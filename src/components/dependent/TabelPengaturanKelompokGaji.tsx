@@ -29,7 +29,7 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
     (rowData: any) => {
       return (
         <EditKelompokGajiModalDisclosure rowData={rowData}>
-          <MenuItem isDisabled={rowData.columnsFormat[1].value}>
+          <MenuItem>
             <Text>Edit</Text>
             <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
           </MenuItem>

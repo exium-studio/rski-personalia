@@ -75,7 +75,7 @@ export default function DebugTools() {
           colorScheme="ap"
           className="btn-ap"
           position={"fixed"}
-          bottom={"8px"}
+          bottom={"100px"}
           right={"8px"}
           zIndex={999999999}
           onClick={onOpen}

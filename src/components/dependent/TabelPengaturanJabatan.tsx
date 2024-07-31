@@ -14,6 +14,7 @@ import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisc
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
 import EditJabatanModalDisclosure from "../independent/EditJabatanModalDisclosure";
+import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -27,7 +28,7 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
     (rowData: any) => {
       return (
         <EditJabatanModalDisclosure rowData={rowData}>
-          <MenuItem isDisabled={rowData.columnsFormat[1].value}>
+          <MenuItem>
             <Text>Edit</Text>
             <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
           </MenuItem>
@@ -36,10 +37,15 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
     },
     (rowData: any) => {
       return (
-        <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
-          <Text>Restore</Text>
-          <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <RestoreDataPengaturanModalDisclosure
+          id={rowData.id}
+          url={`/api/rski/dashboard/pengaturan/jabatan/restore/${rowData.id}`}
+        >
+          <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
+            <Text>Restore</Text>
+            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </RestoreDataPengaturanModalDisclosure>
       );
     },
     "divider",
