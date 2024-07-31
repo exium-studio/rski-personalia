@@ -1,0 +1,25 @@
+const perubahanDataKolom = {
+  foto_profil: "Foto Profil",
+  nama: "Nama Lengkap",
+  tgl_lahir: "Tanggal Lahir",
+  no_hp: "Nomor Telpon",
+  jenis_kelamin: "Jenis Kelamin",
+  nik_ktp: "Nomor Induk Kependudukan",
+  no_kk: "Nomor Kartu Keluarga",
+  agama: "Agama",
+  golongan_darah: "Golongan Darah",
+  tinggi_badan: "Tinggi Badan",
+  alamat: "Alamat",
+  no_ijazah: "Nomor Ijazah Terakhir",
+  tahun_lulus: "Tahun Lulus Ijazah Terakhir",
+  keluarga: "Keluarga",
+  ktp: "KTP",
+  kk: "Kartu Keluarga",
+  sip: "SIP",
+  bpjsksh: "BPJS Kesehatan",
+  bpjsktk: "BPJS Ketenagakerjaan",
+  ijazah: "Ijazah Terakhir",
+  sertifikat_kompetensi: "Sertifikat Kompetensi",
+};
+
+export default perubahanDataKolom;

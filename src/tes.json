@@ -1,0 +1,272 @@
+[
+  {
+      "id": 1,
+      "user": {
+          "id": 2,
+          "nama": "User 0",
+          "username": "username0",
+          "email_verified_at": null,
+          "role_id": null,
+          "foto_profil": null,
+          "data_completion_step": 1,
+          "status_aktif": 0,
+          "created_at": "2024-06-07T06:57:42.000000Z",
+          "updated_at": "2024-06-07T06:57:42.000000Z"
+      },
+      "nik": "2415692",
+      "no_rm": 1828094,
+      "unit_kerja": {
+          "id": 20,
+          "nama_unit": "Psikiatri",
+          "jenis_karyawan": 0,
+          "created_at": "2024-03-19T06:57:41.000000Z",
+          "updated_at": "2024-06-07T06:57:41.000000Z"
+      },
+      "status_karyawan": "Kontrak",
+      "created_at": "2024-06-07T06:57:42.000000Z",
+      "updated_at": "2024-06-07T06:57:42.000000Z"
+  },
+  {
+      "id": 2,
+      "user": {
+          "id": 3,
+          "nama": "User 1",
+          "username": "username1",
+          "email_verified_at": null,
+          "role_id": null,
+          "foto_profil": null,
+          "data_completion_step": 1,
+          "status_aktif": 0,
+          "created_at": "2024-06-07T06:57:42.000000Z",
+          "updated_at": "2024-06-07T06:57:42.000000Z"
+      },
+      "nik": "1528863",
+      "no_rm": 4600727,
+      "unit_kerja": {
+          "id": 16,
+          "nama_unit": "Fisioterapi",
+          "jenis_karyawan": 1,
+          "created_at": "2023-07-29T06:57:41.000000Z",
+          "updated_at": "2024-06-07T06:57:41.000000Z"
+      },
+      "status_karyawan": "Magang",
+      "created_at": "2024-06-07T06:57:42.000000Z",
+      "updated_at": "2024-06-07T06:57:42.000000Z"
+  },
+  {
+      "id": 3,
+      "user": {
+          "id": 4,
+          "nama": "User 2",
+          "username": "username2",
+          "email_verified_at": null,
+          "role_id": null,
+          "foto_profil": null,
+          "data_completion_step": 1,
+          "status_aktif": 0,
+          "created_at": "2024-06-07T06:57:43.000000Z",
+          "updated_at": "2024-06-07T06:57:43.000000Z"
+      },
+      "nik": "2371077",
+      "no_rm": 4327005,
+      "unit_kerja": {
+          "id": 11,
+          "nama_unit": "Kebidanan dan Kandungan",
+          "jenis_karyawan": 1,
+          "created_at": "2023-06-18T06:57:41.000000Z",
+          "updated_at": "2024-06-07T06:57:41.000000Z"
+      },
+      "status_karyawan": "Tetap",
+      "created_at": "2024-06-07T06:57:43.000000Z",
+      "updated_at": "2024-06-07T06:57:43.000000Z"
+  },
+  {
+      "id": 4,
+      "user": {
+          "id": 5,
+          "nama": "User 3",
+          "username": "username3",
+          "email_verified_at": null,
+          "role_id": null,
+          "foto_profil": null,
+          "data_completion_step": 1,
+          "status_aktif": 0,
+          "created_at": "2024-06-07T06:57:43.000000Z",
+          "updated_at": "2024-06-07T06:57:43.000000Z"
+      },
+      "nik": "271683",
+      "no_rm": 355076,
+      "unit_kerja": {
+          "id": 6,
+          "nama_unit": "Pemeliharaan Sarana Prasarana",
+          "jenis_karyawan": 1,
+          "created_at": "2023-06-13T06:57:41.000000Z",
+          "updated_at": "2024-06-07T06:57:41.000000Z"
+      },
+      "status_karyawan": "Magang",
+      "created_at": "2024-06-07T06:57:43.000000Z",
+      "updated_at": "2024-06-07T06:57:43.000000Z"
+  },
+  {
+      "id": 5,
+      "user": {
+          "id": 6,
+          "nama": "User 4",
+          "username": "username4",
+          "email_verified_at": null,
+          "role_id": null,
+          "foto_profil": null,
+          "data_completion_step": 1,
+          "status_aktif": 0,
+          "created_at": "2024-06-07T06:57:43.000000Z",
+          "updated_at": "2024-06-07T06:57:43.000000Z"
+      },
+      "nik": "2331089",
+      "no_rm": 103065,
+      "unit_kerja": {
+          "id": 1,
+          "nama_unit": "Asuransi Kesehatan",
+          "jenis_karyawan": 0,
+          "created_at": "2024-05-20T06:57:41.000000Z",
+          "updated_at": "2024-06-07T06:57:41.000000Z"
+      },
+      "status_karyawan": "Kontrak",
+      "created_at": "2024-06-07T06:57:43.000000Z",
+      "updated_at": "2024-06-07T06:57:43.000000Z"
+  },
+  {
+      "id": 6,
+      "user": {
+          "id": 7,
+          "nama": "User 5",
+          "username": "username5",
+          "email_verified_at": null,
+          "role_id": null,
+          "foto_profil": null,
+          "data_completion_step": 1,
+          "status_aktif": 0,
+          "created_at": "2024-06-07T06:57:44.000000Z",
+          "updated_at": "2024-06-07T06:57:44.000000Z"
+      },
+      "nik": "2128093",
+      "no_rm": 1076505,
+      "unit_kerja": {
+          "id": 14,
+          "nama_unit": "Apotek",
+          "jenis_karyawan": 1,
+          "created_at": "2023-06-26T06:57:41.000000Z",
+          "updated_at": "2024-06-07T06:57:41.000000Z"
+      },
+      "status_karyawan": "Kontrak",
+      "created_at": "2024-06-07T06:57:44.000000Z",
+      "updated_at": "2024-06-07T06:57:44.000000Z"
+  },
+  {
+      "id": 7,
+      "user": {
+          "id": 8,
+          "nama": "User 6",
+          "username": "username6",
+          "email_verified_at": null,
+          "role_id": null,
+          "foto_profil": null,
+          "data_completion_step": 1,
+          "status_aktif": 0,
+          "created_at": "2024-06-07T06:57:44.000000Z",
+          "updated_at": "2024-06-07T06:57:44.000000Z"
+      },
+      "nik": "2246555",
+      "no_rm": 3574313,
+      "unit_kerja": {
+          "id": 13,
+          "nama_unit": "Onkologi",
+          "jenis_karyawan": 1,
+          "created_at": "2024-01-17T06:57:41.000000Z",
+          "updated_at": "2024-06-07T06:57:41.000000Z"
+      },
+      "status_karyawan": "Tetap",
+      "created_at": "2024-06-07T06:57:44.000000Z",
+      "updated_at": "2024-06-07T06:57:44.000000Z"
+  },
+  {
+      "id": 8,
+      "user": {
+          "id": 9,
+          "nama": "User 7",
+          "username": "username7",
+          "email_verified_at": null,
+          "role_id": null,
+          "foto_profil": null,
+          "data_completion_step": 1,
+          "status_aktif": 0,
+          "created_at": "2024-06-07T06:57:44.000000Z",
+          "updated_at": "2024-06-07T06:57:44.000000Z"
+      },
+      "nik": "2220567",
+      "no_rm": 4660600,
+      "unit_kerja": {
+          "id": 20,
+          "nama_unit": "Psikiatri",
+          "jenis_karyawan": 0,
+          "created_at": "2024-03-19T06:57:41.000000Z",
+          "updated_at": "2024-06-07T06:57:41.000000Z"
+      },
+      "status_karyawan": "Magang",
+      "created_at": "2024-06-07T06:57:44.000000Z",
+      "updated_at": "2024-06-07T06:57:44.000000Z"
+  },
+  {
+      "id": 9,
+      "user": {
+          "id": 10,
+          "nama": "User 8",
+          "username": "username8",
+          "email_verified_at": null,
+          "role_id": null,
+          "foto_profil": null,
+          "data_completion_step": 1,
+          "status_aktif": 0,
+          "created_at": "2024-06-07T06:57:45.000000Z",
+          "updated_at": "2024-06-07T06:57:45.000000Z"
+      },
+      "nik": "578774",
+      "no_rm": 1187264,
+      "unit_kerja": {
+          "id": 3,
+          "nama_unit": "Laboratorium",
+          "jenis_karyawan": 0,
+          "created_at": "2024-02-08T06:57:41.000000Z",
+          "updated_at": "2024-06-07T06:57:41.000000Z"
+      },
+      "status_karyawan": "Tetap",
+      "created_at": "2024-06-07T06:57:45.000000Z",
+      "updated_at": "2024-06-07T06:57:45.000000Z"
+  },
+  {
+      "id": 10,
+      "user": {
+          "id": 11,
+          "nama": "User 9",
+          "username": "username9",
+          "email_verified_at": null,
+          "role_id": null,
+          "foto_profil": null,
+          "data_completion_step": 1,
+          "status_aktif": 0,
+          "created_at": "2024-06-07T06:57:45.000000Z",
+          "updated_at": "2024-06-07T06:57:45.000000Z"
+      },
+      "nik": "3181412",
+      "no_rm": 943415,
+      "unit_kerja": {
+          "id": 24,
+          "nama_unit": "Gizi",
+          "jenis_karyawan": 1,
+          "created_at": "2024-05-26T06:57:41.000000Z",
+          "updated_at": "2024-06-07T06:57:41.000000Z"
+      },
+      "status_karyawan": "Magang",
+      "created_at": "2024-06-07T06:57:45.000000Z",
+      "updated_at": "2024-06-07T06:57:45.000000Z"
+  }
+]
