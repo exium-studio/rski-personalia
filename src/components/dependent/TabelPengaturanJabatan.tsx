@@ -27,7 +27,7 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
     (rowData: any) => {
       return (
         <EditJabatanModalDisclosure rowData={rowData}>
-          <MenuItem>
+          <MenuItem isDisabled={rowData.columnsFormat[1].value}>
             <Text>Edit</Text>
             <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
           </MenuItem>

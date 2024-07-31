@@ -28,7 +28,7 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
     (rowData: any) => {
       return (
         <EditKelompokGajiModalDisclosure rowData={rowData}>
-          <MenuItem>
+          <MenuItem isDisabled={rowData.columnsFormat[1].value}>
             <Text>Edit</Text>
             <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
           </MenuItem>
@@ -37,7 +37,7 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
     },
     (rowData: any) => {
       return (
-        <MenuItem isDisabled={!rowData?.deleted_at}>
+        <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
           <Text>Restore</Text>
           <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
         </MenuItem>
@@ -50,7 +50,10 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
           id={rowData.id}
           url={`/api/rski/dashboard/pengaturan/kelompok-gaji/${rowData.id}`}
         >
-          <MenuItem fontWeight={500} isDisabled={rowData?.deleted_at}>
+          <MenuItem
+            fontWeight={500}
+            isDisabled={rowData.columnsFormat[1].value}
+          >
             <Text color={"red.400"}>Delete</Text>
             <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
           </MenuItem>
