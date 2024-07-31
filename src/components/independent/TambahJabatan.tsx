@@ -5,7 +5,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Icon,
-  Input,
   InputGroup,
   InputLeftElement,
   Modal,
@@ -29,6 +28,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
+import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
 
 interface Props extends ButtonProps {}
@@ -108,6 +108,7 @@ export default function TambahJabatan({ ...props }: Props) {
         }}
         initialFocusRef={initialRef}
         isCentered
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent>
@@ -129,11 +130,13 @@ export default function TambahJabatan({ ...props }: Props) {
                   Nama Jabatan
                   <RequiredForm />
                 </FormLabel>
-                <Input
+                <StringInput
                   name="nama_jabatan"
                   placeholder="Human Resource"
-                  onChange={formik.handleChange}
-                  value={formik.values.nama_jabatan || ""}
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("nama_jabatan", input);
+                  }}
+                  inputValue={formik.values.nama_jabatan}
                 />
                 <FormErrorMessage>
                   {formik.errors.nama_jabatan as string}

@@ -14,6 +14,7 @@ import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
 import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
+import EditUnitKerjaModalDisclosure from "../independent/EditUnitKerjaModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -26,10 +27,12 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <MenuItem>
-          <Text>Edit</Text>
-          <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <EditUnitKerjaModalDisclosure rowData={rowData}>
+          <MenuItem>
+            <Text>Edit</Text>
+            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </EditUnitKerjaModalDisclosure>
       );
     },
     (rowData: any) => {

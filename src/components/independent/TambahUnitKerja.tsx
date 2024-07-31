@@ -5,7 +5,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Icon,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -19,14 +18,15 @@ import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
+import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
-import SelectJenisKaryawan from "../dependent/_Select/SelectJenisKaryawan";
-import DisclosureHeader from "../dependent/DisclosureHeader";
-import RequiredForm from "../form/RequiredForm";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import req from "../../constant/req";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import SelectJenisKaryawan from "../dependent/_Select/SelectJenisKaryawan";
+import DisclosureHeader from "../dependent/DisclosureHeader";
+import StringInput from "../dependent/input/StringInput";
+import RequiredForm from "../form/RequiredForm";
 
 interface Props extends ButtonProps {}
 
@@ -102,6 +102,7 @@ export default function TambahUnitKerja({ ...props }: Props) {
         }}
         initialFocusRef={initialRef}
         isCentered
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent>
@@ -123,11 +124,13 @@ export default function TambahUnitKerja({ ...props }: Props) {
                   Nama Unit
                   <RequiredForm />
                 </FormLabel>
-                <Input
+                <StringInput
                   name="nama_unit"
                   placeholder="Human Resource"
-                  onChange={formik.handleChange}
-                  value={formik.values.nama_unit}
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("nama_unit", input);
+                  }}
+                  inputValue={formik.values.nama_unit}
                 />
                 <FormErrorMessage>
                   {formik.errors.nama_unit as string}

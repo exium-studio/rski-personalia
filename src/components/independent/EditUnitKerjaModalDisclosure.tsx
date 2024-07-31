@@ -5,16 +5,12 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -25,8 +21,9 @@ import req from "../../constant/req";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
+import SelectJenisKaryawan from "../dependent/_Select/SelectJenisKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import NumberInput from "../dependent/input/NumberInput";
+import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
 
 interface Props extends BoxProps {
@@ -56,22 +53,26 @@ export default function EditUnitKerjaModalDisclosure({
     validateOnChange: false,
     initialValues: {
       nama_unit: rowData.columnsFormat[0].value,
-      jenis_karyawan: rowData.columnsFormat[2].value,
+      jenis_karyawan: {
+        value: rowData.columnsFormat[2].value,
+        label: rowData.columnsFormat[2].value ? "Shift" : "Non-Shift",
+      },
     },
     validationSchema: yup.object().shape({
       nama_unit: yup.string().required("Harus diisi"),
-      jenis_karyawan: yup.number().required("Harus diisi"),
+      jenis_karyawan: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_unit: values.nama_unit,
-        jenis_karyawan: values.jenis_karyawan,
+        jenis_karyawan: values.jenis_karyawan.value,
         _method: "patch",
       };
+      console.log(payload);
       setLoading(true);
       req
         .post(
-          `/api/rski/dashboard/pengaturan/kelompok-gaji/${rowData.id}`,
+          `/api/rski/dashboard/pengaturan/unit-kerja/${rowData.id}`,
           payload
         )
         .then((r) => {
@@ -109,10 +110,10 @@ export default function EditUnitKerjaModalDisclosure({
       "nama_unit",
       rowData.columnsFormat[0].value
     );
-    formikRef.current.setFieldValue(
-      "jenis_karyawan",
-      rowData.columnsFormat[2].value
-    );
+    formikRef.current.setFieldValue("jenis_karyawan", {
+      value: rowData.columnsFormat[2].value,
+      label: rowData.columnsFormat[2].value ? "Shift" : "Non-Shift",
+    });
   }, [rowData]);
 
   return (
@@ -129,32 +130,35 @@ export default function EditUnitKerjaModalDisclosure({
         }}
         initialFocusRef={initialRef}
         isCentered
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit Kelompok Gaji"
+              title="Edit Unit Kerja"
               onClose={() => {
                 formik.resetForm();
               }}
             />
           </ModalHeader>
           <ModalBody>
-            <form id="editKelompokGajiForm" onSubmit={formik.handleSubmit}>
+            <form id="editUnitKerjaForm" onSubmit={formik.handleSubmit}>
               <FormControl
                 mb={4}
                 isInvalid={formik.errors.nama_unit ? true : false}
               >
                 <FormLabel>
-                  Nama Kelompok
+                  Nama Unit
                   <RequiredForm />
                 </FormLabel>
-                <Input
+                <StringInput
                   name="nama_unit"
                   placeholder="Human Resource"
-                  onChange={formik.handleChange}
-                  value={formik.values.nama_unit}
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("nama_unit", input);
+                  }}
+                  inputValue={formik.values.nama_unit}
                 />
                 <FormErrorMessage>
                   {formik.errors.nama_unit as string}
@@ -165,23 +169,17 @@ export default function EditUnitKerjaModalDisclosure({
                 isInvalid={formik.errors.jenis_karyawan ? true : false}
               >
                 <FormLabel>
-                  Besaran Gaji
+                  Jenis Pegawai
                   <RequiredForm />
                 </FormLabel>
-                <InputGroup>
-                  <InputLeftElement pl={4}>
-                    <Text>Rp</Text>
-                  </InputLeftElement>
-                  <NumberInput
-                    pl={12}
-                    name="jenis_karyawan"
-                    placeholder="5.500.000"
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("jenis_karyawan", input);
-                    }}
-                    inputValue={formik.values.jenis_karyawan}
-                  />
-                </InputGroup>
+                <SelectJenisKaryawan
+                  name="jenis_karyawan"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("jenis_karyawan", input);
+                  }}
+                  inputValue={formik.values.jenis_karyawan}
+                />
+
                 <FormErrorMessage>
                   {formik.errors.jenis_karyawan as string}
                 </FormErrorMessage>
@@ -192,7 +190,7 @@ export default function EditUnitKerjaModalDisclosure({
           <ModalFooter>
             <Button
               type="submit"
-              form="editKelompokGajiForm"
+              form="editUnitKerjaForm"
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}

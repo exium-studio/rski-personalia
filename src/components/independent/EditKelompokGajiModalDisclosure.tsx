@@ -5,7 +5,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input,
   InputGroup,
   InputLeftElement,
   Modal,
@@ -27,8 +26,8 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
+import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
-
 interface Props extends BoxProps {
   rowData: any;
   children?: ReactNode;
@@ -129,6 +128,7 @@ export default function EditKelompokGajiModalDisclosure({
         }}
         initialFocusRef={initialRef}
         isCentered
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent>
@@ -150,11 +150,13 @@ export default function EditKelompokGajiModalDisclosure({
                   Nama Kelompok
                   <RequiredForm />
                 </FormLabel>
-                <Input
+                <StringInput
                   name="nama_kelompok"
                   placeholder="Human Resource"
-                  onChange={formik.handleChange}
-                  value={formik.values.nama_kelompok}
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("nama_kelompok", input);
+                  }}
+                  inputValue={formik.values.nama_kelompok}
                 />
                 <FormErrorMessage>
                   {formik.errors.nama_kelompok as string}

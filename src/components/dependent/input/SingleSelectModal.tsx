@@ -160,6 +160,7 @@ export default function SingleSelectModal({
         initialFocusRef={initialRef}
         isCentered={sh < 650 ? false : true}
         scrollBehavior={sh < 650 ? "outside" : "inside"}
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent

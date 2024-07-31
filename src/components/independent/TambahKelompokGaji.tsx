@@ -5,7 +5,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Icon,
-  Input,
   InputGroup,
   InputLeftElement,
   Modal,
@@ -22,14 +21,15 @@ import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
+import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
+import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
-import req from "../../constant/req";
-import useRenderTrigger from "../../global/useRenderTrigger";
 
 interface Props extends ButtonProps {}
 
@@ -105,6 +105,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
         }}
         initialFocusRef={initialRef}
         isCentered
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent>
@@ -126,11 +127,13 @@ export default function TambahKelompokGaji({ ...props }: Props) {
                   Nama Kelompok
                   <RequiredForm />
                 </FormLabel>
-                <Input
+                <StringInput
                   name="nama_kelompok"
                   placeholder="Human Resource"
-                  onChange={formik.handleChange}
-                  value={formik.values.nama_kelompok}
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("nama_kelompok", input);
+                  }}
+                  inputValue={formik.values.nama_kelompok}
                 />
                 <FormErrorMessage>
                   {formik.errors.nama_kelompok as string}
