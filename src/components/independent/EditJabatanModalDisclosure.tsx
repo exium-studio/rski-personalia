@@ -61,10 +61,11 @@ export default function EditJabatanModalDisclosure({
       const payload = {
         nama_jabatan: values.nama_jabatan,
         tunjangan: values.tunjangan,
+        _method: "patch",
       };
       setLoading(true);
       req
-        .post("/api/rski/dashboard/pengaturan/jabatan", payload)
+        .post(`/api/rski/dashboard/pengaturan/jabatan/${rowData.id}`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({

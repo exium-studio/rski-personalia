@@ -67,6 +67,8 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
     dependencies: [],
   });
 
+  console.log(data);
+
   const fd = data?.filter((item: any) => {
     const searchTerm = filterConfig?.search.toLowerCase();
     const isDeletedTerm = filterConfig?.is_deleted?.map(
