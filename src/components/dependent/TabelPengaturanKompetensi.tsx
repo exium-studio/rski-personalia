@@ -1,7 +1,7 @@
-import { Center, HStack, Icon, MenuItem, Text } from "@chakra-ui/react";
+import { Center, Icon, MenuItem, Text } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
 import { Interface__SelectOption } from "../../constant/interfaces";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import { iconSize } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatNumber from "../../lib/formatNumber";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -195,17 +195,12 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
           )}
         </>
       )}
-      s
+
       {!error && (
         <>
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (

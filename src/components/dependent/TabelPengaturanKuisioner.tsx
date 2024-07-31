@@ -17,6 +17,7 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 
 interface Props {
   filterConfig?: any;
@@ -54,177 +55,9 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
     },
   ];
 
-  const dummy = [
-    {
-      id: 1,
-      pertanyaan: "Seberapa efektif Anda merasa proses onboarding saat ini?",
-      jabatan: {
-        id: 1,
-        nama_jabatan: "HRD",
-        is_struktural: 1,
-        tunjangan: 1500000,
-        created_at: "2023-09-21T02:41:29.000000Z",
-        updated_at: "2024-05-07T02:41:29.000000Z",
-        deleted_at: null,
-      },
-      created_at: "2024-07-01",
-      updated_at: "2024-07-05",
-      deleted_at: null,
-    },
-    {
-      id: 2,
-      pertanyaan: "Bagaimana Anda menilai komunikasi dalam tim Anda?",
-      jabatan: {
-        id: 2,
-        nama_jabatan: "Manager",
-        is_struktural: 1,
-        tunjangan: 2000000,
-        created_at: "2023-10-11T02:41:29.000000Z",
-        updated_at: "2024-06-07T02:41:29.000000Z",
-        deleted_at: null,
-      },
-      created_at: "2024-07-02",
-      updated_at: "2024-07-06",
-      deleted_at: null,
-    },
-    {
-      id: 3,
-      pertanyaan:
-        "Apakah Anda merasa memiliki cukup sumber daya untuk menyelesaikan tugas Anda?",
-      jabatan: {
-        id: 3,
-        nama_jabatan: "Supervisor",
-        is_struktural: 1,
-        tunjangan: 1800000,
-        created_at: "2023-08-15T02:41:29.000000Z",
-        updated_at: "2024-04-07T02:41:29.000000Z",
-        deleted_at: null,
-      },
-      created_at: "2024-07-03",
-      updated_at: "2024-07-07",
-      deleted_at: null,
-    },
-    {
-      id: 4,
-      pertanyaan:
-        "Bagaimana Anda menilai keseimbangan kerja/hidup di perusahaan ini?",
-      jabatan: {
-        id: 4,
-        nama_jabatan: "Staff IT",
-        is_struktural: 0,
-        tunjangan: 1200000,
-        created_at: "2023-11-01T02:41:29.000000Z",
-        updated_at: "2024-06-10T02:41:29.000000Z",
-        deleted_at: null,
-      },
-      created_at: "2024-07-04",
-      updated_at: "2024-07-08",
-      deleted_at: null,
-    },
-    {
-      id: 5,
-      pertanyaan:
-        "Seberapa puas Anda dengan peluang pengembangan karir di perusahaan ini?",
-      jabatan: {
-        id: 5,
-        nama_jabatan: "Staff Admin",
-        is_struktural: 0,
-        tunjangan: 1100000,
-        created_at: "2023-07-21T02:41:29.000000Z",
-        updated_at: "2024-05-11T02:41:29.000000Z",
-        deleted_at: null,
-      },
-      created_at: "2024-07-05",
-      updated_at: "2024-07-09",
-      deleted_at: null,
-    },
-    {
-      id: 6,
-      pertanyaan: "Apakah Anda merasa dihargai oleh atasan Anda?",
-      jabatan: {
-        id: 6,
-        nama_jabatan: "Accountant",
-        is_struktural: 0,
-        tunjangan: 1300000,
-        created_at: "2023-09-15T02:41:29.000000Z",
-        updated_at: "2024-06-12T02:41:29.000000Z",
-        deleted_at: null,
-      },
-      created_at: "2024-07-06",
-      updated_at: "2024-07-10",
-      deleted_at: "2024-09-05",
-    },
-    {
-      id: 7,
-      pertanyaan: "Seberapa jelas tujuan dan tanggung jawab pekerjaan Anda?",
-      jabatan: {
-        id: 7,
-        nama_jabatan: "Marketing",
-        is_struktural: 0,
-        tunjangan: 1400000,
-        created_at: "2023-10-05T02:41:29.000000Z",
-        updated_at: "2024-05-15T02:41:29.000000Z",
-        deleted_at: null,
-      },
-      created_at: "2024-07-07",
-      updated_at: "2024-07-11",
-      deleted_at: null,
-    },
-    {
-      id: 8,
-      pertanyaan:
-        "Bagaimana Anda menilai dukungan yang diberikan untuk pengembangan keterampilan?",
-      jabatan: {
-        id: 8,
-        nama_jabatan: "Sales",
-        is_struktural: 0,
-        tunjangan: 1250000,
-        created_at: "2023-11-22T02:41:29.000000Z",
-        updated_at: "2024-06-17T02:41:29.000000Z",
-        deleted_at: null,
-      },
-      created_at: "2024-07-08",
-      updated_at: "2024-07-12",
-      deleted_at: null,
-    },
-    {
-      id: 9,
-      pertanyaan: "Seberapa efektif Anda merasa rapat tim?",
-      jabatan: {
-        id: 9,
-        nama_jabatan: "Developer",
-        is_struktural: 0,
-        tunjangan: 1600000,
-        created_at: "2023-12-01T02:41:29.000000Z",
-        updated_at: "2024-05-20T02:41:29.000000Z",
-        deleted_at: null,
-      },
-      created_at: "2024-07-09",
-      updated_at: "2024-07-13",
-      deleted_at: "2024-09-08",
-    },
-    {
-      id: 10,
-      pertanyaan:
-        "Apakah Anda merasa perusahaan ini peduli dengan kesejahteraan karyawan?",
-      jabatan: {
-        id: 10,
-        nama_jabatan: "Customer Service",
-        is_struktural: 0,
-        tunjangan: 1000000,
-        created_at: "2023-07-10T02:41:29.000000Z",
-        updated_at: "2024-05-25T02:41:29.000000Z",
-        deleted_at: null,
-      },
-      created_at: "2024-07-10",
-      updated_at: "2024-07-14",
-      deleted_at: "2024-09-09",
-    },
-  ];
-
-  const { error, loading, data, retry } = useDataState<any[]>({
-    initialData: dummy,
-    url: "",
+  const { error, notFound, loading, data, retry } = useDataState<any[]>({
+    initialData: undefined,
+    url: "/api/rski/dashboard/pengaturan/kuisioner",
     dependencies: [],
   });
 
@@ -313,10 +146,21 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"400px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && <NoData minH={"400px"} />}
+
+          {notFound && !isObjectEmpty(filterConfig) && (
+            <NotFound minH={"400px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"400px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
+
       {!error && (
         <>
           {loading && (
