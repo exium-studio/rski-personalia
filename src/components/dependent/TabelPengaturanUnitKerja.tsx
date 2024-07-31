@@ -12,6 +12,7 @@ import CustomTable from "./CustomTable";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -41,10 +42,18 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
     "divider",
     (rowData: any) => {
       return (
-        <MenuItem fontWeight={500} isDisabled={rowData.columnsFormat[1].value}>
-          <Text color={"red.400"}>Delete</Text>
-          <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-        </MenuItem>
+        <DeleteDataPengaturanModalDisclosure
+          id={rowData.id}
+          url={`/api/rski/dashboard/pengaturan/unit-kerja/${rowData.id}`}
+        >
+          <MenuItem
+            fontWeight={500}
+            isDisabled={rowData.columnsFormat[1].value}
+          >
+            <Text color={"red.400"}>Delete</Text>
+            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
+          </MenuItem>
+        </DeleteDataPengaturanModalDisclosure>
       );
     },
   ];
