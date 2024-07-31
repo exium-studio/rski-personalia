@@ -47,19 +47,22 @@ export default function TambahKompetensi({ ...props }: Props) {
     validateOnChange: false,
     initialValues: {
       nama_kompetensi: "" as any,
-      total_tunjangan: undefined,
       jenis_kompetensi: "" as any,
+      total_tunjangan: undefined,
+      nilai_bor: undefined,
     },
     validationSchema: yup.object().shape({
       nama_kompetensi: yup.string().required("Harus diisi"),
-      total_tunjangan: yup.number().required("Harus diisi"),
       jenis_kompetensi: yup.object().required("Harus diisi"),
+      total_tunjangan: yup.number().required("Harus diisi"),
+      nilai_bor: yup.number().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_kompetensi: values.nama_kompetensi,
-        total_tunjangan: values.total_tunjangan,
         jenis_kompetensi: values.jenis_kompetensi.value,
+        total_tunjangan: values.total_tunjangan,
+        nilai_bor: values.nilai_bor,
       };
       setLoading(true);
       req
@@ -165,6 +168,7 @@ export default function TambahKompetensi({ ...props }: Props) {
               </FormControl>
 
               <FormControl
+                mb={4}
                 isInvalid={formik.errors.total_tunjangan ? true : false}
               >
                 <FormLabel>
@@ -187,6 +191,30 @@ export default function TambahKompetensi({ ...props }: Props) {
                 </InputGroup>
                 <FormErrorMessage>
                   {formik.errors.total_tunjangan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl isInvalid={formik.errors.nilai_bor ? true : false}>
+                <FormLabel>
+                  Nilai BOR
+                  <RequiredForm />
+                </FormLabel>
+                <InputGroup>
+                  <InputLeftElement pl={4}>
+                    <Text>Rp</Text>
+                  </InputLeftElement>
+                  <NumberInput
+                    pl={12}
+                    name="nilai_bor"
+                    placeholder="500.000"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("nilai_bor", input);
+                    }}
+                    inputValue={formik.values.nilai_bor}
+                  />
+                </InputGroup>
+                <FormErrorMessage>
+                  {formik.errors.nilai_bor as string}
                 </FormErrorMessage>
               </FormControl>
             </form>
