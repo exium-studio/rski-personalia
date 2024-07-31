@@ -109,12 +109,13 @@ export default function Profil() {
   const userData = useGetUserData();
 
   return (
-    <CWrapper pt={0}>
-      <Box w={"50px"} flex={1} bg={darkLightColor} mx={"auto"} />
+    <CWrapper pt={0} overflowY={"auto"}>
+      <Box w={"50px"} flex={"1 1 50px"} bg={"#353535"} mx={"auto"} />
+
       <Box
         w={"65px"}
         h={"20px"}
-        bg={darkLightColor}
+        bg={"#353535"}
         mx={"auto"}
         p={1}
         borderRadius={"full"}
@@ -155,7 +156,8 @@ export default function Profil() {
           mx={"auto"}
         />
       </Box>
-      <Box m={"auto"} flex={3}>
+
+      <Box m={"auto"} flex={5}>
         <CContainer
           bg={lightDarkColor}
           borderRadius={12}
