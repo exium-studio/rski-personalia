@@ -15,6 +15,7 @@ import CustomTable from "./CustomTable";
 import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -37,10 +38,15 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
     },
     (rowData: any) => {
       return (
-        <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
-          <Text>Restore</Text>
-          <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <RestoreDataPengaturanModalDisclosure
+          id={rowData.id}
+          url={`/api/rski/dashboard/pengaturan/kelompok-gaji/restore/${rowData.id}`}
+        >
+          <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
+            <Text>Restore</Text>
+            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </RestoreDataPengaturanModalDisclosure>
       );
     },
     "divider",

@@ -25,23 +25,28 @@ interface Props {
   data?: any;
 }
 
-export default function DeleteDataPengaturanModalDisclosure({
+export default function RestoreDataPengaturanModalDisclosure({
   children,
   url,
   id,
   data,
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`delete-data-pengaturan-modal-${id}`, isOpen, onOpen, onClose);
+  useBackOnClose(
+    `restore-data-pengaturan-modal-${id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
 
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
-  function handleOnDelete() {
+  function handleOnRestore() {
     setLoading(true);
     req
-      .delete(url)
+      .post(url)
       .then((r) => {
         if (r.status === 200) {
           toast({
@@ -81,11 +86,11 @@ export default function DeleteDataPengaturanModalDisclosure({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <DisclosureHeader title={"Delete Data Pengaturan"} />
+            <DisclosureHeader title={"Restore Data Pengaturan"} />
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.4}>
-              Apakah anda yakin akan menghapus data pengaturan ini?
+              Apakah anda yakin akan mengembalikan data pengaturan ini?
             </Text>
           </ModalBody>
           <ModalFooter gap={2}>
@@ -99,9 +104,9 @@ export default function DeleteDataPengaturanModalDisclosure({
             </Button>
             <Button
               w={"100%"}
-              className="clicky"
-              colorScheme="red"
-              onClick={handleOnDelete}
+              className="btn-ap clicky"
+              colorScheme="ap"
+              onClick={handleOnRestore}
               isLoading={loading}
             >
               Ya
