@@ -16,10 +16,11 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
@@ -28,6 +29,8 @@ import SelectJenisKompetensi from "../dependent/_Select/SelectJenisKompetensi";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
 import RequiredForm from "../form/RequiredForm";
+import useRenderTrigger from "../../global/useRenderTrigger";
+import req from "../../constant/req";
 
 interface Props extends ButtonProps {}
 
@@ -36,21 +39,56 @@ export default function TambahKompetensi({ ...props }: Props) {
   useBackOnClose("tambah-kompetensi-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama_jabatan: "" as any,
+      nama_kompetensi: "" as any,
       total_tunjangan: undefined,
       jenis_kompetensi: "" as any,
     },
     validationSchema: yup.object().shape({
-      nama_jabatan: yup.string().required("Harus diisi"),
+      nama_kompetensi: yup.string().required("Harus diisi"),
       total_tunjangan: yup.number().required("Harus diisi"),
       jenis_kompetensi: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      //TODO api tambah kelompok gaji
+      const payload = {
+        nama_kompetensi: values.nama_kompetensi,
+        total_tunjangan: values.total_tunjangan,
+        jenis_kompetensi: values.jenis_kompetensi.value,
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/pengaturan/kompetensi`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+          setRt(!rt);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
   return (
@@ -89,20 +127,20 @@ export default function TambahKompetensi({ ...props }: Props) {
             <form id="tambahJabatanForm" onSubmit={formik.handleSubmit}>
               <FormControl
                 mb={4}
-                isInvalid={formik.errors.nama_jabatan ? true : false}
+                isInvalid={formik.errors.nama_kompetensi ? true : false}
               >
                 <FormLabel>
                   Nama Kompetensi
                   <RequiredForm />
                 </FormLabel>
                 <Input
-                  name="nama_jabatan"
-                  placeholder="Human Resource"
+                  name="nama_kompetensi"
+                  placeholder="Ortopedi"
                   onChange={formik.handleChange}
-                  value={formik.values.nama_jabatan}
+                  value={formik.values.nama_kompetensi}
                 />
                 <FormErrorMessage>
-                  {formik.errors.nama_jabatan as string}
+                  {formik.errors.nama_kompetensi as string}
                 </FormErrorMessage>
               </FormControl>
 
@@ -160,8 +198,9 @@ export default function TambahKompetensi({ ...props }: Props) {
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}
+              isLoading={loading}
             >
-              Simpan
+              Tambahkan
             </Button>
           </ModalFooter>
         </ModalContent>

@@ -167,7 +167,7 @@ export default function TambahUnitKerja({ ...props }: Props) {
               w={"100%"}
               isLoading={loading}
             >
-              Simpan
+              Tambahkan
             </Button>
           </ModalFooter>
         </ModalContent>
