@@ -1,14 +1,17 @@
-import { Center, HStack, Text, useDisclosure } from "@chakra-ui/react";
+import { Center, Icon, MenuItem, Text, useDisclosure } from "@chakra-ui/react";
+import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
 import { useState } from "react";
 import { dummyKelolaRole } from "../../const/dummy";
-import { responsiveSpacing } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
+import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 import DetailKelolaRoleModal from "./DetailKelolaRoleModal";
+import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 
 interface Props {
@@ -16,6 +19,49 @@ interface Props {
 }
 
 export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
+  // Row Options Config
+  const rowOptions = [
+    (rowData: any) => {
+      return (
+        <MenuItem>
+          <Text>Edit</Text>
+          <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+        </MenuItem>
+      );
+    },
+    (rowData: any) => {
+      console.log(rowData);
+      return (
+        <RestoreDataPengaturanModalDisclosure
+          id={rowData.id}
+          url={`/api/rski/dashboard/pengaturan/kelompok-gaji/restore/${rowData.id}`}
+        >
+          <MenuItem isDisabled={!rowData.columnsFormat[1]?.value}>
+            <Text>Restore</Text>
+            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </RestoreDataPengaturanModalDisclosure>
+      );
+    },
+    "divider",
+    (rowData: any) => {
+      return (
+        <DeleteDataPengaturanModalDisclosure
+          id={rowData.id}
+          url={`/api/rski/dashboard/pengaturan/kelompok-gaji/${rowData.id}`}
+        >
+          <MenuItem
+            fontWeight={500}
+            isDisabled={rowData.columnsFormat[1]?.value}
+          >
+            <Text color={"red.400"}>Delete</Text>
+            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
+          </MenuItem>
+        </DeleteDataPengaturanModalDisclosure>
+      );
+    },
+  ];
+
   // Disclosure Config
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -75,7 +121,6 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
       },
     ],
   }));
-  console.log(notFound);
 
   return (
     <>
@@ -96,11 +141,6 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (
@@ -121,6 +161,7 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
                             setRole(rowData);
                             onOpen();
                           }}
+                          rowOptions={rowOptions}
                         />
                       </CustomTableContainer>
 

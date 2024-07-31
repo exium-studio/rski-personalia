@@ -249,13 +249,7 @@ export default function PengaturanKeizinan({ role_id, role_name }: Props) {
         <>
           {loading && (
             <>
-              <HStack mb={responsiveSpacing}>
-                <Skeleton h={"40px"} mx={"auto"} />
-                <Skeleton h={"40px"} mx={"auto"} />
-                <Skeleton h={"40px"} mx={"auto"} ml={"auto"} />
-              </HStack>
-              <Skeleton h={"40px"} mx={"auto"} mb={responsiveSpacing} />
-              <Skeleton minH={"300px"} flex={1} mx={"auto"} />
+              <Skeleton flex={1} />
             </>
           )}
           {!loading && (
