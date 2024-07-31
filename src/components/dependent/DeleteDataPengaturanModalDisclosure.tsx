@@ -44,7 +44,13 @@ export default function DeleteDataPengaturanModalDisclosure({
       .delete(url)
       .then((r) => {
         if (r.status === 200) {
-          toast({ status: "success", title: r.data.message, isClosable: true });
+          toast({
+            status: "success",
+            title: r.data.message,
+            isClosable: true,
+            position: "bottom-right",
+          });
+          backOnClose();
           setRt(!rt);
         }
       })
@@ -54,6 +60,7 @@ export default function DeleteDataPengaturanModalDisclosure({
           status: "error",
           title: "Maaf terjadi kesalahan pada sistem",
           isClosable: true,
+          position: "bottom-right",
         });
       })
       .finally(() => {

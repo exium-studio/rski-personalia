@@ -1,9 +1,9 @@
-import { Center, HStack, Icon, MenuItem, Text } from "@chakra-ui/react";
+import { Center, Icon, MenuItem, Text } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
-import { dummyUnitKerja } from "../../const/dummy";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import { Interface__SelectOption } from "../../constant/interfaces";
+import { iconSize } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
@@ -12,7 +12,6 @@ import CustomTable from "./CustomTable";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
-import isObjectEmpty from "../../lib/isObjectEmpty";
 
 interface Props {
   filterConfig?: any;
@@ -160,11 +159,6 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (

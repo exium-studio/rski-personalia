@@ -76,10 +76,14 @@ export default function EditKelompokGajiModalDisclosure({
         )
         .then((r) => {
           if (r.status === 200) {
-            toast({ status: "success", title: r.data.message });
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
             backOnClose();
             setRt(!rt);
-            resetForm();
           }
         })
         .catch((e) => {
@@ -88,6 +92,7 @@ export default function EditKelompokGajiModalDisclosure({
             status: "error",
             title: "Maaf terjadi kesalahan pada sistem",
             isClosable: true,
+            position: "bottom-right",
           });
           setRt(!rt);
         })

@@ -63,6 +63,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
               status: "success",
               title: r.data.message,
               isClosable: true,
+              position: "bottom-right",
             });
             setRt(!rt);
             resetForm();
@@ -74,6 +75,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
             status: "error",
             title: "Maaf terjadi kesalahan pada sistem",
             isClosable: true,
+            position: "bottom-right",
           });
           setRt(!rt);
         })

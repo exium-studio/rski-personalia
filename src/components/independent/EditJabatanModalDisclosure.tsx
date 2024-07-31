@@ -72,9 +72,10 @@ export default function EditJabatanModalDisclosure({
               status: "success",
               title: r.data.message,
               isClosable: true,
+              position: "bottom-right",
             });
+            backOnClose();
             setRt(!rt);
-            resetForm();
           }
         })
         .catch((e) => {
@@ -83,6 +84,7 @@ export default function EditJabatanModalDisclosure({
             status: "error",
             title: "Maaf terjadi kesalahan pada sistem",
             isClosable: true,
+            position: "bottom-right",
           });
           setRt(!rt);
         })
