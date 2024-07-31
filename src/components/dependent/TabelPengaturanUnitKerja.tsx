@@ -12,6 +12,7 @@ import CustomTable from "./CustomTable";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 
 interface Props {
   filterConfig?: any;
@@ -49,9 +50,9 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
     },
   ];
 
-  const { error, loading, data, retry } = useDataState<any[]>({
-    initialData: dummyUnitKerja,
-    url: "",
+  const { error, notFound, loading, data, retry } = useDataState<any[]>({
+    initialData: undefined,
+    url: `/api/rski/dashboard/pengaturan/unit-kerja`,
     dependencies: [],
   });
 
@@ -140,9 +141,19 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"400px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && <NoData minH={"400px"} />}
+
+          {notFound && !isObjectEmpty(filterConfig) && (
+            <NotFound minH={"400px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"400px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
       {!error && (
         <>
