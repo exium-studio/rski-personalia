@@ -1,4 +1,4 @@
-import { Center, Icon, MenuItem, Text } from "@chakra-ui/react";
+import { Center, Icon, MenuItem, Text, Tooltip } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
 import { dummyKelompokGaji } from "../../const/dummy";
 import { Interface__SelectOption } from "../../constant/interfaces";
@@ -129,7 +129,19 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
     columnsFormat: [
       {
         value: item.nama_kelompok,
-        td: item.nama_kelompok,
+        td: (
+          <Tooltip openDelay={500} label={item.nama_kelompok} placement="right">
+            <Text
+              w={"100%"}
+              maxW={"180px"}
+              overflow={"hidden"}
+              whiteSpace={"nowrap"}
+              textOverflow={"ellipsis"}
+            >
+              {item.nama_kelompok}
+            </Text>
+          </Tooltip>
+        ),
         props: {
           position: "sticky",
           left: 0,

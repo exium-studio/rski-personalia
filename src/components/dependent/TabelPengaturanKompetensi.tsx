@@ -1,4 +1,4 @@
-import { Center, Icon, MenuItem, Text } from "@chakra-ui/react";
+import { Center, Icon, MenuItem, Text, Tooltip } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
 import { Interface__SelectOption } from "../../constant/interfaces";
 import { iconSize } from "../../constant/sizes";
@@ -133,7 +133,23 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
     columnsFormat: [
       {
         value: item.nama_kompetensi,
-        td: item.nama_kompetensi,
+        td: (
+          <Tooltip
+            openDelay={500}
+            label={item.nama_kompetensi}
+            placement="right"
+          >
+            <Text
+              w={"100%"}
+              maxW={"180px"}
+              overflow={"hidden"}
+              whiteSpace={"nowrap"}
+              textOverflow={"ellipsis"}
+            >
+              {item.nama_kompetensi}
+            </Text>
+          </Tooltip>
+        ),
         props: {
           position: "sticky",
           left: 0,
