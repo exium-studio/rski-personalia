@@ -15,6 +15,7 @@ import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisc
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import EditKompetensiModalDisclosure from "../independent/EditKompetensiModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -27,10 +28,12 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <MenuItem>
-          <Text>Edit</Text>
-          <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <EditKompetensiModalDisclosure rowData={rowData}>
+          <MenuItem>
+            <Text>Edit</Text>
+            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </EditKompetensiModalDisclosure>
       );
     },
     (rowData: any) => {
@@ -127,6 +130,13 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
         justify: "end",
       },
     },
+    {
+      th: "Nilai BOR",
+      isSortable: true,
+      cProps: {
+        justify: "end",
+      },
+    },
   ];
   const formattedData = fd?.map((item: any) => ({
     id: item.id,
@@ -186,6 +196,14 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
       {
         value: item.total_tunjangan,
         td: `Rp ${formatNumber(item.total_tunjangan)}`,
+        isNumeric: true,
+        cProps: {
+          justify: "end",
+        },
+      },
+      {
+        value: item.nilai_bor,
+        td: `Rp ${formatNumber(item.nilai_bor)}`,
         isNumeric: true,
         cProps: {
           justify: "end",

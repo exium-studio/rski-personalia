@@ -5,12 +5,15 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  InputGroup,
+  InputLeftElement,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -21,24 +24,25 @@ import req from "../../constant/req";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import SelectJenisKaryawan from "../dependent/_Select/SelectJenisKaryawan";
+import SelectJenisKompetensi from "../dependent/_Select/SelectJenisKompetensi";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
+import NumberInput from "../dependent/input/NumberInput";
 
 interface Props extends BoxProps {
   rowData: any;
   children?: ReactNode;
 }
 
-export default function EditUnitKerjaModalDisclosure({
+export default function EditKompetensiModalDisclosure({
   rowData,
   children,
   ...props
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
-    `edit-unit-kerja-modal-${rowData.id}`,
+    `edit-kompetensi-modal-${rowData.id}`,
     isOpen,
     onOpen,
     onClose
@@ -52,27 +56,33 @@ export default function EditUnitKerjaModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama_unit: rowData.columnsFormat[0].value,
-      jenis_karyawan: {
-        value: rowData.columnsFormat[2].value,
-        label: rowData.columnsFormat[2].value ? "Shift" : "Non-Shift",
+      nama_kompetensi: rowData.columnsFormat[0]?.value,
+      jenis_kompetensi: {
+        value: rowData.columnsFormat[2]?.value,
+        label: rowData.columnsFormat[2]?.value ? "Medis" : "Non-Medis",
       },
+      total_tunjangan: rowData.columnsFormat[3]?.value,
+      nilai_bor: rowData.columnsFormat[4]?.value,
     },
     validationSchema: yup.object().shape({
-      nama_unit: yup.string().required("Harus diisi"),
-      jenis_karyawan: yup.object().required("Harus diisi"),
+      nama_kompetensi: yup.string().required("Harus diisi"),
+      jenis_kompetensi: yup.object().required("Harus diisi"),
+      total_tunjangan: yup.number().required("Harus diisi"),
+      nilai_bor: yup.number().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        nama_unit: values.nama_unit,
-        jenis_karyawan: values.jenis_karyawan.value,
+        nama_kompetensi: values.nama_kompetensi,
+        jenis_kompetensi: values.jenis_kompetensi.value,
+        total_tunjangan: values.total_tunjangan,
+        nilai_bor: values.nilai_bor,
         _method: "patch",
       };
       console.log(payload);
       setLoading(true);
       req
         .post(
-          `/api/rski/dashboard/pengaturan/unit-kerja/${rowData.id}`,
+          `/api/rski/dashboard/pengaturan/kompetensi/${rowData.id}`,
           payload
         )
         .then((r) => {
@@ -107,13 +117,21 @@ export default function EditUnitKerjaModalDisclosure({
 
   useEffect(() => {
     formikRef.current.setFieldValue(
-      "nama_unit",
+      "nama_kompetensi",
       rowData.columnsFormat[0].value
     );
-    formikRef.current.setFieldValue("jenis_karyawan", {
+    formikRef.current.setFieldValue("jenis_kompetensi", {
       value: rowData.columnsFormat[2].value,
-      label: rowData.columnsFormat[2].value ? "Shift" : "Non-Shift",
+      label: rowData.columnsFormat[2].value ? "Medis" : "Non-Medis",
     });
+    formikRef.current.setFieldValue(
+      "total_tunjangan",
+      rowData.columnsFormat[3].value
+    );
+    formikRef.current.setFieldValue(
+      "nilai_bor",
+      rowData.columnsFormat[4].value
+    );
   }, [rowData]);
 
   return (
@@ -136,7 +154,7 @@ export default function EditUnitKerjaModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit Unit Kerja"
+              title="Edit Kompetensi"
               onClose={() => {
                 formik.resetForm();
               }}
@@ -146,42 +164,94 @@ export default function EditUnitKerjaModalDisclosure({
             <form id="editUnitKerjaForm" onSubmit={formik.handleSubmit}>
               <FormControl
                 mb={4}
-                isInvalid={formik.errors.nama_unit ? true : false}
+                isInvalid={formik.errors.nama_kompetensi ? true : false}
               >
                 <FormLabel>
-                  Nama Unit
+                  Nama Kompetensi
                   <RequiredForm />
                 </FormLabel>
                 <StringInput
-                  name="nama_unit"
+                  name="nama_kompetensi"
                   placeholder="Human Resource"
                   onChangeSetter={(input) => {
-                    formik.setFieldValue("nama_unit", input);
+                    formik.setFieldValue("nama_kompetensi", input);
                   }}
-                  inputValue={formik.values.nama_unit}
+                  inputValue={formik.values.nama_kompetensi}
                 />
                 <FormErrorMessage>
-                  {formik.errors.nama_unit as string}
+                  {formik.errors.nama_kompetensi as string}
                 </FormErrorMessage>
               </FormControl>
 
               <FormControl
-                isInvalid={formik.errors.jenis_karyawan ? true : false}
+                mb={4}
+                isInvalid={formik.errors.jenis_kompetensi ? true : false}
               >
                 <FormLabel>
-                  Jenis Pegawai
+                  Jenis Kompetensi
                   <RequiredForm />
                 </FormLabel>
-                <SelectJenisKaryawan
-                  name="jenis_karyawan"
+                <SelectJenisKompetensi
+                  name="jenis_kompetensi"
                   onConfirm={(input) => {
-                    formik.setFieldValue("jenis_karyawan", input);
+                    formik.setFieldValue("jenis_kompetensi", input);
                   }}
-                  inputValue={formik.values.jenis_karyawan}
+                  inputValue={formik.values.jenis_kompetensi}
                 />
 
                 <FormErrorMessage>
-                  {formik.errors.jenis_karyawan as string}
+                  {formik.errors.jenis_kompetensi as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.total_tunjangan ? true : false}
+              >
+                <FormLabel>
+                  Tunjangan
+                  <RequiredForm />
+                </FormLabel>
+                <InputGroup>
+                  <InputLeftElement pl={4}>
+                    <Text>Rp</Text>
+                  </InputLeftElement>
+                  <NumberInput
+                    pl={12}
+                    name="total_tunjangan"
+                    placeholder="500.000"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("total_tunjangan", input);
+                    }}
+                    inputValue={formik.values.total_tunjangan}
+                  />
+                </InputGroup>
+                <FormErrorMessage>
+                  {formik.errors.total_tunjangan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl isInvalid={formik.errors.nilai_bor ? true : false}>
+                <FormLabel>
+                  Nilai BOR
+                  <RequiredForm />
+                </FormLabel>
+                <InputGroup>
+                  <InputLeftElement pl={4}>
+                    <Text>Rp</Text>
+                  </InputLeftElement>
+                  <NumberInput
+                    pl={12}
+                    name="nilai_bor"
+                    placeholder="500.000"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("nilai_bor", input);
+                    }}
+                    inputValue={formik.values.nilai_bor}
+                  />
+                </InputGroup>
+                <FormErrorMessage>
+                  {formik.errors.nilai_bor as string}
                 </FormErrorMessage>
               </FormControl>
             </form>
