@@ -40,7 +40,8 @@ export default function PengaturanKompetensi() {
         flexShrink={0}
       >
         <SearchComponent
-          flex={"1 1 165px"}
+          flex={"1 1 0"}
+          minW={"165px"}
           name="search"
           onChangeSetter={(input) => {
             setFilterConfig((ps: any) => ({
