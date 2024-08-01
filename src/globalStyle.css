@@ -424,6 +424,17 @@ button[aria-label="Close"] > svg {
 }
 
 /* Keyframes */
+@keyframes flyInFromTop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 @keyframes ripple {
   to {
     width: 260px;

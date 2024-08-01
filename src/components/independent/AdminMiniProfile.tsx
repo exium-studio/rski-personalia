@@ -22,16 +22,16 @@ import { RiArrowDownSLine, RiLogoutBoxLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
-import backOnClose from "../../lib/backOnClose";
 import useGetUserData from "../../hooks/useGetUserData";
+import useLogout from "../../hooks/useLogout";
+import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import { removeCookie } from "typescript-cookie";
-import { useNavigate } from "react-router-dom";
 
 const LogoutConfirmation = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("logout-confirmation-modal", isOpen, onOpen, onClose);
-  const navigate = useNavigate();
+
+  const { logout, logoutLoading } = useLogout();
 
   return (
     <>
@@ -64,6 +64,7 @@ const LogoutConfirmation = () => {
               w={"100%"}
               className="btn-solid clicky"
               onClick={backOnClose}
+              isDisabled={logoutLoading}
             >
               Tidak
             </Button>
@@ -71,10 +72,8 @@ const LogoutConfirmation = () => {
               w={"100%"}
               className="clicky"
               colorScheme="red"
-              onClick={() => {
-                removeCookie("__auth_token");
-                navigate("/");
-              }}
+              onClick={logout}
+              isLoading={logoutLoading}
             >
               Ya
             </Button>

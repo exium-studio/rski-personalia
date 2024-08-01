@@ -16,17 +16,18 @@ import {
 import { RiShieldUserFill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { removeCookie } from "typescript-cookie";
 import { useContentBgColor, useLightDarkColor } from "../../constant/colors";
 import navs from "../../constant/navs";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useGetUserData from "../../hooks/useGetUserData";
-import useLogout from "../../hooks/useLogout";
 import useScreenWidth from "../../lib/useScreenWidth";
 import Header from "../dependent/Header";
 import TopNavs from "../dependent/TopNavs";
 import ComponentSpinner from "../independent/ComponentSpinner";
 import CContainer from "./CContainer";
 import Container from "./Container";
+import useLogout from "../../hooks/useLogout";
 
 const NavMenu = ({ nav, i, active, topNavActive }: any) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -142,7 +143,8 @@ export default function NavContainer({
 
   const [loading, setLoading] = useState<boolean>(true);
   const userData = useGetUserData();
-  const logout = useLogout();
+  const navigate = useNavigate();
+  const { logout } = useLogout();
 
   useEffect(() => {
     setLoading(true);
@@ -151,14 +153,17 @@ export default function NavContainer({
         allowed.includes(permission.id)
       );
       if (!hasPermission) {
+        navigate("/");
         logout();
+        removeCookie("__auth_token");
+        removeCookie("__user_data");
       } else {
         setLoading(false);
       }
     } else {
       setLoading(false);
     }
-  }, [allowed, userData.permissions, logout]);
+  }, [allowed, userData.permissions, navigate, logout]);
 
   return (
     <Container>
