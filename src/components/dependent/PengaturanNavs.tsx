@@ -19,8 +19,8 @@ export default function PengaturanNavs({ activeGroup, active }: Props) {
       py={4}
       bg={lightDarkColor}
       borderRadius={12}
-      w={"230px"}
-      flex={"0 0 230px"}
+      w={"240px"}
+      flex={"0 0 240px"}
       flexShrink={0}
       gap={4}
       overflowY={"auto"}
