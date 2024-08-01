@@ -184,6 +184,8 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
     ],
   }));
 
+  console.log(filterConfig);
+
   return (
     <>
       {error && (

@@ -347,7 +347,7 @@ export default function MultipleSelectModal({
               className="btn-solid clicky"
               w={"100%"}
               onClick={() => {
-                setSelected(undefined);
+                setSelected([]);
               }}
             >
               Clear
