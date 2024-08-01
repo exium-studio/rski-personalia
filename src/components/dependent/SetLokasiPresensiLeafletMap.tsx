@@ -171,8 +171,9 @@ export default function SetLokasiPresensiLeafletMap({
         opacity={isOpen ? 1 : 0}
         visibility={isOpen ? "visible" : "hidden"}
         transition={"200ms"}
+        color={"white"}
       >
-        {loading && <ComponentSpinner minH={"200px"} />}
+        {loading && <ComponentSpinner minH={"240px"} />}
 
         {!loading && (
           <>
@@ -198,6 +199,7 @@ export default function SetLokasiPresensiLeafletMap({
                       w={"100%"}
                       px={4}
                       py={2}
+                      color={"white"}
                     >
                       <Text
                         overflow={"hidden"}
