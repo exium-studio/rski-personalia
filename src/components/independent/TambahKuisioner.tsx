@@ -52,7 +52,7 @@ export default function TambahKuisioner({ ...props }: Props) {
     onSubmit: (values, { resetForm }) => {
       const payload = {
         pertanyaan: values.pertanyaan,
-        jabatan: values?.jabatan?.value,
+        jabatan_id: values?.jabatan?.value,
       };
       setLoading(true);
       req

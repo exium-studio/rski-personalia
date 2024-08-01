@@ -1,23 +1,18 @@
-import {
-  Center,
-  HStack,
-  Icon,
-  MenuItem,
-  Text,
-  Tooltip,
-} from "@chakra-ui/react";
+import { Center, Icon, MenuItem, Text, Tooltip } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import { Interface__SelectOption } from "../../constant/interfaces";
+import { iconSize } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
+import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
+import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
-import isObjectEmpty from "../../lib/isObjectEmpty";
 
 interface Props {
   filterConfig?: any;
@@ -38,19 +33,32 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
     },
     (rowData: any) => {
       return (
-        <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
-          <Text>Restore</Text>
-          <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <RestoreDataPengaturanModalDisclosure
+          id={rowData.id}
+          url={`/api/rski/dashboard/pengaturan/pertanyaan/restore/${rowData.id}`}
+        >
+          <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
+            <Text>Restore</Text>
+            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </RestoreDataPengaturanModalDisclosure>
       );
     },
     "divider",
     (rowData: any) => {
       return (
-        <MenuItem fontWeight={500} isDisabled={rowData.columnsFormat[1].value}>
-          <Text color={"red.400"}>Delete</Text>
-          <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-        </MenuItem>
+        <DeleteDataPengaturanModalDisclosure
+          id={rowData.id}
+          url={`/api/rski/dashboard/pengaturan/pertanyaan/${rowData.id}`}
+        >
+          <MenuItem
+            fontWeight={500}
+            isDisabled={rowData.columnsFormat[1].value}
+          >
+            <Text color={"red.400"}>Delete</Text>
+            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
+          </MenuItem>
+        </DeleteDataPengaturanModalDisclosure>
       );
     },
   ];
@@ -112,8 +120,9 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
       {
         value: item.pertanyaan,
         td: (
-          <Tooltip label={item.pertanyaan}>
+          <Tooltip label={item.pertanyaan} openDelay={500} placement="right">
             <Text
+              w={"100%"}
               maxW={"300px"}
               overflow={"hidden"}
               whiteSpace={"nowrap"}
@@ -124,9 +133,6 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
           </Tooltip>
         ),
         isSortable: true,
-        cProps: {
-          justify: "center",
-        },
       },
       {
         value: item.deleted_at,
@@ -166,11 +172,6 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (

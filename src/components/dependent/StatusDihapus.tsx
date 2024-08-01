@@ -18,7 +18,7 @@ export default function StatusDihapus({ data }: Props) {
           <Text>Dihapus {formatDate(data)}</Text>
 
           <Text opacity={0.4} mt={2}>
-            Data yang dihapus tidak akan muncul di dafta opsi, namun akan tetap
+            Data yang dihapus tidak akan muncul di daftar opsi, namun akan tetap
             menjadi legacy data
           </Text>
         </>
