@@ -89,7 +89,7 @@ interface Props extends StackProps {}
 
 export default function AdminMiniProfile({ ...props }: Props) {
   const userData: any = useGetUserData();
-  console.log(userData);
+  // console.log(userData);
 
   const [menuButtonW, setMenuButtonW] = useState<number | undefined>();
   const menuButtonRef = useRef<HTMLButtonElement>(null);

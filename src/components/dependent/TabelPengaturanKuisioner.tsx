@@ -13,6 +13,7 @@ import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisc
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import EditKuisionerModalDisclosure from "../independent/EditKuisionerModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -25,10 +26,12 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <MenuItem>
-          <Text>Edit</Text>
-          <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <EditKuisionerModalDisclosure rowData={rowData}>
+          <MenuItem>
+            <Text>Edit</Text>
+            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </EditKuisionerModalDisclosure>
       );
     },
     (rowData: any) => {
@@ -143,6 +146,7 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
         },
       },
       {
+        original_value: item.jabatan,
         value: item.jabatan?.nama_jabatan,
         td: item.jabatan?.nama_jabatan,
       },

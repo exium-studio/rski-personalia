@@ -386,6 +386,7 @@ export interface Interface__FormattedTableData {
   id: number;
   columnsFormat: {
     column?: string;
+    original_value?: any;
     value: string | number | boolean | Date | null;
     td: string | number | boolean | null | React.ReactNode;
     isNumeric?: boolean; // default false

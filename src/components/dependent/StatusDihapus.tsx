@@ -27,7 +27,7 @@ export default function StatusDihapus({ data }: Props) {
     >
       <Box>
         <BooleanBadge
-          w={"120px"}
+          w={"100px"}
           data={!!data}
           trueValue="Dihapus"
           falseValue=""
