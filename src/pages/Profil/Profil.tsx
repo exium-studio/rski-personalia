@@ -152,10 +152,9 @@ export default function Profil() {
             mt={"2px"}
             w={"50px"}
             h={"8px"}
-            bg={"dark"}
+            bg={"p.600"}
             borderRadius={"full"}
             mx={"auto"}
-            opacity={0.4}
           />
         </Box>
       </>
@@ -213,6 +212,17 @@ export default function Profil() {
               />
             </CContainer>
           </CContainer>
+
+          <Box
+            w={"100px"}
+            h={"5px"}
+            bg={"p.600"}
+            position={"absolute"}
+            bottom={"0"}
+            left={"50%"}
+            transform={"translateX(-50%)"}
+            zIndex={99}
+          ></Box>
         </Box>
 
         <LogoutConfirmation w={"100%"} mb={"auto"} />
