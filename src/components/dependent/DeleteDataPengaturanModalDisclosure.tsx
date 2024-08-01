@@ -41,7 +41,7 @@ export default function DeleteDataPengaturanModalDisclosure({
   function handleOnDelete() {
     setLoading(true);
     req
-      .delete(url)
+      .delete(`${url}/${id}`)
       .then((r) => {
         if (r.status === 200) {
           toast({

@@ -19,6 +19,9 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
+import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 
 interface Props {
   filterConfig?: any;
@@ -39,26 +42,39 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
     },
     (rowData: any) => {
       return (
-        <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
-          <Text>Restore</Text>
-          <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <RestoreDataPengaturanModalDisclosure
+          id={rowData.id}
+          url="/api/rski/dashboard/pengaturan/premi"
+        >
+          <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
+            <Text>Restore</Text>
+            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </RestoreDataPengaturanModalDisclosure>
       );
     },
     "divider",
     (rowData: any) => {
       return (
-        <MenuItem fontWeight={500} isDisabled={rowData.columnsFormat[1].value}>
-          <Text color={"red.400"}>Delete</Text>
-          <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-        </MenuItem>
+        <DeleteDataPengaturanModalDisclosure
+          id={rowData.id}
+          url={`/api/rski/dashboard/pengaturan/premi`}
+        >
+          <MenuItem
+            fontWeight={500}
+            isDisabled={rowData.columnsFormat[1].value}
+          >
+            <Text color={"red.400"}>Delete</Text>
+            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
+          </MenuItem>
+        </DeleteDataPengaturanModalDisclosure>
       );
     },
   ];
 
-  const { error, loading, data, retry } = useDataState<any[]>({
-    initialData: dummyPremi,
-    url: "",
+  const { error, notFound, loading, data, retry } = useDataState<any[]>({
+    initialData: undefined,
+    url: "/api/rski/dashboard/pengaturan/premi",
     dependencies: [],
   });
 
@@ -179,10 +195,21 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"400px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && <NoData minH={"400px"} />}
+
+          {notFound && !isObjectEmpty(filterConfig) && (
+            <NotFound minH={"400px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"400px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
+
       {!error && (
         <>
           {loading && (

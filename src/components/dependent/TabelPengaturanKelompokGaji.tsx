@@ -40,7 +40,7 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/kelompok-gaji/restore/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/kelompok-gaji/restore`}
         >
           <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
             <Text>Restore</Text>
@@ -54,7 +54,7 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/kelompok-gaji/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/kelompok-gaji`}
         >
           <MenuItem
             fontWeight={500}

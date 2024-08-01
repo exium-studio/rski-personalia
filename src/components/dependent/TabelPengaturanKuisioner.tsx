@@ -38,7 +38,7 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/pertanyaan/restore/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/pertanyaan/restore`}
         >
           <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
             <Text>Restore</Text>
@@ -52,7 +52,7 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/pertanyaan/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/pertanyaan`}
         >
           <MenuItem
             fontWeight={500}

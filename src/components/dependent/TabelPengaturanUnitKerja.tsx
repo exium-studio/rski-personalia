@@ -39,7 +39,7 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/unit-kerja/restore/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/unit-kerja/restore`}
         >
           <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
             <Text>Restore</Text>
@@ -53,7 +53,7 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/unit-kerja/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/unit-kerja`}
         >
           <MenuItem
             fontWeight={500}

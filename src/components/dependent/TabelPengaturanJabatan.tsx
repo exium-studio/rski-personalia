@@ -39,7 +39,7 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/jabatan/restore/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/jabatan/restore`}
         >
           <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
             <Text>Restore</Text>
@@ -53,7 +53,7 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/jabatan/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/jabatan`}
         >
           <MenuItem
             fontWeight={500}

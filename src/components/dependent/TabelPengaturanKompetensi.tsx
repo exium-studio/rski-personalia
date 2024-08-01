@@ -40,7 +40,7 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/kompetensi/restore/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/kompetensi/restore`}
         >
           <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
             <Text>Restore</Text>
@@ -54,7 +54,7 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/kompetensi/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/kompetensi`}
         >
           <MenuItem
             fontWeight={500}

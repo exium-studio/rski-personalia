@@ -46,7 +46,7 @@ export default function RestoreDataPengaturanModalDisclosure({
   function handleOnRestore() {
     setLoading(true);
     req
-      .post(url)
+      .post(`${url}/${id}`)
       .then((r) => {
         if (r.status === 200) {
           toast({
