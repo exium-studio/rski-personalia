@@ -35,17 +35,7 @@ export default function PengaturanLokasiPresensi() {
   // SX
   const lightDarkColor = useLightDarkColor();
 
-  const [myLoc, setMyLoc] = useState<LatLng | undefined>(undefined);
-  useEffect(() => {
-    getLocation()
-      .then(({ lat, long }) => {
-        setMyLoc({ lat: lat, lng: long });
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-      .finally(() => {});
-  }, []);
+  const [center, setCenter] = useState<LatLng | undefined>(undefined);
 
   const [loadingSimpan, setLoadingSimpan] = useState<boolean>(false);
   const toast = useToast();
@@ -108,15 +98,33 @@ export default function PengaturanLokasiPresensi() {
     dependencies: [],
   });
 
+  const [isData, setIsData] = useState<boolean>(true);
+
   const formikRef = useRef(formik);
   useEffect(() => {
     if (data) {
+      setCenter({ lat: data.lat, lng: data.long });
       formikRef.current.setFieldValue("alamat", data.alamat);
       formikRef.current.setFieldValue("lat", data.lat);
       formikRef.current.setFieldValue("long", data.long);
       formikRef.current.setFieldValue("radius", data.radius);
+    } else {
+      setIsData(false);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (!isData) {
+      getLocation()
+        .then(({ lat, long }) => {
+          setCenter({ lat: lat, lng: long });
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(() => {});
+    }
+  }, [isData]);
 
   return (
     <>
@@ -150,10 +158,10 @@ export default function PengaturanLokasiPresensi() {
 
           {!loading && (
             <>
-              {myLoc && (
+              {center && (
                 <>
                   <SetLokasiPresensi
-                    center={myLoc}
+                    center={center}
                     officeCenter={
                       formik.values.lat && formik.values.long
                         ? {

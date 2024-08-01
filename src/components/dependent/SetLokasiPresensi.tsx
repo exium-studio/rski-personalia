@@ -44,7 +44,7 @@ export default function SetLokasiPresensi({
         officeCenter={officeCenter}
         setOfficeLoc={setOfficeLoc}
         presence_radius={presence_radius}
-        zoom={15}
+        zoom={17}
         searchAddress={searchAddress}
         searchComponentRef={searchComponentRef}
         isOpen={isOpen}

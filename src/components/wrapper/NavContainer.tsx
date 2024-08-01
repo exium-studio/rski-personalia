@@ -246,13 +246,15 @@ export default function NavContainer({
           overflowY={"auto"}
           {...props}
         >
-          <Header
-            title={title}
-            left={left}
-            backLink={backLink}
-            right={right}
-            p={responsiveSpacing}
-          />
+          {active !== 6 && (
+            <Header
+              title={title}
+              left={left}
+              backLink={backLink}
+              right={right}
+              p={responsiveSpacing}
+            />
+          )}
 
           {topNavsData &&
             topNavsData.length > 1 &&
