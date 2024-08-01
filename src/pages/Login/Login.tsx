@@ -2,8 +2,13 @@ import { Box, Image, Stack, Text, VStack } from "@chakra-ui/react";
 import FormLogin from "../../components/form/Auth/FormLogin";
 import CContainer from "../../components/wrapper/CContainer";
 import Container from "../../components/wrapper/Container";
+import { ColorModeSwitcher } from "../../ColorModeSwitcher";
+import { useLightDarkColor } from "../../constant/colors";
 
 export default function Login() {
+  // SX
+  const lightDarkColor = useLightDarkColor();
+
   return (
     <Container>
       <CContainer>
@@ -43,7 +48,7 @@ export default function Login() {
           <VStack p={6} minH={"400px"} h={"100vh"} flex={1}>
             <VStack
               borderRadius={20}
-              justify={"flex-end"}
+              justify={"space-between"}
               align={"flex-start"}
               p={4}
               overflow={"clip"}
@@ -53,6 +58,13 @@ export default function Login() {
               bgPos={"center"}
               flex={1}
             >
+              <ColorModeSwitcher
+                ml={"auto"}
+                bg={`${lightDarkColor} !important`}
+                _hover={{ bg: `${lightDarkColor} !important` }}
+                _active={{ bg: `${lightDarkColor} !important` }}
+              />
+
               <VStack
                 // maxW={"700px"}
                 bg={"blackAlpha.600"}

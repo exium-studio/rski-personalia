@@ -21,7 +21,7 @@ export const ColorModeSwitcher: React.FC<ColorModeSwitcherProps> = (props) => {
   return (
     <IconButton
       size="md"
-      className="btn-solid clicky"
+      className="clicky"
       color="current"
       marginLeft="2"
       onClick={toggleColorMode}

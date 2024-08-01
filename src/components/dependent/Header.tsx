@@ -87,7 +87,7 @@ export default function Header({
 
             <NotificationButton aria-label="Notification Button" />
 
-            <ColorModeSwitcher />
+            <ColorModeSwitcher className="btn-solid clicky" />
 
             <AdminMiniProfile />
           </ButtonGroup>
