@@ -213,52 +213,6 @@ export default function SetLokasiPresensiLeafletMap({
               })}
           </>
         )}
-
-        {/* <Menu isOpen={isOpen} initialFocusRef={undefined} autoSelect={true}>
-          <MenuList
-            minW={`calc(${searchComponentRef?.current?.offsetWidth}px - 16px)`}
-            maxW={`calc(${searchComponentRef?.current?.offsetWidth}px - 16px)`}
-            onMouseEnter={() => searchComponentRef.current?.focus()}
-          >
-            {loading && <ComponentSpinner minH={"200px"} />}
-
-            {!loading && (
-              <>
-                {searchResult?.length === 0 && (
-                  <CContainer p={responsiveSpacing}>
-                    <NotFound minH={"200px"} label="Alamat tidak ditemukan" />
-                  </CContainer>
-                )}
-
-                {searchResult?.length > 0 &&
-                  searchResult.map((res: any, i: number) => {
-                    return (
-                      i < 5 && (
-                        <MenuItem
-                          key={i}
-                          onClick={() => {
-                            setSelectedSearchResult(res);
-                            onClose();
-                          }}
-                          w={"100%"}
-                          tabIndex={-1}
-                          isFocusable={false}
-                        >
-                          <Text
-                            overflow={"hidden"}
-                            whiteSpace={"nowrap"}
-                            textOverflow={"ellipsis"}
-                          >
-                            {res.display_name}
-                          </Text>
-                        </MenuItem>
-                      )
-                    );
-                  })}
-              </>
-            )}
-          </MenuList>
-        </Menu> */}
       </Box>
 
       <MapContainer
@@ -275,6 +229,7 @@ export default function SetLokasiPresensiLeafletMap({
         maxBounds={maxBounds}
         maxBoundsViscosity={1.0} // Biarkan peta memantul ketika mencapai batas
         doubleClickZoom={false} // Nonaktifkan zoom saat double-klik
+        scrollWheelZoom={false} // Nonaktifkan scroll zoom
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
