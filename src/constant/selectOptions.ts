@@ -134,12 +134,12 @@ const optionsInboxType = [
 
 const optionsJenisPotongan = [
   {
-    value: 1,
-    label: "Nominal",
+    value: 0,
+    label: "Persentase",
   },
   {
-    value: 2,
-    label: "Persentase",
+    value: 1,
+    label: "Nominal",
   },
 ];
 
@@ -165,7 +165,19 @@ const optionsTipeTransfer = [
   },
 ];
 
+const optionsSumberPotongan = [
+  {
+    value: 1,
+    label: "Gaji Pokok",
+  },
+  {
+    value: 2,
+    label: "Gaji Bruto",
+  },
+];
+
 export {
+  optionsSumberPotongan,
   optionsTipeTransfer,
   optionsKategoriDiklat,
   optionsStatusHidup,

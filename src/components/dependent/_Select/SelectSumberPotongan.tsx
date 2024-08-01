@@ -1,7 +1,7 @@
 import { ButtonProps, useDisclosure } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
+import { optionsSumberPotongan } from "../../../constant/selectOptions";
 import SingleSelectModal from "../input/SingleSelectModal";
-import { optionsTipeTransfer } from "../../../constant/selectOptions";
 
 interface Props extends ButtonProps {
   name: string;
@@ -14,7 +14,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function SelectTipeTransfer({
+export default function SelectSumberPotongan({
   name,
   onConfirm,
   inputValue,
@@ -29,12 +29,12 @@ export default function SelectTipeTransfer({
 
   return (
     <SingleSelectModal
-      id="select-tipe-transfer-modal"
+      id="select-sumber-potongan-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
       onClose={onClose}
-      options={optionsTipeTransfer}
+      options={optionsSumberPotongan}
       onConfirm={(input) => {
         onConfirm(input);
       }}
@@ -42,7 +42,7 @@ export default function SelectTipeTransfer({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Tipe Transfer"}
+      placeholder={placeholder || "Pilih Sumber Potongan"}
       nonNullable={nonNullable}
       {...props}
     />

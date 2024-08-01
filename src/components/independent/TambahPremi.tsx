@@ -32,6 +32,7 @@ import NumberInput from "../dependent/input/NumberInput";
 import RequiredForm from "../form/RequiredForm";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import req from "../../constant/req";
+import SelectSumberPotongan from "../dependent/_Select/SelectSumberPotongan";
 
 interface Props extends ButtonProps {}
 
@@ -48,19 +49,29 @@ export default function TambahPremi({ ...props }: Props) {
     validateOnChange: false,
     initialValues: {
       nama_premi: "",
-      jenis_premi: undefined as any,
+      jenis_premi: {
+        value: 0,
+        label: "Persentase",
+      },
+      sumber_potongan: undefined as any,
       besaran_premi: undefined,
+      minimal_rate: undefined,
+      maksimal_rate: undefined,
     },
     validationSchema: yup.object().shape({
       nama_premi: yup.string().required("Harus diisi"),
       jenis_premi: yup.object().required("Harus diisi"),
+      sumber_potongan: yup.object().required("Harus diisi"),
       besaran_premi: yup.number().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_premi: values.nama_premi,
         jenis_premi: values.jenis_premi.value,
+        sumber_potongan: values.sumber_potongan.value,
         besaran_premi: values.besaran_premi,
+        minimal_rate: values.minimal_rate,
+        maksimal_rate: values.maksimal_rate,
       };
       setLoading(true);
       req
@@ -150,6 +161,27 @@ export default function TambahPremi({ ...props }: Props) {
                 isInvalid={formik.errors.jenis_premi ? true : false}
               >
                 <FormLabel>
+                  Sumber Potongan
+                  <RequiredForm />
+                </FormLabel>
+                <SelectSumberPotongan
+                  name="sumber_potongan"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("sumber_potongan", input);
+                  }}
+                  inputValue={formik.values.sumber_potongan}
+                  isError={!!formik.errors.sumber_potongan}
+                />
+                <FormErrorMessage>
+                  {formik.errors.sumber_potongan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.jenis_premi ? true : false}
+              >
+                <FormLabel>
                   Jenis Potongan
                   <RequiredForm />
                 </FormLabel>
@@ -167,6 +199,7 @@ export default function TambahPremi({ ...props }: Props) {
               </FormControl>
 
               <FormControl
+                mb={4}
                 isInvalid={formik.errors.besaran_premi ? true : false}
               >
                 <FormLabel>
@@ -175,7 +208,7 @@ export default function TambahPremi({ ...props }: Props) {
                 </FormLabel>
 
                 {formik?.values.jenis_premi &&
-                formik?.values.jenis_premi?.value === 2 ? (
+                formik?.values.jenis_premi?.value === 0 ? (
                   <InputGroup>
                     <InputRightElement pr={4}>
                       <Text>%</Text>
@@ -208,6 +241,60 @@ export default function TambahPremi({ ...props }: Props) {
                 )}
                 <FormErrorMessage>
                   {formik.errors.besaran_premi as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.minimal_rate ? true : false}
+              >
+                <FormLabel>Minimal Rate</FormLabel>
+
+                <InputGroup>
+                  <InputLeftElement pl={4}>
+                    <Text>Rp</Text>
+                  </InputLeftElement>
+                  <NumberInput
+                    isDisabled={formik.values.jenis_premi === undefined}
+                    pl={12}
+                    name="minimal_rate"
+                    placeholder="500.000"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("minimal_rate", input);
+                    }}
+                    inputValue={formik.values.minimal_rate}
+                  />
+                </InputGroup>
+
+                <FormErrorMessage>
+                  {formik.errors.minimal_rate as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.maksimal_rate ? true : false}
+              >
+                <FormLabel>Maksimal Rate</FormLabel>
+
+                <InputGroup>
+                  <InputLeftElement pl={4}>
+                    <Text>Rp</Text>
+                  </InputLeftElement>
+                  <NumberInput
+                    isDisabled={formik.values.jenis_premi === undefined}
+                    pl={12}
+                    name="maksimal_rate"
+                    placeholder="500.000"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("maksimal_rate", input);
+                    }}
+                    inputValue={formik.values.maksimal_rate}
+                  />
+                </InputGroup>
+
+                <FormErrorMessage>
+                  {formik.errors.maksimal_rate as string}
                 </FormErrorMessage>
               </FormControl>
             </form>

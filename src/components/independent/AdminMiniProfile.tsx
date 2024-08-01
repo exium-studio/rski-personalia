@@ -113,7 +113,9 @@ export default function AdminMiniProfile({ ...props }: Props) {
         >
           <Icon as={RiArrowDownSLine} fontSize={iconSize} />
 
-          <Text>{userData?.nama || "Admin"}</Text>
+          <Text noOfLines={1} whiteSpace={"nowrap"}>
+            {userData?.nama || "Admin"}
+          </Text>
 
           <Avatar
             src={userData?.foto_profil || ""}
