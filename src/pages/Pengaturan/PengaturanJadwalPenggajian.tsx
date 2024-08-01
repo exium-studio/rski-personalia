@@ -7,35 +7,70 @@ import {
   FormLabel,
   SimpleGrid,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
+import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
+import Retry from "../../components/dependent/Retry";
 import RequiredForm from "../../components/form/RequiredForm";
+import Skeleton from "../../components/independent/Skeleton";
 import CContainer from "../../components/wrapper/CContainer";
 import { useBodyColor } from "../../constant/colors";
+import req from "../../constant/req";
 import { responsiveSpacing } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useDataState from "../../hooks/useDataState";
-import Retry from "../../components/dependent/Retry";
-import Skeleton from "../../components/independent/Skeleton";
-import NoData from "../../components/independent/NoData";
-import { useEffect, useRef } from "react";
 
 export default function PengaturanJadwalPenggajian() {
-  const { error, loading, data, retry } = useDataState<any>({
-    initialData: 16,
-    url: "",
+  const { error, notFound, loading, data, retry } = useDataState<any>({
+    initialData: undefined,
+    url: "/api/rski/dashboard/pengaturan/get-jadwal-penggajian/1",
     dependencies: [],
   });
 
+  const [loadingSimpan, setLoadingSimpan] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { tanggal: data },
+    initialValues: { tgl_mulai: data?.tgl_mulai },
     validationSchema: yup
       .object()
-      .shape({ tanggal: yup.string().required("Harus diisi") }),
+      .shape({ tgl_mulai: yup.string().required("Harus diisi") }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      //TODO simpan tanggal penggajian
+      const payload = {
+        tgl_mulai: values.tgl_mulai,
+      };
+      setLoadingSimpan(true);
+      req
+        .post(`/api/rski/dashboard/pengaturan/jadwal-penggajian`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+          setRt(!rt);
+        })
+        .finally(() => {
+          setLoadingSimpan(false);
+        });
     },
   });
 
@@ -43,7 +78,7 @@ export default function PengaturanJadwalPenggajian() {
 
   useEffect(() => {
     if (data) {
-      formikRef.current.setFieldValue("tanggal", data);
+      formikRef.current.setFieldValue("tgl_mulai", data?.tgl_mulai);
     }
   }, [data]);
 
@@ -56,114 +91,109 @@ export default function PengaturanJadwalPenggajian() {
       overflowX={"auto"}
       h={"100%"}
     >
-      {error && (
+      {error && !notFound && (
         <Box my={"auto"}>
           <Retry loading={loading} retry={retry} />
         </Box>
       )}
-      {!error && (
-        <>
-          {loading && (
-            <>
-              <FormLabel>
-                Tanggal Penggajian
-                <RequiredForm />
-              </FormLabel>
-              <SimpleGrid w={"100%"} columns={[7]} gap={4}>
-                {Array.from({ length: 28 }).map((_, i) => (
-                  <Skeleton
-                    key={i}
-                    p={4}
-                    borderRadius={12}
-                    aspectRatio={1}
-                    flex={"1 1 50px"}
-                    h={"auto"}
-                  />
-                ))}
-              </SimpleGrid>
-
-              <Box mt={"auto"}>
+      <>
+        {loading && (
+          <>
+            <FormLabel>
+              Tanggal Penggajian
+              <RequiredForm />
+            </FormLabel>
+            <SimpleGrid w={"100%"} columns={[7]} gap={4}>
+              {Array.from({ length: 28 }).map((_, i) => (
                 <Skeleton
-                  mt={responsiveSpacing}
-                  ml={"auto"}
-                  w={"120px"}
-                  h={"40px"}
+                  key={i}
+                  p={4}
+                  borderRadius={12}
+                  aspectRatio={1}
+                  flex={"1 1 50px"}
+                  h={"auto"}
                 />
-              </Box>
-            </>
-          )}
-          {!loading && (
-            <>
-              {(!data || (data && data.length === 0)) && <NoData />}
-              {(data || (data && data.length > 0)) && (
-                <>
-                  <form
-                    id="pengaturanJadwalPenggajianForm"
-                    onSubmit={formik.handleSubmit}
-                  >
-                    <FormControl
-                      mb={responsiveSpacing}
-                      isInvalid={formik.errors.tanggal ? true : false}
+              ))}
+            </SimpleGrid>
+
+            <Box mt={"auto"}>
+              <Skeleton
+                mt={responsiveSpacing}
+                ml={"auto"}
+                w={"120px"}
+                h={"40px"}
+              />
+            </Box>
+          </>
+        )}
+
+        {!loading && (
+          <>
+            <form
+              id="pengaturanJadwalPenggajianForm"
+              onSubmit={formik.handleSubmit}
+            >
+              <FormControl
+                mb={responsiveSpacing}
+                isInvalid={formik.errors.tgl_mulai ? true : false}
+              >
+                <FormLabel>
+                  Tanggal Penggajian
+                  <RequiredForm />
+                </FormLabel>
+
+                <SimpleGrid w={"100%"} columns={[7]} gap={4}>
+                  {Array.from({ length: 28 }).map((_, i) => (
+                    <Center
+                      p={4}
+                      borderRadius={12}
+                      className={
+                        i === formik.values.tgl_mulai - 1
+                          ? "btn-apa clicky"
+                          : "btn-outline clicky"
+                      }
+                      border={
+                        i === formik.values.tgl_mulai - 1
+                          ? "1px solid var(--p500a2)"
+                          : "1px solid var(--divider3)"
+                      }
+                      key={i}
+                      aspectRatio={1}
+                      cursor={"pointer"}
+                      flex={"1 1 50px"}
+                      onClick={() => {
+                        formik.setFieldValue("tgl_mulai", i + 1);
+                      }}
                     >
-                      <FormLabel>
-                        Tanggal Penggajian
-                        <RequiredForm />
-                      </FormLabel>
+                      <Text fontSize={22} fontWeight={600}>
+                        {i + 1}
+                      </Text>
+                    </Center>
+                  ))}
+                </SimpleGrid>
 
-                      <SimpleGrid w={"100%"} columns={[7]} gap={4}>
-                        {Array.from({ length: 28 }).map((_, i) => (
-                          <Center
-                            p={4}
-                            borderRadius={12}
-                            className={
-                              i === formik.values.tanggal - 1
-                                ? "btn-apa clicky"
-                                : "btn-outline clicky"
-                            }
-                            border={
-                              i === formik.values.tanggal - 1
-                                ? "1px solid var(--p500a2)"
-                                : "1px solid var(--divider3)"
-                            }
-                            key={i}
-                            aspectRatio={1}
-                            cursor={"pointer"}
-                            flex={"1 1 50px"}
-                            onClick={() => {
-                              formik.setFieldValue("tanggal", i + 1);
-                            }}
-                          >
-                            <Text fontSize={22} fontWeight={600}>
-                              {i + 1}
-                            </Text>
-                          </Center>
-                        ))}
-                      </SimpleGrid>
+                <FormErrorMessage>
+                  {formik.errors.tgl_mulai as string}
+                </FormErrorMessage>
+              </FormControl>
+            </form>
 
-                      <FormErrorMessage>
-                        {formik.errors.tanggal as string}
-                      </FormErrorMessage>
-                    </FormControl>
-                  </form>
-
-                  <Button
-                    mt={"auto"}
-                    ml={"auto"}
-                    w={"120px"}
-                    className="btn-ap clicky"
-                    flexShrink={0}
-                    colorScheme="ap"
-                    type="submit"
-                    form="pengaturanJadwalPenggajianForm"
-                  >
-                    Simpan
-                  </Button>
-                </>
-              )}
-            </>
-          )}
-        </>
-      )}
+            <Button
+              mt={"auto"}
+              ml={"auto"}
+              w={"120px"}
+              className="btn-ap clicky"
+              flexShrink={0}
+              colorScheme="ap"
+              type="submit"
+              form="pengaturanJadwalPenggajianForm"
+              isLoading={loadingSimpan}
+            >
+              Simpan
+            </Button>
+          </>
+        )}
+      </>
     </CContainer>
   );
 }
