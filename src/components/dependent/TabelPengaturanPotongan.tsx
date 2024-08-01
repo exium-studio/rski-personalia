@@ -36,7 +36,7 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url="/api/rski/dashboard/pengaturan/premi"
+          url="/api/rski/dashboard/pengaturan/premi/restore"
         >
           <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
             <Text>Restore</Text>
@@ -129,6 +129,20 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
         justify: "end",
       },
     },
+    {
+      th: "Minimal Rate",
+      isSortable: true,
+      cProps: {
+        justify: "end",
+      },
+    },
+    {
+      th: "Maksimal Rate",
+      isSortable: true,
+      cProps: {
+        justify: "end",
+      },
+    },
   ];
   const formattedData = fd?.map((item: any) => ({
     id: item.id,
@@ -176,6 +190,22 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
           item.jenis_premi === 1
             ? `Rp ${formatNumber(item.besaran_premi)}`
             : `${item.besaran_premi}%`,
+        isNumeric: true,
+        cProps: {
+          justify: "end",
+        },
+      },
+      {
+        value: item.minimal_rate,
+        td: `Rp ${formatNumber(item.minimal_rate)}`,
+        isNumeric: true,
+        cProps: {
+          justify: "end",
+        },
+      },
+      {
+        value: item.maksimal_rate,
+        td: `Rp ${formatNumber(item.maksimal_rate)}`,
         isNumeric: true,
         cProps: {
           justify: "end",
