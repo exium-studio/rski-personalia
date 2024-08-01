@@ -57,7 +57,7 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
 
   const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
-    url: "/api/rski/dashboard/pengaturan/kuisioner",
+    url: "/api/rski/dashboard/pengaturan/pertanyaan",
     dependencies: [],
   });
 
@@ -83,7 +83,7 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
         : true;
     const matchesJabatan =
       jabatanTerm && jabatanTerm.length > 0
-        ? jabatanTerm?.includes(item.jabatan.id)
+        ? jabatanTerm?.includes(item.jabatan?.id)
         : true;
 
     return matchesSearchTerm && matchesIsDeletedTerm && matchesJabatan;
@@ -114,7 +114,7 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
         td: (
           <Tooltip label={item.pertanyaan}>
             <Text
-              maxW={"180px"}
+              maxW={"300px"}
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}
@@ -137,8 +137,8 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
         },
       },
       {
-        value: item.jabatan.nama_jabatan,
-        td: item.jabatan.nama_jabatan,
+        value: item.jabatan?.nama_jabatan,
+        td: item.jabatan?.nama_jabatan,
       },
     ],
   }));

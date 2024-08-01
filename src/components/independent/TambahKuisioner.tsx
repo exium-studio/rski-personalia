@@ -12,12 +12,15 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
+import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import SelectJabatan from "../dependent/_Select/SelectJabatan";
@@ -32,19 +35,53 @@ export default function TambahKuisioner({ ...props }: Props) {
   useBackOnClose("tambah-kuisioner-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
       pertanyaan: "" as any,
-      jabatan: undefined,
+      jabatan: undefined as any,
     },
     validationSchema: yup.object().shape({
       pertanyaan: yup.string().required("Harus diisi"),
-      jabatan: yup.number().required("Harus diisi"),
+      jabatan: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      //TODO api tambah kelompok gaji
+      const payload = {
+        pertanyaan: values.pertanyaan,
+        jabatan: values?.jabatan?.value,
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/pengaturan/pertanyaan`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+          setRt(!rt);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
   return (
@@ -124,8 +161,9 @@ export default function TambahKuisioner({ ...props }: Props) {
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}
+              isLoading={loading}
             >
-              Simpan
+              Tambahkan
             </Button>
           </ModalFooter>
         </ModalContent>
