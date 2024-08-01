@@ -21,6 +21,7 @@
   --p900: #043c55;
   --drawer: #005234aa;
 
+  --p500a0: rgba(22, 179, 171, 0.6);
   --p500a: rgba(22, 179, 171, 0.5);
   --p500a1: rgba(22, 179, 171, 0.45);
   --p500a2: rgba(22, 179, 171, 0.35);
@@ -613,7 +614,7 @@ button[aria-label="Close"] > svg {
 }
 
 .rdp-day_selected:not(.rdp-day_range_middle):hover {
-  background: var(--p500a2) !important;
+  background: var(--p500a0) !important;
 }
 
 .rdp-day_range_middle {

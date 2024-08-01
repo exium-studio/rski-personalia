@@ -13,12 +13,15 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
+import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
@@ -32,6 +35,10 @@ export default function TambahHariLibur({ ...props }: Props) {
   useBackOnClose("tamba-hari-libur-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
@@ -43,7 +50,38 @@ export default function TambahHariLibur({ ...props }: Props) {
       tanggal: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
-      //TODO api tambah hari libur
+      const payload = {
+        nama: values.nama,
+        tanggal: values.tanggal,
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/pengaturan/hari-libur`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+          setRt(!rt);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -131,8 +169,9 @@ export default function TambahHariLibur({ ...props }: Props) {
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}
+              isLoading={loading}
             >
-              Simpan
+              Tambahkan
             </Button>
           </ModalFooter>
         </ModalContent>
