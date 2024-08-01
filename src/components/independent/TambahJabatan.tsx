@@ -85,8 +85,6 @@ export default function TambahJabatan({ ...props }: Props) {
     },
   });
 
-  console.log(formik.values);
-
   return (
     <>
       <Button
@@ -136,7 +134,7 @@ export default function TambahJabatan({ ...props }: Props) {
                   onChangeSetter={(input) => {
                     formik.setFieldValue("nama_jabatan", input);
                   }}
-                  inputValue={formik.values.nama_jabatan}
+                  inputValue={formik.values.nama_jabatan || ""}
                 />
                 <FormErrorMessage>
                   {formik.errors.nama_jabatan as string}

@@ -40,7 +40,7 @@ export default function EditJabatanModalDisclosure({
   ...props
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("tambah-jabatan-modal", isOpen, onOpen, onClose);
+  useBackOnClose(`edit-jabatan-modal-${rowData.id}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
