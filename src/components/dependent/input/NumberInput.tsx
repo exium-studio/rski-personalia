@@ -23,7 +23,7 @@ export default function NumberInput({
 }: Props) {
   return (
     <StringInput
-      name="tinggi_badan"
+      name={name}
       inputMode="numeric"
       onChangeSetter={(i) => {
         if (i === "") {

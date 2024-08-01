@@ -17,10 +17,11 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
@@ -29,13 +30,19 @@ import SelectJenisPremi from "../dependent/_Select/SelectJenisPotongan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
 import RequiredForm from "../form/RequiredForm";
+import useRenderTrigger from "../../global/useRenderTrigger";
+import req from "../../constant/req";
 
 interface Props extends ButtonProps {}
 
 export default function TambahPremi({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("tambah-premi=modal", isOpen, onOpen, onClose);
+  useBackOnClose("tambah-potongan-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
 
   const formik = useFormik({
     validateOnChange: false,
@@ -50,8 +57,39 @@ export default function TambahPremi({ ...props }: Props) {
       besaran_premi: yup.number().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      //TODO api tambah kelompok gaji
+      const payload = {
+        nama_premi: values.nama_premi,
+        jenis_premi: values.jenis_premi.value,
+        besaran_premi: values.besaran_premi,
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/pengaturan/premi`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+          setRt(!rt);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
   return (
@@ -142,14 +180,13 @@ export default function TambahPremi({ ...props }: Props) {
                     <InputRightElement pr={4}>
                       <Text>%</Text>
                     </InputRightElement>
-                    <NumberInput
+                    <Input
+                      type="number"
                       pr={12}
                       name="besaran_premi"
-                      placeholder="500.000"
-                      onChangeSetter={(input) => {
-                        formik.setFieldValue("besaran_premi", input);
-                      }}
-                      inputValue={formik.values.besaran_premi}
+                      placeholder="3.5"
+                      onChange={formik.handleChange}
+                      value={formik.values.besaran_premi}
                     />
                   </InputGroup>
                 ) : (
@@ -182,8 +219,9 @@ export default function TambahPremi({ ...props }: Props) {
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}
+              isLoading={loading}
             >
-              Simpan
+              Tambahkan
             </Button>
           </ModalFooter>
         </ModalContent>
