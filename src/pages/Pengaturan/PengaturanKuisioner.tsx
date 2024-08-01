@@ -42,7 +42,7 @@ export default function PengaturanKuisioner() {
         flexShrink={0}
       >
         <SearchComponent
-          minW={"165px"}
+          flex={"1 1 165px"}
           name="search"
           onChangeSetter={(input) => {
             setFilterConfig((ps: any) => ({
@@ -64,7 +64,7 @@ export default function PengaturanKuisioner() {
           inputValue={filterConfig.is_deleted}
           optionsDisplay="chip"
           placeholder="Filter Dihapus"
-          maxW={"165px"}
+          flex={"0 1 fit-content"}
         />
 
         <MultiSelectJabatan
@@ -78,7 +78,7 @@ export default function PengaturanKuisioner() {
           inputValue={filterConfig.jabatan}
           optionsDisplay="chip"
           placeholder="Filter Jabatan"
-          maxW={"165px"}
+          flex={"0 1 fit-content"}
         />
 
         <TambahKuisioner minW={"fit-content"} />

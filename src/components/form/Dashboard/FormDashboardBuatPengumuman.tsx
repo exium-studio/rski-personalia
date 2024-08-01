@@ -3,8 +3,8 @@ import { useFormik } from "formik";
 import { MutableRefObject } from "react";
 import * as yup from "yup";
 import StringInput from "../../dependent/input/StringInput";
-import Textarea from "../../input/Textarea";
 import RequiredForm from "../RequiredForm";
+import Textarea from "../../dependent/input/Textarea";
 
 interface Props {
   forwardRef: MutableRefObject<null>;
@@ -49,9 +49,12 @@ export default function FormDashboardBuatPengumuman({ forwardRef }: Props) {
           <RequiredForm />
         </FormLabel>
         <Textarea
-          formik={formik}
           name="pengumuman"
-          placeholder="Isi pengumuman"
+          placeholder="isi pengumuman"
+          onChangeSetter={(input) => {
+            formik.setFieldValue("pengumuman", input);
+          }}
+          inputValue={formik.values.pengumuman}
         />
         <FormErrorMessage>{formik.errors.pengumuman}</FormErrorMessage>
       </FormControl>

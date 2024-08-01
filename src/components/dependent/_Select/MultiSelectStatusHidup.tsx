@@ -42,7 +42,7 @@ export default function MultiSelectStatusHidup({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Multi Pilih Hubungan Keluarga"}
+      placeholder={placeholder || "Multi Pilih Status Hidup"}
       nonNullable={nonNullable}
       {...props}
     />

@@ -174,12 +174,11 @@ export default function EditDataKeluargaKaryawanModal({ data }: Props) {
                   <RequiredForm />
                 </FormLabel>
                 <SelectStatusHidup
-                  formik={formik}
                   name="status_hidup"
-                  placeholder="Pilih status hidup"
-                  initialSelected={formik.values.status_hidup}
-                  noSearch
-                  noUseBackOnClose
+                  onConfirm={(input) => {
+                    formik.setFieldValue("status_hidup", input);
+                  }}
+                  inputValue={formik.values.status_hidup}
                 />
                 <FormErrorMessage>
                   {formik.errors.status_hidup as string}

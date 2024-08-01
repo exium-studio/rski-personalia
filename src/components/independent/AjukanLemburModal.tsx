@@ -29,7 +29,7 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
-import Textarea from "../input/Textarea";
+import Textarea from "../dependent/input/Textarea";
 
 interface Props extends ButtonProps {}
 
@@ -163,10 +163,10 @@ export default function AjukanLemburModal({ ...props }: Props) {
                 </FormLabel>
                 <SelectKompensasi
                   name="kompensasi"
-                  formik={formik}
-                  placeholder="Pilih Kompensasi"
-                  initialSelected={formik.values.kompensasi}
-                  noUseBackOnClose
+                  onConfirm={(input) => {
+                    formik.setFieldValue("kompensasi", input);
+                  }}
+                  inputValue={formik.values.kompensasi}
                 />
                 <FormErrorMessage>
                   {formik.errors.kompensasi as string}
@@ -219,8 +219,11 @@ export default function AjukanLemburModal({ ...props }: Props) {
                 </FormLabel>
                 <Textarea
                   name="catatan"
-                  formik={formik}
-                  placeholder="Catatan untuk Karyawan"
+                  placeholder="Catatan untuk karyawan"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("catatan", input);
+                  }}
+                  inputValue={formik.values.catatan}
                 />
                 <FormErrorMessage>
                   {formik.errors.catatan as string}

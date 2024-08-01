@@ -40,7 +40,7 @@ export default function PengaturanPremi() {
         flexShrink={0}
       >
         <SearchComponent
-          minW={"165px"}
+          flex={"1 1 165px"}
           name="search"
           onChangeSetter={(input) => {
             setFilterConfig((ps: any) => ({
@@ -62,7 +62,7 @@ export default function PengaturanPremi() {
           inputValue={filterConfig.is_deleted}
           optionsDisplay="chip"
           placeholder="Filter Dihapus"
-          maxW={"165px"}
+          flex={"0 1 fit-content"}
         />
 
         <MultiSelectJenisPotongan
@@ -76,10 +76,7 @@ export default function PengaturanPremi() {
           inputValue={filterConfig.jenis_premi}
           optionsDisplay="chip"
           placeholder="Filter Jenis Potongan"
-          flex={"1 1 165px"}
-          minW={"165px"}
-          w={"100%"}
-          maxW={"fit-content"}
+          flex={"0 1 fit-content"}
         />
 
         <TambahPremi minW={"fit-content"} />

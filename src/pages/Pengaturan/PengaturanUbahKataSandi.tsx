@@ -7,10 +7,10 @@ import {
 import { useFormik } from "formik";
 import * as yup from "yup";
 import RequiredForm from "../../components/form/RequiredForm";
-import PasswordInput from "../../components/input/PasswordInput";
 import CContainer from "../../components/wrapper/CContainer";
 import { useBodyColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import PasswordInput from "../../components/dependent/input/PasswordInput";
 
 export default function PengaturanUbahKataSandi() {
   const formik = useFormik({
@@ -54,8 +54,11 @@ export default function PengaturanUbahKataSandi() {
           </FormLabel>
           <PasswordInput
             name="password_lama"
-            placeholder="Masukkan kata sandi lama"
-            formik={formik}
+            placeholder="******"
+            onChangeSetter={(input) => {
+              formik.setFieldValue("password_lama", input);
+            }}
+            inputValue={formik.values.password_lama}
           />
           <FormErrorMessage>
             {formik.errors.password_lama as string}
@@ -72,8 +75,11 @@ export default function PengaturanUbahKataSandi() {
           </FormLabel>
           <PasswordInput
             name="password_baru"
-            placeholder="Masukkan kata sandi baru"
-            formik={formik}
+            placeholder="******"
+            onChangeSetter={(input) => {
+              formik.setFieldValue("password_baru", input);
+            }}
+            inputValue={formik.values.password_baru}
           />
           <FormErrorMessage>
             {formik.errors.password_baru as string}
@@ -90,8 +96,11 @@ export default function PengaturanUbahKataSandi() {
           </FormLabel>
           <PasswordInput
             name="konfirmasi_password_baru"
-            placeholder="Masukkan lagi kata sandi baru untuk konfirmasi"
-            formik={formik}
+            placeholder="******"
+            onChangeSetter={(input) => {
+              formik.setFieldValue("konfirmasi_password_baru", input);
+            }}
+            inputValue={formik.values.konfirmasi_password_baru}
           />
           <FormErrorMessage>
             {formik.errors.konfirmasi_password_baru as string}

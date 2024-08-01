@@ -154,7 +154,19 @@ const optionsKategoriDiklat = [
   },
 ];
 
+const optionsTipeTransfer = [
+  {
+    value: 1,
+    label: "Mutasi",
+  },
+  {
+    value: 2,
+    label: "Promosi",
+  },
+];
+
 export {
+  optionsTipeTransfer,
   optionsKategoriDiklat,
   optionsStatusHidup,
   optionsAgama,

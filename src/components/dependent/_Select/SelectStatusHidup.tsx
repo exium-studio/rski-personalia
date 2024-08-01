@@ -1,96 +1,50 @@
-import React, { useRef, useState } from "react";
-import { Button, ButtonProps, Text } from "@chakra-ui/react";
-import { Select__Item__Interface } from "../../../constant/interfaces";
-import Select from "../../input/Select";
+import { ButtonProps, useDisclosure } from "@chakra-ui/react";
+import { Interface__SelectOption } from "../../../constant/interfaces";
+import { optionsStatusHidup } from "../../../constant/selectOptions";
+import SingleSelectModal from "../input/SingleSelectModal";
 
 interface Props extends ButtonProps {
-  placeholder: string;
-  initialSelected?: Select__Item__Interface;
-  formik?: any;
-  name?: string;
-  confirmSelect?: (newSelectedValue: any) => void;
-  noUseBackOnClose?: boolean;
-  noSearch?: boolean;
-  modalSize?: string;
+  name: string;
+  onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
+  inputValue: Interface__SelectOption | undefined;
+  withSearch?: boolean;
+  optionsDisplay?: "list" | "chip";
+  isError?: boolean;
+  placeholder?: string;
+  nonNullable?: boolean;
 }
 
 export default function SelectStatusHidup({
-  placeholder,
-  initialSelected,
-  formik,
   name,
-  confirmSelect,
-  noUseBackOnClose,
-  noSearch,
-  modalSize,
+  onConfirm,
+  inputValue,
+  withSearch,
+  optionsDisplay = "list",
+  isError,
+  placeholder,
+  nonNullable,
   ...props
 }: Props) {
-  const [search, setSearch] = useState<string>("");
-  const options = [
-    {
-      value: 0,
-      label: "Meninggal",
-    },
-    {
-      value: 1,
-      label: "Hidup",
-    },
-  ];
-  const filteredOptions = options?.filter((option) =>
-    option.label.toLowerCase().includes(search.toLocaleLowerCase())
-  );
-  const [selected, setSelected] = useState<Select__Item__Interface | null>(
-    initialSelected || null
-  );
-  const selectComponentRef = useRef<{ handleOnClose: () => void } | null>(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Select
-      ref={selectComponentRef}
-      placeholder={placeholder}
-      selected={selected}
-      setSelected={setSelected}
-      formik={formik}
+    <SingleSelectModal
+      id="select-status-hidup-modal"
       name={name}
-      noUseBackOnClose={noUseBackOnClose}
-      search={search}
-      setSearch={setSearch}
-      noSearch={noSearch}
-      modalSize={modalSize}
-      confirmSelect={confirmSelect}
-      initialSelected={initialSelected}
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onClose={onClose}
+      options={optionsStatusHidup}
+      onConfirm={(input) => {
+        onConfirm(input);
+      }}
+      inputValue={inputValue}
+      withSearch={withSearch}
+      optionsDisplay={optionsDisplay}
+      isError={isError}
+      placeholder={placeholder || "Pilih Status Hidup"}
+      nonNullable={nonNullable}
       {...props}
-    >
-      {filteredOptions?.map((option, i) => (
-        <Button
-          bg={
-            selected && selected.value === option.value
-              ? "var(--p500a3) !important"
-              : ""
-          }
-          _hover={{
-            bg: "var(--divider) !important",
-          }}
-          border={"1px solid var(--divider)"}
-          borderColor={
-            selected && selected.value === option.value ? "var(--p500a1)" : ""
-          }
-          key={i}
-          onClick={() => {
-            setSelected(option);
-          }}
-          fontWeight={500}
-          justifyContent={"space-between"}
-        >
-          {option.label}
-        </Button>
-      ))}
-
-      {filteredOptions && filteredOptions.length === 0 && (
-        <Text textAlign={"center"} my={2}>
-          Opsi tidak ditemukan
-        </Text>
-      )}
-    </Select>
+    />
   );
 }

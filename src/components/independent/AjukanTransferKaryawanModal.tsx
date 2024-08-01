@@ -32,8 +32,8 @@ import SelectUnitKerja from "../dependent/_Select/SelectUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import RequiredForm from "../form/RequiredForm";
-import FileInput from "../input/FileInput";
-import Textarea from "../input/Textarea";
+import Textarea from "../dependent/input/Textarea";
+import FileInput from "../dependent/input/FileInput";
 
 interface Props extends ButtonProps {}
 
@@ -159,11 +159,10 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                   </FormLabel>
                   <SelectTipeTransfer
                     name="tipe"
-                    formik={formik}
-                    placeholder="Pilih Tipe Transfer"
-                    initialSelected={formik.values.tipe}
-                    noSearch
-                    noUseBackOnClose
+                    onConfirm={(input) => {
+                      formik.setFieldValue("tipe", input);
+                    }}
+                    inputValue={formik.values.tipe}
                   />
                   <FormErrorMessage>
                     {formik.errors.tipe as string}
@@ -237,7 +236,13 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                     Dokumen
                     <RequiredForm />
                   </FormLabel>
-                  <FileInput name="dokumen" formik={formik} />
+                  <FileInput
+                    name="dokumen"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("dokumne", input);
+                    }}
+                    inputValue={formik.values.dokumen}
+                  />
                   <FormErrorMessage>
                     {formik.errors.dokumen as string}
                   </FormErrorMessage>
@@ -253,8 +258,11 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                   </FormLabel>
                   <Textarea
                     name="alasan"
-                    formik={formik}
-                    placeholder="Jolitos Kurniawan"
+                    placeholder="Alasan transfer pegawai"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("alasan", input);
+                    }}
+                    inputValue={formik.values.alasan}
                   />
                   <FormErrorMessage>
                     {formik.errors.alasan as string}

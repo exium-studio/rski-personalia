@@ -40,7 +40,7 @@ export default function PengaturanKelompokGaji() {
         flexShrink={0}
       >
         <SearchComponent
-          minW={"165px"}
+          flex={"1 1 165px"}
           name="search"
           onChangeSetter={(input) => {
             setFilterConfig((ps: any) => ({
@@ -62,7 +62,7 @@ export default function PengaturanKelompokGaji() {
           inputValue={filterConfig.is_deleted}
           optionsDisplay="chip"
           placeholder="Filter Dihapus"
-          maxW={"165px"}
+          flex={"0 1 fit-content"}
         />
 
         <TambahKelompokGaji minW={"fit-content"} />

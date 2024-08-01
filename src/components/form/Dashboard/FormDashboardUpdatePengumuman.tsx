@@ -8,7 +8,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import RequiredForm from "../RequiredForm";
-import Textarea from "../../input/Textarea";
+import Textarea from "../../dependent/input/Textarea";
 
 interface Props {
   data: Pengumuman__Interface;
@@ -51,9 +51,12 @@ export default function FormDashboardUpdatePengumuman({ data }: Props) {
           <RequiredForm />
         </FormLabel>
         <Textarea
-          formik={formik}
           name="pengumuman"
           placeholder="Isi pengumuman"
+          onChangeSetter={(input) => {
+            formik.setFieldValue("pengumuman", input);
+          }}
+          inputValue={formik.values.pengumuman}
         />
         <FormErrorMessage>{formik.errors.pengumuman}</FormErrorMessage>
       </FormControl>

@@ -23,7 +23,7 @@ import backOnClose from "../../lib/backOnCloseOld";
 import useBackOnClose from "../../lib/useBackOnCloseOld";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import RequiredForm from "../form/RequiredForm";
-import Textarea from "../input/Textarea";
+import Textarea from "../dependent/input/Textarea";
 
 interface Props extends ButtonProps {}
 
@@ -101,7 +101,10 @@ export default function TambahRole({ ...props }: Props) {
                 <Textarea
                   name="deskripsi"
                   placeholder="Diperuntukan untuk jabatan HR"
-                  formik={formik}
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("deskripsi", input);
+                  }}
+                  inputValue={formik.values.deskripsi}
                 />
                 <FormErrorMessage>
                   {formik.errors.deskripsi as string}
