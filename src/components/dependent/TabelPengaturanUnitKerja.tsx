@@ -171,7 +171,7 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && <NoData minH={"400px"} />}
+          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"400px"} />}
 
           {notFound && !isObjectEmpty(filterConfig) && (
             <NotFound minH={"400px"} />

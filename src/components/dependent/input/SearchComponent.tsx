@@ -36,7 +36,6 @@ export default function SearchComponent({
       <Input
         ref={inputRef ? inputRef : null}
         placeholder={placeholder || "Pencarian"}
-        flex={"1 1 0"}
         pr={"36px"}
         onChange={(e) => {
           onChangeSetter(e.target.value);

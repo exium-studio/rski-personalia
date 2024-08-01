@@ -76,7 +76,10 @@ export default function PengaturanPremi() {
           inputValue={filterConfig.jenis_premi}
           optionsDisplay="chip"
           placeholder="Filter Jenis Potongan"
-          maxW={"165px"}
+          flex={"1 1 165px"}
+          minW={"165px"}
+          w={"100%"}
+          maxW={"fit-content"}
         />
 
         <TambahPremi minW={"fit-content"} />

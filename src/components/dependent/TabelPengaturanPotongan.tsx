@@ -7,21 +7,20 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
-import { dummyPremi } from "../../const/dummy";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import { Interface__SelectOption } from "../../constant/interfaces";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatNumber from "../../lib/formatNumber";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
-import Retry from "./Retry";
-import StatusDihapus from "./StatusDihapus";
 import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
-import isObjectEmpty from "../../lib/isObjectEmpty";
+import Retry from "./Retry";
+import StatusDihapus from "./StatusDihapus";
 
 interface Props {
   filterConfig?: any;
@@ -196,7 +195,7 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && <NoData minH={"400px"} />}
+          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"400px"} />}
 
           {notFound && !isObjectEmpty(filterConfig) && (
             <NotFound minH={"400px"} />
