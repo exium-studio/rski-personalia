@@ -1,17 +1,19 @@
-import { Center, HStack, Icon, MenuItem, Text } from "@chakra-ui/react";
+import { Center, Icon, MenuItem, Text } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
-import { dummyShift } from "../../const/dummy";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import { Interface__SelectOption } from "../../constant/interfaces";
+import { iconSize } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
-import formatTime from "../../lib/formatTime";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
+import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
+import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import EditShiftModalDisclosure from "../independent/EditShiftModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -24,39 +26,53 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <MenuItem>
-          <Text>Edit</Text>
-          <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <EditShiftModalDisclosure rowData={rowData}>
+          <MenuItem>
+            <Text>Edit</Text>
+            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </EditShiftModalDisclosure>
       );
     },
     (rowData: any) => {
       return (
-        <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
-          <Text>Restore</Text>
-          <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <RestoreDataPengaturanModalDisclosure
+          id={rowData.id}
+          url="/api/rski/dashboard/pengaturan/shift/restore"
+        >
+          <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
+            <Text>Restore</Text>
+            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </RestoreDataPengaturanModalDisclosure>
       );
     },
     "divider",
     (rowData: any) => {
       return (
-        <MenuItem fontWeight={500} isDisabled={rowData.columnsFormat[1].value}>
-          <Text color={"red.400"}>Delete</Text>
-          <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-        </MenuItem>
+        <DeleteDataPengaturanModalDisclosure
+          id={rowData.id}
+          url="/api/rski/dashboard/pengaturan/shift"
+        >
+          <MenuItem
+            fontWeight={500}
+            isDisabled={rowData.columnsFormat[1].value}
+          >
+            <Text color={"red.400"}>Delete</Text>
+            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
+          </MenuItem>
+        </DeleteDataPengaturanModalDisclosure>
       );
     },
   ];
 
-  const { error, loading, data, retry } = useDataState<any[]>({
-    initialData: dummyShift,
-    url: "",
+  const { error, notFound, loading, data, retry } = useDataState<any[]>({
+    initialData: undefined,
+    url: "/api/rski/dashboard/pengaturan/shift",
     dependencies: [],
   });
 
   const fd = data?.filter((item: any) => {
-    console.log(item);
     const searchTerm = filterConfig?.search.toLowerCase();
     const isDeletedTerm = filterConfig?.is_deleted?.map(
       (term: Interface__SelectOption) => term.value
@@ -127,8 +143,12 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
         },
       },
       {
+        original_data: {
+          jam_from: item.jam_from,
+          jam_to: item.jam_to,
+        },
         value: item.jam_from,
-        td: `${formatTime(item.jam_from)} - ${formatTime(item.jam_to)}`,
+        td: `${item.jam_from.slice(0, 5)} - ${item.jam_to.slice(0, 5)}`,
         isTime: true,
         cProps: {
           justify: "center",
@@ -140,20 +160,26 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"400px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"400px"} />}
+
+          {notFound && !isObjectEmpty(filterConfig) && (
+            <NotFound minH={"400px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"400px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
+
       {!error && (
         <>
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (
