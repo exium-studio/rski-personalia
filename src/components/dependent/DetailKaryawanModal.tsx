@@ -86,6 +86,7 @@ export default function DetailKaryawanModal({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-user/${user_id}`,
     dependencies: [],
+    conditions: !!(isOpen && user_id),
   });
   const [search, setSearch] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string[]>([]);
