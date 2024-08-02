@@ -3,7 +3,7 @@ import {
   RiGroupFill,
   RiHome6Fill,
   RiMoneyDollarCircleFill,
-  RiSettingsFill,
+  RiSettings3Fill,
   RiTimeFill,
   RiTimerFill,
   RiUserFill,
@@ -126,7 +126,7 @@ const navs = [
   {
     label: "Pengaturan",
     link: "/pengaturan",
-    icon: RiSettingsFill,
+    icon: RiSettings3Fill,
     subNavs: [
       {
         label: "Pengaturan",
