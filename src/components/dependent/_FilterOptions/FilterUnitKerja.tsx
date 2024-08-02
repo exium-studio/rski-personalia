@@ -99,7 +99,7 @@ export default function FilterUnitKerja({
               const active =
                 filterConfig?.unit_kerja &&
                 filterConfig?.unit_kerja.some(
-                  (unit: any) => unit.id === data.id
+                  (unit: any) => unit?.id === data?.id
                 );
 
               return (
