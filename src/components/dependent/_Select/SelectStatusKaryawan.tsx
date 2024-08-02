@@ -1,6 +1,7 @@
 import { ButtonProps, useDisclosure } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import SingleSelectModal from "../input/SingleSelectModal";
+import { optionsStatusKepegawaian } from "../../../constant/selectOptions";
 
 interface Props extends ButtonProps {
   name: string;
@@ -26,21 +27,6 @@ export default function SelectStatusKaryawan({
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const options = [
-    {
-      value: 1,
-      label: "Tetap",
-    },
-    {
-      value: 2,
-      label: "Kontrak",
-    },
-    {
-      value: 3,
-      label: "Magang",
-    },
-  ];
-
   return (
     <SingleSelectModal
       id="select-status-karyawan-modal"
@@ -48,7 +34,7 @@ export default function SelectStatusKaryawan({
       isOpen={isOpen}
       onOpen={onOpen}
       onClose={onClose}
-      options={options}
+      options={optionsStatusKepegawaian}
       onConfirm={(input) => {
         onConfirm(input);
       }}

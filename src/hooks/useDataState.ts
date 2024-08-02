@@ -55,7 +55,6 @@ const useDataState = <T>({
       .then((response) => {
         setError(false);
         if (response.status === 200) {
-          console.log(response.data.pagination);
           setData(response.data.data);
           setPaginationData(response.data?.pagination);
         }

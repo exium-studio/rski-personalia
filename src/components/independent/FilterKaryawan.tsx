@@ -72,9 +72,24 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   }
 
   function handleApplyFilter() {
-    const filters = localFilterConfig;
-    console.log(localFilterConfig);
-    setFilterKaryawan(localFilterConfig);
+    const formattedFilters = {
+      search: localFilterConfig.search,
+      unit_kerja: localFilterConfig.unit_kerja.map((item: any) => item.id),
+      status_karyawan: localFilterConfig.status_karyawan.map(
+        (item: any) => item.value
+      ),
+      masa_kerja: localFilterConfig.masa_kerja,
+      status_aktif: localFilterConfig.status_aktif.map(
+        (item: any) => item.value
+      ),
+      tgl_masuk: localFilterConfig.tgl_masuk,
+      agama: localFilterConfig.agama.map((item: any) => item.value),
+    };
+
+    // console.log("local", localFilterConfig);
+    // console.log(formattedFilters);
+
+    setFilterKaryawan(formattedFilters);
     backOnClose();
   }
 

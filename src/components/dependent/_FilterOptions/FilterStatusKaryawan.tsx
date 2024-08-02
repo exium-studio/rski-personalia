@@ -1,5 +1,6 @@
 import { HStack, Text, Wrap } from "@chakra-ui/react";
 import { Dispatch } from "react";
+import { optionsStatusKepegawaian } from "../../../constant/selectOptions";
 import FilterItemWrapper from "../../wrapper/FilterItemWrapper";
 
 interface Props {
@@ -11,21 +12,6 @@ export default function FilterStatusKaryawan({
   filterConfig,
   setFilterConfig,
 }: Props) {
-  const statusKaryawanList = [
-    {
-      id: 1,
-      nama_status: "Tetap",
-    },
-    {
-      id: 2,
-      nama_status: "Kontrak",
-    },
-    {
-      id: 3,
-      nama_status: "Magang",
-    },
-  ];
-
   // SX
 
   return (
@@ -36,11 +22,11 @@ export default function FilterStatusKaryawan({
       filterKey="status_karyawan"
     >
       <Wrap py={4}>
-        {statusKaryawanList?.map((data, i) => {
+        {optionsStatusKepegawaian?.map((data, i) => {
           const active =
             filterConfig?.status_karyawan &&
             filterConfig?.status_karyawan.some(
-              (unit: any) => unit.id === data.id
+              (unit: any) => unit.value === data.value
             );
 
           return (
@@ -62,13 +48,15 @@ export default function FilterStatusKaryawan({
                 setFilterConfig((ps: any) => {
                   const isDataExist =
                     ps.status_karyawan &&
-                    ps.status_karyawan.some((unit: any) => unit.id === data.id);
+                    ps.status_karyawan.some(
+                      (unit: any) => unit.value === data.value
+                    );
 
                   if (isDataExist) {
                     return {
                       ...ps,
                       status_karyawan: ps.status_karyawan.filter(
-                        (unit: any) => unit.id !== data.id
+                        (unit: any) => unit.value !== data.value
                       ),
                     };
                   } else {
@@ -88,7 +76,7 @@ export default function FilterStatusKaryawan({
                 h={"20px !important"}
                 noOfLines={1}
               >
-                {data.nama_status}
+                {data.label}
               </Text>
             </HStack>
           );

@@ -176,7 +176,23 @@ const optionsSumberPotongan = [
   },
 ];
 
+const optionsStatusKepegawaian = [
+  {
+    value: 1,
+    label: "Tetap",
+  },
+  {
+    value: 2,
+    label: "Kontrak",
+  },
+  {
+    value: 3,
+    label: "Magang",
+  },
+];
+
 export {
+  optionsStatusKepegawaian,
   optionsSumberPotongan,
   optionsTipeTransfer,
   optionsKategoriDiklat,
