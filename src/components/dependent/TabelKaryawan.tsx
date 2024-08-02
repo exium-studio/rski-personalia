@@ -88,10 +88,6 @@ export default function TabelKaryawan() {
       isSortable: true,
     },
     {
-      th: "Username",
-      isSortable: true,
-    },
-    {
       th: "Ayah",
       isSortable: true,
     },
@@ -181,10 +177,6 @@ export default function TabelKaryawan() {
       {
         value: item.email,
         td: item.email,
-      },
-      {
-        value: item.user.username,
-        td: item.user.username,
       },
       {
         value: item.ayah.nama,

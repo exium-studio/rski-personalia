@@ -22,7 +22,6 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
     { column: "no_rm", label: "No. Rekam Medis" },
     { column: "unit_kerja", label: "Unit Kerja" },
     { column: "email", label: "Email" },
-    { column: "username", label: "Username" },
     { column: "ayah", label: "Ayah" },
     { column: "ibu", label: "Ibu" },
     { column: "jumlah_keluarga", label: "Jumlah Keluarga" },
@@ -43,7 +42,7 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
     },
     {
       label: "Akun",
-      columns: [0, 1, 5, 6, 7],
+      columns: [0, 1, 5, 6],
     },
     {
       label: "Keluarga",
