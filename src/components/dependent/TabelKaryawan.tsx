@@ -31,7 +31,6 @@ export default function TabelKaryawan() {
   // Columns Config
   const { columnsConfig } = useKaryawanTableColumnsConfig();
 
-  console.log("formatted", formattedFilterKaryawan);
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<Interface__DetailKaryawan[]>({
       initialData: undefined,

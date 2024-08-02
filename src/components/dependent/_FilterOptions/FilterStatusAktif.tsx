@@ -27,8 +27,6 @@ export default function FilterStatusAktif({
     },
   ];
 
-  console.log(filterConfig.status_aktif);
-
   // SX
 
   return (

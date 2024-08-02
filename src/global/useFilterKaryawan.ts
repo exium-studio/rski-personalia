@@ -11,8 +11,8 @@ const defaultFilterConfig = {
 };
 
 type State = {
-  defaultFilterKaryawan: typeof defaultFilterConfig;
-  filterKaryawan: typeof defaultFilterConfig;
+  defaultFilterKaryawan: any;
+  filterKaryawan: any;
   formattedFilterKaryawan: any;
 };
 

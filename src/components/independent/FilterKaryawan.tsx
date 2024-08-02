@@ -48,7 +48,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   } = useFilterKaryawan();
 
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
-    filterKaryawan
+    defaultFilterKaryawan
   );
 
   function filterCount(values: any) {
@@ -76,6 +76,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   }
 
   function handleApplyFilter() {
+    // Membuat formattedFilters dengan semua filter
     const formattedFilters = {
       search: localFilterConfig.search,
       unit_kerja: localFilterConfig.unit_kerja.map((item: any) => item.id),
@@ -90,8 +91,20 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       agama: localFilterConfig.agama.map((item: any) => item.value),
     };
 
+    // Menghapus properti dengan array kosong kecuali 'search'
+    const filteredFilters = Object.entries(formattedFilters)
+      .filter(
+        ([key, value]) =>
+          key === "search" || (Array.isArray(value) && value.length > 0)
+      )
+      .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      }, {} as { [key: string]: any });
+
+    // Mengupdate state dengan filter yang diformat
     setFilterKaryawan(localFilterConfig);
-    setFormattedFilterKaryawan(formattedFilters);
+    setFormattedFilterKaryawan(filteredFilters);
     backOnClose();
   }
 
