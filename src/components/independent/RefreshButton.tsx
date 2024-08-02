@@ -7,8 +7,6 @@ interface Props extends ButtonProps {}
 export default function RefreshButton({ ...props }: Props) {
   const [rotate, setRotate] = useState(false);
 
-  console.log(rotate);
-
   const handleRotate = () => {
     setRotate(true);
   };
