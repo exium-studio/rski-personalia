@@ -141,7 +141,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
         initialFocusRef={initialRef}
         isCentered
         size={"lg"}
-        // scrollBehavior="inside"
+        scrollBehavior="inside"
       >
         <ModalOverlay />
 
@@ -150,7 +150,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
             <DisclosureHeader title={title || "Filter Karyawan"} />
           </ModalHeader>
 
-          <ModalBody>
+          <ModalBody className="scrollY">
             <Accordion allowToggle>
               <FilterUnitKerja
                 filterConfig={localFilterConfig}
