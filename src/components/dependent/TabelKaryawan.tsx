@@ -31,17 +31,16 @@ export default function TabelKaryawan() {
   // Columns Config
   const { columnsConfig } = useKaryawanTableColumnsConfig();
 
-  const { error, notFound, loading, data, retry } = useDataState<
-    Interface__DetailKaryawan[]
-  >({
-    initialData: undefined,
-    url: "/api/rski/dashboard/karyawan/get-data-karyawan",
-    payload: {
-      filterConfig: filterKaryawan,
-    },
-    limit: limitConfig,
-    dependencies: [limitConfig, pageConfig, filterKaryawan],
-  });
+  const { error, notFound, loading, data, paginationData, retry } =
+    useDataState<Interface__DetailKaryawan[]>({
+      initialData: undefined,
+      url: "/api/rski/dashboard/karyawan/get-data-karyawan",
+      payload: {
+        filterConfig: filterKaryawan,
+      },
+      limit: limitConfig,
+      dependencies: [limitConfig, pageConfig, filterKaryawan],
+    });
 
   const formattedHeader = [
     {

@@ -24,6 +24,9 @@ const useDataState = <T>({
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingLoadMore, setLoadingLoadMore] = useState<boolean>(false);
   const [data, setData] = useState<T | undefined>(initialData);
+  const [paginationData, setPaginationData] = useState<T | undefined>(
+    initialData
+  );
   const [offset, setOffset] = useState<number>(0);
   const { rt } = useRenderTrigger();
 
@@ -52,7 +55,9 @@ const useDataState = <T>({
       .then((response) => {
         setError(false);
         if (response.status === 200) {
+          console.log(response.data.pagination);
           setData(response.data.data);
+          setPaginationData(response.data?.pagination);
         }
       })
       .catch((error) => {
@@ -95,6 +100,7 @@ const useDataState = <T>({
     loadMore,
     loadingLoadMore,
     setLoadingLoadMore,
+    paginationData,
   };
 };
 
