@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Cookies } from "typescript-cookie";
+import { getCookie } from "typescript-cookie";
 
 const req = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -8,9 +8,22 @@ const req = axios.create({
   xsrfHeaderName: "X-XSRF-TOKEN",
   headers: {
     Accept: "application/json",
-    Authorization: `Bearer ${Cookies.get("__auth_token")}`,
   },
 });
+
+// Add a request interceptor
+req.interceptors.request.use(
+  (config) => {
+    const token = getCookie("__auth_token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 req.interceptors.response.use(
   (response) => response,
