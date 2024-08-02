@@ -247,13 +247,13 @@ export default function MultipleSelectModal({
                         borderColor={
                           selected &&
                           selected.some((item) => item.value === option.value)
-                            ? "var(--p500a2)"
+                            ? "var(--p500)"
                             : "transparent !important"
                         }
                         bg={
                           selected &&
                           selected.some((item) => item.value === option.value)
-                            ? "var(--p500a4) !important"
+                            ? "var(--p500a5) !important"
                             : ""
                         }
                       >
@@ -292,7 +292,7 @@ export default function MultipleSelectModal({
                         borderColor={
                           selected &&
                           selected.some((item) => item.value === option.value)
-                            ? "var(--p500a2)"
+                            ? "var(--p500)"
                             : ""
                         }
                         bg={

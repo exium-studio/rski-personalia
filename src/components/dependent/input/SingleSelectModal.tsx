@@ -199,7 +199,7 @@ export default function SingleSelectModal({
                         }}
                         borderColor={
                           selected && selected.value === option.value
-                            ? "var(--p500a2)"
+                            ? "var(--p500)"
                             : "transparent !important"
                         }
                         bg={
@@ -245,7 +245,7 @@ export default function SingleSelectModal({
                         borderRadius={"full"}
                         borderColor={
                           selected && selected.value === option.value
-                            ? "var(--p500a2)"
+                            ? "var(--p500)"
                             : ""
                         }
                         bg={

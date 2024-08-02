@@ -107,7 +107,7 @@ export default function ColumnsConfigModal({
                           className={"btn-outline clicky"}
                           borderColor={
                             selected && selected.some((item) => item === i)
-                              ? "var(--p500a2)"
+                              ? "var(--p500)"
                               : ""
                           }
                           bg={

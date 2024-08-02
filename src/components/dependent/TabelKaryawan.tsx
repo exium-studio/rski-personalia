@@ -1,16 +1,7 @@
-import {
-  Center,
-  HStack,
-  Icon,
-  MenuItem,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { RiEditLine } from "@remixicon/react";
+import { Center, HStack, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
-import { dummyKaryawans } from "../../const/dummy";
 import { Interface__DetailKaryawan } from "../../constant/interfaces";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useKaryawanTableColumnsConfig from "../../global/useKaryawanTableColumnsConfig";
 import useDataState from "../../hooks/useDataState";
@@ -20,12 +11,13 @@ import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
-import BooleanBadge from "./BooleanBadge";
 import CustomTable from "./CustomTable";
 import DetailKaryawanModal from "./DetailKaryawanModal";
 import Retry from "./Retry";
+import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
+import NotFound from "../independent/NotFound";
 
 export default function TabelKaryawan() {
   // Limit Config
@@ -38,29 +30,20 @@ export default function TabelKaryawan() {
   const { filterKaryawan } = useFilterKaryawan();
   // Columns Config
   const { columnsConfig } = useKaryawanTableColumnsConfig();
-  // Row Options Config
-  const rowOptions = [
-    (rowIds: any) => {
-      return (
-        <MenuItem>
-          <Text>Edit</Text>
-          <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
-      );
-    },
-  ];
 
-  const { error, loading, data, retry } = useDataState<
+  const { error, notFound, loading, data, retry } = useDataState<
     Interface__DetailKaryawan[]
   >({
-    initialData: dummyKaryawans,
-    url: "",
+    initialData: undefined,
+    url: "/api/rski/dashboard/karyawan/get-data-karyawan",
     payload: {
       filterConfig: filterKaryawan,
     },
     limit: limitConfig,
     dependencies: [limitConfig, pageConfig, filterKaryawan],
   });
+
+  console.log(data);
 
   const formattedHeader = [
     {
@@ -169,14 +152,7 @@ export default function TabelKaryawan() {
       },
       {
         value: item.user.status_aktif,
-        td: (
-          <BooleanBadge
-            data={item.user.status_aktif}
-            trueValue="Aktif"
-            falseValue="Tidak Aktif"
-            w={"120px"}
-          />
-        ),
+        td: <StatusAktifBadge data={item.user.status_aktif} w={"120px"} />,
         cProps: {
           justify: "center",
         },
@@ -287,7 +263,7 @@ export default function TabelKaryawan() {
                 }}
                 columnsConfig={columnsConfig}
                 // batchActions={rowOptions}
-                rowOptions={rowOptions}
+                // rowOptions={rowOptions}
               />
             </CustomTableContainer>
 
@@ -307,6 +283,7 @@ export default function TabelKaryawan() {
                 </Text>
               }
             />
+
             <DetailKaryawanModal
               user_id={user_id}
               isOpen={isOpen}
@@ -317,6 +294,7 @@ export default function TabelKaryawan() {
         )}
       </>
     ),
+    notFound: <NotFound />,
   };
 
   return (
@@ -325,7 +303,9 @@ export default function TabelKaryawan() {
 
       {!loading && (
         <>
-          {error && render.error}
+          {error && !notFound && render.error}
+
+          {error && notFound && render.notFound}
 
           {!error && render.loaded}
         </>

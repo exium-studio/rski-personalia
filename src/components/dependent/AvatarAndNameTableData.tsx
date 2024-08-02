@@ -20,7 +20,7 @@ export default function AvatarAndNameTableData({
   ...props
 }: Props) {
   return (
-    <HStack w={"100%"} maxW={"180px"} gap={3} {...props}>
+    <HStack w={"180px"} gap={3} {...props}>
       {noDetail ? (
         <Avatar
           cursor={"pointer"}
