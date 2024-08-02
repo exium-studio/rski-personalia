@@ -67,7 +67,7 @@ export default function EditKuisionerModalDisclosure({
       setLoading(true);
       req
         .post(
-          `/api/rski/dashboard/pengaturan/unit-kerja/${rowData.id}`,
+          `/api/rski/dashboard/pengaturan/pertanyaan/${rowData.id}`,
           payload
         )
         .then((r) => {
