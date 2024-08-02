@@ -125,12 +125,12 @@ const navs = [
   },
   {
     label: "Pengaturan",
-    link: "/pengaturan/akun/kelola-role",
+    link: "/pengaturan",
     icon: RiSettingsFill,
     subNavs: [
       {
         label: "Pengaturan",
-        link: "/pengaturan/akun/kelola-role",
+        link: "/pengaturan",
       },
     ],
   },

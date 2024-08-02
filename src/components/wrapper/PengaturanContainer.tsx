@@ -6,8 +6,8 @@ import CWrapper from "./CWrapper";
 
 interface Props {
   children?: ReactNode;
-  activeGroup: number;
-  active: number;
+  activeGroup?: number;
+  active?: number;
 }
 
 export default function PengaturanContainer({

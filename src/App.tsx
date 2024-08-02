@@ -26,6 +26,7 @@ import PengaturanKelolaRole from "./pages/Pengaturan/PengaturanKelolaRole";
 import PengaturanKelompokGaji from "./pages/Pengaturan/PengaturanKelompokGaji";
 import PengaturanKompetensi from "./pages/Pengaturan/PengaturanKompetensi";
 import PengaturanKuisioner from "./pages/Pengaturan/PengaturanKuisioner";
+import PengaturanLanding from "./pages/Pengaturan/PengaturanLanding";
 import PengaturanLokasiPresensi from "./pages/Pengaturan/PengaturanLokasiPresensi";
 import PengaturanPremi from "./pages/Pengaturan/PengaturanPotongan";
 import PengaturanShift from "./pages/Pengaturan/PengaturanShift";
@@ -249,6 +250,21 @@ export const App = () => (
           }
         />
 
+        <Route
+          path="/pengaturan"
+          element={
+            <NavContainer
+              active={7}
+              topNavsData={navs[7].subNavs}
+              topNavActive={0}
+              title="Pengaturan"
+            >
+              <PengaturanContainer>
+                <PengaturanLanding />
+              </PengaturanContainer>
+            </NavContainer>
+          }
+        />
         <Route
           path="/pengaturan/akun/kelola-role"
           element={

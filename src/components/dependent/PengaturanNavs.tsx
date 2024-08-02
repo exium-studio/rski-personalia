@@ -6,8 +6,8 @@ import { iconSize } from "../../constant/sizes";
 import CContainer from "../wrapper/CContainer";
 
 interface Props {
-  activeGroup: number;
-  active: number;
+  activeGroup?: number;
+  active?: number;
 }
 
 export default function PengaturanNavs({ activeGroup, active }: Props) {
