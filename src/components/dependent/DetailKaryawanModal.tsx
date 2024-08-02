@@ -30,7 +30,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useLightDarkColor } from "../../constant/colors";
-import { dummyDetailKaryawan } from "../../const/dummy";
 import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -84,8 +83,8 @@ export default function DetailKaryawanModal({
   const initialRef = useRef(null);
 
   const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummyDetailKaryawan,
-    url: "",
+    initialData: undefined,
+    url: `/api/rski/dashboard/karyawan/detail-karyawan-user/${user_id}`,
     dependencies: [],
   });
   const [search, setSearch] = useState<string>("");
@@ -132,7 +131,7 @@ export default function DetailKaryawanModal({
             <>
               {loading && (
                 <>
-                  <ComponentSpinner />
+                  <ComponentSpinner m={"auto"} />
                 </>
               )}
               {!loading && (
@@ -705,7 +704,9 @@ export default function DetailKaryawanModal({
                                   <Tooltip label={data.alamat}>
                                     <Text
                                       fontWeight={500}
-                                      noOfLines={1}
+                                      whiteSpace={"nowrap"}
+                                      overflow={"hidden"}
+                                      textOverflow={"ellipsis"}
                                       maxW={"180px"}
                                       cursor={"pointer"}
                                     >
