@@ -1,9 +1,11 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   ButtonProps,
   HStack,
   Icon,
+  IconButton,
   Image,
   Modal,
   ModalBody,
@@ -11,14 +13,15 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  SimpleGrid,
   Stack,
   Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { RiLogoutBoxLine } from "@remixicon/react";
+import { RiLogoutBoxLine, RiRestartLine } from "@remixicon/react";
+import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 import DisclosureHeader from "../../components/dependent/DisclosureHeader";
+import NotificationModal from "../../components/independent/NotificationModal";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
@@ -27,7 +30,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import useGetUserData from "../../hooks/useGetUserData";
 import useLogout from "../../hooks/useLogout";
 import backOnClose from "../../lib/backOnClose";
-import { ColorModeSwitcher } from "../../ColorModeSwitcher";
+import formatDate from "../../lib/formatDate";
 
 interface LogoutProps extends ButtonProps {}
 
@@ -105,18 +108,20 @@ export default function Profil() {
   const userData = useGetUserData();
 
   return (
-    <CWrapper pt={0}>
+    <CWrapper p={0} position={"relative"}>
       <Stack
-        gap={responsiveSpacing}
+        zIndex={2}
         flexDir={["column", null, "row"]}
         flex={1}
         align={"stretch"}
+        gap={0}
       >
         <VStack
+          p={responsiveSpacing}
+          pt={"0 !important"}
           gap={0}
           animation={"flyInFromTop 500ms ease"}
           minW={"400px"}
-          // border={"1px solid red"}
         >
           <>
             <Box minW={"50px"} flex={"1 1 50px"} bg={"#353535"} mx={"auto"} />
@@ -247,14 +252,39 @@ export default function Profil() {
           </VStack>
         </VStack>
 
-        <CContainer p={responsiveSpacing}>
-          <SimpleGrid columns={[2, 3, 4]}>
-            <ColorModeSwitcher
-              w={"100%"}
-              aspectRatio={1}
-              className="btn-solid clicky"
-            />
-          </SimpleGrid>
+        <CContainer p={responsiveSpacing} flex={1} gap={responsiveSpacing}>
+          <HStack justify={"space-between"} gap={responsiveSpacing}>
+            <Text fontWeight={600} fontSize={18}>
+              {formatDate(new Date(), "long")}
+            </Text>
+
+            <ButtonGroup>
+              <IconButton
+                aria-label="refresh button"
+                className="btn-solid clicky"
+                icon={
+                  <Icon
+                    as={RiRestartLine}
+                    fontSize={20}
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                  />
+                }
+              />
+
+              <NotificationModal aria-label="Notification Button" />
+
+              <ColorModeSwitcher className="btn-solid clicky" />
+            </ButtonGroup>
+          </HStack>
+
+          <CContainer
+            flex={1}
+            p={responsiveSpacing}
+            borderRadius={12}
+            bg={lightDarkColor}
+          ></CContainer>
         </CContainer>
       </Stack>
     </CWrapper>

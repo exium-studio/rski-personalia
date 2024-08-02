@@ -162,15 +162,22 @@ export default function NotificationModal({ ...props }: Props) {
                 <Retry loading={loading} retry={retry} />
               </Box>
             )}
+
             {!error && (
               <>
                 {loading && (
                   <>
                     {Array.from({ length: 10 }).map((_, i) => (
-                      <Skeleton key={i} h={"110.63px"} flex={1} mx={"auto"} />
+                      <Skeleton
+                        key={i}
+                        minH={"110.63px"}
+                        flex={1}
+                        mx={"auto"}
+                      />
                     ))}
                   </>
                 )}
+
                 {!loading && (
                   <>
                     {(!data || (data && data.length === 0)) && (
