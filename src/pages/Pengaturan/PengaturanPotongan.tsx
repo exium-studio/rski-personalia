@@ -4,7 +4,7 @@ import MultiSelectJenisPotongan from "../../components/dependent/_Select/MultiSe
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
 import TabelPengaturanPotongan from "../../components/dependent/TabelPengaturanPotongan";
-import TambahPremi from "../../components/independent/TambahPremi";
+import TambahPotongan from "../../components/independent/TambahPotongan";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
@@ -80,7 +80,7 @@ export default function PengaturanPremi() {
           flex={"0 1 fit-content"}
         />
 
-        <TambahPremi minW={"fit-content"} />
+        <TambahPotongan minW={"fit-content"} />
       </HStack>
 
       <TabelPengaturanPotongan filterConfig={filterConfig} />

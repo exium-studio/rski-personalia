@@ -197,7 +197,7 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
       },
       {
         value: item.minimal_rate,
-        td: `Rp ${formatNumber(item.minimal_rate)}`,
+        td: item.minimal_rate ? `Rp ${formatNumber(item.minimal_rate)}` : "",
         isNumeric: true,
         cProps: {
           justify: "end",
@@ -205,7 +205,7 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
       },
       {
         value: item.maksimal_rate,
-        td: `Rp ${formatNumber(item.maksimal_rate)}`,
+        td: item.maksimal_rate ? `Rp ${formatNumber(item.maksimal_rate)}` : "",
         isNumeric: true,
         cProps: {
           justify: "end",

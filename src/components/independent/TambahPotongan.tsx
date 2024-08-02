@@ -36,7 +36,7 @@ import SelectSumberPotongan from "../dependent/_Select/SelectSumberPotongan";
 
 interface Props extends ButtonProps {}
 
-export default function TambahPremi({ ...props }: Props) {
+export default function TambahPotongan({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("tambah-potongan-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
@@ -68,7 +68,7 @@ export default function TambahPremi({ ...props }: Props) {
       const payload = {
         nama_premi: values.nama_premi,
         jenis_premi: values.jenis_premi.value,
-        sumber_potongan: values.sumber_potongan.value,
+        kategori_potongan_id: values.sumber_potongan.value,
         besaran_premi: values.besaran_premi,
         minimal_rate: values.minimal_rate,
         maksimal_rate: values.maksimal_rate,
