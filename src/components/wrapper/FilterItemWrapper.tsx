@@ -44,7 +44,6 @@ export default function FilterItemWrapper({
         _expanded={{
           color: "p.500",
           fontWeight: 500,
-          // borderBottom: "1px solid var(--divider)",
         }}
         _hover={{ bg: "transparent" }}
         justifyContent={"space-between"}

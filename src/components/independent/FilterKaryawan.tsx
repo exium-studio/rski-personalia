@@ -23,13 +23,13 @@ import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import formatNumber from "../../lib/formatNumber";
+import FilterAgama from "../dependent/_FilterOptions/FilterAgama";
 import FilterMasaKerja from "../dependent/_FilterOptions/FilterMasaKerja";
 import FilterStatusAktif from "../dependent/_FilterOptions/FilterStatusAktif";
 import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryawan";
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import FilterAgama from "../dependent/_FilterOptions/FilterAgama";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -56,14 +56,14 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     if (values.status_karyawan && values.status_karyawan.length > 0) {
       count += values.status_karyawan.length;
     }
-    if (values.masa_kerja) {
-      count += 1;
+    if (values.masa_kerja && values.masa_kerja.length > 0) {
+      count += values.masa_kerja.length;
     }
     if (values.status_aktif && values.status_aktif.length > 0) {
       count += values.status_aktif.length;
     }
-    if (values.tgl_masuk) {
-      count += 1;
+    if (values.tgl_masuk && values.tgl_masuk.length > 0) {
+      count += values.tgl_masuk.length;
     }
     if (values.agama && values.agama.length > 0) {
       count += values.agama.length;
@@ -71,7 +71,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     return count;
   }
 
-  function filterData() {
+  function handleApplyFilter() {
+    const filters = localFilterConfig;
+    console.log(localFilterConfig);
     setFilterKaryawan(localFilterConfig);
     backOnClose();
   }
@@ -180,7 +182,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
               </Button>
 
               <Button
-                onClick={filterData}
+                onClick={handleApplyFilter}
                 w={"50%"}
                 colorScheme="ap"
                 className="btn-ap clicky"
