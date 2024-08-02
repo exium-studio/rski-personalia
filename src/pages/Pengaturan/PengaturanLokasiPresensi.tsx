@@ -99,18 +99,24 @@ export default function PengaturanLokasiPresensi() {
   });
 
   const [isData, setIsData] = useState<boolean>(true);
+  // console.log(isData, center);
 
   const formikRef = useRef(formik);
   useEffect(() => {
-    if (data) {
-      setCenter({ lat: data.lat, lng: data.long });
-      formikRef.current.setFieldValue("alamat", data.alamat);
-      formikRef.current.setFieldValue("lat", data.lat);
-      formikRef.current.setFieldValue("long", data.long);
-      formikRef.current.setFieldValue("radius", data.radius);
-    } else {
-      setIsData(false);
-    }
+    const fetchData = async () => {
+      if (data) {
+        await Promise.resolve(); // Wait for the next tick to ensure data is available
+        setCenter({ lat: data.lat, lng: data.long });
+        formikRef.current.setFieldValue("alamat", data.alamat);
+        formikRef.current.setFieldValue("lat", data.lat);
+        formikRef.current.setFieldValue("long", data.long);
+        formikRef.current.setFieldValue("radius", data.radius);
+      } else {
+        setIsData(false);
+      }
+    };
+
+    fetchData();
   }, [data]);
 
   useEffect(() => {
