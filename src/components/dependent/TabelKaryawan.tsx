@@ -34,7 +34,7 @@ export default function TabelKaryawan() {
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<Interface__DetailKaryawan[]>({
       initialData: undefined,
-      url: "/api/rski/dashboard/karyawan/get-data-karyawan",
+      url: `/api/rski/dashboard/karyawan/get-data-karyawan?page=${pageConfig}`,
       payload: {
         filterConfig: filterKaryawan,
       },
@@ -261,11 +261,7 @@ export default function TabelKaryawan() {
               setLimitConfig={setLimitConfig}
               pageConfig={pageConfig}
               setPageConfig={setPageConfig}
-              paginationData={{
-                prev_page_url: "",
-                next_page_url: "",
-                last_page: 1,
-              }}
+              paginationData={paginationData}
               footer={
                 <Text opacity={0.4}>
                   Klik row untuk melihat detail karyawan

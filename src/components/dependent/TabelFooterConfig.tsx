@@ -48,7 +48,7 @@ export default function TabelFooterConfig({
       mt={responsiveSpacing}
       align={"center"}
     >
-      {limitConfig && setLimitConfig && (
+      {typeof limitConfig === "number" && setLimitConfig && (
         <Menu>
           <MenuButton
             ref={limitButtonRef}
@@ -61,7 +61,7 @@ export default function TabelFooterConfig({
           >
             <HStack>
               <Text color={"p.500"}>
-                {limitConfig === -1 ? "Semua" : limitConfig}
+                {limitConfig === 0 ? "Semua" : limitConfig}
               </Text>
               <Text fontWeight={400}>Row</Text>
             </HStack>
@@ -94,9 +94,9 @@ export default function TabelFooterConfig({
             </MenuItem>
 
             <MenuItem
-              color={limitConfig === -1 ? "p.500" : ""}
+              color={limitConfig === 0 ? "p.500" : ""}
               onClick={() => {
-                setLimitConfig(-1);
+                setLimitConfig(0);
               }}
             >
               Semua

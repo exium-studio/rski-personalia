@@ -21,7 +21,7 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
   const [data, setData] = useState<number | undefined>(page);
 
   const validation = () => {
-    if (data && data > 0 && data <= pagination.last_page) {
+    if (data && data > 0 && data <= pagination.meta?.last_page) {
       return true;
     }
     return false;
@@ -29,7 +29,7 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (data && data > 0 && data <= pagination.last_page) {
+    if (data && data > 0 && data <= pagination.meta?.last_page) {
       setPage(data);
     }
   };
@@ -56,7 +56,7 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
 
         <MenuList minW={"180px"} maxW={"180px"} zIndex={99}>
           <MenuGroup
-            title={`Terakhir : ${pagination.last_page}`}
+            title={`Terakhir : ${pagination.meta?.last_page}`}
             fontWeight={400}
           ></MenuGroup>
           <form id={"jumpToPageForm"} onSubmit={handleSubmit}>
