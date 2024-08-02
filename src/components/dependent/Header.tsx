@@ -17,14 +17,15 @@ import {
   RiRestartLine,
 } from "@remixicon/react";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher";
+import { useContentBgColor } from "../../constant/colors";
 import { iconSize } from "../../constant/sizes";
+import formatDate from "../../lib/formatDate";
 import useScreenWidth from "../../lib/useScreenWidth";
 import AdminMiniProfile from "../independent/AdminMiniProfile";
 import BackButton from "../independent/BackButton";
 import { ColorModeSwitcherHeaderMenu } from "../independent/ColorModeSwitcherHeaderMenu";
 import NotificationButton from "../independent/NotificationModal";
-import { useContentBgColor } from "../../constant/colors";
-import formatDate from "../../lib/formatDate";
+import RefreshButton from "../independent/RefreshButton";
 
 interface Props extends StackProps {
   title?: string;
@@ -71,19 +72,7 @@ export default function Header({
           </Text>
 
           <ButtonGroup>
-            <IconButton
-              aria-label="refresh button"
-              className="btn-solid clicky"
-              icon={
-                <Icon
-                  as={RiRestartLine}
-                  fontSize={20}
-                  onClick={() => {
-                    window.location.reload();
-                  }}
-                />
-              }
-            />
+            <RefreshButton className="btn-solid clicky" />
 
             <NotificationButton aria-label="Notification Button" />
 

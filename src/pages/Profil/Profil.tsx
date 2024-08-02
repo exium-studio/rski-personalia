@@ -5,7 +5,6 @@ import {
   ButtonProps,
   HStack,
   Icon,
-  IconButton,
   Image,
   Modal,
   ModalBody,
@@ -19,10 +18,17 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { RiLogoutBoxLine, RiRestartLine } from "@remixicon/react";
+import { RiLogoutBoxLine } from "@remixicon/react";
+import { useEffect, useState } from "react";
+import Highlighter from "react-highlight-words";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 import DisclosureHeader from "../../components/dependent/DisclosureHeader";
+import SearchComponent from "../../components/dependent/input/SearchComponent";
+import JenisKaryawanBadge from "../../components/dependent/JenisKaryawanBadge";
+import SmallLink from "../../components/dependent/SmallLink";
+import FlexLine from "../../components/independent/FlexLine";
 import NotificationModal from "../../components/independent/NotificationModal";
+import RefreshButton from "../../components/independent/RefreshButton";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
@@ -32,12 +38,6 @@ import useGetUserData from "../../hooks/useGetUserData";
 import useLogout from "../../hooks/useLogout";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
-import SearchComponent from "../../components/dependent/input/SearchComponent";
-import { useEffect, useState } from "react";
-import Highlighter from "react-highlight-words";
-import FlexLine from "../../components/independent/FlexLine";
-import JenisKaryawanBadge from "../../components/dependent/JenisKaryawanBadge";
-import SmallLink from "../../components/dependent/SmallLink";
 import formatMasaKerja from "../../lib/formatMasaKerja";
 import formatNumber from "../../lib/formatNumber";
 
@@ -294,19 +294,7 @@ export default function Profil() {
             </Text>
 
             <ButtonGroup>
-              <IconButton
-                aria-label="refresh button"
-                className="btn-solid clicky"
-                icon={
-                  <Icon
-                    as={RiRestartLine}
-                    fontSize={20}
-                    onClick={() => {
-                      window.location.reload();
-                    }}
-                  />
-                }
-              />
+              <RefreshButton className="btn-solid clicky" />
 
               <NotificationModal aria-label="Notification Button" />
 
