@@ -236,7 +236,7 @@ export default function NavContainer({
 
         <CContainer
           bg={useContentBgColor()}
-          pb={["86px", null, 6]}
+          pb={["86px", null, 0]}
           align={"stretch"}
           h={"100vh"}
           maxW={smScreen ? "100%" : "calc(100% - 72px)"}
