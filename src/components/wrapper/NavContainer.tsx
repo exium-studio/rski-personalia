@@ -149,9 +149,14 @@ export default function NavContainer({
   useEffect(() => {
     setLoading(true);
     if (allowed && allowed.length > 0) {
-      const hasPermission = userData.permissions.some((permission: any) =>
-        allowed.includes(permission.id)
-      );
+      let hasPermission = false;
+
+      if (userData?.permissions) {
+        hasPermission = userData?.permissions.some((permission: any) =>
+          allowed.includes(permission.id)
+        );
+      }
+
       if (!hasPermission) {
         navigate("/");
         logout();
@@ -163,7 +168,7 @@ export default function NavContainer({
     } else {
       setLoading(false);
     }
-  }, [allowed, userData.permissions, navigate, logout]);
+  }, [allowed, userData?.permissions, navigate, logout]);
 
   return (
     <Container>
