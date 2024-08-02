@@ -12,6 +12,7 @@ import {
   ModalOverlay,
   SimpleGrid,
   Text,
+  Tooltip,
   useDisclosure,
   Wrap,
 } from "@chakra-ui/react";
@@ -133,15 +134,20 @@ export default function ColumnsConfigModal({
                             setSelected(newSelected);
                           }}
                         >
-                          <Text
-                            opacity={
-                              selected && selected.some((item) => item === i)
-                                ? 1
-                                : 0.6
-                            }
-                          >
-                            {option.label}
-                          </Text>
+                          <Tooltip label={option.label} openDelay={500}>
+                            <Text
+                              opacity={
+                                selected && selected.some((item) => item === i)
+                                  ? 1
+                                  : 0.6
+                              }
+                              overflow={"hidden"}
+                              whiteSpace={"nowrap"}
+                              textOverflow={"ellipsis"}
+                            >
+                              {option.label}
+                            </Text>
+                          </Tooltip>
                         </Button>
                       )
                     );
@@ -153,7 +159,7 @@ export default function ColumnsConfigModal({
                 <Text fontWeight={500} mb={4} opacity={0.6}>
                   Preset Kolom
                 </Text>
-                <SimpleGrid columns={[1, 2, 3]} gap={2}>
+                <SimpleGrid columns={[1, 2, 3]} gap={2} flex={1}>
                   {presetColumns.map((preset, i) => (
                     <Button
                       key={i}
@@ -162,8 +168,17 @@ export default function ColumnsConfigModal({
                       onClick={() => {
                         setSelected(preset.columns);
                       }}
+                      h={"100%"}
                     >
-                      {preset.label}
+                      <Tooltip label={preset.label} openDelay={500}>
+                        <Text
+                          overflow={"hidden"}
+                          whiteSpace={"nowrap"}
+                          textOverflow={"ellipsis"}
+                        >
+                          {preset.label}
+                        </Text>
+                      </Tooltip>
                     </Button>
                   ))}
                 </SimpleGrid>

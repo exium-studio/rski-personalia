@@ -43,8 +43,6 @@ export default function TabelKaryawan() {
     dependencies: [limitConfig, pageConfig, filterKaryawan],
   });
 
-  console.log(data);
-
   const formattedHeader = [
     {
       th: "Nama",
