@@ -193,7 +193,7 @@ export const globalTheme = extendTheme({
           bg: "#303030df",
           color: "white",
           backdropFilter: "blur(20px)",
-          border: "1px solid var(--divider3)",
+          border: "1px solid var(--divider)",
           overflow: "hidden",
           boxShadow: "none",
           borderRadius: 8,
