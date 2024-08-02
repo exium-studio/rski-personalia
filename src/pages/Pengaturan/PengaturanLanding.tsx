@@ -1,5 +1,5 @@
 import { Icon, Text, VStack } from "@chakra-ui/react";
-import { RiSettingsLine } from "@remixicon/react";
+import { RiSettingsFill } from "@remixicon/react";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
@@ -21,7 +21,7 @@ export default function PengaturanLanding() {
       flex={"1 1 600px"}
     >
       <VStack p={responsiveSpacing} justify={"center"} flex={1}>
-        <Icon as={RiSettingsLine} fontSize={120} opacity={0.6} />
+        <Icon as={RiSettingsFill} fontSize={120} opacity={0.6} />
         <Text textAlign={"center"} fontWeight={600} fontSize={20} opacity={0.6}>
           Pengaturan
         </Text>

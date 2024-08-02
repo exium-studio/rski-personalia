@@ -1,7 +1,7 @@
 const formatDate = (dateString: Date | string, options?: any) => {
   // Cek jika dateString kosong atau tidak valid
   if (!dateString) {
-    return "-";
+    return "";
   }
 
   const defaultFormat: Intl.DateTimeFormatOptions = {

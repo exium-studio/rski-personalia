@@ -319,6 +319,7 @@ export default function Profil() {
             borderRadius={12}
             bg={lightDarkColor}
             overflowY={"auto"}
+            pb={responsiveSpacing}
           >
             <HStack p={responsiveSpacing}>
               <SearchComponent
@@ -336,8 +337,7 @@ export default function Profil() {
               className="scrollY"
               bg={lightDarkColor}
               gap={responsiveSpacing}
-              p={responsiveSpacing}
-              pt={"0 !important"}
+              px={responsiveSpacing}
             >
               <VStack align={"stretch"} gap={0}>
                 <Text fontSize={20} fontWeight={600} mb={4}>

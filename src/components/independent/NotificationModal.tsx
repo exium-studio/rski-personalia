@@ -167,14 +167,12 @@ export default function NotificationModal({ ...props }: Props) {
               <>
                 {loading && (
                   <>
-                    {Array.from({ length: 10 }).map((_, i) => (
-                      <Skeleton
-                        key={i}
-                        minH={"110.63px"}
-                        flex={1}
-                        mx={"auto"}
-                      />
-                    ))}
+                    <Skeleton
+                      minH={"400px"}
+                      flex={1}
+                      mx={"auto"}
+                      borderRadius={0}
+                    />
                   </>
                 )}
 

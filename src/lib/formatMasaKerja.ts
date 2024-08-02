@@ -1,6 +1,6 @@
 const formatMasaKerja = (bulan: number): string => {
   if (bulan <= 0) {
-    return "-";
+    return "";
   }
 
   const tahun = Math.floor(bulan / 12);
