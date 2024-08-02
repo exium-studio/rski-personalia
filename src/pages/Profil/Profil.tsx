@@ -135,7 +135,7 @@ export default function Profil() {
   }, [search]);
 
   return (
-    <CWrapper p={0} position={"relative"}>
+    <CWrapper p={"0 !important"} position={"relative"}>
       <Stack
         flexShrink={0}
         zIndex={2}
@@ -144,7 +144,6 @@ export default function Profil() {
         align={"stretch"}
         gap={0}
         overflowY={"auto"}
-        minH={"100vh"}
       >
         <VStack
           p={responsiveSpacing}
@@ -321,7 +320,7 @@ export default function Profil() {
             bg={lightDarkColor}
             overflowY={"auto"}
           >
-            <HStack p={responsiveSpacing} pb={"0 !important"}>
+            <HStack p={responsiveSpacing}>
               <SearchComponent
                 name="search"
                 onChangeSetter={(input) => {
@@ -338,6 +337,7 @@ export default function Profil() {
               bg={lightDarkColor}
               gap={responsiveSpacing}
               p={responsiveSpacing}
+              pt={"0 !important"}
             >
               <VStack align={"stretch"} gap={0}>
                 <Text fontSize={20} fontWeight={600} mb={4}>
