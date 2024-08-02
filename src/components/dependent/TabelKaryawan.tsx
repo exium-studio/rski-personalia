@@ -8,6 +8,7 @@ import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
 import formatMasaKerja from "../../lib/formatMasaKerja";
 import NoData from "../independent/NoData";
+import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
@@ -17,7 +18,6 @@ import Retry from "./Retry";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
-import NotFound from "../independent/NotFound";
 
 export default function TabelKaryawan() {
   // Limit Config
@@ -27,7 +27,7 @@ export default function TabelKaryawan() {
   // Karyawan Detail Disclosure
   const { isOpen, onOpen, onClose } = useDisclosure();
   // Filter Config
-  const { filterKaryawan } = useFilterKaryawan();
+  const { formattedFilterKaryawan } = useFilterKaryawan();
   // Columns Config
   const { columnsConfig } = useKaryawanTableColumnsConfig();
 
@@ -36,10 +36,10 @@ export default function TabelKaryawan() {
       initialData: undefined,
       url: `/api/rski/dashboard/karyawan/get-data-karyawan?page=${pageConfig}`,
       payload: {
-        filterConfig: filterKaryawan,
+        filterConfig: formattedFilterKaryawan,
       },
       limit: limitConfig,
-      dependencies: [limitConfig, pageConfig, filterKaryawan],
+      dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
     });
 
   const formattedHeader = [

@@ -27,6 +27,8 @@ export default function FilterStatusAktif({
     },
   ];
 
+  console.log(filterConfig.status_aktif);
+
   // SX
 
   return (
@@ -48,7 +50,7 @@ export default function FilterStatusAktif({
             const active =
               filterConfig?.status_aktif &&
               filterConfig?.status_aktif.some(
-                (status: any) => status.value === data.value
+                (status: any) => status?.value === data?.value
               );
 
             return (

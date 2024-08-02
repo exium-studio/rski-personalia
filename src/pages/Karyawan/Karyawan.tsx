@@ -15,12 +15,13 @@ import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 export default function Karyawan() {
   // Filter Config
-  const { setFilterKaryawan } = useFilterKaryawan();
+  const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterKaryawan({ search });
+      setFormattedFilterKaryawan({ search });
     }, 300);
 
     return () => {

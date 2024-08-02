@@ -40,11 +40,15 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   useBackOnClose("filter-karyawan", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
-  const { defaultFilterKaryawan, filterKaryawan, setFilterKaryawan } =
-    useFilterKaryawan();
+  const {
+    defaultFilterKaryawan,
+    filterKaryawan,
+    setFilterKaryawan,
+    setFormattedFilterKaryawan,
+  } = useFilterKaryawan();
 
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
-    defaultFilterKaryawan
+    filterKaryawan
   );
 
   function filterCount(values: any) {
@@ -86,10 +90,8 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       agama: localFilterConfig.agama.map((item: any) => item.value),
     };
 
-    // console.log("local", localFilterConfig);
-    // console.log(formattedFilters);
-
-    setFilterKaryawan(formattedFilters);
+    setFilterKaryawan(localFilterConfig);
+    setFormattedFilterKaryawan(formattedFilters);
     backOnClose();
   }
 
