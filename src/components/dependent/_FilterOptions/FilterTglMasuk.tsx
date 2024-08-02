@@ -15,7 +15,7 @@ export default function FilterTglMasuk({
   function confirmDate(date: Date | undefined) {
     setFilterConfig((ps: any) => ({
       ...ps,
-      tgl_masuk: date ? [date] : [],
+      tgl_masuk: date,
     }));
   }
 
@@ -37,8 +37,8 @@ export default function FilterTglMasuk({
             confirmDate(input);
           }}
           inputValue={
-            filterConfig.tgl_masuk[0]
-              ? new Date(filterConfig.tgl_masuk[0])
+            filterConfig.tgl_masuk
+              ? new Date(filterConfig.tgl_masuk)
               : undefined
           }
         />

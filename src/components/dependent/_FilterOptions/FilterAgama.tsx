@@ -2,39 +2,24 @@ import { HStack, Text, VStack, Wrap } from "@chakra-ui/react";
 import { Dispatch } from "react";
 import DataNotFound from "../../independent/DataNotFound";
 import FilterItemWrapper from "../../wrapper/FilterItemWrapper";
+import { optionsAgama } from "../../../constant/selectOptions";
 
 interface Props {
   filterConfig: any;
   setFilterConfig: Dispatch<any>;
 }
 
-export default function FilterStatusAktif({
-  filterConfig,
-  setFilterConfig,
-}: Props) {
-  const data = [
-    {
-      value: 0,
-      label: "Belum Aktif",
-    },
-    {
-      value: 1,
-      label: "Aktif",
-    },
-    {
-      value: 2,
-      label: "Tidak Aktif",
-    },
-  ];
+export default function FilterAgama({ filterConfig, setFilterConfig }: Props) {
+  const data = optionsAgama;
 
   // SX
 
   return (
     <FilterItemWrapper
-      title="Status Aktif"
-      filterValue={filterConfig.status_aktif}
+      title="Agama"
+      filterValue={filterConfig.agama}
       setFilterConfig={setFilterConfig}
-      filterKey="status_aktif"
+      filterKey="agama"
     >
       <VStack align={"stretch"} gap={0}>
         {data?.length === 0 && (
@@ -46,8 +31,8 @@ export default function FilterStatusAktif({
         <Wrap py={4} w={"100%"}>
           {data?.map((data, i) => {
             const active =
-              filterConfig?.status_aktif &&
-              filterConfig?.status_aktif.some(
+              filterConfig?.agama &&
+              filterConfig?.agama.some(
                 (status: any) => status.value === data.value
               );
 
@@ -69,28 +54,26 @@ export default function FilterStatusAktif({
                 transition={"200ms"}
                 onClick={() => {
                   setFilterConfig((ps: any) => {
-                    // Mengecek apakah data sudah ada dalam status_aktif
+                    // Mengecek apakah data sudah ada dalam agama
                     const isDataExist =
-                      ps.status_aktif &&
-                      ps.status_aktif.some(
+                      ps.agama &&
+                      ps.agama.some(
                         (status: any) => status.value === data.value
                       );
 
-                    // Jika data sudah ada, maka hapus data dari status_aktif
+                    // Jika data sudah ada, maka hapus data dari agama
                     if (isDataExist) {
                       return {
                         ...ps,
-                        status_aktif: ps.status_aktif.filter(
+                        agama: ps.agama.filter(
                           (status: any) => status.value !== data.value
                         ),
                       };
                     } else {
-                      // Jika data belum ada, maka tambahkan data ke status_aktif
+                      // Jika data belum ada, maka tambahkan data ke agama
                       return {
                         ...ps,
-                        status_aktif: ps.status_aktif
-                          ? [...ps.status_aktif, data]
-                          : [data],
+                        agama: ps.agama ? [...ps.agama, data] : [data],
                       };
                     }
                   });

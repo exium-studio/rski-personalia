@@ -1,5 +1,4 @@
-import { BadgeProps } from "@chakra-ui/react";
-import BooleanBadge from "./BooleanBadge";
+import { Badge, BadgeProps } from "@chakra-ui/react";
 
 interface Props extends BadgeProps {
   data: boolean | number | null;
@@ -9,15 +8,13 @@ export default function StatusAktifBadge({ data, ...props }: Props) {
   // SX
 
   return (
-    <BooleanBadge
-      data={data}
+    <Badge
       borderRadius={"full"}
       textAlign={"center"}
-      trueValue="Aktif"
-      nullValue="Belum Aktif"
-      falseValue="Tidak Aktif"
-      colorScheme={data ? "green" : data === null ? "gray" : "red"}
+      colorScheme={data ? "green" : data === 0 ? "gray" : "red"}
       {...props}
-    />
+    >
+      {data ? "Aktif" : data === 0 ? "Belum Aktif" : "Tidak Aktif"}
+    </Badge>
   );
 }

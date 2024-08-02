@@ -29,6 +29,7 @@ import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryaw
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import FilterAgama from "../dependent/_FilterOptions/FilterAgama";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -55,14 +56,17 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     if (values.status_karyawan && values.status_karyawan.length > 0) {
       count += values.status_karyawan.length;
     }
-    if (values.masa_kerja && values.masa_kerja.length > 0) {
-      count += values.masa_kerja.length;
+    if (values.masa_kerja) {
+      count += 1;
     }
     if (values.status_aktif && values.status_aktif.length > 0) {
       count += values.status_aktif.length;
     }
-    if (values.tgl_masuk && values.tgl_masuk.length > 0) {
-      count += values.tgl_masuk.length;
+    if (values.tgl_masuk) {
+      count += 1;
+    }
+    if (values.agama && values.agama.length > 0) {
+      count += values.agama.length;
     }
     return count;
   }
@@ -80,18 +84,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   return (
     <>
       <Button
-        // variant={"outline"}
-        // colorScheme="ap"
         className="btn-outline clicky"
         _focus={{ border: "1px solid var(--p500)" }}
-        leftIcon={
-          <Icon
-            as={RiEqualizer3Fill}
-            fontSize={iconSize}
-            // color={chartColors[0]}
-            // opacity={0.4}
-          />
-        }
+        leftIcon={<Icon as={RiEqualizer3Fill} fontSize={iconSize} />}
         flexShrink={0}
         pl={5}
         onClick={() => {
@@ -161,6 +156,11 @@ export default function FilterKaryawan({ title, ...props }: Props) {
               />
 
               <FilterTglMasuk
+                filterConfig={localFilterConfig}
+                setFilterConfig={setLocalFilterConfig}
+              />
+
+              <FilterAgama
                 filterConfig={localFilterConfig}
                 setFilterConfig={setLocalFilterConfig}
               />
