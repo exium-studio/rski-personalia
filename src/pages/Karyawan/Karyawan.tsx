@@ -27,7 +27,7 @@ export default function Karyawan() {
     return () => {
       clearTimeout(handler);
     };
-  }, [search, setFilterKaryawan]);
+  }, [search, setFilterKaryawan, setFormattedFilterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();

@@ -19,7 +19,7 @@ type State = {
 type Actions = {
   setFilterKaryawan: (filterKaryawan: Partial<State["filterKaryawan"]>) => void;
   setFormattedFilterKaryawan: (
-    filterKaryawan: Partial<State["filterKaryawan"]>
+    filterKaryawan: Partial<State["formattedFilterKaryawan"]>
   ) => void;
 };
 

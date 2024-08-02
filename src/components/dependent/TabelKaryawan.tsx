@@ -31,12 +31,13 @@ export default function TabelKaryawan() {
   // Columns Config
   const { columnsConfig } = useKaryawanTableColumnsConfig();
 
+  console.log("formatted", formattedFilterKaryawan);
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<Interface__DetailKaryawan[]>({
       initialData: undefined,
       url: `/api/rski/dashboard/karyawan/get-data-karyawan?page=${pageConfig}`,
       payload: {
-        filterConfig: formattedFilterKaryawan,
+        ...formattedFilterKaryawan,
       },
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
