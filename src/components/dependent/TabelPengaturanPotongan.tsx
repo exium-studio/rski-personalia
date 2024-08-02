@@ -14,6 +14,7 @@ import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisc
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import EditPotonganModalDisclosure from "../independent/EditPotonganModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -26,10 +27,12 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <MenuItem>
-          <Text>Edit</Text>
-          <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <EditPotonganModalDisclosure rowData={rowData}>
+          <MenuItem>
+            <Text>Edit</Text>
+            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </EditPotonganModalDisclosure>
       );
     },
     (rowData: any) => {
@@ -123,6 +126,10 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
       isSortable: true,
     },
     {
+      th: "Sumber Potongan",
+      isSortable: true,
+    },
+    {
       th: "Besaran Premi",
       isSortable: true,
       cProps: {
@@ -185,6 +192,11 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
         isNumeric: true,
       },
       {
+        original_value: item.kategori_potongan,
+        value: item.kategori_potongan.label,
+        td: item.kategori_potongan.label,
+      },
+      {
         value: item.besaran_premi,
         td:
           item.jenis_premi === 1
@@ -213,8 +225,6 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
       },
     ],
   }));
-
-  console.log(filterConfig);
 
   return (
     <>

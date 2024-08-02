@@ -1,10 +1,10 @@
 import {
+  Box,
+  BoxProps,
   Button,
-  ButtonProps,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Icon,
   Input,
   InputGroup,
   InputLeftElement,
@@ -19,27 +19,32 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import req from "../../constant/req";
-import { iconSize } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import SelectJenisPremi from "../dependent/_Select/SelectJenisPotongan";
+import SelectJenisPotongan from "../dependent/_Select/SelectJenisPotongan";
 import SelectSumberPotongan from "../dependent/_Select/SelectSumberPotongan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
 
-interface Props extends ButtonProps {}
+interface Props extends BoxProps {
+  rowData: any;
+  children?: ReactNode;
+}
 
-export default function TambahPotongan({ ...props }: Props) {
+export default function EditPotonganModalDisclosure({
+  rowData,
+  children,
+  ...props
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("tambah-potongan-modal", isOpen, onOpen, onClose);
+  useBackOnClose(`edit-potongan-modal-${rowData.id}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -105,18 +110,40 @@ export default function TambahPotongan({ ...props }: Props) {
     },
   });
 
+  const formikRef = useRef(formik);
+
+  useEffect(() => {
+    formikRef.current.setFieldValue(
+      "nama_premi",
+      rowData.columnsFormat[0].value
+    );
+    formikRef.current.setFieldValue("jenis_premi", {
+      value: rowData.columnsFormat[2].value,
+      label: rowData.columnsFormat[2].value ? "Nominal" : "Persentase",
+    });
+    formikRef.current.setFieldValue("sumber_potongan", {
+      value: rowData.columnsFormat[3].original_value.id,
+      label: rowData.columnsFormat[3].original_value.label,
+    });
+    formikRef.current.setFieldValue(
+      "besaran_premi",
+      rowData.columnsFormat[4].value
+    );
+    formikRef.current.setFieldValue(
+      "minimal_rate",
+      rowData.columnsFormat[5]?.value
+    );
+    formikRef.current.setFieldValue(
+      "maximal_rate",
+      rowData.columnsFormat[6]?.value
+    );
+  }, [rowData]);
+
   return (
     <>
-      <Button
-        className="btn-ap clicky"
-        colorScheme="ap"
-        onClick={onOpen}
-        leftIcon={<Icon as={RiAddCircleFill} fontSize={iconSize} />}
-        pl={5}
-        {...props}
-      >
-        Tambah Potongan
-      </Button>
+      <Box onClick={onOpen} {...props}>
+        {children}
+      </Box>
 
       <Modal
         isOpen={isOpen}
@@ -126,19 +153,20 @@ export default function TambahPotongan({ ...props }: Props) {
         }}
         initialFocusRef={initialRef}
         isCentered
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Tambah Potongan"
+              title="Edit Unit Kerja"
               onClose={() => {
                 formik.resetForm();
               }}
             />
           </ModalHeader>
           <ModalBody>
-            <form id="tambahPotonganForm" onSubmit={formik.handleSubmit}>
+            <form id="editPotonganForm" onSubmit={formik.handleSubmit}>
               <FormControl
                 mb={4}
                 isInvalid={formik.errors.nama_premi ? true : false}
@@ -189,7 +217,7 @@ export default function TambahPotongan({ ...props }: Props) {
                   Jenis Potongan
                   <RequiredForm />
                 </FormLabel>
-                <SelectJenisPremi
+                <SelectJenisPotongan
                   name="jenis_premi"
                   onConfirm={(input) => {
                     formik.setFieldValue("jenis_premi", input);
@@ -303,16 +331,17 @@ export default function TambahPotongan({ ...props }: Props) {
               </FormControl>
             </form>
           </ModalBody>
+
           <ModalFooter>
             <Button
               type="submit"
-              form="tambahPotonganForm"
+              form="editPotonganForm"
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}
               isLoading={loading}
             >
-              Tambahkan
+              Simpan
             </Button>
           </ModalFooter>
         </ModalContent>

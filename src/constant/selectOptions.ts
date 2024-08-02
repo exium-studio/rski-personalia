@@ -168,11 +168,11 @@ const optionsTipeTransfer = [
 const optionsSumberPotongan = [
   {
     value: 1,
-    label: "Gaji Pokok",
+    label: "Gaji Bruto",
   },
   {
     value: 2,
-    label: "Gaji Bruto",
+    label: "Gaji Pokok",
   },
 ];
 
