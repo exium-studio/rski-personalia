@@ -57,7 +57,7 @@ export default function EditPotonganModalDisclosure({
       nama_premi: "",
       jenis_premi: {
         value: 0,
-        label: "Persentase",
+        label: "Persentase (%)",
       },
       sumber_potongan: undefined as any,
       besaran_premi: undefined,
@@ -78,10 +78,11 @@ export default function EditPotonganModalDisclosure({
         besaran_premi: values.besaran_premi,
         minimal_rate: values.minimal_rate,
         maksimal_rate: values.maksimal_rate,
+        _method: "patch",
       };
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/premi`, payload)
+        .post(`/api/rski/dashboard/pengaturan/premi/${rowData.id}`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -119,7 +120,7 @@ export default function EditPotonganModalDisclosure({
     );
     formikRef.current.setFieldValue("jenis_premi", {
       value: rowData.columnsFormat[2].value,
-      label: rowData.columnsFormat[2].value ? "Nominal" : "Persentase",
+      label: rowData.columnsFormat[2].value ? "Nominal" : "Persentase (%)",
     });
     formikRef.current.setFieldValue("sumber_potongan", {
       value: rowData.columnsFormat[3].original_value.id,

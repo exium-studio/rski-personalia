@@ -52,7 +52,7 @@ export default function TambahPotongan({ ...props }: Props) {
       nama_premi: "",
       jenis_premi: {
         value: 0,
-        label: "Persentase",
+        label: "Persentase (%)",
       },
       sumber_potongan: undefined as any,
       besaran_premi: undefined,

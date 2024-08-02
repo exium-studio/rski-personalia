@@ -119,7 +119,7 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
       },
     },
     {
-      th: "Persentase TER",
+      th: "Persentase TER (%)",
       isSortable: true,
       cProps: {
         justify: "center",

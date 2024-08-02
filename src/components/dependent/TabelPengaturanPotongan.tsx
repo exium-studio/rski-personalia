@@ -188,7 +188,7 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
       },
       {
         value: item.jenis_premi,
-        td: item.jenis_premi === 1 ? "Nominal" : "Persentase",
+        td: item.jenis_premi === 1 ? "Nominal" : "Persentase (%)",
         isNumeric: true,
       },
       {

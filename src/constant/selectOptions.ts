@@ -135,7 +135,7 @@ const optionsInboxType = [
 const optionsJenisPotongan = [
   {
     value: 0,
-    label: "Persentase",
+    label: "Persentase (%)",
   },
   {
     value: 1,
