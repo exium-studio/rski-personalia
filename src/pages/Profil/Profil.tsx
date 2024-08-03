@@ -115,7 +115,6 @@ export default function Profil() {
   const lightDarkColor = useLightDarkColor();
 
   const userData = useGetUserData();
-  console.log(userData);
 
   const [search, setSearch] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string[]>([]);
