@@ -57,7 +57,7 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
 
           <Wrap m={"auto"} spacing={responsiveSpacing}>
             <VStack flex={"1 1 0"} my={responsiveSpacing} position={"relative"}>
-              <VStack w={"100% !important"} className="doughnutChartContainer">
+              <VStack w={"100%"} className="doughnutChartContainer">
                 <ChartDoughnut labels={labels} datasets={datasets} />
               </VStack>
 
@@ -87,6 +87,7 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
                   h={"10px"}
                   bg={"orange.200"}
                 />
+
                 <Text>Tetap</Text>
 
                 <Text ml={"auto"}>{data[0]}</Text>
