@@ -89,7 +89,7 @@ export default function DetailKeluargaKaryawanModalDisclosure({
               <>
                 {loading && (
                   <>
-                    <ComponentSpinner />
+                    <ComponentSpinner m={"auto"} />
                   </>
                 )}
                 {!loading && (
@@ -132,19 +132,6 @@ export default function DetailKeluargaKaryawanModalDisclosure({
                               {data.jumlah_keluarga || 0}
                             </Text>
                           </VStack>
-
-                          {/* <HStack ml={"auto"}>
-                            <Button
-                              leftIcon={
-                                <Icon as={RiCheckboxFill} fontSize={iconSize} />
-                              }
-                              pl={5}
-                              className="btn-ap clicky"
-                              colorScheme="ap"
-                            >
-                              Persetujuan
-                            </Button>
-                          </HStack> */}
                         </Wrap>
 
                         <TabelDetailKeluargaKaryawan
