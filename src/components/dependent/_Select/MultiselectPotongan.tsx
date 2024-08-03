@@ -2,12 +2,12 @@ import { ButtonProps, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import req from "../../../constant/req";
-import SingleSelectModal from "../input/SingleSelectModal";
+import MultipleSelectModal from "../input/MultipleSelectModal";
 
 interface Props extends ButtonProps {
   name: string;
-  onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
-  inputValue: Interface__SelectOption | undefined;
+  onConfirm: (inputValue: Interface__SelectOption[] | undefined) => void;
+  inputValue: Interface__SelectOption[] | undefined;
   withSearch?: boolean;
   optionsDisplay?: "list" | "chip";
   isError?: boolean;
@@ -15,7 +15,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function SelectPtkp({
+export default function MultiselectPotongan({
   name,
   onConfirm,
   inputValue,
@@ -36,12 +36,12 @@ export default function SelectPtkp({
   useEffect(() => {
     if (isOpen && !options) {
       req
-        .get("/api/get-list-ptkp")
+        .get("/api/get-list-premi")
         .then((r) => {
           if (r.status === 200) {
             const options = r.data.data.map((item: any) => ({
               value: item.id,
-              label: item.kode_ptkp,
+              label: item.nama_premi,
             }));
             setOptions(options);
           }
@@ -57,15 +57,13 @@ export default function SelectPtkp({
   }, [isOpen, options]);
 
   return (
-    <SingleSelectModal
-      id="select-ptkp-modal"
+    <MultipleSelectModal
+      id="multi-select-potongan-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
       onClose={onClose}
-      options={options?.sort((a, b) => {
-        return a.label.localeCompare(b.label);
-      })}
+      options={options}
       onConfirm={(input) => {
         onConfirm(input);
       }}
@@ -73,7 +71,7 @@ export default function SelectPtkp({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih PTKP"}
+      placeholder={placeholder || "Multi Pilih Potongan"}
       nonNullable={nonNullable}
       {...props}
     />

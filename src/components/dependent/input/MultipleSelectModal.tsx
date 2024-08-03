@@ -136,7 +136,7 @@ export default function MultipleSelectModal({
         }
         {...props}
       >
-        <Box overflowX={"auto"} className="noScroll">
+        <Box w={"100%"} overflowX={"auto"} className="noScroll">
           <HStack w={"100%"}>
             {inputValue && inputValue.length > 0 ? (
               inputValue.map((value, i) => {

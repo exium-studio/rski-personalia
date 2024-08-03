@@ -44,18 +44,17 @@ import SelectUnitKerja from "../../components/dependent/_Select/SelectUnitKerja"
 import DatePickerModal from "../../components/dependent/input/DatePickerModal";
 import RequiredForm from "../../components/form/RequiredForm";
 import { useLightDarkColor } from "../../constant/colors";
-import { responsiveSpacing } from "../../constant/sizes";
-import { iconSize } from "../../constant/sizes";
+import req from "../../constant/req";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import useScreenHeight from "../../lib/useScreenHeight";
 import useScreenWidth from "../../lib/useScreenWidth";
 import CContainer from "../wrapper/CContainer";
-import SelectPotongan from "./_Select/SelectPotongan";
+import MultiselectPotongan from "./_Select/MultiselectPotongan";
 import DisclosureHeader from "./DisclosureHeader";
 import NumberInput from "./input/NumberInput";
-import req from "../../constant/req";
-import useRenderTrigger from "../../global/useRenderTrigger";
 
 const validationSchemaStep1 = yup.object({
   nama_karyawan: yup.string().required("Harus diisi"),
@@ -63,24 +62,24 @@ const validationSchemaStep1 = yup.object({
   no_rm: yup.string().required("Harus diisi"),
   no_manulife: yup.string().required("Harus diisi"),
   tgl_masuk: yup.string().required("Harus diisi"),
-  status_karyawan: yup.mixed().required("Harus diisi"),
-  unit_kerja: yup.mixed().required("Harus diisi"),
-  jabatan: yup.mixed().required("Harus diisi"),
-  kompetensi: yup.mixed(),
-  role: yup.mixed().required("Harus diisi"),
+  status_karyawan: yup.object().required("Harus diisi"),
+  unit_kerja: yup.object().required("Harus diisi"),
+  jabatan: yup.object().required("Harus diisi"),
+  kompetensi: yup.object(),
+  role: yup.object().required("Harus diisi"),
 });
 
 const validationSchemaStep2 = yup.object({
-  kelompok_gaji: yup.mixed().required("Harus diisi"),
+  kelompok_gaji: yup.object().required("Harus diisi"),
   no_rekening: yup.string().required("Harus diisi"),
-  tunjangan_uang_lembur: yup.string().required("Harus diisi"),
+  tunjangan_jabatan: yup.string().required("Harus diisi"),
   tunjangan_fungsional: yup.string().required("Harus diisi"),
   tunjangan_khusus: yup.string().required("Harus diisi"),
   tunjangan_lainnya: yup.string().required("Harus diisi"),
   uang_lembur: yup.string().required("Harus diisi"),
   uang_makan: yup.string().required("Harus diisi"),
-  ptkp: yup.mixed().required("Harus diisi"),
-  potongan: yup.mixed(),
+  ptkp: yup.object().required("Harus diisi"),
+  potongan: yup.array(),
 });
 
 const validationSchemaStep3 = yup.object({
@@ -118,55 +117,51 @@ export default function TambahKaryawanModal({ ...props }: Props) {
       no_rm: "",
       no_manulife: "",
       tgl_masuk: "",
-      status_karyawan: "" as any,
-      unit_kerja: "" as any,
-      jabatan: "" as any,
-      kompetensi: "" as any,
-      role: "" as any,
-      kelompok_gaji: "" as any,
+      status_karyawan: undefined as any,
+      unit_kerja: undefined as any,
+      jabatan: undefined as any,
+      kompetensi: undefined as any,
+      role: undefined as any,
+      kelompok_gaji: undefined as any,
       no_rekening: "",
-      tunjangan_uang_lembur: undefined,
-      tunjangan_fungsional: undefined,
-      tunjangan_khusus: undefined,
-      tunjangan_lainnya: undefined,
-      uang_lembur: undefined,
-      uang_makan: undefined,
-      ptkp: "" as any,
-      potongan: "" as any,
-      username: "",
-      password: "",
+      tunjangan_jabatan: undefined as any,
+      tunjangan_fungsional: undefined as any,
+      tunjangan_khusus: undefined as any,
+      tunjangan_lainnya: undefined as any,
+      uang_lembur: undefined as any,
+      uang_makan: undefined as any,
+      ptkp: undefined as any,
+      potongan: undefined as any,
     },
 
     validationSchema: validationSchema[activeStep],
 
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        nama_karyawan: "",
-        email: "",
-        no_rm: "",
-        no_manulife: "",
-        tgl_masuk: "",
-        status_karyawan: "",
-        unit_kerja: "",
-        jabatan: "",
-        kompetensi: "",
-        role: "",
-        kelompok_gaji: "",
-        no_rekening: "",
-        tunjangan_uang_lembur: undefined,
-        tunjangan_fungsional: undefined,
-        tunjangan_khusus: undefined,
-        tunjangan_lainnya: undefined,
-        uang_lembur: undefined,
-        uang_makan: undefined,
-        ptkp: "",
-        potongan: "",
-        username: "",
-        password: "",
+        nama: values.nama_karyawan,
+        email: values.email,
+        no_rm: values.no_rm,
+        no_manulife: values.no_manulife,
+        tgl_masuk: values.tgl_masuk,
+        status_karyawan_id: values.status_karyawan.value,
+        unit_kerja_id: values.unit_kerja.value,
+        jabatan_id: values.jabatan.value,
+        kompetensi_id: values.kompetensi.value,
+        role_id: values.role.value,
+        kelompok_gaji_id: values.kelompok_gaji.value,
+        no_rekening: values.no_rekening,
+        tunjangan_jabatan: values.tunjangan_jabatan,
+        tunjangan_fungsional: values.tunjangan_fungsional,
+        tunjangan_khusus: values.tunjangan_khusus,
+        tunjangan_lainnya: values.tunjangan_lainnya,
+        uang_lembur: values.uang_lembur,
+        uang_makan: values.uang_makan,
+        ptkp_id: values.ptkp.value,
+        premi_id: values.potongan.map((pot: any) => pot.value),
       };
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/unit-kerja`, payload)
+        .post(`/api/rski/dashboard/karyawan/data-karyawan`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -316,6 +311,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
                 ? new Date(formik.values.tgl_masuk)
                 : undefined
             }
+            isError={!!formik.errors.tgl_masuk}
           />
           <FormErrorMessage>{formik.errors.tgl_masuk}</FormErrorMessage>
         </FormControl>
@@ -335,6 +331,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               formik.setFieldValue("status_karyawan", input);
             }}
             inputValue={formik.values.status_karyawan}
+            isError={!!formik.errors.status_karyawan}
           />
           <FormErrorMessage>
             {formik.errors.unit_kerja as string}
@@ -357,6 +354,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             }}
             inputValue={formik.values.unit_kerja}
             withSearch
+            isError={!!formik.errors.unit_kerja}
           />
           <FormErrorMessage>
             {formik.errors.unit_kerja as string}
@@ -379,6 +377,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             }}
             inputValue={formik.values.jabatan}
             withSearch
+            isError={!!formik.errors.jabatan}
           />
           <FormErrorMessage>{formik.errors.jabatan as string}</FormErrorMessage>
         </FormControl>
@@ -396,6 +395,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             }}
             inputValue={formik.values.kompetensi}
             withSearch
+            isError={!!formik.errors.kompetensi}
           />
           <FormHelperText opacity={0.4}>
             Kosongkan jika tidak memiliki kompetensi
@@ -416,6 +416,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               formik.setFieldValue("role", input);
             }}
             inputValue={formik.values.role}
+            isError={!!formik.errors.role}
           />
           <FormErrorMessage>{formik.errors.role as string}</FormErrorMessage>
         </FormControl>
@@ -485,10 +486,10 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         <FormControl
           mb={4}
           flex={"1 1 300px"}
-          isInvalid={!!formik.errors.tunjangan_uang_lembur}
+          isInvalid={!!formik.errors.tunjangan_jabatan}
         >
           <FormLabel>
-            Tunjangan Uang Lembur
+            Tunjangan Jabatan
             <RequiredForm />
           </FormLabel>
           <InputGroup>
@@ -497,16 +498,16 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             </InputLeftElement>
             <NumberInput
               pl={12}
-              name="tunjangan_uang_lembur"
+              name="tunjangan_jabatan"
               placeholder="500.000"
               onChangeSetter={(input) => {
-                formik.setFieldValue("tunjangan_uang_lembur", input);
+                formik.setFieldValue("tunjangan_jabatan", input);
               }}
-              inputValue={formik.values.tunjangan_uang_lembur}
+              inputValue={formik.values.tunjangan_jabatan}
             />
           </InputGroup>
           <FormErrorMessage>
-            {formik.errors.tunjangan_uang_lembur}
+            {formik.errors.tunjangan_jabatan as string}
           </FormErrorMessage>
         </FormControl>
 
@@ -534,7 +535,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             />
           </InputGroup>
           <FormErrorMessage>
-            {formik.errors.tunjangan_fungsional}
+            {formik.errors.tunjangan_fungsional as string}
           </FormErrorMessage>
         </FormControl>
 
@@ -561,7 +562,9 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               inputValue={formik.values.tunjangan_khusus}
             />
           </InputGroup>
-          <FormErrorMessage>{formik.errors.tunjangan_khusus}</FormErrorMessage>
+          <FormErrorMessage>
+            {formik.errors.tunjangan_khusus as string}
+          </FormErrorMessage>
         </FormControl>
 
         <FormControl
@@ -587,7 +590,9 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               inputValue={formik.values.tunjangan_lainnya}
             />
           </InputGroup>
-          <FormErrorMessage>{formik.errors.tunjangan_lainnya}</FormErrorMessage>
+          <FormErrorMessage>
+            {formik.errors.tunjangan_lainnya as string}
+          </FormErrorMessage>
         </FormControl>
 
         <FormControl
@@ -613,7 +618,9 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               inputValue={formik.values.uang_lembur}
             />
           </InputGroup>
-          <FormErrorMessage>{formik.errors.uang_lembur}</FormErrorMessage>
+          <FormErrorMessage>
+            {formik.errors.uang_lembur as string}
+          </FormErrorMessage>
         </FormControl>
 
         <FormControl
@@ -639,7 +646,9 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               inputValue={formik.values.uang_makan}
             />
           </InputGroup>
-          <FormErrorMessage>{formik.errors.uang_makan}</FormErrorMessage>
+          <FormErrorMessage>
+            {formik.errors.uang_makan as string}
+          </FormErrorMessage>
         </FormControl>
 
         <FormControl mb={4} flex={"1 1 300px"} isInvalid={!!formik.errors.ptkp}>
@@ -658,11 +667,8 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         </FormControl>
 
         <FormControl mb={4} flex={"1 1 300px"} isInvalid={!!formik.errors.ptkp}>
-          <FormLabel>
-            Potongan
-            <RequiredForm />
-          </FormLabel>
-          <SelectPotongan
+          <FormLabel>Potongan</FormLabel>
+          <MultiselectPotongan
             name="potongan"
             onConfirm={(input) => {
               formik.setFieldValue("potongan", input);
