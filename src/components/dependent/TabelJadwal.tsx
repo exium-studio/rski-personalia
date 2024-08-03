@@ -1,7 +1,6 @@
 import { Center, HStack } from "@chakra-ui/react";
 import { eachDayOfInterval } from "date-fns";
 import { useState } from "react";
-import { dummyTabelJadwalData } from "../../const/dummy";
 import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
@@ -26,8 +25,8 @@ export default function TabelJadwal({ filterConfig }: Props) {
   const [pageConfig, setPageConfig] = useState<number>(1);
 
   const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummyTabelJadwalData,
-    url: "",
+    initialData: undefined,
+    url: "/api/rski/dashboard/jadwal-karyawan/get-data-jadwal",
     payload: filterConfig,
     limit: limitConfig,
     dependencies: [limitConfig, pageConfig, filterConfig],
