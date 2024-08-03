@@ -28,10 +28,11 @@ import {
   Text,
   useDisclosure,
   useSteps,
+  useToast,
 } from "@chakra-ui/react";
 import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
 import SelectJabatan from "../../components/dependent/_Select/SelectJabatan";
 import SelectKelompokGaji from "../../components/dependent/_Select/SelectKelompokGaji";
@@ -53,31 +54,33 @@ import CContainer from "../wrapper/CContainer";
 import SelectPotongan from "./_Select/SelectPotongan";
 import DisclosureHeader from "./DisclosureHeader";
 import NumberInput from "./input/NumberInput";
+import req from "../../constant/req";
+import useRenderTrigger from "../../global/useRenderTrigger";
 
 const validationSchemaStep1 = yup.object({
-  // nama_karyawan: yup.string().required("Harus diisi"),
-  // email: yup.string().email("Email tidak valid").required("Harus diisi"),
-  // no_rm: yup.string().required("Harus diisi"),
-  // no_manulife: yup.string().required("Harus diisi"),
-  // tgl_masuk: yup.string().required("Harus diisi"),
-  // status_karyawan: yup.mixed().required("Harus diisi"),
-  // unit_kerja: yup.mixed().required("Harus diisi"),
-  // jabatan: yup.mixed().required("Harus diisi"),
-  // kompetensi: yup.mixed(),
-  // role: yup.mixed().required("Harus diisi"),
+  nama_karyawan: yup.string().required("Harus diisi"),
+  email: yup.string().email("Email tidak valid").required("Harus diisi"),
+  no_rm: yup.string().required("Harus diisi"),
+  no_manulife: yup.string().required("Harus diisi"),
+  tgl_masuk: yup.string().required("Harus diisi"),
+  status_karyawan: yup.mixed().required("Harus diisi"),
+  unit_kerja: yup.mixed().required("Harus diisi"),
+  jabatan: yup.mixed().required("Harus diisi"),
+  kompetensi: yup.mixed(),
+  role: yup.mixed().required("Harus diisi"),
 });
 
 const validationSchemaStep2 = yup.object({
-  // kelompok_gaji: yup.mixed().required("Harus diisi"),
-  // no_rekening: yup.string().required("Harus diisi"),
-  // tunjangan_uang_lembur: yup.string().required("Harus diisi"),
-  // tunjangan_fungsional: yup.string().required("Harus diisi"),
-  // tunjangan_khusus: yup.string().required("Harus diisi"),
-  // tunjangan_lainnya: yup.string().required("Harus diisi"),
-  // uang_lembur: yup.string().required("Harus diisi"),
-  // uang_makan: yup.string().required("Harus diisi"),
-  // ptkp: yup.mixed().required("Harus diisi"),
-  // potongan: yup.mixed(),
+  kelompok_gaji: yup.mixed().required("Harus diisi"),
+  no_rekening: yup.string().required("Harus diisi"),
+  tunjangan_uang_lembur: yup.string().required("Harus diisi"),
+  tunjangan_fungsional: yup.string().required("Harus diisi"),
+  tunjangan_khusus: yup.string().required("Harus diisi"),
+  tunjangan_lainnya: yup.string().required("Harus diisi"),
+  uang_lembur: yup.string().required("Harus diisi"),
+  uang_makan: yup.string().required("Harus diisi"),
+  ptkp: yup.mixed().required("Harus diisi"),
+  potongan: yup.mixed(),
 });
 
 const validationSchemaStep3 = yup.object({
@@ -103,6 +106,9 @@ export default function TambahKaryawanModal({ ...props }: Props) {
   const activeStepText = steps[activeStep].title;
 
   const sw = useScreenWidth();
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
 
   const formik = useFormik({
     validateOnChange: false,
@@ -134,8 +140,58 @@ export default function TambahKaryawanModal({ ...props }: Props) {
     validationSchema: validationSchema[activeStep],
 
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      //TODO api post tambah karyawan step 1
+      const payload = {
+        nama_karyawan: "",
+        email: "",
+        no_rm: "",
+        no_manulife: "",
+        tgl_masuk: "",
+        status_karyawan: "",
+        unit_kerja: "",
+        jabatan: "",
+        kompetensi: "",
+        role: "",
+        kelompok_gaji: "",
+        no_rekening: "",
+        tunjangan_uang_lembur: undefined,
+        tunjangan_fungsional: undefined,
+        tunjangan_khusus: undefined,
+        tunjangan_lainnya: undefined,
+        uang_lembur: undefined,
+        uang_makan: undefined,
+        ptkp: "",
+        potongan: "",
+        username: "",
+        password: "",
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/pengaturan/unit-kerja`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+          setRt(!rt);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -634,11 +690,14 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           Sebelumnya
         </Button>
         <Button
+          type="submit"
+          form="tambahKaryawanForm"
           w={"100%"}
           colorScheme="ap"
           className="btn-ap clicky"
           h={"50px"}
           onClick={handleNext}
+          isLoading={loading}
         >
           Tambah Karyawan
         </Button>
