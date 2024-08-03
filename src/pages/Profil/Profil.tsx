@@ -420,10 +420,14 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      <SmallLink to="#">Lihat</SmallLink>
-                      <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.nik_ktp}
-                      </Text>
+                      {userData.data_karyawan?.nik_ktp && (
+                        <>
+                          <SmallLink to="#">Lihat</SmallLink>
+                          <Text fontWeight={500} textAlign={"right"}>
+                            {userData.data_karyawan?.nik_ktp}
+                          </Text>
+                        </>
+                      )}
                     </HStack>
                   </HStack>
 
@@ -440,10 +444,14 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      <SmallLink to="#">Lihat</SmallLink>
-                      <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.no_kk}
-                      </Text>
+                      {userData.data_karyawan?.no_kk && (
+                        <>
+                          <SmallLink to="#">Lihat</SmallLink>
+                          <Text fontWeight={500} textAlign={"right"}>
+                            {userData.data_karyawan?.no_kk}
+                          </Text>
+                        </>
+                      )}
                     </HStack>
                   </HStack>
 
@@ -628,10 +636,14 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      <SmallLink to="#">Lihat</SmallLink>
-                      <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan.no_bpjsksh}
-                      </Text>
+                      {userData.data_karyawan.no_bpjsksh && (
+                        <>
+                          <SmallLink to="#">Lihat</SmallLink>
+                          <Text fontWeight={500} textAlign={"right"}>
+                            {userData.data_karyawan.no_bpjsksh}
+                          </Text>
+                        </>
+                      )}
                     </HStack>
                   </HStack>
 
@@ -902,10 +914,14 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      <SmallLink to="#">Lihat</SmallLink>
-                      <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan.no_ijazah}
-                      </Text>
+                      {userData.data_karyawan.no_ijazah && (
+                        <>
+                          <SmallLink to="#">Lihat</SmallLink>
+                          <Text fontWeight={500} textAlign={"right"}>
+                            {userData.data_karyawan.no_ijazah}
+                          </Text>
+                        </>
+                      )}
                     </HStack>
                   </HStack>
 
@@ -939,10 +955,14 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      <SmallLink to="#">Lihat</SmallLink>
-                      <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan.no_str}
-                      </Text>
+                      {userData.data_karyawan.no_str && (
+                        <>
+                          <SmallLink to="#">Lihat</SmallLink>
+                          <Text fontWeight={500} textAlign={"right"}>
+                            {userData.data_karyawan.no_str}
+                          </Text>
+                        </>
+                      )}
                     </HStack>
                   </HStack>
 
@@ -976,10 +996,14 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      <SmallLink to="#">Lihat</SmallLink>
-                      <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan.no_sip}
-                      </Text>
+                      {userData.data_karyawan.no_sip && (
+                        <>
+                          <SmallLink to="#">Lihat</SmallLink>
+                          <Text fontWeight={500} textAlign={"right"}>
+                            {userData.data_karyawan.no_sip}
+                          </Text>
+                        </>
+                      )}
                     </HStack>
                   </HStack>
 
