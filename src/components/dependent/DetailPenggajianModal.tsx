@@ -29,6 +29,7 @@ import Retry from "./Retry";
 import TabelDetailPenggajian from "./TabelDetailPenggajian";
 
 interface Props {
+  id?: string;
   penggajian_id: number;
   isOpen: boolean;
   onOpen: () => void;
@@ -36,13 +37,14 @@ interface Props {
 }
 
 export default function DetailPenggajianModal({
+  id,
   penggajian_id,
   isOpen,
   onOpen,
   onClose,
 }: Props) {
   useBackOnClose(
-    `detail-penggajian-modal-${penggajian_id}`,
+    id || `detail-penggajian-modal-${penggajian_id}`,
     isOpen,
     onOpen,
     onClose
@@ -161,6 +163,7 @@ export default function DetailPenggajianModal({
     initialData: dummy,
     url: "",
     dependencies: [],
+    conditions: !!(isOpen && penggajian_id),
   });
 
   // SX

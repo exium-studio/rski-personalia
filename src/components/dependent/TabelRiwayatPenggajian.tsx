@@ -1,6 +1,5 @@
 import { Center, HStack, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
-import { dummyRiwayatPenggajian } from "../../const/dummy";
 import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
@@ -26,8 +25,8 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { error, loading, data, retry } = useDataState<any[]>({
-    initialData: dummyRiwayatPenggajian,
-    url: "",
+    initialData: undefined,
+    url: "/api/rski/dashboard/keuangan/data-penggajian",
     payload: {
       filterConfig: filterConfig,
     },
@@ -177,6 +176,7 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
                   />
 
                   <DetailPenggajianModal
+                  id={``}
                     penggajian_id={1}
                     isOpen={isOpen}
                     onOpen={onOpen}
