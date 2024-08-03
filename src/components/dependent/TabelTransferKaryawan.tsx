@@ -1,6 +1,5 @@
 import { Center, HStack, Text, Tooltip } from "@chakra-ui/react";
 import { useState } from "react";
-import { dummyTransferKaryawan } from "../../const/dummy";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useTransferKaryawanTableColumnsConfig from "../../global/useTransferKaryawanTableColumnsConfig";
@@ -13,6 +12,8 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+import isObjectEmpty from "../../lib/isObjectEmpty";
+import NotFound from "../independent/NotFound";
 
 export default function TabelRekamJejak() {
   // Limit Config
@@ -20,14 +21,14 @@ export default function TabelRekamJejak() {
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
   // Filter Config
-  const { filterKaryawan } = useFilterKaryawan();
+  const { formattedFilterKaryawan } = useFilterKaryawan();
   // Columns Config
   const { columnsConfig } = useTransferKaryawanTableColumnsConfig();
 
-  const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummyTransferKaryawan,
-    url: "",
-    payload: filterKaryawan,
+  const { error, notFound, loading, data, retry } = useDataState<any>({
+    initialData: undefined,
+    url: "/api/rski/dashboard/karyawan/transfer/get-data-trasnfer",
+    payload: formattedFilterKaryawan,
     dependencies: [],
   });
 
@@ -166,10 +167,23 @@ export default function TabelRekamJejak() {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"400px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && isObjectEmpty(formattedFilterKaryawan) && (
+            <NoData minH={"400px"} />
+          )}
+
+          {notFound && !isObjectEmpty(formattedFilterKaryawan) && (
+            <NotFound minH={"400px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"400px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
+
       {!error && (
         <>
           {loading && (

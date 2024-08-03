@@ -184,6 +184,7 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
           )}
         </>
       )}
+
       {!error && (
         <>
           {loading && (

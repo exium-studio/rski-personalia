@@ -7,6 +7,7 @@ import useKaryawanTableColumnsConfig from "../../global/useKaryawanTableColumnsC
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
 import formatMasaKerja from "../../lib/formatMasaKerja";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
@@ -221,9 +222,21 @@ export default function TabelKaryawan() {
 
   const render = {
     error: (
-      <Center my={"auto"} minH={"400px"}>
-        <Retry loading={loading} retry={retry} />
-      </Center>
+      <>
+        {notFound && isObjectEmpty(formattedFilterKaryawan) && (
+          <NoData minH={"400px"} />
+        )}
+
+        {notFound && !isObjectEmpty(formattedFilterKaryawan) && (
+          <NotFound minH={"400px"} />
+        )}
+
+        {!notFound && (
+          <Center my={"auto"} minH={"400px"}>
+            <Retry loading={loading} retry={retry} />
+          </Center>
+        )}
+      </>
     ),
     loading: (
       <>
