@@ -111,6 +111,7 @@ export default function RunThr({ ...props }: Props) {
                   inputValue={formik.values.list_karyawan}
                   isDisabled={formik.values.semua_karyawan}
                   isError={!!formik.errors.list_karyawan}
+                  withSearch
                 />
                 <FormErrorMessage>
                   {formik.errors.list_karyawan as string}

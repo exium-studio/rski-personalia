@@ -217,124 +217,136 @@ export default function MultipleSelectModal({
           <ModalBody className="scrollY">
             {fo && (
               <>
-                {optionsDisplay === "list" && (
-                  <CContainer gap={2}>
-                    {fo.map((option, i) => (
-                      <Button
-                        key={i}
-                        px={4}
-                        justifyContent={"space-between"}
-                        className="btn-outline"
-                        onClick={() => {
-                          const isSelected =
-                            selected &&
-                            selected.some(
-                              (item) => item.value === option.value
-                            );
-                          let newSelected = selected || [];
+                {fo.length > 0 && (
+                  <>
+                    {optionsDisplay === "list" && (
+                      <CContainer gap={2}>
+                        {fo.map((option, i) => (
+                          <Button
+                            key={i}
+                            px={4}
+                            justifyContent={"space-between"}
+                            className="btn-outline"
+                            onClick={() => {
+                              const isSelected =
+                                selected &&
+                                selected.some(
+                                  (item) => item.value === option.value
+                                );
+                              let newSelected = selected || [];
 
-                          if (isSelected) {
-                            // Filter out the option if it's already selected
-                            newSelected = newSelected.filter(
-                              (item) => item.value !== option.value
-                            );
-                          } else {
-                            // Add the option to the selected array
-                            newSelected = [...newSelected, option];
-                          }
+                              if (isSelected) {
+                                // Filter out the option if it's already selected
+                                newSelected = newSelected.filter(
+                                  (item) => item.value !== option.value
+                                );
+                              } else {
+                                // Add the option to the selected array
+                                newSelected = [...newSelected, option];
+                              }
 
-                          setSelected(newSelected);
-                        }}
-                        borderColor={
-                          selected &&
-                          selected.some((item) => item.value === option.value)
-                            ? "var(--p500)"
-                            : "transparent !important"
-                        }
-                        bg={
-                          selected &&
-                          selected.some((item) => item.value === option.value)
-                            ? "var(--p500a5) !important"
-                            : ""
-                        }
-                      >
-                        <Text
-                          overflow={"hidden"}
-                          whiteSpace={"nowrap"}
-                          textOverflow={"ellipsis"}
-                        >
-                          {option.label}
-                        </Text>
+                              setSelected(newSelected);
+                            }}
+                            borderColor={
+                              selected &&
+                              selected.some(
+                                (item) => item.value === option.value
+                              )
+                                ? "var(--p500)"
+                                : "transparent !important"
+                            }
+                            bg={
+                              selected &&
+                              selected.some(
+                                (item) => item.value === option.value
+                              )
+                                ? "var(--p500a5) !important"
+                                : ""
+                            }
+                          >
+                            <Text
+                              overflow={"hidden"}
+                              whiteSpace={"nowrap"}
+                              textOverflow={"ellipsis"}
+                            >
+                              {option.label}
+                            </Text>
 
-                        <Text
-                          ml={4}
-                          opacity={0.4}
-                          maxW={"120px"}
-                          whiteSpace={"nowrap"}
-                          overflow={"hidden"}
-                          textOverflow={"ellipsis"}
-                          fontWeight={400}
-                        >
-                          {option.label2}
-                        </Text>
-                      </Button>
-                    ))}
-                  </CContainer>
-                )}
+                            <Text
+                              ml={4}
+                              opacity={0.4}
+                              maxW={"120px"}
+                              whiteSpace={"nowrap"}
+                              overflow={"hidden"}
+                              textOverflow={"ellipsis"}
+                              fontWeight={400}
+                            >
+                              {option.label2}
+                            </Text>
+                          </Button>
+                        ))}
+                      </CContainer>
+                    )}
 
-                {optionsDisplay === "chip" && (
-                  <Wrap>
-                    {fo.map((option, i) => (
-                      <Button
-                        key={i}
-                        justifyContent={"space-between"}
-                        className="btn-outline"
-                        borderRadius={"full"}
-                        borderColor={
-                          selected &&
-                          selected.some((item) => item.value === option.value)
-                            ? "var(--p500)"
-                            : ""
-                        }
-                        bg={
-                          selected &&
-                          selected.some((item) => item.value === option.value)
-                            ? "var(--p500a5) !important"
-                            : ""
-                        }
-                        onClick={() => {
-                          const isSelected =
-                            selected &&
-                            selected.some(
-                              (item) => item.value === option.value
-                            );
-                          let newSelected = selected || [];
+                    {optionsDisplay === "chip" && (
+                      <Wrap>
+                        {fo.map((option, i) => (
+                          <Button
+                            key={i}
+                            justifyContent={"space-between"}
+                            className="btn-outline"
+                            borderRadius={"full"}
+                            borderColor={
+                              selected &&
+                              selected.some(
+                                (item) => item.value === option.value
+                              )
+                                ? "var(--p500)"
+                                : ""
+                            }
+                            bg={
+                              selected &&
+                              selected.some(
+                                (item) => item.value === option.value
+                              )
+                                ? "var(--p500a5) !important"
+                                : ""
+                            }
+                            onClick={() => {
+                              const isSelected =
+                                selected &&
+                                selected.some(
+                                  (item) => item.value === option.value
+                                );
+                              let newSelected = selected || [];
 
-                          if (isSelected) {
-                            // Filter out the option if it's already selected
-                            newSelected = newSelected.filter(
-                              (item) => item.value !== option.value
-                            );
-                          } else {
-                            // Add the option to the selected array
-                            newSelected = [...newSelected, option];
-                          }
+                              if (isSelected) {
+                                // Filter out the option if it's already selected
+                                newSelected = newSelected.filter(
+                                  (item) => item.value !== option.value
+                                );
+                              } else {
+                                // Add the option to the selected array
+                                newSelected = [...newSelected, option];
+                              }
 
-                          setSelected(newSelected);
-                        }}
-                        gap={2}
-                      >
-                        <Text
-                          overflow={"hidden"}
-                          whiteSpace={"nowrap"}
-                          textOverflow={"ellipsis"}
-                        >
-                          {option.label}
-                        </Text>
-                        {/* <Text opacity={0.4}>{option.label2}</Text> */}
-                      </Button>
-                    ))}
-                  </Wrap>
+                              setSelected(newSelected);
+                            }}
+                            gap={2}
+                          >
+                            <Text
+                              overflow={"hidden"}
+                              whiteSpace={"nowrap"}
+                              textOverflow={"ellipsis"}
+                            >
+                              {option.label}
+                            </Text>
+                            {/* <Text opacity={0.4}>{option.label2}</Text> */}
+                          </Button>
+                        ))}
+                      </Wrap>
+                    )}
+                  </>
                 )}
 
                 {fo.length === 0 && <NotFound label="Opsi tidak ditemukan" />}

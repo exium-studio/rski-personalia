@@ -6,7 +6,14 @@ interface Props extends StackProps {
 
 export default function CContainer({ children, ...props }: Props) {
   return (
-    <VStack gap={0} align={"stretch"} w={"100%"} flex={1} {...props}>
+    <VStack
+      className="CContainer"
+      gap={0}
+      align={"stretch"}
+      w={"100%"}
+      flex={1}
+      {...props}
+    >
       {children}
     </VStack>
   );

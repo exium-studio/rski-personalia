@@ -187,86 +187,90 @@ export default function SingleSelectModal({
           <ModalBody className="scrollY" overflowY={"auto"}>
             {fo && (
               <>
-                {optionsDisplay === "list" && (
-                  <VStack align={"stretch"}>
-                    {fo.map((option, i) => (
-                      <Button
-                        key={i}
-                        px={4}
-                        justifyContent={"space-between"}
-                        className="btn-outline"
-                        onClick={() => {
-                          setSelected(option);
-                        }}
-                        borderColor={
-                          selected && selected.value === option.value
-                            ? "var(--p500)"
-                            : "transparent !important"
-                        }
-                        bg={
-                          selected && selected.value === option.value
-                            ? "var(--p500a4) !important"
-                            : ""
-                        }
-                      >
-                        <Text
-                          overflow={"hidden"}
-                          whiteSpace={"nowrap"}
-                          textOverflow={"ellipsis"}
-                        >
-                          {option.label}
-                        </Text>
+                {fo.length > 0 && (
+                  <>
+                    {optionsDisplay === "list" && (
+                      <VStack align={"stretch"}>
+                        {fo.map((option, i) => (
+                          <Button
+                            key={i}
+                            px={4}
+                            justifyContent={"space-between"}
+                            className="btn-outline"
+                            onClick={() => {
+                              setSelected(option);
+                            }}
+                            borderColor={
+                              selected && selected.value === option.value
+                                ? "var(--p500)"
+                                : "transparent !important"
+                            }
+                            bg={
+                              selected && selected.value === option.value
+                                ? "var(--p500a4) !important"
+                                : ""
+                            }
+                          >
+                            <Text
+                              overflow={"hidden"}
+                              whiteSpace={"nowrap"}
+                              textOverflow={"ellipsis"}
+                            >
+                              {option.label}
+                            </Text>
 
-                        <Text
-                          ml={4}
-                          opacity={0.4}
-                          maxW={"120px"}
-                          whiteSpace={"nowrap"}
-                          overflow={"hidden"}
-                          textOverflow={"ellipsis"}
-                          fontWeight={400}
-                        >
-                          {option.label2}
-                        </Text>
-                      </Button>
-                    ))}
-                  </VStack>
-                )}
+                            <Text
+                              ml={4}
+                              opacity={0.4}
+                              maxW={"120px"}
+                              whiteSpace={"nowrap"}
+                              overflow={"hidden"}
+                              textOverflow={"ellipsis"}
+                              fontWeight={400}
+                            >
+                              {option.label2}
+                            </Text>
+                          </Button>
+                        ))}
+                      </VStack>
+                    )}
 
-                {optionsDisplay === "chip" && (
-                  <Wrap>
-                    {fo.map((option, i) => (
-                      <Button
-                        key={i}
-                        justifyContent={"space-between"}
-                        className="btn-outline"
-                        onClick={() => {
-                          setSelected(option);
-                        }}
-                        borderRadius={"full"}
-                        borderColor={
-                          selected && selected.value === option.value
-                            ? "var(--p500)"
-                            : ""
-                        }
-                        bg={
-                          selected && selected.value === option.value
-                            ? "var(--p500a4) !important"
-                            : ""
-                        }
-                        gap={2}
-                      >
-                        <Text
-                          overflow={"hidden"}
-                          whiteSpace={"nowrap"}
-                          textOverflow={"ellipsis"}
-                        >
-                          {option.label}
-                        </Text>
-                        {/* <Text opacity={0.4}>{option.label2}</Text> */}
-                      </Button>
-                    ))}
-                  </Wrap>
+                    {optionsDisplay === "chip" && (
+                      <Wrap>
+                        {fo.map((option, i) => (
+                          <Button
+                            key={i}
+                            justifyContent={"space-between"}
+                            className="btn-outline"
+                            onClick={() => {
+                              setSelected(option);
+                            }}
+                            borderRadius={"full"}
+                            borderColor={
+                              selected && selected.value === option.value
+                                ? "var(--p500)"
+                                : ""
+                            }
+                            bg={
+                              selected && selected.value === option.value
+                                ? "var(--p500a4) !important"
+                                : ""
+                            }
+                            gap={2}
+                          >
+                            <Text
+                              overflow={"hidden"}
+                              whiteSpace={"nowrap"}
+                              textOverflow={"ellipsis"}
+                            >
+                              {option.label}
+                            </Text>
+                            {/* <Text opacity={0.4}>{option.label2}</Text> */}
+                          </Button>
+                        ))}
+                      </Wrap>
+                    )}
+                  </>
                 )}
 
                 {fo.length === 0 && <NotFound label="Opsi tidak ditemukan" />}
