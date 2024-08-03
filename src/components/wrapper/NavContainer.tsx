@@ -264,11 +264,7 @@ export default function NavContainer({
           {topNavsData &&
             topNavsData.length > 1 &&
             typeof topNavActive === "number" && (
-              <TopNavs
-                data={topNavsData}
-                active={topNavActive}
-                mb={responsiveSpacing}
-              />
+              <TopNavs data={topNavsData} active={topNavActive} />
             )}
 
           <VStack
