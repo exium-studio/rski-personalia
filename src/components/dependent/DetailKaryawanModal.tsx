@@ -37,9 +37,9 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatMasaKerja from "../../lib/formatMasaKerja";
 import formatNumber from "../../lib/formatNumber";
-import ComponentSpinner from "../independent/ComponentSpinner";
 import FlexLine from "../independent/FlexLine";
 import NoData from "../independent/NoData";
+import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import BooleanBadge from "./BooleanBadge";
 import DetailKeluargaKaryawanModalDisclosure from "./DetailKeluargaKaryawanModalDisclosure";
@@ -66,14 +66,6 @@ export default function DetailKaryawanModal({
   onOpen,
   onClose,
 }: Props) {
-  useEffect(() => {
-    if (id && isOpen) {
-      if (!user_id) {
-        backOnClose();
-      }
-    }
-  }, [id, user_id, isOpen]);
-
   useBackOnClose(
     id || `detail-karyawan-modal-${user_id}`,
     isOpen,
@@ -81,7 +73,6 @@ export default function DetailKaryawanModal({
     onClose
   );
   const initialRef = useRef(null);
-
   const { error, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-user/${user_id}`,
@@ -131,9 +122,75 @@ export default function DetailKaryawanModal({
           {!error && (
             <>
               {loading && (
-                <>
-                  <ComponentSpinner m={"auto"} />
-                </>
+                <CContainer
+                  h={"calc(100vh - 70px)"}
+                  overflowY={"auto"}
+                  className="scrollY"
+                >
+                  <SimpleGrid
+                    columns={[1, null, null, 2]}
+                    flex={1}
+                    overflowY={"auto"}
+                    className="scrollY"
+                    mb={responsiveSpacing}
+                  >
+                    <CContainer
+                      overflowY={[null, null, null, "auto"]}
+                      className="scrollY"
+                      bg={lightDarkColor}
+                      px={responsiveSpacing}
+                      justify={"space-between"}
+                    >
+                      <VStack
+                        gap={responsiveSpacing}
+                        borderRadius={12}
+                        align={"center"}
+                        mb={8}
+                      >
+                        <Skeleton
+                          borderRadius={"full"}
+                          w={"200px"}
+                          h={"200px"}
+                          mx={"auto"}
+                        />
+                        <Skeleton maxW={"400px"} />
+                        <Skeleton maxW={"400px"} h={"30px"} />
+                        <Skeleton maxW={"100px"} h={"30px"} />
+                      </VStack>
+
+                      <SimpleGrid gap={3} columns={[1, 2, null, 3]}>
+                        <Skeleton h={"95px"} />
+                        <Skeleton h={"95px"} />
+                        <Skeleton h={"95px"} />
+                        <Skeleton h={"95px"} />
+                        <Skeleton h={"95px"} />
+                        <Skeleton h={"95px"} />
+                        <Skeleton h={"95px"} />
+                        <Skeleton h={"95px"} />
+                        <Skeleton h={"95px"} />
+                      </SimpleGrid>
+                    </CContainer>
+
+                    <CContainer
+                      overflowY={[null, null, null, "auto"]}
+                      className="scrollY"
+                      bg={lightDarkColor}
+                      px={responsiveSpacing}
+                      justify={"space-between"}
+                      gap={responsiveSpacing}
+                    >
+                      <HStack>
+                        <Skeleton h={"40px"} />
+                        <Skeleton h={"40px"} maxW={"140px"} />
+                        <Skeleton h={"40px"} maxW={"100px"} />
+                      </HStack>
+
+                      <Skeleton flexShrink={0} h={"400px"} />
+                      <Skeleton flexShrink={0} h={"400px"} />
+                      <Skeleton flexShrink={0} h={"400px"} />
+                    </CContainer>
+                  </SimpleGrid>
+                </CContainer>
               )}
               {!loading && (
                 <>
