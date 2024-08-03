@@ -18,9 +18,7 @@ type State = {
 
 type Actions = {
   setFilterKaryawan: (filterKaryawan: Partial<State["filterKaryawan"]>) => void;
-  setFormattedFilterKaryawan: (
-    filterKaryawan: Partial<State["formattedFilterKaryawan"]>
-  ) => void;
+  setFormattedFilterKaryawan: (filterKaryawan: any) => void;
 };
 
 const useFilterKaryawan = create<State & Actions>((set) => ({

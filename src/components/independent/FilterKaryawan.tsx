@@ -102,7 +102,10 @@ export default function FilterKaryawan({ title, ...props }: Props) {
         return acc;
       }, {} as { [key: string]: any });
 
-    console.log(filteredFilters);
+    console.log(
+      "filteredFilters in filter karyawan component",
+      filteredFilters
+    );
 
     // Mengupdate state dengan filter yang diformat
     setFilterKaryawan(localFilterConfig);
