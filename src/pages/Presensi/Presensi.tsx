@@ -20,7 +20,7 @@ export default function Presensi() {
   const { filterKaryawan, setFilterKaryawan } = useFilterKaryawan();
   const [filterConfig, setFilterConfig] = useState({
     ...filterKaryawan,
-    tgl: [today],
+    tanggal: today,
   });
   const [search, setSearch] = useState("");
   useEffect(() => {
@@ -33,12 +33,8 @@ export default function Presensi() {
     };
   }, [search, setFilterKaryawan]);
 
-  useEffect(() => {
-    console.log("Current filterKaryawan state:", filterKaryawan);
-  }, [filterKaryawan]);
-
   const confirmDate = (newDate: Date | undefined) => {
-    setFilterConfig((ps: any) => ({ ...ps, tgl: [newDate] }));
+    setFilterConfig((ps: any) => ({ ...ps, tanggal: newDate }));
   };
 
   useEffect(() => {
@@ -91,7 +87,7 @@ export default function Presensi() {
               minW={"fit-content"}
               w={"fit-content"}
               onConfirm={confirmDate}
-              inputValue={filterConfig.tgl[0]}
+              inputValue={filterConfig.tanggal}
               nonNullable
             />
             <FilterKaryawan />

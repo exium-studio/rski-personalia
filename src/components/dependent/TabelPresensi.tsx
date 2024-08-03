@@ -1,6 +1,5 @@
 import { Center, HStack, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
-import { dummyPresensi } from "../../const/dummy";
 import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatTime from "../../lib/formatTime";
@@ -29,8 +28,8 @@ export default function TabelPresensi({ filterConfig }: Props) {
   // const { columnsConfig } = useKaryawanTableColumnsConfig();
 
   const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummyPresensi,
-    url: "",
+    initialData: undefined,
+    url: "/api/rski/dashboard/presensi/get-data-presensi",
     payload: filterConfig,
     dependencies: [],
   });
