@@ -36,10 +36,9 @@ export default function MultiSelectJabatan({
   useEffect(() => {
     if (isOpen && !options) {
       req
-        .get("/api/rski/dashboard/pengaturan/jabatan")
+        .get("/api/get-list-jabatan")
         .then((r) => {
           if (r.status === 200) {
-            console.log(r.data.data);
             const options = r.data.data.map((item: any) => ({
               value: item.id,
               label: item.nama_jabatan,
