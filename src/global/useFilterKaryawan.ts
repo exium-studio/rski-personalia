@@ -35,7 +35,6 @@ const useFilterKaryawan = create<State & Actions>((set) => ({
   setFormattedFilterKaryawan: (newFilter) =>
     set((state) => ({
       formattedFilterKaryawan: {
-        ...state.formattedFilterKaryawan,
         ...newFilter,
       },
     })),

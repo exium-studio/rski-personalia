@@ -88,102 +88,99 @@ export default function ColumnsConfigModal({
             <DisclosureHeader title={title || "Config Kolom Tabel"} />
           </ModalHeader>
 
-          <ModalBody className="scrollY">
-            <Wrap spacing={responsiveSpacing} mb={responsiveSpacing}>
-              <CContainer flex={"1 1 300px"}>
-                <Text fontWeight={500} mb={4} opacity={0.6}>
-                  Kolom
-                </Text>
-                <SimpleGrid columns={[1, 2, null, 3]} gap={2}>
-                  {allColumns.map((option, i) => {
-                    const ok = i !== 0;
-                    return (
-                      ok && (
-                        <Button
-                          key={i}
-                          // flex={"1 1 0"}
-                          // minW={"max-content"}
-                          // borderRadius={"full"}
-                          fontWeight={500}
-                          className={"btn-outline clicky"}
-                          borderColor={
-                            selected && selected.some((item) => item === i)
-                              ? "var(--p500)"
-                              : ""
-                          }
-                          bg={
-                            selected && selected.some((item) => item === i)
-                              ? "var(--p500a5) !important"
-                              : ""
-                          }
-                          onClick={() => {
-                            const isSelected =
-                              selected && selected.some((item) => item === i);
-                            let newSelected = selected || [];
+          <ModalBody className="scrollY" gap={responsiveSpacing}>
+            <CContainer>
+              <Text fontWeight={500} mb={4} opacity={0.6}>
+                Preset Kolom
+              </Text>
+              <SimpleGrid columns={[1, 2, null, 3, 4]} gap={2} flex={1}>
+                {presetColumns.map((preset, i) => (
+                  <Button
+                    key={i}
+                    // borderRadius={"full"}
+                    className="btn-solid clicky"
+                    onClick={() => {
+                      setSelected(preset.columns);
+                    }}
+                  >
+                    <Tooltip label={preset.label} openDelay={500}>
+                      <Text
+                        overflow={"hidden"}
+                        whiteSpace={"nowrap"}
+                        textOverflow={"ellipsis"}
+                      >
+                        {preset.label}
+                      </Text>
+                    </Tooltip>
+                  </Button>
+                ))}
+              </SimpleGrid>
+            </CContainer>
 
-                            if (isSelected) {
-                              // Filter out the option if it's already selected
-                              newSelected = newSelected.filter(
-                                (item) => item !== i
-                              );
-                            } else {
-                              // Add the option to the selected array
-                              newSelected = [...newSelected, i];
+            <CContainer>
+              <Text fontWeight={500} mb={4} opacity={0.6}>
+                Kolom
+              </Text>
+              <SimpleGrid columns={[1, 2, null, 3, 4]} gap={2}>
+                {allColumns.map((option, i) => {
+                  const ok = i !== 0;
+                  return (
+                    ok && (
+                      <Button
+                        key={i}
+                        // flex={"1 1 0"}
+                        // minW={"max-content"}
+                        // borderRadius={"full"}
+                        fontWeight={500}
+                        className={"btn-outline clicky"}
+                        borderColor={
+                          selected && selected.some((item) => item === i)
+                            ? "var(--p500)"
+                            : ""
+                        }
+                        bg={
+                          selected && selected.some((item) => item === i)
+                            ? "var(--p500a5) !important"
+                            : ""
+                        }
+                        onClick={() => {
+                          const isSelected =
+                            selected && selected.some((item) => item === i);
+                          let newSelected = selected || [];
+
+                          if (isSelected) {
+                            // Filter out the option if it's already selected
+                            newSelected = newSelected.filter(
+                              (item) => item !== i
+                            );
+                          } else {
+                            // Add the option to the selected array
+                            newSelected = [...newSelected, i];
+                          }
+
+                          setSelected(newSelected);
+                        }}
+                      >
+                        <Tooltip label={option.label} openDelay={500}>
+                          <Text
+                            opacity={
+                              selected && selected.some((item) => item === i)
+                                ? 1
+                                : 0.6
                             }
-
-                            setSelected(newSelected);
-                          }}
-                        >
-                          <Tooltip label={option.label} openDelay={500}>
-                            <Text
-                              opacity={
-                                selected && selected.some((item) => item === i)
-                                  ? 1
-                                  : 0.6
-                              }
-                              overflow={"hidden"}
-                              whiteSpace={"nowrap"}
-                              textOverflow={"ellipsis"}
-                            >
-                              {option.label}
-                            </Text>
-                          </Tooltip>
-                        </Button>
-                      )
-                    );
-                  })}
-                </SimpleGrid>
-              </CContainer>
-
-              <CContainer flex={"1 1 300px"}>
-                <Text fontWeight={500} mb={4} opacity={0.6}>
-                  Preset Kolom
-                </Text>
-                <SimpleGrid columns={[1, 2, 3]} gap={2} flex={1}>
-                  {presetColumns.map((preset, i) => (
-                    <Button
-                      key={i}
-                      // borderRadius={"full"}
-                      className="btn-solid clicky"
-                      onClick={() => {
-                        setSelected(preset.columns);
-                      }}
-                      h={"100%"}
-                    >
-                      <Tooltip label={preset.label} openDelay={500}>
-                        <Text
-                          overflow={"hidden"}
-                          whiteSpace={"nowrap"}
-                          textOverflow={"ellipsis"}
-                        >
-                          {preset.label}
-                        </Text>
-                      </Tooltip>
-                    </Button>
-                  ))}
-                </SimpleGrid>
-              </CContainer>
-            </Wrap>
+                            overflow={"hidden"}
+                            whiteSpace={"nowrap"}
+                            textOverflow={"ellipsis"}
+                          >
+                            {option.label}
+                          </Text>
+                        </Tooltip>
+                      </Button>
+                    )
+                  );
+                })}
+              </SimpleGrid>
+            </CContainer>
 
             <CContainer mt={"auto"} mb={2}>
               <Text fontWeight={500} mb={4} opacity={0.6}>
