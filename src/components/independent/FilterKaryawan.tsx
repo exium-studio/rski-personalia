@@ -102,6 +102,8 @@ export default function FilterKaryawan({ title, ...props }: Props) {
         return acc;
       }, {} as { [key: string]: any });
 
+    console.log(filteredFilters);
+
     // Mengupdate state dengan filter yang diformat
     setFilterKaryawan(localFilterConfig);
     setFormattedFilterKaryawan(filteredFilters);

@@ -60,6 +60,7 @@ export default function Karyawan() {
                 setSearch(input);
               }}
               inputValue={search}
+              placeholder="Pencarian nama/no. induk karyawan"
             />
 
             <FilterKaryawan />
