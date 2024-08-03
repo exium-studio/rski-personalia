@@ -141,12 +141,7 @@ export default function DetailKaryawanModal({
                       px={responsiveSpacing}
                       justify={"space-between"}
                     >
-                      <VStack
-                        gap={responsiveSpacing}
-                        borderRadius={12}
-                        align={"center"}
-                        mb={8}
-                      >
+                      <VStack gap={2} borderRadius={12} align={"center"} mb={8}>
                         <Skeleton
                           borderRadius={"full"}
                           w={"200px"}
