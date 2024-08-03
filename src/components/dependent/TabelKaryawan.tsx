@@ -31,8 +31,6 @@ export default function TabelKaryawan() {
   // Columns Config
   const { columnsConfig } = useKaryawanTableColumnsConfig();
 
-  console.log("formatted in karyawan table", formattedFilterKaryawan);
-
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<Interface__DetailKaryawan[]>({
       initialData: undefined,
@@ -272,6 +270,7 @@ export default function TabelKaryawan() {
             />
 
             <DetailKaryawanModal
+              id={`detail-karyawan-by-row-click`}
               user_id={user_id}
               isOpen={isOpen}
               onOpen={onOpen}
