@@ -177,7 +177,7 @@ export default function DetailKaryawanModal({
                       bg={lightDarkColor}
                       px={responsiveSpacing}
                       justify={"space-between"}
-                      gap={responsiveSpacing}
+                      gap={2}
                     >
                       <HStack>
                         <Skeleton h={"40px"} />
