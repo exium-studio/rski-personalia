@@ -39,7 +39,6 @@ export default function SelectUnitKerja({
         .get("/api/get-list-unit-kerja")
         .then((r) => {
           if (r.status === 200) {
-            console.log(r.data.data);
             const options = r.data.data.map((item: any) => ({
               value: item.id,
               label: item.nama_unit,

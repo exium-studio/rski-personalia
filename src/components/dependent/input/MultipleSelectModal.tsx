@@ -195,6 +195,7 @@ export default function MultipleSelectModal({
         <ModalContent
           my={sh < 650 ? 0 : ""}
           h={withSearch && sh >= 650 ? "100%" : ""}
+          maxH={"650px"}
         >
           <ModalHeader ref={initialRef}>
             <Box>
