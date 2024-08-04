@@ -174,7 +174,7 @@ export default function DokumenKaryawanModalDisclosure({
               <>
                 {loading && (
                   <>
-                    <ComponentSpinner />
+                    <ComponentSpinner m={"auto"} />
                   </>
                 )}
                 {!loading && (
