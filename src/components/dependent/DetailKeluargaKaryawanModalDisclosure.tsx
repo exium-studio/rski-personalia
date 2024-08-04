@@ -13,7 +13,6 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import { dummyDetailKeluargaKaryawan } from "../../const/dummy";
 import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -45,8 +44,8 @@ export default function DetailKeluargaKaryawanModalDisclosure({
   const initialRef = useRef(null);
 
   const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummyDetailKeluargaKaryawan,
-    url: "",
+    initialData: undefined,
+    url: `/api/rski/dashboard/karyawan/keluarga-karyawan/${karyawan_id}`,
     dependencies: [],
   });
 
