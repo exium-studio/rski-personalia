@@ -38,7 +38,7 @@ interface Props extends ButtonProps {
 
 export default function EditKaryawanModal({ initialData, ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`tambah-karyawan-modal`, isOpen, onOpen, onClose);
+  useBackOnClose(`edit-karyawan-modal`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
   const steps = [{ title: "Data Karyawan" }, { title: "Penggajian" }];

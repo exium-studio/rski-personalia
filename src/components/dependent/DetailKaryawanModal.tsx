@@ -455,7 +455,6 @@ export default function DetailKaryawanModal({
                               </Text>
                             </VStack>
 
-                            {/* Edit */}
                             <VStack
                               cursor={"pointer"}
                               borderRadius={12}
@@ -509,6 +508,7 @@ export default function DetailKaryawanModal({
                                 : "Aktifkan"}
                             </Button>
 
+                            {/* Edit */}
                             <EditKaryawanModal initialData={data} />
                           </HStack>
 
