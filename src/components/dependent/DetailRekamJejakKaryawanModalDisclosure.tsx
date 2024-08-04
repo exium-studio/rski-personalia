@@ -211,7 +211,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
               <>
                 {loading && (
                   <>
-                    <ComponentSpinner />
+                    <ComponentSpinner m={"auto"} />
                   </>
                 )}
                 {!loading && (
