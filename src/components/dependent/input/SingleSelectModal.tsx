@@ -123,7 +123,7 @@ export default function SingleSelectModal({
         pl={"16px !important"}
         {...props}
       >
-        <HStack>
+        <HStack w={"100%"}>
           {inputValue ? (
             <Text
               fontWeight={400}
@@ -146,7 +146,14 @@ export default function SingleSelectModal({
             </Text>
           )}
 
-          <Text fontWeight={400} opacity={0.4} ml={2}>
+          <Text
+            fontWeight={400}
+            opacity={0.4}
+            ml={2}
+            overflow={"hidden"}
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+          >
             {inputValue && inputValue.label2}
           </Text>
         </HStack>
