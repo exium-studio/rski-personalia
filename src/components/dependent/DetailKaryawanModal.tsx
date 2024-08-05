@@ -20,7 +20,6 @@ import {
   RiCalendarCloseFill,
   RiCalendarFill,
   RiCalendarScheduleFill,
-  RiCircleFill,
   RiFeedbackFill,
   RiFileChartFill,
   RiHeartFill,
@@ -41,17 +40,16 @@ import FlexLine from "../independent/FlexLine";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
-import BooleanBadge from "./BooleanBadge";
 import DetailKeluargaKaryawanModalDisclosure from "./DetailKeluargaKaryawanModalDisclosure";
 import DetailRekamJejakKaryawanModalDisclosure from "./DetailRekamJejakKaryawanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
 import DokumenKaryawanModalDisclosure from "./DokumenKaryawanModalDisclosure";
 import EditKaryawanModal from "./EditKaryawanModal";
+import SearchComponent from "./input/SearchComponent";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
 import SmallLink from "./SmallLink";
-import SearchComponent from "./input/SearchComponent";
-
+import StatusAktifBadge from "./StatusAktifBadge";
 interface Props {
   id?: string;
   user_id?: number;
@@ -238,23 +236,18 @@ export default function DetailKaryawanModal({
                               <HStack mb={2}>
                                 <HStack opacity={0.6}>
                                   <Text>{data.email}</Text>
-                                  <Icon
+                                  {/* <Icon
                                     as={RiCircleFill}
                                     fontSize={8}
                                     opacity={0.4}
                                   />
-                                  <Text>{data.user.username}</Text>
+                                  <Text>{data.user.username}</Text> */}
                                 </HStack>
                               </HStack>
 
                               <HStack>
-                                <BooleanBadge
-                                  w={"fit-content"}
-                                  borderRadius={"full"}
+                                <StatusAktifBadge
                                   data={data.user.status_aktif}
-                                  trueValue="Aktif"
-                                  falseValue="Tidak Aktif"
-                                  fontSize={13}
                                 />
                               </HStack>
                             </VStack>
@@ -497,11 +490,13 @@ export default function DetailKaryawanModal({
                               }}
                               inputValue={search}
                             />
+
                             <Button
                               flexShrink={0}
                               leftIcon={<Icon as={RiShutDownLine} />}
                               className="btn-outline clicky"
                               pl={5}
+                              isDisabled={data.user.status_aktif === 0}
                             >
                               {data.user.status_aktif
                                 ? "Non-aktifkan"
@@ -547,23 +542,6 @@ export default function DetailKaryawanModal({
                                   <JenisKaryawanBadge
                                     data={data.unit_kerja.jenis_karyawan}
                                   />
-                                </HStack>
-
-                                <HStack justify={"space-between"}>
-                                  {/* <Text opacity={0.6}>No. Induk Karyawan</Text> */}
-                                  <Box opacity={0.6}>
-                                    <Highlighter
-                                      highlightClassName="hw"
-                                      unhighlightClassName="uw"
-                                      searchWords={searchQuery}
-                                      autoEscape={true}
-                                      textToHighlight="Username Akun"
-                                    />
-                                  </Box>
-                                  <FlexLine />
-                                  <Text fontWeight={500} textAlign={"right"}>
-                                    {data.user.username}
-                                  </Text>
                                 </HStack>
 
                                 <HStack justify={"space-between"}>
@@ -704,7 +682,9 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    {data.jenis_kelamin.label}
+                                    {data.jenis_kelamin === 1
+                                      ? "Laki - laki"
+                                      : "Perempuan"}
                                   </Text>
                                 </HStack>
 
