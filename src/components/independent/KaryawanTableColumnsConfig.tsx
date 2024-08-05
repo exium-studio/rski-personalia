@@ -54,7 +54,7 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
     },
     {
       label: "Rekam Jejak",
-      columns: [0, 11, 12, 13, 14, 15],
+      columns: [0, 11, 12, 13, 14],
     },
   ];
 
