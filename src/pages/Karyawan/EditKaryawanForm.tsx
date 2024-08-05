@@ -11,45 +11,50 @@ import {
   InputLeftElement,
   SimpleGrid,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { Dispatch } from "react";
 import * as yup from "yup";
+import MultiselectPotongan from "../../components/dependent/_Select/MultiselectPotongan";
 import SelectJabatan from "../../components/dependent/_Select/SelectJabatan";
 import SelectKelompokGaji from "../../components/dependent/_Select/SelectKelompokGaji";
 import SelectKompetensi from "../../components/dependent/_Select/SelectKompetensi";
-import SelectPotongan from "../../components/dependent/_Select/SelectPotongan";
 import SelectPtkp from "../../components/dependent/_Select/SelectPtkp";
 import SelectRole from "../../components/dependent/_Select/SelectRole";
 import SelectStatusKaryawan from "../../components/dependent/_Select/SelectStatusKaryawan";
 import SelectUnitKerja from "../../components/dependent/_Select/SelectUnitKerja";
 import DatePickerModal from "../../components/dependent/input/DatePickerModal";
+import NumberInput from "../../components/dependent/input/NumberInput";
 import RequiredForm from "../../components/form/RequiredForm";
+import req from "../../constant/req";
+import useRenderTrigger from "../../global/useRenderTrigger";
+import backOnClose from "../../lib/backOnClose";
 
 const validationSchemaStep1 = yup.object({
-  // nama_karyawan: yup.string().required("Harus diisi"),
-  // email: yup.string().email("Email tidak valid").required("Harus diisi"),
-  // no_rm: yup.string().required("Harus diisi"),
-  // no_manulife: yup.string().required("Harus diisi"),
-  // tgl_masuk: yup.string().required("Harus diisi"),
-  // status_karyawan: yup.string().required("Harus diisi"),
-  // unit_kerja: yup.string().required("Harus diisi"),
-  // jabatan: yup.string().required("Harus diisi"),
-  // kompetensi: yup.string(),
-  // role: yup.string().required("Harus diisi"),
+  nama_karyawan: yup.string().required("Harus diisi"),
+  email: yup.string().email("Email tidak valid").required("Harus diisi"),
+  no_rm: yup.string().required("Harus diisi"),
+  no_manulife: yup.string().required("Harus diisi"),
+  tgl_masuk: yup.string().required("Harus diisi"),
+  status_karyawan: yup.object().required("Harus diisi"),
+  unit_kerja: yup.object().required("Harus diisi"),
+  jabatan: yup.object().required("Harus diisi"),
+  kompetensi: yup.object(),
+  role: yup.object().required("Harus diisi"),
 });
 
 const validationSchemaStep2 = yup.object({
-  kelompok_gaji: yup.mixed().required("Harus diisi"),
+  kelompok_gaji: yup.object().required("Harus diisi"),
   no_rekening: yup.string().required("Harus diisi"),
-  tunjangan_uang_lembur: yup.string().required("Harus diisi"),
+  tunjangan_jabatan: yup.string().required("Harus diisi"),
   tunjangan_fungsional: yup.string().required("Harus diisi"),
   tunjangan_khusus: yup.string().required("Harus diisi"),
   tunjangan_lainnya: yup.string().required("Harus diisi"),
   uang_lembur: yup.string().required("Harus diisi"),
   uang_makan: yup.string().required("Harus diisi"),
-  ptkp: yup.mixed().required("Harus diisi"),
-  potongan: yup.array(),
+  ptkp: yup.object().required("Harus diisi"),
+  potongan: yup.array().required("Harus diisi"),
 });
 
 const validationSchema = [validationSchemaStep1, validationSchemaStep2];
@@ -58,20 +63,27 @@ interface Props {
   activeStep: number;
   setActiveStep: Dispatch<number>;
   data: any;
+  loading: boolean;
+  setLoading: Dispatch<boolean>;
 }
 
 export default function EditKaryawanForm({
   activeStep,
   setActiveStep,
   data,
+  loading,
+  setLoading,
 }: Props) {
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
       nama_karyawan: data.user.nama,
       email: data.email,
-      no_rm: data.no_rm,
-      no_manulife: data.no_manulife,
+      no_rm: data.no_rm as string,
+      no_manulife: data.no_manulife as string,
       tgl_masuk: data.tgl_masuk,
       status_karyawan: {
         value: data.status_karyawan.id,
@@ -98,7 +110,7 @@ export default function EditKaryawanForm({
         label: data.kelompok_gaji.nama_kelompok,
       },
       no_rekening: data.no_rekening,
-      tunjangan_uang_lembur: data.uang_lembur,
+      tunjangan_jabatan: data.tunjangan_jabatan,
       tunjangan_fungsional: data.tunjangan_fungsional,
       tunjangan_khusus: data.tunjangan_khusus,
       tunjangan_lainnya: data.tunjangan_lainnya,
@@ -115,15 +127,68 @@ export default function EditKaryawanForm({
     },
     validationSchema: validationSchema[activeStep],
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      //TODO api post tambah karyawan step 1
+      const payload = {
+        nama: values.nama_karyawan,
+        email: values.email,
+        no_rm: values.no_rm.toString(),
+        no_manulife: values.no_manulife.toString(),
+        tgl_masuk: values.tgl_masuk,
+        status_karyawan_id: values.status_karyawan.value,
+        unit_kerja_id: values.unit_kerja.value,
+        jabatan_id: values.jabatan.value,
+        kompetensi_id: values.kompetensi.value,
+        role_id: values.role.value,
+        kelompok_gaji_id: values.kelompok_gaji.value,
+        no_rekening: values.no_rekening,
+        tunjangan_jabatan: values.tunjangan_jabatan,
+        tunjangan_fungsional: values.tunjangan_fungsional,
+        tunjangan_khusus: values.tunjangan_khusus,
+        tunjangan_lainnya: values.tunjangan_lainnya,
+        uang_lembur: values.uang_lembur,
+        uang_makan: values.uang_makan,
+        ptkp_id: values.ptkp.value,
+        premi_id: values.potongan?.map((pot: any) => pot.value),
+        _method: "patch",
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/karyawan/data-karyawan/${data.id}`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            backOnClose();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+          setRt(!rt);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
   const handleNext = () => {
     formik.validateForm().then((errors) => {
       if (Object.keys(errors).length === 0) {
-        setActiveStep(activeStep + 1);
+        if (activeStep === 1) {
+          formik.submitForm();
+        } else {
+          setActiveStep(activeStep + 1);
+        }
       } else {
         const touchedErrors: Record<string, boolean> = {};
         Object.keys(errors).forEach((key) => {
@@ -177,7 +242,7 @@ export default function EditKaryawanForm({
             value={formik.values.email}
           />
           <FormHelperText opacity={0.4}>
-            Email ini digunakan untuk masuk (login)
+            Email ini digunakan untuk masuk ke RSKI Karyawan (login)
           </FormHelperText>
           <FormErrorMessage>{formik.errors.email as string}</FormErrorMessage>
         </FormControl>
@@ -188,7 +253,7 @@ export default function EditKaryawanForm({
           isInvalid={!!formik.errors.no_rm}
         >
           <FormLabel>
-            RM
+            No. Rekam medis
             <RequiredForm />
           </FormLabel>
           <Input
@@ -230,7 +295,7 @@ export default function EditKaryawanForm({
             <RequiredForm />
           </FormLabel>
           <DatePickerModal
-            id="edit-karyawan-date-picker"
+            id="tambah-karyawan-date-picker"
             name="tgl_masuk"
             placeholder="Pilih Tanggal Masuk"
             onConfirm={(input) => {
@@ -241,6 +306,7 @@ export default function EditKaryawanForm({
                 ? new Date(formik.values.tgl_masuk)
                 : undefined
             }
+            isError={!!formik.errors.tgl_masuk}
           />
           <FormErrorMessage>
             {formik.errors.tgl_masuk as string}
@@ -262,6 +328,7 @@ export default function EditKaryawanForm({
               formik.setFieldValue("status_karyawan", input);
             }}
             inputValue={formik.values.status_karyawan}
+            isError={!!formik.errors.status_karyawan}
           />
           <FormErrorMessage>
             {formik.errors.unit_kerja as string}
@@ -284,6 +351,7 @@ export default function EditKaryawanForm({
             }}
             inputValue={formik.values.unit_kerja}
             withSearch
+            isError={!!formik.errors.unit_kerja}
           />
           <FormErrorMessage>
             {formik.errors.unit_kerja as string}
@@ -306,10 +374,9 @@ export default function EditKaryawanForm({
             }}
             inputValue={formik.values.jabatan}
             withSearch
+            isError={!!formik.errors.jabatan}
           />
-          <FormErrorMessage>
-            {formik.errors.jabatan as string as string}
-          </FormErrorMessage>
+          <FormErrorMessage>{formik.errors.jabatan as string}</FormErrorMessage>
         </FormControl>
 
         <FormControl
@@ -325,6 +392,7 @@ export default function EditKaryawanForm({
             }}
             inputValue={formik.values.kompetensi}
             withSearch
+            isError={!!formik.errors.kompetensi}
           />
           <FormHelperText opacity={0.4}>
             Kosongkan jika tidak memiliki kompetensi
@@ -345,10 +413,9 @@ export default function EditKaryawanForm({
               formik.setFieldValue("role", input);
             }}
             inputValue={formik.values.role}
+            isError={!!formik.errors.role}
           />
-          <FormErrorMessage>
-            {formik.errors.role as string as string}
-          </FormErrorMessage>
+          <FormErrorMessage>{formik.errors.role as string}</FormErrorMessage>
         </FormControl>
       </SimpleGrid>
     );
@@ -359,7 +426,6 @@ export default function EditKaryawanForm({
       <Box mt={"auto"} pt={4}>
         <Button
           w={"100%"}
-          flexShrink={0}
           colorScheme="ap"
           className="btn-ap clicky"
           h={"50px"}
@@ -419,25 +485,28 @@ export default function EditKaryawanForm({
         <FormControl
           mb={4}
           flex={"1 1 300px"}
-          isInvalid={!!formik.errors.tunjangan_uang_lembur}
+          isInvalid={!!formik.errors.tunjangan_jabatan}
         >
           <FormLabel>
-            Tunjangan Uang Lembur
+            Tunjangan Jabatan
             <RequiredForm />
           </FormLabel>
           <InputGroup>
-            <InputLeftElement>
+            <InputLeftElement pl={4}>
               <Text>Rp</Text>
             </InputLeftElement>
-            <Input
-              name="tunjangan_uang_lembur"
-              placeholder="Rp. 500.000"
-              onChange={formik.handleChange}
-              value={formik.values.tunjangan_uang_lembur}
+            <NumberInput
+              pl={12}
+              name="tunjangan_jabatan"
+              placeholder="500.000"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("tunjangan_jabatan", input);
+              }}
+              inputValue={formik.values.tunjangan_jabatan}
             />
           </InputGroup>
           <FormErrorMessage>
-            {formik.errors.tunjangan_uang_lembur as string}
+            {formik.errors.tunjangan_jabatan as string}
           </FormErrorMessage>
         </FormControl>
 
@@ -451,14 +520,17 @@ export default function EditKaryawanForm({
             <RequiredForm />
           </FormLabel>
           <InputGroup>
-            <InputLeftElement>
+            <InputLeftElement pl={4}>
               <Text>Rp</Text>
             </InputLeftElement>
-            <Input
+            <NumberInput
+              pl={12}
               name="tunjangan_fungsional"
-              placeholder="Rp. 500.000"
-              onChange={formik.handleChange}
-              value={formik.values.tunjangan_fungsional}
+              placeholder="500.000"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("tunjangan_fungsional", input);
+              }}
+              inputValue={formik.values.tunjangan_fungsional}
             />
           </InputGroup>
           <FormErrorMessage>
@@ -476,14 +548,17 @@ export default function EditKaryawanForm({
             <RequiredForm />
           </FormLabel>
           <InputGroup>
-            <InputLeftElement>
+            <InputLeftElement pl={4}>
               <Text>Rp</Text>
             </InputLeftElement>
-            <Input
+            <NumberInput
+              pl={12}
               name="tunjangan_khusus"
-              placeholder="Rp. 500.000"
-              onChange={formik.handleChange}
-              value={formik.values.tunjangan_khusus}
+              placeholder="500.000"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("tunjangan_khusus", input);
+              }}
+              inputValue={formik.values.tunjangan_khusus}
             />
           </InputGroup>
           <FormErrorMessage>
@@ -501,14 +576,17 @@ export default function EditKaryawanForm({
             <RequiredForm />
           </FormLabel>
           <InputGroup>
-            <InputLeftElement>
+            <InputLeftElement pl={4}>
               <Text>Rp</Text>
             </InputLeftElement>
-            <Input
+            <NumberInput
+              pl={12}
               name="tunjangan_lainnya"
-              placeholder="Rp. 500.000"
-              onChange={formik.handleChange}
-              value={formik.values.tunjangan_lainnya}
+              placeholder="500.000"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("tunjangan_lainnya", input);
+              }}
+              inputValue={formik.values.tunjangan_lainnya}
             />
           </InputGroup>
           <FormErrorMessage>
@@ -526,14 +604,17 @@ export default function EditKaryawanForm({
             <RequiredForm />
           </FormLabel>
           <InputGroup>
-            <InputLeftElement>
+            <InputLeftElement pl={4}>
               <Text>Rp</Text>
             </InputLeftElement>
-            <Input
+            <NumberInput
+              pl={12}
               name="uang_lembur"
-              placeholder="Rp. 500.000"
-              onChange={formik.handleChange}
-              value={formik.values.uang_lembur}
+              placeholder="500.000"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("uang_lembur", input);
+              }}
+              inputValue={formik.values.uang_lembur}
             />
           </InputGroup>
           <FormErrorMessage>
@@ -551,14 +632,17 @@ export default function EditKaryawanForm({
             <RequiredForm />
           </FormLabel>
           <InputGroup>
-            <InputLeftElement>
+            <InputLeftElement pl={4}>
               <Text>Rp</Text>
             </InputLeftElement>
-            <Input
+            <NumberInput
+              pl={12}
               name="uang_makan"
-              placeholder="Rp. 500.000"
-              onChange={formik.handleChange}
-              value={formik.values.uang_makan}
+              placeholder="500.000"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("uang_makan", input);
+              }}
+              inputValue={formik.values.uang_makan}
             />
           </InputGroup>
           <FormErrorMessage>
@@ -578,9 +662,7 @@ export default function EditKaryawanForm({
             }}
             inputValue={formik.values.ptkp}
           />
-          <FormErrorMessage>
-            {formik.errors.ptkp as string as string}
-          </FormErrorMessage>
+          <FormErrorMessage>{formik.errors.ptkp as string}</FormErrorMessage>
         </FormControl>
 
         <FormControl mb={4} flex={"1 1 300px"} isInvalid={!!formik.errors.ptkp}>
@@ -588,7 +670,7 @@ export default function EditKaryawanForm({
             Potongan
             <RequiredForm />
           </FormLabel>
-          <SelectPotongan
+          <MultiselectPotongan
             name="potongan"
             onConfirm={(input) => {
               formik.setFieldValue("potongan", input);
@@ -606,7 +688,7 @@ export default function EditKaryawanForm({
 
   const Step2Footer = () => {
     return (
-      <ButtonGroup flexShrink={0} mt={"auto"} pt={4} w={"100%"}>
+      <ButtonGroup mt={"auto"} pt={4} w={"100%"}>
         <Button
           w={"100%"}
           className="btn-solid clicky"
@@ -616,19 +698,20 @@ export default function EditKaryawanForm({
           Sebelumnya
         </Button>
         <Button
+          type="submit"
+          form="tambahKaryawanForm"
           w={"100%"}
           colorScheme="ap"
           className="btn-ap clicky"
           h={"50px"}
-          type="submit"
-          form="editKaryawanForm"
+          onClick={handleNext}
+          isLoading={loading}
         >
           Simpan
         </Button>
       </ButtonGroup>
     );
   };
-
   const stepComponents = [Step1, Step2];
   const stepFooterComponents = [Step1Footer, Step2Footer];
 

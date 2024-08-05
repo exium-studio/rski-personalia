@@ -21,10 +21,9 @@ import {
   useSteps,
 } from "@chakra-ui/react";
 import { RiEditFill } from "@remixicon/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
-import { responsiveSpacing } from "../../constant/sizes";
-import { iconSize } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import useScreenWidth from "../../lib/useScreenWidth";
@@ -46,6 +45,8 @@ export default function EditKaryawanModal({ initialData, ...props }: Props) {
   const activeStepText = steps[activeStep].title;
 
   const sw = useScreenWidth();
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -132,6 +133,8 @@ export default function EditKaryawanModal({ initialData, ...props }: Props) {
                 data={initialData}
                 activeStep={activeStep}
                 setActiveStep={setActiveStep}
+                loading={loading}
+                setLoading={setLoading}
               />
             </CContainer>
           </ModalBody>

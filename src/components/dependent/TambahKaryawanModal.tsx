@@ -79,19 +79,10 @@ const validationSchemaStep2 = yup.object({
   uang_lembur: yup.string().required("Harus diisi"),
   uang_makan: yup.string().required("Harus diisi"),
   ptkp: yup.object().required("Harus diisi"),
-  potongan: yup.array(),
+  potongan: yup.array().required("Harus diisi"),
 });
 
-const validationSchemaStep3 = yup.object({
-  username: yup.string().required("Harus diisi"),
-  password: yup.string().required("Harus diisi"),
-});
-
-const validationSchema = [
-  validationSchemaStep1,
-  validationSchemaStep2,
-  validationSchemaStep3,
-];
+const validationSchema = [validationSchemaStep1, validationSchemaStep2];
 
 interface Props extends ButtonProps {}
 
@@ -260,7 +251,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           isInvalid={!!formik.errors.no_rm}
         >
           <FormLabel>
-            RM
+            No. Rekam Medis
             <RequiredForm />
           </FormLabel>
           <Input
@@ -667,7 +658,10 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         </FormControl>
 
         <FormControl mb={4} flex={"1 1 300px"} isInvalid={!!formik.errors.ptkp}>
-          <FormLabel>Potongan</FormLabel>
+          <FormLabel>
+            Potongan
+            <RequiredForm />
+          </FormLabel>
           <MultiselectPotongan
             name="potongan"
             onConfirm={(input) => {
