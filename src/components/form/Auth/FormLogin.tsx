@@ -3,6 +3,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -17,6 +18,7 @@ import RequiredForm from "../RequiredForm";
 export default function FormLogin() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const toast = useToast();
 
   const formik = useFormik({
     validateOnChange: false,
@@ -57,6 +59,12 @@ export default function FormLogin() {
         })
         .catch((e) => {
           console.log(e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
         })
         .finally(() => {
           setLoading(false);
