@@ -54,7 +54,7 @@ const validationSchemaStep2 = yup.object({
   uang_lembur: yup.string().required("Harus diisi"),
   uang_makan: yup.string().required("Harus diisi"),
   ptkp: yup.object().required("Harus diisi"),
-  potongan: yup.array().required("Harus diisi"),
+  potongan: yup.array(),
 });
 
 const validationSchema = [validationSchemaStep1, validationSchemaStep2];
@@ -666,10 +666,7 @@ export default function EditKaryawanForm({
         </FormControl>
 
         <FormControl mb={4} flex={"1 1 300px"} isInvalid={!!formik.errors.ptkp}>
-          <FormLabel>
-            Potongan
-            <RequiredForm />
-          </FormLabel>
+          <FormLabel>Potongan</FormLabel>
           <MultiselectPotongan
             name="potongan"
             onConfirm={(input) => {
