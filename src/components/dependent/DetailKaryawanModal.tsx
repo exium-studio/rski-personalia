@@ -3,7 +3,6 @@ import {
   AlertDescription,
   Avatar,
   Box,
-  Button,
   HStack,
   Icon,
   Modal,
@@ -26,7 +25,6 @@ import {
   RiFileChartFill,
   RiHeartFill,
   RiLoginBoxFill,
-  RiShutDownLine,
 } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
@@ -42,6 +40,7 @@ import FlexLine from "../independent/FlexLine";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
+import AktifkanNonaktifkanButton from "./AktifkanNonaktifkanButton";
 import DetailKeluargaKaryawanModalDisclosure from "./DetailKeluargaKaryawanModalDisclosure";
 import DetailRekamJejakKaryawanModalDisclosure from "./DetailRekamJejakKaryawanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
@@ -520,16 +519,10 @@ export default function DetailKaryawanModal({
                               inputValue={search}
                             />
 
-                            <Button
-                              flexShrink={0}
-                              leftIcon={<Icon as={RiShutDownLine} />}
-                              className="btn-outline clicky"
-                              pl={5}
-                            >
-                              {data.user.status_aktif
-                                ? "Non-aktifkan"
-                                : "Aktifkan"}
-                            </Button>
+                            <AktifkanNonaktifkanButton
+                              user_id={data.user.id}
+                              data={data?.status_aktifs}
+                            />
 
                             {/* Edit */}
                             <EditKaryawanModal initialData={data} />
