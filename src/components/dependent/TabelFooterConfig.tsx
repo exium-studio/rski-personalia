@@ -15,11 +15,11 @@ import PaginationNav from "./PaginationNav";
 import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
-  limitConfig?: number;
-  setLimitConfig?: (limit: number) => void;
-  pageConfig?: number;
-  setPageConfig?: (page: number) => void;
-  paginationData?: any;
+  limitConfig: number;
+  setLimitConfig: (limit: number) => void;
+  pageConfig: number;
+  setPageConfig: (page: number) => void;
+  paginationData: any;
   footer?: React.ReactNode;
 }
 
@@ -70,8 +70,10 @@ export default function TabelFooterConfig({
           <MenuList minW={`${limitMenuListW}px`} zIndex={10}>
             <MenuItem
               color={limitConfig === 10 ? "p.500" : ""}
+              bg={limitConfig === 10 ? "var(--p500a5)" : ""}
               onClick={() => {
                 setLimitConfig(10);
+                setPageConfig(1);
               }}
             >
               10
@@ -80,6 +82,7 @@ export default function TabelFooterConfig({
               color={limitConfig === 50 ? "p.500" : ""}
               onClick={() => {
                 setLimitConfig(50);
+                setPageConfig(1);
               }}
             >
               50
@@ -88,6 +91,7 @@ export default function TabelFooterConfig({
               color={limitConfig === 100 ? "p.500" : ""}
               onClick={() => {
                 setLimitConfig(100);
+                setPageConfig(1);
               }}
             >
               100
@@ -97,6 +101,7 @@ export default function TabelFooterConfig({
               color={limitConfig === 0 ? "p.500" : ""}
               onClick={() => {
                 setLimitConfig(0);
+                setPageConfig(1);
               }}
             >
               Semua
