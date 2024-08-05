@@ -47,6 +47,7 @@ export default function DetailKeluargaKaryawanModalDisclosure({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/keluarga-karyawan/${karyawan_id}`,
     dependencies: [],
+    conditions: !!(isOpen && karyawan_id),
   });
 
   // SX
