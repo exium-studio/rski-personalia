@@ -60,10 +60,10 @@ export default function TabelFooterConfig({
             }
           >
             <HStack>
+              <Text fontWeight={400}>Tampilkan</Text>
               <Text color={"p.500"}>
                 {limitConfig === 0 ? "Semua" : limitConfig}
               </Text>
-              <Text fontWeight={400}>Row</Text>
             </HStack>
           </MenuButton>
 
