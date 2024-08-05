@@ -6,7 +6,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "typescript-cookie";
 import * as yup from "yup";
@@ -14,11 +14,19 @@ import req from "../../../constant/req";
 import PasswordInput from "../../dependent/input/PasswordInput";
 import StringInput from "../../dependent/input/StringInput";
 import RequiredForm from "../RequiredForm";
+import useGetUserData from "../../../hooks/useGetUserData";
 
 export default function FormLogin() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const toast = useToast();
+  const userData = useGetUserData();
+
+  useEffect(() => {
+    if (userData) {
+      navigate("/profil");
+    }
+  }, [userData, navigate]);
 
   const formik = useFormik({
     validateOnChange: false,
@@ -34,8 +42,6 @@ export default function FormLogin() {
     }),
 
     onSubmit: (values, { resetForm }) => {
-      // console.log(values);
-
       setLoading(true);
 
       const payload = {
@@ -55,6 +61,12 @@ export default function FormLogin() {
               JSON.stringify(r.data.user.data)
             );
             navigate("/profil");
+            toast({
+              status: "success",
+              title: r.data.user.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
           }
         })
         .catch((e) => {
