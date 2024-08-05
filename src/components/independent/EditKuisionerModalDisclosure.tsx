@@ -86,7 +86,8 @@ export default function EditKuisionerModalDisclosure({
           console.log(e);
           toast({
             status: "error",
-            title: "Maaf terjadi kesalahan pada sistem",
+            title:
+              e.response.data.message || "Maaf terjadi kesalahan pada sistem",
             isClosable: true,
             position: "bottom-right",
           });

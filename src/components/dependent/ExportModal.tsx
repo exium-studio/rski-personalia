@@ -69,13 +69,18 @@ export default function ExportModal({ url, title, ...props }: Props) {
         } else {
           toast({
             status: "error",
-            title: "Maaf terjadi kesalahan pada sistem",
+            title:
+              e.response.data.message || "Maaf terjadi kesalahan pada sistem",
           });
         }
       })
       .catch((error) => {
         console.error(error);
-        toast({ status: "error", title: "Maaf terjadi kesalahan pada sistem" });
+        toast({
+          status: "error",
+          title:
+            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+        });
       })
       .finally(() => {
         backOnClose();
