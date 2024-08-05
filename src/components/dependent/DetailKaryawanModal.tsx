@@ -1511,7 +1511,8 @@ export default function DetailKaryawanModal({
                                         fontWeight={500}
                                         textAlign={"right"}
                                       >
-                                        Rp {formatNumber(data.besaran_premi)}
+                                        Rp{" "}
+                                        {formatNumber(potongan.besaran_premi)}
                                       </Text>
                                     </HStack>
                                   )

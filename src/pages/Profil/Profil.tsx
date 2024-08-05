@@ -1235,6 +1235,38 @@ export default function Profil() {
                   </HStack>
                 </VStack>
               </VStack>
+
+              <VStack align={"stretch"} gap={0}>
+                <Text fontSize={20} fontWeight={600} mb={4}>
+                  Data Potongan
+                </Text>
+
+                <VStack align={"stretch"} gap={4}>
+                  {userData.data_keryawan?.potongan_gaji?.length === 0 && (
+                    <Text opacity={0.4}>Tidak ada potongan gaji</Text>
+                  )}
+
+                  {userData.data_keryawan?.potongan_gaji?.map(
+                    (potongan: any, i: number) => (
+                      <HStack justify={"space-between"} key={i}>
+                        <Box opacity={0.6}>
+                          <Highlighter
+                            highlightClassName="hw"
+                            unhighlightClassName="uw"
+                            searchWords={searchQuery}
+                            autoEscape={true}
+                            textToHighlight={potongan.nama_premi}
+                          />
+                        </Box>
+                        <FlexLine />
+                        <Text fontWeight={500} textAlign={"right"}>
+                          Rp {formatNumber(potongan.besaran_premi)}
+                        </Text>
+                      </HStack>
+                    )
+                  )}
+                </VStack>
+              </VStack>
             </CContainer>
           </CContainer>
         </CContainer>
