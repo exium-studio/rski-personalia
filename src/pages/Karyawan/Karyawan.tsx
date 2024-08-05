@@ -67,7 +67,11 @@ export default function Karyawan() {
 
             <KaryawanTableColumnsConfig title="Config Kolom Tabel Karyawan" />
 
-            <ExportModal url={""} title={"Export Karyawan"} px={6} />
+            <ExportModal
+              url={"/api/rski/dashboard/karyawan/export"}
+              title={"Export Karyawan"}
+              px={6}
+            />
 
             <ImportModal url={""} title={"Import Karyawan"} px={6} />
 
