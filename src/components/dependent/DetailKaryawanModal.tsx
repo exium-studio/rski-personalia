@@ -496,7 +496,6 @@ export default function DetailKaryawanModal({
                               leftIcon={<Icon as={RiShutDownLine} />}
                               className="btn-outline clicky"
                               pl={5}
-                              isDisabled={data.user.status_aktif === 0}
                             >
                               {data.user.status_aktif
                                 ? "Non-aktifkan"

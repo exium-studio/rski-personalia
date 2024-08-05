@@ -221,6 +221,7 @@ export const globalTheme = extendTheme({
       baseStyle: (props) => ({
         dialogContainer: {
           p: 4,
+          className: "scrollY",
         },
         dialog: {
           bg: props.colorMode === "dark" ? "dark" : "white",
@@ -232,6 +233,7 @@ export const globalTheme = extendTheme({
           borderRadius: 12,
           // m: 4,
           border: "1px solid var(--divider2)",
+          className: "scrollY",
           // maxH: "100%",
         },
         overlay: {
