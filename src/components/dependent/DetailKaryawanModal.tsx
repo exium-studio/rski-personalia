@@ -589,23 +589,6 @@ export default function DetailKaryawanModal({
                                 </HStack>
 
                                 <HStack justify={"space-between"}>
-                                  {/* <Text opacity={0.6}>No. Induk Karyawan</Text> */}
-                                  <Box opacity={0.6}>
-                                    <Highlighter
-                                      highlightClassName="hw"
-                                      unhighlightClassName="uw"
-                                      searchWords={searchQuery}
-                                      autoEscape={true}
-                                      textToHighlight="Username Akun"
-                                    />
-                                  </Box>
-                                  <FlexLine />
-                                  <Text fontWeight={500} textAlign={"right"}>
-                                    {data.user?.username}
-                                  </Text>
-                                </HStack>
-
-                                <HStack justify={"space-between"}>
                                   {/* <Text opacity={0.6}>Email</Text> */}
                                   <Box opacity={0.6}>
                                     <Highlighter
@@ -618,7 +601,7 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    {data.data_karyawan?.email}
+                                    {data?.email}
                                   </Text>
                                 </HStack>
 
@@ -635,7 +618,7 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    {data.data_karyawan?.nik}
+                                    {data?.nik}
                                   </Text>
                                 </HStack>
 
@@ -652,14 +635,14 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <HStack>
-                                    {data.data_karyawan?.nik_ktp && (
+                                    {data?.nik_ktp && (
                                       <>
                                         <SmallLink to="#">Lihat</SmallLink>
                                         <Text
                                           fontWeight={500}
                                           textAlign={"right"}
                                         >
-                                          {data.data_karyawan?.nik_ktp}
+                                          {data?.nik_ktp}
                                         </Text>
                                       </>
                                     )}
@@ -679,14 +662,14 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <HStack>
-                                    {data.data_karyawan?.no_kk && (
+                                    {data?.no_kk && (
                                       <>
                                         <SmallLink to="#">Lihat</SmallLink>
                                         <Text
                                           fontWeight={500}
                                           textAlign={"right"}
                                         >
-                                          {data.data_karyawan?.no_kk}
+                                          {data?.no_kk}
                                         </Text>
                                       </>
                                     )}
@@ -757,7 +740,9 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    {data.jenis_kelamin?.label}
+                                    {data.jenis_kelamin
+                                      ? "Laki - laki"
+                                      : "Perempuan"}
                                   </Text>
                                 </HStack>
 
@@ -791,7 +776,7 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    {data.data_karyawan?.gelar_depan}
+                                    {data?.gelar_depan}
                                   </Text>
                                 </HStack>
 
@@ -810,7 +795,9 @@ export default function DetailKaryawanModal({
                                   <Tooltip label={data.alamat}>
                                     <Text
                                       fontWeight={500}
-                                      noOfLines={1}
+                                      whiteSpace={"nowrap"}
+                                      overflow={"hidden"}
+                                      textOverflow={"ellipsis"}
                                       maxW={"180px"}
                                       cursor={"pointer"}
                                     >

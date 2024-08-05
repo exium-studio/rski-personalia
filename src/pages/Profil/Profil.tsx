@@ -356,23 +356,6 @@ export default function Profil() {
                   </HStack>
 
                   <HStack justify={"space-between"}>
-                    {/* <Text opacity={0.6}>No. Induk Karyawan</Text> */}
-                    <Box opacity={0.6}>
-                      <Highlighter
-                        highlightClassName="hw"
-                        unhighlightClassName="uw"
-                        searchWords={searchQuery}
-                        autoEscape={true}
-                        textToHighlight="Username Akun"
-                      />
-                    </Box>
-                    <FlexLine />
-                    <Text fontWeight={500} textAlign={"right"}>
-                      {userData.data_karyawan.user?.username}
-                    </Text>
-                  </HStack>
-
-                  <HStack justify={"space-between"}>
                     {/* <Text opacity={0.6}>Email</Text> */}
                     <Box opacity={0.6}>
                       <Highlighter
@@ -518,7 +501,9 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <Text fontWeight={500} textAlign={"right"}>
-                      {userData.data_karyawan.jenis_kelamin?.label}
+                      {userData.data_karyawan.jenis_kelamin
+                        ? "Laki - laki"
+                        : "Perempuan"}
                     </Text>
                   </HStack>
 
@@ -571,7 +556,9 @@ export default function Profil() {
                     <Tooltip label={userData.data_karyawan.alamat}>
                       <Text
                         fontWeight={500}
-                        noOfLines={1}
+                        whiteSpace={"nowrap"}
+                        overflow={"hidden"}
+                        textOverflow={"ellipsis"}
                         maxW={"180px"}
                         cursor={"pointer"}
                       >
