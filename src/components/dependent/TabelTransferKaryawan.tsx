@@ -115,8 +115,8 @@ export default function TabelRekamJejak() {
         isNumeric: true,
       },
       {
-        value: item.kategori.label,
-        td: item.kategori.label,
+        value: item.kategori?.label,
+        td: item.kategori?.label,
       },
       {
         value: item.created_at,
