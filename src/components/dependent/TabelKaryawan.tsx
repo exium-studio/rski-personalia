@@ -179,16 +179,16 @@ export default function TabelKaryawan() {
         td: item.email,
       },
       {
-        value: item.ayah.nama,
-        td: item.ayah.nama,
+        value: item.ayah?.nama,
+        td: item.ayah?.nama,
       },
       {
-        value: item.ibu.nama,
-        td: item.ibu.nama,
+        value: item.ibu?.nama,
+        td: item.ibu?.nama,
       },
       {
-        value: item.jumlah_keluarga,
-        td: item.jumlah_keluarga,
+        value: item?.jumlah_keluarga,
+        td: item?.jumlah_keluarga,
         cProps: {
           justify: "center",
         },

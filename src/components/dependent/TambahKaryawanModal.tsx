@@ -163,6 +163,9 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             });
             setRt(!rt);
             resetForm();
+            if (activeStep === 1) {
+              handleBack();
+            }
           }
         })
         .catch((e) => {
