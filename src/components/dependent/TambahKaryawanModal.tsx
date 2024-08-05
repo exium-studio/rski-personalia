@@ -668,7 +668,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               formik.setFieldValue("potongan", input);
             }}
             inputValue={formik.values.potongan}
-            withSearch
+            // withSearch
           />
           <FormErrorMessage>
             {formik.errors.potongan as string}

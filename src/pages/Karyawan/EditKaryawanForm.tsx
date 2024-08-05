@@ -676,7 +676,7 @@ export default function EditKaryawanForm({
               formik.setFieldValue("potongan", input);
             }}
             inputValue={formik.values.potongan}
-            withSearch
+            // withSearch
           />
           <FormErrorMessage>
             {formik.errors.potongan as string}
