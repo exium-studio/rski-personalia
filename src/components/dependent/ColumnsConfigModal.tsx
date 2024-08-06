@@ -59,7 +59,6 @@ export default function ColumnsConfigModal({
       <Button
         className="btn-outline clicky"
         leftIcon={<Icon as={RiLayoutColumnLine} fontSize={iconSize} />}
-        _focus={{ border: "1px solid var(--p500)" }}
         flexShrink={0}
         pl={5}
         pr={6}

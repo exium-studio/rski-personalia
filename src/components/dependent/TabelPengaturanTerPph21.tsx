@@ -66,7 +66,7 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
 
   const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
-    url: "/api/rski/dashboard/pengaturan/ter-pph-21",
+    url: "/api/rski/dashboard/pengaturan/pph-21",
     dependencies: [],
   });
 

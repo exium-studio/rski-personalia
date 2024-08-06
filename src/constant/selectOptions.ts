@@ -191,7 +191,59 @@ const optionsStatusKepegawaian = [
   },
 ];
 
+const optionsPendidikan = [
+  {
+    value: 1,
+    label: "SD",
+  },
+  {
+    value: 2,
+    label: "SMP",
+  },
+  {
+    value: 3,
+    label: "SMA",
+  },
+  {
+    value: 4,
+    label: "SMK",
+  },
+  {
+    value: 5,
+    label: "Diploma 1 (D1)",
+  },
+  {
+    value: 6,
+    label: "Diploma 2 (D2)",
+  },
+  {
+    value: 7,
+    label: "Diploma 3 (D3)",
+  },
+  {
+    value: 8,
+    label: "Diploma 4 (D4) / Sarjana Terapan",
+  },
+  {
+    value: 9,
+    label: "Sarjana (S1)",
+  },
+  {
+    value: 10,
+    label: "Magister (S2)",
+  },
+  {
+    value: 11,
+    label: "Doktor (S3)",
+  },
+  {
+    value: 12,
+    label: "Pendidikan Non-Formal",
+  },
+];
+
 export {
+  optionsPendidikan,
   optionsStatusKepegawaian,
   optionsSumberPotongan,
   optionsTipeTransfer,

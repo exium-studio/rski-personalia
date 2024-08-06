@@ -69,7 +69,6 @@ export default function ImportModal({ url, title, ...props }: Props) {
         // colorScheme="ap"
         minW={"120px"}
         className="btn-outline clicky"
-        _focus={{ border: "1px solid var(--p500)" }}
         leftIcon={
           <Icon
             as={RiDownloadLine}

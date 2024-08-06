@@ -31,6 +31,7 @@ import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FilterJenisKelamin from "../dependent/_FilterOptions/FilterJenisKelamin";
+import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -123,7 +124,6 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     <>
       <Button
         className="btn-outline clicky"
-        _focus={{ border: "1px solid var(--p500)" }}
         leftIcon={<Icon as={RiEqualizer3Fill} fontSize={iconSize} />}
         flexShrink={0}
         pl={5}
@@ -162,7 +162,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
         initialFocusRef={initialRef}
         isCentered
         size={"lg"}
-        scrollBehavior="inside"
+        // scrollBehavior="inside"
       >
         <ModalOverlay />
 
@@ -204,6 +204,11 @@ export default function FilterKaryawan({ title, ...props }: Props) {
               />
 
               <FilterJenisKelamin
+                filterConfig={localFilterConfig}
+                setFilterConfig={setLocalFilterConfig}
+              />
+
+              <FilterPendidikanTerakhir
                 filterConfig={localFilterConfig}
                 setFilterConfig={setLocalFilterConfig}
               />
