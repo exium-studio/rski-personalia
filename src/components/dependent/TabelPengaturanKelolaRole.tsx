@@ -30,7 +30,6 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
       );
     },
     (rowData: any) => {
-      console.log(rowData);
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
