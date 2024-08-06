@@ -123,14 +123,14 @@ export default function FilterJebatan({
                       // Mengecek apakah data sudah ada dalam jabatan
                       const isDataExist =
                         ps.jabatan &&
-                        ps.jabatan.some((unit: any) => unit.id === data.id);
+                        ps.jabatan.some((item: any) => item.id === data.id);
 
                       // Jika data sudah ada, maka hapus data dari jabatan
                       if (isDataExist) {
                         return {
                           ...ps,
                           jabatan: ps.jabatan.filter(
-                            (unit: any) => unit.id !== data.id
+                            (item: any) => item.id !== data.id
                           ),
                         };
                       } else {

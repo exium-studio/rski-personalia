@@ -92,6 +92,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     const formattedFilters = {
       search: localFilterConfig.search,
       unit_kerja: localFilterConfig.unit_kerja.map((item: any) => item.id),
+      jabatan: localFilterConfig.jabatan.map((item: any) => item.id),
       status_karyawan: localFilterConfig.status_karyawan.map(
         (item: any) => item.value
       ),
@@ -101,6 +102,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       ),
       tgl_masuk: localFilterConfig.tgl_masuk,
       agama: localFilterConfig.agama.map((item: any) => item.value),
+      jenis_kelamin: localFilterConfig.jenis_kelamin.map(
+        (item: any) => item.value
+      ),
     };
 
     // Menghapus properti dengan array kosong kecuali 'search'
@@ -113,6 +117,8 @@ export default function FilterKaryawan({ title, ...props }: Props) {
         acc[key] = value;
         return acc;
       }, {} as { [key: string]: any });
+
+    console.log(localFilterConfig);
 
     // Mengupdate state dengan filter yang diformat
     setFilterKaryawan(localFilterConfig);
