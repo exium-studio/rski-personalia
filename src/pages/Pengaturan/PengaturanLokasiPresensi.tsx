@@ -24,12 +24,11 @@ import Skeleton from "../../components/independent/Skeleton";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { LatLng } from "../../constant/interfaces";
-import { responsiveSpacing } from "../../constant/sizes";
-import useDataState from "../../hooks/useDataState";
-import getLocation from "../../lib/getLocation";
 import req from "../../constant/req";
+import { responsiveSpacing } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import formatDate from "../../lib/formatDate";
+import getLocation from "../../lib/getLocation";
 
 export default function PengaturanLokasiPresensi() {
   // SX
@@ -93,51 +92,57 @@ export default function PengaturanLokasiPresensi() {
     },
   });
 
-  const { error, notFound, loading, data, retry } = useDataState<any>({
-    initialData: undefined,
-    url: "/api/rski/dashboard/pengaturan/get-lokasi-kantor/1",
-    dependencies: [],
-  });
-
-  const [isData, setIsData] = useState<boolean>(true);
-  // console.log(isData, center);
+  const [error, setError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<any>(undefined);
 
   const formikRef = useRef(formik);
+  function getData() {
+    req
+      .get(`/api/rski/dashboard/pengaturan/get-lokasi-kantor/1`)
+      .then((r) => {
+        if (r.status === 200) {
+          const dataRes = r.data.data;
+          setData(dataRes);
+          setCenter({ lat: dataRes.lat, lng: dataRes.long });
+          formikRef.current.setFieldValue("alamat", dataRes.alamat);
+          formikRef.current.setFieldValue("lat", dataRes.lat);
+          formikRef.current.setFieldValue("long", dataRes.long);
+          formikRef.current.setFieldValue("radius", dataRes.radius);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        getLocation()
+          .then(({ lat, long }) => {
+            setCenter({ lat: lat, lng: long });
+          })
+          .catch((e) => {
+            console.log(e);
+          })
+          .finally(() => {});
+        setError(true);
+        toast({
+          status: "error",
+          title:
+            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
   useEffect(() => {
-    const fetchData = async () => {
-      if (data) {
-        await Promise.resolve(); // Wait for the next tick to ensure data is available
-        setCenter({ lat: data.lat, lng: data.long });
-        formikRef.current.setFieldValue("alamat", data.alamat);
-        formikRef.current.setFieldValue("lat", data.lat);
-        formikRef.current.setFieldValue("long", data.long);
-        formikRef.current.setFieldValue("radius", data.radius);
-      } else {
-        setIsData(false);
-      }
-    };
-
-    fetchData();
-  }, [data]);
-
-  useEffect(() => {
-    if (!isData) {
-      getLocation()
-        .then(({ lat, long }) => {
-          setCenter({ lat: lat, lng: long });
-        })
-        .catch((e) => {
-          console.log(e);
-        })
-        .finally(() => {});
-    }
-  }, [isData]);
+    getData();
+  }, []);
 
   return (
     <>
-      {error && !notFound ? (
+      {error ? (
         <Center m={"auto"} minH={"300px"}>
-          <Retry loading={loading} retry={retry} />
+          <Retry loading={loading} retry={getData} />
         </Center>
       ) : (
         <CContainer
@@ -163,7 +168,7 @@ export default function PengaturanLokasiPresensi() {
             </CContainer>
           )}
 
-          {!loading && (
+          {!loading && data && center && (
             <>
               {center && (
                 <>
