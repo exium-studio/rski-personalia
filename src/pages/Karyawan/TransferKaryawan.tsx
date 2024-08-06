@@ -14,7 +14,7 @@ import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 export default function TransferKaryawan() {
   // Filter Config
-  const { filterKaryawan, setFilterKaryawan } = useFilterKaryawan();
+  const { setFilterKaryawan } = useFilterKaryawan();
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -26,10 +26,6 @@ export default function TransferKaryawan() {
       clearTimeout(handler);
     };
   }, [search, setFilterKaryawan]);
-
-  useEffect(() => {
-    console.log("Current filterKaryawan state:", filterKaryawan);
-  }, [filterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();

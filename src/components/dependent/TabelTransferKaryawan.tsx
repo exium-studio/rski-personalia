@@ -28,8 +28,11 @@ export default function TabelRekamJejak() {
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: "/api/rski/dashboard/karyawan/transfer/get-data-trasnfer",
-    payload: formattedFilterKaryawan,
-    dependencies: [],
+    payload: {
+      ...formattedFilterKaryawan,
+    },
+    limit: limitConfig,
+    dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
   });
 
   const formattedHeader = [
@@ -115,8 +118,8 @@ export default function TabelRekamJejak() {
         isNumeric: true,
       },
       {
-        value: item.kategori?.label,
-        td: item.kategori?.label,
+        value: item.kategori_transfer?.label,
+        td: item.kategori_transfer?.label,
       },
       {
         value: item.created_at,

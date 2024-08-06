@@ -21,9 +21,17 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
   const [data, setData] = useState<number | undefined>(page);
 
   const validation = () => {
+    if (
+      pagination?.meta?.last_page === undefined ||
+      pagination?.meta?.last_page === null
+    ) {
+      return true;
+    }
+
     if (data && data > 0 && data <= pagination?.meta?.last_page) {
       return true;
     }
+
     return false;
   };
 
