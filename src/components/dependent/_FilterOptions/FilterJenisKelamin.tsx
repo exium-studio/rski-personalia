@@ -1,8 +1,8 @@
 import { HStack, Text, VStack, Wrap } from "@chakra-ui/react";
 import { Dispatch } from "react";
+import { optionsJenisKelamin } from "../../../constant/selectOptions";
 import DataNotFound from "../../independent/DataNotFound";
 import FilterItemWrapper from "../../wrapper/FilterItemWrapper";
-import { optionsAgama } from "../../../constant/selectOptions";
 
 interface Props {
   filterConfig: any;
@@ -13,13 +13,13 @@ export default function FilterJenisKelamin({
   filterConfig,
   setFilterConfig,
 }: Props) {
-  const data = optionsAgama;
+  const data = optionsJenisKelamin;
 
   // SX
 
   return (
     <FilterItemWrapper
-      title="Agama"
+      title="Jenis Kelamin"
       filterValue={filterConfig.agama}
       setFilterConfig={setFilterConfig}
       filterKey="jenis_kelamin"

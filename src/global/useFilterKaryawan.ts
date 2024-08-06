@@ -8,6 +8,7 @@ const defaultFilterConfig = {
   status_aktif: [],
   tgl_masuk: [],
   agama: [],
+  jenis_kelamin: [],
 };
 
 type State = {
