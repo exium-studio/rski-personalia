@@ -357,7 +357,7 @@ export default function DetailKaryawanModal({
 
                             {/* Data Keluarga */}
                             <DetailKeluargaKaryawanModalDisclosure
-                              karyawan_id={data.id}
+                              karyawan_id={data.user.data_karyawan_id}
                               flexShrink={0}
                             >
                               <VStack
