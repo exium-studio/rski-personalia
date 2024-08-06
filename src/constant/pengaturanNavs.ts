@@ -1,4 +1,5 @@
 import {
+  RiArticleLine,
   RiCalendarCheckLine,
   RiCalendarCloseLine,
   RiCalendarLine,
@@ -7,6 +8,7 @@ import {
   RiHandCoinLine,
   RiIdCardLine,
   RiLandscapeLine,
+  RiListIndefinite,
   RiLockLine,
   RiMapPinLine,
   RiQuestionLine,
@@ -68,6 +70,16 @@ const pengaturanNavs = [
         icon: RiHandCoinLine,
         label: "Potongan",
         link: "/pengaturan/keuangan/premi",
+      },
+      {
+        icon: RiArticleLine,
+        label: "PTKP",
+        link: "/pengaturan/keuangan/ptkp",
+      },
+      {
+        icon: RiListIndefinite,
+        label: "Kategori TER",
+        link: "/pengaturan/keuangan/kategori-ter-pph21",
       },
       {
         icon: RiFilePaper2Line,
