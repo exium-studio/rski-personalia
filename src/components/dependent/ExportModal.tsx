@@ -23,9 +23,15 @@ import req from "../../constant/req";
 interface Props extends ButtonProps {
   url: string;
   title?: string;
+  downloadFileName?: string;
 }
 
-export default function ExportModal({ url, title, ...props }: Props) {
+export default function ExportModal({
+  url,
+  title,
+  downloadFileName,
+  ...props
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`export-modal-${1}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
@@ -55,7 +61,7 @@ export default function ExportModal({ url, title, ...props }: Props) {
                 .split("filename=")[1]
                 .split(";")[0]
                 .replace(/"/g, "")
-            : "RSKI - Data Pegawai.xls"; // Nama default jika tidak ada header
+            : downloadFileName;
 
           link.download = fileName;
           document.body.appendChild(link);

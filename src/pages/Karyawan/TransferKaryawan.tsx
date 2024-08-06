@@ -64,7 +64,11 @@ export default function TransferKaryawan() {
 
             <TransferKaryawanTableColumnsConfig />
 
-            <ExportModal url="" title="Export Transfer Karyawan" />
+            <ExportModal
+              url="/api/rski/dashboard/karyawan/transfer/export"
+              title="Export Transfer Karyawan"
+              downloadFileName={"Transfer Karyawan"}
+            />
 
             <AjukanTransferKaryawanModal minW={"fit-content"} />
           </HStack>
