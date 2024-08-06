@@ -29,6 +29,7 @@ import PengaturanKuisioner from "./pages/Pengaturan/PengaturanKuisioner";
 import PengaturanLanding from "./pages/Pengaturan/PengaturanLanding";
 import PengaturanLokasiPresensi from "./pages/Pengaturan/PengaturanLokasiPresensi";
 import PengaturanPremi from "./pages/Pengaturan/PengaturanPotongan";
+import PengaturanPtkp from "./pages/Pengaturan/PengaturanPtkp";
 import PengaturanShift from "./pages/Pengaturan/PengaturanShift";
 import PengaturanTerPph21 from "./pages/Pengaturan/PengaturanTerPph21";
 import PengaturanCuti from "./pages/Pengaturan/PengaturanTipeCuti";
@@ -395,7 +396,7 @@ export const App = () => (
               title="Pengaturan - TER pph21"
             >
               <PengaturanContainer activeGroup={2} active={1}>
-                <PengaturanTerPph21 />
+                <PengaturanPtkp />
               </PengaturanContainer>
             </NavContainer>
           }
