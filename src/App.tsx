@@ -386,7 +386,7 @@ export const App = () => (
           }
         />
         <Route
-          path="/pengaturan/keuangan/ter-pph21"
+          path="/pengaturan/keuangan/ptkp"
           element={
             <NavContainer
               active={7}
@@ -401,6 +401,36 @@ export const App = () => (
           }
         />
         <Route
+          path="/pengaturan/keuangan/kategori-ter-pph21"
+          element={
+            <NavContainer
+              active={7}
+              topNavsData={navs[7].subNavs}
+              topNavActive={0}
+              title="Pengaturan - TER pph21"
+            >
+              <PengaturanContainer activeGroup={2} active={2}>
+                <PengaturanTerPph21 />
+              </PengaturanContainer>
+            </NavContainer>
+          }
+        />
+        <Route
+          path="/pengaturan/keuangan/ter-pph21"
+          element={
+            <NavContainer
+              active={7}
+              topNavsData={navs[7].subNavs}
+              topNavActive={0}
+              title="Pengaturan - TER pph21"
+            >
+              <PengaturanContainer activeGroup={2} active={3}>
+                <PengaturanTerPph21 />
+              </PengaturanContainer>
+            </NavContainer>
+          }
+        />
+        <Route
           path="/pengaturan/keuangan/jadwal-penggajian"
           element={
             <NavContainer
@@ -409,7 +439,7 @@ export const App = () => (
               topNavActive={0}
               title="Pengaturan - Tanggal Penggajian"
             >
-              <PengaturanContainer activeGroup={2} active={2}>
+              <PengaturanContainer activeGroup={2} active={4}>
                 <PengaturanJadwalPenggajian />
               </PengaturanContainer>
             </NavContainer>
