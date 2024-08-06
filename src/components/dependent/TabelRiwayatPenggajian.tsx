@@ -127,7 +127,7 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"400px"}>
+        <Center my={"auto"} minH={"300px"}>
           <Retry loading={loading} retry={retry} />
         </Center>
       )}
@@ -145,7 +145,7 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
           )}
           {!loading && (
             <>
-              {!formattedData && <NoData minH={"400px"} />}
+              {!formattedData && <NoData minH={"300px"} />}
 
               {formattedData && (
                 <>
@@ -176,7 +176,7 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
                   />
 
                   <DetailPenggajianModal
-                  id={``}
+                    id={``}
                     penggajian_id={1}
                     isOpen={isOpen}
                     onOpen={onOpen}

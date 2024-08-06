@@ -45,7 +45,7 @@ export default function Login() {
             </Text>
           </VStack>
 
-          <VStack p={6} minH={"400px"} h={"100vh"} flex={1}>
+          <VStack p={6} minH={"300px"} h={"100vh"} flex={1}>
             <VStack
               borderRadius={20}
               justify={"space-between"}

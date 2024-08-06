@@ -75,7 +75,7 @@ export default function DetailPresensi() {
 
   return (
     <CWrapper>
-      {loading && <ComponentSpinner minH={"400px"} flex={1} />}
+      {loading && <ComponentSpinner minH={"300px"} flex={1} />}
 
       <VStack spacing={responsiveSpacing} align={"stretch"}>
         {!loading && data && (

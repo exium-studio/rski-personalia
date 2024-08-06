@@ -136,7 +136,7 @@ export default function PengaturanLokasiPresensi() {
   return (
     <>
       {error && !notFound ? (
-        <Center m={"auto"} minH={"400px"}>
+        <Center m={"auto"} minH={"300px"}>
           <Retry loading={loading} retry={retry} />
         </Center>
       ) : (

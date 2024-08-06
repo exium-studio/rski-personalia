@@ -62,7 +62,7 @@ export default function DetailVerifikasiBerkas() {
         bg={useBodyColor()}
         borderRadius={12}
       >
-        {loading && <ComponentSpinner minH={"400px"} flex={1} />}
+        {loading && <ComponentSpinner minH={"300px"} flex={1} />}
 
         {!loading && data && (
           <>

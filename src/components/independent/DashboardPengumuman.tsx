@@ -77,7 +77,7 @@ export default function DashboardPengumuman({ ...props }: Props) {
 
   return (
     <>
-      {loading && <Skeleton flex={"1 1 0"} h={"100%"} minH={"400px"} />}
+      {loading && <Skeleton flex={"1 1 0"} h={"100%"} minH={"300px"} />}
 
       {!loading && (
         <VStack

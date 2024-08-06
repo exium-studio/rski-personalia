@@ -226,7 +226,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                           borderRadius={12}
                         >
                           {loading && (
-                            <ComponentSpinner minH={"400px"} flex={1} />
+                            <ComponentSpinner minH={"300px"} flex={1} />
                           )}
 
                           {!loading && data && (

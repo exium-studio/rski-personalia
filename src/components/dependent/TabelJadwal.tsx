@@ -114,7 +114,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"400px"}>
+        <Center my={"auto"} minH={"300px"}>
           <Retry loading={loading} retry={retry} />
         </Center>
       )}
@@ -133,7 +133,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
           {!loading && (
             <>
               {(!data || (data && data.length === 0)) && (
-                <NoData minH={"400px"} />
+                <NoData minH={"300px"} />
               )}
               {(data || (data && data.length > 0)) && (
                 <>

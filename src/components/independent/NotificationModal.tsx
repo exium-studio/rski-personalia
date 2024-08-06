@@ -168,7 +168,7 @@ export default function NotificationModal({ ...props }: Props) {
                 {loading && (
                   <>
                     <Skeleton
-                      minH={"400px"}
+                      minH={"300px"}
                       flex={1}
                       mx={"auto"}
                       borderRadius={0}

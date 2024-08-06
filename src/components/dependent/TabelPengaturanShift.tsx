@@ -161,14 +161,14 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"400px"} />}
+          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
 
           {notFound && !isObjectEmpty(filterConfig) && (
-            <NotFound minH={"400px"} />
+            <NotFound minH={"300px"} />
           )}
 
           {!notFound && (
-            <Center my={"auto"} minH={"400px"}>
+            <Center my={"auto"} minH={"300px"}>
               <Retry loading={loading} retry={retry} />
             </Center>
           )}
@@ -184,11 +184,11 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
           )}
           {!loading && (
             <>
-              {!formattedData && <NoData minH={"400px"} />}
+              {!formattedData && <NoData minH={"300px"} />}
 
               {formattedData && (
                 <>
-                  {fd && fd?.length === 0 && <NotFound minH={"400px"} />}
+                  {fd && fd?.length === 0 && <NotFound minH={"300px"} />}
 
                   {fd && fd?.length > 0 && (
                     <>

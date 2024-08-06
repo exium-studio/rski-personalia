@@ -324,7 +324,7 @@ export default function TabelPenilaianKaryawan({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"400px"}>
+        <Center my={"auto"} minH={"300px"}>
           <Retry loading={loading} retry={retry} />
         </Center>
       )}
@@ -342,7 +342,7 @@ export default function TabelPenilaianKaryawan({ filterConfig }: Props) {
           )}
           {!loading && (
             <>
-              {!formattedData && <NoData minH={"400px"} />}
+              {!formattedData && <NoData minH={"300px"} />}
 
               {formattedData && (
                 <>

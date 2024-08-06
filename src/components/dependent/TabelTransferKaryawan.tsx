@@ -169,15 +169,15 @@ export default function TabelRekamJejak() {
       {error && (
         <>
           {notFound && isObjectEmpty(formattedFilterKaryawan) && (
-            <NoData minH={"400px"} />
+            <NoData minH={"300px"} />
           )}
 
           {notFound && !isObjectEmpty(formattedFilterKaryawan) && (
-            <NotFound minH={"400px"} />
+            <NotFound minH={"300px"} />
           )}
 
           {!notFound && (
-            <Center my={"auto"} minH={"400px"}>
+            <Center my={"auto"} minH={"300px"}>
               <Retry loading={loading} retry={retry} />
             </Center>
           )}
@@ -199,7 +199,7 @@ export default function TabelRekamJejak() {
           {!loading && (
             <>
               {(!data || (data && data.length === 0)) && (
-                <NoData minH={"400px"} />
+                <NoData minH={"300px"} />
               )}
 
               {(data || (data && data.length > 0)) && (

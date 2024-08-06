@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import req from "../constant/req";
 import useRenderTrigger from "../global/useRenderTrigger";
 
@@ -9,6 +9,7 @@ interface Props<T> {
   limit?: number;
   dependencies?: any[];
   conditions?: boolean;
+  page?: number;
 }
 
 const useDataState = <T>({
@@ -18,6 +19,7 @@ const useDataState = <T>({
   limit,
   dependencies = [],
   conditions = true,
+  page = 1,
 }: Props<T>) => {
   const [error, setError] = useState<boolean>(false);
   const [notFound, setNotFound] = useState<boolean>(false);
@@ -27,8 +29,9 @@ const useDataState = <T>({
   const [paginationData, setPaginationData] = useState<T | undefined>(
     initialData
   );
-  const [offset, setOffset] = useState<number>(0);
+  const [offset, setOffset] = useState<number>((page - 1) * (limit || 0));
   const { rt } = useRenderTrigger();
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -36,9 +39,15 @@ const useDataState = <T>({
       makeRequest();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [conditions, url, rt, ...dependencies]);
+  }, [conditions, url, rt, page, ...dependencies]);
 
   const makeRequest = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
+
     const method = payload ? "POST" : "GET";
     const data = {
       ...payload,
@@ -51,8 +60,10 @@ const useDataState = <T>({
       url,
       data: method === "POST" ? data : undefined,
       // params: method === "GET" ? data : undefined,
+      signal: abortController.signal,
     })
       .then((response) => {
+        setLoading(false);
         setError(false);
         if (response.status === 200) {
           setData(response.data.data);
@@ -60,14 +71,16 @@ const useDataState = <T>({
         }
       })
       .catch((error) => {
-        if (error.response.status === 404) {
-          setNotFound(true);
+        if (error.name === "CanceledError") {
+          return;
+        } else {
+          setLoading(false);
+          if (error.response && error.response.status === 404) {
+            setNotFound(true);
+          }
+          setError(true);
+          console.log(error);
         }
-        setError(true);
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
       });
   };
 
