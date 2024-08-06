@@ -127,6 +127,10 @@ export default function TabelKaryawan() {
       th: "Jenis Kelamin",
       isSortable: true,
     },
+    {
+      th: "Jabatan",
+      isSortable: true,
+    },
   ];
   const formattedData = data?.map((item: Interface__DetailKaryawan) => ({
     id: item.user.id,
@@ -230,6 +234,10 @@ export default function TabelKaryawan() {
         value: item.jenis_kelamin,
         td: item.jenis_kelamin ? "Laki - laki" : "Perempuan",
         isNumeric: true,
+      },
+      {
+        value: item.jabatan.nama_jabatan,
+        td: item.jabatan.nama_jabatan,
       },
     ],
   }));
