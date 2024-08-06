@@ -240,11 +240,6 @@ export default function TabelKaryawan() {
     loading: (
       <>
         <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-        {/* <HStack justify={"space-between"} mt={responsiveSpacing}>
-          <Skeleton maxW={"120px"} />
-          <Skeleton maxW={"300px"} h={"20px"} />
-          <Skeleton maxW={"112px"} />
-        </HStack> */}
       </>
     ),
     loaded: (

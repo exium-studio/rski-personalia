@@ -23,9 +23,11 @@ export default function PaginationNav({
         className="btn"
         size={"sm"}
         onClick={() => {
-          setPage(page - 1);
+          if (page > 1) {
+            setPage(page - 1);
+          }
         }}
-        isDisabled={!paginationData?.links?.prev}
+        isDisabled={!paginationData?.links?.prev || page === 1}
       />
 
       <PaginationJump
@@ -43,7 +45,10 @@ export default function PaginationNav({
         onClick={() => {
           setPage(page + 1);
         }}
-        isDisabled={!paginationData?.links?.next}
+        isDisabled={
+          !paginationData?.links?.next ||
+          page === paginationData?.meta?.last_page
+        }
       />
     </HStack>
   );
