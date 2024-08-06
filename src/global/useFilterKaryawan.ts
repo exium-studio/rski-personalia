@@ -3,12 +3,14 @@ import { create } from "zustand";
 const defaultFilterConfig = {
   search: "",
   unit_kerja: [],
+  jabatan: [],
   status_karyawan: [],
   masa_kerja: [],
   status_aktif: [],
   tgl_masuk: [],
   agama: [],
   jenis_kelamin: [],
+  pendidikan_terakhir: [],
 };
 
 type State = {
