@@ -1,7 +1,6 @@
-import { Center, HStack, Text, useDisclosure } from "@chakra-ui/react";
+import { Center, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import { Interface__DetailKaryawan } from "../../constant/interfaces";
-import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useKaryawanTableColumnsConfig from "../../global/useKaryawanTableColumnsConfig";
 import useDataState from "../../hooks/useDataState";
@@ -241,11 +240,11 @@ export default function TabelKaryawan() {
     loading: (
       <>
         <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-        <HStack justify={"space-between"} mt={responsiveSpacing}>
+        {/* <HStack justify={"space-between"} mt={responsiveSpacing}>
           <Skeleton maxW={"120px"} />
           <Skeleton maxW={"300px"} h={"20px"} />
           <Skeleton maxW={"112px"} />
-        </HStack>
+        </HStack> */}
       </>
     ),
     loaded: (
@@ -268,19 +267,6 @@ export default function TabelKaryawan() {
                 // rowOptions={rowOptions}
               />
             </CustomTableContainer>
-
-            <TabelFooterConfig
-              limitConfig={limitConfig}
-              setLimitConfig={setLimitConfig}
-              pageConfig={pageConfig}
-              setPageConfig={setPageConfig}
-              paginationData={paginationData}
-              footer={
-                <Text opacity={0.4}>
-                  Klik row untuk melihat detail karyawan
-                </Text>
-              }
-            />
 
             <DetailKaryawanModal
               id={`detail-karyawan-by-row-click`}
@@ -309,6 +295,17 @@ export default function TabelKaryawan() {
           {!error && render.loaded}
         </>
       )}
+
+      <TabelFooterConfig
+        limitConfig={limitConfig}
+        setLimitConfig={setLimitConfig}
+        pageConfig={pageConfig}
+        setPageConfig={setPageConfig}
+        paginationData={paginationData}
+        footer={
+          <Text opacity={0.4}>Klik row untuk melihat detail karyawan</Text>
+        }
+      />
     </>
   );
 }
