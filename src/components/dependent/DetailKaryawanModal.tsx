@@ -264,12 +264,6 @@ export default function DetailKaryawanModal({
                               <HStack mb={2}>
                                 <HStack opacity={0.6}>
                                   <Text>{data.email}</Text>
-                                  {/* <Icon
-                                    as={RiCircleFill}
-                                    fontSize={8}
-                                    opacity={0.4}
-                                  />
-                                  <Text>{data.user.username}</Text> */}
                                 </HStack>
                               </HStack>
 

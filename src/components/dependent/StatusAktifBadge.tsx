@@ -11,10 +11,10 @@ export default function StatusAktifBadge({ data, ...props }: Props) {
     <Badge
       borderRadius={"full"}
       textAlign={"center"}
-      colorScheme={data ? "green" : data === 0 ? "gray" : "red"}
+      colorScheme={data === 2 ? "green" : data === 1 ? "gray" : "red"}
       {...props}
     >
-      {data ? "Aktif" : data === 0 ? "Belum Aktif" : "Tidak Aktif"}
+      {data === 2 ? "Aktif" : data === 1 ? "Belum Aktif" : "Tidak Aktif"}
     </Badge>
   );
 }
