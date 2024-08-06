@@ -31,7 +31,7 @@ export default function FilterMasaKerja({
 
   return (
     <FilterItemWrapper
-      title="Masa Kerja"
+      title="Maksimal Masa Kerja"
       filterValue={filterConfig.masa_kerja}
       setFilterConfig={setFilterConfig}
       filterKey="masa_kerja"
