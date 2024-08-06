@@ -1,19 +1,18 @@
-import { Center, HStack, Text, Tooltip } from "@chakra-ui/react";
+import { Center, Text, Tooltip } from "@chakra-ui/react";
 import { useState } from "react";
-import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useTransferKaryawanTableColumnsConfig from "../../global/useTransferKaryawanTableColumnsConfig";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
+import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
-import isObjectEmpty from "../../lib/isObjectEmpty";
-import NotFound from "../independent/NotFound";
 
 export default function TabelRekamJejak() {
   // Limit Config
@@ -192,13 +191,14 @@ export default function TabelRekamJejak() {
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
+              {/* <HStack justify={"space-between"} mt={responsiveSpacing}>
                 <Skeleton maxW={"120px"} />
                 <Skeleton maxW={"300px"} h={"20px"} />
                 <Skeleton maxW={"112px"} />
-              </HStack>
+              </HStack> */}
             </>
           )}
+
           {!loading && (
             <>
               {(!data || (data && data.length === 0)) && (
@@ -217,29 +217,24 @@ export default function TabelRekamJejak() {
                       columnsConfig={columnsConfig}
                     />
                   </CustomTableContainer>
-
-                  <TabelFooterConfig
-                    limitConfig={limitConfig}
-                    setLimitConfig={setLimitConfig}
-                    pageConfig={pageConfig}
-                    setPageConfig={setPageConfig}
-                    paginationData={{
-                      prev_page_url: "",
-                      next_page_url: "",
-                      last_page: 1,
-                    }}
-                    // footer={
-                    //   <Text opacity={0.4}>
-                    //     Klik row untuk melihat detail karyawan
-                    //   </Text>
-                    // }
-                  />
                 </>
               )}
             </>
           )}
         </>
       )}
+
+      <TabelFooterConfig
+        limitConfig={limitConfig}
+        setLimitConfig={setLimitConfig}
+        pageConfig={pageConfig}
+        setPageConfig={setPageConfig}
+        paginationData={{
+          prev_page_url: "",
+          next_page_url: "",
+          last_page: 1,
+        }}
+      />
     </>
   );
 }
