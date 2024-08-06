@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie } from "typescript-cookie";
+import { getCookie, removeCookie } from "typescript-cookie";
 
 const req = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -35,6 +35,11 @@ req.interceptors.response.use(
           break;
         case 503:
           window.location.href = "/maintenance";
+          break;
+        case 401:
+          removeCookie("__auth_token");
+          localStorage.removeItem("__user_data");
+          window.location.href = "/";
           break;
         default:
           return Promise.reject(error);

@@ -16,6 +16,7 @@ export default function useLogout() {
       .then((r) => {
         if (r.status === 200) {
           removeCookie("__auth_token");
+          localStorage.removeItem("__user_data");
           navigate("/");
           toast({
             status: "success",
