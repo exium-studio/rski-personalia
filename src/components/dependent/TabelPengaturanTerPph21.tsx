@@ -76,7 +76,7 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
       (term: Interface__SelectOption) => term.value
     );
 
-    const matchesSearchTerm = item.ptkp?.kode_ptkp
+    const matchesSearchTerm = item.kategori_ter_id?.nama_kategori_ter
       .toLowerCase()
       .includes(searchTerm);
     const matchesIsDeletedTerm =

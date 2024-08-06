@@ -1,7 +1,7 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import TabelTerPph21 from "../../components/dependent/TabelPengaturanTerPph21";
+import TabelPengaturanTerPph21 from "../../components/dependent/TabelPengaturanTerPph21";
 import TambahTerPph21 from "../../components/independent/TambahTerPph21";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
@@ -66,7 +66,7 @@ export default function PengaturanTerPph21() {
         <TambahTerPph21 minW={"fit-content"} />
       </HStack>
 
-      <TabelTerPph21 filterConfig={filterConfig} />
+      <TabelPengaturanTerPph21 filterConfig={filterConfig} />
     </CContainer>
   );
 }
