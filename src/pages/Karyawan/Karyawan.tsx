@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import ExportModal from "../../components/dependent/ExportModal";
+import ExportKaryawanModal from "../../components/dependent/ExportKaryawanModal";
 import ImportModal from "../../components/dependent/ImportModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelKaryawan from "../../components/dependent/TabelKaryawan";
@@ -67,11 +67,7 @@ export default function Karyawan() {
 
             <KaryawanTableColumnsConfig title="Config Kolom Tabel Karyawan" />
 
-            <ExportModal
-              url={"/api/rski/dashboard/karyawan/export"}
-              title={"Export Karyawan"}
-              px={6}
-            />
+            <ExportKaryawanModal px={6} />
 
             <ImportModal url={""} title={"Import Karyawan"} px={6} />
 
