@@ -60,6 +60,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     if (values.unit_kerja && values.unit_kerja.length > 0) {
       count += values.unit_kerja.length;
     }
+    if (values.jabatan && values.jabatan.length > 0) {
+      count += values.jabatan.length;
+    }
     if (values.status_karyawan && values.status_karyawan.length > 0) {
       count += values.status_karyawan.length;
     }
@@ -74,6 +77,12 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     }
     if (values.agama && values.agama.length > 0) {
       count += values.agama.length;
+    }
+    if (values.jenis_kelamin && values.jenis_kelamin.length > 0) {
+      count += values.jenis_kelamin.length;
+    }
+    if (values.pendidikan && values.pendidikan.length > 0) {
+      count += values.pendidikan.length;
     }
     return count;
   }
@@ -104,11 +113,6 @@ export default function FilterKaryawan({ title, ...props }: Props) {
         acc[key] = value;
         return acc;
       }, {} as { [key: string]: any });
-
-    console.log(
-      "filteredFilters in filter karyawan component",
-      filteredFilters
-    );
 
     // Mengupdate state dengan filter yang diformat
     setFilterKaryawan(localFilterConfig);

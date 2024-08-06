@@ -20,9 +20,9 @@ export default function FilterPendidikanTerakhir({
   return (
     <FilterItemWrapper
       title="Pendidikan Terakhir"
-      filterValue={filterConfig.agama}
+      filterValue={filterConfig.pendidikan_terakhir}
       setFilterConfig={setFilterConfig}
-      filterKey="jenis_kelamin"
+      filterKey="pendidikan_terakhir"
     >
       <VStack align={"stretch"} gap={0}>
         {data?.length === 0 && (
@@ -34,8 +34,8 @@ export default function FilterPendidikanTerakhir({
         <Wrap py={4} w={"100%"}>
           {data?.map((data, i) => {
             const active =
-              filterConfig?.jenis_kelamin &&
-              filterConfig?.jenis_kelamin.some(
+              filterConfig?.pendidikan_terakhir &&
+              filterConfig?.pendidikan_terakhir.some(
                 (status: any) => status.value === data.value
               );
 
@@ -57,27 +57,27 @@ export default function FilterPendidikanTerakhir({
                 transition={"200ms"}
                 onClick={() => {
                   setFilterConfig((ps: any) => {
-                    // Mengecek apakah data sudah ada dalam jenis_kelamin
+                    // Mengecek apakah data sudah ada dalam pendidikan_terakhir
                     const isDataExist =
-                      ps.jenis_kelamin &&
-                      ps.jenis_kelamin.some(
+                      ps.pendidikan_terakhir &&
+                      ps.pendidikan_terakhir.some(
                         (status: any) => status.value === data.value
                       );
 
-                    // Jika data sudah ada, maka hapus data dari jenis_kelamin
+                    // Jika data sudah ada, maka hapus data dari pendidikan_terakhir
                     if (isDataExist) {
                       return {
                         ...ps,
-                        jenis_kelamin: ps.jenis_kelamin.filter(
+                        pendidikan_terakhir: ps.pendidikan_terakhir.filter(
                           (status: any) => status.value !== data.value
                         ),
                       };
                     } else {
-                      // Jika data belum ada, maka tambahkan data ke jenis_kelamin
+                      // Jika data belum ada, maka tambahkan data ke pendidikan_terakhir
                       return {
                         ...ps,
-                        jenis_kelamin: ps.jenis_kelamin
-                          ? [...ps.jenis_kelamin, data]
+                        pendidikan_terakhir: ps.pendidikan_terakhir
+                          ? [...ps.pendidikan_terakhir, data]
                           : [data],
                       };
                     }

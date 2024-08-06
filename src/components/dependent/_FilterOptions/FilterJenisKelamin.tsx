@@ -20,7 +20,7 @@ export default function FilterJenisKelamin({
   return (
     <FilterItemWrapper
       title="Jenis Kelamin"
-      filterValue={filterConfig.agama}
+      filterValue={filterConfig.jenis_kelamin}
       setFilterConfig={setFilterConfig}
       filterKey="jenis_kelamin"
     >

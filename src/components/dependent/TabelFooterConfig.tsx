@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   HStack,
   Icon,
@@ -48,77 +49,81 @@ export default function TabelFooterConfig({
       mt={responsiveSpacing}
       align={"center"}
     >
-      {typeof limitConfig === "number" && setLimitConfig && (
-        <Menu>
-          <MenuButton
-            ref={limitButtonRef}
-            px={4}
-            as={Button}
-            className="btn-outline"
-            rightIcon={
-              <Icon as={RiArrowDownSLine} fontSize={iconSize} opacity={0.6} />
-            }
-          >
-            <HStack>
-              <Text fontWeight={400}>Tampilkan</Text>
-              <Text color={"p.500"}>
-                {limitConfig === 0 ? "Semua" : limitConfig}
-              </Text>
-            </HStack>
-          </MenuButton>
+      <Box w={"100%"} maxW={"200px"}>
+        {typeof limitConfig === "number" && setLimitConfig && (
+          <Menu>
+            <MenuButton
+              ref={limitButtonRef}
+              px={4}
+              as={Button}
+              className="btn-outline"
+              rightIcon={
+                <Icon as={RiArrowDownSLine} fontSize={iconSize} opacity={0.6} />
+              }
+            >
+              <HStack>
+                <Text fontWeight={400}>Tampilkan</Text>
+                <Text color={"p.500"}>
+                  {limitConfig === 0 ? "Semua" : limitConfig}
+                </Text>
+              </HStack>
+            </MenuButton>
 
-          <MenuList minW={`${limitMenuListW}px`} zIndex={10}>
-            <MenuItem
-              color={limitConfig === 10 ? "p.500" : ""}
-              bg={limitConfig === 10 ? "var(--p500a5)" : ""}
-              onClick={() => {
-                setLimitConfig(10);
-                setPageConfig(1);
-              }}
-            >
-              10
-            </MenuItem>
-            <MenuItem
-              color={limitConfig === 50 ? "p.500" : ""}
-              onClick={() => {
-                setLimitConfig(50);
-                setPageConfig(1);
-              }}
-            >
-              50
-            </MenuItem>
-            <MenuItem
-              color={limitConfig === 100 ? "p.500" : ""}
-              onClick={() => {
-                setLimitConfig(100);
-                setPageConfig(1);
-              }}
-            >
-              100
-            </MenuItem>
+            <MenuList minW={`${limitMenuListW}px`} zIndex={10}>
+              <MenuItem
+                color={limitConfig === 10 ? "p.500" : ""}
+                bg={limitConfig === 10 ? "var(--p500a5)" : ""}
+                onClick={() => {
+                  setLimitConfig(10);
+                  setPageConfig(1);
+                }}
+              >
+                10
+              </MenuItem>
+              <MenuItem
+                color={limitConfig === 50 ? "p.500" : ""}
+                onClick={() => {
+                  setLimitConfig(50);
+                  setPageConfig(1);
+                }}
+              >
+                50
+              </MenuItem>
+              <MenuItem
+                color={limitConfig === 100 ? "p.500" : ""}
+                onClick={() => {
+                  setLimitConfig(100);
+                  setPageConfig(1);
+                }}
+              >
+                100
+              </MenuItem>
 
-            <MenuItem
-              color={limitConfig === 0 ? "p.500" : ""}
-              onClick={() => {
-                setLimitConfig(0);
-                setPageConfig(1);
-              }}
-            >
-              Semua
-            </MenuItem>
-          </MenuList>
-        </Menu>
-      )}
+              <MenuItem
+                color={limitConfig === 0 ? "p.500" : ""}
+                onClick={() => {
+                  setLimitConfig(0);
+                  setPageConfig(1);
+                }}
+              >
+                Semua
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        )}
+      </Box>
 
       {footer}
 
-      {pageConfig && setPageConfig && (
-        <PaginationNav
-          page={pageConfig}
-          setPage={setPageConfig}
-          paginationData={paginationData}
-        />
-      )}
+      <HStack w={"100%"} maxW={"200px"} justify={"end"}>
+        {pageConfig && setPageConfig && (
+          <PaginationNav
+            page={pageConfig}
+            setPage={setPageConfig}
+            paginationData={paginationData}
+          />
+        )}
+      </HStack>
     </Wrap>
   );
 }
