@@ -30,6 +30,9 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
     { column: "masa_kerja", label: "Masa Kerja" },
     { column: "promosi", label: "Promosi" },
     { column: "mutasi", label: "Mutasi" },
+    { column: "agama", label: "Agama" },
+    { column: "jenis_kelamin", label: "Jenis Kelamin" },
+    { column: "jabatan", label: "Jabatan" },
   ];
   const presetColumns = [
     {
@@ -38,7 +41,7 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
     },
     {
       label: "Karyawan",
-      columns: [0, 1, 2, 3, 4, 5],
+      columns: [0, 1, 2, 3, 4, 5, 17, 15, 16],
     },
     {
       label: "Akun",

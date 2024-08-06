@@ -349,7 +349,7 @@ export default function CustomTable({
                 onClick={() => {
                   header.isSortable && requestSort(i);
                 }}
-                cursor={header.isSortable ? "pointer" : "auto"}
+                cursor={header?.isSortable ? "pointer" : "auto"}
                 borderBottom={"none !important"}
                 p={0}
                 {...header?.props}
@@ -365,7 +365,7 @@ export default function CustomTable({
                   pr={i === formattedHeader.length - 1 ? 4 : ""}
                   {...header?.cProps}
                 >
-                  <Text>{header.th}</Text>
+                  <Text>{header?.th}</Text>
 
                   {renderSortIcon(i)}
                 </HStack>
@@ -474,11 +474,11 @@ export default function CustomTable({
                       transition={"200ms"}
                       {...col?.cProps}
                     >
-                      {typeof col.td === "string" ||
-                      typeof col.td === "number" ? (
-                        <Text>{col.td}</Text>
+                      {typeof col?.td === "string" ||
+                      typeof col?.td === "number" ? (
+                        <Text>{col?.td}</Text>
                       ) : (
-                        col.td
+                        col?.td
                       )}
                     </HStack>
                   </Td>
