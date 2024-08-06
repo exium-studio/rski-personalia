@@ -127,8 +127,6 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   // SX
   const lightDarkColor = useLightDarkColor();
 
-  // console.log(filterKaryawan);
-
   return (
     <>
       <Button
