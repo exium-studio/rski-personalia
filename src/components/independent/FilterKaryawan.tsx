@@ -32,6 +32,7 @@ import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FilterJenisKelamin from "../dependent/_FilterOptions/FilterJenisKelamin";
 import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
+import FilterJebatan from "../dependent/_FilterOptions/FilterJabatan";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -174,6 +175,11 @@ export default function FilterKaryawan({ title, ...props }: Props) {
           <ModalBody className="scrollY">
             <Accordion allowToggle>
               <FilterUnitKerja
+                filterConfig={localFilterConfig}
+                setFilterConfig={setLocalFilterConfig}
+              />
+
+              <FilterJebatan
                 filterConfig={localFilterConfig}
                 setFilterConfig={setLocalFilterConfig}
               />

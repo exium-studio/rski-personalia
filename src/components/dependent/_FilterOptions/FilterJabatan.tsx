@@ -22,7 +22,7 @@ interface Props {
   setFilterConfig: Dispatch<any>;
 }
 
-export default function FilterUnitKerja({
+export default function FilterJebatan({
   filterConfig,
   setFilterConfig,
 }: Props) {
@@ -33,12 +33,12 @@ export default function FilterUnitKerja({
   useEffect(() => {
     if (!options) {
       req
-        .get("/api/get-list-unit-kerja")
+        .get("/api/get-list-jabatan")
         .then((r) => {
           if (r.status === 200) {
             const options = r.data.data.map((item: any) => ({
               id: item.id,
-              label: item.nama_unit,
+              label: item.nama_jabatan,
             }));
             setOptions(options);
           }
@@ -57,10 +57,10 @@ export default function FilterUnitKerja({
 
   return (
     <FilterItemWrapper
-      title="Unit Kerja"
-      filterValue={filterConfig.unit_kerja}
+      title="Jabatan"
+      filterValue={filterConfig.jabatan}
       setFilterConfig={setFilterConfig}
-      filterKey="unit_kerja"
+      filterKey="jabatan"
     >
       <InputGroup position={"sticky"} top={0} bg={useBodyColor()} zIndex={2}>
         <InputLeftElement>
@@ -97,8 +97,8 @@ export default function FilterUnitKerja({
           <Wrap py={4} w={"100%"}>
             {filteredList?.map((data: any, i: number) => {
               const active =
-                filterConfig?.unit_kerja &&
-                filterConfig?.unit_kerja.some(
+                filterConfig?.jabatan &&
+                filterConfig?.jabatan.some(
                   (unit: any) => unit?.id === data?.id
                 );
 
@@ -120,26 +120,24 @@ export default function FilterUnitKerja({
                   transition={"200ms"}
                   onClick={() => {
                     setFilterConfig((ps: any) => {
-                      // Mengecek apakah data sudah ada dalam unit_kerja
+                      // Mengecek apakah data sudah ada dalam jabatan
                       const isDataExist =
-                        ps.unit_kerja &&
-                        ps.unit_kerja.some((unit: any) => unit.id === data.id);
+                        ps.jabatan &&
+                        ps.jabatan.some((unit: any) => unit.id === data.id);
 
-                      // Jika data sudah ada, maka hapus data dari unit_kerja
+                      // Jika data sudah ada, maka hapus data dari jabatan
                       if (isDataExist) {
                         return {
                           ...ps,
-                          unit_kerja: ps.unit_kerja.filter(
+                          jabatan: ps.jabatan.filter(
                             (unit: any) => unit.id !== data.id
                           ),
                         };
                       } else {
-                        // Jika data belum ada, maka tambahkan data ke unit_kerja
+                        // Jika data belum ada, maka tambahkan data ke jabatan
                         return {
                           ...ps,
-                          unit_kerja: ps.unit_kerja
-                            ? [...ps.unit_kerja, data]
-                            : [data],
+                          jabatan: ps.jabatan ? [...ps.jabatan, data] : [data],
                         };
                       }
                     });
