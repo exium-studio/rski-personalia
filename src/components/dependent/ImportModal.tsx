@@ -96,8 +96,6 @@ export default function ImportModal({
     },
   });
 
-  console.log(formik.values);
-
   return (
     <>
       <Button
