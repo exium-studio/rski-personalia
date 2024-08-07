@@ -14,6 +14,7 @@ import TabelJadwalItem from "./JadwalTabelItem";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 import TerapkanJadwalKaryawanTerpilih from "./TerapkanJadwalKaryawanTerpilih";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 interface Props {
   filterConfig?: any;
@@ -24,14 +25,21 @@ export default function TabelJadwal({ filterConfig }: Props) {
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
+  // Filter Karyawan Config
+  const { formattedFilterKaryawan } = useFilterKaryawan();
 
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any>({
       initialData: undefined,
       url: `/api/rski/dashboard/jadwal-karyawan/get-data-jadwal?page=${pageConfig}`,
-      payload: { ...filterConfig },
+      payload: { ...filterConfig, ...formattedFilterKaryawan },
       limit: limitConfig,
-      dependencies: [limitConfig, pageConfig, filterConfig],
+      dependencies: [
+        limitConfig,
+        pageConfig,
+        filterConfig,
+        formattedFilterKaryawan,
+      ],
     });
 
   const dateList = eachDayOfInterval({

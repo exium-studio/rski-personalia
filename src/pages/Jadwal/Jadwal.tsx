@@ -12,7 +12,6 @@ import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 export default function Jadwal() {
   const today = new Date();
@@ -23,11 +22,9 @@ export default function Jadwal() {
     from: startOfWeekDate,
     to: endOfWeekDate,
   };
-  const { formattedFilterKaryawan } = useFilterKaryawan();
 
   // Filter Config
   const defaultFilterConfig = {
-    ...formattedFilterKaryawan,
     tgl_mulai: defaultRangeTgl?.from,
     tgl_selesai: defaultRangeTgl?.to,
   };
