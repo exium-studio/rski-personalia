@@ -28,18 +28,19 @@ export default function TabelPresensi({ filterConfig }: Props) {
   // Filter Karyawan Config
   const { formattedFilterKaryawan } = useFilterKaryawan();
 
-  const { error, notFound, loading, data, retry } = useDataState<any>({
-    initialData: undefined,
-    url: `/api/rski/dashboard/presensi/get-data-presensi?page=${pageConfig}`,
-    payload: { ...filterConfig, ...formattedFilterKaryawan },
-    limit: limitConfig,
-    dependencies: [
-      limitConfig,
-      pageConfig,
-      filterConfig,
-      formattedFilterKaryawan,
-    ],
-  });
+  const { error, notFound, loading, data, paginationData, retry } =
+    useDataState<any>({
+      initialData: undefined,
+      url: `/api/rski/dashboard/presensi/get-data-presensi?page=${pageConfig}`,
+      payload: { ...filterConfig, ...formattedFilterKaryawan },
+      limit: limitConfig,
+      dependencies: [
+        limitConfig,
+        pageConfig,
+        filterConfig,
+        formattedFilterKaryawan,
+      ],
+    });
 
   const formattedHeader = [
     {
@@ -206,11 +207,7 @@ export default function TabelPresensi({ filterConfig }: Props) {
           setLimitConfig={setLimitConfig}
           pageConfig={pageConfig}
           setPageConfig={setPageConfig}
-          paginationData={{
-            prev_page_url: "",
-            next_page_url: "",
-            last_page: 1,
-          }}
+          paginationData={paginationData}
           footer={
             <Text opacity={0.4}>Klik row untuk melihat detail presensi</Text>
           }
