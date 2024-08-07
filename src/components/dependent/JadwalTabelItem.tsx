@@ -49,6 +49,8 @@ export default function TabelJadwalItem({
   index,
   rowIndex,
 }: Props) {
+  console.log(jadwal.tgl_mulai);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
     `jadwal-detail-${data.id}-${rowIndex}-${index}`,
@@ -62,8 +64,8 @@ export default function TabelJadwalItem({
     validateOnChange: false,
     initialValues: {
       shift: {
-        value: jadwal.id,
-        label: jadwal.label,
+        value: jadwal?.shift?.id,
+        label: jadwal?.shift?.nama_shift,
         label2: `${formatTime(jadwal.jam_masuk)}-${formatTime(
           jadwal.jam_keluar
         )}`,
@@ -93,13 +95,14 @@ export default function TabelJadwalItem({
         cursor={"pointer"}
         onClick={onOpen}
       >
-        <HStack justify={"space-between"} flex={1}>
+        <HStack gap={3} justify={"space-between"} flex={1}>
           <Box>
             <Text noOfLines={1} mb={1} fontSize={14}>
-              {jadwal.label}
+              {jadwal?.shift?.nama}
             </Text>
             <Text fontSize={14} whiteSpace={"nowrap"}>
-              {formatTime(jadwal.jam_masuk)} - {formatTime(jadwal.jam_keluar)}
+              {formatTime(jadwal?.shift?.jam_masuk)} -{" "}
+              {formatTime(jadwal?.shift?.jam_keluar)}
             </Text>
           </Box>
 
@@ -138,7 +141,7 @@ export default function TabelJadwalItem({
                 name={data.user.nama}
               />
 
-              <VStack align={"stretch"} w={"100%"} gap={3}>
+              <VStack align={"stretch"} w={"100%"} gap={4}>
                 <HStack justify={"space-between"}>
                   <Text fontSize={14} w={"120px"} opacity={0.6}>
                     Nama
@@ -153,7 +156,16 @@ export default function TabelJadwalItem({
                     Tanggal Masuk
                   </Text>
                   <Text textAlign={"right"}>
-                    {formatDate(data.tgl_masuk as string)}
+                    {formatDate(jadwal.tgl_mulai as string)}
+                  </Text>
+                </HStack>
+
+                <HStack justify={"space-between"}>
+                  <Text fontSize={14} w={"120px"} opacity={0.6}>
+                    Tanggal Selesai
+                  </Text>
+                  <Text textAlign={"right"}>
+                    {formatDate(jadwal.tgl_selesai as string)}
                   </Text>
                 </HStack>
 
@@ -169,9 +181,9 @@ export default function TabelJadwalItem({
                     <Text fontSize={14} w={"120px"} opacity={0.6}>
                       Jam Kerja
                     </Text>
-                    <Text>{`${formatTime(jadwal.jam_masuk)} - ${formatTime(
-                      jadwal.jam_keluar
-                    )}`}</Text>
+                    <Text>{`${formatTime(
+                      jadwal?.shift?.jam_masuk
+                    )} - ${formatTime(jadwal?.shift?.jam_keluar)}`}</Text>
                   </HStack>
                 )}
               </VStack>
@@ -182,7 +194,7 @@ export default function TabelJadwalItem({
                 id="terapkanJadwalKaryawanTerpilihForm"
                 onSubmit={formik.handleSubmit}
               >
-                <FormControl mt={6} isInvalid={!!formik.errors.shift}>
+                <FormControl mt={3} isInvalid={!!formik.errors.shift}>
                   <FormLabel>
                     Shift
                     <RequiredForm />

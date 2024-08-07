@@ -82,32 +82,34 @@ export default function TabelJadwal({ filterConfig }: Props) {
           borderRight: "1px solid var(--divider3)",
         },
       },
-      ...(item.list_jadwal?.map((jadwal: any, i: number) => ({
-        value: jadwal?.label,
-        td:
-          jadwal !== null ? (
-            <TabelJadwalItem
-              data={item}
-              jadwal={jadwal}
-              tgl={dateList[i]}
-              index={i}
-              rowIndex={rowIndex}
-            />
-          ) : (
-            // "-"
-            <TerapkanJadwalKaryawanTerpilih
-              data={item}
-              tgl={dateList[i]}
-              index={i}
-              rowIndex={rowIndex}
-            />
-          ),
-        cProps: {
-          align: "stretch",
-          h: "92px",
-          p: "6px",
-        },
-      })) || []),
+      ...(item.list_jadwal?.map((jadwal: any, i: number) => {
+        return {
+          value: jadwal?.label,
+          td:
+            jadwal !== null ? (
+              <TabelJadwalItem
+                data={item}
+                jadwal={jadwal}
+                tgl={dateList[i]}
+                index={i}
+                rowIndex={rowIndex}
+              />
+            ) : (
+              // "-"
+              <TerapkanJadwalKaryawanTerpilih
+                data={item}
+                tgl={dateList[i]}
+                index={i}
+                rowIndex={rowIndex}
+              />
+            ),
+          cProps: {
+            align: "stretch",
+            h: "92px",
+            p: "6px",
+          },
+        };
+      }) || []),
     ],
   }));
 
