@@ -1,7 +1,6 @@
 import { Center, HStack, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import formatTime from "../../lib/formatTime";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -15,7 +14,6 @@ import CustomTable from "./CustomTable";
 import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
-
 interface Props {
   filterConfig?: any;
 }
@@ -27,14 +25,12 @@ export default function TabelPresensi({ filterConfig }: Props) {
   const [pageConfig, setPageConfig] = useState<number>(1);
   // Presensi Detail Disclosure Config
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // Filter Config
-  const { formattedFilterKaryawan } = useFilterKaryawan();
 
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/presensi/get-data-presensi`,
-    payload: filterConfig,
-    dependencies: [],
+    payload: { ...filterConfig },
+    dependencies: [filterConfig],
   });
 
   const formattedHeader = [
@@ -144,11 +140,9 @@ export default function TabelPresensi({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && isObjectEmpty(formattedFilterKaryawan) && (
-            <NoData minH={"300px"} />
-          )}
+          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
 
-          {notFound && !isObjectEmpty(formattedFilterKaryawan) && (
+          {notFound && !isObjectEmpty(filterConfig) && (
             <NotFound minH={"300px"} />
           )}
 
