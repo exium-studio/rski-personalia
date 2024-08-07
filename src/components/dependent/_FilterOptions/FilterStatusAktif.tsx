@@ -2,6 +2,7 @@ import { HStack, Text, VStack, Wrap } from "@chakra-ui/react";
 import { Dispatch } from "react";
 import DataNotFound from "../../independent/DataNotFound";
 import FilterItemWrapper from "../../wrapper/FilterItemWrapper";
+import { optionsStatusAktif } from "../../../constant/selectOptions";
 
 interface Props {
   filterConfig: any;
@@ -12,21 +13,6 @@ export default function FilterStatusAktif({
   filterConfig,
   setFilterConfig,
 }: Props) {
-  const data = [
-    {
-      value: 0,
-      label: "Belum Aktif",
-    },
-    {
-      value: 1,
-      label: "Aktif",
-    },
-    {
-      value: 2,
-      label: "Tidak Aktif",
-    },
-  ];
-
   // SX
 
   return (
@@ -37,14 +23,14 @@ export default function FilterStatusAktif({
       filterKey="status_aktif"
     >
       <VStack align={"stretch"} gap={0}>
-        {data?.length === 0 && (
+        {optionsStatusAktif?.length === 0 && (
           <VStack h={"100px"} justify={"center"}>
             <DataNotFound />
           </VStack>
         )}
 
         <Wrap py={4} w={"100%"}>
-          {data?.map((data, i) => {
+          {optionsStatusAktif?.map((data, i) => {
             const active =
               filterConfig?.status_aktif &&
               filterConfig?.status_aktif.some(

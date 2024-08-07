@@ -242,7 +242,23 @@ const optionsPendidikan = [
   },
 ];
 
+const optionsStatusAktif = [
+  {
+    value: 1,
+    label: "Belum Aktif",
+  },
+  {
+    value: 2,
+    label: "Aktif",
+  },
+  {
+    value: 3,
+    label: "Di-Non-Aktifkan",
+  },
+];
+
 export {
+  optionsStatusAktif,
   optionsPendidikan,
   optionsStatusKepegawaian,
   optionsSumberPotongan,
