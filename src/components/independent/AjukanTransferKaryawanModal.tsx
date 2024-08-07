@@ -279,7 +279,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
 
                 <FormControl mb={4} isInvalid={!!formik.errors.dokumen}>
                   <FormLabel>
-                    Dokumen
+                    Dokumen (maks. 10 MB)
                     <RequiredForm />
                   </FormLabel>
                   <FileInput
