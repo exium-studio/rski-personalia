@@ -1,6 +1,5 @@
-import { Center, HStack, Text, useDisclosure } from "@chakra-ui/react";
+import { Center, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
-import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatTime from "../../lib/formatTime";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -153,16 +152,12 @@ export default function TabelPresensi({ filterConfig }: Props) {
           )}
         </>
       )}
+
       {!error && (
         <>
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (
@@ -183,23 +178,6 @@ export default function TabelPresensi({ filterConfig }: Props) {
                     />
                   </CustomTableContainer>
 
-                  <TabelFooterConfig
-                    limitConfig={limitConfig}
-                    setLimitConfig={setLimitConfig}
-                    pageConfig={pageConfig}
-                    setPageConfig={setPageConfig}
-                    paginationData={{
-                      prev_page_url: "",
-                      next_page_url: "",
-                      last_page: 1,
-                    }}
-                    footer={
-                      <Text opacity={0.4}>
-                        Klik row untuk melihat detail presensi
-                      </Text>
-                    }
-                  />
-
                   <DetailPresensiKaryawanModal
                     presensi_id={presensi_id}
                     isOpen={isOpen}
@@ -211,6 +189,23 @@ export default function TabelPresensi({ filterConfig }: Props) {
             </>
           )}
         </>
+      )}
+
+      {!error && (
+        <TabelFooterConfig
+          limitConfig={limitConfig}
+          setLimitConfig={setLimitConfig}
+          pageConfig={pageConfig}
+          setPageConfig={setPageConfig}
+          paginationData={{
+            prev_page_url: "",
+            next_page_url: "",
+            last_page: 1,
+          }}
+          footer={
+            <Text opacity={0.4}>Klik row untuk melihat detail presensi</Text>
+          }
+        />
       )}
     </>
   );
