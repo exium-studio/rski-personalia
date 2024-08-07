@@ -25,6 +25,7 @@ import NotFound from "../../independent/NotFound";
 import CContainer from "../../independent/wrapper/CContainer";
 import DisclosureHeader from "../DisclosureHeader";
 import SearchComponent from "./SearchComponent";
+import { responsiveSpacing } from "../../../constant/sizes";
 
 interface Props {
   id: string;
@@ -206,7 +207,7 @@ export default function MultipleSelectModal({
               <DisclosureHeader title={placeholder || "Multi Pilih"} />
 
               {(withSearch || (options && options?.length > 6)) && (
-                <Box px={6} pb={6}>
+                <Box px={6} pb={2}>
                   <SearchComponent
                     name="search select options"
                     inputValue={search}
