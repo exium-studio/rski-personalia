@@ -172,13 +172,17 @@ export default function SingleSelectModal({
         <ModalOverlay />
         <ModalContent
           my={sh < 650 ? 0 : ""}
-          h={withSearch && sh >= 650 ? "100%" : ""}
-          maxH={"650px"}
+          h={
+            (withSearch || (options && options?.length > 6)) && sh >= 650
+              ? "100%"
+              : ""
+          }
+          // maxH={"650px"}
         >
           <ModalHeader ref={initialRef}>
             <DisclosureHeader title={placeholder || "Pilih Salah Satu"} />
 
-            {withSearch && (
+            {(withSearch || (options && options?.length > 6)) && (
               <Box px={6} pb={6}>
                 <SearchComponent
                   name="search select options"
@@ -280,7 +284,9 @@ export default function SingleSelectModal({
                   </>
                 )}
 
-                {fo.length === 0 && <NotFound label="Opsi tidak ditemukan" />}
+                {fo.length === 0 && (
+                  <NotFound minH={"300px"} label="Opsi tidak ditemukan" />
+                )}
               </>
             )}
 

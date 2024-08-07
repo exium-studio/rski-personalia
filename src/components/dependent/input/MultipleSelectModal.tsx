@@ -194,8 +194,12 @@ export default function MultipleSelectModal({
         <ModalOverlay />
         <ModalContent
           my={sh < 650 ? 0 : ""}
-          h={withSearch && sh >= 650 ? "100%" : ""}
-          maxH={"650px"}
+          h={
+            (withSearch || (options && options?.length > 6)) && sh >= 650
+              ? "100%"
+              : ""
+          }
+          // maxH={"650px"}
         >
           <ModalHeader ref={initialRef}>
             <Box>
@@ -349,7 +353,9 @@ export default function MultipleSelectModal({
                   </>
                 )}
 
-                {fo.length === 0 && <NotFound label="Opsi tidak ditemukan" />}
+                {fo.length === 0 && (
+                  <NotFound minH={"300px"} label="Opsi tidak ditemukan" />
+                )}
               </>
             )}
 
