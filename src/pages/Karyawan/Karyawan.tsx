@@ -68,7 +68,12 @@ export default function Karyawan() {
 
             <ExportKaryawanModal px={6} />
 
-            <ImportModal url={""} title={"Import Karyawan"} px={6} />
+            <ImportModal
+              url={"/api/rski/dashboard/jadwal-karyawan/jadwal-import"}
+              title={"Import Karyawan"}
+              reqBodyKey="jadwal_karyawan_file"
+              px={6}
+            />
 
             <TambahKaryawanModal minW={"fit-content"} />
           </HStack>

@@ -84,7 +84,7 @@ export default function Presensi() {
             <ExportPresensiModal />
             <ImportModal
               url="/api/rski/dashboard/presensi/import"
-              title="Import Presnsi"
+              title="Import Presensi"
               reqBodyKey="presensi_file"
             />
           </HStack>
