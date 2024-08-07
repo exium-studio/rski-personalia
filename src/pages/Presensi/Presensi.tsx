@@ -17,7 +17,7 @@ export default function Presensi() {
   const today = new Date();
 
   // Filter Config
-  const { filterKaryawan, setFilterKaryawan } = useFilterKaryawan();
+  const { filterKaryawan } = useFilterKaryawan();
   const [filterConfig, setFilterConfig] = useState({
     ...filterKaryawan,
     tanggal: today,
@@ -25,27 +25,17 @@ export default function Presensi() {
   const [search, setSearch] = useState("");
   useEffect(() => {
     const handler = setTimeout(() => {
-      setFilterKaryawan({ search });
+      setFilterConfig((ps: any) => ({ ...ps, search: search }));
     }, 300);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [search, setFilterKaryawan]);
+  }, [search, setFilterConfig]);
 
   const confirmDate = (newDate: Date | undefined) => {
     setFilterConfig((ps: any) => ({ ...ps, tanggal: newDate }));
   };
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setFilterKaryawan({ search });
-    }, 300);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [search, setFilterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();

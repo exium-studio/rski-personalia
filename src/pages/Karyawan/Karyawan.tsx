@@ -17,7 +17,6 @@ export default function Karyawan() {
   // Filter Config
   const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
   const [search, setSearch] = useState("");
-
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterKaryawan({ search });
