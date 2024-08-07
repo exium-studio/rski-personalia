@@ -67,6 +67,13 @@ export default function ExportModal({
           document.body.appendChild(link);
           link.click();
 
+          toast({
+            status: "success",
+            title: `Sedang mengunduh - ${fileName}`,
+            position: "bottom-right",
+            isClosable: true,
+          });
+
           // Membersihkan URL objek
           setTimeout(() => {
             window.URL.revokeObjectURL(url);
@@ -76,6 +83,8 @@ export default function ExportModal({
           toast({
             status: "error",
             title: "Maaf terjadi kesalahan pada sistem",
+            position: "bottom-right",
+            isClosable: true,
           });
         }
       })
@@ -85,6 +94,8 @@ export default function ExportModal({
           status: "error",
           title:
             e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
         });
       })
       .finally(() => {
