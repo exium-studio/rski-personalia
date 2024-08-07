@@ -13,6 +13,8 @@ import TabelJadwalItem from "./JadwalTabelItem";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 import TerapkanJadwalKaryawanTerpilih from "./TerapkanJadwalKaryawanTerpilih";
+import isObjectEmpty from "../../lib/isObjectEmpty";
+import NotFound from "../independent/NotFound";
 
 interface Props {
   filterConfig?: any;
@@ -24,7 +26,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
 
-  const { error, loading, data, retry } = useDataState<any>({
+  const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: "/api/rski/dashboard/jadwal-karyawan/get-data-jadwal",
     payload: filterConfig,
@@ -109,14 +111,22 @@ export default function TabelJadwal({ filterConfig }: Props) {
     ],
   }));
 
-  // console.log(formattedData);
-
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"300px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
+
+          {notFound && !isObjectEmpty(filterConfig) && (
+            <NotFound minH={"300px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"300px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
       {!error && (
         <>
