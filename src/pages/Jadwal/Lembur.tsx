@@ -1,6 +1,5 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import SelectMultiKompensasi from "../../components/dependent/_Select/SelectMultiKompensasi";
 import ExportModal from "../../components/dependent/ExportModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelLembur from "../../components/dependent/TabelLembur";
@@ -10,14 +9,11 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import FilterKaryawan from "../../components/independent/FilterKaryawan";
 
 export default function Lembur() {
   // Filter Config
   const { filterKaryawan, setFilterKaryawan } = useFilterKaryawan();
-  const [filterConfig, setFilterConfig] = useState({
-    ...filterKaryawan,
-    kompensasi: undefined,
-  });
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -29,10 +25,6 @@ export default function Lembur() {
       clearTimeout(handler);
     };
   }, [search, setFilterKaryawan]);
-
-  useEffect(() => {
-    console.log("Current filterKaryawan state:", filterKaryawan);
-  }, [filterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -66,24 +58,12 @@ export default function Lembur() {
               }}
               inputValue={search}
             />
-            <SelectMultiKompensasi
-              name="kompensasi"
-              placeholder="Filter Kompensasi"
-              onConfirm={(input: any) => {
-                setFilterConfig((ps: any) => ({
-                  ...ps,
-                  kompensasi: input,
-                }));
-              }}
-              inputValue={filterConfig.kompensasi}
-              minW={"fit-content"}
-              w={"fit-content"}
-            />
+            <FilterKaryawan />
             <ExportModal url="" title="Export Lembur" />
             <AjukanLemburModal minW={"fit-content"} />
           </HStack>
 
-          <TabelLembur filterConfig={filterConfig} />
+          <TabelLembur filterConfig={filterKaryawan} />
         </CContainer>
       </CWrapper>
     </>
