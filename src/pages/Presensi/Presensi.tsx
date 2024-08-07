@@ -92,7 +92,11 @@ export default function Presensi() {
             />
             <FilterKaryawan />
             <ExportPresensiModal />
-            <ImportModal url="" title="Import Presnsi" />
+            <ImportModal
+              url="/api/rski/dashboard/presensi/import"
+              title="Import Presnsi"
+              reqBodyKey="presensi_file"
+            />
           </HStack>
 
           <TabelPresensi filterConfig={filterConfig} />

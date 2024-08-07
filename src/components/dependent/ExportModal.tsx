@@ -93,7 +93,7 @@ export default function ExportModal({
         toast({
           status: "error",
           title:
-            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+            e?.response?.data?.message || "Maaf terjadi kesalahan pada sistem",
           position: "bottom-right",
           isClosable: true,
         });

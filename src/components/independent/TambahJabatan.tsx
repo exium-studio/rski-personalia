@@ -74,7 +74,8 @@ export default function TambahJabatan({ ...props }: Props) {
           toast({
             status: "error",
             title:
-              e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+              e?.response?.data?.message ||
+              "Maaf terjadi kesalahan pada sistem",
             isClosable: true,
             position: "bottom-right",
           });

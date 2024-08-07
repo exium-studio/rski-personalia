@@ -11,26 +11,37 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { RiDownloadLine } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "./DisclosureHeader";
 import FileInputLarge from "./input/FileInputLarge";
+import req from "../../constant/req";
 
 interface Props extends ButtonProps {
   url: string;
+  reqBodyKey?: string;
   title?: string;
 }
 
-export default function ImportModal({ url, title, ...props }: Props) {
+export default function ImportModal({
+  url,
+  reqBodyKey = "file",
+  title,
+  ...props
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`import-modal-${1}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
 
   const formik = useFormik({
     validateOnChange: false,
@@ -57,8 +68,29 @@ export default function ImportModal({ url, title, ...props }: Props) {
         ),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      //TODO post file
+      setLoading(true);
+      const payload = {
+        [reqBodyKey]: values.file,
+      };
+      req
+        .post(url, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            backOnClose();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            position: "bottom-right",
+            isClosable: true,
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -123,6 +155,7 @@ export default function ImportModal({ url, title, ...props }: Props) {
               w={"100%"}
               className="btn-ap clicky"
               colorScheme="ap"
+              isLoading={loading}
             >
               Simpan
             </Button>
