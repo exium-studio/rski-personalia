@@ -35,7 +35,7 @@ interface Props extends StackProps {
   setBulan: Dispatch<number>;
   tahun: number;
   setTahun: Dispatch<number>;
-  setDate: Dispatch<Date>;
+  setDate?: Dispatch<Date>;
 }
 
 export default function PeriodPickerModal({
@@ -122,7 +122,9 @@ export default function PeriodPickerModal({
   function onConfirm() {
     setBulan(bulanLocal);
     setTahun(tahunLocal);
-    setDate(new Date(tahunLocal, bulanLocal));
+    if (setDate) {
+      setDate(new Date(tahunLocal, bulanLocal));
+    }
     backOnClose();
   }
 
@@ -133,7 +135,9 @@ export default function PeriodPickerModal({
         className="btn-outline clicky"
         justify={"center"}
         flex={1}
+        minH={"40px"}
         _hover={{ bg: "var(--divider)" }}
+        flexShrink={0}
         onClick={() => {
           onOpen();
           setBulanLocal(bulan);

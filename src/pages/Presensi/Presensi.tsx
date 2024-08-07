@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import ExportModal from "../../components/dependent/ExportModal";
+import ExportPresensiModal from "../../components/dependent/ExportPresensiModal";
 import ImportModal from "../../components/dependent/ImportModal";
 import DatePickerModal from "../../components/dependent/input/DatePickerModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
@@ -91,7 +91,7 @@ export default function Presensi() {
               nonNullable
             />
             <FilterKaryawan />
-            <ExportModal url="" title="Export Presnsi" />
+            <ExportPresensiModal />
             <ImportModal url="" title="Import Presnsi" />
           </HStack>
 
