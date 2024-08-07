@@ -65,7 +65,6 @@ export default function PengaturanJadwalPenggajian() {
             isClosable: true,
             position: "bottom-right",
           });
-          setRt(!rt);
         })
         .finally(() => {
           setLoadingSimpan(false);

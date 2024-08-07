@@ -83,7 +83,6 @@ export default function TambahShift({ ...props }: Props) {
             isClosable: true,
             position: "bottom-right",
           });
-          setRt(!rt);
         })
         .finally(() => {
           setLoading(false);

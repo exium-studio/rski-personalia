@@ -83,7 +83,6 @@ export default function PengaturanLokasiPresensi() {
             isClosable: true,
             position: "bottom-right",
           });
-          setRt(!rt);
         })
         .finally(() => {
           setLoadingSimpan(false);

@@ -74,7 +74,6 @@ export default function TambahUnitKerja({ ...props }: Props) {
             isClosable: true,
             position: "bottom-right",
           });
-          setRt(!rt);
         })
         .finally(() => {
           setLoading(false);

@@ -77,7 +77,6 @@ export default function TambahHariLibur({ ...props }: Props) {
             isClosable: true,
             position: "bottom-right",
           });
-          setRt(!rt);
         })
         .finally(() => {
           setLoading(false);
