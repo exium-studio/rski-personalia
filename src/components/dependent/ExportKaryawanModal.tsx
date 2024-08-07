@@ -33,11 +33,11 @@ export default function ExportKaryawanModal({ ...props }: Props) {
 
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
-  const { filterKaryawan } = useExportFilterKaryawan();
+  const { formattedFilterKaryawan } = useExportFilterKaryawan();
 
   const handleExport = () => {
     setLoading(true);
-    const payload = { ...filterKaryawan };
+    const payload = { ...formattedFilterKaryawan };
     req
       .post("/api/rski/dashboard/karyawan/export", payload, {
         responseType: "blob",

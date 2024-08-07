@@ -142,6 +142,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
               {(!data || (data && data.length === 0)) && (
                 <NoData minH={"300px"} />
               )}
+
               {(data || (data && data.length > 0)) && (
                 <>
                   <CustomTableContainer>
