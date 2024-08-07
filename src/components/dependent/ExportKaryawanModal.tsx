@@ -14,11 +14,12 @@ import {
 } from "@chakra-ui/react";
 import { RiUploadLine } from "@remixicon/react";
 import { useRef, useState } from "react";
-import { iconSize } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "./DisclosureHeader";
 import req from "../../constant/req";
+import ExportFilterKaryawan from "../independent/ExportFilterKaryawan";
 
 interface Props extends ButtonProps {}
 
@@ -118,7 +119,10 @@ export default function ExportKaryawanModal({ ...props }: Props) {
             <DisclosureHeader title={"Export Karyawan"} />
           </ModalHeader>
           <ModalBody>
-            <Text opacity={0.6}>Apakah anda yakin akan export tabel ini?</Text>
+            <Text opacity={0.6} mb={responsiveSpacing}>
+              Apakah anda yakin akan export tabel ini?
+            </Text>
+            <ExportFilterKaryawan />
           </ModalBody>
           <ModalFooter gap={2}>
             <Button
