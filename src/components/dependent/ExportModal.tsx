@@ -14,11 +14,11 @@ import {
 } from "@chakra-ui/react";
 import { RiUploadLine } from "@remixicon/react";
 import { useRef, useState } from "react";
+import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "./DisclosureHeader";
-import req from "../../constant/req";
 
 interface Props extends ButtonProps {
   url: string;
@@ -67,12 +67,12 @@ export default function ExportModal({
           document.body.appendChild(link);
           link.click();
 
-          toast({
-            status: "success",
-            title: `Sedang mengunduh - ${fileName}`,
-            position: "bottom-right",
-            isClosable: true,
-          });
+          // toast({
+          //   status: "success",
+          //   title: `Sedang mengunduh - ${fileName}`,
+          //   position: "bottom-right",
+          //   isClosable: true,
+          // });
 
           // Membersihkan URL objek
           setTimeout(() => {
