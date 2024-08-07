@@ -61,8 +61,8 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     if (values.unit_kerja && values.unit_kerja.length > 0) {
       count += values.unit_kerja.length;
     }
-    if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
-      count += values.pendidikan_terakhir.length;
+    if (values.jenis_karyawan && values.jenis_karyawan.length > 0) {
+      count += values.jenis_karyawan.length;
     }
     if (values.jabatan && values.jabatan.length > 0) {
       count += values.jabatan.length;
@@ -85,8 +85,8 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     if (values.jenis_kelamin && values.jenis_kelamin.length > 0) {
       count += values.jenis_kelamin.length;
     }
-    if (values.pendidikan && values.pendidikan.length > 0) {
-      count += values.pendidikan.length;
+    if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
+      count += values.pendidikan_terakhir.length;
     }
     return count;
   }

@@ -19,7 +19,7 @@ import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import ExportFilterKaryawan from "../independent/ExportFilterKaryawan";
+import ExportFilterKaryawan from "../independent/FilterExportKaryawan";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import useExportFilterKaryawan from "../../global/useExportFilterKaryawan";

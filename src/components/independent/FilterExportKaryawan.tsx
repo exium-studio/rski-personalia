@@ -26,6 +26,7 @@ import formatNumber from "../../lib/formatNumber";
 import FilterAgama from "../dependent/_FilterOptions/FilterAgama";
 import FilterJebatan from "../dependent/_FilterOptions/FilterJabatan";
 import FilterJenisKelamin from "../dependent/_FilterOptions/FilterJenisKelamin";
+import FilterJenisPegawai from "../dependent/_FilterOptions/FilterJenisPegawai";
 import FilterMasaKerja from "../dependent/_FilterOptions/FilterMasaKerja";
 import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 import FilterStatusAktif from "../dependent/_FilterOptions/FilterStatusAktif";
@@ -38,7 +39,7 @@ interface Props extends ButtonProps {
   title?: string;
 }
 
-export default function ExportFilterKaryawan({ title, ...props }: Props) {
+export default function FilterExportKaryawan({ title, ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("export-filter-karyawan", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
@@ -59,6 +60,9 @@ export default function ExportFilterKaryawan({ title, ...props }: Props) {
 
     if (values.unit_kerja && values.unit_kerja.length > 0) {
       count += values.unit_kerja.length;
+    }
+    if (values.jenis_karyawan && values.jenis_karyawan.length > 0) {
+      count += values.jenis_karyawan.length;
     }
     if (values.jabatan && values.jabatan.length > 0) {
       count += values.jabatan.length;
@@ -81,8 +85,8 @@ export default function ExportFilterKaryawan({ title, ...props }: Props) {
     if (values.jenis_kelamin && values.jenis_kelamin.length > 0) {
       count += values.jenis_kelamin.length;
     }
-    if (values.pendidikan && values.pendidikan.length > 0) {
-      count += values.pendidikan.length;
+    if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
+      count += values.pendidikan_terakhir.length;
     }
     return count;
   }
@@ -92,6 +96,9 @@ export default function ExportFilterKaryawan({ title, ...props }: Props) {
     const formattedFilters = {
       search: localFilterConfig.search,
       unit_kerja: localFilterConfig.unit_kerja.map((item: any) => item.id),
+      jenis_karyawan: localFilterConfig.jenis_karyawan.map(
+        (item: any) => item.value
+      ),
       jabatan: localFilterConfig.jabatan.map((item: any) => item.id),
       status_karyawan: localFilterConfig.status_karyawan.map(
         (item: any) => item.value
@@ -103,6 +110,9 @@ export default function ExportFilterKaryawan({ title, ...props }: Props) {
       tgl_masuk: localFilterConfig.tgl_masuk,
       agama: localFilterConfig.agama.map((item: any) => item.value),
       jenis_kelamin: localFilterConfig.jenis_kelamin.map(
+        (item: any) => item.value
+      ),
+      pendidikan_terakhir: localFilterConfig.pendidikan_terakhir.map(
         (item: any) => item.value
       ),
     };
@@ -181,6 +191,11 @@ export default function ExportFilterKaryawan({ title, ...props }: Props) {
           <ModalBody className="scrollY">
             <Accordion allowToggle>
               <FilterUnitKerja
+                filterConfig={localFilterConfig}
+                setFilterConfig={setLocalFilterConfig}
+              />
+
+              <FilterJenisPegawai
                 filterConfig={localFilterConfig}
                 setFilterConfig={setLocalFilterConfig}
               />
