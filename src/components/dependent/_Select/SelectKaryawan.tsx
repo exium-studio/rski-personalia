@@ -1,7 +1,7 @@
-import { ButtonProps, useDisclosure } from "@chakra-ui/react";
+import { ButtonProps, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { dummyKaryawanList } from "../../../const/dummy";
 import { Interface__SelectOption } from "../../../constant/interfaces";
+import req from "../../../constant/req";
 import SingleSelectModal from "../input/SingleSelectModal";
 
 interface Props extends ButtonProps {
@@ -28,24 +28,38 @@ export default function SelectMultiKaryawan({
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const toast = useToast();
   const [options, setOptions] = useState<Interface__SelectOption[] | undefined>(
     undefined
   );
 
   useEffect(() => {
-    // TODO get all unit kerja
-
-    const options = dummyKaryawanList.map((item) => ({
-      value: item.id,
-      label: item.user.nama,
-      // label2: item.unit_kerja.nama_unit,
-    }));
-    setOptions(options);
-  }, []);
+    if (isOpen && !options) {
+      req
+        .get("/api/get-list-user")
+        .then((r) => {
+          if (r.status === 200) {
+            const options = r.data.data.map((item: any) => ({
+              value: item.id,
+              label: item.nama,
+            }));
+            setOptions(options);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+          });
+        });
+    }
+  }, [isOpen, options]);
 
   return (
     <SingleSelectModal
-      id="select-unit_kerja-modal"
+      id="select-pegawai-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
@@ -58,7 +72,7 @@ export default function SelectMultiKaryawan({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Karyawan"}
+      placeholder={placeholder || "Pilih Pegawai"}
       nonNullable={nonNullable}
       {...props}
     />

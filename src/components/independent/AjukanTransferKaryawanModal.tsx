@@ -16,12 +16,15 @@ import {
   SimpleGrid,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { RiUserSharedFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
+import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnCloseOld";
 import SelectJabatan from "../dependent/_Select/SelectJabatan";
@@ -31,9 +34,9 @@ import SelectTipeTransfer from "../dependent/_Select/SelectTipeTransfer";
 import SelectUnitKerja from "../dependent/_Select/SelectUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
-import RequiredForm from "../form/RequiredForm";
-import Textarea from "../dependent/input/Textarea";
 import FileInput from "../dependent/input/FileInput";
+import Textarea from "../dependent/input/Textarea";
+import RequiredForm from "../form/RequiredForm";
 
 interface Props extends ButtonProps {}
 
@@ -42,34 +45,73 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
   useBackOnClose("ajukan-transfer-karyawan-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      karyawan: undefined,
+      karyawan: undefined as any,
       tgl_mulai: "",
-      tipe: "" as any,
-      unit_kerja_tujuan: "" as any,
-      jabatan_tujuan: "" as any,
-      kelompok_gaji_tujuan: "" as any,
-      dokumen: "",
+      kategori_transfer: undefined as any,
+      unit_kerja_tujuan: undefined as any,
+      jabatan_tujuan: undefined as any,
+      kelompok_gaji_tujuan: undefined as any,
+      dokumen: undefined as any,
       alasan: "",
       beri_tahu_manajer_direktur: false,
       beri_tahu_karyawan: false,
     },
     validationSchema: yup.object().shape({
-      karyawan: yup.string().required("Harus diisi"),
+      karyawan: yup.object().required("Harus diisi"),
       tgl_mulai: yup.string().required("Harus diisi"),
-      tipe: yup.mixed().required("Harus diisi"),
-      unit_kerja_tujuan: yup.mixed(),
-      jabatan_tujuan: yup.mixed(),
-      kelompok_gaji_tujuan: yup.mixed(),
-      dokumen: yup.array().min(1, "Harus diisi").required("Harus diisi"),
+      kategori_transfer: yup.object().required("Harus diisi"),
+      unit_kerja_tujuan: yup.object(),
+      jabatan_tujuan: yup.object(),
+      kelompok_gaji_tujuan: yup.object(),
+      dokumen: yup.mixed().required("Harus diisi"),
       alasan: yup.string().required("Harus diisi"),
       beri_tahu_manajer_direktur: yup.boolean(),
       beri_tahu_karyawan: yup.boolean(),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      const payload = {
+        user_id: values.karyawan,
+        tgl_mulai: values.tgl_mulai,
+        kategori_transfer_id: values?.kategori_transfer?.value,
+        unit_kerja_tujuan: values?.unit_kerja_tujuan?.value,
+        jabatan_tujuan: values?.jabatan_tujuan?.value,
+        alasan: values.alasan,
+        dokumen: values.dokumen,
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/karyawan/transfer`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -113,7 +155,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
               <SimpleGrid columns={[1, 2]} spacingX={4}>
                 <FormControl mb={4} isInvalid={!!formik.errors.karyawan}>
                   <FormLabel>
-                    Nama Karyawan
+                    Pegawai
                     <RequiredForm />
                   </FormLabel>
                   <SelectKaryawan
@@ -123,6 +165,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                     }}
                     inputValue={formik.values.karyawan}
                     isError={!!formik.errors.karyawan}
+                    withSearch
                   />
                   <FormErrorMessage>
                     {formik.errors.karyawan as string}
@@ -152,20 +195,23 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                   </FormErrorMessage>
                 </FormControl>
 
-                <FormControl mb={4} isInvalid={!!formik.errors.tipe}>
+                <FormControl
+                  mb={4}
+                  isInvalid={!!formik.errors.kategori_transfer}
+                >
                   <FormLabel>
                     Tipe Transfer
                     <RequiredForm />
                   </FormLabel>
                   <SelectTipeTransfer
-                    name="tipe"
+                    name="kategori_transfer"
                     onConfirm={(input) => {
-                      formik.setFieldValue("tipe", input);
+                      formik.setFieldValue("kategori_transfer", input);
                     }}
-                    inputValue={formik.values.tipe}
+                    inputValue={formik.values.kategori_transfer}
                   />
                   <FormErrorMessage>
-                    {formik.errors.tipe as string}
+                    {formik.errors.kategori_transfer as string}
                   </FormErrorMessage>
                 </FormControl>
 
@@ -175,9 +221,9 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                 >
                   <FormLabel>Unit Kerja Tujuan</FormLabel>
                   <SelectUnitKerja
-                    name="unit_kerja"
+                    name="unit_kerja_tujuan"
                     onConfirm={(input) => {
-                      formik.setFieldValue("unit_kerja", input);
+                      formik.setFieldValue("unit_kerja_tujuan", input);
                     }}
                     inputValue={formik.values.unit_kerja_tujuan}
                     placeholder="Pilih Unit Kerja Tujuan"
@@ -194,9 +240,9 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                 <FormControl mb={4} isInvalid={!!formik.errors.jabatan_tujuan}>
                   <FormLabel>Jabatan Tujuan</FormLabel>
                   <SelectJabatan
-                    name="jabatan"
+                    name="jabatan_tujuan"
                     onConfirm={(input) => {
-                      formik.setFieldValue("jabatan", input);
+                      formik.setFieldValue("jabatan_tujuan", input);
                     }}
                     inputValue={formik.values.jabatan_tujuan}
                     placeholder="Pilih Jabatan Tujuan"
@@ -216,9 +262,9 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                 >
                   <FormLabel>Kelompok Gaji Tujuan</FormLabel>
                   <SelectKelompokGaji
-                    name="kelompok_gaji"
+                    name="kelompok_gaji_tujuan"
                     onConfirm={(input) => {
-                      formik.setFieldValue("kelompok_gaji", input);
+                      formik.setFieldValue("kelompok_gaji_tujuan", input);
                     }}
                     inputValue={formik.values.kelompok_gaji_tujuan}
                     placeholder="Pilih Kelompok Gaji Tujuan"
@@ -239,7 +285,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                   <FileInput
                     name="dokumen"
                     onChangeSetter={(input) => {
-                      formik.setFieldValue("dokumne", input);
+                      formik.setFieldValue("dokumen", input);
                     }}
                     inputValue={formik.values.dokumen}
                   />
@@ -298,8 +344,9 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
               w={"100%"}
               colorScheme="ap"
               className="btn-ap clicky"
+              isLoading={loading}
             >
-              Simpan
+              Transfer Pegawai
             </Button>
           </ModalFooter>
         </ModalContent>
