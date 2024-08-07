@@ -74,16 +74,12 @@ export default function DateRangePickerModal({
   const [selected, setSelected] = useState<any>(inputValue);
 
   function handleSelect(range: any) {
-    if (maxRange && countDateRange(range?.from, range?.to) <= maxRange) {
-      const diffTime = Math.abs(range.to - range.from);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      if (diffDays > maxRange - 1) {
-        // Handle exceeding max range logic here
-        const newTo = new Date(range.from);
-        newTo.setDate(newTo.getDate() + maxRange - 1);
-        range = { from: range.from, to: newTo };
-      }
+    if (maxRange && countDateRange(range?.from, range?.to) > maxRange) {
+      const newTo = new Date(range.from);
+      newTo.setDate(newTo.getDate() + maxRange - 1);
+      range = { from: range.from, to: newTo };
     }
+
     setSelected(range);
   }
 
