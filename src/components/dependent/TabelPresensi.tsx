@@ -13,6 +13,7 @@ import CustomTable from "./CustomTable";
 import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
 interface Props {
   filterConfig?: any;
 }
@@ -24,11 +25,13 @@ export default function TabelPresensi({ filterConfig }: Props) {
   const [pageConfig, setPageConfig] = useState<number>(1);
   // Presensi Detail Disclosure Config
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // Filter Karyawan Config
+  const { formattedFilterKaryawan } = useFilterKaryawan();
 
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/presensi/get-data-presensi`,
-    payload: { ...filterConfig },
+    payload: { ...filterConfig, ...formattedFilterKaryawan },
     dependencies: [filterConfig],
   });
 

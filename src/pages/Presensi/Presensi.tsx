@@ -11,15 +11,12 @@ import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 export default function Presensi() {
   const today = new Date();
 
   // Filter Config
-  const { filterKaryawan } = useFilterKaryawan();
   const [filterConfig, setFilterConfig] = useState({
-    ...filterKaryawan,
     tanggal: today,
   });
   const [search, setSearch] = useState("");

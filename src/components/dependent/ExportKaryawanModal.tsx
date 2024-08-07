@@ -23,6 +23,7 @@ import ExportFilterKaryawan from "../independent/FilterExportKaryawan";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import useExportFilterKaryawan from "../../global/useExportFilterKaryawan";
+import download from "../../lib/download";
 
 interface Props extends ButtonProps {}
 
@@ -44,14 +45,7 @@ export default function ExportKaryawanModal({ ...props }: Props) {
       })
       .then((r) => {
         if (r.status === 200) {
-          const downloadUrl = window.URL.createObjectURL(new Blob([r.data]));
-          const link = document.createElement("a");
-          link.href = downloadUrl;
-          link.setAttribute("download", `Data Pegawai.xls`);
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(downloadUrl);
+          download(r.data, "Data Pegawai", "xls");
         } else {
           toast({
             status: "error",

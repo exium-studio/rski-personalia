@@ -22,6 +22,8 @@ import backOnClose from "../../lib/backOnClose";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import PeriodPickerModal from "./input/PeriodPickerModal";
+import download from "../../lib/download";
+import months from "../../constant/months";
 
 interface Props extends ButtonProps {}
 
@@ -46,31 +48,7 @@ export default function ExportPresensiModal({ ...props }: Props) {
       })
       .then((r) => {
         if (r.status === 200) {
-          // Membuat URL dari Blob
-          const url = window.URL.createObjectURL(new Blob([r.data]));
-
-          // Membuat elemen <a> untuk mengunduh file
-          const link = document.createElement("a");
-          link.href = url;
-
-          // Mendapatkan nama file dari header Content-Disposition
-          const contentDisposition = r.headers["content-disposition"];
-          const fileName = contentDisposition
-            ? contentDisposition
-                .split("filename=")[1]
-                .split(";")[0]
-                .replace(/"/g, "")
-            : "RSKI - Data Karyawan";
-
-          link.download = fileName;
-          document.body.appendChild(link);
-          link.click();
-
-          // Membersihkan URL objek
-          setTimeout(() => {
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(link);
-          }, 100);
+          download(r.data, `Data Presensi ${months[bulan]} ${tahun}`, "xls");
         } else {
           toast({
             status: "error",
@@ -155,6 +133,7 @@ export default function ExportPresensiModal({ ...props }: Props) {
                   w={"100%"}
                   className="btn-solid clicky"
                   onClick={backOnClose}
+                  isDisabled={loading}
                 >
                   Tidak
                 </Button>

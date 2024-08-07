@@ -19,6 +19,7 @@ import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "./DisclosureHeader";
+import download from "../../lib/download";
 
 interface Props extends ButtonProps {
   url: string;
@@ -49,14 +50,7 @@ export default function ExportModal({
       })
       .then((r) => {
         if (r.status === 200) {
-          const downloadUrl = window.URL.createObjectURL(new Blob([r.data]));
-          const link = document.createElement("a");
-          link.href = downloadUrl;
-          link.setAttribute("download", `${downloadFileName}.${extension}`);
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(downloadUrl);
+          download(r.data, "Data Pegawai", extension);
         } else {
           toast({
             status: "error",
