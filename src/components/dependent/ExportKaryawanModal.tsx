@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   ButtonProps,
   Icon,
   Modal,
@@ -14,12 +15,13 @@ import {
 } from "@chakra-ui/react";
 import { RiUploadLine } from "@remixicon/react";
 import { useRef, useState } from "react";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import req from "../../constant/req";
+import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "./DisclosureHeader";
-import req from "../../constant/req";
 import ExportFilterKaryawan from "../independent/ExportFilterKaryawan";
+import CContainer from "../wrapper/CContainer";
+import DisclosureHeader from "./DisclosureHeader";
 
 interface Props extends ButtonProps {}
 
@@ -119,28 +121,30 @@ export default function ExportKaryawanModal({ ...props }: Props) {
             <DisclosureHeader title={"Export Karyawan"} />
           </ModalHeader>
           <ModalBody>
-            <Text opacity={0.6} mb={responsiveSpacing}>
-              Apakah anda yakin akan export tabel ini?
-            </Text>
-            <ExportFilterKaryawan />
+            <Text opacity={0.6}>Apakah anda yakin akan export tabel ini?</Text>
           </ModalBody>
-          <ModalFooter gap={2}>
-            <Button
-              w={"100%"}
-              className="btn-solid clicky"
-              onClick={backOnClose}
-            >
-              Tidak
-            </Button>
-            <Button
-              w={"100%"}
-              className="btn-ap clicky"
-              colorScheme="ap"
-              isLoading={loading}
-              onClick={handleExport}
-            >
-              Ya
-            </Button>
+          <ModalFooter>
+            <CContainer gap={2}>
+              <ExportFilterKaryawan />
+              <ButtonGroup>
+                <Button
+                  w={"100%"}
+                  className="btn-solid clicky"
+                  onClick={backOnClose}
+                >
+                  Tidak
+                </Button>
+                <Button
+                  w={"100%"}
+                  className="btn-ap clicky"
+                  colorScheme="ap"
+                  isLoading={loading}
+                  onClick={handleExport}
+                >
+                  Ya
+                </Button>
+              </ButtonGroup>
+            </CContainer>
           </ModalFooter>
         </ModalContent>
       </Modal>
