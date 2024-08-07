@@ -77,7 +77,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        user_id: values.karyawan,
+        user_id: values.karyawan.value,
         tgl_mulai: values.tgl_mulai,
         kategori_transfer_id: values?.kategori_transfer?.value,
         unit_kerja_tujuan: values?.unit_kerja_tujuan?.value,
