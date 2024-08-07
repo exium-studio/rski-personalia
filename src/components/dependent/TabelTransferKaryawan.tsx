@@ -27,7 +27,7 @@ export default function TabelRekamJejak() {
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any>({
       initialData: undefined,
-      url: "/api/rski/dashboard/karyawan/transfer/get-data-trasnfer",
+      url: `/api/rski/dashboard/karyawan/transfer/get-data-trasnfer?page=${pageConfig}`,
       payload: {
         ...formattedFilterKaryawan,
       },
