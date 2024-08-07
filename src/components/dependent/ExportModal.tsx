@@ -145,6 +145,7 @@ export default function ExportModal({
               w={"100%"}
               className="btn-solid clicky"
               onClick={backOnClose}
+              isDisabled={loading}
             >
               Tidak
             </Button>
