@@ -24,6 +24,7 @@ import useBackOnClose from "../../lib/useBackOnCloseOld";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardUpdatePengumuman from "../form/Dashboard/FormDashboardUpdatePengumuman";
 import { useErrorAlphaColor } from "../../constant/colors";
+import timeSince from "../../lib/timeSince";
 
 interface Props extends StackProps {
   data: Pengumuman__Interface;
@@ -60,13 +61,18 @@ export default function DashboardPengumumanItemDetail({
         transition={"200ms"}
         {...props}
       >
-        <HStack align={"flex-start"} justify={"space-between"}>
-          <Text fontWeight={500}>{data.judul}</Text>
-          <Text opacity={0.6} fontSize={12}>
-            {formatDate(data.createdAt)}
+        <Text fontWeight={500}>{data.judul}</Text>
+
+        <Text fontSize={14}>{data.pengumuman}</Text>
+
+        <HStack mt={"auto"} pt={2} justify={"space-between"}>
+          <Text fontSize={14} opacity={0.4}>
+            {timeSince(data.created_at)}
+          </Text>
+          <Text fontSize={14} opacity={0.4}>
+            berakhir {formatDate(data.tgl_berakhir)}
           </Text>
         </HStack>
-        <Text fontSize={14}>{data.pengumuman}</Text>
       </VStack>
 
       <Modal
@@ -86,7 +92,7 @@ export default function DashboardPengumumanItemDetail({
           <ModalBody>
             <HStack mb={4}>
               <Icon as={RiCalendar2Fill} fontSize={iconSize} opacity={0.6} />
-              <Text>{formatDate(data.createdAt)}</Text>
+              <Text>{formatDate(data.created_at)}</Text>
             </HStack>
             <FormDashboardUpdatePengumuman data={data} />
           </ModalBody>

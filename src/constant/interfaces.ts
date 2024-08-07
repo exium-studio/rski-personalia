@@ -131,7 +131,9 @@ export interface Pengumuman__Interface {
   id: number;
   judul: string;
   pengumuman: string;
-  createdAt: string;
+  tgl_berakhir: string | Date;
+  created_at: string | Date;
+  updated_at: string | Date | undefined;
 }
 
 export interface TopNavs__Interface {

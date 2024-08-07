@@ -33,34 +33,49 @@ export default function DashboardPengumuman({ ...props }: Props) {
       judul: "Judul Pengumuman",
       pengumuman:
         "Contoh isi pengumuman, bisa pendek, bisa sangat amat panjang sekali seperti ini, ber tele - tele kaya lele",
-      createdAt: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      tgl_berakhir:
+        "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      created_at: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      updated_at: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
     },
     {
       id: 2,
       judul: "Judul Pengumuman",
       pengumuman:
         "Contoh isi pengumuman, bisa pendek, bisa sangat amat panjang sekali seperti ini, tambahan aja",
-      createdAt: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      tgl_berakhir:
+        "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      created_at: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      updated_at: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
     },
     {
       id: 3,
       judul: "Judul Pengumuman",
       pengumuman: "Contoh isi pengumuman, bisa pendek",
-      createdAt: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      tgl_berakhir:
+        "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      created_at: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      updated_at: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
     },
     {
       id: 4,
       judul: "Judul Pengumuman",
       pengumuman:
         "Contoh isi pengumuman, bisa pendek, bisa sangat amat panjang sekali seperti ini, bisa diberi keterangan ditujukan pada siapa",
-      createdAt: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      tgl_berakhir:
+        "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      created_at: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      updated_at: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
     },
     {
       id: 5,
       judul: "Judul Pengumuman",
       pengumuman:
         "Contoh isi pengumuman, bisa pendek, bisa sangat amat panjang sekali seperti ini, tidak bisa insert link atau semacamnya",
-      createdAt: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      tgl_berakhir:
+        "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      created_at: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
+      updated_at: "Tue May 07 2024 21:13:25 GMT+0700 (Western Indonesia Time)",
     },
   ];
   //! DEBUG
