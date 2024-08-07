@@ -24,15 +24,16 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import formatNumber from "../../lib/formatNumber";
 import FilterAgama from "../dependent/_FilterOptions/FilterAgama";
+import FilterJebatan from "../dependent/_FilterOptions/FilterJabatan";
+import FilterJenisKelamin from "../dependent/_FilterOptions/FilterJenisKelamin";
+import FilterJenisPegawai from "../dependent/_FilterOptions/FilterJenisPegawai";
 import FilterMasaKerja from "../dependent/_FilterOptions/FilterMasaKerja";
+import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 import FilterStatusAktif from "../dependent/_FilterOptions/FilterStatusAktif";
 import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryawan";
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import FilterJenisKelamin from "../dependent/_FilterOptions/FilterJenisKelamin";
-import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
-import FilterJebatan from "../dependent/_FilterOptions/FilterJabatan";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -181,6 +182,11 @@ export default function FilterKaryawan({ title, ...props }: Props) {
           <ModalBody className="scrollY">
             <Accordion allowToggle>
               <FilterUnitKerja
+                filterConfig={localFilterConfig}
+                setFilterConfig={setLocalFilterConfig}
+              />
+
+              <FilterJenisPegawai
                 filterConfig={localFilterConfig}
                 setFilterConfig={setLocalFilterConfig}
               />
