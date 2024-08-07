@@ -201,7 +201,7 @@ export default function MultipleSelectModal({
             <Box>
               <DisclosureHeader title={placeholder || "Multi Pilih"} />
 
-              {withSearch && (
+              {(withSearch || (options && options?.length > 6)) && (
                 <Box px={6} pb={6}>
                   <SearchComponent
                     name="search select options"

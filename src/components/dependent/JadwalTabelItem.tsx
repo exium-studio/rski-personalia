@@ -49,8 +49,6 @@ export default function TabelJadwalItem({
   index,
   rowIndex,
 }: Props) {
-  console.log(jadwal.shift);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
     `jadwal-detail-${data.id}-${rowIndex}-${index}`,

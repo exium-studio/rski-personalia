@@ -96,6 +96,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                     formik.setFieldValue("list_karyawan", input);
                   }}
                   inputValue={formik.values.list_karyawan}
+                  isError={!!formik.errors.list_karyawan}
                 />
                 <FormErrorMessage>
                   {formik.errors.list_karyawan as string}
@@ -119,6 +120,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                         ? new Date(formik.values.tgl_mulai)
                         : undefined
                     }
+                    isError={!!formik.errors.tgl_mulai}
                   />
                   <FormErrorMessage>
                     {formik.errors.tgl_mulai as string}
@@ -144,6 +146,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                         ? new Date(formik.values.tgl_selesai)
                         : undefined
                     }
+                    isError={!!formik.errors.tgl_selesai}
                   />
                   <FormErrorMessage>
                     {formik.errors.tgl_selesai as string}
@@ -163,6 +166,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                     formik.setFieldValue("shift", input);
                   }}
                   inputValue={formik.values.shift}
+                  isError={!!formik.errors.shift}
                 />
                 <FormErrorMessage>
                   {formik.errors.shift as string}
