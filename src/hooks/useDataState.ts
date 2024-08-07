@@ -34,6 +34,7 @@ const useDataState = <T>({
   const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
+    setError(false);
     setLoading(true);
     if (conditions && url) {
       makeRequest();

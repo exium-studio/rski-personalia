@@ -316,16 +316,18 @@ export default function TabelKaryawan() {
         </>
       )}
 
-      <TabelFooterConfig
-        limitConfig={limitConfig}
-        setLimitConfig={setLimitConfig}
-        pageConfig={pageConfig}
-        setPageConfig={setPageConfig}
-        paginationData={paginationData}
-        footer={
-          <Text opacity={0.4}>Klik row untuk melihat detail karyawan</Text>
-        }
-      />
+      {!error && (
+        <TabelFooterConfig
+          limitConfig={limitConfig}
+          setLimitConfig={setLimitConfig}
+          pageConfig={pageConfig}
+          setPageConfig={setPageConfig}
+          paginationData={paginationData}
+          footer={
+            <Text opacity={0.4}>Klik row untuk melihat detail karyawan</Text>
+          }
+        />
+      )}
     </>
   );
 }
