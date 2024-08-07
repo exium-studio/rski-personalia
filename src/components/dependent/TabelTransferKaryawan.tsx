@@ -225,13 +225,15 @@ export default function TabelRekamJejak() {
         </>
       )}
 
-      <TabelFooterConfig
-        limitConfig={limitConfig}
-        setLimitConfig={setLimitConfig}
-        pageConfig={pageConfig}
-        setPageConfig={setPageConfig}
-        paginationData={paginationData}
-      />
+      {!error && (
+        <TabelFooterConfig
+          limitConfig={limitConfig}
+          setLimitConfig={setLimitConfig}
+          pageConfig={pageConfig}
+          setPageConfig={setPageConfig}
+          paginationData={paginationData}
+        />
+      )}
     </>
   );
 }
