@@ -1,10 +1,7 @@
 import {
   Avatar,
   Box,
-  Center,
   HStack,
-  Icon,
-  Image,
   Modal,
   ModalBody,
   ModalContent,
@@ -12,14 +9,12 @@ import {
   ModalOverlay,
   SimpleGrid,
   Text,
-  Tooltip,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { RiLoginBoxLine, RiLogoutBoxLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { useErrorColor, useLightDarkColor } from "../../constant/colors";
+import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -29,6 +24,7 @@ import formatDuration from "../../lib/formatDuration";
 import formatTime from "../../lib/formatTime";
 import ComponentSpinner from "../independent/ComponentSpinner";
 import FlexLine from "../independent/FlexLine";
+import Img from "../independent/Img";
 import NoData from "../independent/NoData";
 import CContainer from "../wrapper/CContainer";
 import DetailKaryawanModalDisclosure from "./DetailKaryawanModalDisclosure";
@@ -58,51 +54,9 @@ export default function DetailPresensiKaryawanModal({
   );
   const initialRef = useRef(null);
 
-  const dummy = {
-    id: 1,
-    user: {
-      id: 1,
-      nama: "Very Very Long Name",
-      username: "olgaP",
-      email_verified_at: null,
-      role_id: null,
-      foto_profil: null,
-      status_aktif: true,
-      data_completion_step: 1,
-      created_at: "2024-05-30T10:26:58.000000Z",
-      updated_at: "2024-05-30T10:26:58.000000Z",
-    },
-    unit_kerja: {
-      id: 2,
-      nama_unit: "Dokter Bedah Neurologi",
-      jenis_karyawan: 1,
-      created_at: "2024-04-04T03:18:23.000000Z",
-      updated_at: "2024-05-07T03:18:23.000000Z",
-    },
-    jadwal: {
-      id: 1,
-      nama: "Pagi",
-      jam_from: "2024-01-01 06:00:00",
-      jam_to: "2024-01-01 15:00:00",
-      created_at: "2024-05-30T10:26:59.000000Z",
-      updated_at: "2024-05-30T10:26:59.000000Z",
-    },
-    jam_masuk: "2024-05-06 06:14:14",
-    jam_keluar: "2024-05-06 13:27:14",
-    durasi: 8 * 3600 + 348,
-    lat: "33.749358",
-    long: "-84.38842",
-    foto_masuk: "/reza.jpg",
-    foto_keluar: "/images/gear5.jpg",
-    absensi: "Izin",
-    kategori: "Terlambat",
-    created_at: "2024-05-30T10:27:14.000000Z",
-    updated_at: "2024-05-30T10:27:14.000000Z",
-  };
-
   const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummy,
-    url: "",
+    initialData: undefined,
+    url: `/api/rski/dashboard/presensi/data-presensi/${presensi_id}`,
     dependencies: [presensi_id],
   });
 
@@ -125,7 +79,6 @@ export default function DetailPresensiKaryawanModal({
 
   // SX
   const lightDarkColor = useLightDarkColor();
-  const errorColor = useErrorColor();
 
   return (
     <Modal
@@ -151,7 +104,7 @@ export default function DetailPresensiKaryawanModal({
             <>
               {loading && (
                 <>
-                  <ComponentSpinner />
+                  <ComponentSpinner m={"auto"} />
                 </>
               )}
               {!loading && (
@@ -181,14 +134,14 @@ export default function DetailPresensiKaryawanModal({
                           />
                         </DetailKaryawanModalDisclosure>
 
-                        <VStack align={"stretch"}>
+                        <VStack gap={1} align={"stretch"}>
                           <Text fontSize={14} opacity={0.6}>
                             Nama Karyawan
                           </Text>
                           <Text fontWeight={500}>{data.user.nama}</Text>
                         </VStack>
 
-                        <VStack align={"stretch"}>
+                        <VStack gap={1} align={"stretch"}>
                           <Text fontSize={14} opacity={0.6}>
                             Unit Kerja
                           </Text>
@@ -197,7 +150,7 @@ export default function DetailPresensiKaryawanModal({
                           </Text>
                         </VStack>
 
-                        <VStack align={"stretch"}>
+                        <VStack gap={1} align={"stretch"}>
                           <Text fontSize={14} opacity={0.6}>
                             Jenis Pegawai
                           </Text>
@@ -220,21 +173,86 @@ export default function DetailPresensiKaryawanModal({
                             overflowY={"auto"}
                             className="scrollY"
                             px={responsiveSpacing}
-                            h={"100%"}
                           >
-                            <Box flex={"1 1 200px"}>
+                            <Box>
                               <Text fontSize={20} fontWeight={600} mb={4}>
                                 Lokasi Presensi
                               </Text>
+                              <SimpleGrid
+                                columns={[1, 2]}
+                                gap={responsiveSpacing}
+                              >
+                                <Box position={"relative"}>
+                                  <LokasiPresensi
+                                    center={{
+                                      lat: data.lat_masuk || 0,
+                                      lng: data.long_masuk || 0,
+                                    }}
+                                    officeCenter={{
+                                      lat: data.lat_masuk || 0,
+                                      lng: data.long_masuk || 0,
+                                    }}
+                                    presence_radius={100}
+                                  />
+                                  <Text opacity={0.6} mt={2}>
+                                    Lokasi Presensi Masuk
+                                  </Text>
+                                </Box>
 
-                              <LokasiPresensi
-                                center={{ lat: data.lat, lng: data.long }}
-                                officeCenter={{
-                                  lat: data.lat,
-                                  lng: data.long,
-                                }}
-                                presence_radius={100}
-                              />
+                                <Box position={"relative"}>
+                                  <LokasiPresensi
+                                    center={{
+                                      lat: data.lat_keluar || 0,
+                                      lng: data.long_keluar || 0,
+                                    }}
+                                    officeCenter={{
+                                      lat: data.lat_keluar || 0,
+                                      lng: data.long_keluar || 0,
+                                    }}
+                                    presence_radius={100}
+                                  />
+                                  <Text opacity={0.6} mt={2}>
+                                    Lokasi Presensi Keluar
+                                  </Text>
+                                </Box>
+                              </SimpleGrid>
+                            </Box>
+
+                            <Box>
+                              <Text fontSize={20} fontWeight={600} mb={4}>
+                                Foto Presensi
+                              </Text>
+
+                              <SimpleGrid
+                                columns={[1, 2]}
+                                gap={responsiveSpacing}
+                              >
+                                <Box position={"relative"} flex={"1 1 200px"}>
+                                  <Img
+                                    src={data.foto_masuk.path}
+                                    fallbackSrc="/images/defaultProfilePhoto.webp"
+                                    borderRadius={12}
+                                    aspectRatio={1}
+                                    objectFit={"cover"}
+                                  />
+                                  <Text opacity={0.6} mt={2}>
+                                    Foto Presensi Masuk
+                                  </Text>
+                                </Box>
+
+                                <Box position={"relative"} flex={"1 1 200px"}>
+                                  <Img
+                                    src={data.foto_keluar.path}
+                                    fallbackSrc="/images/defaultProfilePhoto.webp"
+                                    borderRadius={12}
+                                    aspectRatio={1}
+                                    objectFit={"cover"}
+                                  />
+                                  <Text opacity={0.6} mt={2}>
+                                    Foto Presensi Masuk
+                                  </Text>
+                                </Box>
+                              </SimpleGrid>
                             </Box>
                           </CContainer>
 
@@ -463,80 +481,6 @@ export default function DetailPresensiKaryawanModal({
                                     </Text>
                                   </HStack>
                                 </CContainer>
-                              </Box>
-
-                              <Box>
-                                <Text fontSize={20} fontWeight={600} mb={4}>
-                                  Foto Presensi
-                                </Text>
-
-                                <SimpleGrid
-                                  columns={[1, 2]}
-                                  gap={responsiveSpacing}
-                                >
-                                  <Box position={"relative"} flex={"1 1 200px"}>
-                                    <Tooltip
-                                      label={"Foto Presensi Masuk"}
-                                      placement="right"
-                                    >
-                                      <Center
-                                        p={2}
-                                        bg={"p.500"}
-                                        position={"absolute"}
-                                        borderRadius={"12px 0px 20px 0"}
-                                        top={0}
-                                        left={0}
-                                      >
-                                        <Icon
-                                          as={RiLoginBoxLine}
-                                          fontSize={20}
-                                          color={lightDarkColor}
-                                        />
-                                      </Center>
-                                    </Tooltip>
-                                    <Image
-                                      src={
-                                        data.foto_masuk ||
-                                        "/images/defaultProfilePhoto.webp"
-                                      }
-                                      borderRadius={12}
-                                      aspectRatio={1}
-                                      objectFit={"cover"}
-                                    />
-                                  </Box>
-
-                                  <Box position={"relative"} flex={"1 1 200px"}>
-                                    <Tooltip
-                                      label={"Foto Presensi Keluar"}
-                                      placement="right"
-                                    >
-                                      <Center
-                                        p={2}
-                                        bg={errorColor}
-                                        position={"absolute"}
-                                        borderRadius={"12px 0px 20px 0"}
-                                        top={0}
-                                        left={0}
-                                      >
-                                        <Icon
-                                          as={RiLogoutBoxLine}
-                                          fontSize={20}
-                                          color={lightDarkColor}
-                                          transform={"rotate(180deg)"}
-                                        />
-                                      </Center>
-                                    </Tooltip>
-                                    <Image
-                                      src={
-                                        data.foto_keluar ||
-                                        "/images/defaultProfilePhoto.webp"
-                                      }
-                                      borderRadius={12}
-                                      aspectRatio={1}
-                                      objectFit={"cover"}
-                                    />
-                                  </Box>
-                                </SimpleGrid>
                               </Box>
                             </CContainer>
                           </CContainer>

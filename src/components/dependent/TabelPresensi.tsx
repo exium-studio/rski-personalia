@@ -30,9 +30,15 @@ export default function TabelPresensi({ filterConfig }: Props) {
 
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
-    url: `/api/rski/dashboard/presensi/get-data-presensi`,
+    url: `/api/rski/dashboard/presensi/get-data-presensi?page=${pageConfig}`,
     payload: { ...filterConfig, ...formattedFilterKaryawan },
-    dependencies: [filterConfig],
+    limit: limitConfig,
+    dependencies: [
+      limitConfig,
+      pageConfig,
+      filterConfig,
+      formattedFilterKaryawan,
+    ],
   });
 
   const formattedHeader = [

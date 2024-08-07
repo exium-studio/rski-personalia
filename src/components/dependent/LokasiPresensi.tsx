@@ -25,17 +25,16 @@ export default function LokasiPresensi({
   center,
   officeCenter,
   presence_radius,
-  zoom = 20,
+  zoom = 17,
 }: Props) {
-  console.log(center);
   const userIcon = new L.Icon({
     iconUrl: "/vectors/icons/userPin.svg",
-    iconSize: [64, 64], // Ukuran ikon
+    iconSize: [42, 42], // Ukuran ikon
   });
 
   const officeIcon = new L.Icon({
     iconUrl: "/vectors/icons/hospital.svg",
-    iconSize: [150, 150], // Ukuran ikon
+    iconSize: [64, 64], // Ukuran ikon
   });
 
   const containerStyle = {
@@ -56,14 +55,7 @@ export default function LokasiPresensi({
   );
 
   return (
-    <VStack
-      w={"100%"}
-      minH={"450px"}
-      h={`calc(100% - 46px)`}
-      aspectRatio={1}
-      borderRadius={12}
-      overflow={"clip"}
-    >
+    <VStack w={"100%"} aspectRatio={1} borderRadius={12} overflow={"clip"}>
       <MapContainer
         //@ts-ignore
         center={[center.lat, center.lng]}
