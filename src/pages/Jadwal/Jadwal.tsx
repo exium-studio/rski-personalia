@@ -23,11 +23,11 @@ export default function Jadwal() {
     from: startOfWeekDate,
     to: endOfWeekDate,
   };
-  const { filterKaryawan } = useFilterKaryawan();
+  const { formattedFilterKaryawan } = useFilterKaryawan();
 
   // Filter Config
   const defaultFilterConfig = {
-    ...filterKaryawan,
+    ...formattedFilterKaryawan,
     tgl_mulai: defaultRangeTgl?.from,
     tgl_selesai: defaultRangeTgl?.to,
   };
