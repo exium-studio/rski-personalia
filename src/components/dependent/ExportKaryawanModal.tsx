@@ -44,31 +44,14 @@ export default function ExportKaryawanModal({ ...props }: Props) {
       })
       .then((r) => {
         if (r.status === 200) {
-          // Membuat URL dari Blob
-          const url = window.URL.createObjectURL(new Blob([r.data]));
-
-          // Membuat elemen <a> untuk mengunduh file
+          const downloadUrl = window.URL.createObjectURL(new Blob([r.data]));
           const link = document.createElement("a");
-          link.href = url;
-
-          // Mendapatkan nama file dari header Content-Disposition
-          const contentDisposition = r.headers["content-disposition"];
-          const fileName = contentDisposition
-            ? contentDisposition
-                .split("filename=")[1]
-                .split(";")[0]
-                .replace(/"/g, "")
-            : "RSKI - Data Karyawan";
-
-          link.download = fileName;
+          link.href = downloadUrl;
+          link.setAttribute("download", `Data Karyawan.xls`);
           document.body.appendChild(link);
           link.click();
-
-          // Membersihkan URL objek
-          setTimeout(() => {
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(link);
-          }, 100);
+          document.body.removeChild(link);
+          URL.revokeObjectURL(downloadUrl);
         } else {
           toast({
             status: "error",
