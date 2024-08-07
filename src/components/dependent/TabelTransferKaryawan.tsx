@@ -24,15 +24,16 @@ export default function TabelRekamJejak() {
   // Columns Config
   const { columnsConfig } = useTransferKaryawanTableColumnsConfig();
 
-  const { error, notFound, loading, data, retry } = useDataState<any>({
-    initialData: undefined,
-    url: "/api/rski/dashboard/karyawan/transfer/get-data-trasnfer",
-    payload: {
-      ...formattedFilterKaryawan,
-    },
-    limit: limitConfig,
-    dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
-  });
+  const { error, notFound, loading, data, paginationData, retry } =
+    useDataState<any>({
+      initialData: undefined,
+      url: "/api/rski/dashboard/karyawan/transfer/get-data-trasnfer",
+      payload: {
+        ...formattedFilterKaryawan,
+      },
+      limit: limitConfig,
+      dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
+    });
 
   const formattedHeader = [
     {
@@ -229,11 +230,7 @@ export default function TabelRekamJejak() {
         setLimitConfig={setLimitConfig}
         pageConfig={pageConfig}
         setPageConfig={setPageConfig}
-        paginationData={{
-          prev_page_url: "",
-          next_page_url: "",
-          last_page: 1,
-        }}
+        paginationData={paginationData}
       />
     </>
   );
