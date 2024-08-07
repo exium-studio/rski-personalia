@@ -14,6 +14,7 @@ import {
   ModalOverlay,
   SimpleGrid,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -26,6 +27,10 @@ import DatePickerModal from "../dependent/input/DatePickerModal";
 import RequiredForm from "../form/RequiredForm";
 import { iconSize } from "../../constant/sizes";
 import { RiCalendarFill } from "@remixicon/react";
+import { useState } from "react";
+import req from "../../constant/req";
+import { Interface__Karyawan } from "../../constant/interfaces";
+import useRenderTrigger from "../../global/useRenderTrigger";
 
 interface Props extends ButtonProps {}
 
@@ -33,13 +38,17 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("terapkan-jadwal-batch-modal", isOpen, onOpen, onClose);
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      list_karyawan: undefined,
-      tgl_mulai: undefined,
-      tgl_selesai: undefined,
-      shift: undefined,
+      list_karyawan: undefined as any,
+      tgl_mulai: undefined as any,
+      tgl_selesai: undefined as any,
+      shift: undefined as any,
     },
     validationSchema: yup.object().shape({
       list_karyawan: yup.array().min(1, "Harus diisi").required("Harus diisi"),
@@ -48,7 +57,44 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
       shift: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      const payload = {
+        user_id: values?.list_karyawan?.map(
+          (user: Interface__Karyawan) => user.id
+        ),
+        tgl_mulai: values.tgl_mulai,
+        tgl_selesai: values.tgl_selesai,
+        shift_id: values.shift.value,
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/jadwal-karyawan/data-jadwal`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              e?.response?.data?.message ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+          setRt(!rt);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -183,8 +229,9 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                 w={"100%"}
                 colorScheme="ap"
                 className="btn-ap clicky"
+                isLoading={loading}
               >
-                Simpan
+                Terapkan
               </Button>
             </ButtonGroup>
           </ModalFooter>

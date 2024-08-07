@@ -53,7 +53,7 @@ export default function TambahUnitKerja({ ...props }: Props) {
       };
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/karyawan/data-karyawan`, payload)
+        .post(`/api/rski/dashboard/pengaturan/unit-kerja`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
