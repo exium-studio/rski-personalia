@@ -24,12 +24,14 @@ interface Props extends ButtonProps {
   url: string;
   title?: string;
   downloadFileName?: string;
+  extension?: string;
 }
 
 export default function ExportModal({
   url,
   title,
   downloadFileName,
+  extension = "xls",
   ...props
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,38 +49,14 @@ export default function ExportModal({
       })
       .then((r) => {
         if (r.status === 200) {
-          // Membuat URL dari Blob
-          const url = window.URL.createObjectURL(new Blob([r.data]));
-
-          // Membuat elemen <a> untuk mengunduh file
+          const downloadUrl = window.URL.createObjectURL(new Blob([r.data]));
           const link = document.createElement("a");
-          link.href = url;
-
-          // Mendapatkan nama file dari header Content-Disposition
-          const contentDisposition = r.headers["content-disposition"];
-          const fileName = contentDisposition
-            ? contentDisposition
-                .split("filename=")[1]
-                .split(";")[0]
-                .replace(/"/g, "")
-            : downloadFileName;
-
-          link.download = fileName;
+          link.href = downloadUrl;
+          link.setAttribute("download", `${downloadFileName}.${extension}`);
           document.body.appendChild(link);
           link.click();
-
-          // toast({
-          //   status: "success",
-          //   title: `Sedang mengunduh - ${fileName}`,
-          //   position: "bottom-right",
-          //   isClosable: true,
-          // });
-
-          // Membersihkan URL objek
-          setTimeout(() => {
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(link);
-          }, 100);
+          document.body.removeChild(link);
+          URL.revokeObjectURL(downloadUrl);
         } else {
           toast({
             status: "error",
