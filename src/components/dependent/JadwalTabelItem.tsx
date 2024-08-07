@@ -49,7 +49,7 @@ export default function TabelJadwalItem({
   index,
   rowIndex,
 }: Props) {
-  console.log(jadwal.tgl_mulai);
+  console.log(jadwal.shift);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
@@ -65,7 +65,7 @@ export default function TabelJadwalItem({
     initialValues: {
       shift: {
         value: jadwal?.shift?.id,
-        label: jadwal?.shift?.nama_shift,
+        label: jadwal?.shift?.nama,
         label2: `${formatTime(jadwal.jam_masuk)}-${formatTime(
           jadwal.jam_keluar
         )}`,
