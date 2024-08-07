@@ -83,6 +83,22 @@ export default function TabelKaryawan() {
       isSortable: true,
     },
     {
+      th: "Agama",
+      isSortable: true,
+    },
+    {
+      th: "Jenis Kelamin",
+      isSortable: true,
+    },
+    {
+      th: "Jabatan",
+      isSortable: true,
+    },
+    {
+      th: "Pendidikan Terakhir",
+      isSortable: true,
+    },
+    {
       th: "Email",
       isSortable: true,
     },
@@ -118,22 +134,6 @@ export default function TabelKaryawan() {
     },
     {
       th: "Mutasi",
-    },
-    {
-      th: "Agama",
-      isSortable: true,
-    },
-    {
-      th: "Jenis Kelamin",
-      isSortable: true,
-    },
-    {
-      th: "Jabatan",
-      isSortable: true,
-    },
-    {
-      th: "Pendidikan Terakhir",
-      isSortable: true,
     },
   ];
   const formattedData = data?.map((item: Interface__DetailKaryawan) => ({
@@ -190,6 +190,23 @@ export default function TabelKaryawan() {
         td: item.unit_kerja.nama_unit,
       },
       {
+        value: item.agama?.label,
+        td: item.agama?.label,
+      },
+      {
+        value: item.jenis_kelamin,
+        td: item.jenis_kelamin ? "Laki - laki" : "Perempuan",
+        isNumeric: true,
+      },
+      {
+        value: item.jabatan.nama_jabatan,
+        td: item.jabatan.nama_jabatan,
+      },
+      {
+        value: item.pendidikan_terakhir.label,
+        td: item.pendidikan_terakhir.label,
+      },
+      {
         value: item.email,
         td: item.email,
       },
@@ -229,23 +246,6 @@ export default function TabelKaryawan() {
       {
         value: "-",
         td: "-",
-      },
-      {
-        value: item.agama?.label,
-        td: item.agama?.label,
-      },
-      {
-        value: item.jenis_kelamin,
-        td: item.jenis_kelamin ? "Laki - laki" : "Perempuan",
-        isNumeric: true,
-      },
-      {
-        value: item.jabatan.nama_jabatan,
-        td: item.jabatan.nama_jabatan,
-      },
-      {
-        value: item.pendidikan_terakhir.label,
-        td: item.pendidikan_terakhir.label,
       },
     ],
   }));
