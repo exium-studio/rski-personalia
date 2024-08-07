@@ -16,8 +16,14 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { RiCalendarFill } from "@remixicon/react";
 import { useFormik } from "formik";
+import { useState } from "react";
 import * as yup from "yup";
+import { Interface__SelectOption } from "../../constant/interfaces";
+import req from "../../constant/req";
+import { iconSize } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnCloseOld";
 import MultiSelectKaryawan from "../dependent/_Select/MultiSelectKaryawan";
@@ -25,12 +31,6 @@ import SelectShift from "../dependent/_Select/SelectShift";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import RequiredForm from "../form/RequiredForm";
-import { iconSize } from "../../constant/sizes";
-import { RiCalendarFill } from "@remixicon/react";
-import { useState } from "react";
-import req from "../../constant/req";
-import { Interface__Karyawan } from "../../constant/interfaces";
-import useRenderTrigger from "../../global/useRenderTrigger";
 
 interface Props extends ButtonProps {}
 
@@ -59,7 +59,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
     onSubmit: (values, { resetForm }) => {
       const payload = {
         user_id: values?.list_karyawan?.map(
-          (user: Interface__Karyawan) => user.id
+          (user: Interface__SelectOption) => user.value
         ),
         tgl_mulai: values.tgl_mulai,
         tgl_selesai: values.tgl_selesai,
