@@ -56,7 +56,7 @@ export default function SelectPtkp({
           });
         });
     }
-  }, [isOpen, options]);
+  }, [isOpen, options, toast]);
 
   return (
     <SingleSelectModal

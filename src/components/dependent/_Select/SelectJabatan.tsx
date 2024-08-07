@@ -55,7 +55,7 @@ export default function SelectJabatan({
           });
         });
     }
-  }, [isOpen, options]);
+  }, [isOpen, options, toast]);
 
   return (
     <SingleSelectModal

@@ -56,7 +56,7 @@ export default function SelectRole({
           });
         });
     }
-  }, [isOpen, options]);
+  }, [isOpen, options, toast]);
 
   return (
     <SingleSelectModal

@@ -56,7 +56,7 @@ export default function MultiselectPotongan({
           });
         });
     }
-  }, [isOpen, options]);
+  }, [isOpen, options, toast]);
 
   return (
     <MultipleSelectModal

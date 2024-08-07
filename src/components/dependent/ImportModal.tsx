@@ -69,9 +69,11 @@ export default function ImportModal({
     }),
     onSubmit: (values, { resetForm }) => {
       setLoading(true);
-      const payload = {
-        [reqBodyKey]: values.file,
-      };
+      const payload = new FormData();
+      if (values?.file) {
+        payload.append(reqBodyKey, values?.file);
+      }
+
       req
         .post(url, payload)
         .then((r) => {
@@ -93,6 +95,8 @@ export default function ImportModal({
         });
     },
   });
+
+  console.log(formik.values);
 
   return (
     <>

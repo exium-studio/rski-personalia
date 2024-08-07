@@ -56,7 +56,7 @@ export default function SelectKelompokGaji({
           });
         });
     }
-  }, [isOpen, options]);
+  }, [isOpen, options, toast]);
 
   return (
     <SingleSelectModal

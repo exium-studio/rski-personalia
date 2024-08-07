@@ -56,7 +56,7 @@ export default function SelectKompetensi({
           });
         });
     }
-  }, [isOpen, options]);
+  }, [isOpen, options, toast]);
 
   return (
     <SingleSelectModal

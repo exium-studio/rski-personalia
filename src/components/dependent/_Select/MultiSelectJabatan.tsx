@@ -56,7 +56,7 @@ export default function MultiSelectJabatan({
           });
         });
     }
-  }, [isOpen, options]);
+  }, [isOpen, options, toast]);
 
   return (
     <MultipleSelectModal

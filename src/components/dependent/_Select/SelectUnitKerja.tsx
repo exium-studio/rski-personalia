@@ -56,7 +56,7 @@ export default function SelectUnitKerja({
           });
         });
     }
-  }, [isOpen, options]);
+  }, [isOpen, options, toast]);
 
   return (
     <SingleSelectModal

@@ -56,7 +56,7 @@ export default function MultiSelectUnitKerja({
           });
         });
     }
-  }, [isOpen, options]);
+  }, [isOpen, options, toast]);
 
   return (
     <MultipleSelectModal

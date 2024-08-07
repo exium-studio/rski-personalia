@@ -56,7 +56,7 @@ export default function SelectMultiKaryawan({
           });
         });
     }
-  }, [isOpen, options]);
+  }, [isOpen, options, toast]);
 
   return (
     <SingleSelectModal
