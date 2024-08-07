@@ -128,6 +128,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
           )}
         </>
       )}
+
       {!error && (
         <>
           {loading && (
@@ -153,23 +154,25 @@ export default function TabelJadwal({ filterConfig }: Props) {
                       formattedData={formattedData}
                     />
                   </CustomTableContainer>
-
-                  <TabelFooterConfig
-                    limitConfig={limitConfig}
-                    setLimitConfig={setLimitConfig}
-                    pageConfig={pageConfig}
-                    setPageConfig={setPageConfig}
-                    paginationData={{
-                      prev_page_url: "",
-                      next_page_url: "",
-                      last_page: 1,
-                    }}
-                  />
                 </>
               )}
             </>
           )}
         </>
+      )}
+
+      {!error && (
+        <TabelFooterConfig
+          limitConfig={limitConfig}
+          setLimitConfig={setLimitConfig}
+          pageConfig={pageConfig}
+          setPageConfig={setPageConfig}
+          paginationData={{
+            prev_page_url: "",
+            next_page_url: "",
+            last_page: 1,
+          }}
+        />
       )}
     </>
   );
