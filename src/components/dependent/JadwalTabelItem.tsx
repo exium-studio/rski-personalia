@@ -83,6 +83,8 @@ export default function TabelJadwalItem({
     <>
       <VStack
         p={3}
+        pt={2}
+        pr={2}
         gap={1}
         borderRadius={8}
         w={"100%"}
