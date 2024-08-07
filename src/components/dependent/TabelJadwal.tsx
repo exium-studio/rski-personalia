@@ -141,6 +141,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
               </HStack>
             </>
           )}
+
           {!loading && (
             <>
               {(!data || (data && data.length === 0)) && (
