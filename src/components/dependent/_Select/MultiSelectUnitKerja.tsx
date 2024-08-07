@@ -50,9 +50,7 @@ export default function MultiSelectUnitKerja({
           console.log(e);
           toast({
             status: "error",
-            title:
-              e?.response?.data?.message ||
-              "Maaf terjadi kesalahan pada sistem",
+            title: "Maaf terjadi kesalahan pada sistem",
           });
         });
     }

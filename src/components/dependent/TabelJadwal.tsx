@@ -28,7 +28,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any>({
       initialData: undefined,
-      url: "/api/rski/dashboard/jadwal-karyawan/get-data-jadwal",
+      url: `/api/rski/dashboard/jadwal-karyawan/get-data-jadwal?page=${pageConfig}`,
       payload: { ...filterConfig },
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, filterConfig],

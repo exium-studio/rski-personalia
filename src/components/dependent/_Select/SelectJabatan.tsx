@@ -49,9 +49,7 @@ export default function SelectJabatan({
           console.log(e);
           toast({
             status: "error",
-            title:
-              e?.response?.data?.message ||
-              "Maaf terjadi kesalahan pada sistem",
+            title: "Maaf terjadi kesalahan pada sistem",
           });
         });
     }

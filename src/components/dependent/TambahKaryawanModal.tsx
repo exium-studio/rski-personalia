@@ -172,9 +172,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           console.log(e);
           toast({
             status: "error",
-            title:
-              e?.response?.data?.message ||
-              "Maaf terjadi kesalahan pada sistem",
+            title: "Maaf terjadi kesalahan pada sistem",
             isClosable: true,
             position: "bottom-right",
           });

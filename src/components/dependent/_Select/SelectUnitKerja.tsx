@@ -50,9 +50,7 @@ export default function SelectUnitKerja({
           console.log(e);
           toast({
             status: "error",
-            title:
-              e?.response?.data?.message ||
-              "Maaf terjadi kesalahan pada sistem",
+            title: "Maaf terjadi kesalahan pada sistem",
             position: "bottom-right",
             isClosable: true,
           });
