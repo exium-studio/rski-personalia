@@ -39,7 +39,7 @@ export default function ExportPresensiModal({ ...props }: Props) {
 
   const handleExport = () => {
     setLoading(true);
-    const payload = { month: bulan, year: tahun };
+    const payload = { month: bulan + 1, year: tahun };
     req
       .post("/api/rski/dashboard/presensi/export", payload, {
         responseType: "blob",
