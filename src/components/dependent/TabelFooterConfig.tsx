@@ -54,7 +54,8 @@ export default function TabelFooterConfig({
           <Menu>
             <MenuButton
               ref={limitButtonRef}
-              px={4}
+              pl={4}
+              pr={3}
               as={Button}
               className="btn-outline"
               rightIcon={
