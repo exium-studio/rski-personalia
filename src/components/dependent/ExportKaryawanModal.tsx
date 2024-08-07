@@ -22,6 +22,7 @@ import backOnClose from "../../lib/backOnClose";
 import ExportFilterKaryawan from "../independent/ExportFilterKaryawan";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
+import useExportFilterKaryawan from "../../global/useExportFilterKaryawan";
 
 interface Props extends ButtonProps {}
 
@@ -32,12 +33,14 @@ export default function ExportKaryawanModal({ ...props }: Props) {
 
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
+  const { filterKaryawan } = useExportFilterKaryawan();
 
   const handleExport = () => {
     setLoading(true);
+    const payload = { ...filterKaryawan };
     req
-      .get("/api/rski/dashboard/karyawan/export", {
-        responseType: "blob", // Penting untuk menangani file biner
+      .post("/api/rski/dashboard/karyawan/export", payload, {
+        responseType: "blob",
       })
       .then((r) => {
         if (r.status === 200) {
@@ -70,6 +73,8 @@ export default function ExportKaryawanModal({ ...props }: Props) {
           toast({
             status: "error",
             title: "Maaf terjadi kesalahan pada sistem",
+            position: "bottom-right",
+            isClosable: true,
           });
         }
       })
@@ -79,6 +84,8 @@ export default function ExportKaryawanModal({ ...props }: Props) {
           status: "error",
           title:
             e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
         });
       })
       .finally(() => {
