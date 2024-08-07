@@ -25,7 +25,6 @@ import NotFound from "../../independent/NotFound";
 import CContainer from "../../independent/wrapper/CContainer";
 import DisclosureHeader from "../DisclosureHeader";
 import SearchComponent from "./SearchComponent";
-import { responsiveSpacing } from "../../../constant/sizes";
 
 interface Props {
   id: string;
