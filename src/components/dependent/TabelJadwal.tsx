@@ -1,10 +1,11 @@
-import { Center, HStack } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import { eachDayOfInterval } from "date-fns";
 import { useState } from "react";
-import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
+import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
@@ -13,8 +14,6 @@ import TabelJadwalItem from "./JadwalTabelItem";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 import TerapkanJadwalKaryawanTerpilih from "./TerapkanJadwalKaryawanTerpilih";
-import isObjectEmpty from "../../lib/isObjectEmpty";
-import NotFound from "../independent/NotFound";
 
 interface Props {
   filterConfig?: any;
@@ -26,13 +25,14 @@ export default function TabelJadwal({ filterConfig }: Props) {
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
 
-  const { error, notFound, loading, data, retry } = useDataState<any>({
-    initialData: undefined,
-    url: "/api/rski/dashboard/jadwal-karyawan/get-data-jadwal",
-    payload: { ...filterConfig },
-    limit: limitConfig,
-    dependencies: [limitConfig, pageConfig, filterConfig],
-  });
+  const { error, notFound, loading, data, paginationData, retry } =
+    useDataState<any>({
+      initialData: undefined,
+      url: "/api/rski/dashboard/jadwal-karyawan/get-data-jadwal",
+      payload: { ...filterConfig },
+      limit: limitConfig,
+      dependencies: [limitConfig, pageConfig, filterConfig],
+    });
 
   const dateList = eachDayOfInterval({
     start: filterConfig.tgl_mulai,
@@ -134,11 +134,6 @@ export default function TabelJadwal({ filterConfig }: Props) {
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
 
@@ -168,11 +163,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
           setLimitConfig={setLimitConfig}
           pageConfig={pageConfig}
           setPageConfig={setPageConfig}
-          paginationData={{
-            prev_page_url: "",
-            next_page_url: "",
-            last_page: 1,
-          }}
+          paginationData={paginationData}
         />
       )}
     </>
