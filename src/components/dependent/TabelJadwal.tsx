@@ -29,14 +29,14 @@ export default function TabelJadwal({ filterConfig }: Props) {
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: "/api/rski/dashboard/jadwal-karyawan/get-data-jadwal",
-    payload: filterConfig,
+    payload: { ...filterConfig },
     limit: limitConfig,
     dependencies: [limitConfig, pageConfig, filterConfig],
   });
 
   const dateList = eachDayOfInterval({
-    start: filterConfig.range_tgl.from,
-    end: filterConfig.range_tgl.to,
+    start: filterConfig.tgl_mulai,
+    end: filterConfig.tgl_selesai,
   });
 
   const formattedHeader = [

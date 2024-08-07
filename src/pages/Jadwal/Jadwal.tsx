@@ -23,13 +23,13 @@ export default function Jadwal() {
     from: startOfWeekDate,
     to: endOfWeekDate,
   };
-
   const { filterKaryawan } = useFilterKaryawan();
 
   // Filter Config
   const defaultFilterConfig = {
     ...filterKaryawan,
-    range_tgl: defaultRangeTgl,
+    tgl_mulai: defaultRangeTgl?.from,
+    tgl_selesai: defaultRangeTgl?.to,
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
   const confirmDateRange = (
@@ -37,9 +37,8 @@ export default function Jadwal() {
   ) => {
     setFilterConfig((ps: any) => ({
       ...ps,
-      range_tgl: inputValue
-        ? { from: inputValue.from, to: inputValue.to }
-        : undefined,
+      tgl_mulai: inputValue?.from,
+      tgl_selesai: inputValue?.to,
     }));
   };
 
@@ -84,7 +83,10 @@ export default function Jadwal() {
               minW={"140px"}
               w={"fit-content"}
               onConfirm={confirmDateRange}
-              inputValue={filterConfig.range_tgl}
+              inputValue={{
+                from: filterConfig.tgl_mulai,
+                to: filterConfig.tgl_selesai,
+              }}
               maxRange={7}
               nonNullable
             />
