@@ -503,6 +503,8 @@ export interface Interface__Ptkp {
 export interface Interface__ConstantTable {
   id: number | boolean | null;
   label: string;
+  created_at?: string | Date;
+  updated_at?: string | Date;
 }
 
 export interface Interface__AnggotaKeluarga {
@@ -564,6 +566,7 @@ export interface Interface__DetailKaryawan {
   no_sip: string;
   masa_berlaku_sip: Date | string;
   tgl_berakhir_pks: Date | string;
+  pendidikan_terakhir: Interface__ConstantTable;
   masa_diklat: number;
   jumlah_keluarga: number;
   ibu: Interface__AnggotaKeluarga;

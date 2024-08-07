@@ -61,6 +61,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     if (values.unit_kerja && values.unit_kerja.length > 0) {
       count += values.unit_kerja.length;
     }
+    if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
+      count += values.pendidikan_terakhir.length;
+    }
     if (values.jabatan && values.jabatan.length > 0) {
       count += values.jabatan.length;
     }
@@ -93,6 +96,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     const formattedFilters = {
       search: localFilterConfig.search,
       unit_kerja: localFilterConfig.unit_kerja.map((item: any) => item.id),
+      jenis_karyawan: localFilterConfig.jenis_karyawan.map(
+        (item: any) => item.value
+      ),
       jabatan: localFilterConfig.jabatan.map((item: any) => item.id),
       status_karyawan: localFilterConfig.status_karyawan.map(
         (item: any) => item.value
@@ -104,6 +110,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       tgl_masuk: localFilterConfig.tgl_masuk,
       agama: localFilterConfig.agama.map((item: any) => item.value),
       jenis_kelamin: localFilterConfig.jenis_kelamin.map(
+        (item: any) => item.value
+      ),
+      pendidikan_terakhir: localFilterConfig.pendidikan_terakhir.map(
         (item: any) => item.value
       ),
     };

@@ -15,24 +15,25 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
   } = useKaryawanTableColumnsConfig();
 
   const allColumns = [
-    { column: "nama", label: "Nama" },
-    { column: "status_aktif", label: "Status Aktif" },
-    { column: "nik", label: "Nik" },
-    { column: "status_karyawan", label: "Status Kepegawaian" },
-    { column: "no_rm", label: "No. Rekam Medis" },
-    { column: "unit_kerja", label: "Unit Kerja" },
-    { column: "email", label: "Email" },
-    { column: "ayah", label: "Ayah" },
-    { column: "ibu", label: "Ibu" },
-    { column: "jumlah_keluarga", label: "Jumlah Keluarga" },
-    { column: "tgl_masuk", label: "Tanggal Masuk" },
-    { column: "tgl_keluar", label: "Tanggal Keluar" },
-    { column: "masa_kerja", label: "Masa Kerja" },
-    { column: "promosi", label: "Promosi" },
-    { column: "mutasi", label: "Mutasi" },
-    { column: "agama", label: "Agama" },
-    { column: "jenis_kelamin", label: "Jenis Kelamin" },
-    { column: "jabatan", label: "Jabatan" },
+    { column: "nama", label: "Nama" }, // 0
+    { column: "status_aktif", label: "Status Aktif" }, // 1
+    { column: "nik", label: "Nik" }, // 2
+    { column: "status_karyawan", label: "Status Kepegawaian" }, // 3
+    { column: "no_rm", label: "No. Rekam Medis" }, // 4
+    { column: "unit_kerja", label: "Unit Kerja" }, // 5
+    { column: "agama", label: "Agama" }, // 6
+    { column: "jenis_kelamin", label: "Jenis Kelamin" }, // 7
+    { column: "jabatan", label: "Jabatan" }, // 8
+    { column: "pendidikan_terakhir", label: "Pendidikan Terakhir" }, // 9
+    { column: "email", label: "Email" }, // 10
+    { column: "ayah", label: "Ayah" }, // 11
+    { column: "ibu", label: "Ibu" }, // 12
+    { column: "jumlah_keluarga", label: "Jumlah Keluarga" }, // 13
+    { column: "tgl_masuk", label: "Tanggal Masuk" }, // 14
+    { column: "tgl_keluar", label: "Tanggal Keluar" }, // 15
+    { column: "masa_kerja", label: "Masa Kerja" }, // 16
+    { column: "promosi", label: "Promosi" }, // 17
+    { column: "mutasi", label: "Mutasi" }, // 18
   ];
   const presetColumns = [
     {
@@ -41,23 +42,23 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
     },
     {
       label: "Karyawan",
-      columns: [0, 1, 2, 3, 4, 5, 17, 15, 16],
+      columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     },
     {
       label: "Akun",
-      columns: [0, 1, 5, 6],
+      columns: [0, 1, 5, 10],
     },
     {
       label: "Keluarga",
-      columns: [0, 8, 9, 10],
+      columns: [0, 11, 12, 13],
     },
     {
       label: "Pekerja Kontrak",
-      columns: [0, 3, 11, 12, 7],
+      columns: [0, 1, 14, 15, 16],
     },
     {
       label: "Rekam Jejak",
-      columns: [0, 11, 12, 13, 14],
+      columns: [0, 2, 3, 4, 5, 17, 18],
     },
   ];
 

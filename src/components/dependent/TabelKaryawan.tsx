@@ -131,6 +131,10 @@ export default function TabelKaryawan() {
       th: "Jabatan",
       isSortable: true,
     },
+    {
+      th: "Pendidikan Terakhir",
+      isSortable: true,
+    },
   ];
   const formattedData = data?.map((item: Interface__DetailKaryawan) => ({
     id: item.user.id,
@@ -238,6 +242,10 @@ export default function TabelKaryawan() {
       {
         value: item.jabatan.nama_jabatan,
         td: item.jabatan.nama_jabatan,
+      },
+      {
+        value: item.pendidikan_terakhir.label,
+        td: item.pendidikan_terakhir.label,
       },
     ],
   }));
