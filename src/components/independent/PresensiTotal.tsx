@@ -29,9 +29,9 @@ export default function PresensiTotal({ ...props }: Props) {
     <Wrap spacing={responsiveSpacing} {...props}>
       {loading && (
         <>
-          <Skeleton flex={"1 1"} h={"100px"} />
-          <Skeleton flex={"1 1"} h={"100px"} />
-          <Skeleton flex={"1 1"} h={"100px"} />
+          <Skeleton flex={"1 1"} h={"80px"} />
+          <Skeleton flex={"1 1"} h={"80px"} />
+          <Skeleton flex={"1 1"} h={"80px"} />
         </>
       )}
       {!loading && data && (
@@ -43,7 +43,7 @@ export default function PresensiTotal({ ...props }: Props) {
             bg={"var(--p500a4)"}
             align={"flex-start"}
             flex={"1 1 350px"}
-            h={"100px"}
+            h={"80px"}
           >
             <HStack
               align={"stretch"}
@@ -52,7 +52,7 @@ export default function PresensiTotal({ ...props }: Props) {
               w={"100%"}
             >
               <VStack gap={0} flex={"1 1"}>
-                <Text fontSize={36} fontWeight={600} color={"p.500"}>
+                <Text fontSize={26} fontWeight={600} color={"p.500"}>
                   {formatNumber(data?.hadir.hadir)}
                 </Text>
                 <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
@@ -63,7 +63,7 @@ export default function PresensiTotal({ ...props }: Props) {
               <Box w={"1px"} bg={"var(--p500a4)"} />
 
               <VStack gap={0} flex={"1 1"}>
-                <Text fontSize={36} fontWeight={600} color={"p.500"}>
+                <Text fontSize={26} fontWeight={600} color={"p.500"}>
                   {formatNumber(data?.hadir.tepat_waktu)}
                 </Text>
                 <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
@@ -72,7 +72,7 @@ export default function PresensiTotal({ ...props }: Props) {
               </VStack>
 
               <VStack gap={0} flex={"1 1"}>
-                <Text fontSize={36} fontWeight={600} color={"p.500"}>
+                <Text fontSize={26} fontWeight={600} color={"p.500"}>
                   {formatNumber(data?.hadir.terlambat)}
                 </Text>
                 <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
@@ -89,7 +89,7 @@ export default function PresensiTotal({ ...props }: Props) {
             bg={"var(--divider)"}
             align={"flex-start"}
             flex={"1 1 450px"}
-            h={"100px"}
+            h={"80px"}
           >
             <HStack
               align={"stretch"}
@@ -103,7 +103,7 @@ export default function PresensiTotal({ ...props }: Props) {
                 // borderRight={"1px solid var(--divider3)"}
               >
                 <Text
-                  fontSize={36}
+                  fontSize={26}
                   fontWeight={600}
                   color={"var(--divider-text)"}
                 >
@@ -118,7 +118,7 @@ export default function PresensiTotal({ ...props }: Props) {
 
               <VStack gap={0} flex={"1 1"}>
                 <Text
-                  fontSize={36}
+                  fontSize={26}
                   fontWeight={600}
                   color={"var(--divider-text)"}
                 >
@@ -131,7 +131,7 @@ export default function PresensiTotal({ ...props }: Props) {
 
               <VStack gap={0} flex={"1 1"}>
                 <Text
-                  fontSize={36}
+                  fontSize={26}
                   fontWeight={600}
                   color={"var(--divider-text)"}
                 >
@@ -143,7 +143,7 @@ export default function PresensiTotal({ ...props }: Props) {
               </VStack>
 
               <VStack gap={0} flex={"1 1"}>
-                <Text fontSize={36} fontWeight={600} color={"red.400"}>
+                <Text fontSize={26} fontWeight={600} color={"red.400"}>
                   {formatNumber(data.tidak_hadir.absen)}
                 </Text>
                 <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
