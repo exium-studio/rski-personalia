@@ -138,6 +138,7 @@ export default function ExportKaryawanModal({ ...props }: Props) {
                   w={"100%"}
                   className="btn-solid clicky"
                   onClick={backOnClose}
+                  isDisabled={loading}
                 >
                   Tidak
                 </Button>

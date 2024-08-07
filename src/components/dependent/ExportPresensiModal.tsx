@@ -140,10 +140,7 @@ export default function ExportPresensiModal({ ...props }: Props) {
             <DisclosureHeader title={"Export Presensi"} />
           </ModalHeader>
           <ModalBody>
-            <Text opacity={0.6}>
-              Apakah anda yakin akan export data presensi dengan periode
-              terpilih?
-            </Text>
+            <Text opacity={0.6}>Apakah anda yakin akan export tabel ini?</Text>
           </ModalBody>
           <ModalFooter>
             <CContainer gap={2}>
