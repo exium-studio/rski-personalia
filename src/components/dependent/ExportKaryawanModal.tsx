@@ -47,7 +47,7 @@ export default function ExportKaryawanModal({ ...props }: Props) {
           const downloadUrl = window.URL.createObjectURL(new Blob([r.data]));
           const link = document.createElement("a");
           link.href = downloadUrl;
-          link.setAttribute("download", `Data Karyawan.xls`);
+          link.setAttribute("download", `Data Pegawai.xls`);
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
@@ -108,7 +108,7 @@ export default function ExportKaryawanModal({ ...props }: Props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Export Karyawan"} />
+            <DisclosureHeader title={"Export Pegawai"} />
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.6}>Apakah anda yakin akan export tabel ini?</Text>
