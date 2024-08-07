@@ -48,7 +48,7 @@ export default function FilterItemWrapper({
         _hover={{ bg: "transparent" }}
         justifyContent={"space-between"}
         pl={2}
-        pr={1}
+        pr={"2px"}
         position="relative"
         role="group"
       >
