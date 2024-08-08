@@ -316,7 +316,28 @@ export default function DetailPresensiKaryawanModal({
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatDate(
-                                        data.jadwal.jam_from,
+                                        data.jadwal.tgl_masuk,
+                                        "short"
+                                      )}
+                                    </Text>
+                                  </HStack>
+
+                                  <HStack justify={"space-between"}>
+                                    <Box opacity={0.6}>
+                                      <Highlighter
+                                        highlightClassName="hw"
+                                        unhighlightClassName="uw"
+                                        searchWords={searchQuery}
+                                        autoEscape={true}
+                                        textToHighlight={
+                                          "Jadwal Tanggal Keluar"
+                                        }
+                                      />
+                                    </Box>
+                                    <FlexLine />
+                                    <Text fontWeight={500} textAlign={"right"}>
+                                      {formatDate(
+                                        data.jadwal.tgl_keluar,
                                         "short"
                                       )}
                                     </Text>
