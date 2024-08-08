@@ -32,7 +32,7 @@ import {
 } from "@chakra-ui/react";
 import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import SelectJabatan from "../../components/dependent/_Select/SelectJabatan";
 import SelectKelompokGaji from "../../components/dependent/_Select/SelectKelompokGaji";
@@ -95,6 +95,10 @@ export default function TambahKaryawanModal({ ...props }: Props) {
   const steps = [{ title: "Data Karyawan" }, { title: "Penggajian" }];
   const { activeStep, setActiveStep } = useSteps();
   const activeStepText = steps[activeStep].title;
+
+  useEffect(() => {
+    setActiveStep(0);
+  }, [setActiveStep]);
 
   const sw = useScreenWidth();
   const [loading, setLoading] = useState<boolean>(false);
@@ -168,7 +172,6 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             });
             setRt(!rt);
             // resetForm();
-            isSubmitting.current = false;
             if (activeStep === 1) {
               handleBack();
             }
@@ -184,6 +187,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           });
         })
         .finally(() => {
+          isSubmitting.current = false;
           setLoading(false);
         });
     },
@@ -462,6 +466,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               formik.setFieldValue("kelompok_gaji", input);
             }}
             inputValue={formik.values.kelompok_gaji}
+            isError={!!formik.errors.kelompok_gaji}
             // withSearch
           />
           <FormErrorMessage>
