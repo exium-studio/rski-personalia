@@ -14,16 +14,20 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { RiFileList3Fill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import CContainer from "../wrapper/CContainer";
+import useRenderTrigger from "../../global/useRenderTrigger";
+import req from "../../constant/req";
+import PleaseWaitModal from "../dependent/PleaseWaitModal";
 
 interface Props extends ButtonProps {}
 
@@ -32,12 +36,45 @@ export default function BuatPenggajianModal({ ...props }: Props) {
   useBackOnClose("buat-penggajian-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: { sertakan_bor: false },
     validationSchema: yup.object().shape({ sertakan_bor: yup.boolean() }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      const payload = {
+        bor: values.sertakan_bor,
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/keuangan/penggajian`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -92,13 +129,22 @@ export default function BuatPenggajianModal({ ...props }: Props) {
                 </AlertDescription>
               </Alert>
 
-              <Button w={"100%"} className="btn-ap clicky" colorScheme="ap">
+              <Button
+                onClick={() => {
+                  formik.submitForm();
+                }}
+                w={"100%"}
+                className="btn-ap clicky"
+                colorScheme="ap"
+              >
                 Buat Penggajian
               </Button>
             </CContainer>
           </ModalFooter>
         </ModalContent>
       </Modal>
+
+      <PleaseWaitModal isOpen={loading} />
     </>
   );
 }

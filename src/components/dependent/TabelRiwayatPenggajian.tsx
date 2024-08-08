@@ -26,15 +26,16 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
   // Karyawan Detail Disclosure
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { error, notFound, loading, data, retry } = useDataState<any[]>({
-    initialData: undefined,
-    url: `/api/rski/dashboard/keuangan/get-penggajian?page=${pageConfig}`,
-    payload: {
-      ...filterConfig,
-    },
-    limit: limitConfig,
-    dependencies: [limitConfig, pageConfig, filterConfig],
-  });
+  const { error, notFound, loading, data, paginationData, retry } =
+    useDataState<any[]>({
+      initialData: undefined,
+      url: `/api/rski/dashboard/keuangan/get-penggajian?page=${pageConfig}`,
+      payload: {
+        ...filterConfig,
+      },
+      limit: limitConfig,
+      dependencies: [limitConfig, pageConfig, filterConfig],
+    });
 
   const formattedHeader = [
     {
@@ -176,11 +177,7 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
                     setLimitConfig={setLimitConfig}
                     pageConfig={pageConfig}
                     setPageConfig={setPageConfig}
-                    paginationData={{
-                      prev_page_url: "",
-                      next_page_url: "",
-                      last_page: 1,
-                    }}
+                    paginationData={paginationData}
                     footer={
                       <Text opacity={0.4}>
                         Klik row untuk melihat laporan penggajian
