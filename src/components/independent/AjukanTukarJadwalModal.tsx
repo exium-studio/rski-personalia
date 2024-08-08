@@ -26,6 +26,7 @@ import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
 import SelectJadwalKaryawan from "../dependent/_Select/SelectJadwalKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import RequiredForm from "../form/RequiredForm";
+import SelectKaryawanDitukar from "../dependent/_Select/SelectKaryawanDitukar";
 
 interface Props extends ButtonProps {}
 
@@ -143,7 +144,8 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
                   Karyawan Ditukar
                   <RequiredForm />
                 </FormLabel>
-                <SelectKaryawan
+                <SelectKaryawanDitukar
+                  jadwal_id={formik.values.jadwal_pengajuan?.value}
                   isDisabled={!formik.values.jadwal_pengajuan}
                   name="user_ditukar"
                   onConfirm={(input) => {
