@@ -1,7 +1,6 @@
 import {
   Button,
   Center,
-  HStack,
   Modal,
   ModalBody,
   ModalContent,
@@ -11,18 +10,18 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { dummyTukarJadwals } from "../../const/dummy";
-import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
+import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
+import ApprovalStatus from "./ApprovalStatus";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
-import BooleanBadge from "./BooleanBadge";
 import CustomTable from "./CustomTable";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
@@ -66,18 +65,24 @@ export default function TabelKaryawan({ filterConfig }: Props) {
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
   // Filter Config
-  const { filterKaryawan } = useFilterKaryawan();
+  const { formattedFilterKaryawan } = useFilterKaryawan();
 
-  const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummyTukarJadwals,
-    url: "",
-    payload: [filterKaryawan],
-    dependencies: [],
-  });
+  const { error, notFound, loading, data, paginationData, retry } =
+    useDataState<any>({
+      initialData: undefined,
+      url: `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal?page=${pageConfig}`,
+      payload: { ...formattedFilterKaryawan },
+      limit: limitConfig,
+      dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
+    });
 
   const formattedHeader = [
     {
       th: "Tanggal Pengajuan",
+      isSortable: true,
+    },
+    {
+      th: "Kategori Penukaran",
       isSortable: true,
     },
     {
@@ -106,7 +111,6 @@ export default function TabelKaryawan({ filterConfig }: Props) {
       },
     },
   ];
-
   const formattedData = data?.map((item: any) => ({
     id: item.id,
     columnsFormat: [
@@ -115,15 +119,12 @@ export default function TabelKaryawan({ filterConfig }: Props) {
         td: formatDate(item.created_at),
       },
       {
+        value: item.kategori_penukaran.label,
+        td: item.kategori_penukaran.label,
+      },
+      {
         value: item.status_penukaran,
-        td: (
-          <BooleanBadge
-            w={"120px"}
-            data={item.status_penukaran}
-            trueValue="Disetujui"
-            falseValue="Ditolak"
-          />
-        ),
+        td: <ApprovalStatus data={item.status_penukaran.id} w={"120px"} />,
         cProps: {
           justify: "center",
         },
@@ -133,31 +134,31 @@ export default function TabelKaryawan({ filterConfig }: Props) {
         td: item.unit_kerja.nama_unit,
       },
       {
-        value: item.user.nama,
+        value: item.karyawan_pengajuan.nama,
         td: (
           <AvatarAndNameTableData
             data={{
-              id: item.user.id,
-              nama: item.user.nama,
-              foto_profil: item.user.foto_profil,
+              id: item.karyawan_pengajuan.id,
+              nama: item.karyawan_pengajuan.nama,
+              foto_profil: item.karyawan_pengajuan.foto_profil,
             }}
           />
         ),
       },
       {
-        value: item.user_ditukar.nama,
+        value: item.karyawan_ditukar.nama,
         td: (
           <AvatarAndNameTableData
             data={{
-              id: item.user_ditukar.id,
-              nama: item.user_ditukar.nama,
-              foto_profil: item.user_ditukar.foto_profil,
+              id: item.karyawan_ditukar.id,
+              nama: item.karyawan_ditukar.nama,
+              foto_profil: item.karyawan_ditukar.foto_profil,
             }}
           />
         ),
       },
       {
-        value: item.jadwal_pengajuan.tgl_mulai,
+        value: item.tanggal_pengajuan,
         td: <PertukaranJadwalModal />,
         cProps: {
           justify: "center",
@@ -169,20 +170,27 @@ export default function TabelKaryawan({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"300px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && isObjectEmpty(formattedFilterKaryawan) && (
+            <NoData minH={"300px"} />
+          )}
+
+          {notFound && !isObjectEmpty(formattedFilterKaryawan) && (
+            <NotFound minH={"300px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"300px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
       {!error && (
         <>
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (
@@ -197,29 +205,20 @@ export default function TabelKaryawan({ filterConfig }: Props) {
                       formattedData={formattedData}
                     />
                   </CustomTableContainer>
-
-                  <TabelFooterConfig
-                    limitConfig={limitConfig}
-                    setLimitConfig={setLimitConfig}
-                    pageConfig={pageConfig}
-                    setPageConfig={setPageConfig}
-                    paginationData={{
-                      prev_page_url: "",
-                      next_page_url: "",
-                      last_page: 1,
-                    }}
-                    // footer={
-                    //   <Text opacity={0.4}>
-                    //     Klik row untuk melihat detail karyawan
-                    //   </Text>
-                    // }
-                  />
                 </>
               )}
             </>
           )}
         </>
       )}
+
+      <TabelFooterConfig
+        limitConfig={limitConfig}
+        setLimitConfig={setLimitConfig}
+        pageConfig={pageConfig}
+        setPageConfig={setPageConfig}
+        paginationData={paginationData}
+      />
     </>
   );
 }
