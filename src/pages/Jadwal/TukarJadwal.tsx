@@ -80,7 +80,11 @@ export default function TukarJadwal() {
               w={"fit-content"}
             />
             <FilterKaryawan />
-            <ExportModal url="" title="Export Penukaran Jadwal" />
+            <ExportModal
+              url="}/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/export"
+              title="Export Penukaran Jadwal"
+              downloadFileName="Data Tukar Jadwal"
+            />
             <AjukanTukarJadwalModal minW={"fit-content"} />
           </HStack>
 
