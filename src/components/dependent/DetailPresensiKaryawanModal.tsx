@@ -57,7 +57,8 @@ export default function DetailPresensiKaryawanModal({
   const { error, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/presensi/data-presensi/${presensi_id}`,
-    dependencies: [presensi_id],
+    dependencies: [isOpen, presensi_id],
+    conditions: !!(isOpen && presensi_id),
   });
 
   const [search, setSearch] = useState<string>("");
