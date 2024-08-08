@@ -22,9 +22,9 @@ import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
-import ComponentSpinner from "../independent/ComponentSpinner";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
+import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import BooleanBadge from "./BooleanBadge";
 import DisclosureHeader from "./DisclosureHeader";
@@ -130,10 +130,12 @@ export default function DokumenKaryawanModalDisclosure({
     data_dokumen: dummyDokumens,
   };
 
-  const { error, loading, data, retry } = useDataState<any>({
+  const loading = true;
+  const { error, data, retry } = useDataState<any>({
     initialData: dummy,
-    url: "",
+    url: `/api/rski/dashboard/karyawan/detail-karyawan-dokumen/${karyawan_id}`,
     dependencies: [],
+    conditions: !!(isOpen && karyawan_id),
   });
 
   // SX
@@ -164,7 +166,7 @@ export default function DokumenKaryawanModalDisclosure({
           <ModalHeader ref={initialRef}>
             <DisclosureHeader title={"Dokumen Karyawan"} />
           </ModalHeader>
-          <ModalBody>
+          <ModalBody px={0}>
             {error && (
               <Box my={"auto"}>
                 <Retry loading={loading} retry={retry} />
@@ -173,10 +175,62 @@ export default function DokumenKaryawanModalDisclosure({
             {!error && (
               <>
                 {loading && (
-                  <>
-                    <ComponentSpinner m={"auto"} />
-                  </>
+                  <CContainer
+                    flex={1}
+                    overflowY={"auto"}
+                    pb={responsiveSpacing}
+                  >
+                    <Wrap
+                      spacing={responsiveSpacing}
+                      mb={responsiveSpacing}
+                      align={"center"}
+                      px={responsiveSpacing}
+                    >
+                      <Skeleton w={"55px"} h={"55px"} borderRadius={"full"} />
+
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
+
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
+
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
+
+                      <Skeleton w={"140px"} h={"48px"} ml={"auto"} />
+                    </Wrap>
+
+                    <CContainer
+                      flex={1}
+                      gap={responsiveSpacing}
+                      overflowY={"auto"}
+                      className="scrollY"
+                      px={responsiveSpacing}
+                    >
+                      <SimpleGrid
+                        columns={[2, 3, null, 4, 5]}
+                        gap={3}
+                        borderRadius={12}
+                      >
+                        {Array.from({ length: 10 }).map((_, i) => (
+                          <Skeleton
+                            key={i}
+                            w={"100%"}
+                            h={"168.43px"}
+                            borderRadius={12}
+                          />
+                        ))}
+                      </SimpleGrid>
+                    </CContainer>
+                  </CContainer>
                 )}
+
                 {!loading && (
                   <>
                     {(!data || (data && data.length === 0)) && <NoData />}
@@ -187,7 +241,8 @@ export default function DokumenKaryawanModalDisclosure({
                         className="scrollY"
                         borderRadius={12}
                         flex={1}
-                        pb={6}
+                        px={responsiveSpacing}
+                        pb={responsiveSpacing}
                       >
                         <Wrap
                           spacing={responsiveSpacing}
@@ -198,6 +253,8 @@ export default function DokumenKaryawanModalDisclosure({
                             size={"lg"}
                             src={data.user.foto_profil}
                             name={data.user.nama}
+                            w={"55px"}
+                            h={"55px"}
                           />
 
                           <VStack align={"stretch"}>
@@ -252,8 +309,6 @@ export default function DokumenKaryawanModalDisclosure({
                           <SimpleGrid
                             columns={[2, 3, null, 4, 5]}
                             gap={3}
-                            // bg={contentBgColor}
-                            // p={responsiveSpacing}
                             borderRadius={12}
                           >
                             {data.data_dokumen.map(
