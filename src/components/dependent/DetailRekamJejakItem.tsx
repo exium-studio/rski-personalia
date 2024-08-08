@@ -189,7 +189,7 @@ export default function DetailRekamJejakItem({ dataList, data, index }: Props) {
             >
               <HStack>
                 <Text fontWeight={600} fontSize={18}>
-                  {data.kategori.label}
+                  {data.kategori_rekam_jejak.label}
                 </Text>
                 <Text>-</Text>
                 <Text>{formatDate(data.created_at)}</Text>
@@ -198,11 +198,12 @@ export default function DetailRekamJejakItem({ dataList, data, index }: Props) {
             </AccordionButton>
 
             <AccordionPanel px={6} pb={5}>
-              {data.kategori.id === 1 && (
+              {data.kategori_rekam_jejak.id === 1 && (
                 <PerubahanDataItem data={data.content} />
               )}
 
-              {(data.kategori.id === 2 || data.kategori.id === 3) && (
+              {(data.kategori_rekam_jejak.id === 2 ||
+                data.kategori_rekam_jejak.id === 3) && (
                 <TransferKaryanItem data={data.content} />
               )}
             </AccordionPanel>

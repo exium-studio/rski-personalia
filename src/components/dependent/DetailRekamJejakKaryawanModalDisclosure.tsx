@@ -28,6 +28,7 @@ import CContainer from "../wrapper/CContainer";
 import DetailRekamJejakItem from "./DetailRekamJejakItem";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
+import Skeleton from "../independent/Skeleton";
 
 interface Props extends BoxProps {
   karyawan_id: number;
@@ -47,6 +48,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
     onClose
   );
   const initialRef = useRef(null);
+
   // 1 Perubahan Data
   // 2 Mutasi Pegawai
   // 3 Promosi Pegawai
@@ -168,8 +170,9 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
 
   const { error, loading, data, retry } = useDataState<any>({
     initialData: dummy,
-    url: "",
+    url: `/api/rski/dashboard/karyawan/detail-karyawan-rekam-jejak/${karyawan_id}`,
     dependencies: [],
+    conditions: !!(isOpen && karyawan_id),
   });
 
   // SX
@@ -214,6 +217,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                     <ComponentSpinner m={"auto"} />
                   </>
                 )}
+
                 {!loading && (
                   <>
                     {(!data || (data && data.length === 0)) && <NoData />}
@@ -226,7 +230,51 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                           borderRadius={12}
                         >
                           {loading && (
-                            <ComponentSpinner minH={"300px"} flex={1} />
+                            <CContainer flex={1}>
+                              <Wrap
+                                spacing={responsiveSpacing}
+                                mb={responsiveSpacing}
+                                align={"center"}
+                              >
+                                <Skeleton
+                                  w={"55px"}
+                                  h={"55px"}
+                                  borderRadius={"full"}
+                                />
+
+                                <VStack align={"stretch"}>
+                                  <Skeleton w={"100px"} h={"16px"} />
+                                  <Skeleton w={"100px"} h={"16px"} />
+                                </VStack>
+
+                                <VStack align={"stretch"}>
+                                  <Skeleton w={"100px"} h={"16px"} />
+                                  <Skeleton w={"100px"} h={"16px"} />
+                                </VStack>
+
+                                <VStack align={"stretch"}>
+                                  <Skeleton w={"100px"} h={"16px"} />
+                                  <Skeleton w={"100px"} h={"16px"} />
+                                </VStack>
+
+                                <VStack align={"stretch"}>
+                                  <Skeleton w={"100px"} h={"16px"} />
+                                  <Skeleton w={"100px"} h={"16px"} />
+                                </VStack>
+                              </Wrap>
+
+                              <CContainer
+                                flex={1}
+                                gap={responsiveSpacing}
+                                pb={responsiveSpacing}
+                              >
+                                <HStack>
+                                  <Skeleton h={"40px"} flex={1} />
+                                </HStack>
+
+                                <Skeleton flex={1} w={"100%"} />
+                              </CContainer>
+                            </CContainer>
                           )}
 
                           {!loading && data && (
@@ -244,15 +292,17 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                   size={"md"}
                                   w={"55px"}
                                   h={"55px"}
-                                  src={data.foto_profil}
-                                  name={data.nama}
+                                  src={data.data_user.user?.foto_profil}
+                                  name={data.data_user.user?.nama}
                                 />
 
                                 <VStack align={"stretch"}>
                                   <Text fontSize={14} opacity={0.6}>
                                     Nama Karyawan
                                   </Text>
-                                  <Text fontWeight={500}>{data.nama}</Text>
+                                  <Text fontWeight={500}>
+                                    {data.data_user.user?.nama}
+                                  </Text>
                                 </VStack>
 
                                 <VStack align={"stretch"}>
@@ -260,7 +310,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Tanggal Masuk
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {formatDate(data.tgl_masuk)}
+                                    {formatDate(data.data_user.tgl_masuk)}
                                   </Text>
                                 </VStack>
 
@@ -269,7 +319,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Tanggal Keluar
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {formatDate(data.tgl_keluar)}
+                                    {formatDate(data.data_user.tgl_keluar)}
                                   </Text>
                                 </VStack>
 
@@ -278,7 +328,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Masa Kerja
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {formatMasaKerja(data.masa_kerja)}
+                                    {formatMasaKerja(data.data_user.masa_kerja)}
                                   </Text>
                                 </VStack>
                               </Wrap>
