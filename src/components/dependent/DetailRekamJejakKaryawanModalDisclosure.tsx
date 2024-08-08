@@ -22,13 +22,12 @@ import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatMasaKerja from "../../lib/formatMasaKerja";
-import ComponentSpinner from "../independent/ComponentSpinner";
 import NoData from "../independent/NoData";
+import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import DetailRekamJejakItem from "./DetailRekamJejakItem";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
-import Skeleton from "../independent/Skeleton";
 
 interface Props extends BoxProps {
   karyawan_id: number;
@@ -213,9 +212,55 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
             {!error && (
               <>
                 {loading && (
-                  <>
-                    <ComponentSpinner m={"auto"} />
-                  </>
+                  <CContainer flex={1} overflowY={"auto"}>
+                    <Wrap
+                      spacing={responsiveSpacing}
+                      mb={responsiveSpacing}
+                      align={"center"}
+                      px={responsiveSpacing}
+                    >
+                      <Skeleton w={"55px"} h={"55px"} borderRadius={"full"} />
+
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
+
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
+
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
+
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
+                    </Wrap>
+
+                    <CContainer
+                      flex={1}
+                      px={responsiveSpacing}
+                      gap={responsiveSpacing}
+                      overflowY={"auto"}
+                      className="scrollY"
+                    >
+                      {Array.from({ length: 10 }).map((_, i) => (
+                        <HStack pl={4} gap={8} key={i}>
+                          <Skeleton
+                            w={"24px"}
+                            h={"24px"}
+                            borderRadius={"full"}
+                          />
+                          <Skeleton flex={1} w={"100%"} />
+                        </HStack>
+                      ))}
+                    </CContainer>
+                  </CContainer>
                 )}
 
                 {!loading && (
@@ -336,7 +381,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                               <HStack
                                 align={"stretch"}
                                 h={"20px"}
-                                pl={"36px"}
+                                pl={"40px"}
                                 position={"absolute"}
                                 top={"60px"}
                                 right={0}
@@ -357,7 +402,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                 flex={1}
                                 overflowY={"auto"}
                                 className="scrollY"
-                                pl={"36px"}
+                                pl={"40px"}
                                 pr={6}
                                 pt={responsiveSpacing}
                               >
