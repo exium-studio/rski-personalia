@@ -14,10 +14,9 @@ import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 export default function TukarJadwal() {
   // Filter Config
-  const { filterKaryawan, setFilterKaryawan } = useFilterKaryawan();
+  const { setFilterKaryawan } = useFilterKaryawan();
   const [filterConfig, setFilterConfig] = useState({
-    ...filterKaryawan,
-    status_pertukaran: undefined,
+    status_penukaran: undefined,
   });
   const [search, setSearch] = useState("");
 
@@ -30,10 +29,6 @@ export default function TukarJadwal() {
       clearTimeout(handler);
     };
   }, [search, setFilterKaryawan]);
-
-  useEffect(() => {
-    console.log("Current filterKaryawan state:", filterKaryawan);
-  }, [filterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -72,10 +67,10 @@ export default function TukarJadwal() {
               onConfirm={(input) => {
                 setFilterConfig((ps: any) => ({
                   ...ps,
-                  status_pertukaran: input,
+                  status_penukaran: input,
                 }));
               }}
-              inputValue={filterConfig.status_pertukaran}
+              inputValue={filterConfig.status_penukaran}
               minW={"fit-content"}
               w={"fit-content"}
             />

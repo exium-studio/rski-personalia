@@ -71,9 +71,14 @@ export default function TabelKaryawan({ filterConfig }: Props) {
     useDataState<any>({
       initialData: undefined,
       url: `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal?page=${pageConfig}`,
-      payload: { ...formattedFilterKaryawan },
+      payload: { ...formattedFilterKaryawan, ...filterConfig },
       limit: limitConfig,
-      dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
+      dependencies: [
+        limitConfig,
+        pageConfig,
+        formattedFilterKaryawan,
+        filterConfig,
+      ],
     });
 
   const formattedHeader = [
@@ -86,7 +91,7 @@ export default function TabelKaryawan({ filterConfig }: Props) {
       isSortable: true,
     },
     {
-      th: "Status Pertukaran",
+      th: "Status Penukaran",
       isSortable: true,
       cProps: {
         justify: "center",
