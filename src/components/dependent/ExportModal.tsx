@@ -50,7 +50,7 @@ export default function ExportModal({
       })
       .then((r) => {
         if (r.status === 200) {
-          download(r.data, "Data Pegawai", extension);
+          download(r.data, downloadFileName, extension);
         } else {
           toast({
             status: "error",

@@ -77,7 +77,7 @@ export default function TukarJadwal() {
             />
             <FilterKaryawan />
             <ExportModal
-              url="}/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/export"
+              url="/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/export"
               title="Export Penukaran Jadwal"
               downloadFileName="Data Tukar Jadwal"
             />
