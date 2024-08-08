@@ -172,9 +172,9 @@ export default function TabelKaryawan() {
         isNumeric: true,
       },
       {
-        value: item.status_karyawan.label,
+        value: item.status_karyawan?.label,
         td: (
-          <StatusKaryawanBadge w={"120px"} data={item.status_karyawan.label} />
+          <StatusKaryawanBadge w={"120px"} data={item.status_karyawan?.label} />
         ),
         cProps: {
           justify: "center",
@@ -203,8 +203,8 @@ export default function TabelKaryawan() {
         td: item.jabatan.nama_jabatan,
       },
       {
-        value: item.pendidikan_terakhir.label,
-        td: item.pendidikan_terakhir.label,
+        value: item.pendidikan_terakhir?.label,
+        td: item.pendidikan_terakhir?.label,
       },
       {
         value: item.email,

@@ -238,7 +238,7 @@ export const globalTheme = extendTheme({
         },
         overlay: {
           bg: "#00000011",
-          backdropFilter: "blur(5px)",
+          backdropFilter: "blur(8px)",
         },
         header: {
           p: 0,

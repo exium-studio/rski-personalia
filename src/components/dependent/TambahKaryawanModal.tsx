@@ -55,6 +55,7 @@ import CContainer from "../wrapper/CContainer";
 import MultiselectPotongan from "./_Select/MultiselectPotongan";
 import DisclosureHeader from "./DisclosureHeader";
 import NumberInput from "./input/NumberInput";
+import PleaseWaitModal from "./PleaseWaitModal";
 
 const validationSchemaStep1 = yup.object({
   nama_karyawan: yup.string().required("Harus diisi"),
@@ -134,12 +135,12 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         no_rm: values.no_rm,
         no_manulife: values.no_manulife,
         tgl_masuk: values.tgl_masuk,
-        status_karyawan_id: values.status_karyawan.value,
-        unit_kerja_id: values.unit_kerja.value,
-        jabatan_id: values.jabatan.value,
-        kompetensi_id: values.kompetensi.value,
-        role_id: values.role.value,
-        kelompok_gaji_id: values.kelompok_gaji.value,
+        status_karyawan_id: values.status_karyawan?.value,
+        unit_kerja_id: values.unit_kerja?.value,
+        jabatan_id: values.jabatan?.value,
+        kompetensi_id: values.kompetensi?.value,
+        role_id: values.role?.value,
+        kelompok_gaji_id: values.kelompok_gaji?.value,
         no_rekening: values.no_rekening,
         tunjangan_jabatan: values.tunjangan_jabatan,
         tunjangan_fungsional: values.tunjangan_fungsional,
@@ -147,8 +148,8 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         tunjangan_lainnya: values.tunjangan_lainnya,
         uang_lembur: values.uang_lembur,
         uang_makan: values.uang_makan,
-        ptkp_id: values.ptkp.value,
-        premi_id: values.potongan.map((pot: any) => pot.value),
+        ptkp_id: values.ptkp?.value,
+        premi_id: values.potongan.map((pot: any) => pot?.value),
       };
       setLoading(true);
       req
@@ -448,7 +449,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               formik.setFieldValue("kelompok_gaji", input);
             }}
             inputValue={formik.values.kelompok_gaji}
-            withSearch
+            // withSearch
           />
           <FormErrorMessage>
             {formik.errors.kelompok_gaji as string}
@@ -694,7 +695,6 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           className="btn-ap clicky"
           h={"50px"}
           onClick={handleNext}
-          isLoading={loading}
         >
           Tambah Karyawan
         </Button>
@@ -800,6 +800,8 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      <PleaseWaitModal isOpen={loading} />
     </>
   );
 }
