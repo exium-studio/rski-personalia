@@ -24,6 +24,7 @@ import ComponentSpinner from "../../independent/ComponentSpinner";
 import NotFound from "../../independent/NotFound";
 import DisclosureHeader from "../DisclosureHeader";
 import SearchComponent from "./SearchComponent";
+import { responsiveSpacing } from "../../../constant/sizes";
 
 interface Props {
   id: string;
@@ -183,7 +184,7 @@ export default function SingleSelectModal({
             <DisclosureHeader title={placeholder || "Pilih Salah Satu"} />
 
             {(withSearch || (options && options?.length > 6)) && (
-              <Box px={6} pb={2}>
+              <Box px={6} pb={responsiveSpacing}>
                 <SearchComponent
                   name="search select options"
                   inputValue={search}
