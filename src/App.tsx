@@ -12,7 +12,7 @@ import MissingPage from "./pages/Error/MissingPage";
 import Cuti from "./pages/Jadwal/Cuti";
 import Jadwal from "./pages/Jadwal/Jadwal";
 import Lembur from "./pages/Jadwal/Lembur";
-import PenukaranJadwal from "./pages/Jadwal/PenukaranJadwal";
+import TukarJadwal from "./pages/Jadwal/TukarJadwal";
 import Karyawan from "./pages/Karyawan/Karyawan";
 import PerubahanDataKaryawan from "./pages/Karyawan/PerubahanDataKaryawan";
 import TransferKaryawan from "./pages/Karyawan/TransferKaryawan";
@@ -140,7 +140,7 @@ export const App = () => (
               topNavsData={navs[3].subNavs}
               topNavActive={1}
             >
-              <PenukaranJadwal />
+              <TukarJadwal />
             </NavContainer>
           }
         />

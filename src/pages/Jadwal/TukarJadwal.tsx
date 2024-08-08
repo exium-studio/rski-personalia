@@ -12,7 +12,7 @@ import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 
-export default function PenukaranJadwal() {
+export default function TukarJadwal() {
   // Filter Config
   const { filterKaryawan, setFilterKaryawan } = useFilterKaryawan();
   const [filterConfig, setFilterConfig] = useState({
