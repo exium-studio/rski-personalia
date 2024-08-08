@@ -346,7 +346,6 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               formik.setFieldValue("unit_kerja", input);
             }}
             inputValue={formik.values.unit_kerja}
-            withSearch
             isError={!!formik.errors.unit_kerja}
           />
           <FormErrorMessage>
@@ -369,7 +368,6 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               formik.setFieldValue("jabatan", input);
             }}
             inputValue={formik.values.jabatan}
-            withSearch
             isError={!!formik.errors.jabatan}
           />
           <FormErrorMessage>{formik.errors.jabatan as string}</FormErrorMessage>
@@ -387,7 +385,6 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               formik.setFieldValue("kompetensi", input);
             }}
             inputValue={formik.values.kompetensi}
-            withSearch
             isError={!!formik.errors.kompetensi}
           />
           <FormHelperText opacity={0.4}>
