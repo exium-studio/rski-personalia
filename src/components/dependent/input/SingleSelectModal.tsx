@@ -228,7 +228,7 @@ export default function SingleSelectModal({
                               whiteSpace={"nowrap"}
                               textOverflow={"ellipsis"}
                             >
-                              {option.label}
+                              {option?.label}
                             </Text>
 
                             <Text

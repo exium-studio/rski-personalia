@@ -36,6 +36,8 @@ export default function SelectJadwalKaryawan({
     undefined
   );
 
+  console.log(options);
+
   useEffect(() => {
     if (isOpen && !options) {
       req
@@ -86,7 +88,7 @@ export default function SelectJadwalKaryawan({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Jadwal Karyawan"}
+      placeholder={placeholder || "Pilih Jadwal Pegawai Pengajuan"}
       nonNullable={nonNullable}
       {...props}
     />

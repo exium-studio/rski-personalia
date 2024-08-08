@@ -58,7 +58,7 @@ export default function SelectMultiKaryawan({
 
   return (
     <SingleSelectModal
-      id="select-pegawai-modal"
+      id="select-karyawan-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}

@@ -23,7 +23,7 @@ import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
-import SelectJadwalKaryawan from "../dependent/_Select/SelectJadwalKaryawan";
+import SelectJadwalKaryawan from "../dependent/_Select/SelectJadwalKaryawanPengajuan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import RequiredForm from "../form/RequiredForm";
 import SelectKaryawanDitukar from "../dependent/_Select/SelectKaryawanDitukar";
