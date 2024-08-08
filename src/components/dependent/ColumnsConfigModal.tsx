@@ -89,7 +89,7 @@ export default function ColumnsConfigModal({
 
           <ModalBody className="scrollY" gap={responsiveSpacing}>
             <CContainer>
-              <Text fontWeight={500} mb={4} opacity={0.6}>
+              <Text fontWeight={500} mb={2} opacity={0.6}>
                 Preset Kolom
               </Text>
               <SimpleGrid columns={[1, 2, null, 3, 4]} gap={2} flex={1}>
@@ -117,7 +117,7 @@ export default function ColumnsConfigModal({
             </CContainer>
 
             <CContainer>
-              <Text fontWeight={500} mb={4} opacity={0.6}>
+              <Text fontWeight={500} mb={2} opacity={0.6}>
                 Kolom
               </Text>
               <SimpleGrid columns={[1, 2, null, 3, 4]} gap={2}>
@@ -182,7 +182,7 @@ export default function ColumnsConfigModal({
             </CContainer>
 
             <CContainer mt={"auto"} mb={2}>
-              <Text fontWeight={500} mb={4} opacity={0.6}>
+              <Text fontWeight={500} mb={2} opacity={0.6}>
                 Urutan Kolom (dari kiri ke kanan)
               </Text>
               <Wrap>
