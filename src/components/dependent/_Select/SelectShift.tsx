@@ -47,7 +47,7 @@ export default function SelectJadwal({
                 item.jam_to
               )}`,
             }));
-            setOptions(options);
+            setOptions([{ value: 0, label: "Libur" }, ...options]);
           }
         })
         .catch((e) => {

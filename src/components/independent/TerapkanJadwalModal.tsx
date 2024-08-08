@@ -47,14 +47,14 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
     initialValues: {
       list_karyawan: undefined as any,
       tgl_mulai: undefined as any,
-      tgl_selesai: undefined as any,
       shift: undefined as any,
+      // tgl_selesai: undefined as any,
     },
     validationSchema: yup.object().shape({
       list_karyawan: yup.array().min(1, "Harus diisi").required("Harus diisi"),
       tgl_mulai: yup.string().required("Harus diisi"),
-      tgl_selesai: yup.string().required("Harus diisi"),
       shift: yup.object().required("Harus diisi"),
+      // tgl_selesai: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
@@ -62,8 +62,8 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
           (user: Interface__SelectOption) => user.value
         ),
         tgl_mulai: values.tgl_mulai,
-        tgl_selesai: values.tgl_selesai,
         shift_id: values.shift.value,
+        // tgl_selesai: values.tgl_selesai,
       };
       setLoading(true);
       req
@@ -174,7 +174,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                   </FormErrorMessage>
                 </FormControl>
 
-                <FormControl
+                {/* <FormControl
                   mb={4}
                   isInvalid={formik.errors.tgl_selesai ? true : false}
                 >
@@ -198,7 +198,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                   <FormErrorMessage>
                     {formik.errors.tgl_selesai as string}
                   </FormErrorMessage>
-                </FormControl>
+                </FormControl> */}
               </SimpleGrid>
 
               <FormControl isInvalid={!!formik.errors.shift}>
