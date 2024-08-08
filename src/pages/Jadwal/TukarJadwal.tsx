@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import SelectStatusPenukaranJadwal from "../../components/dependent/_Select/SelectStatusPenukaranJadwal";
+import MultiSelectStatusPenukaranJadwal from "../../components/dependent/_Select/MultiSelectStatusPenukaranJadwal";
 import ExportModal from "../../components/dependent/ExportModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelTukarJadwal from "../../components/dependent/TabelTukarJadwal";
@@ -62,7 +62,7 @@ export default function TukarJadwal() {
               }}
               inputValue={search}
             />
-            <SelectStatusPenukaranJadwal
+            <MultiSelectStatusPenukaranJadwal
               name="status_penukaran"
               onConfirm={(input) => {
                 setFilterConfig((ps: any) => ({
@@ -71,6 +71,7 @@ export default function TukarJadwal() {
                 }));
               }}
               inputValue={filterConfig.status_penukaran}
+              optionsDisplay="chip"
               minW={"fit-content"}
               w={"fit-content"}
             />

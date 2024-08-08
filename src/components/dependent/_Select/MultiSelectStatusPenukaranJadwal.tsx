@@ -1,11 +1,11 @@
 import { ButtonProps, useDisclosure } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
-import SingleSelectModal from "../input/SingleSelectModal";
+import MultipleSelectModal from "../input/MultipleSelectModal";
 
 interface Props extends ButtonProps {
   name: string;
-  onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
-  inputValue: Interface__SelectOption | undefined;
+  onConfirm: (inputValue: Interface__SelectOption[] | undefined) => void;
+  inputValue: Interface__SelectOption[] | undefined;
   withSearch?: boolean;
   optionsDisplay?: "list" | "chip";
   isError?: boolean;
@@ -13,7 +13,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function SelectStatusPenukaranJadwal({
+export default function MultiSelectStatusPenukaranJadwal({
   name,
   onConfirm,
   inputValue,
@@ -28,17 +28,21 @@ export default function SelectStatusPenukaranJadwal({
 
   const options = [
     {
-      value: true,
+      value: 1,
+      label: "Menunggu",
+    },
+    {
+      value: 2,
       label: "Disetujui",
     },
     {
-      value: false,
+      value: 3,
       label: "Ditolak",
     },
   ];
 
   return (
-    <SingleSelectModal
+    <MultipleSelectModal
       id="select-status-karyawan-modal"
       name={name}
       isOpen={isOpen}

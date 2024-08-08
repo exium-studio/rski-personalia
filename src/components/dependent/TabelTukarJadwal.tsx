@@ -71,7 +71,12 @@ export default function TabelKaryawan({ filterConfig }: Props) {
     useDataState<any>({
       initialData: undefined,
       url: `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal?page=${pageConfig}`,
-      payload: { ...formattedFilterKaryawan, ...filterConfig },
+      payload: {
+        ...formattedFilterKaryawan,
+        status_penukaran: [
+          ...filterConfig?.status_penukaran?.map((sp: any) => sp.value),
+        ],
+      },
       limit: limitConfig,
       dependencies: [
         limitConfig,
