@@ -60,9 +60,11 @@ export default function ExportKaryawanModal({ ...props }: Props) {
         toast({
           status: "error",
           title:
-            e?.response?.data?.message || "Maaf terjadi kesalahan pada sistem",
-          position: "bottom-right",
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Maaf terjadi kesalahan pada sistem",
           isClosable: true,
+          position: "bottom-right",
         });
       })
       .finally(() => {

@@ -100,6 +100,7 @@ export default function Jadwal() {
             <ImportModal
               url="/api/rski/dashboard/jadwal-karyawan/jadwal-import"
               title="Import Jadwal"
+              reqBodyKey="jadwal_karyawan_file"
             />
             <TerapkanJadwalModal minW={"fit-content"} />
           </HStack>
