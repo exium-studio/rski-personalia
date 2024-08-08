@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   BoxProps,
+  HStack,
   Modal,
   ModalBody,
   ModalContent,
@@ -17,8 +18,8 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
-import ComponentSpinner from "../independent/ComponentSpinner";
 import NoData from "../independent/NoData";
+import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
@@ -42,10 +43,9 @@ export default function DetailKeluargaKaryawanModalDisclosure({
     onClose
   );
   const initialRef = useRef(null);
-
   const { error, loading, data, retry } = useDataState<any>({
     initialData: undefined,
-    url: `/api/rski/dashboard/karyawan/keluarga-karyawan/${karyawan_id}`,
+    url: `/api/rski/dashboard/karyawan/detail-karyawan-keluarga/${karyawan_id}`,
     dependencies: [],
     conditions: !!(isOpen && karyawan_id),
   });
@@ -85,12 +85,43 @@ export default function DetailKeluargaKaryawanModalDisclosure({
                 <Retry loading={loading} retry={retry} />
               </Box>
             )}
+
             {!error && (
               <>
                 {loading && (
-                  <>
-                    <ComponentSpinner m={"auto"} />
-                  </>
+                  <CContainer flex={1}>
+                    <Wrap
+                      spacing={responsiveSpacing}
+                      mb={responsiveSpacing}
+                      align={"center"}
+                    >
+                      <Skeleton w={"55px"} h={"55px"} borderRadius={"full"} />
+
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
+
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
+                    </Wrap>
+
+                    <CContainer
+                      flex={1}
+                      gap={responsiveSpacing}
+                      pb={responsiveSpacing}
+                    >
+                      <HStack>
+                        <Skeleton h={"40px"} flex={1} />
+                        <Skeleton h={"40px"} flex={0} minW={"140px"} />
+                        <Skeleton h={"40px"} flex={0} minW={"140px"} />
+                      </HStack>
+
+                      <Skeleton flex={1} w={"100%"} />
+                    </CContainer>
+                  </CContainer>
                 )}
                 {!loading && (
                   <>

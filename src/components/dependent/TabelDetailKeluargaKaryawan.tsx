@@ -77,7 +77,6 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
       isSortable: true,
     },
   ];
-
   const formattedData = fd.map((item) => ({
     id: item.id,
     columnsFormat: [
