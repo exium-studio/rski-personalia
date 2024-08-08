@@ -3,7 +3,9 @@ import { useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
+import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import BooleanBadge from "./BooleanBadge";
@@ -24,11 +26,11 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
   // Karyawan Detail Disclosure
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { error, loading, data, retry } = useDataState<any[]>({
+  const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
-    url: "/api/rski/dashboard/keuangan/data-penggajian",
+    url: `/api/rski/dashboard/keuangan/get-penggajian?page=${pageConfig}`,
     payload: {
-      filterConfig: filterConfig,
+      ...filterConfig,
     },
     limit: limitConfig,
     dependencies: [limitConfig, pageConfig, filterConfig],
@@ -127,10 +129,21 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"300px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
+
+          {notFound && !isObjectEmpty(filterConfig) && (
+            <NotFound minH={"300px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"300px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
+
       {!error && (
         <>
           {loading && (
