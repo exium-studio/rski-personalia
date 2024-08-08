@@ -107,6 +107,7 @@ export default function DetailPresensiKaryawanModal({
                   <ComponentSpinner m={"auto"} />
                 </>
               )}
+
               {!loading && (
                 <>
                   {(!data || (data && data.length === 0)) && <NoData />}
@@ -229,7 +230,7 @@ export default function DetailPresensiKaryawanModal({
                               >
                                 <Box position={"relative"} flex={"1 1 200px"}>
                                   <Img
-                                    src={data.foto_masuk.path}
+                                    initialSrc={data.foto_masuk.path}
                                     fallbackSrc="/images/defaultProfilePhoto.webp"
                                     borderRadius={12}
                                     aspectRatio={1}
@@ -242,7 +243,7 @@ export default function DetailPresensiKaryawanModal({
 
                                 <Box position={"relative"} flex={"1 1 200px"}>
                                   <Img
-                                    src={data.foto_keluar.path}
+                                    initialSrc={data.foto_keluar.path}
                                     fallbackSrc="/images/defaultProfilePhoto.webp"
                                     borderRadius={12}
                                     aspectRatio={1}
