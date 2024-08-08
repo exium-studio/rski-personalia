@@ -52,6 +52,7 @@ import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import DetailJadwalKaryawanModalDisclosure from "./DetailJadwalKaryawanModalDisclosure";
+import DetailCutiKaryawanModalDisclosure from "./DetailCutiKaryawanModalDisclosure";
 interface Props {
   id?: string;
   user_id?: number;
@@ -214,6 +215,7 @@ export default function DetailKaryawanModal({
                   </SimpleGrid>
                 </CContainer>
               )}
+
               {!loading && (
                 <>
                   {(!data || (data && data.length === 0)) && <NoData />}
@@ -411,26 +413,31 @@ export default function DetailKaryawanModal({
                             </DokumenKaryawanModalDisclosure>
 
                             {/* Cuti */}
-                            <VStack
-                              cursor={"pointer"}
-                              borderRadius={12}
-                              justify={"center"}
-                              p={4}
-                              className="btn-solid clicky"
+                            <DetailCutiKaryawanModalDisclosure
+                              karyawan_id={data.id}
+                              flexShrink={0}
                             >
-                              <Icon
-                                opacity={0.4}
-                                as={RiCalendarCloseFill}
-                                fontSize={32}
-                              />
-                              <Text
-                                fontWeight={500}
-                                textAlign={"center"}
-                                lineHeight={1.4}
+                              <VStack
+                                cursor={"pointer"}
+                                borderRadius={12}
+                                justify={"center"}
+                                p={4}
+                                className="btn-solid clicky"
                               >
-                                Cuti
-                              </Text>
-                            </VStack>
+                                <Icon
+                                  opacity={0.4}
+                                  as={RiCalendarCloseFill}
+                                  fontSize={32}
+                                />
+                                <Text
+                                  fontWeight={500}
+                                  textAlign={"center"}
+                                  lineHeight={1.4}
+                                >
+                                  Cuti
+                                </Text>
+                              </VStack>
+                            </DetailCutiKaryawanModalDisclosure>
 
                             {/* Tukar Jadwal */}
                             <VStack
