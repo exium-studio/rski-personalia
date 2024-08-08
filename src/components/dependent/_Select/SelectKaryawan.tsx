@@ -15,7 +15,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function SelectMultiKaryawan({
+export default function SelectKaryawan({
   name,
   onConfirm,
   inputValue,
