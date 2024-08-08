@@ -310,13 +310,13 @@ export default function DetailPresensiKaryawanModal({
                                         unhighlightClassName="uw"
                                         searchWords={searchQuery}
                                         autoEscape={true}
-                                        textToHighlight={"Jadwal Tanggal Masuk"}
+                                        textToHighlight={"Jadwal Tanggal Mulai"}
                                       />
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatDate(
-                                        data.jadwal.tgl_masuk,
+                                        data.jadwal.tgl_mulai,
                                         "short"
                                       )}
                                     </Text>
@@ -330,14 +330,14 @@ export default function DetailPresensiKaryawanModal({
                                         searchWords={searchQuery}
                                         autoEscape={true}
                                         textToHighlight={
-                                          "Jadwal Tanggal Keluar"
+                                          "Jadwal Tanggal Selesai"
                                         }
                                       />
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatDate(
-                                        data.jadwal.tgl_keluar,
+                                        data.jadwal.tgl_selesai,
                                         "short"
                                       )}
                                     </Text>

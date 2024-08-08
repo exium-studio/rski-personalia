@@ -390,7 +390,7 @@ export interface Interface__FormattedTableData {
     column?: string;
     original_value?: any;
     value: any;
-    td: string | number | boolean | null | React.ReactNode;
+    td: any;
     isNumeric?: boolean; // default false
     isDate?: boolean; // default false
     isTime?: boolean; // default false
@@ -428,6 +428,24 @@ export interface Interface__StatusKaryawan {
 }
 
 export type Interface__ValidStatusKerja = "Kerja" | "Cuti" | "Izin" | "Libur";
+
+export interface Interface__Shift {
+  id: number;
+  nama: string;
+  jam_from: string | Date;
+  jam_to: string | Date;
+  created_at: string | Date;
+  updated_at: string | Date;
+  deleted_at: string | Date;
+}
+
+export interface Interface__JadwalItem {
+  id: number;
+  tgl_mulai: string | Date;
+  tgl_selesai: string | Date;
+  shift: Interface__Shift;
+  updated_at: string | Date;
+}
 
 export interface Interface__Jadwal {
   id: number;

@@ -51,6 +51,7 @@ import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
+import DetailJadwalKaryawanModalDisclosure from "./DetailJadwalKaryawanModalDisclosure";
 interface Props {
   id?: string;
   user_id?: number;
@@ -300,26 +301,31 @@ export default function DetailKaryawanModal({
                             </VStack>
 
                             {/* Jadwal */}
-                            <VStack
-                              cursor={"pointer"}
-                              borderRadius={12}
-                              justify={"center"}
-                              p={4}
-                              className="btn-solid clicky"
+                            <DetailJadwalKaryawanModalDisclosure
+                              karyawan_id={data.id}
+                              flexShrink={0}
                             >
-                              <Icon
-                                opacity={0.4}
-                                as={RiCalendarFill}
-                                fontSize={32}
-                              />
-                              <Text
-                                fontWeight={500}
-                                textAlign={"center"}
-                                lineHeight={1.4}
+                              <VStack
+                                cursor={"pointer"}
+                                borderRadius={12}
+                                justify={"center"}
+                                p={4}
+                                className="btn-solid clicky"
                               >
-                                Jadwal
-                              </Text>
-                            </VStack>
+                                <Icon
+                                  opacity={0.4}
+                                  as={RiCalendarFill}
+                                  fontSize={32}
+                                />
+                                <Text
+                                  fontWeight={500}
+                                  textAlign={"center"}
+                                  lineHeight={1.4}
+                                >
+                                  Jadwal
+                                </Text>
+                              </VStack>
+                            </DetailJadwalKaryawanModalDisclosure>
 
                             {/* Rekam Jejak */}
                             <DetailRekamJejakKaryawanModalDisclosure

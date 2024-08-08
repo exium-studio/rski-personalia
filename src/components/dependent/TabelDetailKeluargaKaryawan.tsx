@@ -1,14 +1,14 @@
+import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { Interface__AnggotaKeluarga } from "../../constant/interfaces";
-import CustomTableContainer from "../wrapper/CustomTableContainer";
-import BooleanBadge from "./BooleanBadge";
-import CustomTable from "./CustomTable";
-import { HStack } from "@chakra-ui/react";
 import { responsiveSpacing } from "../../constant/sizes";
-import SearchComponent from "./input/SearchComponent";
 import NotFound from "../independent/NotFound";
+import CustomTableContainer from "../wrapper/CustomTableContainer";
 import MultiSelectHubunganKeluarga from "./_Select/MultiSelectHubunganKeluarga";
 import MultiSelectStatusHidup from "./_Select/MultiSelectStatusHidup";
+import BooleanBadge from "./BooleanBadge";
+import CustomTable from "./CustomTable";
+import SearchComponent from "./input/SearchComponent";
 
 interface Props {
   data: Interface__AnggotaKeluarga[];

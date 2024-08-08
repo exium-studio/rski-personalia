@@ -29,7 +29,11 @@ export default function SearchComponent({
   ...props
 }: Props) {
   return (
-    <Tooltip label={placeholder || "Pencarian"} openDelay={500}>
+    <Tooltip
+      label={placeholder || "Pencarian"}
+      openDelay={500}
+      placement="bottom-start"
+    >
       <InputGroup {...props}>
         <InputLeftElement>
           <Icon as={RiSearchLine} opacity={0.3} fontSize={iconSize} />
