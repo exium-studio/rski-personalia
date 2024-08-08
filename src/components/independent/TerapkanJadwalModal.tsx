@@ -150,7 +150,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <SimpleGrid columns={[1, 2]} gap={4}>
+              <SimpleGrid columns={[1]} gap={4}>
                 <FormControl mb={4} isInvalid={!!formik.errors.tgl_mulai}>
                   <FormLabel>
                     Tanggal Mulai
