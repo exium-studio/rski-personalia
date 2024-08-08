@@ -1,7 +1,7 @@
-import { ButtonProps, useDisclosure } from "@chakra-ui/react";
+import { ButtonProps, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { dummyShift } from "../../../const/dummy";
 import { Interface__SelectOption } from "../../../constant/interfaces";
+import req from "../../../constant/req";
 import formatTime from "../../../lib/formatTime";
 import SingleSelectModal from "../input/SingleSelectModal";
 
@@ -31,23 +31,45 @@ export default function SelectJadwalKaryawan({
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const toast = useToast();
   const [options, setOptions] = useState<Interface__SelectOption[] | undefined>(
     undefined
   );
 
   useEffect(() => {
-    if (karyawan_id) {
-      // TODO get all jadwal by karyawan_id
+    if (isOpen && !options) {
+      req
+        .get(
+          `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal/jadwal-pengajuan/${karyawan_id}`
+        )
+        .then((r) => {
+          if (r.status === 200) {
+            const options = r.data.data.list_jadwal.map((item: any) => {
+              if (item) {
+                return {
+                  value: item?.id,
+                  label: item?.nama_shift,
+                  label2: `${formatTime(item?.jam_from)} - ${formatTime(
+                    item?.jam_to
+                  )}`,
+                };
+              }
+              return null;
+            });
+            setOptions(options);
+          }
+        })
+        .catch((e) => {
+          console.log("Error:", e);
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            position: "bottom-right",
+            isClosable: true,
+          });
+        });
     }
-    const options = dummyShift.map((item) => ({
-      value: item.id,
-      label: item.nama,
-      label2: `${formatTime(item.jam_from)} - ${formatTime(item.jam_to)}`,
-    }));
-    setOptions(options);
-  }, [karyawan_id]);
-
-  console.log(inputValue, props.isDisabled);
+  }, [isOpen, options, toast]);
 
   return (
     <SingleSelectModal
