@@ -6,7 +6,7 @@ import formatTime from "../../../lib/formatTime";
 import SingleSelectModal from "../input/SingleSelectModal";
 
 interface Props extends ButtonProps {
-  karyawan_id?: number;
+  user_id?: number;
   name: string;
   onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
   inputValue: Interface__SelectOption | undefined;
@@ -18,7 +18,7 @@ interface Props extends ButtonProps {
 }
 
 export default function SelectJadwalKaryawan({
-  karyawan_id,
+  user_id,
   name,
   onConfirm,
   inputValue,
@@ -36,28 +36,27 @@ export default function SelectJadwalKaryawan({
     undefined
   );
 
-  console.log(options);
+  console.log(user_id);
 
   useEffect(() => {
-    if (isOpen && !options) {
+    if (isOpen) {
+      setOptions(undefined);
       req
         .get(
-          `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal/jadwal-pengajuan/${karyawan_id}`
+          `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal/jadwal-pengajuan/${user_id}`
         )
         .then((r) => {
           if (r.status === 200) {
-            const options = r.data.data.list_jadwal.map((item: any) => {
-              if (item) {
-                return {
-                  value: item?.id,
-                  label: item?.nama_shift,
-                  label2: `${formatTime(item?.jam_from)} - ${formatTime(
-                    item?.jam_to
-                  )}`,
-                };
-              }
-              return null;
-            });
+            let optionsRaw = r.data.data.list_jadwal;
+            optionsRaw = optionsRaw.filter((item: any) => item !== null);
+            const options = optionsRaw.map((item: any) => ({
+              value: item?.id,
+              label: item?.nama_shift,
+              label2: `${formatTime(item?.jam_from)} - ${formatTime(
+                item?.jam_to
+              )}`,
+            }));
+
             setOptions(options);
           }
         })
@@ -71,7 +70,7 @@ export default function SelectJadwalKaryawan({
           });
         });
     }
-  }, [isOpen, options, toast]);
+  }, [isOpen, toast, user_id]);
 
   return (
     <SingleSelectModal

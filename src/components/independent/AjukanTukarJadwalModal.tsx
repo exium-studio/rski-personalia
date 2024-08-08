@@ -23,10 +23,11 @@ import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
-import SelectJadwalKaryawan from "../dependent/_Select/SelectJadwalKaryawanPengajuan";
+import SelectJadwalKaryawanPengajuan from "../dependent/_Select/SelectJadwalKaryawanPengajuan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import RequiredForm from "../form/RequiredForm";
 import SelectKaryawanDitukar from "../dependent/_Select/SelectKaryawanDitukar";
+import SelectJadwalKaryawanDitukar from "../dependent/_Select/SelectJadwalKaryawanDitukar";
 
 interface Props extends ButtonProps {}
 
@@ -115,8 +116,8 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
                   Jadwal Pengajuan
                   <RequiredForm />
                 </FormLabel>
-                <SelectJadwalKaryawan
-                  karyawan_id={formik.values.user_pengajuan?.value}
+                <SelectJadwalKaryawanPengajuan
+                  user_id={formik.values.user_pengajuan?.value}
                   isDisabled={!formik.values.user_pengajuan}
                   name="jadwal_pengajuan"
                   onConfirm={(input) => {
@@ -166,7 +167,7 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
                   Jadwal Ditukar
                   <RequiredForm />
                 </FormLabel>
-                <SelectJadwalKaryawan
+                <SelectJadwalKaryawanDitukar
                   karyawan_id={formik.values.user_ditukar?.id}
                   isDisabled={!formik.values.user_ditukar}
                   name="jadwal_ditukar"

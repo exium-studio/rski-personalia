@@ -17,7 +17,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function SelectJadwalKaryawanPengajuan({
+export default function SelectJadwalKaryawanDitukar({
   karyawan_id,
   name,
   onConfirm,

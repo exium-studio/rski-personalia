@@ -240,7 +240,7 @@ export default function SingleSelectModal({
                               textOverflow={"ellipsis"}
                               fontWeight={400}
                             >
-                              {option.label2}
+                              {option?.label2}
                             </Text>
                           </Button>
                         ))}

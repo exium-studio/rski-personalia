@@ -63,8 +63,10 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
         ),
         tgl_mulai: values.tgl_mulai,
         shift_id: values.shift.value,
-        // tgl_selesai: values.tgl_selesai,
+        tgl_selesai: values.tgl_mulai,
       };
+
+      console.log(payload);
       setLoading(true);
       req
         .post(`/api/rski/dashboard/jadwal-karyawan/data-jadwal`, payload)
