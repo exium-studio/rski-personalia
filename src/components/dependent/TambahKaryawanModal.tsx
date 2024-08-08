@@ -100,6 +100,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
+  const isSubmitting = useRef(false);
 
   const formik = useFormik({
     validateOnChange: false,
@@ -129,6 +130,9 @@ export default function TambahKaryawanModal({ ...props }: Props) {
     validationSchema: validationSchema[activeStep],
 
     onSubmit: (values, { resetForm }) => {
+      if (isSubmitting.current) return; // Cegah submit berulang
+      isSubmitting.current = true;
+
       const payload = {
         nama: values.nama_karyawan,
         email: values.email,
@@ -149,7 +153,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         uang_lembur: values.uang_lembur,
         uang_makan: values.uang_makan,
         ptkp_id: values.ptkp?.value,
-        premi_id: values.potongan.map((pot: any) => pot?.value),
+        premi_id: values.potongan?.map((pot: any) => pot?.value),
       };
       setLoading(true);
       req
@@ -163,7 +167,8 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               position: "bottom-right",
             });
             setRt(!rt);
-            resetForm();
+            // resetForm();
+            isSubmitting.current = false;
             if (activeStep === 1) {
               handleBack();
             }
@@ -208,7 +213,11 @@ export default function TambahKaryawanModal({ ...props }: Props) {
 
   const Step1 = () => {
     return (
-      <SimpleGrid columns={[1, 2, 3]} spacingX={4}>
+      <SimpleGrid
+        display={activeStep === 0 ? "grid" : "none"}
+        columns={[1, 2, 3]}
+        spacingX={4}
+      >
         <FormControl
           mb={4}
           flex={"1 1 300px"}
@@ -417,7 +426,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
 
   const Step1Footer = () => {
     return (
-      <Box mt={"auto"} pt={4}>
+      <Box display={activeStep === 0 ? "block" : "none"} mt={"auto"} pt={4}>
         <Button
           w={"100%"}
           colorScheme="ap"
@@ -433,7 +442,11 @@ export default function TambahKaryawanModal({ ...props }: Props) {
 
   const Step2 = () => {
     return (
-      <SimpleGrid columns={[1, 2, 3]} spacingX={4}>
+      <SimpleGrid
+        display={activeStep === 1 ? "grid" : "none"}
+        columns={[1, 2, 3]}
+        spacingX={4}
+      >
         <FormControl
           mb={4}
           flex={"1 1 300px"}
@@ -678,7 +691,12 @@ export default function TambahKaryawanModal({ ...props }: Props) {
 
   const Step2Footer = () => {
     return (
-      <ButtonGroup mt={"auto"} pt={4} w={"100%"}>
+      <ButtonGroup
+        display={activeStep === 1 ? "flex" : "none"}
+        mt={"auto"}
+        pt={4}
+        w={"100%"}
+      >
         <Button
           w={"100%"}
           className="btn-solid clicky"
@@ -792,10 +810,12 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               </Text>
 
               <form id="tambahKaryawanForm" onSubmit={formik.handleSubmit}>
-                {stepComponents[activeStep]()}
+                {stepComponents[0]()}
+                {stepComponents[1]()}
               </form>
 
-              {stepFooterComponents[activeStep]()}
+              {stepFooterComponents[0]()}
+              {stepFooterComponents[1]()}
             </CContainer>
           </ModalBody>
         </ModalContent>
