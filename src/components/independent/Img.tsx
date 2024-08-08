@@ -13,7 +13,6 @@ export default function Img({ initialSrc, fallbackSrc, ...props }: Props) {
     <Image
       src={src}
       onError={() => {
-        console.log("error");
         setSrc(fallbackSrc);
       }}
       {...props}
