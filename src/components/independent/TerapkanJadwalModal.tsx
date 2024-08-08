@@ -31,13 +31,13 @@ import SelectShift from "../dependent/_Select/SelectShift";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import RequiredForm from "../form/RequiredForm";
+import formatDate from "../../lib/formatDate";
 
 interface Props extends ButtonProps {}
 
 export default function TerapkanJadwalModal({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("terapkan-jadwal-batch-modal", isOpen, onOpen, onClose);
-
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
@@ -61,12 +61,11 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
         user_id: values?.list_karyawan?.map(
           (user: Interface__SelectOption) => user.value
         ),
-        tgl_mulai: values.tgl_mulai,
+        tgl_mulai: formatDate(values.tgl_mulai, "short"),
+        tgl_selesai: formatDate(values.tgl_mulai, "short"),
         shift_id: values.shift.value,
-        tgl_selesai: values.tgl_mulai,
       };
 
-      console.log(payload);
       setLoading(true);
       req
         .post(`/api/rski/dashboard/jadwal-karyawan/data-jadwal`, payload)

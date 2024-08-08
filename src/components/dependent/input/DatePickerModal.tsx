@@ -66,6 +66,8 @@ export default function DatePickerModal({
   );
   const [selected, setSelected] = useState<any>(inputValue);
 
+  console.log(selected);
+
   function confirmSelected() {
     let confirmable = false;
     if (!nonNullable) {
