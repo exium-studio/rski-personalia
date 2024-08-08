@@ -238,12 +238,12 @@ export default function TabelJadwalItem({
               >
                 <FormControl mt={3} isInvalid={!!formik.errors.shift}>
                   <FormLabel>
-                    Shift
+                    Jam Kerja
                     <RequiredForm />
                   </FormLabel>
                   <SelectShift
                     name="shift"
-                    placeholder="Pilih Jadwal"
+                    placeholder="Pilih Jam Kerja"
                     onConfirm={(input) => {
                       formik.setFieldValue("shift", input);
                     }}

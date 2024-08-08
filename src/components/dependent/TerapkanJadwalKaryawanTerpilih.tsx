@@ -194,12 +194,12 @@ export default function TerapkanJadwalKaryawanTerpilih({
                 isInvalid={formik.errors.shift ? true : false}
               >
                 <FormLabel>
-                  Shift
+                  Jam kerja
                   <RequiredForm />
                 </FormLabel>
                 <SelectShift
                   name="shift"
-                  placeholder="Pilih Jadwal"
+                  placeholder="Pilih Jam Kerja"
                   onConfirm={(input) => {
                     formik.setFieldValue("shift", input);
                   }}

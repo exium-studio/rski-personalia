@@ -203,12 +203,12 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
 
               <FormControl isInvalid={!!formik.errors.shift}>
                 <FormLabel>
-                  Pilih Shift
+                  Jam Kerja
                   <RequiredForm />
                 </FormLabel>
                 <SelectShift
                   name="shift"
-                  placeholder="Pilih Jadwal"
+                  placeholder="Pilih Jam Kerja"
                   onConfirm={(input) => {
                     formik.setFieldValue("shift", input);
                   }}
