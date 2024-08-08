@@ -256,7 +256,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                             h={"24px"}
                             borderRadius={"full"}
                           />
-                          <Skeleton flex={1} w={"100%"} />
+                          <Skeleton flex={1} w={"100%"} h={"58.99px"} />
                         </HStack>
                       ))}
                     </CContainer>
