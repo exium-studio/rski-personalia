@@ -88,8 +88,15 @@ export default function Jadwal() {
               nonNullable
             />
             <FilterKaryawan />
-            <ExportModal url="" title="Export Jadwal" />
-            <ImportModal url="" title="Import Jadwal" />
+            <ExportModal
+              url="/api/rski/dashboard/jadwal-karyawan/export"
+              title="Export Jadwal"
+              downloadFileName="Data Jadwal"
+            />
+            <ImportModal
+              url="/api/rski/dashboard/jadwal-karyawan/jadwal-import"
+              title="Import Jadwal"
+            />
             <TerapkanJadwalModal minW={"fit-content"} />
           </HStack>
 

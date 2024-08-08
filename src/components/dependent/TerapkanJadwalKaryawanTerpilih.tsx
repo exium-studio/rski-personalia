@@ -15,12 +15,16 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { RiEditBoxLine } from "@remixicon/react";
 import { useFormik } from "formik";
+import { useState } from "react";
 import * as yup from "yup";
+import req from "../../constant/req";
 import { responsiveSpacing } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
@@ -51,14 +55,55 @@ export default function TerapkanJadwalKaryawanTerpilih({
     onClose
   );
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { shift: "" as any },
-    validationSchema: yup
-      .object()
-      .shape({ shift: yup.object().required("Harus diisi") }),
+    initialValues: { shift: undefined as any, tgl_mulai: tgl },
+    validationSchema: yup.object().shape({
+      shift: yup.object().required("Harus diisi"),
+      tgl_mulai: yup.string().required("Harus diisi"),
+    }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      const payload = {
+        shift_id: values.shift.value,
+        tgl_mulai: values.tgl_mulai,
+      };
+      setLoading(true);
+      req
+        .post(
+          `/api/rski/dashboard/jadwal-karyawan/create-shift/${data.user.id}`,
+          payload
+        )
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -106,7 +151,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
             />
           </ModalHeader>
           <ModalBody>
-            <VStack gap={responsiveSpacing} px={1} flexShrink={0} mb={4}>
+            <VStack gap={responsiveSpacing} px={1} flexShrink={0}>
               <Avatar
                 mb={"auto"}
                 size={"xl"}
@@ -114,7 +159,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
                 name={data.user.nama}
               />
 
-              <VStack align={"stretch"} w={"100%"} gap={3}>
+              <VStack align={"stretch"} w={"100%"} gap={4}>
                 <HStack justify={"space-between"}>
                   <Text fontSize={14} w={"120px"} opacity={0.6}>
                     Nama
@@ -126,11 +171,9 @@ export default function TerapkanJadwalKaryawanTerpilih({
 
                 <HStack justify={"space-between"}>
                   <Text fontSize={14} w={"120px"} opacity={0.6}>
-                    Tanggal Masuk
+                    Tanggal Mulai
                   </Text>
-                  <Text textAlign={"right"}>
-                    {formatDate(data.tgl_masuk as string)}
-                  </Text>
+                  <Text textAlign={"right"}>{formatDate(tgl as string)}</Text>
                 </HStack>
 
                 <HStack justify={"space-between"}>
@@ -176,8 +219,9 @@ export default function TerapkanJadwalKaryawanTerpilih({
                 w={"100%"}
                 colorScheme="ap"
                 className="btn-ap clicky"
+                isLoading={loading}
               >
-                Simpan
+                Tetapkan
               </Button>
             </ButtonGroup>
           </ModalFooter>

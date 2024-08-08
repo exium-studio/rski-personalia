@@ -16,6 +16,7 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { RiEditBoxLine } from "@remixicon/react";
@@ -33,6 +34,8 @@ import SelectShift from "./_Select/SelectShift";
 import DeleteJadwalModal from "./DeleteJadwalModal";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
+import req from "../../constant/req";
+import useRenderTrigger from "../../global/useRenderTrigger";
 
 interface Props {
   data: any;
@@ -56,7 +59,9 @@ export default function TabelJadwalItem({
     onOpen,
     onClose
   );
-  const [loadingUpdate, setLoadingUpdate] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
 
   const formik = useFormik({
     validateOnChange: false,
@@ -64,18 +69,55 @@ export default function TabelJadwalItem({
       shift: {
         value: jadwal?.shift?.id,
         label: jadwal?.shift?.nama,
-        label2: `${formatTime(jadwal.jam_masuk)}-${formatTime(
-          jadwal.jam_keluar
+        label2: `${formatTime(jadwal.shift.jam_from)}-${formatTime(
+          jadwal.shift.jam_to
         )}`,
       },
+      tgl_mulai: tgl,
     },
     validationSchema: yup
       .object()
       .shape({ shift: yup.object().required("Harus diisi") }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      setLoadingUpdate(true);
-      //TODO api update pengumuman
+      const payload = {
+        shift_id: values.shift.value,
+        tgl_mulai: values.tgl_mulai,
+        _method: "patch",
+      };
+      setLoading(true);
+      req
+        .post(
+          `/api/rski/dashboard/jadwal-karyawan/data-jadwal/${data.user.id}`,
+          payload
+        )
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+            backOnClose();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -101,8 +143,8 @@ export default function TabelJadwalItem({
               {jadwal?.shift?.nama}
             </Text>
             <Text fontSize={14} whiteSpace={"nowrap"}>
-              {formatTime(jadwal?.shift?.jam_masuk)} -{" "}
-              {formatTime(jadwal?.shift?.jam_keluar)}
+              {formatTime(jadwal?.shift?.jam_from)} -{" "}
+              {formatTime(jadwal?.shift?.jam_to)}
             </Text>
           </Box>
 
@@ -182,8 +224,8 @@ export default function TabelJadwalItem({
                       Jam Kerja
                     </Text>
                     <Text>{`${formatTime(
-                      jadwal?.shift?.jam_masuk
-                    )} - ${formatTime(jadwal?.shift?.jam_keluar)}`}</Text>
+                      jadwal?.shift?.jam_from
+                    )} - ${formatTime(jadwal?.shift?.jam_to)}`}</Text>
                   </HStack>
                 )}
               </VStack>
@@ -220,7 +262,7 @@ export default function TabelJadwalItem({
               <ButtonGroup w={"100%"}>
                 <DeleteJadwalModal
                   data={data}
-                  isDisabled={isDatePassed(data.tgl_masuk)}
+                  isDisabled={isDatePassed(data.tgl_masuk) || loading}
                   noUseBackOnClose
                 />
 
@@ -230,7 +272,7 @@ export default function TabelJadwalItem({
                   form="terapkanJadwalKaryawanTerpilihForm"
                   colorScheme="ap"
                   className="btn-ap clicky"
-                  isLoading={loadingUpdate}
+                  isLoading={loading}
                   isDisabled={isDatePassed(data.tgl_masuk)}
                 >
                   Simpan

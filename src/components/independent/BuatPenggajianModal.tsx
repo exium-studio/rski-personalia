@@ -67,7 +67,10 @@ export default function BuatPenggajianModal({ ...props }: Props) {
           console.log(e);
           toast({
             status: "error",
-            title: "Maaf terjadi kesalahan pada sistem",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
             isClosable: true,
             position: "bottom-right",
           });
