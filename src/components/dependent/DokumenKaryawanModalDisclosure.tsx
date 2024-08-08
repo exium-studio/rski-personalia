@@ -130,8 +130,8 @@ export default function DokumenKaryawanModalDisclosure({
     data_dokumen: dummyDokumens,
   };
 
-  const loading = true;
-  const { error, data, retry } = useDataState<any>({
+  // const loading = true;
+  const { error, loading, data, retry } = useDataState<any>({
     initialData: dummy,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-dokumen/${karyawan_id}`,
     dependencies: [],
