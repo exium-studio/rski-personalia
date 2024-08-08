@@ -66,16 +66,21 @@ export default function TabelKaryawan({ filterConfig }: Props) {
   const [pageConfig, setPageConfig] = useState<number>(1);
   // Filter Config
   const { formattedFilterKaryawan } = useFilterKaryawan();
+  const formattedFilterConfig: any = {
+    ...formattedFilterKaryawan,
+    ...(filterConfig?.status_penukaran?.length > 0 && {
+      status_penukaran: filterConfig.status_penukaran.map(
+        (sp: any) => sp.value
+      ),
+    }),
+  };
 
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any>({
       initialData: undefined,
       url: `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal?page=${pageConfig}`,
       payload: {
-        ...formattedFilterKaryawan,
-        status_penukaran: [
-          ...filterConfig?.status_penukaran?.map((sp: any) => sp.value),
-        ],
+        ...formattedFilterConfig,
       },
       limit: limitConfig,
       dependencies: [
@@ -133,7 +138,7 @@ export default function TabelKaryawan({ filterConfig }: Props) {
         td: item.kategori_penukaran.label,
       },
       {
-        value: item.status_penukaran,
+        value: item.status_penukaran.label,
         td: <ApprovalStatus data={item.status_penukaran.id} w={"120px"} />,
         cProps: {
           justify: "center",

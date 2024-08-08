@@ -12,7 +12,6 @@ import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import formatTime from "../../lib/formatTime";
 
 export default function Jadwal() {
   const today = new Date();
@@ -42,9 +41,6 @@ export default function Jadwal() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
-
-  //@ts-ignore
-  console.log(formatTime(undefined));
 
   return (
     <>
