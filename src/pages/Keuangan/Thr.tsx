@@ -30,10 +30,6 @@ export default function Thr() {
     };
   }, [search, tahun, setFilterConfig]);
 
-  useEffect(() => {
-    console.log(filterConfig);
-  }, [filterConfig]);
-
   // SX
   const lightDarkColor = useLightDarkColor();
 
@@ -80,7 +76,11 @@ export default function Thr() {
               flex={"1 1 320px"}
             />
 
-            <ExportModal url="" title="Export Penggajian" />
+            <ExportModal
+              url="/api/rski/dashboard/keuangan/run-thr/export"
+              title="Export Penggajian"
+              downloadFileName="Data THR"
+            />
 
             <RunThr minW={"fit-content"} />
           </HStack>

@@ -2,6 +2,7 @@ import {
   Badge,
   Box,
   Button,
+  Checkbox,
   HStack,
   Icon,
   Modal,
@@ -17,6 +18,7 @@ import { RiArrowDownSLine } from "@remixicon/react";
 import { useRef, useState } from "react";
 import { useErrorColor } from "../../../constant/colors";
 import { Interface__SelectOption } from "../../../constant/interfaces";
+import { responsiveSpacing } from "../../../constant/sizes";
 import useBackOnClose from "../../../hooks/useBackOnClose";
 import useScreenHeight from "../../../hooks/useScreenHeight";
 import backOnClose from "../../../lib/backOnClose";
@@ -25,7 +27,6 @@ import NotFound from "../../independent/NotFound";
 import CContainer from "../../independent/wrapper/CContainer";
 import DisclosureHeader from "../DisclosureHeader";
 import SearchComponent from "./SearchComponent";
-import { responsiveSpacing } from "../../../constant/sizes";
 
 interface Props {
   id: string;
@@ -61,6 +62,7 @@ export default function MultipleSelectModal({
   placement = "bottom",
   placeholder,
   nonNullable,
+
   ...props
 }: Props) {
   useBackOnClose(`${id}-${name}`, isOpen, onOpen, onClose);
@@ -80,6 +82,8 @@ export default function MultipleSelectModal({
         );
       })
     : options;
+
+  const [selectAll, setSelectAll] = useState<boolean>(false);
 
   function confirmSelected() {
     let confirmable = false;
@@ -229,6 +233,25 @@ export default function MultipleSelectModal({
             </Box>
           </ModalHeader>
           <ModalBody className="scrollY">
+            <Box
+              onClick={() => {
+                if (!selectAll) {
+                  setSelected(options);
+                } else {
+                  setSelected(undefined);
+                }
+              }}
+            >
+              <Checkbox
+                name="semua_karyawan"
+                onChange={(e) => setSelectAll(e.target.checked)}
+                isChecked={selectAll}
+                colorScheme="ap"
+                mb={4}
+              >
+                <Text mt="-3px">Pilih Semua</Text>
+              </Checkbox>
+            </Box>
             {fo && (
               <>
                 {fo.length > 0 && (
@@ -254,8 +277,13 @@ export default function MultipleSelectModal({
                                 newSelected = newSelected.filter(
                                   (item) => item.value !== option.value
                                 );
+                                setSelectAll(false);
                               } else {
                                 // Add the option to the selected array
+                                //@ts-ignore
+                                if (selected?.length + 1 === options?.length) {
+                                  setSelectAll(true);
+                                }
                                 newSelected = [...newSelected, option];
                               }
 
@@ -339,7 +367,12 @@ export default function MultipleSelectModal({
                                 newSelected = newSelected.filter(
                                   (item) => item.value !== option.value
                                 );
+                                setSelectAll(false);
                               } else {
+                                //@ts-ignore
+                                if (selected?.length + 1 === options?.length) {
+                                  setSelectAll(true);
+                                }
                                 // Add the option to the selected array
                                 newSelected = [...newSelected, option];
                               }

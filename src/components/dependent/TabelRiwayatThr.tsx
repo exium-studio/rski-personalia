@@ -1,9 +1,10 @@
-import { Center, HStack, Text, useDisclosure } from "@chakra-ui/react";
+import { Center, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
-import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
+import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import BooleanBadge from "./BooleanBadge";
@@ -24,15 +25,16 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
   // Karyawan Detail Disclosure
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { error, loading, data, retry } = useDataState<any[]>({
-    initialData: undefined,
-    url: "/api/rski/dashboard/keuangan/data-thr-penggajian",
-    payload: {
-      filterConfig: filterConfig,
-    },
-    limit: limitConfig,
-    dependencies: [limitConfig, pageConfig, filterConfig],
-  });
+  const { error, notFound, loading, data, paginationData, retry } =
+    useDataState<any[]>({
+      initialData: undefined,
+      url: "/api/rski/dashboard/keuangan/get-thr",
+      payload: {
+        filterConfig: filterConfig,
+      },
+      limit: limitConfig,
+      dependencies: [limitConfig, pageConfig, filterConfig],
+    });
 
   const formattedHeader = [
     {
@@ -127,20 +129,25 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"300px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
+
+          {notFound && !isObjectEmpty(filterConfig) && (
+            <NotFound minH={"300px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"300px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
       {!error && (
         <>
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (
@@ -158,23 +165,6 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
                     />
                   </CustomTableContainer>
 
-                  <TabelFooterConfig
-                    limitConfig={limitConfig}
-                    setLimitConfig={setLimitConfig}
-                    pageConfig={pageConfig}
-                    setPageConfig={setPageConfig}
-                    paginationData={{
-                      prev_page_url: "",
-                      next_page_url: "",
-                      last_page: 1,
-                    }}
-                    footer={
-                      <Text opacity={0.4}>
-                        Klik row untuk melihat laporan penggajian
-                      </Text>
-                    }
-                  />
-
                   <DetailThrModal
                     thr_id={1}
                     isOpen={isOpen}
@@ -187,6 +177,17 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
           )}
         </>
       )}
+
+      <TabelFooterConfig
+        limitConfig={limitConfig}
+        setLimitConfig={setLimitConfig}
+        pageConfig={pageConfig}
+        setPageConfig={setPageConfig}
+        paginationData={paginationData}
+        footer={
+          <Text opacity={0.4}>Klik row untuk melihat laporan penggajian</Text>
+        }
+      />
     </>
   );
 }

@@ -49,6 +49,7 @@ export default function SearchComponent({
             onChangeSetter(e.target.value);
           }}
           value={inputValue}
+          boxShadow={"none !important"}
         />
 
         {inputValue && (
