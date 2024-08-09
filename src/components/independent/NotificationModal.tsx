@@ -16,7 +16,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { RiMailDownloadLine } from "@remixicon/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -35,82 +35,26 @@ export default function NotificationModal({ ...props }: Props) {
   useBackOnClose("notification-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
-  const dummy = {
-    total_baru: 2,
-    inboxes: [
-      {
-        id: 1,
-        is_read: false,
-        kategori: {
-          id: 3,
-          label: "Permintaan Tukar Jadwal",
-          link: "/beranda/tukar-jadwal?tabindex=1",
-        },
-        sender: {
-          // User Interface
-          id: 1,
-          nama: "Jolitos Kurniawan",
-          foto_profil: "/images/gear5.jpg",
-        },
-        message: "Jolitos Kurniawan ingin tukar jadwal dengan Sulenq Wazawsky",
-        created_at: "2024-07-11",
-      },
-      {
-        id: 3,
-        is_read: false,
-        kategori: {
-          id: 5,
-          label: "Permintaan Perubahan Data Personal",
-          link: "/beranda/event-diklat",
-        },
-        sender: {
-          id: 1,
-          nama: "Jolitos Kurniawan",
-          foto_profil: "/images/gear5.jpg",
-        },
-        message: "Kepala ruang mejadwalkan lembur untuk Anda",
-        created_at: "2024-07-4",
-      },
-      {
-        id: 4,
-        is_read: true,
-        kategori: {
-          id: 5,
-          label: "Pengumuman",
-          link: "/beranda/pengumuman",
-        },
-        sender: {
-          id: 1,
-          nama: "Jolitos Kurniawan",
-          foto_profil: "/images/gear5.jpg",
-        },
-        message: "Ada pengumuman baru, segera dicek ya",
-        created_at: "2024-07-4",
-      },
-      {
-        id: 5,
-        is_read: true,
-        kategori: {
-          id: 3,
-          label: "Pengajuan Tukar Jadwal",
-          link: "/beranda/tukar-jadwal?tabindex=0",
-        },
-        sender: {
-          // User Interface
-          id: 1,
-          nama: "Jolitos Kurniawan",
-          foto_profil: "/images/gear5.jpg",
-        },
-        message: "Tukar jadwal anda sudah disetujui manajer",
-        created_at: "2024-07-1",
-      },
-    ],
-  };
   const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummy,
-    url: "",
+    initialData: undefined,
+    url: `/api/rski/dashboard/notifikasi`,
     dependencies: [],
   });
+
+  const [notRedCount, setNotReadCount] = useState<number | undefined>(
+    undefined
+  );
+  useEffect(() => {
+    if (data) {
+      let count = 0;
+      data.forEach((notif: any) => {
+        if (notif.is_read === 0) {
+          count++;
+        }
+      });
+      setNotReadCount(count);
+    }
+  }, [data]);
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -118,7 +62,7 @@ export default function NotificationModal({ ...props }: Props) {
   return (
     <>
       <Box position={"relative"}>
-        {data?.total_baru && (
+        {notRedCount && (
           <Center
             position={"absolute"}
             w={"20px"}
@@ -130,7 +74,7 @@ export default function NotificationModal({ ...props }: Props) {
             right={-2}
           >
             <Text fontWeight={550} fontSize={12}>
-              {data.total_baru}
+              {notRedCount}
             </Text>
           </Center>
         )}
@@ -184,7 +128,7 @@ export default function NotificationModal({ ...props }: Props) {
                     {(data || (data && data.length > 0)) && (
                       <>
                         <CContainer>
-                          {data.inboxes.map((inbox: any, i: number) => (
+                          {data.map((inbox: any, i: number) => (
                             <HStack
                               align={"start"}
                               key={i}
@@ -194,14 +138,14 @@ export default function NotificationModal({ ...props }: Props) {
                               _hover={{ bg: "var(--divider)" }}
                               transition={"200ms"}
                               borderBottom={
-                                i !== data.inboxes.length - 1
+                                i !== data.length - 1
                                   ? "1px solid var(--divider)"
                                   : ""
                               }
                             >
                               <CContainer gap={1}>
                                 <Text fontWeight={600}>
-                                  {inbox.kategori.label}
+                                  {inbox.kategori_notifikasi?.label}
                                 </Text>
                                 <Text fontSize={14} noOfLines={1} opacity={0.6}>
                                   {inbox.message}
