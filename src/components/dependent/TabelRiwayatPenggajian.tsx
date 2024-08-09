@@ -1,6 +1,5 @@
-import { Center, HStack, Text, useDisclosure } from "@chakra-ui/react";
+import { Center, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
-import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -13,7 +12,6 @@ import CustomTable from "./CustomTable";
 import DetailPenggajianModal from "./DetailPenggajianModal";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
-
 interface Props {
   filterConfig: any;
 }
@@ -150,11 +148,6 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (
@@ -198,6 +191,17 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
           )}
         </>
       )}
+
+      <TabelFooterConfig
+        limitConfig={limitConfig}
+        setLimitConfig={setLimitConfig}
+        pageConfig={pageConfig}
+        setPageConfig={setPageConfig}
+        paginationData={paginationData}
+        footer={
+          <Text opacity={0.4}>Klik row untuk melihat laporan penggajian</Text>
+        }
+      />
     </>
   );
 }
