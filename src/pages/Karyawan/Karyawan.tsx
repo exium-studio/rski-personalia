@@ -59,7 +59,8 @@ export default function Karyawan() {
                 setSearch(input);
               }}
               inputValue={search}
-              placeholder="Cari dengan nama/no. induk karyawan"
+              tooltipLabel="Cari dengan nama/no. induk karyawan"
+              placeholder="nama/no. induk karyawan"
             />
 
             <FilterKaryawan />

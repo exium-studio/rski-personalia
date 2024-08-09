@@ -5,7 +5,7 @@ import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
 import NotFound from "../independent/NotFound";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
-import ApprovalStatus from "./ApprovalStatus";
+import ApprovalStatus from "./StatusApprovalBadge";
 import CustomTable from "./CustomTable";
 import SearchComponent from "./input/SearchComponent";
 

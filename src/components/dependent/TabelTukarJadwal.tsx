@@ -20,7 +20,7 @@ import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
-import ApprovalStatus from "./ApprovalStatus";
+import ApprovalStatus from "./StatusApprovalBadge";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import DisclosureHeader from "./DisclosureHeader";

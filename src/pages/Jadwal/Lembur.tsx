@@ -13,7 +13,7 @@ import FilterKaryawan from "../../components/independent/FilterKaryawan";
 
 export default function Lembur() {
   // Filter Config
-  const { filterKaryawan, setFilterKaryawan } = useFilterKaryawan();
+  const { setFilterKaryawan } = useFilterKaryawan();
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function Lembur() {
             <AjukanLemburModal minW={"fit-content"} />
           </HStack>
 
-          <TabelLembur filterConfig={filterKaryawan} />
+          <TabelLembur />
         </CContainer>
       </CWrapper>
     </>

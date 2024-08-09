@@ -4,7 +4,7 @@ interface Props extends BadgeProps {
   data: number;
 }
 
-export default function ApprovalStatus({ data, ...props }: Props) {
+export default function StatusApprovalBadge({ data, ...props }: Props) {
   return (
     <Badge
       colorScheme={data === 1 ? "orange" : data === 2 ? "green" : "red"}

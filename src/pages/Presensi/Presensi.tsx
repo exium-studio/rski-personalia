@@ -67,6 +67,8 @@ export default function Presensi() {
                 setSearch(input);
               }}
               inputValue={search}
+              tooltipLabel="Cari dengan nama/no. induk karyawan"
+              placeholder="nama/no. induk karyawan"
             />
             <DatePickerModal
               id="presensi-date-picker"

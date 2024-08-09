@@ -17,6 +17,7 @@ interface Props extends InputGroupProps {
   inputValue: string;
   onChangeSetter: Dispatch<string>;
   placeholder?: string;
+  tooltipLabel?: string;
   inputRef?: any;
 }
 
@@ -25,12 +26,13 @@ export default function SearchComponent({
   name,
   inputValue,
   onChangeSetter,
-  placeholder,
+  tooltipLabel,
+  placeholder = "Pencarian",
   ...props
 }: Props) {
   return (
     <Tooltip
-      label={placeholder || "Pencarian"}
+      label={tooltipLabel || placeholder}
       openDelay={500}
       placement="bottom-start"
     >
@@ -41,7 +43,7 @@ export default function SearchComponent({
 
         <Input
           ref={inputRef ? inputRef : null}
-          placeholder={placeholder || "Pencarian"}
+          placeholder={placeholder}
           pr={"36px"}
           onChange={(e) => {
             onChangeSetter(e.target.value);
