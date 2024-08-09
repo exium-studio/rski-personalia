@@ -3,6 +3,7 @@ import {
   Box,
   BoxProps,
   Button,
+  Center,
   Icon,
   Modal,
   ModalBody,
@@ -131,7 +132,7 @@ export default function DokumenKaryawanModalDisclosure({
   };
 
   // const loading = true;
-  const { error, loading, data, retry } = useDataState<any>({
+  const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: dummy,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-dokumen/${karyawan_id}`,
     dependencies: [],
@@ -168,9 +169,15 @@ export default function DokumenKaryawanModalDisclosure({
           </ModalHeader>
           <ModalBody px={0}>
             {error && (
-              <Box my={"auto"}>
-                <Retry loading={loading} retry={retry} />
-              </Box>
+              <>
+                {notFound && <NoData minH={"300px"} />}
+
+                {!notFound && (
+                  <Center my={"auto"} minH={"300px"}>
+                    <Retry loading={loading} retry={retry} />
+                  </Center>
+                )}
+              </>
             )}
             {!error && (
               <>

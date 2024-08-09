@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   BoxProps,
+  Center,
   HStack,
   Modal,
   ModalBody,
@@ -43,7 +44,7 @@ export default function DetailCutiKaryawanModalDisclosure({
     onClose
   );
   const initialRef = useRef(null);
-  const { error, loading, data, retry } = useDataState<any>({
+  const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-cuti/${karyawan_id}`,
     dependencies: [],
@@ -81,9 +82,15 @@ export default function DetailCutiKaryawanModalDisclosure({
           </ModalHeader>
           <ModalBody>
             {error && (
-              <Box my={"auto"}>
-                <Retry loading={loading} retry={retry} />
-              </Box>
+              <>
+                {notFound && <NoData minH={"300px"} />}
+
+                {!notFound && (
+                  <Center my={"auto"} minH={"300px"}>
+                    <Retry loading={loading} retry={retry} />
+                  </Center>
+                )}
+              </>
             )}
 
             {!error && (
