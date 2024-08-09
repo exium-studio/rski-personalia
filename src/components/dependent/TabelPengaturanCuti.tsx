@@ -81,7 +81,7 @@ export default function TabelPengaturanHariLibur({ filterConfig }: Props) {
         position: "sticky",
         left: 0,
         zIndex: 3,
-        w: "180px",
+        w: "243px",
       },
       cProps: {
         borderRight: "1px solid var(--divider3)",

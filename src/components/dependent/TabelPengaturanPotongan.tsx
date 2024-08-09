@@ -159,7 +159,7 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
         td: (
           <Tooltip label={item.nama_premi}>
             <Text
-              maxW={"180px"}
+              maxW={"243px"}
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}

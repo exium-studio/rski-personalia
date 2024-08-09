@@ -43,7 +43,7 @@ export default function TabelRekamJejak() {
         position: "sticky",
         left: 0,
         zIndex: 99,
-        w: "180px",
+        w: "243px",
       },
       cProps: {
         borderRight: "1px solid var(--divider3)",

@@ -800,7 +800,7 @@ export default function DetailKaryawanModal({
                                       whiteSpace={"nowrap"}
                                       overflow={"hidden"}
                                       textOverflow={"ellipsis"}
-                                      maxW={"180px"}
+                                      maxW={"243px"}
                                       cursor={"pointer"}
                                     >
                                       {data.alamat}

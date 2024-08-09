@@ -62,7 +62,7 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
           </Text>
         </MenuButton>
 
-        <MenuList minW={"180px"} maxW={"180px"} zIndex={99}>
+        <MenuList minW={"243px"} maxW={"243px"} zIndex={99}>
           <MenuGroup
             title={`Terakhir : ${pagination?.meta?.last_page}`}
             fontWeight={400}

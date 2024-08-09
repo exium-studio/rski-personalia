@@ -64,7 +64,7 @@ const BatchActions = ({
       />
 
       <Portal containerRef={tableRef}>
-        <MenuList zIndex={10} minW={"180px"}>
+        <MenuList zIndex={10} minW={"243px"}>
           <MenuGroup title={`${selectedRows.length} Terpilih`} fontWeight={400}>
             <MenuDivider />
 
@@ -119,7 +119,7 @@ const RowOptions = ({ rowData, rowOptions, tableRef }: RowOptionsProps) => {
       />
 
       <Portal containerRef={tableRef}>
-        <MenuList zIndex={10} className="rowOptionsList" minW={"180px"}>
+        <MenuList zIndex={10} className="rowOptionsList" minW={"243px"}>
           {rowOptions?.map((option, i) => {
             return option === "divider" ? (
               <MenuDivider key={i} />

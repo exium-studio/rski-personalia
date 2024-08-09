@@ -43,7 +43,7 @@ export default function TabelRekamJejak({ filterConfig }: Props) {
         position: "sticky",
         left: "52px",
         zIndex: 99,
-        w: "180px",
+        w: "243px",
       },
       cProps: {
         borderRight: "1px solid var(--divider3)",

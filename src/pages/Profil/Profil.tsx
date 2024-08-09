@@ -559,7 +559,7 @@ export default function Profil() {
                         whiteSpace={"nowrap"}
                         overflow={"hidden"}
                         textOverflow={"ellipsis"}
-                        maxW={"180px"}
+                        maxW={"243px"}
                         cursor={"pointer"}
                       >
                         {userData.data_karyawan.alamat}

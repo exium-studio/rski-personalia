@@ -24,7 +24,7 @@ export default function Login() {
             <VStack align={"flex-start"} mb={6}>
               <Image
                 src={"/logo512.png"}
-                w={"180px"}
+                w={"243px"}
                 mx={["auto", null, "0"]}
               />
             </VStack>
