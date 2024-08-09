@@ -58,6 +58,7 @@ export default function DashboardJabatan({ ...props }: Props) {
 
           {!loading && data && (
             <VStack
+              flex={"1 1 0"}
               align={"stretch"}
               bg={bodyColor}
               borderRadius={12}
