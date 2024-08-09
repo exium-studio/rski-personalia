@@ -63,6 +63,7 @@ export default function DashboardJabatan({ ...props }: Props) {
               minW={dashboardItemMinWidth}
               gap={0}
               h={dashboardItemHeight}
+              pb={responsiveSpacing}
               {...props}
             >
               <Box p={responsiveSpacing}>
@@ -75,7 +76,6 @@ export default function DashboardJabatan({ ...props }: Props) {
               <VStack
                 align={"stretch"}
                 gap={4}
-                pb={responsiveSpacing}
                 overflowY={"auto"}
                 px={responsiveSpacing}
                 className="scrollY"
