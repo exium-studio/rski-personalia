@@ -63,7 +63,7 @@ export default function DashboardPengumumanItemDetail({
       >
         <Text fontWeight={500}>{data.judul}</Text>
 
-        <Text fontSize={14}>{data.pengumuman}</Text>
+        <Text fontSize={14}>{data.konten}</Text>
 
         <HStack mt={"auto"} pt={2} justify={"space-between"}>
           <Text fontSize={14} opacity={0.4}>

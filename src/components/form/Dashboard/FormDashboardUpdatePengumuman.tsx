@@ -17,10 +17,10 @@ interface Props {
 export default function FormDashboardUpdatePengumuman({ data }: Props) {
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { judul: data.judul, pengumuman: data.pengumuman },
+    initialValues: { judul: data.judul, konten: data.konten },
     validationSchema: yup.object().shape({
       judul: yup.string().required("Judul harus diisi"),
-      pengumuman: yup.string().required("Pengumuman harus diisi"),
+      konten: yup.string().required("Pengumuman harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       console.log(values);
@@ -45,20 +45,20 @@ export default function FormDashboardUpdatePengumuman({ data }: Props) {
         <FormErrorMessage>{formik.errors.judul}</FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={formik.errors.pengumuman ? true : false}>
+      <FormControl isInvalid={formik.errors.konten ? true : false}>
         <FormLabel>
           Pengumuman
           <RequiredForm />
         </FormLabel>
         <Textarea
-          name="pengumuman"
+          name="konten"
           placeholder="Isi pengumuman"
           onChangeSetter={(input) => {
-            formik.setFieldValue("pengumuman", input);
+            formik.setFieldValue("konten", input);
           }}
-          inputValue={formik.values.pengumuman}
+          inputValue={formik.values.konten}
         />
-        <FormErrorMessage>{formik.errors.pengumuman}</FormErrorMessage>
+        <FormErrorMessage>{formik.errors.konten}</FormErrorMessage>
       </FormControl>
     </form>
   );

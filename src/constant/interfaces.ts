@@ -130,7 +130,8 @@ export interface Jabatan__Interface {
 export interface Pengumuman__Interface {
   id: number;
   judul: string;
-  pengumuman: string;
+  konten: string;
+  is_read: boolean | number;
   tgl_berakhir: string | Date;
   created_at: string | Date;
   updated_at: string | Date | undefined;
