@@ -6,7 +6,7 @@ import formatTime from "../../../lib/formatTime";
 import SingleSelectModal from "../input/SingleSelectModal";
 
 interface Props extends ButtonProps {
-  karyawan_id?: number;
+  jadwal_id?: number;
   name: string;
   onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
   inputValue: Interface__SelectOption | undefined;
@@ -18,7 +18,7 @@ interface Props extends ButtonProps {
 }
 
 export default function SelectJadwalKaryawanDitukar({
-  karyawan_id,
+  jadwal_id,
   name,
   onConfirm,
   inputValue,
@@ -40,7 +40,7 @@ export default function SelectJadwalKaryawanDitukar({
     if (isOpen && !options) {
       req
         .get(
-          `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal/jadwal-pengajuan/${karyawan_id}`
+          `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal/jadwal-ditukar/${jadwal_id}`
         )
         .then((r) => {
           if (r.status === 200) {

@@ -168,8 +168,8 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
                   <RequiredForm />
                 </FormLabel>
                 <SelectJadwalKaryawanDitukar
-                  karyawan_id={formik.values.user_ditukar?.id}
-                  isDisabled={!formik.values.user_ditukar}
+                  jadwal_id={formik.values.jadwal_pengajuan?.value}
+                  isDisabled={!formik.values.jadwal_pengajuan}
                   name="jadwal_ditukar"
                   onConfirm={(input) => {
                     formik.setFieldValue("jadwal_ditukar", input);
