@@ -57,7 +57,7 @@ export default function AvatarAndNameTableData({
             colorScheme={data.unit_kerja.jenis_karyawan ? "cyan" : "orange"}
             trueValue="Shift"
             falseValue="Non-Shift"
-            w={"100%"}
+            w={"100px"}
           />
         )}
       </CContainer>
