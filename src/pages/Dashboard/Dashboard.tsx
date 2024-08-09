@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { Wrap } from "@chakra-ui/react";
 import DashboardJabatan from "../../components/independent/DashboardJabatan";
 import DashboardJenisKelamin from "../../components/independent/DashboardJenisKelamin";
 import DashboardPengumuman from "../../components/independent/DashboardPengumuman";
@@ -14,7 +14,7 @@ export default function Dashboard() {
       <CWrapper>
         <DashboardTotal mb={responsiveSpacing} />
 
-        <SimpleGrid columns={[1, 2, null, 3, 3]} spacing={responsiveSpacing}>
+        <Wrap spacing={responsiveSpacing}>
           <DashboardJenisKelamin flex={"1 1 0"} />
 
           <DashboardJabatan flex={"1 1 0"} />
@@ -24,7 +24,7 @@ export default function Dashboard() {
           <DashboardSiapaYangLembur flex={"1 1 0"} />
 
           <DashboardPengumuman flex={"1 1 0"} />
-        </SimpleGrid>
+        </Wrap>
       </CWrapper>
     </>
   );
