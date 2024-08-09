@@ -1,4 +1,5 @@
 import {
+  Badge,
   Button,
   ButtonGroup,
   HStack,
@@ -25,6 +26,7 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardUpdatePengumuman from "../form/Dashboard/FormDashboardUpdatePengumuman";
 import { useErrorAlphaColor } from "../../constant/colors";
 import timeSince from "../../lib/timeSince";
+import isDatePassed from "../../lib/isDatePassed";
 
 interface Props extends StackProps {
   data: Pengumuman__Interface;
@@ -61,7 +63,15 @@ export default function DashboardPengumumanItemDetail({
         transition={"200ms"}
         {...props}
       >
-        <Text fontWeight={500}>{data.judul}</Text>
+        <HStack justify={"space-between"} align={"start"}>
+          <Text fontWeight={500}>{data.judul}</Text>
+
+          {isDatePassed(data.tgl_berakhir) && (
+            <Badge color={"red.400"} bg={"var--divider)"}>
+              Berakhir
+            </Badge>
+          )}
+        </HStack>
 
         <Text fontSize={14}>{data.konten}</Text>
 
