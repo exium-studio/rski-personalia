@@ -73,6 +73,7 @@ export default function DashboardPengumuman({ ...props }: Props) {
               minW={dashboardItemMinWidth}
               overflowX={"hidden"}
               h={dashboardItemHeight}
+              pb={responsiveSpacing}
               {...props}
             >
               <Box p={responsiveSpacing}>
@@ -111,7 +112,7 @@ export default function DashboardPengumuman({ ...props }: Props) {
               <VStack
                 align={"stretch"}
                 overflowY={"auto"}
-                className="scrollX scrollY"
+                className="scrollY"
                 flex={1}
                 gap={0}
               >
