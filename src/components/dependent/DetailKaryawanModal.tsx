@@ -524,6 +524,8 @@ export default function DetailKaryawanModal({
                                 setSearch(input);
                               }}
                               inputValue={search}
+                              placeholder="Data Pegawai"
+                              tooltipLabel="Cari Data Pegawai"
                             />
 
                             <AktifkanNonaktifkanButton
