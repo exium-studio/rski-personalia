@@ -1,76 +1,104 @@
 import {
   Avatar,
   Box,
+  Center,
   HStack,
   StackProps,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { dummyKaryawanList } from "../../const/dummy";
 import { useBodyColor } from "../../constant/colors";
 import {
   dashboardItemHeight,
   dashboardItemMinWidth,
   responsiveSpacing,
 } from "../../constant/sizes";
+import useDataState from "../../hooks/useDataState";
+import Retry from "../dependent/Retry";
+import NoData from "./NoData";
 import Skeleton from "./Skeleton";
 
 interface Props extends StackProps {}
 
 export default function DashboardSiapaYangLembur({ ...props }: Props) {
-  const [data] = useState<any[] | null>(dummyKaryawanList);
-  const [loading] = useState<boolean>(false);
-  useEffect(() => {
-    //TODO api get data dashboard jenis kelamin
-  }, []);
+  const { error, notFound, loading, data, retry } = useDataState<any>({
+    initialData: undefined,
+    url: `/api/rski/dashboard/get-lembur-today`,
+    dependencies: [],
+  });
 
   // SX
   const bodyColor = useBodyColor();
 
   return (
     <>
-      {loading && <Skeleton flex={"1 1 0"} h={"100%"} minH={"300px"} />}
+      {error && (
+        <>
+          {notFound && <NoData minH={"300px"} />}
 
-      {!loading && data && (
-        <VStack
-          align={"stretch"}
-          bg={bodyColor}
-          borderRadius={12}
-          gap={0}
-          minW={dashboardItemMinWidth}
-          h={dashboardItemHeight}
-          {...props}
-        >
-          <Box p={responsiveSpacing}>
-            <Text fontWeight={600}>Pegawai Lembur</Text>
-            <Text fontSize={14} opacity={0.6}>
-              Pegawai yang lembur hari ini
-            </Text>
-          </Box>
+          {!notFound && (
+            <Center my={"auto"} minH={"300px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
+      )}
 
-          <VStack
-            align={"stretch"}
-            gap={responsiveSpacing}
-            pb={responsiveSpacing}
-            overflowY={"auto"}
-            px={responsiveSpacing}
-            className="scrollX scrollY"
-            // className="scrollY"
-          >
-            {data.map((user, i) => (
-              <HStack key={i}>
-                <Avatar name={user.nama} src={user.foto_profil} />
-                <Box>
-                  <Text mb={1}>{user.user.nama}</Text>
-                  <Text opacity={0.6} fontSize={12}>
-                    {user.unit_kerja.nama_unit}
-                  </Text>
-                </Box>
-              </HStack>
-            ))}
-          </VStack>
-        </VStack>
+      {!error && (
+        <>
+          {loading && (
+            <Skeleton
+              flex={"1 1 0"}
+              borderRadius={12}
+              h={dashboardItemHeight}
+              minW={dashboardItemMinWidth}
+            />
+          )}
+
+          {!loading && data && (
+            <VStack
+              align={"stretch"}
+              bg={bodyColor}
+              borderRadius={12}
+              gap={0}
+              minW={dashboardItemMinWidth}
+              pb={responsiveSpacing}
+              h={dashboardItemHeight}
+              {...props}
+            >
+              <Box p={responsiveSpacing}>
+                <Text fontWeight={600}>Pegawai Lembur</Text>
+                <Text fontSize={14} opacity={0.6}>
+                  Pegawai yang lembur hari ini
+                </Text>
+              </Box>
+
+              <VStack
+                align={"stretch"}
+                gap={responsiveSpacing}
+                overflowY={"auto"}
+                px={responsiveSpacing}
+                className="scrollX scrollY"
+                // className="scrollY"
+              >
+                {data.map((pegawai: any, i: number) => (
+                  <HStack key={i}>
+                    <Avatar
+                      name={pegawai.user.nama}
+                      src={pegawai.user.foto_profil}
+                    />
+                    <Box>
+                      <Text mb={1}>{pegawai.user.nama}</Text>
+                      <Text opacity={0.6} fontSize={12}>
+                        {pegawai.unit_kerja.nama_unit}
+                      </Text>
+                    </Box>
+                  </HStack>
+                ))}
+              </VStack>
+            </VStack>
+          )}
+        </>
       )}
     </>
   );
