@@ -25,11 +25,10 @@ export default function DashboardBuatPengumumanModal() {
   return (
     <>
       <Button
-        size={"sm"}
         leftIcon={<Icon as={RiAddLine} fontSize={iconSize} />}
         pl={2}
-        className="btn-apa clicky"
-        color={"p.500"}
+        className="btn-ap clicky"
+        colorScheme="ap"
         onClick={onOpen}
       >
         Buat Pengumuman
