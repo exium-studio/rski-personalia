@@ -15,7 +15,8 @@ import FilterKaryawan from "../../components/independent/FilterKaryawan";
 
 export default function Cuti() {
   // Filter Config
-  const { filterKaryawan, setFilterKaryawan } = useFilterKaryawan();
+  const { filterKaryawan, setFilterKaryawan, setFormattedFilterKaryawan } =
+    useFilterKaryawan();
   const [filterConfig, setFilterConfig] = useState({
     ...filterKaryawan,
     status_cuti: undefined,
@@ -26,16 +27,13 @@ export default function Cuti() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterKaryawan({ search });
+      setFormattedFilterKaryawan({ search });
     }, 300);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [search, setFilterKaryawan]);
-
-  useEffect(() => {
-    console.log("Current filterKaryawan state:", filterKaryawan);
-  }, [filterKaryawan]);
+  }, [search, setFilterKaryawan, setFormattedFilterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();

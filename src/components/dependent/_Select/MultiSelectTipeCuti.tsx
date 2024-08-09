@@ -57,6 +57,7 @@ export default function MultiSelectTipeCuti({
         });
     }
   }, [isOpen, options, toast]);
+
   return (
     <MultipleSelectModal
       id="multi-select-tipe-cuti-modal"

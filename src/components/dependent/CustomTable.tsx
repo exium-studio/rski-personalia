@@ -174,10 +174,10 @@ export default function CustomTable({
   const [selectAllRows, setSelectAllRows] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [sortConfig, setSortConfig] = useState<{
-    sortColumnIndex: number;
+    sortColumnIndex: number | undefined;
     direction: "asc" | "desc";
   }>({
-    sortColumnIndex: initialSortColumnIndex || 0,
+    sortColumnIndex: initialSortColumnIndex || undefined,
     direction: initialSortOrder || "asc",
   });
 
@@ -226,7 +226,11 @@ export default function CustomTable({
     }));
   };
   const sortedData = () => {
-    if (sortConfig.sortColumnIndex !== null) {
+    if (
+      sortConfig.sortColumnIndex !== undefined &&
+      sortConfig.sortColumnIndex !== null
+    ) {
+      console.log("Sorting...", sortConfig.sortColumnIndex);
       return [...tableBody].sort((a, b) => {
         //@ts-ignore
         const aValue = a.columnsFormat[sortConfig.sortColumnIndex].value;

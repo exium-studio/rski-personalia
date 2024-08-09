@@ -197,23 +197,25 @@ export default function MultipleSelectModal({
           my={sh < 650 ? 0 : ""}
           h={
             (withSearch ||
-              (optionsDisplay === "list" && options && options?.length > 6) ||
-              (optionsDisplay === "chip" && options && options?.length > 16)) &&
+              (optionsDisplay === "list" && options && options?.length > 10) ||
+              (optionsDisplay === "chip" && options && options?.length > 20)) &&
             sh >= 650
               ? "100%"
               : ""
           }
-          // maxH={"650px"}
+          maxH={"650px"}
         >
           <ModalHeader ref={initialRef}>
             <Box>
               <DisclosureHeader title={placeholder || "Multi Pilih"} />
 
               {(withSearch ||
-                (optionsDisplay === "list" && options && options?.length > 6) ||
+                (optionsDisplay === "list" &&
+                  options &&
+                  options?.length > 10) ||
                 (optionsDisplay === "chip" &&
                   options &&
-                  options?.length > 16)) && (
+                  options?.length > 20)) && (
                 <Box px={6} pb={responsiveSpacing}>
                   <SearchComponent
                     name="search select options"

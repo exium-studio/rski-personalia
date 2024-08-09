@@ -12,6 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { RiCalendarCloseFill } from "@remixicon/react";
 import { useFormik } from "formik";
@@ -24,18 +25,26 @@ import DateRangePickerModal from "../dependent/input/DateRangePickerModal";
 import RequiredForm from "../form/RequiredForm";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
+import req from "../../constant/req";
+import { useState } from "react";
+import useRenderTrigger from "../../global/useRenderTrigger";
+import formatDate from "../../lib/formatDate";
 interface Props extends ButtonProps {}
 
 export default function AjukanCutiModal({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("ajukan-cuti-modal", isOpen, onOpen, onClose);
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      karyawan: "" as any,
-      tipe_cuti: "" as any,
-      range_tgl: undefined,
+      karyawan: undefined as any,
+      tipe_cuti: undefined as any,
+      range_tgl: undefined as any,
     },
     validationSchema: yup.object().shape({
       karyawan: yup.object().required("Harus diisi"),
@@ -43,7 +52,43 @@ export default function AjukanCutiModal({ ...props }: Props) {
       range_tgl: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      const payload = {
+        user_id: values.karyawan.value,
+        tipe_cuti_id: values.tipe_cuti.value,
+        tgl_from: formatDate(values.range_tgl?.from as string, "short"),
+        tgl_to: formatDate(values.range_tgl?.to as string, "short"),
+        status_cuti_id: 2,
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/jadwal-karyawan/cuti`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -144,8 +189,9 @@ export default function AjukanCutiModal({ ...props }: Props) {
               w={"100%"}
               colorScheme="ap"
               className="btn-ap clicky"
+              isLoading={loading}
             >
-              Simpan
+              Ajukan Cuti
             </Button>
           </ModalFooter>
         </ModalContent>
