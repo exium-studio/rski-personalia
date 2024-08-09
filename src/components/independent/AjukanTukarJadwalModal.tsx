@@ -23,7 +23,7 @@ import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
-import SelectJadwalKaryawanPengajuan from "../dependent/_Select/SelectJadwalKaryawanPengajuan";
+import SelectJadwalKaryawan from "../dependent/_Select/SelectJadwalKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import RequiredForm from "../form/RequiredForm";
 import SelectKaryawanDitukar from "../dependent/_Select/SelectKaryawanDitukar";
@@ -116,7 +116,7 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
                   Jadwal Pengajuan
                   <RequiredForm />
                 </FormLabel>
-                <SelectJadwalKaryawanPengajuan
+                <SelectJadwalKaryawan
                   user_id={formik.values.user_pengajuan?.value}
                   isDisabled={!formik.values.user_pengajuan}
                   name="jadwal_pengajuan"

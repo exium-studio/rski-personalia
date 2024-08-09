@@ -11,55 +11,96 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  SimpleGrid,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { RiCalendarScheduleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
-import backOnClose from "../../lib/backOnCloseOld";
-import useBackOnClose from "../../lib/useBackOnCloseOld";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import backOnClose from "../../lib/backOnClose";
+import SelectJadwalKaryawan from "../dependent/_Select/SelectJadwalKaryawan";
 import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
 import SelectKompensasi from "../dependent/_Select/SelectKompensasi";
-import SelectShift from "../dependent/_Select/SelectShift";
-import SelectTipeCuti from "../dependent/_Select/SelectTipeCuti";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
+import Textarea from "../dependent/input/Textarea";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
-import Textarea from "../dependent/input/Textarea";
+import req from "../../constant/req";
+import useRenderTrigger from "../../global/useRenderTrigger";
 
 interface Props extends ButtonProps {}
 
 export default function AjukanLemburModal({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(isOpen, onClose);
+  useBackOnClose("ajukan-lembur-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
 
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      karyawan: undefined,
-      tgl_pengajuan: undefined,
-      shift: undefined,
-      kompensasi: undefined,
-      tipe: undefined,
-      durasi: undefined,
+      karyawan: undefined as any,
+      tgl_pengajuan: undefined as any,
+      jadwal: undefined as any,
+      kompensasi: undefined as any,
+      durasi: undefined as any,
       catatan: "",
     },
     validationSchema: yup.object().shape({
       karyawan: yup.object().required("Harus diisi"),
       tgl_pengajuan: yup.string().required("Harus diisi"),
-      shift: yup.object().required("Harus diisi"),
+      jadwal: yup.object().required("Harus diisi"),
       kompensasi: yup.object().required("Harus diisi"),
-      tipe: yup.object().required("Harus diisi"),
       durasi: yup.string().required("Harus diisi"),
       catatan: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      const payload = {
+        tgl_pengajuan: values.tgl_pengajuan,
+        user_id: values.karyawan.value,
+        jadwal_id: values.jadwal.value,
+        kompensasi_lembur_id: values.kompensasi.value,
+        durasi: values.durasi,
+        catatan: values.catatan,
+        status_lembur_id: 1,
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/jadwal-karyawan/lembur`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -78,7 +119,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
       <Modal
         isOpen={isOpen}
         onClose={() => {
-          backOnClose(onClose);
+          backOnClose();
           formik.resetForm();
         }}
         initialFocusRef={initialRef}
@@ -96,24 +137,6 @@ export default function AjukanLemburModal({ ...props }: Props) {
           </ModalHeader>
           <ModalBody>
             <form id="ajukanLemburForm" onSubmit={formik.handleSubmit}>
-              <FormControl mb={4} isInvalid={!!formik.errors.karyawan}>
-                <FormLabel>
-                  Karyawan
-                  <RequiredForm />
-                </FormLabel>
-                <SelectKaryawan
-                  name="karyawan"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("karyawan", input);
-                  }}
-                  inputValue={formik.values.karyawan}
-                  isError={!!formik.errors.karyawan}
-                />
-                <FormErrorMessage>
-                  {formik.errors.karyawan as string}
-                </FormErrorMessage>
-              </FormControl>
-
               <FormControl mb={4} isInvalid={!!formik.errors.tgl_pengajuan}>
                 <FormLabel>
                   Tanggal Pengajuan
@@ -137,22 +160,42 @@ export default function AjukanLemburModal({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl mb={4} isInvalid={!!formik.errors.shift}>
+              <FormControl mb={4} isInvalid={!!formik.errors.karyawan}>
                 <FormLabel>
-                  Shift
+                  Karyawan
                   <RequiredForm />
                 </FormLabel>
-                <SelectShift
-                  name="shift"
-                  placeholder="Pilih Jadwal"
+                <SelectKaryawan
+                  name="karyawan"
                   onConfirm={(input) => {
-                    formik.setFieldValue("shift", input);
+                    formik.setFieldValue("karyawan", input);
                   }}
-                  inputValue={formik.values.shift}
-                  isError={!!formik.errors.shift}
+                  inputValue={formik.values.karyawan}
+                  isError={!!formik.errors.karyawan}
                 />
                 <FormErrorMessage>
-                  {formik.errors.shift as string}
+                  {formik.errors.karyawan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={4} isInvalid={!!formik.errors.jadwal}>
+                <FormLabel>
+                  Jadwal
+                  <RequiredForm />
+                </FormLabel>
+                <SelectJadwalKaryawan
+                  user_id={formik.values?.karyawan?.value}
+                  isDisabled={!!!formik.values?.karyawan}
+                  name="jadwal"
+                  placeholder="Pilih Jadwal"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("jadwal", input);
+                  }}
+                  inputValue={formik.values.jadwal}
+                  isError={!!formik.errors.jadwal}
+                />
+                <FormErrorMessage>
+                  {formik.errors.jadwal as string}
                 </FormErrorMessage>
               </FormControl>
 
@@ -173,44 +216,24 @@ export default function AjukanLemburModal({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <SimpleGrid columns={[1, 2]} gap={4}>
-                <FormControl mb={4} isInvalid={!!formik.errors.tipe}>
-                  <FormLabel>
-                    Tipe
-                    <RequiredForm />
-                  </FormLabel>
-                  <SelectTipeCuti
-                    name="tipe"
-                    onConfirm={(input) => {
-                      formik.setFieldValue("tipe", input);
-                    }}
-                    inputValue={formik.values.tipe}
-                    isError={!!formik.errors.tipe}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.tipe as string}
-                  </FormErrorMessage>
-                </FormControl>
-
-                <FormControl mb={4} isInvalid={!!formik.errors.durasi}>
-                  <FormLabel>
-                    Durasi
-                    <RequiredForm />
-                  </FormLabel>
-                  <TimePickerModal
-                    id="ajukan-lembur"
-                    name="durasi"
-                    onConfirm={(input) => {
-                      formik.setFieldValue("durasi", input);
-                    }}
-                    inputValue={formik.values.durasi}
-                    isError={!!formik.errors.durasi}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.durasi as string}
-                  </FormErrorMessage>
-                </FormControl>
-              </SimpleGrid>
+              <FormControl mb={4} isInvalid={!!formik.errors.durasi}>
+                <FormLabel>
+                  Durasi
+                  <RequiredForm />
+                </FormLabel>
+                <TimePickerModal
+                  id="ajukan-lembur"
+                  name="durasi"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("durasi", input);
+                  }}
+                  inputValue={formik.values.durasi}
+                  isError={!!formik.errors.durasi}
+                />
+                <FormErrorMessage>
+                  {formik.errors.durasi as string}
+                </FormErrorMessage>
+              </FormControl>
 
               <FormControl isInvalid={!!formik.errors.catatan}>
                 <FormLabel>
@@ -238,8 +261,9 @@ export default function AjukanLemburModal({ ...props }: Props) {
               w={"100%"}
               colorScheme="ap"
               className="btn-ap clicky"
+              isLoading={loading}
             >
-              Simpan
+              Ajukan Lembur
             </Button>
           </ModalFooter>
         </ModalContent>

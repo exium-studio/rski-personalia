@@ -36,8 +36,6 @@ export default function SelectJadwalKaryawan({
     undefined
   );
 
-  console.log(user_id);
-
   useEffect(() => {
     if (isOpen) {
       setOptions(undefined);

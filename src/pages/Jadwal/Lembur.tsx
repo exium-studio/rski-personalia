@@ -13,18 +13,19 @@ import FilterKaryawan from "../../components/independent/FilterKaryawan";
 
 export default function Lembur() {
   // Filter Config
-  const { setFilterKaryawan } = useFilterKaryawan();
+  const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterKaryawan({ search });
+      setFormattedFilterKaryawan({ search });
     }, 300);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [search, setFilterKaryawan]);
+  }, [search, setFilterKaryawan, setFormattedFilterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -59,7 +60,11 @@ export default function Lembur() {
               inputValue={search}
             />
             <FilterKaryawan />
-            <ExportModal url="" title="Export Lembur" />
+            <ExportModal
+              url="/api/rski/dashboard/jadwal-karyawan/lembur/export"
+              title="Export Lembur"
+              downloadFileName="Data Lembur"
+            />
             <AjukanLemburModal minW={"fit-content"} />
           </HStack>
 
