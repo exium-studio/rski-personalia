@@ -233,27 +233,28 @@ export default function MultipleSelectModal({
             </Box>
           </ModalHeader>
           <ModalBody className="scrollY">
-            <Box
-              onClick={() => {
-                if (!selectAll) {
-                  setSelected(options);
-                } else {
-                  setSelected(undefined);
-                }
-              }}
-            >
-              <Checkbox
-                name="semua_karyawan"
-                onChange={(e) => setSelectAll(e.target.checked)}
-                isChecked={selectAll}
-                colorScheme="ap"
-                mb={4}
-              >
-                <Text mt="-3px">Pilih Semua</Text>
-              </Checkbox>
-            </Box>
             {fo && (
               <>
+                <Box
+                  onClick={() => {
+                    if (!selectAll) {
+                      setSelected(options);
+                    } else {
+                      setSelected(undefined);
+                    }
+                  }}
+                >
+                  <Checkbox
+                    name="semua_karyawan"
+                    onChange={(e) => setSelectAll(e.target.checked)}
+                    isChecked={selectAll}
+                    colorScheme="ap"
+                    mb={4}
+                  >
+                    <Text mt="-3px">Pilih Semua</Text>
+                  </Checkbox>
+                </Box>
+
                 {fo.length > 0 && (
                   <>
                     {optionsDisplay === "list" && (
