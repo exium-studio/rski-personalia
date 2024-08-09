@@ -1,7 +1,5 @@
-import { Center, HStack } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import { useState } from "react";
-import { dummyRiwayatCuti } from "../../const/dummy";
-import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import NoData from "../independent/NoData";
@@ -12,6 +10,8 @@ import BooleanBadge from "./BooleanBadge";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+import isObjectEmpty from "../../lib/isObjectEmpty";
+import NotFound from "../independent/NotFound";
 
 interface Props {
   filterConfig: any;
@@ -23,17 +23,24 @@ export default function TabelCuti({ filterConfig }: Props) {
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
   // Filter Config
-  const { filterKaryawan } = useFilterKaryawan();
+  const { formattedFilterKaryawan } = useFilterKaryawan();
 
-  const { error, loading, data, retry } = useDataState<any[]>({
-    initialData: dummyRiwayatCuti,
-    url: "",
-    payload: {
-      filterConfig: filterConfig,
-    },
-    limit: limitConfig,
-    dependencies: [limitConfig, pageConfig, filterKaryawan],
-  });
+  const { error, notFound, loading, data, paginationData, retry } =
+    useDataState<any[]>({
+      initialData: undefined,
+      url: `/api/rski/dashboard/jadwal-karyawan/get-cuti?page=${pageConfig}`,
+      payload: {
+        ...formattedFilterKaryawan,
+        ...(filterConfig?.status_cuti?.length > 0 && {
+          status_cuti: filterConfig.status_cuti.map((sp: any) => sp.value),
+        }),
+        ...(filterConfig?.tipe_cuti?.length > 0 && {
+          tipe_cuti: filterConfig.tipe_cuti.map((sp: any) => sp.value),
+        }),
+      },
+      limit: limitConfig,
+      dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
+    });
 
   const formattedHeader = [
     {
@@ -63,6 +70,9 @@ export default function TabelCuti({ filterConfig }: Props) {
     {
       th: "Durasi",
       isSortable: true,
+      cProps: {
+        justify: "end",
+      },
     },
     {
       th: "Unit Kerja",
@@ -114,6 +124,9 @@ export default function TabelCuti({ filterConfig }: Props) {
         value: item.durasi,
         td: `${item.durasi} hari`,
         isNumeric: true,
+        cProps: {
+          justify: "end",
+        },
       },
       {
         value: item.unit_kerja.nama_unit,
@@ -126,20 +139,28 @@ export default function TabelCuti({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"300px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && isObjectEmpty(formattedFilterKaryawan) && (
+            <NoData minH={"300px"} />
+          )}
+
+          {notFound && !isObjectEmpty(formattedFilterKaryawan) && (
+            <NotFound minH={"300px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"300px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
+
       {!error && (
         <>
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (
@@ -154,24 +175,20 @@ export default function TabelCuti({ filterConfig }: Props) {
                       formattedData={formattedData}
                     />
                   </CustomTableContainer>
-
-                  <TabelFooterConfig
-                    limitConfig={limitConfig}
-                    setLimitConfig={setLimitConfig}
-                    pageConfig={pageConfig}
-                    setPageConfig={setPageConfig}
-                    paginationData={{
-                      prev_page_url: "",
-                      next_page_url: "",
-                      last_page: 1,
-                    }}
-                  />
                 </>
               )}
             </>
           )}
         </>
       )}
+
+      <TabelFooterConfig
+        limitConfig={limitConfig}
+        setLimitConfig={setLimitConfig}
+        pageConfig={pageConfig}
+        setPageConfig={setPageConfig}
+        paginationData={paginationData}
+      />
     </>
   );
 }
