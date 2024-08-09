@@ -2,7 +2,7 @@ import { Button, ButtonProps, Icon, Text, VStack } from "@chakra-ui/react";
 import { RiErrorWarningLine, RiRefreshLine } from "@remixicon/react";
 
 interface Props extends ButtonProps {
-  loading: boolean;
+  loading?: boolean;
   retry: () => void;
 }
 
