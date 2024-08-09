@@ -2,16 +2,16 @@ import { Center } from "@chakra-ui/react";
 import { useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
+import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
-import BooleanBadge from "./BooleanBadge";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
+import StatusPermintaanCutiBadge from "./StatusPermintaanCutiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
-import isObjectEmpty from "../../lib/isObjectEmpty";
-import NotFound from "../independent/NotFound";
 
 interface Props {
   filterConfig: any;
@@ -39,7 +39,12 @@ export default function TabelCuti({ filterConfig }: Props) {
         }),
       },
       limit: limitConfig,
-      dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
+      dependencies: [
+        limitConfig,
+        pageConfig,
+        filterConfig,
+        formattedFilterKaryawan,
+      ],
     });
 
   const formattedHeader = [
@@ -104,14 +109,7 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
       {
         value: item.status_cuti,
-        td: (
-          <BooleanBadge
-            data={item.status_cuti}
-            trueValue="Aktif"
-            falseValue="Tidak Aktif"
-            w={"120px"}
-          />
-        ),
+        td: <StatusPermintaanCutiBadge data={item.status_cuti} w={"120px"} />,
         cProps: {
           justify: "center",
         },

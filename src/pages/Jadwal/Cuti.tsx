@@ -11,6 +11,7 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import FilterKaryawan from "../../components/independent/FilterKaryawan";
 
 export default function Cuti() {
   // Filter Config
@@ -18,7 +19,7 @@ export default function Cuti() {
   const [filterConfig, setFilterConfig] = useState({
     ...filterKaryawan,
     status_cuti: undefined,
-    jenis_cuti: undefined,
+    tipe_cuti: undefined,
   });
   const [search, setSearch] = useState("");
 
@@ -67,20 +68,22 @@ export default function Cuti() {
                 setSearch(input);
               }}
               inputValue={search}
+              tooltipLabel="Cari dengan nama/no. induk karyawan"
+              placeholder="nama/no. induk karyawan"
             />
 
             <MultiSelectTipeCuti
-              name={"jenis_cuti"}
+              name={"tipe_cuti"}
               minW={"fit-content"}
               maxW={"165px !important"}
               placeholder="Filter Tipe Cuti"
               onConfirm={(input: any) => {
                 setFilterConfig((ps: any) => ({
                   ...ps,
-                  jenis_cuti: input,
+                  tipe_cuti: input,
                 }));
               }}
-              inputValue={filterConfig.jenis_cuti}
+              inputValue={filterConfig.tipe_cuti}
               optionsDisplay="chip"
               pr={5}
               maxSelectedDisplay={1}
@@ -102,6 +105,8 @@ export default function Cuti() {
               pr={5}
               maxSelectedDisplay={1}
             />
+
+            <FilterKaryawan />
 
             <ExportModal url="" title="Export Cuti" />
 
