@@ -17,6 +17,7 @@ import useDataState from "../../hooks/useDataState";
 import Retry from "../dependent/Retry";
 import NoData from "./NoData";
 import Skeleton from "./Skeleton";
+import formatDurationShort from "../../lib/formatDurationShort";
 
 interface Props extends StackProps {}
 
@@ -93,6 +94,8 @@ export default function DashboardSiapaYangLembur({ ...props }: Props) {
                         {pegawai.unit_kerja.nama_unit}
                       </Text>
                     </Box>
+
+                    <Box ml={"auto"}>{formatDurationShort(pegawai.durasi)}</Box>
                   </HStack>
                 ))}
               </VStack>
