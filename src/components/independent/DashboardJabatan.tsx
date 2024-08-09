@@ -1,124 +1,103 @@
-import { Box, HStack, StackProps, Text, VStack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import {
+  Box,
+  Center,
+  HStack,
+  StackProps,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useBodyColor } from "../../constant/colors";
-import { Jabatan__Interface } from "../../constant/interfaces";
-import Skeleton from "./Skeleton";
 import {
   dashboardItemHeight,
   dashboardItemMinWidth,
   responsiveSpacing,
 } from "../../constant/sizes";
+import useDataState from "../../hooks/useDataState";
+import Retry from "../dependent/Retry";
 import FlexLine from "./FlexLine";
+import NoData from "./NoData";
+import Skeleton from "./Skeleton";
 
 interface Props extends StackProps {}
 
 export default function DashboardJabatan({ ...props }: Props) {
-  //! DEBUG
-  const dummy = [
-    {
-      nama: "CEO",
-      jumlah: 1,
-    },
-    {
-      nama: "CTO",
-      jumlah: 4,
-    },
-    {
-      nama: "CFO",
-      jumlah: 2,
-    },
-    {
-      nama: "HRD",
-      jumlah: 5,
-    },
-    {
-      nama: "Manager",
-      jumlah: 16,
-    },
-    {
-      nama: "Staff",
-      jumlah: 254,
-    },
-    {
-      nama: "Dokter Hewan",
-      jumlah: 10,
-    },
-    {
-      nama: "Dokter Gigi",
-      jumlah: 10,
-    },
-    {
-      nama: "Dokter Bedah",
-      jumlah: 10,
-    },
-    {
-      nama: "Dokter Anak",
-      jumlah: 10,
-    },
-    {
-      nama: "Dokter Kulit",
-      jumlah: 10,
-    },
-    {
-      nama: "Dokter Palsu",
-      jumlah: 10,
-    },
-    {
-      nama: "Office Boy",
-      jumlah: 10,
-    },
-  ];
-  //! DEBUG
-
-  const [data] = useState<Jabatan__Interface[] | null>(dummy);
-  const [loading] = useState<boolean>(false);
-  useEffect(() => {
-    //TODO api get data dashboard jenis kelamin
-  }, []);
+  const { error, notFound, loading, data, retry } = useDataState<any>({
+    initialData: undefined,
+    url: `/api/rski/dashboard/calculated-jabatan`,
+    dependencies: [],
+  });
 
   // SX
   const bodyColor = useBodyColor();
 
   return (
     <>
-      {loading && <Skeleton flex={"1 1 0"} h={"100%"} minH={"300px"} />}
+      {error && (
+        <>
+          {notFound && <NoData minH={"300px"} />}
 
-      {!loading && data && (
-        <VStack
-          align={"stretch"}
-          bg={bodyColor}
-          borderRadius={12}
-          minW={dashboardItemMinWidth}
-          gap={0}
-          h={dashboardItemHeight}
-          {...props}
-        >
-          <Box p={responsiveSpacing}>
-            <Text fontWeight={600}>Jabatan</Text>
-            <Text fontSize={14} opacity={0.6}>
-              Karyawan saat ini
-            </Text>
-          </Box>
+          {!notFound && (
+            <Center my={"auto"} minH={"300px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
+      )}
 
-          <VStack
-            align={"stretch"}
-            gap={4}
-            pb={responsiveSpacing}
-            overflowY={"auto"}
-            px={responsiveSpacing}
-            // className="scrollY"
-          >
-            {data.map((jabatan, i) => (
-              <HStack key={i} justify={"space-between"}>
-                <Text fontSize={14} flexShrink={0}>
-                  {jabatan.nama}
+      {!error && (
+        <>
+          {loading && (
+            <Skeleton
+              flex={"1 1 0"}
+              borderRadius={12}
+              h={dashboardItemHeight}
+              minW={dashboardItemMinWidth}
+            />
+          )}
+
+          {!loading && data && (
+            <VStack
+              align={"stretch"}
+              bg={bodyColor}
+              borderRadius={12}
+              minW={dashboardItemMinWidth}
+              gap={0}
+              h={dashboardItemHeight}
+              {...props}
+            >
+              <Box p={responsiveSpacing}>
+                <Text fontWeight={600}>Jabatan</Text>
+                <Text fontSize={14} opacity={0.6}>
+                  Karyawan saat ini
                 </Text>
-                <FlexLine />
-                <Text fontSize={14}>{jabatan.jumlah}</Text>
-              </HStack>
-            ))}
-          </VStack>
-        </VStack>
+              </Box>
+
+              <VStack
+                align={"stretch"}
+                gap={4}
+                pb={responsiveSpacing}
+                overflowY={"auto"}
+                px={responsiveSpacing}
+                className="scrollY"
+              >
+                {data.map((jabatan: any, i: number) => (
+                  <HStack key={i} justify={"space-between"}>
+                    <Text
+                      fontSize={14}
+                      whiteSpace={"nowrap"}
+                      overflow={"hidden"}
+                      textOverflow={"ellipsis"}
+                    >
+                      {jabatan.nama_jabatan}
+                    </Text>
+                    <FlexLine />
+                    <Text fontSize={14}>{jabatan.jumlah_karyawan}</Text>
+                  </HStack>
+                ))}
+              </VStack>
+            </VStack>
+          )}
+        </>
       )}
     </>
   );
