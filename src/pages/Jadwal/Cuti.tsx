@@ -108,7 +108,11 @@ export default function Cuti() {
 
             <FilterKaryawan />
 
-            <ExportModal url="" title="Export Cuti" />
+            <ExportModal
+              url="/api/rski/dashboard/jadwal-karyawan/cuti/export"
+              title="Export Cuti"
+              downloadFileName="Data Cuti"
+            />
 
             <AjukanCutiModal minW={"fit-content"} />
           </HStack>
