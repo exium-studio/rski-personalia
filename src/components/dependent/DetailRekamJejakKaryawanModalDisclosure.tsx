@@ -337,8 +337,8 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                   size={"md"}
                                   w={"55px"}
                                   h={"55px"}
-                                  src={data.data_user.user?.foto_profil}
-                                  name={data.data_user.user?.nama}
+                                  src={data.user?.foto_profil}
+                                  name={data.user?.nama}
                                 />
 
                                 <VStack align={"stretch"}>
@@ -346,7 +346,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Nama Karyawan
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {data.data_user.user?.nama}
+                                    {data.user?.nama}
                                   </Text>
                                 </VStack>
 
@@ -355,7 +355,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Tanggal Masuk
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {formatDate(data.data_user.tgl_masuk)}
+                                    {formatDate(data.tgl_masuk)}
                                   </Text>
                                 </VStack>
 
@@ -364,7 +364,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Tanggal Keluar
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {formatDate(data.data_user.tgl_keluar)}
+                                    {formatDate(data.tgl_keluar)}
                                   </Text>
                                 </VStack>
 
@@ -373,7 +373,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Masa Kerja
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {formatMasaKerja(data.data_user.masa_kerja)}
+                                    {formatMasaKerja(data.masa_kerja)}
                                   </Text>
                                 </VStack>
                               </Wrap>
@@ -406,11 +406,11 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                 pr={6}
                                 pt={responsiveSpacing}
                               >
-                                {data.rekam_jejak.map(
+                                {data.list_rekam_jejak.map(
                                   (item: any, i: number) => (
                                     <DetailRekamJejakItem
                                       key={i}
-                                      dataList={data.rekam_jejak}
+                                      dataList={data.list_rekam_jejak}
                                       data={item}
                                       index={i}
                                     />

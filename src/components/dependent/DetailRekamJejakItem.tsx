@@ -22,7 +22,7 @@ import SmallLink from "./SmallLink";
 
 const PerubahanDataItem = ({ data }: { data: any }) => {
   return (
-    <CContainer gap={3}>
+    <CContainer gap={4}>
       <HStack>
         <Text minW={"160px"} opacity={0.6}>
           Kolom
@@ -75,54 +75,54 @@ const PerubahanDataItem = ({ data }: { data: any }) => {
 
 const TransferKaryanItem = ({ data }: { data: any }) => {
   return (
-    <CContainer gap={3}>
+    <CContainer gap={4}>
       <HStack>
         <Text minW={"160px"} opacity={0.6}>
           Tanggal Mulai
         </Text>
-        <Text fontWeight={500}>{formatDate(data.tgl_mulai)}</Text>
+        <Text fontWeight={500}>{formatDate(data?.tgl_mulai)}</Text>
       </HStack>
 
       <HStack>
         <Text minW={"160px"} opacity={0.6}>
           Unit Kerja Asal
         </Text>
-        <Text fontWeight={500}>{data.unit_kerja_asal.nama_unit}</Text>
+        <Text fontWeight={500}>{data?.unit_kerja_asal.nama_unit}</Text>
       </HStack>
 
       <HStack>
         <Text minW={"160px"} opacity={0.6}>
           Unit Kerja Tujuan
         </Text>
-        <Text fontWeight={500}>{data.unit_kerja_tujuan.nama_unit}</Text>
+        <Text fontWeight={500}>{data?.unit_kerja_tujuan.nama_unit}</Text>
       </HStack>
 
       <HStack>
         <Text minW={"160px"} opacity={0.6}>
           Jabatan Asal
         </Text>
-        <Text fontWeight={500}>{data.jabatan_asal.nama_jabatan}</Text>
+        <Text fontWeight={500}>{data?.jabatan_asal.nama_jabatan}</Text>
       </HStack>
 
       <HStack>
         <Text minW={"160px"} opacity={0.6}>
           Jabatan Tujuan
         </Text>
-        <Text fontWeight={500}>{data.jabatan_tujuan.nama_jabatan}</Text>
+        <Text fontWeight={500}>{data?.jabatan_tujuan.nama_jabatan}</Text>
       </HStack>
 
       <HStack align={"start"}>
         <Text minW={"160px"} opacity={0.6}>
           Alasan
         </Text>
-        <Text fontWeight={500}>{data.alasan}</Text>
+        <Text fontWeight={500}>{data?.alasan}</Text>
       </HStack>
 
       <HStack align={"start"}>
         <Text minW={"160px"} opacity={0.6}>
           Dokumen
         </Text>
-        <SmallLink to={data.dokumen} className="btn-apa">
+        <SmallLink to={data?.dokumen} className="btn-apa">
           Lihat
         </SmallLink>
       </HStack>
@@ -158,7 +158,7 @@ export default function DetailRekamJejakItem({ dataList, data, index }: Props) {
           flex={1}
           w={"1px"}
           bg={"var(--divider3)"}
-          opacity={index === dataList.length - 1 ? 0 : 1}
+          opacity={index === dataList?.length - 1 ? 0 : 1}
         />
       </VStack>
 
