@@ -174,7 +174,10 @@ export default function SingleSelectModal({
         <ModalContent
           my={sh < 650 ? 0 : ""}
           h={
-            (withSearch || (options && options?.length > 6)) && sh >= 650
+            (withSearch ||
+              (optionsDisplay === "list" && options && options?.length > 6) ||
+              (optionsDisplay === "chip" && options && options?.length > 16)) &&
+            sh >= 650
               ? "100%"
               : ""
           }
@@ -183,7 +186,11 @@ export default function SingleSelectModal({
           <ModalHeader ref={initialRef}>
             <DisclosureHeader title={placeholder || "Pilih Salah Satu"} />
 
-            {(withSearch || (options && options?.length > 6)) && (
+            {(withSearch ||
+              (optionsDisplay === "list" && options && options?.length > 6) ||
+              (optionsDisplay === "chip" &&
+                options &&
+                options?.length > 16)) && (
               <Box px={6} pb={responsiveSpacing}>
                 <SearchComponent
                   name="search select options"
