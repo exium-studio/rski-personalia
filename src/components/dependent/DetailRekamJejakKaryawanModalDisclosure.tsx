@@ -127,7 +127,6 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
           id: 1,
           nama_kelompok: "A",
         },
-        kategori: { id: 1, label: "Promosi" },
         alasan:
           "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos rerum unde, culpa corporis impedit id sequi in tenetur laboriosam odit provident vel temporibus fugiat excepturi ex eum at? Rem, totam!",
         dokumen: null,
