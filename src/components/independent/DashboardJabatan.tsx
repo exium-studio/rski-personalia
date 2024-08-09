@@ -4,6 +4,7 @@ import {
   HStack,
   StackProps,
   Text,
+  Tooltip,
   VStack,
 } from "@chakra-ui/react";
 import { useBodyColor } from "../../constant/colors";
@@ -82,15 +83,23 @@ export default function DashboardJabatan({ ...props }: Props) {
               >
                 {data.map((jabatan: any, i: number) => (
                   <HStack key={i} justify={"space-between"}>
-                    <Text
-                      fontSize={14}
-                      whiteSpace={"nowrap"}
-                      overflow={"hidden"}
-                      textOverflow={"ellipsis"}
+                    <Tooltip
+                      label={jabatan.nama_jabatan}
+                      openDelay={500}
+                      // placement="right"
                     >
-                      {jabatan.nama_jabatan}
-                    </Text>
+                      <Text
+                        fontSize={14}
+                        whiteSpace={"nowrap"}
+                        overflow={"hidden"}
+                        textOverflow={"ellipsis"}
+                      >
+                        {jabatan.nama_jabatan}
+                      </Text>
+                    </Tooltip>
+
                     <FlexLine />
+
                     <Text fontSize={14}>{jabatan.jumlah_karyawan}</Text>
                   </HStack>
                 ))}
