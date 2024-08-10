@@ -1,5 +1,6 @@
 import {
   Box,
+  BoxProps,
   Input as ChakraInput,
   InputProps,
   Text,
@@ -14,6 +15,7 @@ interface Props extends InputProps {
   inputValue: string | undefined;
   isError?: boolean;
   placeholder?: string;
+  boxProps?: BoxProps;
 }
 
 export default function StringInput({
@@ -23,6 +25,7 @@ export default function StringInput({
   inputValue,
   isError,
   placeholder = "",
+  boxProps,
   ...props
 }: Props) {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -49,7 +52,7 @@ export default function StringInput({
         `}
       />
 
-      <Box position={"relative"} w={"100%"} overflow={"hidden"}>
+      <Box position={"relative"} w={"100%"} overflow={"hidden"} {...boxProps}>
         <ChakraInput
           ref={fRef}
           name={name}

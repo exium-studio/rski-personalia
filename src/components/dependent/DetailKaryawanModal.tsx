@@ -545,16 +545,24 @@ export default function DetailKaryawanModal({
 
                           <Box px={4}>
                             <Alert
-                              status="warning"
+                              status={
+                                countDataKosong === 0 ? "success" : "warning"
+                              }
                               py={1}
                               borderRadius={"8px !important"}
                             >
                               <AlertDescription
                                 m={0}
                                 fontWeight={600}
-                                color={warningColor}
+                                color={
+                                  countDataKosong === 0
+                                    ? "green.400"
+                                    : warningColor
+                                }
                               >
-                                {countDataKosong} data masih kosong
+                                {countDataKosong === 0
+                                  ? "Data pegawai lengkap"
+                                  : `${countDataKosong} data masih kosong`}
                               </AlertDescription>
                             </Alert>
                           </Box>
@@ -1506,8 +1514,15 @@ export default function DetailKaryawanModal({
                                         fontWeight={500}
                                         textAlign={"right"}
                                       >
-                                        Rp{" "}
-                                        {formatNumber(potongan.besaran_premi)}
+                                        {potongan.kategori_potongan_id === 1
+                                          ? `${formatNumber(
+                                              potongan.besaran_premi
+                                            )}%`
+                                          : `Rp ${formatNumber(
+                                              potongan.besaran_premi
+                                            )}`}
+                                        {/* Rp{" "}
+                                        {formatNumber(potongan.besaran_premi)} */}
                                       </Text>
                                     </HStack>
                                   )

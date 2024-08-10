@@ -675,6 +675,7 @@ export default function EditKaryawanForm({
               formik.setFieldValue("potongan", input);
             }}
             inputValue={formik.values.potongan}
+            optionsDisplay="chip"
             // withSearch
           />
           <FormErrorMessage>

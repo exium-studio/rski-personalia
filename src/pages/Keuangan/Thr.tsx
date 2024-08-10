@@ -64,16 +64,14 @@ export default function Thr() {
             />
 
             <NumberInput
-              name="search"
+              name="tahun"
               onChangeSetter={(input) => {
                 setTahun(input);
               }}
               inputValue={tahun}
               placeholder={"Periode Tahun"}
-              _placeholder={{ color: "var(--divider-text)" }}
-              opacity={1}
               noFormat
-              flex={"1 1 320px"}
+              boxProps={{ w: "fit-content" }}
             />
 
             <ExportModal

@@ -1,4 +1,4 @@
-import { InputProps } from "@chakra-ui/react";
+import { BoxProps, InputProps } from "@chakra-ui/react";
 import formatNumber from "../../../lib/formatNumber";
 import parseNumber from "../../../lib/parseNumber";
 import StringInput from "./StringInput";
@@ -10,6 +10,7 @@ interface Props extends InputProps {
   isError?: boolean;
   placeholder?: string;
   noFormat?: boolean;
+  boxProps?: BoxProps;
 }
 
 export default function NumberInput({
@@ -19,6 +20,7 @@ export default function NumberInput({
   isError,
   placeholder,
   noFormat,
+  boxProps,
   ...props
 }: Props) {
   return (
@@ -37,6 +39,7 @@ export default function NumberInput({
         (noFormat ? inputValue?.toString() : formatNumber(inputValue)) || ""
       }
       placeholder={placeholder || "Masukan Nominal"}
+      boxProps={boxProps}
       {...props}
     />
   );

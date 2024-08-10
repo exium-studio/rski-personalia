@@ -108,14 +108,14 @@ const pengaturanNavs = [
         link: "/pengaturan/manajemen-waktu/lokasi-presensi",
       },
       {
-        icon: RiCalendarCheckLine,
-        label: "Jam Kerja Non-Shift",
-        link: "/pengaturan/manajemen-waktu/shift",
-      },
-      {
         icon: RiCalendarScheduleLine,
         label: "Jam Kerja Shift",
         link: "/pengaturan/manajemen-waktu/shift",
+      },
+      {
+        icon: RiCalendarCheckLine,
+        label: "Jam Kerja Non-Shift",
+        link: "/pengaturan/manajemen-waktu/non-shift",
       },
       {
         icon: RiLandscapeLine,

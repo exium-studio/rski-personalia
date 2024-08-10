@@ -500,7 +500,7 @@ export const App = () => (
               topNavActive={0}
               title="Pengaturan - Hari Libur Karyawan Non-Shift"
             >
-              <PengaturanContainer activeGroup={3} active={2}>
+              <PengaturanContainer activeGroup={3} active={3}>
                 <PengaturanHariLibur />
               </PengaturanContainer>
             </NavContainer>
@@ -515,7 +515,7 @@ export const App = () => (
               topNavActive={0}
               title="Pengaturan - Tipe Cuti"
             >
-              <PengaturanContainer activeGroup={3} active={3}>
+              <PengaturanContainer activeGroup={3} active={4}>
                 <PengaturanCuti />
               </PengaturanContainer>
             </NavContainer>
