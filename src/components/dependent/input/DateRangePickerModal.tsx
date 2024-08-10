@@ -13,6 +13,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  Tooltip,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
@@ -161,68 +162,85 @@ export default function DateRangePickerModal({
 
   return (
     <>
-      <Button
-        className="btn-clear"
-        w={"100%"}
-        justifyContent={"space-between"}
-        borderRadius={8}
-        border={"1px solid var(--divider3)"}
-        boxShadow={isError ? `0 0 0px 1px ${errorColor}` : ""}
-        px={"16px !important"}
-        h={"40px"}
-        fontWeight={400}
-        cursor={"pointer"}
-        onClick={() => {
-          onOpen();
-          setSelected(inputValue);
-          setDate(inputValue ? inputValue.from : new Date());
-          setBulan(
-            inputValue ? inputValue.from?.getMonth() : new Date().getMonth()
-          );
-          setTahun(
-            inputValue
-              ? inputValue.from?.getFullYear()
-              : new Date().getFullYear()
-          );
-        }}
-        // _focus={{ boxShadow: "0 0 0px 2px var(--p500)" }}
-        _focus={{ border: "1px solid var(--p500)", boxShadow: "none" }}
-        {...props}
+      <Tooltip
+        label={`${
+          inputValue?.from
+            ? `${formatDate(inputValue.from, "basicShort")}`
+            : "Pilih tanggal awal"
+        } - ${
+          inputValue?.to
+            ? `${formatDate(inputValue.to, "basicShort")}`
+            : "Pilih tanggal akhir"
+        } ${
+          inputValue && inputValue.from && inputValue.to
+            ? `(${countDateRange(inputValue.from, inputValue.to)} hari)`
+            : ""
+        }`}
+        openDelay={500}
       >
-        {inputValue ? (
-          <Text
-            overflow={"hidden"}
-            whiteSpace={"nowrap"}
-            textOverflow={"ellipsis"}
-            mr={4}
-          >{`${
-            inputValue?.from
-              ? `${formatDate(inputValue.from, "basicShort")}`
-              : "Pilih tanggal awal"
-          } - ${
-            inputValue?.to
-              ? `${formatDate(inputValue.to, "basicShort")}`
-              : "Pilih tanggal akhir"
-          } ${
-            inputValue && inputValue.from && inputValue.to
-              ? `(${countDateRange(inputValue.from, inputValue.to)} hari)`
-              : ""
-          }`}</Text>
-        ) : (
-          <Text
-            //@ts-ignore
-            color={props?._placeholder?.color || "#96969691"}
-            overflow={"hidden"}
-            whiteSpace={"nowrap"}
-            textOverflow={"ellipsis"}
-            mr={4}
-          >
-            {placeholder || `Pilih Rentang Tanggal`}
-          </Text>
-        )}
+        <Button
+          className="btn-clear"
+          w={"100%"}
+          justifyContent={"space-between"}
+          borderRadius={8}
+          border={"1px solid var(--divider3)"}
+          boxShadow={isError ? `0 0 0px 1px ${errorColor}` : ""}
+          px={"16px !important"}
+          h={"40px"}
+          fontWeight={400}
+          cursor={"pointer"}
+          onClick={() => {
+            onOpen();
+            setSelected(inputValue);
+            setDate(inputValue ? inputValue.from : new Date());
+            setBulan(
+              inputValue ? inputValue.from?.getMonth() : new Date().getMonth()
+            );
+            setTahun(
+              inputValue
+                ? inputValue.from?.getFullYear()
+                : new Date().getFullYear()
+            );
+          }}
+          // _focus={{ boxShadow: "0 0 0px 2px var(--p500)" }}
+          _focus={{ border: "1px solid var(--p500)", boxShadow: "none" }}
+          {...props}
+        >
+          {inputValue ? (
+            <Text
+              overflow={"hidden"}
+              whiteSpace={"nowrap"}
+              textOverflow={"ellipsis"}
+              mr={4}
+            >{`${
+              inputValue?.from
+                ? `${formatDate(inputValue.from, "basicShort")}`
+                : "Pilih tanggal awal"
+            } - ${
+              inputValue?.to
+                ? `${formatDate(inputValue.to, "basicShort")}`
+                : "Pilih tanggal akhir"
+            } ${
+              inputValue && inputValue.from && inputValue.to
+                ? `(${countDateRange(inputValue.from, inputValue.to)} hari)`
+                : ""
+            }`}</Text>
+          ) : (
+            <Text
+              //@ts-ignore
+              color={props?._placeholder?.color || "#96969691"}
+              overflow={"hidden"}
+              whiteSpace={"nowrap"}
+              textOverflow={"ellipsis"}
+              mr={4}
+            >
+              {placeholder || `Pilih Rentang Tanggal`}
+            </Text>
+          )}
 
-        <Icon as={RiCalendarLine} />
-      </Button>
+          <Icon as={RiCalendarLine} />
+        </Button>
+      </Tooltip>
 
       <Modal
         isOpen={isOpen}

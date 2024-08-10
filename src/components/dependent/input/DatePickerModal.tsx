@@ -151,7 +151,9 @@ export default function DatePickerModal({
         {...props}
       >
         {inputValue ? (
-          <Text>{formatDate(inputValue, dateFormatOptions)}</Text>
+          <Text>
+            {formatDate(inputValue, dateFormatOptions || "basicShort")}
+          </Text>
         ) : (
           <Text //@ts-ignore
             color={props?._placeholder?.color || "#96969691"}
