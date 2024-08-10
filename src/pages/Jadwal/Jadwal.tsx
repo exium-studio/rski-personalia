@@ -98,6 +98,7 @@ export default function Jadwal() {
               }}
               maxRange={7}
               nonNullable
+              presetsConfig={["thisWeek", "nextWeek"]}
             />
             <FilterKaryawan />
             <ExportModal

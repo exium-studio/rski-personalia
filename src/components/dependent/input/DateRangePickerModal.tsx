@@ -34,6 +34,8 @@ import DisclosureHeader from "../DisclosureHeader";
 import MonthYearInputModal from "./MonthYearInputModal";
 type PrefixOption = "basic" | "basicShort" | "long" | "longShort" | "short";
 
+type PresetConfig = "thisMonth" | "nextMonth" | "thisWeek" | "nextWeek";
+
 interface Props extends ButtonProps {
   id: string;
   name: string;
@@ -44,6 +46,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
   isError?: boolean;
   maxRange?: number;
+  presetsConfig?: PresetConfig[];
 }
 
 export default function DateRangePickerModal({
@@ -56,6 +59,7 @@ export default function DateRangePickerModal({
   nonNullable,
   isError,
   maxRange,
+  presetsConfig = ["thisMonth", "thisWeek"],
   ...props
 }: Props) {
   const initialRef = useRef(null);
@@ -99,6 +103,7 @@ export default function DateRangePickerModal({
       backOnClose();
     }
   }
+
   function setSelectedToThisWeek() {
     const today = new Date();
 
@@ -120,6 +125,28 @@ export default function DateRangePickerModal({
     setBulan(today.getMonth());
     setTahun(today.getFullYear());
   }
+  function setSelectedToNextWeek() {
+    const today = new Date();
+
+    // Get the current day of the week (0 - Sunday, 6 - Saturday)
+    const dayOfWeek = today.getDay();
+
+    // Calculate the date of the start of the next week (Monday)
+    const startOfNextWeek = new Date(today);
+    const dayDiffToNextMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek; // if today is Sunday, set the difference to 1, else calculate to next Monday
+    startOfNextWeek.setDate(today.getDate() + dayDiffToNextMonday);
+
+    // Calculate the date of the end of the next week (Sunday)
+    const endOfNextWeek = new Date(startOfNextWeek);
+    endOfNextWeek.setDate(startOfNextWeek.getDate() + 6); // 6 days after Monday is Sunday
+
+    // Set the state with the calculated dates
+    setDate(today);
+    setSelected({ from: startOfNextWeek, to: endOfNextWeek });
+    setBulan(startOfNextWeek.getMonth());
+    setTahun(startOfNextWeek.getFullYear());
+  }
+
   function setSelectedToThisMonth() {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -129,6 +156,29 @@ export default function DateRangePickerModal({
     setSelected({ from: startOfMonth, to: endOfMonth });
     setBulan(today.getMonth());
     setTahun(today.getFullYear());
+  }
+  function setSelectedToNextMonth() {
+    const today = new Date();
+
+    // Calculate the date of the start of the next month
+    const startOfNextMonth = new Date(
+      today.getFullYear(),
+      today.getMonth() + 1,
+      1
+    );
+
+    // Calculate the date of the end of the next month
+    const endOfNextMonth = new Date(
+      today.getFullYear(),
+      today.getMonth() + 2,
+      0
+    );
+
+    // Set the state with the calculated dates
+    setDate(today);
+    setSelected({ from: startOfNextMonth, to: endOfNextMonth });
+    setBulan(startOfNextMonth.getMonth());
+    setTahun(startOfNextMonth.getFullYear());
   }
 
   function nextMonth() {
@@ -155,6 +205,49 @@ export default function DateRangePickerModal({
     setBulan(prevMonth.getMonth());
     setTahun(prevMonth.getFullYear());
   }
+
+  const renderPresets = {
+    thisMonth: (
+      <Button
+        w={"100%"}
+        className="btn-outline clicky"
+        onClick={setSelectedToThisMonth}
+        isDisabled={!!(maxRange && maxRange < 31)}
+      >
+        Bulan Ini
+      </Button>
+    ),
+    nextMonth: (
+      <Button
+        w={"100%"}
+        className="btn-outline clicky"
+        onClick={setSelectedToNextMonth}
+        isDisabled={!!(maxRange && maxRange < 31)}
+      >
+        Bulan Depan
+      </Button>
+    ),
+    thisWeek: (
+      <Button
+        w={"100%"}
+        className="btn-outline clicky"
+        onClick={setSelectedToThisWeek}
+        isDisabled={!!(maxRange && maxRange < 7)}
+      >
+        Minggu Ini
+      </Button>
+    ),
+    nextWeek: (
+      <Button
+        w={"100%"}
+        className="btn-outline clicky"
+        onClick={setSelectedToNextWeek}
+        isDisabled={!!(maxRange && maxRange < 7)}
+      >
+        Minggu Depan
+      </Button>
+    ),
+  };
 
   // SX
   const errorColor = useErrorColor();
@@ -203,7 +296,6 @@ export default function DateRangePickerModal({
             );
           }}
           // _focus={{ boxShadow: "0 0 0px 2px var(--p500)" }}
-          _focus={{ border: "1px solid var(--p500)", boxShadow: "none" }}
           {...props}
         >
           {inputValue ? (
@@ -321,22 +413,11 @@ export default function DateRangePickerModal({
 
               <VStack mt={4}>
                 <ButtonGroup w={"100%"}>
-                  <Button
-                    flex={1}
-                    className="btn-outline clicky"
-                    onClick={setSelectedToThisMonth}
-                    isDisabled={!!(maxRange && maxRange < 31)}
-                  >
-                    Bulan Ini
-                  </Button>
-                  <Button
-                    flex={1}
-                    className="btn-outline clicky"
-                    onClick={setSelectedToThisWeek}
-                    isDisabled={!!(maxRange && maxRange < 7)}
-                  >
-                    Minggu Ini
-                  </Button>
+                  {presetsConfig.map((preset, i) => (
+                    <Box w={"100%"} key={i}>
+                      {renderPresets[preset]}
+                    </Box>
+                  ))}
                 </ButtonGroup>
 
                 <HStack w={"100%"} position={"relative"}>
