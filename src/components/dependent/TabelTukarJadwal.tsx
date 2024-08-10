@@ -145,8 +145,8 @@ export default function TabelKaryawan({ filterConfig }: Props) {
         },
       },
       {
-        value: item.unit_kerja.nama_unit,
-        td: item.unit_kerja.nama_unit,
+        value: item.unit_kerja?.nama_unit,
+        td: item.unit_kerja?.nama_unit,
       },
       {
         value: item.karyawan_pengajuan.nama,
