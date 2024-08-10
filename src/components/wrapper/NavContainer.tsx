@@ -69,6 +69,10 @@ const NavMenu = ({ nav, i, active, topNavActive }: any) => {
         }
         boxShadow={"none !important"}
         border={"none !important"}
+        _focusVisible={{
+          boxShadow: "none !important",
+          border: "none !important",
+        }}
         className="btn"
         onClick={() => {
           navigate(nav.link);
