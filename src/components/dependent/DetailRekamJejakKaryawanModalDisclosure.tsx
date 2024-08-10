@@ -53,121 +53,121 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
   // 3 Promosi Pegawai
   // 4 Feedback
 
-  const dummyRekamJejak = [
-    {
-      user_id: 1,
-      kategori: {
-        id: 1,
-        label: "Pembaruan Data",
-      },
-      content: {
-        id: 1,
-        kolom: "tgl_lahir",
-        original_data: "2001-11-01",
-        updated_data: "2001-11-05",
-        status_perubahan: true,
-        created_at: "2024-07-10",
-        updated_at: "2024-07-11",
-      },
-      created_at: "2023-05-02",
-    },
-    {
-      user_id: 1,
-      kategori: {
-        id: 2,
-        label: "Mutasi Pegawai",
-      },
-      content: {
-        id: 1,
-        user: {
-          id: 1,
-          nama: "Olga Parks",
-          username: "olgaP",
-          email_verified_at: null,
-          role_id: null,
-          foto_profil: null,
-          data_completion_step: 1,
-          created_at: "2024-05-25T07:43:42.000000Z",
-          updated_at: "2024-05-25T07:43:42.000000Z",
-          data_karyawans: null,
-        },
-        tgl_mulai: "2024-09-15 00:00:00",
-        nik: "9819287",
-        unit_kerja_asal: {
-          id: 12,
-          nama_unit: "Rawat Inap",
-          jenis_karyawan: 0,
-          created_at: "2023-12-19T07:43:42.000000Z",
-          updated_at: "2024-05-25T07:43:42.000000Z",
-        },
-        unit_kerja_tujuan: {
-          id: 4,
-          nama_unit: "Penyakit Dalam",
-          jenis_karyawan: 1,
-          created_at: "2024-04-17T07:43:42.000000Z",
-          updated_at: "2024-05-25T07:43:42.000000Z",
-        },
-        jabatan_asal: {
-          id: 10,
-          nama_jabatan: "Tenaga Medis Darurat",
-          is_struktural: 0,
-          tunjangan: 502110,
-          created_at: "2023-10-18T07:43:42.000000Z",
-          updated_at: "2024-05-25T07:43:42.000000Z",
-        },
-        jabatan_tujuan: {
-          id: 9,
-          nama_jabatan: "Staf Tata Usaha",
-          is_struktural: 1,
-          tunjangan: 935671,
-          created_at: "2024-03-16T07:43:42.000000Z",
-          updated_at: "2024-05-25T07:43:42.000000Z",
-        },
-        kelompok_gaji_tujuan: {
-          id: 1,
-          nama_kelompok: "A",
-        },
-        alasan:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos rerum unde, culpa corporis impedit id sequi in tenetur laboriosam odit provident vel temporibus fugiat excepturi ex eum at? Rem, totam!",
-        dokumen: null,
-        beri_tahu_manajer_direktur: true,
-        beri_tahu_karyawan: true,
-        created_at: "2024-05-25T07:43:59.000000Z",
-        updated_at: "2024-05-25T07:43:59.000000Z",
-      },
-      created_at: "2024-07-21",
-    },
-    {
-      user_id: 1,
-      kategori: {
-        id: 1,
-        label: "Pembaruan Data",
-      },
-      content: {
-        id: 2,
-        kolom: "foto_profil",
-        original_data: "https://bit.ly/dan-abramov",
-        updated_data: "/images/gear5.jpg",
-        status_perubahan: false,
-        created_at: "2024-07-22",
-        updated_at: "2024-07-23",
-      },
-      created_at: "2024-07-22",
-    },
-  ];
+  // const dummyRekamJejak = [
+  //   {
+  //     user_id: 1,
+  //     kategori: {
+  //       id: 1,
+  //       label: "Pembaruan Data",
+  //     },
+  //     content: {
+  //       id: 1,
+  //       kolom: "tgl_lahir",
+  //       original_data: "2001-11-01",
+  //       updated_data: "2001-11-05",
+  //       status_perubahan: true,
+  //       created_at: "2024-07-10",
+  //       updated_at: "2024-07-11",
+  //     },
+  //     created_at: "2023-05-02",
+  //   },
+  //   {
+  //     user_id: 1,
+  //     kategori: {
+  //       id: 2,
+  //       label: "Mutasi Pegawai",
+  //     },
+  //     content: {
+  //       id: 1,
+  //       user: {
+  //         id: 1,
+  //         nama: "Olga Parks",
+  //         username: "olgaP",
+  //         email_verified_at: null,
+  //         role_id: null,
+  //         foto_profil: null,
+  //         data_completion_step: 1,
+  //         created_at: "2024-05-25T07:43:42.000000Z",
+  //         updated_at: "2024-05-25T07:43:42.000000Z",
+  //         data_karyawans: null,
+  //       },
+  //       tgl_mulai: "2024-09-15 00:00:00",
+  //       nik: "9819287",
+  //       unit_kerja_asal: {
+  //         id: 12,
+  //         nama_unit: "Rawat Inap",
+  //         jenis_karyawan: 0,
+  //         created_at: "2023-12-19T07:43:42.000000Z",
+  //         updated_at: "2024-05-25T07:43:42.000000Z",
+  //       },
+  //       unit_kerja_tujuan: {
+  //         id: 4,
+  //         nama_unit: "Penyakit Dalam",
+  //         jenis_karyawan: 1,
+  //         created_at: "2024-04-17T07:43:42.000000Z",
+  //         updated_at: "2024-05-25T07:43:42.000000Z",
+  //       },
+  //       jabatan_asal: {
+  //         id: 10,
+  //         nama_jabatan: "Tenaga Medis Darurat",
+  //         is_struktural: 0,
+  //         tunjangan: 502110,
+  //         created_at: "2023-10-18T07:43:42.000000Z",
+  //         updated_at: "2024-05-25T07:43:42.000000Z",
+  //       },
+  //       jabatan_tujuan: {
+  //         id: 9,
+  //         nama_jabatan: "Staf Tata Usaha",
+  //         is_struktural: 1,
+  //         tunjangan: 935671,
+  //         created_at: "2024-03-16T07:43:42.000000Z",
+  //         updated_at: "2024-05-25T07:43:42.000000Z",
+  //       },
+  //       kelompok_gaji_tujuan: {
+  //         id: 1,
+  //         nama_kelompok: "A",
+  //       },
+  //       alasan:
+  //         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos rerum unde, culpa corporis impedit id sequi in tenetur laboriosam odit provident vel temporibus fugiat excepturi ex eum at? Rem, totam!",
+  //       dokumen: null,
+  //       beri_tahu_manajer_direktur: true,
+  //       beri_tahu_karyawan: true,
+  //       created_at: "2024-05-25T07:43:59.000000Z",
+  //       updated_at: "2024-05-25T07:43:59.000000Z",
+  //     },
+  //     created_at: "2024-07-21",
+  //   },
+  //   {
+  //     user_id: 1,
+  //     kategori: {
+  //       id: 1,
+  //       label: "Pembaruan Data",
+  //     },
+  //     content: {
+  //       id: 2,
+  //       kolom: "foto_profil",
+  //       original_data: "https://bit.ly/dan-abramov",
+  //       updated_data: "/images/gear5.jpg",
+  //       status_perubahan: false,
+  //       created_at: "2024-07-22",
+  //       updated_at: "2024-07-23",
+  //     },
+  //     created_at: "2024-07-22",
+  //   },
+  // ];
 
-  const dummy = {
-    nama: "Jolitos Kurniawan",
-    foto_profil: "https://bit.ly/dan-abramov",
-    jumlah_keluarga: 4,
-    tgl_masuk: new Date(),
-    tgl_keluar: null,
-    masa_kerja: 27,
-    rekam_jejak: dummyRekamJejak,
-  };
+  // const dummy = {
+  //   nama: "Jolitos Kurniawan",
+  //   foto_profil: "https://bit.ly/dan-abramov",
+  //   jumlah_keluarga: 4,
+  //   tgl_masuk: new Date(),
+  //   tgl_keluar: null,
+  //   masa_kerja: 27,
+  //   rekam_jejak: dummyRekamJejak,
+  // };
 
   const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummy,
+    initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-rekam-jejak/${karyawan_id}`,
     dependencies: [],
     conditions: !!(isOpen && karyawan_id),
@@ -354,7 +354,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Tanggal Masuk
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {formatDate(data.tgl_masuk)}
+                                    {formatDate(data.tgl_masuk_karyawan)}
                                   </Text>
                                 </VStack>
 
@@ -363,7 +363,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Tanggal Keluar
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {formatDate(data.tgl_keluar)}
+                                    {formatDate(data.tgl_keluar_karyawan)}
                                   </Text>
                                 </VStack>
 
@@ -372,7 +372,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Masa Kerja
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {formatMasaKerja(data.masa_kerja)}
+                                    {formatMasaKerja(data.masa_kerja_karyawan)}
                                   </Text>
                                 </VStack>
                               </Wrap>
