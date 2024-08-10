@@ -433,7 +433,22 @@ export default function TambahKaryawanModal({ ...props }: Props) {
 
   const Step1Footer = () => {
     return (
-      <Box display={activeStep === 0 ? "block" : "none"} mt={"auto"} pt={4}>
+      <ButtonGroup
+        display={activeStep === 0 ? "flex" : "none"}
+        mt={"auto"}
+        pt={4}
+        w={"100%"}
+      >
+        <Button
+          w={"100%"}
+          className="btn-solid clicky"
+          h={"50px"}
+          onClick={() => {
+            formik.resetForm();
+          }}
+        >
+          Clear
+        </Button>
         <Button
           w={"100%"}
           colorScheme="ap"
@@ -443,7 +458,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         >
           Lanjut
         </Button>
-      </Box>
+      </ButtonGroup>
     );
   };
 
@@ -760,7 +775,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title={"Tambah Karyawan"}
+              title={"Tambah Pegawai"}
               onClose={() => {
                 formik.resetForm();
               }}
