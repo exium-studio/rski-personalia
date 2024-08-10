@@ -2,7 +2,6 @@ import {
   Center,
   Icon,
   IconButton,
-  Input,
   InputGroup,
   InputGroupProps,
   InputLeftElement,
@@ -11,6 +10,7 @@ import {
 import { RiCloseLine, RiSearchLine } from "@remixicon/react";
 import { Dispatch } from "react";
 import { iconSize } from "../../../constant/sizes";
+import StringInput from "./StringInput";
 
 interface Props extends InputGroupProps {
   name: string;
@@ -41,14 +41,16 @@ export default function SearchComponent({
           <Icon as={RiSearchLine} opacity={0.3} fontSize={iconSize} />
         </InputLeftElement>
 
-        <Input
-          ref={inputRef ? inputRef : null}
+        <StringInput
+          pl={10}
+          name={name}
+          fRef={inputRef ? inputRef : null}
           placeholder={placeholder}
           pr={"36px"}
-          onChange={(e) => {
-            onChangeSetter(e.target.value);
+          onChangeSetter={(input) => {
+            onChangeSetter(input as string);
           }}
-          value={inputValue}
+          inputValue={inputValue}
           boxShadow={"none !important"}
         />
 
