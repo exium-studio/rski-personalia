@@ -144,20 +144,20 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
         td: formatDate(item.tgl_mulai),
       },
       {
-        value: item.unit_kerja_asal.nama_unit,
-        td: item.unit_kerja_asal.nama_unit,
+        value: item.unit_kerja_asal?.nama_unit,
+        td: item.unit_kerja_asal?.nama_unit,
       },
       {
         value: item.unit_kerja_tujuan?.nama_unit,
         td: item.unit_kerja_tujuan?.nama_unit,
       },
       {
-        value: item.jabatan_asal.nama_jabatan,
-        td: item.jabatan_asal.nama_jabatan,
+        value: item.jabatan_asal?.nama_jabatan,
+        td: item.jabatan_asal?.nama_jabatan,
       },
       {
-        value: item.jabatan_tujuan.nama_jabatan,
-        td: item.jabatan_tujuan.nama_jabatan,
+        value: item.jabatan_tujuan?.nama_jabatan,
+        td: item.jabatan_tujuan?.nama_jabatan,
       },
       {
         value: item.alasan,
