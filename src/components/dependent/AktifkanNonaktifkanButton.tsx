@@ -95,11 +95,11 @@ export default function AktifkanNonaktifkanButton({ user_id, data }: Props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <DisclosureHeader title={"Konfirmasi"} />
+            <DisclosureHeader title={data ? "Non-aktifkan" : "Aktifkan"} />
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.4}>
-              Apakah anda yakin akan {data ? "Menonaktifkan" : "Mengaktifkan"}{" "}
+              Apakah anda yakin akan {data ? "menonaktifkan" : "mengaktifkan"}{" "}
               akun ini?
             </Text>
           </ModalBody>
