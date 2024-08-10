@@ -239,15 +239,13 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
         </>
       )}
 
-      {!error && (
-        <TabelFooterConfig
-          limitConfig={limitConfig}
-          setLimitConfig={setLimitConfig}
-          pageConfig={pageConfig}
-          setPageConfig={setPageConfig}
-          paginationData={paginationData}
-        />
-      )}
+      <TabelFooterConfig
+        limitConfig={limitConfig}
+        setLimitConfig={setLimitConfig}
+        pageConfig={pageConfig}
+        setPageConfig={setPageConfig}
+        paginationData={paginationData}
+      />
     </>
   );
 }

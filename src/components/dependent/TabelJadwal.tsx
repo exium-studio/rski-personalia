@@ -168,15 +168,13 @@ export default function TabelJadwal({ filterConfig }: Props) {
         </>
       )}
 
-      {!error && (
-        <TabelFooterConfig
-          limitConfig={limitConfig}
-          setLimitConfig={setLimitConfig}
-          pageConfig={pageConfig}
-          setPageConfig={setPageConfig}
-          paginationData={paginationData}
-        />
-      )}
+      <TabelFooterConfig
+        limitConfig={limitConfig}
+        setLimitConfig={setLimitConfig}
+        pageConfig={pageConfig}
+        setPageConfig={setPageConfig}
+        paginationData={paginationData}
+      />
     </>
   );
 }
