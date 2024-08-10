@@ -174,7 +174,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
             </Center>
           )}
 
-          <Text>Filter</Text>
+          <Text>Filter Peg.</Text>
         </HStack>
       </Button>
 
@@ -190,7 +190,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
 
         <ModalContent minW={"328px"}>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={title || "Filter Karyawan"} />
+            <DisclosureHeader title={title || "Filter Pegawai"} />
           </ModalHeader>
 
           <ModalBody className="scrollY">
