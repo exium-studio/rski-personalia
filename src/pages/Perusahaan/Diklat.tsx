@@ -68,14 +68,14 @@ export default function Diklat() {
             />
 
             <NumberInput
-              name="search"
+              name="tahun"
               onChangeSetter={(input) => {
                 setTahun(input);
               }}
               inputValue={tahun}
               placeholder={"Periode Tahun"}
               noFormat
-              flex={"1 1 320px"}
+              boxProps={{ w: "fit-content" }}
             />
 
             <ExportModal url="" title="Export Penggajian" />
