@@ -148,7 +148,7 @@ export default function TabelJadwalItem({
             </Text>
           </Box>
 
-          {data.unit_kerja.jenis_karyawan === 1 && (
+          {data.unit_kerja?.jenis_karyawan === 1 && (
             <Icon
               as={RiEditBoxLine}
               fontSize={20}
@@ -215,10 +215,10 @@ export default function TabelJadwalItem({
                   <Text fontSize={14} w={"120px"} opacity={0.6}>
                     Jenis Pegawai
                   </Text>
-                  <JenisKaryawanBadge data={data.unit_kerja.jenis_karyawan} />
+                  <JenisKaryawanBadge data={data.unit_kerja?.jenis_karyawan} />
                 </HStack>
 
-                {data.unit_kerja.jenis_karyawan === 0 && (
+                {data.unit_kerja?.jenis_karyawan === 0 && (
                   <HStack justify={"space-between"}>
                     <Text fontSize={14} w={"120px"} opacity={0.6}>
                       Jam Kerja
@@ -231,7 +231,7 @@ export default function TabelJadwalItem({
               </VStack>
             </VStack>
 
-            {data.unit_kerja.jenis_karyawan === 1 && (
+            {data.unit_kerja?.jenis_karyawan === 1 && (
               <form
                 id="terapkanJadwalKaryawanTerpilihForm"
                 onSubmit={formik.handleSubmit}
@@ -258,7 +258,7 @@ export default function TabelJadwalItem({
             )}
           </ModalBody>
           <ModalFooter gap={2}>
-            {data.unit_kerja.jenis_karyawan === 1 && (
+            {data.unit_kerja?.jenis_karyawan === 1 && (
               <ButtonGroup w={"100%"}>
                 <DeleteJadwalModal
                   data={data}
@@ -280,7 +280,7 @@ export default function TabelJadwalItem({
               </ButtonGroup>
             )}
 
-            {data.unit_kerja.jenis_karyawan === 0 && (
+            {data.unit_kerja?.jenis_karyawan === 0 && (
               <Button
                 w={"100%"}
                 className="btn-solid clicky"

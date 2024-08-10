@@ -180,7 +180,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
                   <Text fontSize={14} w={"120px"} opacity={0.6}>
                     Jenis Pegawai
                   </Text>
-                  <JenisKaryawanBadge data={data.unit_kerja.jenis_karyawan} />
+                  <JenisKaryawanBadge data={data.unit_kerja?.jenis_karyawan} />
                 </HStack>
               </VStack>
             </VStack>

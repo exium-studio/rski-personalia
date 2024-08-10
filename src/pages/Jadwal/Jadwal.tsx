@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { endOfWeek, startOfWeek } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExportModal from "../../components/dependent/ExportModal";
 import ImportModal from "../../components/dependent/ImportModal";
 import DateRangePickerModal from "../../components/dependent/input/DateRangePickerModal";
@@ -12,6 +12,7 @@ import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 export default function Jadwal() {
   const today = new Date();
@@ -29,6 +30,18 @@ export default function Jadwal() {
     tgl_selesai: defaultRangeTgl?.to,
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
+  const [search, setSearch] = useState("");
+  const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setFilterKaryawan({ search });
+      setFormattedFilterKaryawan({ search });
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [search, setFilterKaryawan, setFormattedFilterKaryawan]);
   const confirmDateRange = (
     inputValue: { from: Date; to: Date } | undefined
   ) => {
@@ -64,15 +77,12 @@ export default function Jadwal() {
             flexShrink={0}
           >
             <SearchComponent
-              name="search"
               minW={"165px"}
-              onChangeSetter={(inputValue) => {
-                setFilterConfig((ps: any) => ({
-                  ...ps,
-                  search: inputValue,
-                }));
+              name="search"
+              onChangeSetter={(input) => {
+                setSearch(input);
               }}
-              inputValue={filterConfig.search}
+              inputValue={search}
               tooltipLabel="Cari dengan nama/no. induk karyawan"
               placeholder="nama/no. induk karyawan"
             />

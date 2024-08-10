@@ -14,11 +14,21 @@ import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 export default function TukarJadwal() {
   // Filter Config
-  const { setFilterKaryawan } = useFilterKaryawan();
   const [filterConfig, setFilterConfig] = useState({
     status_penukaran: undefined,
   });
   const [search, setSearch] = useState("");
+  const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setFilterKaryawan({ search });
+      setFormattedFilterKaryawan({ search });
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [search, setFilterKaryawan, setFormattedFilterKaryawan]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -61,6 +71,8 @@ export default function TukarJadwal() {
                 setSearch(input);
               }}
               inputValue={search}
+              tooltipLabel="Cari dengan nama/no. induk karyawan"
+              placeholder="nama/no. induk karyawan"
             />
             <MultiSelectStatusPenukaranJadwal
               name="status_penukaran"
