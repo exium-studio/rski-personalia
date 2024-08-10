@@ -73,6 +73,8 @@ export default function Jadwal() {
                 }));
               }}
               inputValue={filterConfig.search}
+              tooltipLabel="Cari dengan nama/no. induk karyawan"
+              placeholder="nama/no. induk karyawan"
             />
             <DateRangePickerModal
               id="jadwal-date-range"
