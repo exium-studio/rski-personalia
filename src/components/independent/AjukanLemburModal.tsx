@@ -69,7 +69,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
         kompensasi_lembur_id: values.kompensasi.value,
         durasi: values.durasi,
         catatan: values.catatan,
-        status_lembur_id: 1,
+        // status_lembur_id: 1,
       };
       setLoading(true);
       req

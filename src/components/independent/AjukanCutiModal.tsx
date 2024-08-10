@@ -57,7 +57,6 @@ export default function AjukanCutiModal({ ...props }: Props) {
         tipe_cuti_id: values.tipe_cuti.value,
         tgl_from: formatDate(values.range_tgl?.from as string, "short"),
         tgl_to: formatDate(values.range_tgl?.to as string, "short"),
-        status_cuti_id: 2,
       };
       setLoading(true);
       req

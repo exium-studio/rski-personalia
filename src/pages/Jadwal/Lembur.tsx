@@ -58,6 +58,8 @@ export default function Lembur() {
                 setSearch(input);
               }}
               inputValue={search}
+              tooltipLabel="Cari dengan nama/no. induk karyawan"
+              placeholder="nama/no. induk karyawan"
             />
             <FilterKaryawan />
             <ExportModal

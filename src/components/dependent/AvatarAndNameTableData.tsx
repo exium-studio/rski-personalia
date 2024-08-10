@@ -5,6 +5,7 @@ import BooleanBadge from "./BooleanBadge";
 import DetailKaryawanModalDisclosure from "./DetailKaryawanModalDisclosure";
 
 interface Props extends StackProps {
+  detailKaryawanId?: string;
   data: {
     id: number;
     nama: string;
@@ -15,6 +16,7 @@ interface Props extends StackProps {
 }
 
 export default function AvatarAndNameTableData({
+  detailKaryawanId,
   data,
   noDetail = false,
   ...props
@@ -29,7 +31,10 @@ export default function AvatarAndNameTableData({
           size={data.unit_kerja ? "md" : "sm"}
         />
       ) : (
-        <DetailKaryawanModalDisclosure user_id={data.id}>
+        <DetailKaryawanModalDisclosure
+          detailKaryawanId={detailKaryawanId}
+          user_id={data.id}
+        >
           <Avatar
             cursor={"pointer"}
             src={data.foto_profil || ""}
