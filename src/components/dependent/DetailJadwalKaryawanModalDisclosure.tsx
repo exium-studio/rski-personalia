@@ -78,7 +78,7 @@ export default function DetailJadwalKaryawanModalDisclosure({
         <ModalOverlay />
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Detail Jadwal Karyawan"} />
+            <DisclosureHeader title={"Detail Jadwal Pegawai"} />
           </ModalHeader>
           <ModalBody>
             {error && (

@@ -24,13 +24,13 @@ import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
-import TabelDetailCutiKaryawan from "./TabelDetailCutiKaryawan";
+import TabelDetailAktivitasKaryawan from "./TabelDetailAktivitasKaryawan";
 
 interface Props extends BoxProps {
   karyawan_id: number;
   children?: any;
 }
-export default function DetailCutiKaryawanModalDisclosure({
+export default function DetailAktivitasKaryawanModalDisclosure({
   karyawan_id,
   children,
   ...props
@@ -38,7 +38,7 @@ export default function DetailCutiKaryawanModalDisclosure({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useBackOnClose(
-    `detail-cuti-karyawan-modal-${karyawan_id}`,
+    `detail-aktivitas-karyawan-modal-${karyawan_id}`,
     isOpen,
     onOpen,
     onClose
@@ -46,7 +46,7 @@ export default function DetailCutiKaryawanModalDisclosure({
   const initialRef = useRef(null);
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
-    url: `/api/rski/dashboard/karyawan/detail-karyawan-cuti/${karyawan_id}`,
+    url: `/api/rski/dashboard/karyawan/detail-karyawan-presensi/${karyawan_id}`,
     dependencies: [],
     conditions: !!(isOpen && karyawan_id),
   });
@@ -78,7 +78,7 @@ export default function DetailCutiKaryawanModalDisclosure({
         <ModalOverlay />
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Detail Cuti Pegawai"} />
+            <DisclosureHeader title={"Detail Aktifitas Presensi Pegawai"} />
           </ModalHeader>
           <ModalBody>
             {error && (
@@ -122,8 +122,6 @@ export default function DetailCutiKaryawanModalDisclosure({
                     >
                       <HStack>
                         <Skeleton h={"40px"} flex={1} />
-                        <Skeleton h={"40px"} flex={0} minW={"140px"} />
-                        <Skeleton h={"40px"} flex={0} minW={"140px"} />
                       </HStack>
 
                       <Skeleton flex={1} w={"100%"} />
@@ -152,15 +150,15 @@ export default function DetailCutiKaryawanModalDisclosure({
                             size={"md"}
                             w={"55px"}
                             h={"55px"}
-                            src={data.user?.foto_profil}
-                            name={data.user?.nama}
+                            src={data.user.foto_profil}
+                            name={data.user.nama}
                           />
 
                           <VStack align={"stretch"}>
                             <Text fontSize={14} opacity={0.6}>
                               Nama Karyawan
                             </Text>
-                            <Text fontWeight={500}>{data?.user?.nama}</Text>
+                            <Text fontWeight={500}>{data.user.nama}</Text>
                           </VStack>
 
                           <VStack align={"stretch"}>
@@ -168,12 +166,12 @@ export default function DetailCutiKaryawanModalDisclosure({
                               Unit Kerja
                             </Text>
                             <Text fontWeight={500}>
-                              {data?.unit_kerja?.nama_unit}
+                              {data.unit_kerja.nama_unit}
                             </Text>
                           </VStack>
                         </Wrap>
 
-                        <TabelDetailCutiKaryawan data={data} />
+                        <TabelDetailAktivitasKaryawan data={data.list_jadwal} />
                       </CContainer>
                     )}
                   </>

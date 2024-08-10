@@ -53,6 +53,7 @@ import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import DetailJadwalKaryawanModalDisclosure from "./DetailJadwalKaryawanModalDisclosure";
 import DetailCutiKaryawanModalDisclosure from "./DetailCutiKaryawanModalDisclosure";
+import DetailAktivitasKaryawanModalDisclosure from "./DetailAktivitasKaryawanModalDisclosure";
 interface Props {
   id?: string;
   user_id?: number;
@@ -281,26 +282,31 @@ export default function DetailKaryawanModal({
                           {/* Profil Menu */}
                           <SimpleGrid gap={3} columns={[1, 2, null, 3]}>
                             {/* Presensi */}
-                            <VStack
-                              cursor={"pointer"}
-                              borderRadius={12}
-                              justify={"center"}
-                              p={4}
-                              className="btn-solid clicky"
+                            <DetailAktivitasKaryawanModalDisclosure
+                              karyawan_id={data.id}
+                              flex={0}
                             >
-                              <Icon
-                                opacity={0.4}
-                                as={RiLoginBoxFill}
-                                fontSize={32}
-                              />
-                              <Text
-                                fontWeight={500}
-                                textAlign={"center"}
-                                lineHeight={1.4}
+                              <VStack
+                                cursor={"pointer"}
+                                borderRadius={12}
+                                justify={"center"}
+                                p={4}
+                                className="btn-solid clicky"
                               >
-                                Presensi
-                              </Text>
-                            </VStack>
+                                <Icon
+                                  opacity={0.4}
+                                  as={RiLoginBoxFill}
+                                  fontSize={32}
+                                />
+                                <Text
+                                  fontWeight={500}
+                                  textAlign={"center"}
+                                  lineHeight={1.4}
+                                >
+                                  Aktivitas
+                                </Text>
+                              </VStack>
+                            </DetailAktivitasKaryawanModalDisclosure>
 
                             {/* Jadwal */}
                             <DetailJadwalKaryawanModalDisclosure
