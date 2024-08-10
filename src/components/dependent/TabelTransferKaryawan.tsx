@@ -14,7 +14,11 @@ import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 
-export default function TabelRekamJejak() {
+interface Props {
+  filterConfig?: any;
+}
+
+export default function TabelTransferKaryawan({ filterConfig }: Props) {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
@@ -30,9 +34,19 @@ export default function TabelRekamJejak() {
       url: `/api/rski/dashboard/karyawan/transfer/get-data-trasnfer?page=${pageConfig}`,
       payload: {
         ...formattedFilterKaryawan,
+        ...(filterConfig?.kategori_transfer?.length > 0 && {
+          kategori_transfer: filterConfig.kategori_transfer.map(
+            (sp: any) => sp.value
+          ),
+        }),
       },
       limit: limitConfig,
-      dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
+      dependencies: [
+        limitConfig,
+        pageConfig,
+        formattedFilterKaryawan,
+        filterConfig,
+      ],
     });
 
   const formattedHeader = [
@@ -134,8 +148,8 @@ export default function TabelRekamJejak() {
         td: item.unit_kerja_asal.nama_unit,
       },
       {
-        value: item.unit_kerja_tujuan.nama_unit,
-        td: item.unit_kerja_tujuan.nama_unit,
+        value: item.unit_kerja_tujuan?.nama_unit,
+        td: item.unit_kerja_tujuan?.nama_unit,
       },
       {
         value: item.jabatan_asal.nama_jabatan,

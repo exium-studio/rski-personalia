@@ -94,7 +94,7 @@ export default function TransferKaryawan() {
             <AjukanTransferKaryawanModal minW={"fit-content"} />
           </HStack>
 
-          <TabelTransferKarywan />
+          <TabelTransferKarywan filterConfig={filterConfig} />
         </CContainer>
       </CWrapper>
     </>
