@@ -3,6 +3,7 @@ import {
   RiCalendarCheckLine,
   RiCalendarCloseLine,
   RiCalendarLine,
+  RiCalendarScheduleLine,
   RiFilePaper2Line,
   RiGroup3Line,
   RiHandCoinLine,
@@ -108,7 +109,12 @@ const pengaturanNavs = [
       },
       {
         icon: RiCalendarCheckLine,
-        label: "Shift",
+        label: "Jam Kerja Non-Shift",
+        link: "/pengaturan/manajemen-waktu/shift",
+      },
+      {
+        icon: RiCalendarScheduleLine,
+        label: "Jam Kerja Shift",
         link: "/pengaturan/manajemen-waktu/shift",
       },
       {
