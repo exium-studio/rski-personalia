@@ -120,7 +120,7 @@ export default function ColumnsConfigModal({
               <Text fontWeight={500} mb={2} opacity={0.6}>
                 Kolom
               </Text>
-              <SimpleGrid columns={[1, 2, null, 3, 4]} gap={2}>
+              <Wrap gap={2}>
                 {allColumns.map((option, i) => {
                   const ok = i !== 0;
                   return (
@@ -178,7 +178,7 @@ export default function ColumnsConfigModal({
                     )
                   );
                 })}
-              </SimpleGrid>
+              </Wrap>
             </CContainer>
 
             <CContainer mt={"auto"} mb={2}>
