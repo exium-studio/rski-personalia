@@ -67,6 +67,8 @@ const NavMenu = ({ nav, i, active, topNavActive }: any) => {
             opacity={active === i ? 1 : 0.6}
           />
         }
+        boxShadow={"none !important"}
+        border={"none !important"}
         className="btn"
         onClick={() => {
           navigate(nav.link);
