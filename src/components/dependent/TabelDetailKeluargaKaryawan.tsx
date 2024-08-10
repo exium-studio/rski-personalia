@@ -85,8 +85,8 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
         td: item.nama,
       },
       {
-        value: item.hubungan.label,
-        td: item.hubungan.label,
+        value: item.hubungan,
+        td: item.hubungan,
       },
       {
         value: item.status_hidup,
