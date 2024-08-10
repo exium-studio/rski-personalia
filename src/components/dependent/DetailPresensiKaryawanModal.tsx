@@ -27,7 +27,6 @@ import FlexLine from "../independent/FlexLine";
 import Img from "../independent/Img";
 import NoData from "../independent/NoData";
 import CContainer from "../wrapper/CContainer";
-import DetailKaryawanModalDisclosure from "./DetailKaryawanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
 import SearchComponent from "./input/SearchComponent";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
@@ -126,15 +125,13 @@ export default function DetailPresensiKaryawanModal({
                         align={"center"}
                         px={responsiveSpacing}
                       >
-                        <DetailKaryawanModalDisclosure user_id={data.user.id}>
-                          <Avatar
-                            size={"md"}
-                            w={"55px"}
-                            h={"55px"}
-                            src={data.user.foto_profil}
-                            name={data.user.nama}
-                          />
-                        </DetailKaryawanModalDisclosure>
+                        <Avatar
+                          size={"md"}
+                          w={"55px"}
+                          h={"55px"}
+                          src={data.user.foto_profil}
+                          name={data.user.nama}
+                        />
 
                         <VStack gap={1} align={"stretch"}>
                           <Text fontSize={14} opacity={0.6}>
@@ -191,8 +188,8 @@ export default function DetailPresensiKaryawanModal({
                                       lng: data.long_masuk || 0,
                                     }}
                                     officeCenter={{
-                                      lat: data.lat_masuk || 0,
-                                      lng: data.long_masuk || 0,
+                                      lat: data.lokasi_kantor.lat_masuk || 0,
+                                      lng: data.lokasi_kantor.long_masuk || 0,
                                     }}
                                     presence_radius={100}
                                   />
@@ -208,8 +205,8 @@ export default function DetailPresensiKaryawanModal({
                                       lng: data.long_keluar || 0,
                                     }}
                                     officeCenter={{
-                                      lat: data.lat_keluar || 0,
-                                      lng: data.long_keluar || 0,
+                                      lat: data.lokasi_kantor.lat_keluar || 0,
+                                      lng: data.lokasi_kantor.long_keluar || 0,
                                     }}
                                     presence_radius={100}
                                   />
@@ -356,7 +353,7 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(data.jadwal.jam_from)}
+                                      {formatTime(data.jadwal.shift.jam_from)}
                                     </Text>
                                   </HStack>
 
@@ -372,7 +369,7 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(data.jadwal.jam_to)}
+                                      {formatTime(data.jadwal.shift.jam_to)}
                                     </Text>
                                   </HStack>
                                 </CContainer>
