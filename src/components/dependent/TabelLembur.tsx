@@ -97,7 +97,7 @@ export default function TabelLembur({ filterConfig }: Props) {
         },
       },
       {
-        value: item.status_lembur.label,
+        value: item.status_lembur?.label,
         td: <StatusLemburBadge data={item.status_lembur} w={"120px"} />,
         cProps: {
           justify: "center",

@@ -7,12 +7,14 @@ interface Props extends BadgeProps {
 export default function StatusLemburBadge({ data, ...props }: Props) {
   return (
     <Badge
-      colorScheme={data.id === 1 ? "orange" : data.id === 2 ? "green" : "gray"}
+      colorScheme={
+        data?.id === 1 ? "orange" : data?.id === 2 ? "green" : "gray"
+      }
       borderRadius={"full"}
       textAlign={"center"}
       {...props}
     >
-      {data.label}
+      {data?.label || "INVALID"}
     </Badge>
   );
 }
