@@ -243,13 +243,14 @@ export default function MultipleSelectModal({
                       setSelected(undefined);
                     }
                   }}
+                  w={"fit-content"}
+                  mb={4}
                 >
                   <Checkbox
                     name="semua_karyawan"
                     onChange={(e) => setSelectAll(e.target.checked)}
                     isChecked={selectAll}
                     colorScheme="ap"
-                    mb={4}
                   >
                     <Text mt="-3px">Pilih Semua</Text>
                   </Checkbox>

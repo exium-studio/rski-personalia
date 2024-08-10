@@ -1,12 +1,12 @@
 import { ButtonProps, useDisclosure } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
-import SingleSelectModal from "../input/SingleSelectModal";
 import { optionsTipeTransfer } from "../../../constant/selectOptions";
+import MultipleSelectModal from "../input/MultipleSelectModal";
 
 interface Props extends ButtonProps {
   name: string;
-  onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
-  inputValue: Interface__SelectOption | undefined;
+  onConfirm: (inputValue: Interface__SelectOption[] | undefined) => void;
+  inputValue: Interface__SelectOption[] | undefined;
   withSearch?: boolean;
   optionsDisplay?: "list" | "chip";
   isError?: boolean;
@@ -14,7 +14,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function SelectTipeTransfer({
+export default function MultiSelectKategoriTransfer({
   name,
   onConfirm,
   inputValue,
@@ -28,8 +28,8 @@ export default function SelectTipeTransfer({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <SingleSelectModal
-      id="select-tipe-transfer-modal"
+    <MultipleSelectModal
+      id="multi-select-kategori-transfer-karyawan-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
@@ -42,7 +42,7 @@ export default function SelectTipeTransfer({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Kategori Transfer"}
+      placeholder={placeholder || "Multi Pilih Kategori Transfer"}
       nonNullable={nonNullable}
       {...props}
     />

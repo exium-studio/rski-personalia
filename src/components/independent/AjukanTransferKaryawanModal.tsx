@@ -203,7 +203,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                   isInvalid={!!formik.errors.kategori_transfer}
                 >
                   <FormLabel>
-                    Tipe Transfer
+                    Kategori Transfer
                     <RequiredForm />
                   </FormLabel>
                   <SelectTipeTransfer

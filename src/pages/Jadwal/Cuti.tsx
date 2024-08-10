@@ -15,10 +15,8 @@ import FilterKaryawan from "../../components/independent/FilterKaryawan";
 
 export default function Cuti() {
   // Filter Config
-  const { filterKaryawan, setFilterKaryawan, setFormattedFilterKaryawan } =
-    useFilterKaryawan();
+  const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
   const [filterConfig, setFilterConfig] = useState({
-    ...filterKaryawan,
     status_cuti: undefined,
     tipe_cuti: undefined,
   });

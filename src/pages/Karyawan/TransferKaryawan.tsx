@@ -11,11 +11,15 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import MultiSelectKategoriTransfer from "../../components/dependent/_Select/MultiSelectKategoriTransfer";
 
 export default function TransferKaryawan() {
   // Filter Config
   const { setFilterKaryawan } = useFilterKaryawan();
   const [search, setSearch] = useState("");
+  const [filterConfig, setFilterConfig] = useState({
+    kategori_transfer: undefined,
+  });
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -60,6 +64,21 @@ export default function TransferKaryawan() {
               inputValue={search}
               tooltipLabel="Cari dengan nama/no. induk karyawan"
               placeholder="nama/no. induk karyawan"
+            />
+
+            <MultiSelectKategoriTransfer
+              name="kategori_transfer"
+              onConfirm={(input) => {
+                setFilterConfig((ps: any) => ({
+                  ...ps,
+                  kategori_transfer: input,
+                }));
+              }}
+              inputValue={filterConfig.kategori_transfer}
+              placeholder="Filter Kategori Transfer"
+              minW={"fit-content"}
+              maxW={"165px !important"}
+              optionsDisplay="chip"
             />
 
             <FilterKaryawan />

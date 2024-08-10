@@ -230,7 +230,6 @@ export default function CustomTable({
       sortConfig.sortColumnIndex !== undefined &&
       sortConfig.sortColumnIndex !== null
     ) {
-      console.log("Sorting...", sortConfig.sortColumnIndex);
       return [...tableBody].sort((a, b) => {
         //@ts-ignore
         const aValue = a.columnsFormat[sortConfig.sortColumnIndex].value;
