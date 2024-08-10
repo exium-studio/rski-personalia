@@ -173,7 +173,7 @@ export default function DetailCutiKaryawanModalDisclosure({
                           </VStack>
                         </Wrap>
 
-                        <TabelDetailCutiKaryawan data={data} />
+                        <TabelDetailCutiKaryawan data={data.list_cuti} />
                       </CContainer>
                     )}
                   </>
