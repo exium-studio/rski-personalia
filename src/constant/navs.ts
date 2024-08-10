@@ -65,7 +65,7 @@ const navs = [
         link: "/jadwal",
       },
       {
-        label: "Penukaran Jadwal",
+        label: "Tukar Jadwal",
         link: "/jadwal/penukaran-jadwal",
       },
       {
