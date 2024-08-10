@@ -2,6 +2,7 @@ import {
   Avatar,
   Button,
   ButtonGroup,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -20,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { RiEditBoxLine } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as yup from "yup";
 import req from "../../constant/req";
 import { responsiveSpacing } from "../../constant/sizes";
@@ -107,6 +108,14 @@ export default function TerapkanJadwalKaryawanTerpilih({
     },
   });
 
+  const [libur, setLibur] = useState<boolean>(false);
+  useEffect(() => {
+    formik.resetForm();
+    if (libur) {
+      formik.setFieldValue("shift", { value: 0, label: "Libur" });
+    }
+  }, [libur]);
+
   // SX
 
   return (
@@ -189,10 +198,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
               id="terapkanJadwalKaryawanTerpilihForm"
               onSubmit={formik.handleSubmit}
             >
-              <FormControl
-                mt={6}
-                isInvalid={formik.errors.shift ? true : false}
-              >
+              <FormControl mt={6} isInvalid={!!formik.errors.shift}>
                 <FormLabel>
                   Jam kerja
                   <RequiredForm />
@@ -204,7 +210,18 @@ export default function TerapkanJadwalKaryawanTerpilih({
                     formik.setFieldValue("shift", input);
                   }}
                   inputValue={formik.values.shift}
+                  isError={!!formik.errors.shift}
+                  isDisabled={libur}
+                  mb={4}
                 />
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    setLibur(e.target.checked);
+                  }}
+                >
+                  <Text mt={"-3px"}>Jadwalkan Libur</Text>
+                </Checkbox>
                 <FormErrorMessage>
                   {formik.errors.shift as string}
                 </FormErrorMessage>
