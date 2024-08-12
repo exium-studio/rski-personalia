@@ -32,6 +32,7 @@ interface Props extends StackProps {
   left?: any;
   backLink?: string;
   right?: any;
+  noMiniProfile?: boolean;
 }
 
 export default function Header({
@@ -39,6 +40,7 @@ export default function Header({
   left,
   backLink,
   right,
+  noMiniProfile = false,
   ...props
 }: Props) {
   const smScreen = useScreenWidth() <= 768;
@@ -78,7 +80,7 @@ export default function Header({
 
             <ColorModeSwitcher className="btn-solid clicky" />
 
-            <AdminMiniProfile />
+            {!noMiniProfile && <AdminMiniProfile />}
           </ButtonGroup>
         </>
       )}

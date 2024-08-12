@@ -40,6 +40,7 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatMasaKerja from "../../lib/formatMasaKerja";
 import formatNumber from "../../lib/formatNumber";
+import Header from "../../components/dependent/Header";
 
 interface LogoutProps extends ButtonProps {}
 
@@ -287,19 +288,7 @@ export default function Profil() {
           gap={responsiveSpacing}
           overflowY={[null, null, null, "auto"]}
         >
-          <HStack justify={"space-between"} gap={responsiveSpacing}>
-            <Text fontWeight={600} fontSize={18}>
-              {formatDate(new Date(), "long")}
-            </Text>
-
-            <ButtonGroup>
-              <RefreshButton className="btn-solid clicky" />
-
-              <NotificationModal aria-label="Notification Button" />
-
-              <ColorModeSwitcher className="btn-solid clicky" />
-            </ButtonGroup>
-          </HStack>
+          <Header title="Profil" noMiniProfile />
 
           <CContainer
             flex={1}
