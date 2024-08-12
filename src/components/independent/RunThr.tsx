@@ -23,7 +23,6 @@ import { iconSize } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import MultiSelectKaryawan from "../dependent/_Select/MultiSelectKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import RequiredForm from "../form/RequiredForm";
@@ -42,11 +41,9 @@ export default function RunThr({ ...props }: Props) {
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      list_karyawan: [],
       tgl_run_thr: "",
     },
     validationSchema: yup.object().shape({
-      list_karyawan: yup.array().min(1, "Harus diisi").required("Harus diisi"),
       tgl_run_thr: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
@@ -55,7 +52,7 @@ export default function RunThr({ ...props }: Props) {
       };
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/keuangan/data-thr-penggajian`, payload)
+        .post(`/api/rski/dashboard/keuangan/run-thr`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -66,6 +63,7 @@ export default function RunThr({ ...props }: Props) {
             });
             setRt(!rt);
             resetForm();
+            backOnClose();
           }
         })
         .catch((e) => {
@@ -121,27 +119,6 @@ export default function RunThr({ ...props }: Props) {
           </ModalHeader>
           <ModalBody>
             <form id="runThrForm" onSubmit={formik.handleSubmit}>
-              <FormControl mb={4} isInvalid={!!formik.errors.list_karyawan}>
-                <FormLabel>
-                  Karyawan
-                  <RequiredForm />
-                </FormLabel>
-                <MultiSelectKaryawan
-                  name="list_karyawan"
-                  placeholder="Pilih Multi Karyawan"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("list_karyawan", input);
-                  }}
-                  inputValue={formik.values.list_karyawan}
-                  isError={!!formik.errors.list_karyawan}
-                  withSearch
-                  optionsDisplay="chip"
-                />
-                <FormErrorMessage>
-                  {formik.errors.list_karyawan as string}
-                </FormErrorMessage>
-              </FormControl>
-
               <FormControl isInvalid={!!formik.errors.tgl_run_thr}>
                 <FormLabel>
                   Tanggal
