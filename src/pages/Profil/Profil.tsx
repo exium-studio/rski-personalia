@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   ButtonProps,
   HStack,
   Icon,
@@ -21,14 +20,12 @@ import {
 import { RiLogoutBoxLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 import DisclosureHeader from "../../components/dependent/DisclosureHeader";
+import Header from "../../components/dependent/Header";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import JenisKaryawanBadge from "../../components/dependent/JenisKaryawanBadge";
 import SmallLink from "../../components/dependent/SmallLink";
 import FlexLine from "../../components/independent/FlexLine";
-import NotificationModal from "../../components/independent/NotificationModal";
-import RefreshButton from "../../components/independent/RefreshButton";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
@@ -40,7 +37,6 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatMasaKerja from "../../lib/formatMasaKerja";
 import formatNumber from "../../lib/formatNumber";
-import Header from "../../components/dependent/Header";
 
 interface LogoutProps extends ButtonProps {}
 
