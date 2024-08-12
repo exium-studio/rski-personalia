@@ -2,6 +2,7 @@ import {
   Button,
   ButtonGroup,
   ButtonProps,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -13,12 +14,13 @@ import {
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { RiCalendarFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as yup from "yup";
 import { Interface__SelectOption } from "../../constant/interfaces";
 import req from "../../constant/req";
@@ -99,6 +101,14 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
     },
   });
 
+  const [libur, setLibur] = useState<boolean>(false);
+  useEffect(() => {
+    formik.resetForm();
+    if (libur) {
+      formik.setFieldValue("shift", { value: 0, label: "Libur" });
+    }
+  }, [libur]);
+
   return (
     <>
       <Button
@@ -174,32 +184,6 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                     {formik.errors.tgl_mulai as string}
                   </FormErrorMessage>
                 </FormControl>
-
-                {/* <FormControl
-                  mb={4}
-                  isInvalid={formik.errors.tgl_selesai ? true : false}
-                >
-                  <FormLabel>
-                    Tanggal Selesai
-                    <RequiredForm />
-                  </FormLabel>
-                  <DatePickerModal
-                    id="terapkan-jadwal-tgl-selesai"
-                    name="tgl_selesai"
-                    onConfirm={(input) => {
-                      formik.setFieldValue("tgl_selesai", input);
-                    }}
-                    inputValue={
-                      formik.values.tgl_selesai
-                        ? new Date(formik.values.tgl_selesai)
-                        : undefined
-                    }
-                    isError={!!formik.errors.tgl_selesai}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.tgl_selesai as string}
-                  </FormErrorMessage>
-                </FormControl> */}
               </SimpleGrid>
 
               <FormControl isInvalid={!!formik.errors.shift}>
@@ -215,7 +199,16 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                   }}
                   inputValue={formik.values.shift}
                   isError={!!formik.errors.shift}
+                  mb={4}
                 />
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    setLibur(e.target.checked);
+                  }}
+                >
+                  <Text mt={"-3px"}>Jadwalkan Libur</Text>
+                </Checkbox>
                 <FormErrorMessage>
                   {formik.errors.shift as string}
                 </FormErrorMessage>

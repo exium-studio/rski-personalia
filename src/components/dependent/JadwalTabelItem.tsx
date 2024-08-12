@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -21,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { RiEditBoxLine } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as yup from "yup";
 import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
@@ -120,6 +121,14 @@ export default function TabelJadwalItem({
         });
     },
   });
+
+  const [libur, setLibur] = useState<boolean>(false);
+  useEffect(() => {
+    formik.resetForm();
+    if (libur) {
+      formik.setFieldValue("shift", { value: 0, label: "Libur" });
+    }
+  }, [libur]);
 
   return (
     <>
@@ -249,7 +258,16 @@ export default function TabelJadwalItem({
                     }}
                     inputValue={formik.values.shift}
                     isDisabled={isDatePassed(data.tgl_masuk)}
+                    mb={4}
                   />
+                  <Checkbox
+                    colorScheme="ap"
+                    onChange={(e) => {
+                      setLibur(e.target.checked);
+                    }}
+                  >
+                    <Text mt={"-3px"}>Jadwalkan Libur</Text>
+                  </Checkbox>
                   <FormErrorMessage>
                     {formik.errors.shift as string}
                   </FormErrorMessage>
