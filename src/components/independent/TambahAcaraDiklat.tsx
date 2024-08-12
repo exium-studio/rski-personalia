@@ -300,18 +300,20 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
               </SimpleGrid>
             </form>
 
-            <Button
-              mt={"auto"}
-              mb={6}
-              type="submit"
-              form="tambahAcaraDiklatForm"
-              className="btn-ap clicky"
-              colorScheme="ap"
-              w={"100%"}
-              flexShrink={0}
-            >
-              Buat Acara Diklat
-            </Button>
+            <CContainer mt={"auto"}>
+              <Button
+                mt={4}
+                mb={6}
+                type="submit"
+                form="tambahAcaraDiklatForm"
+                className="btn-ap clicky"
+                colorScheme="ap"
+                w={"100%"}
+                flexShrink={0}
+              >
+                Buat Acara Diklat
+              </Button>
+            </CContainer>
           </ModalBody>
         </ModalContent>
       </Modal>
