@@ -45,7 +45,7 @@ export default function SelectMultiKaryawan({
 
   return (
     <MultipleSelectModal
-      id="select-unit_kerja-modal"
+      id="multi-select-status-cuti-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}

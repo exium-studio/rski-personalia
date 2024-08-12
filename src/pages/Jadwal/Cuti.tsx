@@ -70,7 +70,7 @@ export default function Cuti() {
 
             <MultiSelectTipeCuti
               name={"tipe_cuti"}
-              minW={"fit-content"}
+              // minW={"fit-content"}
               maxW={"165px !important"}
               placeholder="Filter Tipe Cuti"
               onConfirm={(input: any) => {
@@ -88,7 +88,7 @@ export default function Cuti() {
 
             <MultiSelectStatusCuti
               name={"status_cuti"}
-              minW={"fit-content"}
+              // minW={"fit-content"}
               maxW={"165px !important"}
               placeholder="Filter Status Cuti"
               onConfirm={(input: any) => {
