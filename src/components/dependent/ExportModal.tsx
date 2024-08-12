@@ -55,8 +55,8 @@ export default function ExportModal({
           toast({
             status: "error",
             title: "Maaf terjadi kesalahan pada sistem",
-            position: "bottom-right",
             isClosable: true,
+            position: "bottom-right",
           });
         }
       })

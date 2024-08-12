@@ -2,6 +2,7 @@ import { ButtonProps, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import req from "../../../constant/req";
+import backOnClose from "../../../lib/backOnClose";
 import SingleSelectModal from "../input/SingleSelectModal";
 
 interface Props extends ButtonProps {
@@ -54,8 +55,14 @@ export default function SelectKaryawanDitukar({
           console.log(e);
           toast({
             status: "error",
-            title: "Maaf terjadi kesalahan pada sistem",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
           });
+          backOnClose();
         });
     }
   }, [isOpen, options, toast]);

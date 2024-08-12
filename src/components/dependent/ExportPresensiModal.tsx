@@ -53,8 +53,8 @@ export default function ExportPresensiModal({ ...props }: Props) {
           toast({
             status: "error",
             title: "Maaf terjadi kesalahan pada sistem",
-            position: "bottom-right",
             isClosable: true,
+            position: "bottom-right",
           });
         }
       })
@@ -70,9 +70,12 @@ export default function ExportPresensiModal({ ...props }: Props) {
         } else {
           toast({
             status: "error",
-            title: "Maaf terjadi kesalahan pada sistem",
-            position: "bottom-right",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
             isClosable: true,
+            position: "bottom-right",
           });
         }
       })

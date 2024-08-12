@@ -83,7 +83,7 @@ export default function Cuti() {
               optionsDisplay="chip"
               pr={5}
               maxSelectedDisplay={1}
-              _focus={{ border: "none !important" }}
+              _focus={{ border: "1px solid var(--divider3) !important" }}
             />
 
             <MultiSelectStatusCuti
@@ -101,7 +101,7 @@ export default function Cuti() {
               optionsDisplay="chip"
               pr={5}
               maxSelectedDisplay={1}
-              _focus={{ border: "none !important" }}
+              _focus={{ border: "1px solid var(--divider3) !important" }}
             />
 
             <FilterKaryawan />

@@ -62,9 +62,12 @@ export default function SelectJadwalKaryawan({
           console.log("Error:", e);
           toast({
             status: "error",
-            title: "Maaf terjadi kesalahan pada sistem",
-            position: "bottom-right",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
             isClosable: true,
+            position: "bottom-right",
           });
         });
     }

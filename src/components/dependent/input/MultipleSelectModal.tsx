@@ -12,6 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  Tooltip,
   Wrap,
 } from "@chakra-ui/react";
 import { RiArrowDownSLine } from "@remixicon/react";
@@ -111,82 +112,87 @@ export default function MultipleSelectModal({
 
   return (
     <>
-      <Button
-        className="btn-clear"
-        border={"1px solid var(--divider3)"}
-        borderColor={isError ? errorColor : ""}
-        borderRadius={8}
-        gap={3}
-        _focus={{
-          border: "1px solid var(--p500)",
-          boxShadow: "none !important",
-        }}
-        cursor={"pointer"}
-        onClick={() => {
-          onOpen();
-          setSelected(inputValue);
-        }}
-        justifyContent={"space-between"}
-        w={"100%"}
-        role="group"
-        px={
-          inputValue && inputValue.length > 0
-            ? "8px !important"
-            : "12px !important"
-        }
-        pl={
-          inputValue && inputValue.length > 0
-            ? "8px !important"
-            : "16px !important"
-        }
-        {...props}
+      <Tooltip
+        label={`${inputValue && inputValue.map((item) => ` ${item.label}`)}`}
+        openDelay={500}
       >
-        <Box w={"100%"} overflowX={"auto"} className="noScroll">
-          <HStack w={"100%"}>
-            {inputValue && inputValue.length > 0 ? (
-              inputValue.map((value, i) => {
-                return (
-                  i < maxSelectedDisplay && (
-                    <Badge
-                      key={i}
-                      borderRadius={6}
-                      bg={"var(--divider)"}
-                      textTransform={"none"}
-                      flex={"1 1 100px"}
-                      h={"24px"}
-                      pt={"5.5px"}
-                    >
-                      {value.label}
-                    </Badge>
-                  )
-                );
-              })
-            ) : placeholder ? (
-              <Text
-                //@ts-ignore
-                color={props?._placeholder?.color || "#96969691"}
-                fontWeight={400}
-              >
-                {placeholder}
-              </Text>
-            ) : (
-              <Text opacity={0.3} fontWeight={400}>
-                Multi Pilih
-              </Text>
-            )}
+        <Button
+          className="btn-clear"
+          border={"1px solid var(--divider3)"}
+          borderColor={isError ? errorColor : ""}
+          borderRadius={8}
+          gap={3}
+          _focus={{
+            border: "1px solid var(--p500)",
+            boxShadow: "none !important",
+          }}
+          cursor={"pointer"}
+          onClick={() => {
+            onOpen();
+            setSelected(inputValue);
+          }}
+          justifyContent={"space-between"}
+          w={"100%"}
+          role="group"
+          px={
+            inputValue && inputValue.length > 0
+              ? "8px !important"
+              : "12px !important"
+          }
+          pl={
+            inputValue && inputValue.length > 0
+              ? "8px !important"
+              : "16px !important"
+          }
+          {...props}
+        >
+          <Box w={"100%"} overflowX={"auto"} className="noScroll">
+            <HStack w={"100%"}>
+              {inputValue && inputValue.length > 0 ? (
+                inputValue.map((value, i) => {
+                  return (
+                    i < maxSelectedDisplay && (
+                      <Badge
+                        key={i}
+                        borderRadius={6}
+                        bg={"var(--divider)"}
+                        textTransform={"none"}
+                        flex={"1 1 100px"}
+                        h={"24px"}
+                        pt={"5.5px"}
+                      >
+                        {value.label}
+                      </Badge>
+                    )
+                  );
+                })
+              ) : placeholder ? (
+                <Text
+                  //@ts-ignore
+                  color={props?._placeholder?.color || "#96969691"}
+                  fontWeight={400}
+                >
+                  {placeholder}
+                </Text>
+              ) : (
+                <Text opacity={0.3} fontWeight={400}>
+                  Multi Pilih
+                </Text>
+              )}
 
-            {inputValue && inputValue.length - maxSelectedDisplay > 0 && (
-              <Badge bg={"var(--divider)"} h={"24px"} pt={"5.5px"}>
-                +
-                {inputValue.length - maxSelectedDisplay > 0 &&
-                  inputValue.length - maxSelectedDisplay}
-              </Badge>
-            )}
-          </HStack>
-        </Box>
+              {inputValue && inputValue.length - maxSelectedDisplay > 0 && (
+                <Badge bg={"var(--divider)"} h={"24px"} pt={"5.5px"}>
+                  +
+                  {inputValue.length - maxSelectedDisplay > 0 &&
+                    inputValue.length - maxSelectedDisplay}
+                </Badge>
+              )}
+            </HStack>
+          </Box>
 
-        <Icon as={RiArrowDownSLine} fontSize={18} />
-      </Button>
+          <Icon as={RiArrowDownSLine} fontSize={18} />
+        </Button>
+      </Tooltip>
 
       <Modal
         isOpen={isOpen}

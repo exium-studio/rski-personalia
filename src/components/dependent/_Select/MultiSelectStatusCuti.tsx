@@ -31,15 +31,15 @@ export default function SelectMultiKaryawan({
   const options = [
     {
       value: 1,
-      label: "Usai",
+      label: "Menunggu",
     },
     {
       value: 2,
-      label: "Berlangsung",
+      label: "Disetujui",
     },
     {
       value: 3,
-      label: "Menunggu",
+      label: "Ditolak",
     },
   ];
 
