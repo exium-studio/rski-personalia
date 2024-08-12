@@ -256,7 +256,7 @@ export const globalTheme = extendTheme({
         },
         footer: {
           px: "24px",
-          pt: "20px",
+          pt: "24px",
           pb: "24px",
         },
         closeButton: {
