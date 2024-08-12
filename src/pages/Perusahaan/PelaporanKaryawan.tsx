@@ -64,7 +64,11 @@ export default function PelaporanKaryawan() {
 
             <FilterKaryawan title="Filter Karyawan Pelapor" />
 
-            <ExportModal url="" title="Export Penggajian" />
+            <ExportModal
+              url="/api/rski/dashboard/perusahaan/pelaporan/export"
+              title="Export Penggajian"
+              downloadFileName="Data Pelaporan"
+            />
           </HStack>
 
           <TabelPelaporanKaryawan filterConfig={filterKaryawan} />
