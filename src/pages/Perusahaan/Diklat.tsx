@@ -78,7 +78,11 @@ export default function Diklat() {
               boxProps={{ w: "fit-content" }}
             />
 
-            <ExportModal url="" title="Export Penggajian" />
+            <ExportModal
+              url="/api/rski/dashboard/perusahaan/diklat/export"
+              title="Export Penggajian"
+              downloadFileName="data diklat"
+            />
 
             <TambahAcaraDiklat minW={"fit-content"} />
           </HStack>
