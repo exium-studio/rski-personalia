@@ -11,6 +11,8 @@ import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 import ViewPhotoModalDisclosure from "./ViewPhotoModalDisclosure";
+import isObjectEmpty from "../../lib/isObjectEmpty";
+import NotFound from "../independent/NotFound";
 
 interface Props {
   filterConfig: any;
@@ -22,53 +24,16 @@ export default function TabelPelaporanKaryawan({ filterConfig }: Props) {
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
 
-  const dummy = [
-    {
-      pelapor: {
-        id: 3,
-        nama: "Jolitos Kurniawan",
-        username: "username1",
-        email_verified_at: null,
-        role_id: null,
-        foto_profil: "https://bit.ly/dan-abramov",
-        data_completion_step: 1,
-        status_aktif: 1,
-        created_at: "2024-06-06T23:48:35.000000Z",
-        updated_at: "2024-06-06T23:48:35.000000Z",
-        roles: [
-          {
-            id: 3,
-            name: "Admin",
-            deskripsi:
-              "satellites native some bottle blanket extra continued young married lost far great door short quick example tin teeth variety shadow does line met these",
-            guard_name: "web",
-            created_at: "2024-04-19T23:48:34.000000Z",
-            updated_at: "2024-06-06T23:48:34.000000Z",
-            pivot: {
-              model_type: "App\\Models\\User",
-              model_id: 3,
-              role_id: 3,
-            },
-          },
-        ],
+  const { error, notFound, loading, data, paginationData, retry } =
+    useDataState<any[]>({
+      initialData: undefined,
+      url: `/api/rski/dashboard/perusahaan/get-data-pelaporan?page=${pageConfig}`,
+      payload: {
+        filterConfig: filterConfig,
       },
-      pelaku: "Jolitos Kurniawan",
-      tgl_kejadian: "2024-01-04",
-      lokasi: "Parkiran Gedung C",
-      kronologi: "lorem ipsum",
-      upload_foto: "/images/gear5.jpg",
-    },
-  ];
-
-  const { error, loading, data, retry } = useDataState<any[]>({
-    initialData: dummy,
-    url: "",
-    payload: {
-      filterConfig: filterConfig,
-    },
-    limit: limitConfig,
-    dependencies: [limitConfig, pageConfig, filterConfig],
-  });
+      limit: limitConfig,
+      dependencies: [limitConfig, pageConfig, filterConfig],
+    });
 
   const formattedHeader = [
     {
@@ -130,8 +95,16 @@ export default function TabelPelaporanKaryawan({ filterConfig }: Props) {
         },
       },
       {
-        value: item.pelaku,
-        td: item.pelaku,
+        value: item.pelaku.nama,
+        td: (
+          <AvatarAndNameTableData
+            data={{
+              id: item.pelaku.id,
+              nama: item.pelaku.nama,
+              foto_profil: item.pelaku.foto_profil,
+            }}
+          />
+        ),
       },
       {
         value: item.tgl_kejadian,
@@ -147,9 +120,9 @@ export default function TabelPelaporanKaryawan({ filterConfig }: Props) {
         td: item.kronologi,
       },
       {
-        value: item.upload_foto,
+        value: item.foto,
         td: (
-          <ViewPhotoModalDisclosure src={item.upload_foto}>
+          <ViewPhotoModalDisclosure src={item.foto}>
             <Button colorScheme="ap" variant={"ghost"} className="clicky">
               Lihat
             </Button>
@@ -165,10 +138,21 @@ export default function TabelPelaporanKaryawan({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"300px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
+
+          {notFound && !isObjectEmpty(filterConfig) && (
+            <NotFound minH={"300px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"300px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
+
       {!error && (
         <>
           {loading && (
@@ -193,24 +177,20 @@ export default function TabelPelaporanKaryawan({ filterConfig }: Props) {
                       formattedData={formattedData}
                     />
                   </CustomTableContainer>
-
-                  <TabelFooterConfig
-                    limitConfig={limitConfig}
-                    setLimitConfig={setLimitConfig}
-                    pageConfig={pageConfig}
-                    setPageConfig={setPageConfig}
-                    paginationData={{
-                      prev_page_url: "",
-                      next_page_url: "",
-                      last_page: 1,
-                    }}
-                  />
                 </>
               )}
             </>
           )}
         </>
       )}
+
+      <TabelFooterConfig
+        limitConfig={limitConfig}
+        setLimitConfig={setLimitConfig}
+        pageConfig={pageConfig}
+        setPageConfig={setPageConfig}
+        paginationData={paginationData}
+      />
     </>
   );
 }
