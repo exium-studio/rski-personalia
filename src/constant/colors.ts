@@ -47,6 +47,8 @@ const statusKaryawanColorScheme = {
   Kontrak: "purple",
   magang: "green",
   Magang: "green",
+  training: "green",
+  Training: "green",
 };
 
 export {

@@ -1,22 +1,30 @@
 import { Badge, BadgeProps } from "@chakra-ui/react";
-import { statusKaryawanColorScheme } from "../../constant/colors";
 
 interface Props extends BadgeProps {
-  data: string;
+  data: any;
 }
 
 export default function StatusKaryawanBadge({ data, ...props }: Props) {
+  let colorScheme;
+  switch (data.id) {
+    case 1:
+      colorScheme = "orange";
+      break;
+    case 2:
+      colorScheme = "purple";
+      break;
+    case 3:
+      colorScheme = "green";
+      break;
+  }
   return (
     <Badge
       textAlign={"center"}
       borderRadius={"full"}
-      colorScheme={
-        //@ts-ignore
-        statusKaryawanColorScheme[data]
-      }
+      colorScheme={colorScheme}
       {...props}
     >
-      {data}
+      {data.label}
     </Badge>
   );
 }

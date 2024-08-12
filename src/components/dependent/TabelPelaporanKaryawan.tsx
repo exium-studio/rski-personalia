@@ -12,6 +12,7 @@ import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 import ViewPhotoModalDisclosure from "./ViewPhotoModalDisclosure";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 interface Props {
   filterConfig: any;
@@ -22,16 +23,18 @@ export default function TabelPelaporanKaryawan({ filterConfig }: Props) {
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
+  // FIlter Config
+  const { formattedFilterKaryawan } = useFilterKaryawan();
 
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any[]>({
       initialData: undefined,
       url: `/api/rski/dashboard/perusahaan/get-data-pelaporan?page=${pageConfig}`,
       payload: {
-        filterConfig: filterConfig,
+        ...formattedFilterKaryawan,
       },
       limit: limitConfig,
-      dependencies: [limitConfig, pageConfig, filterConfig],
+      dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
     });
 
   const formattedHeader = [
@@ -77,6 +80,7 @@ export default function TabelPelaporanKaryawan({ filterConfig }: Props) {
         value: item.pelapor.nama,
         td: (
           <AvatarAndNameTableData
+            detailKaryawanId={`karyawan-detail-pelaporan-${item.id}-${item.pelapor.id}`}
             data={{
               id: item.pelapor.id,
               nama: item.pelapor.nama,

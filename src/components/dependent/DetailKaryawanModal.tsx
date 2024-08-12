@@ -54,6 +54,7 @@ import StatusAktifBadge from "./StatusAktifBadge";
 import DetailJadwalKaryawanModalDisclosure from "./DetailJadwalKaryawanModalDisclosure";
 import DetailCutiKaryawanModalDisclosure from "./DetailCutiKaryawanModalDisclosure";
 import DetailAktivitasKaryawanModalDisclosure from "./DetailAktivitasKaryawanModalDisclosure";
+import StatusKaryawanBadge from "./StatusKaryawanBadge";
 interface Props {
   id?: string;
   user_id?: number;
@@ -1113,9 +1114,9 @@ export default function DetailKaryawanModal({
                                     />
                                   </Box>
                                   <FlexLine />
-                                  <Text fontWeight={500} textAlign={"right"}>
-                                    {data.status_karyawan?.label}
-                                  </Text>
+                                  <StatusKaryawanBadge
+                                    data={data.status_karyawan}
+                                  />
                                 </HStack>
 
                                 <HStack justify={"space-between"}>

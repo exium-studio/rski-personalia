@@ -173,9 +173,7 @@ export default function TabelKaryawan() {
       },
       {
         value: item.status_karyawan?.label,
-        td: (
-          <StatusKaryawanBadge w={"120px"} data={item.status_karyawan?.label} />
-        ),
+        td: <StatusKaryawanBadge w={"120px"} data={item.status_karyawan} />,
         cProps: {
           justify: "center",
         },
