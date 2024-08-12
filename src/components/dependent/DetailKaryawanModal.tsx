@@ -98,21 +98,32 @@ export default function DetailKaryawanModal({
     setSearchQuery(modifiedWords);
   }, [search]);
 
-  const [countDataKosong, setCountDataKosong] = useState(0);
+  const [countDataKosong, setCountDataKosong] = useState<number | undefined>(
+    undefined
+  );
   function countEmptyValues(obj: Record<string, any>): number {
     let count = 0;
 
     for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        const value = obj[key];
-        if (
-          value === null ||
-          value === undefined ||
-          value === "" ||
-          value?.length === 0
-        ) {
-          count++;
-        }
+      switch (key) {
+        case "path_sip":
+        case "path_nik_ktp":
+        case "path_kartu_keluarga":
+        case "path_ijazah":
+        case "path_str":
+          break;
+        default:
+          if (obj.hasOwnProperty(key)) {
+            const value = obj[key];
+            if (
+              value === null ||
+              value === undefined ||
+              value === "" ||
+              value?.length === 0
+            ) {
+              count++;
+            }
+          }
       }
     }
 
@@ -544,27 +555,31 @@ export default function DetailKaryawanModal({
                           </HStack>
 
                           <Box px={4}>
-                            <Alert
-                              status={
-                                countDataKosong === 0 ? "success" : "warning"
-                              }
-                              py={1}
-                              borderRadius={"8px !important"}
-                            >
-                              <AlertDescription
-                                m={0}
-                                fontWeight={600}
-                                color={
-                                  countDataKosong === 0
-                                    ? "green.400"
-                                    : warningColor
+                            {typeof countDataKosong !== "number" ? (
+                              <Skeleton h={"51.19px"} />
+                            ) : (
+                              <Alert
+                                status={
+                                  countDataKosong === 0 ? "success" : "warning"
                                 }
+                                py={1}
+                                borderRadius={"8px !important"}
                               >
-                                {countDataKosong === 0
-                                  ? "Data pegawai lengkap"
-                                  : `${countDataKosong} data masih kosong`}
-                              </AlertDescription>
-                            </Alert>
+                                <AlertDescription
+                                  m={0}
+                                  fontWeight={600}
+                                  color={
+                                    countDataKosong === 0
+                                      ? "green.400"
+                                      : warningColor
+                                  }
+                                >
+                                  {countDataKosong === 0
+                                    ? "Data pegawai lengkap"
+                                    : `${countDataKosong} data masih kosong`}
+                                </AlertDescription>
+                              </Alert>
+                            )}
                           </Box>
 
                           <CContainer
