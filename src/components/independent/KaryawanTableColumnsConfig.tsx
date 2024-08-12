@@ -35,6 +35,7 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
     { column: "promosi", label: "Promosi" }, // 17
     { column: "mutasi", label: "Mutasi" }, // 18
   ];
+
   const presetColumns = [
     {
       label: "Semua Kolom",
