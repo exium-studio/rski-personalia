@@ -173,8 +173,9 @@ export default function RunThr({ ...props }: Props) {
               w={"100%"}
               className="btn-ap clicky"
               colorScheme="ap"
+              isLoading={loading}
             >
-              Simpan
+              Run THR
             </Button>
           </ModalFooter>
         </ModalContent>
