@@ -11,6 +11,7 @@ interface Props extends ButtonProps {
   isError?: boolean;
   placeholder?: string;
   nonNullable?: boolean;
+  maxSelectedDisplay?: number;
 }
 
 export default function MultiSelectStatusPenukaranJadwal({
@@ -22,6 +23,7 @@ export default function MultiSelectStatusPenukaranJadwal({
   isError,
   placeholder,
   nonNullable,
+  maxSelectedDisplay,
   ...props
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,6 +60,7 @@ export default function MultiSelectStatusPenukaranJadwal({
       isError={isError}
       placeholder={placeholder || "Status Penukaran"}
       nonNullable={nonNullable}
+      maxSelectedDisplay={maxSelectedDisplay}
       {...props}
     />
   );

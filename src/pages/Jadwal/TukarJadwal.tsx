@@ -86,6 +86,7 @@ export default function TukarJadwal() {
               optionsDisplay="chip"
               minW={"fit-content"}
               w={"fit-content"}
+              maxSelectedDisplay={1}
             />
             <FilterKaryawan />
             <ExportModal
