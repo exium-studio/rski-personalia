@@ -198,10 +198,10 @@ export default function TabelDiklat({ filterConfig }: Props) {
           position: "sticky",
           left: 0,
           zIndex: 2,
-          w: "243px",
         },
         cProps: {
           borderRight: "1px solid var(--divider3)",
+          w: "243px",
         },
       },
       {
@@ -297,8 +297,6 @@ export default function TabelDiklat({ filterConfig }: Props) {
                     <CustomTable
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}
-                      initialSortOrder="desc"
-                      initialSortColumnIndex={1}
                     />
                   </CustomTableContainer>
                 </>
