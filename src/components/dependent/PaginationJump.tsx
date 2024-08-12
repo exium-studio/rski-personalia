@@ -7,6 +7,7 @@ import {
   MenuGroup,
   MenuList,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
@@ -19,6 +20,7 @@ type Props = {
 };
 export default function PaginationJump({ page, setPage, pagination }: Props) {
   const [data, setData] = useState<number | undefined>(page);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const validation = () => {
     if (
@@ -44,7 +46,7 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
 
   return (
     <>
-      <Menu>
+      <Menu isOpen={isOpen}>
         <MenuButton
           as={VStack}
           justify={"center"}
@@ -56,6 +58,7 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
           cursor={"pointer"}
           transition={"200ms"}
           px={2}
+          onClick={onOpen}
         >
           <Text fontWeight={600} mt={1}>
             {page}
@@ -89,6 +92,7 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
                 isDisabled={!validation()}
                 borderRadius={"0 0 8px 8px"}
                 w={"100%"}
+                onClick={onClose}
               >
                 Lompat
               </Button>
