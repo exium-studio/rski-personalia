@@ -1,9 +1,10 @@
-import { Button, Center, HStack } from "@chakra-ui/react";
+import { Button, Center } from "@chakra-ui/react";
 import { useState } from "react";
-import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
+import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
@@ -11,8 +12,6 @@ import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 import ViewPhotoModalDisclosure from "./ViewPhotoModalDisclosure";
-import isObjectEmpty from "../../lib/isObjectEmpty";
-import NotFound from "../independent/NotFound";
 
 interface Props {
   filterConfig: any;
@@ -158,11 +157,6 @@ export default function TabelPelaporanKaryawan({ filterConfig }: Props) {
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (

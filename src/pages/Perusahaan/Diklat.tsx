@@ -30,10 +30,6 @@ export default function Diklat() {
     };
   }, [search, tahun, setFilterConfig]);
 
-  useEffect(() => {
-    console.log(filterConfig);
-  }, [filterConfig]);
-
   // SX
   const lightDarkColor = useLightDarkColor();
 

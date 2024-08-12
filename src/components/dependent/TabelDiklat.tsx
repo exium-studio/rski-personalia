@@ -121,7 +121,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       initialData: undefined,
       url: `/api/rski/dashboard/perusahaan/get-data-diklat?page=${pageConfig}`,
       payload: {
-        filterConfig: filterConfig,
+        ...filterConfig,
       },
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, filterConfig],
