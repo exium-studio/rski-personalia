@@ -13,10 +13,11 @@ import {
   ModalOverlay,
   SimpleGrid,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { RiUser2Fill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
@@ -30,6 +31,8 @@ import Textarea from "../dependent/input/Textarea";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
+import req from "../../constant/req";
+import useRenderTrigger from "../../global/useRenderTrigger";
 
 interface Props extends ButtonProps {}
 
@@ -38,19 +41,23 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
   useBackOnClose("tambah-acara-diklat-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
       gambar: "",
       nama: "",
-      kategori: undefined,
+      kategori: undefined as any,
       deskripsi: "",
-      kuota: undefined,
-      tempat: "",
-      tgl_mulai: undefined,
-      tgl_selesai: undefined,
-      jam_mulai: undefined,
-      jam_selesai: undefined,
+      kuota: undefined as any,
+      lokasi: "",
+      tgl_mulai: undefined as any,
+      tgl_selesai: undefined as any,
+      jam_mulai: undefined as any,
+      jam_selesai: undefined as any,
     },
     validationSchema: yup.object().shape({
       gambar: yup.string().required("Harus diisi"),
@@ -58,16 +65,56 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       kategori: yup.object().required("Harus diisi"),
       deskripsi: yup.string().required("Harus diisi"),
       kuota: yup.number().required("Harus diisi"),
-      tempat: yup.string().required("Harus diisi"),
+      lokasi: yup.string().required("Harus diisi"),
       tgl_mulai: yup.string().required("Harus diisi"),
       tgl_selesai: yup.string().required("Harus diisi"),
       jam_mulai: yup.string().required("Harus diisi"),
       jam_selesai: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      const payload = new FormData();
+      payload.append("dokumen", values.gambar);
+      payload.append("nama", values.nama);
+      payload.append("kategori_diklat_id", values.kategori.value);
+      payload.append("deskripsi", values.deskripsi);
+      payload.append("kuota", values.kuota);
+      payload.append("tgl_mulai", values.tgl_mulai);
+      payload.append("tgl_selesai", values.tgl_selesai);
+      payload.append("jam_mulai", values.jam_mulai);
+      payload.append("jam_selesai", values.jam_selesai);
+      payload.append("lokasi", values.lokasi);
+      payload.append("lokasi", values.lokasi);
 
-      //TODO api tambah cuti
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/perusahaan/diklat`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -242,19 +289,19 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                   </FormErrorMessage>
                 </FormControl>
 
-                <FormControl mb={4} isInvalid={!!formik.errors.tempat}>
+                <FormControl mb={4} isInvalid={!!formik.errors.lokasi}>
                   <FormLabel>
                     Lokasi
                     <RequiredForm />
                   </FormLabel>
                   <Input
-                    name="tempat"
+                    name="lokasi"
                     placeholder="Gedung Serba Guna"
                     onChange={formik.handleChange}
-                    value={formik.values.tempat}
+                    value={formik.values.lokasi}
                   />
                   <FormErrorMessage>
-                    {formik.errors.tempat as string}
+                    {formik.errors.lokasi as string}
                   </FormErrorMessage>
                 </FormControl>
 
@@ -310,6 +357,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                 colorScheme="ap"
                 w={"100%"}
                 flexShrink={0}
+                isLoading={loading}
               >
                 Buat Acara Diklat
               </Button>

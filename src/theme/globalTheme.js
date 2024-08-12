@@ -332,6 +332,10 @@ export const globalTheme = extendTheme({
         fontSize: [13, null, 15],
         borderRadius: 8,
       },
+      container: {
+        w: "100% !important",
+        maxW: "500px !important",
+      },
     },
 
     Tooltip: {
