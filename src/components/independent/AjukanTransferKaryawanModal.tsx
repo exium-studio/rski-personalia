@@ -37,6 +37,7 @@ import DatePickerModal from "../dependent/input/DatePickerModal";
 import FileInput from "../dependent/input/FileInput";
 import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
+import formatDate from "../../lib/formatDate";
 
 interface Props extends ButtonProps {}
 
@@ -76,15 +77,16 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
       beri_tahu_karyawan: yup.boolean(),
     }),
     onSubmit: (values, { resetForm }) => {
-      const payload = {
-        user_id: values.karyawan.value,
-        tgl_mulai: values.tgl_mulai,
-        kategori_transfer_id: values?.kategori_transfer?.value,
-        unit_kerja_tujuan: values?.unit_kerja_tujuan?.value,
-        jabatan_tujuan: values?.jabatan_tujuan?.value,
-        alasan: values.alasan,
-        dokumen: values.dokumen,
-      };
+      console.log("jancok");
+      const payload = new FormData();
+      payload.append("user_id", values.karyawan?.value);
+      payload.append("tgl_mulai", formatDate(values.tgl_mulai, "short"));
+      payload.append("kategori_transfer_id", values.kategori_transfer?.value);
+      payload.append("unit_kerja_tujuan", values.unit_kerja_tujuan?.value);
+      payload.append("jabatan_tujuan", values.jabatan_tujuan?.value);
+      payload.append("alasan", values.alasan);
+      payload.append("dokumen", values.dokumen);
+
       setLoading(true);
       req
         .post(`/api/rski/dashboard/karyawan/transfer`, payload)

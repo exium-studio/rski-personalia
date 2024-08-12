@@ -75,7 +75,7 @@ export default function TransferKaryawan() {
                 }));
               }}
               inputValue={filterConfig.kategori_transfer}
-              placeholder="Filter Kategori Transfer"
+              placeholder="Filter Kat. Trans."
               minW={"fit-content"}
               maxW={"165px !important"}
               optionsDisplay="chip"
