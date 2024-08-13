@@ -183,9 +183,6 @@ export default function TabelDiklat({ filterConfig }: Props) {
     {
       th: "Durasi",
       isSortable: true,
-      cProps: {
-        justify: "center",
-      },
     },
   ];
   const formattedData = data?.map((item: any) => ({
@@ -255,9 +252,6 @@ export default function TabelDiklat({ filterConfig }: Props) {
         value: item.durasi,
         td: formatDuration(item.durasi),
         isTime: true,
-        cProps: {
-          justify: "center",
-        },
       },
     ],
   }));
