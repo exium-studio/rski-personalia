@@ -568,8 +568,7 @@ export default function DetailKaryawanModal({
                               {emptyDataLabel && (
                                 <Accordion allowMultiple>
                                   <AccordionItem
-                                    border={"none"}
-                                    bg={"var(--divider)"}
+                                    border={"1px solid var(--divider3)"}
                                     borderRadius={8}
                                     overflow={"clip"}
                                   >
