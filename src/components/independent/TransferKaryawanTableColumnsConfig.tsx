@@ -34,6 +34,7 @@ export default function TransferKaryawanTableColumnsConfig({
     { column: "alasan", label: "Alasan" }, // 13
     { column: "dokumen", label: "Dokumen" }, // 14
   ];
+
   const presetColumns = [
     {
       label: "Semua Kolom",
