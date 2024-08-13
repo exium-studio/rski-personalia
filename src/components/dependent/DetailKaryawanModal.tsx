@@ -280,9 +280,7 @@ export default function DetailKaryawanModal({
                                 <HStack opacity={0.6}>
                                   <Text>{data.email}</Text>
                                 </HStack>
-                              </HStack>
 
-                              <HStack>
                                 <StatusAktifBadge
                                   data={data.user.status_aktif}
                                 />
@@ -585,9 +583,11 @@ export default function DetailKaryawanModal({
                                       }
                                       _expanded={{ bg: "var(--divider2)" }}
                                     >
-                                      {emptyDataLabel?.length === 0
-                                        ? "Data pegawai lengkap"
-                                        : `${emptyDataLabel?.length} data masih kosong`}
+                                      <Text mt={"2px"}>
+                                        {emptyDataLabel?.length === 0
+                                          ? "Data pegawai lengkap"
+                                          : `${emptyDataLabel?.length} data masih kosong`}
+                                      </Text>
                                       <AccordionIcon />
                                     </AccordionButton>
 
