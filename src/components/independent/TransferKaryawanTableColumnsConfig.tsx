@@ -18,17 +18,21 @@ export default function TransferKaryawanTableColumnsConfig({
   } = useTransferKaryawanTableColumnsConfig();
 
   const allColumns = [
-    { column: "nama", label: "Nama" },
-    { column: "nik", label: "Nik" },
-    { column: "kategori", label: "Kategori Transfer" },
-    { column: "created_at", label: "Tanggal Pengajuan" },
-    { column: "tgl_mulai", label: "Tanggal Mulai" },
-    { column: "unit_kerja_asal", label: "Unit Kerja Asal" },
-    { column: "unit_kerja_tujuan", label: "Unit Kerja Tujuan" },
-    { column: "jabatan_asal", label: "Jabatan Asal" },
-    { column: "jabatan_tujuan", label: "Jabatan Tujuan" },
-    { column: "alasan", label: "Alasan" },
-    { column: "dokumen", label: "Dokumen" },
+    { column: "nama", label: "Nama" }, // 0
+    { column: "nik", label: "Nik" }, // 1
+    { column: "kategori", label: "Kategori Transfer" }, // 2
+    { column: "created_at", label: "Tanggal Pengajuan" }, // 3
+    { column: "tgl_mulai", label: "Tanggal Mulai" }, // 4
+    { column: "unit_kerja_asal", label: "Unit Kerja Asal" }, // 5
+    { column: "unit_kerja_tujuan", label: "Unit Kerja Tujuan" }, // 6
+    { column: "jabatan_asal", label: "Jabatan Asal" }, // 7
+    { column: "jabatan_tujuan", label: "Jabatan Tujuan" }, // 8
+    { column: "kelompok_gaji_asal", label: "Kelompok Gaji Asal" }, // 9
+    { column: "kelompok_gaji_tujuan", label: "Kelompok Gaji Tujuan" }, // 10
+    { column: "role_asal", label: "Role Asal" }, // 11
+    { column: "role_tujuan", label: "Role Tujuan" }, // 12
+    { column: "alasan", label: "Alasan" }, // 13
+    { column: "dokumen", label: "Dokumen" }, // 14
   ];
   const presetColumns = [
     {
@@ -41,15 +45,15 @@ export default function TransferKaryawanTableColumnsConfig({
     },
     {
       label: "Data Asal",
-      columns: [0, 2, 5, 7],
+      columns: [0, 2, 5, 7, 9, 11],
     },
     {
       label: "Data Tujuan",
-      columns: [0, 2, 6, 8],
+      columns: [0, 2, 6, 8, 10, 12],
     },
     {
       label: "Data Asal & Tujuan",
-      columns: [0, 2, 5, 6, 7, 8],
+      columns: [0, 2, 5, 6, 7, 8, 9, 10, 11, 12],
     },
     {
       label: "Alasan & Dokumen",

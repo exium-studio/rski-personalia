@@ -97,6 +97,22 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
       isSortable: true,
     },
     {
+      th: "Kelompok Gaji Asal",
+      isSortable: true,
+    },
+    {
+      th: "Kelompok Gaji Tujuan",
+      isSortable: true,
+    },
+    {
+      th: "Role Asal",
+      isSortable: true,
+    },
+    {
+      th: "Role Tujuan",
+      isSortable: true,
+    },
+    {
       th: "Alasan",
     },
     {
@@ -160,6 +176,22 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
       {
         value: item.jabatan_tujuan?.nama_jabatan,
         td: item.jabatan_tujuan?.nama_jabatan,
+      },
+      {
+        value: "-",
+        td: "-",
+      },
+      {
+        value: "-",
+        td: "-",
+      },
+      {
+        value: "-",
+        td: "-",
+      },
+      {
+        value: "-",
+        td: "-",
       },
       {
         value: item.alasan,
