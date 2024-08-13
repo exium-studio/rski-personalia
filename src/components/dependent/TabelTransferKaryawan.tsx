@@ -111,6 +111,7 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
         value: item.user.nama,
         td: (
           <AvatarAndNameTableData
+            detailKaryawanId={`detail-karyawan-modal-${item.id}-${item.user.id}`}
             data={{
               id: item.user.id,
               nama: item.user.nama,
