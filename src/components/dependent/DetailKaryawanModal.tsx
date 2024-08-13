@@ -831,7 +831,6 @@ export default function DetailKaryawanModal({
                                       overflow={"hidden"}
                                       textOverflow={"ellipsis"}
                                       maxW={"243px"}
-                                      cursor={"pointer"}
                                     >
                                       {data.alamat}
                                     </Text>
