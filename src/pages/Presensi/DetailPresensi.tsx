@@ -145,7 +145,7 @@ export default function DetailPresensi() {
                       <Text opacity={0.6}>Tanggal Masuk</Text>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(data.jadwal.jam_from, "short")}
+                        {formatDate(data.jadwal.jam_from)}
                       </Text>
                     </HStack>
 
@@ -164,14 +164,6 @@ export default function DetailPresensi() {
                         {formatTime(data.jadwal.jam_to)}
                       </Text>
                     </HStack>
-
-                    {/* <HStack justify={"space-between"}>
-                      <Text opacity={0.6}>Tanggal Keluar</Text>
-                      <FlexLine />
-                      <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(data.jadwal.jam_to, "short")}
-                      </Text>
-                    </HStack> */}
                   </VStack>
                 </VStack>
               </CContainer>
@@ -244,7 +236,7 @@ export default function DetailPresensi() {
                       <Text opacity={0.6}>Tanggal Masuk</Text>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(data.jam_masuk, "short")}
+                        {formatDate(data.jam_masuk)}
                       </Text>
                     </HStack>
 
@@ -252,7 +244,7 @@ export default function DetailPresensi() {
                       <Text opacity={0.6}>Tanggal Keluar</Text>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(data.jam_keluar, "short")}
+                        {formatDate(data.jam_keluar)}
                       </Text>
                     </HStack>
 

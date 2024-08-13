@@ -166,7 +166,7 @@ export default function DetailPelaporanKaryawan() {
                       <Text opacity={0.6}>Tanggal</Text>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(data.jadwal.jam_from, "short")}
+                        {formatDate(data.jadwal.jam_from)}
                       </Text>
                     </HStack>
 
@@ -185,14 +185,6 @@ export default function DetailPelaporanKaryawan() {
                         {formatTime(data.jadwal.jam_from)}
                       </Text>
                     </HStack>
-
-                    {/* <HStack justify={"space-between"}>
-                      <Text opacity={0.6}>Tanggal Keluar</Text>
-                      <FlexLine />
-                      <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(data.jadwal.jam_to, "short")}
-                      </Text>
-                    </HStack> */}
                   </VStack>
                 </VStack>
               </CContainer>
