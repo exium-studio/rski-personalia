@@ -86,6 +86,7 @@ export default function Jadwal() {
               tooltipLabel="Cari dengan nama/no. induk karyawan"
               placeholder="nama/no. induk karyawan"
             />
+
             <DateRangePickerModal
               id="jadwal-date-range"
               name="date-range"
@@ -100,17 +101,21 @@ export default function Jadwal() {
               nonNullable
               presetsConfig={["thisWeek", "nextWeek"]}
             />
+
             <FilterKaryawan />
+
             <ExportModal
               url="/api/rski/dashboard/jadwal-karyawan/export"
               title="Export Jadwal"
               downloadFileName="Data Jadwal"
             />
+
             <ImportModal
               url="/api/rski/dashboard/jadwal-karyawan/jadwal-import"
               title="Import Jadwal"
               reqBodyKey="jadwal_karyawan_file"
             />
+
             <TerapkanJadwalModal minW={"fit-content"} />
           </HStack>
 
