@@ -1,4 +1,4 @@
-import { Center, Text, Tooltip } from "@chakra-ui/react";
+import { Button, Center, Text, Tooltip } from "@chakra-ui/react";
 import { useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useTransferKaryawanTableColumnsConfig from "../../global/useTransferKaryawanTableColumnsConfig";
@@ -13,6 +13,7 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+import { Link } from "react-router-dom";
 
 interface Props {
   filterConfig?: any;
@@ -175,8 +176,19 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
         ),
       },
       {
-        value: "-",
-        td: "-",
+        value: item.dokumen,
+        td: (
+          <Button
+            colorScheme="ap"
+            variant={"ghost"}
+            className="clicky"
+            as={Link}
+            to={`${process.env.REACT_APP_STORAGE_BASE_URL}${item.dokumen}`}
+            target="_blank"
+          >
+            Lihat
+          </Button>
+        ),
       },
     ],
   }));
@@ -206,11 +218,6 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              {/* <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack> */}
             </>
           )}
 

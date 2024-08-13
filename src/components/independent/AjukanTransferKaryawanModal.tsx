@@ -38,6 +38,7 @@ import FileInput from "../dependent/input/FileInput";
 import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
 import formatDate from "../../lib/formatDate";
+import PleaseWaitModal from "../dependent/PleaseWaitModal";
 
 interface Props extends ButtonProps {}
 
@@ -349,13 +350,14 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
               w={"100%"}
               colorScheme="ap"
               className="btn-ap clicky"
-              isLoading={loading}
             >
               Transfer Pegawai
             </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
+
+      <PleaseWaitModal isOpen={loading} />
     </>
   );
 }
