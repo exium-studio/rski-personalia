@@ -108,6 +108,7 @@ export default function AktifkanNonaktifkanButton({ user_id, data }: Props) {
               w={"100%"}
               className="btn-solid clicky"
               onClick={backOnClose}
+              isDisabled={loading}
             >
               Tidak
             </Button>
