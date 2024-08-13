@@ -36,9 +36,8 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import FileInput from "../dependent/input/FileInput";
 import Textarea from "../dependent/input/Textarea";
-import RequiredForm from "../form/RequiredForm";
-import formatDate from "../../lib/formatDate";
 import PleaseWaitModal from "../dependent/PleaseWaitModal";
+import RequiredForm from "../form/RequiredForm";
 
 interface Props extends ButtonProps {}
 
@@ -80,7 +79,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
     onSubmit: (values, { resetForm }) => {
       const payload = new FormData();
       payload.append("user_id", values.karyawan?.value);
-      payload.append("tgl_mulai", formatDate(values.tgl_mulai, "short"));
+      payload.append("tgl_mulai", new Date(values.tgl_mulai).toISOString());
       payload.append("kategori_transfer_id", values.kategori_transfer?.value);
       payload.append("unit_kerja_tujuan", values.unit_kerja_tujuan?.value);
       payload.append("jabatan_tujuan", values.jabatan_tujuan?.value);
