@@ -18,11 +18,11 @@ import { useRef, useState } from "react";
 import { useErrorAlphaColor } from "../../constant/colors";
 import { Pengumuman__Interface } from "../../constant/interfaces";
 import { responsiveSpacing } from "../../constant/sizes";
-import backOnClose from "../../lib/backOnCloseOld";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import isDatePassed from "../../lib/isDatePassed";
 import timeSince from "../../lib/timeSince";
-import useBackOnClose from "../../lib/useBackOnCloseOld";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardUpdatePengumuman from "../form/Dashboard/FormDashboardUpdatePengumuman";
 
@@ -35,7 +35,7 @@ export default function DashboardPengumumanItemDetail({
   ...props
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(isOpen, onClose);
+  useBackOnClose(`buat-pengumuman-modal-${data.id}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -87,7 +87,7 @@ export default function DashboardPengumumanItemDetail({
       <Modal
         isOpen={isOpen}
         onClose={() => {
-          backOnClose(onClose);
+          backOnClose();
         }}
         initialFocusRef={initialRef}
         isCentered
@@ -99,11 +99,6 @@ export default function DashboardPengumumanItemDetail({
           </ModalHeader>
 
           <ModalBody>
-            {/* <HStack mb={4}>
-              <Icon as={RiCalendar2Fill} fontSize={iconSize} opacity={0.6} />
-              <Text>{formatDate(data.created_at)}</Text>
-            </HStack> */}
-
             <FormDashboardUpdatePengumuman
               data={data}
               setLoading={setLoading}
