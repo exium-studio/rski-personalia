@@ -70,6 +70,7 @@ export default function Presensi() {
               tooltipLabel="Cari dengan nama/no. induk karyawan"
               placeholder="nama/no. induk karyawan"
             />
+
             <DatePickerModal
               id="presensi-date-picker"
               name="'date-picker"
@@ -78,9 +79,13 @@ export default function Presensi() {
               onConfirm={confirmDate}
               inputValue={filterConfig.tanggal}
               nonNullable
+              _focus={{ border: "1px solid var(--divider)" }}
             />
+
             <FilterKaryawan />
+
             <ExportPresensiModal />
+
             <ImportModal
               url="/api/rski/dashboard/presensi/import"
               title="Import Presensi"

@@ -75,10 +75,10 @@ export default function TransferKaryawan() {
                 }));
               }}
               inputValue={filterConfig.kategori_transfer}
-              placeholder="Filter Kat. Trans."
-              minW={"fit-content"}
+              placeholder="Filter Kategori Transfer"
               maxW={"165px !important"}
               optionsDisplay="chip"
+              _focus={{ border: "1px solid var(--divider)" }}
             />
 
             <FilterKaryawan />

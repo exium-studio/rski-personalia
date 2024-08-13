@@ -86,13 +86,17 @@ export default function TukarJadwal() {
               optionsDisplay="chip"
               maxW={"165px"}
               maxSelectedDisplay={1}
+              _focus={{ border: "1px solid var(--divider)" }}
             />
+
             <FilterKaryawan />
+
             <ExportModal
               url="/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/export"
               title="Export Penukaran Jadwal"
               downloadFileName="Data Tukar Jadwal"
             />
+
             <AjukanTukarJadwalModal minW={"fit-content"} />
           </HStack>
 
