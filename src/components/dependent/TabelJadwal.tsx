@@ -32,7 +32,11 @@ export default function TabelJadwal({ filterConfig }: Props) {
     useDataState<any>({
       initialData: undefined,
       url: `/api/rski/dashboard/jadwal-karyawan/get-data-jadwal?page=${pageConfig}`,
-      payload: { ...filterConfig, ...formattedFilterKaryawan },
+      payload: {
+        tgl_mulai: formatDate(filterConfig.tgl_mulai, "iso"),
+        tgl_selesai: formatDate(filterConfig.tgl_selesai, "iso"),
+        ...formattedFilterKaryawan,
+      },
       limit: limitConfig,
       dependencies: [
         limitConfig,
