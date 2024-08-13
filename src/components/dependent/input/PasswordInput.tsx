@@ -45,6 +45,7 @@ export default function PasswordInput({
         _active={{ bg: "transparent" }}
         position={"absolute"}
         right={0}
+        top={0}
         zIndex={2}
         onClick={() => {
           setShowPassword((ps) => !ps);
