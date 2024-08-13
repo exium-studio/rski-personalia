@@ -45,7 +45,6 @@ export default function FormDashboardBuatPengumuman({
         konten: values.konten,
         tgl_berakhir: formatDate(values.tgl_berakhir, "short"),
       };
-      console.log(payload);
       setLoading(true);
       req
         .post(`/api/rski/dashboard/pengumuman`, payload)

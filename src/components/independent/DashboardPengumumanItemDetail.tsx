@@ -3,7 +3,6 @@ import {
   Button,
   ButtonGroup,
   HStack,
-  Icon,
   Modal,
   ModalBody,
   ModalContent,
@@ -15,18 +14,17 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { RiCalendar2Fill } from "@remixicon/react";
 import { useRef, useState } from "react";
+import { useErrorAlphaColor } from "../../constant/colors";
 import { Pengumuman__Interface } from "../../constant/interfaces";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import { responsiveSpacing } from "../../constant/sizes";
 import backOnClose from "../../lib/backOnCloseOld";
 import formatDate from "../../lib/formatDate";
+import isDatePassed from "../../lib/isDatePassed";
+import timeSince from "../../lib/timeSince";
 import useBackOnClose from "../../lib/useBackOnCloseOld";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardUpdatePengumuman from "../form/Dashboard/FormDashboardUpdatePengumuman";
-import { useErrorAlphaColor } from "../../constant/colors";
-import timeSince from "../../lib/timeSince";
-import isDatePassed from "../../lib/isDatePassed";
 
 interface Props extends StackProps {
   data: Pengumuman__Interface;
@@ -101,10 +99,10 @@ export default function DashboardPengumumanItemDetail({
           </ModalHeader>
 
           <ModalBody>
-            <HStack mb={4}>
+            {/* <HStack mb={4}>
               <Icon as={RiCalendar2Fill} fontSize={iconSize} opacity={0.6} />
               <Text>{formatDate(data.created_at)}</Text>
-            </HStack>
+            </HStack> */}
 
             <FormDashboardUpdatePengumuman
               data={data}

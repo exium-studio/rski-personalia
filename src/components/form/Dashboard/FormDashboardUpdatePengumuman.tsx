@@ -14,6 +14,7 @@ import { Dispatch } from "react";
 import req from "../../../constant/req";
 import formatDate from "../../../lib/formatDate";
 import useRenderTrigger from "../../../global/useRenderTrigger";
+import DatePickerModal from "../../dependent/input/DatePickerModal";
 
 interface Props {
   data: Pengumuman__Interface;
@@ -32,7 +33,7 @@ export default function FormDashboardUpdatePengumuman({
     initialValues: {
       judul: data.judul,
       konten: data.konten,
-      tgl_berakhir: data.tgl_berakhir,
+      tgl_berakhir: new Date(data.tgl_berakhir),
     },
     validationSchema: yup.object().shape({
       judul: yup.string().required("Judul harus diisi"),
@@ -46,7 +47,6 @@ export default function FormDashboardUpdatePengumuman({
         tgl_berakhir: formatDate(values.tgl_berakhir, "short"),
         _method: "patch",
       };
-      console.log(payload);
       setLoading(true);
       req
         .post(`/api/rski/dashboard/pengumuman/${data.id}`, payload)
@@ -94,6 +94,24 @@ export default function FormDashboardUpdatePengumuman({
           value={formik.values.judul}
         />
         <FormErrorMessage>{formik.errors.judul}</FormErrorMessage>
+      </FormControl>
+
+      <FormControl mb={4} isInvalid={formik.errors.tgl_berakhir ? true : false}>
+        <FormLabel>
+          Tanggal Berakhir
+          <RequiredForm />
+        </FormLabel>
+        <DatePickerModal
+          id="tambah-pengumuman"
+          name="tgl_berakhir"
+          onConfirm={(input) => {
+            formik.setFieldValue("tgl_berakhir", input);
+          }}
+          inputValue={formik.values.tgl_berakhir}
+        />
+        <FormErrorMessage>
+          {formik.errors.tgl_berakhir as string}
+        </FormErrorMessage>
       </FormControl>
 
       <FormControl isInvalid={formik.errors.konten ? true : false}>
