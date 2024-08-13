@@ -1,5 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import MultiSelectKategoriTransfer from "../../components/dependent/_Select/MultiSelectKategoriTransfer";
 import ExportModal from "../../components/dependent/ExportModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelTransferKarywan from "../../components/dependent/TabelTransferKaryawan";
@@ -11,7 +12,6 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
-import MultiSelectKategoriTransfer from "../../components/dependent/_Select/MultiSelectKategoriTransfer";
 
 export default function TransferKaryawan() {
   // Filter Config

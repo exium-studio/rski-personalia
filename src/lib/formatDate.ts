@@ -32,8 +32,8 @@ const formatDate = (dateString: Date | string, options?: any) => {
 
   const shortFormat: Intl.DateTimeFormatOptions = {
     year: "numeric",
-    month: "numeric",
-    day: "numeric",
+    month: "2-digit",
+    day: "2-digit",
   };
 
   const periodeFormat: Intl.DateTimeFormatOptions = {
@@ -57,7 +57,12 @@ const formatDate = (dateString: Date | string, options?: any) => {
       ? prefixOptions[options]
       : options || defaultFormat;
 
-  const formattedDate = date.toLocaleDateString("id-ID", formatOptions);
+  let formattedDate = date.toLocaleDateString("id-ID", formatOptions);
+
+  // Jika menggunakan short format, ganti '/' menjadi '-'
+  if (formatOptions === shortFormat) {
+    formattedDate = formattedDate.replace(/\//g, "-");
+  }
 
   return formattedDate;
 };

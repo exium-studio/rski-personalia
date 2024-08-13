@@ -1,5 +1,6 @@
 import { Button, Center, Text, Tooltip } from "@chakra-ui/react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useTransferKaryawanTableColumnsConfig from "../../global/useTransferKaryawanTableColumnsConfig";
 import useDataState from "../../hooks/useDataState";
@@ -13,7 +14,6 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
-import { Link } from "react-router-dom";
 
 interface Props {
   filterConfig?: any;
@@ -49,6 +49,8 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
         filterConfig,
       ],
     });
+
+  console.log(formatDate("01-09-2024"));
 
   const formattedHeader = [
     {

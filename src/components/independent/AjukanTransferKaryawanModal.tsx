@@ -78,7 +78,6 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
       beri_tahu_karyawan: yup.boolean(),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log("jancok");
       const payload = new FormData();
       payload.append("user_id", values.karyawan?.value);
       payload.append("tgl_mulai", formatDate(values.tgl_mulai, "short"));
