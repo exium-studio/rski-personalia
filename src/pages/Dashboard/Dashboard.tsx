@@ -11,7 +11,7 @@ import { responsiveSpacing } from "../../constant/sizes";
 export default function Dashboard() {
   return (
     <>
-      <CWrapper>
+      <CWrapper className="scrollY" overflowY={"auto"}>
         <DashboardTotal mb={responsiveSpacing} />
 
         <Wrap spacing={responsiveSpacing}>
