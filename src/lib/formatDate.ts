@@ -31,9 +31,9 @@ const formatDate = (dateString: Date | string, options?: any) => {
   };
 
   const shortFormat: Intl.DateTimeFormatOptions = {
+    day: "2-digit",
+    month: "2-digit",
     year: "numeric",
-    month: "numeric",
-    day: "numeric",
   };
 
   const periodeFormat: Intl.DateTimeFormatOptions = {
@@ -61,6 +61,10 @@ const formatDate = (dateString: Date | string, options?: any) => {
 
   if (options === "iso") {
     formattedDate = date.toISOString();
+  } else if (options === "short") {
+    formattedDate = date
+      .toLocaleDateString("id-ID", formatOptions)
+      .replace(/\//g, "-"); // Replace slashes with hyphens
   } else {
     formattedDate = date.toLocaleDateString("id-ID", formatOptions);
   }
