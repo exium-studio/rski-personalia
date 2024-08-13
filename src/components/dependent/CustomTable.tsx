@@ -230,7 +230,7 @@ export default function CustomTable({
       sortConfig.sortColumnIndex !== undefined &&
       sortConfig.sortColumnIndex !== null
     ) {
-      return [...tableBody].sort((a, b) => {
+      return tableBody.sort((a, b) => {
         //@ts-ignore
         const aValue = a.columnsFormat[sortConfig.sortColumnIndex].value;
         //@ts-ignore
@@ -301,6 +301,12 @@ export default function CustomTable({
   };
 
   const tableRef = useRef(null);
+
+  const dataToMap =
+    sortConfig.sortColumnIndex !== null &&
+    sortConfig.sortColumnIndex !== undefined
+      ? sortedData()
+      : tableBody;
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -398,7 +404,7 @@ export default function CustomTable({
         </Thead>
 
         <Tbody>
-          {sortedData().map((row, rowIndex) => {
+          {dataToMap.map((row, rowIndex) => {
             return (
               <Tr
                 key={rowIndex}
