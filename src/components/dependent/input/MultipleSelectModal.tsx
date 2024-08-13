@@ -63,7 +63,6 @@ export default function MultipleSelectModal({
   placement = "bottom",
   placeholder,
   nonNullable,
-
   ...props
 }: Props) {
   useBackOnClose(`${id}-${name}`, isOpen, onOpen, onClose);
@@ -113,7 +112,11 @@ export default function MultipleSelectModal({
   return (
     <>
       <Tooltip
-        label={`${inputValue && inputValue.map((item) => ` ${item.label}`)}`}
+        label={
+          inputValue && inputValue.length > 0
+            ? `${inputValue && inputValue.map((item) => ` ${item.label}`)}`
+            : placeholder
+        }
         openDelay={500}
       >
         <Button
@@ -146,7 +149,11 @@ export default function MultipleSelectModal({
           }
           {...props}
         >
-          <Box w={"100%"} overflowX={"auto"} className="noScroll">
+          <Box
+            w={"100%"}
+            overflowX={inputValue && inputValue.length > 0 ? "auto" : "hidden"}
+            className="noScroll"
+          >
             <HStack w={"100%"}>
               {inputValue && inputValue.length > 0 ? (
                 inputValue.map((value, i) => {
@@ -171,6 +178,9 @@ export default function MultipleSelectModal({
                   //@ts-ignore
                   color={props?._placeholder?.color || "#96969691"}
                   fontWeight={400}
+                  whiteSpace={"nowrap"}
+                  overflow={"hidden"}
+                  textOverflow={"ellipsis"}
                 >
                   {placeholder}
                 </Text>

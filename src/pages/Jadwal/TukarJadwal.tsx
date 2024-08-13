@@ -84,8 +84,7 @@ export default function TukarJadwal() {
               }}
               inputValue={filterConfig.status_penukaran}
               optionsDisplay="chip"
-              minW={"fit-content"}
-              w={"fit-content"}
+              maxW={"165px"}
               maxSelectedDisplay={1}
             />
             <FilterKaryawan />

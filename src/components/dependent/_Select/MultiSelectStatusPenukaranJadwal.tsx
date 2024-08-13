@@ -58,7 +58,7 @@ export default function MultiSelectStatusPenukaranJadwal({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Status Penukaran"}
+      placeholder={placeholder || "Filter Status Penukaran"}
       nonNullable={nonNullable}
       maxSelectedDisplay={maxSelectedDisplay}
       {...props}
