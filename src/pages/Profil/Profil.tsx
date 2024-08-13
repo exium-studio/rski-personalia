@@ -387,13 +387,16 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      {userData.data_karyawan?.nik_ktp && (
-                        <>
-                          <SmallLink to="#">Lihat</SmallLink>
-                          <Text fontWeight={500} textAlign={"right"}>
-                            {userData.data_karyawan?.nik_ktp}
-                          </Text>
-                        </>
+                      {userData?.data_karyawan?.path_nik_ktp && (
+                        <SmallLink to={userData?.data_karyawan?.path_nik_ktp}>
+                          Lihat
+                        </SmallLink>
+                      )}
+
+                      {userData?.data_karyawan?.nik_ktp && (
+                        <Text fontWeight={500} textAlign={"right"}>
+                          {userData?.data_karyawan?.nik_ktp}
+                        </Text>
                       )}
                     </HStack>
                   </HStack>
@@ -411,13 +414,16 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      {userData.data_karyawan?.no_kk && (
-                        <>
-                          <SmallLink to="#">Lihat</SmallLink>
-                          <Text fontWeight={500} textAlign={"right"}>
-                            {userData.data_karyawan?.no_kk}
-                          </Text>
-                        </>
+                      {userData?.data_karyawan?.path_no_kk && (
+                        <SmallLink to={userData?.data_karyawan?.path_no_kk}>
+                          Lihat
+                        </SmallLink>
+                      )}
+
+                      {userData?.data_karyawan?.no_kk && (
+                        <Text fontWeight={500} textAlign={"right"}>
+                          {userData?.data_karyawan?.no_kk}
+                        </Text>
                       )}
                     </HStack>
                   </HStack>
@@ -607,13 +613,18 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      {userData.data_karyawan.no_bpjsksh && (
-                        <>
-                          <SmallLink to="#">Lihat</SmallLink>
-                          <Text fontWeight={500} textAlign={"right"}>
-                            {userData.data_karyawan.no_bpjsksh}
-                          </Text>
-                        </>
+                      {userData?.data_karyawan?.path_no_bpjsksh && (
+                        <SmallLink
+                          to={userData?.data_karyawan?.path_no_bpjsksh}
+                        >
+                          Lihat
+                        </SmallLink>
+                      )}
+
+                      {userData?.data_karyawan?.no_bpjsksh && (
+                        <Text fontWeight={500} textAlign={"right"}>
+                          {userData?.data_karyawan?.no_bpjsksh}
+                        </Text>
                       )}
                     </HStack>
                   </HStack>
@@ -630,9 +641,17 @@ export default function Profil() {
                       />
                     </Box>
                     <FlexLine />
-                    <Text fontWeight={500} textAlign={"right"}>
-                      {userData.data_karyawan.no_bpjsktk}
-                    </Text>
+                    {userData?.data_karyawan?.path_no_bpjsktk && (
+                      <SmallLink to={userData?.data_karyawan?.path_no_bpjsktk}>
+                        Lihat
+                      </SmallLink>
+                    )}
+
+                    {userData?.data_karyawan?.no_bpjsktk && (
+                      <Text fontWeight={500} textAlign={"right"}>
+                        {userData?.data_karyawan?.no_bpjsktk}
+                      </Text>
+                    )}
                   </HStack>
 
                   <HStack justify={"space-between"}>
@@ -885,13 +904,16 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      {userData.data_karyawan.no_ijazah && (
-                        <>
-                          <SmallLink to="#">Lihat</SmallLink>
-                          <Text fontWeight={500} textAlign={"right"}>
-                            {userData.data_karyawan.no_ijazah}
-                          </Text>
-                        </>
+                      {userData?.data_karyawan?.path_no_ijazah && (
+                        <SmallLink to={userData?.data_karyawan?.path_no_ijazah}>
+                          Lihat
+                        </SmallLink>
+                      )}
+
+                      {userData?.data_karyawan?.no_ijazah && (
+                        <Text fontWeight={500} textAlign={"right"}>
+                          {userData?.data_karyawan?.no_ijazah}
+                        </Text>
                       )}
                     </HStack>
                   </HStack>
@@ -926,13 +948,14 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      {userData.data_karyawan.no_str && (
-                        <>
-                          <SmallLink to="#">Lihat</SmallLink>
-                          <Text fontWeight={500} textAlign={"right"}>
-                            {userData.data_karyawan.no_str}
-                          </Text>
-                        </>
+                      {userData?.data_karyawan?.path_no_str && (
+                        <SmallLink to="#">Lihat</SmallLink>
+                      )}
+
+                      {userData?.data_karyawan?.no_str && (
+                        <Text fontWeight={500} textAlign={"right"}>
+                          {userData?.data_karyawan?.no_str}
+                        </Text>
                       )}
                     </HStack>
                   </HStack>
@@ -967,13 +990,16 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <HStack>
-                      {userData.data_karyawan.no_sip && (
-                        <>
-                          <SmallLink to="#">Lihat</SmallLink>
-                          <Text fontWeight={500} textAlign={"right"}>
-                            {userData.data_karyawan.no_sip}
-                          </Text>
-                        </>
+                      {userData?.data_karyawan?.path_no_sip && (
+                        <SmallLink to={userData?.data_karyawan?.path_no_sip}>
+                          Lihat
+                        </SmallLink>
+                      )}
+
+                      {userData?.data_karyawan?.no_sip && (
+                        <Text fontWeight={500} textAlign={"right"}>
+                          {userData?.data_karyawan?.no_sip}
+                        </Text>
                       )}
                     </HStack>
                   </HStack>
