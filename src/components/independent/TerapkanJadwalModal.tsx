@@ -63,8 +63,8 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
         user_id: values?.list_karyawan?.map(
           (user: Interface__SelectOption) => user.value
         ),
-        tgl_mulai: formatDate(values.tgl_mulai, "short"),
-        tgl_selesai: formatDate(values.tgl_mulai, "short"),
+        tgl_mulai: formatDate(values.tgl_mulai, "iso"),
+        tgl_selesai: formatDate(values.tgl_mulai, "iso"),
         shift_id: values.shift.value,
       };
 

@@ -44,7 +44,7 @@ export default function FormDashboardUpdatePengumuman({
       const payload = {
         judul: values.judul,
         konten: values.konten,
-        tgl_berakhir: formatDate(values.tgl_berakhir, "short"),
+        tgl_berakhir: formatDate(values.tgl_berakhir, "iso"),
         _method: "patch",
       };
       setLoading(true);

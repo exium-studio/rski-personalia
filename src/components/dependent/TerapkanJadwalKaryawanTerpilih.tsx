@@ -70,7 +70,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
     onSubmit: (values, { resetForm }) => {
       const payload = {
         shift_id: values.shift.value,
-        tgl_mulai: formatDate(values.tgl_mulai as string, "short"),
+        tgl_mulai: formatDate(values.tgl_mulai as string, "iso"),
       };
       setLoading(true);
       req
