@@ -31,6 +31,8 @@ export default function TabelKaryawan() {
   // Columns Config
   const { columnsConfig } = useKaryawanTableColumnsConfig();
 
+  console.log(columnsConfig);
+
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<Interface__DetailKaryawan[]>({
       initialData: undefined,
@@ -158,93 +160,93 @@ export default function TabelKaryawan() {
         cProps: {
           borderRight: "1px solid var(--divider3)",
         },
-      },
+      }, // 0
       {
         value: item.user.status_aktif,
         td: <StatusAktifBadge data={item.user.status_aktif} w={"120px"} />,
         cProps: {
           justify: "center",
         },
-      },
+      }, // 1
       {
         value: item.nik,
         td: item.nik,
         isNumeric: true,
-      },
+      }, // 2
       {
         value: item.status_karyawan?.label,
         td: <StatusKaryawanBadge w={"120px"} data={item.status_karyawan} />,
         cProps: {
           justify: "center",
         },
-      },
+      }, // 3
       {
         value: item.no_rm,
         td: item.no_rm,
         isNumeric: true,
-      },
+      }, // 4
       {
         value: item.unit_kerja.nama_unit,
         td: item.unit_kerja.nama_unit,
-      },
+      }, // 5
       {
         value: item.agama?.label,
         td: item.agama?.label,
-      },
+      }, // 6
       {
         value: item.jenis_kelamin,
         td: item.jenis_kelamin ? "Laki - laki" : "Perempuan",
         isNumeric: true,
-      },
+      }, // 7
       {
         value: item.jabatan.nama_jabatan,
         td: item.jabatan.nama_jabatan,
-      },
+      }, // 8
       {
         value: item.pendidikan_terakhir?.label,
         td: item.pendidikan_terakhir?.label,
-      },
+      }, // 9
       {
         value: item.email,
         td: item.email,
-      },
+      }, // 10
       {
         value: item.ayah?.nama,
         td: item.ayah?.nama,
-      },
+      }, // 11
       {
         value: item.ibu?.nama,
         td: item.ibu?.nama,
-      },
+      }, // 12
       {
         value: item?.jumlah_keluarga,
         td: item?.jumlah_keluarga,
         cProps: {
           justify: "center",
         },
-      },
+      }, // 13
       {
         value: item.tgl_masuk,
         td: formatDate(item.tgl_masuk),
         isDate: true,
-      },
+      }, // 14
       {
         value: item.tgl_keluar,
         td: formatDate(item.tgl_keluar),
         isDate: true,
-      },
+      }, // 15
       {
         value: item.masa_kerja,
         td: formatMasaKerja(item.masa_kerja),
-      },
+      }, // 16
       {
         value: "-",
         td: "-",
-      },
+      }, // 17
       {
         value: "-",
         td: "-",
-      },
+      }, // 18
     ],
   }));
 
