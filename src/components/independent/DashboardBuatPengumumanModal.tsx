@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { RiAddLine } from "@remixicon/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
@@ -21,6 +21,8 @@ export default function DashboardBuatPengumumanModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   useBackOnClose("buat-pengumuman-modal", isOpen, onOpen, onClose);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   return (
     <>
@@ -49,7 +51,10 @@ export default function DashboardBuatPengumumanModal() {
           </ModalHeader>
 
           <ModalBody>
-            <FormDashboardBuatPengumuman forwardRef={initialRef} />
+            <FormDashboardBuatPengumuman
+              forwardRef={initialRef}
+              setLoading={setLoading}
+            />
           </ModalBody>
 
           <ModalFooter>
@@ -59,8 +64,9 @@ export default function DashboardBuatPengumumanModal() {
               w={"100%"}
               colorScheme="ap"
               className="btn-ap clicky"
+              isLoading={loading}
             >
-              Buat
+              Buat Pengumuman
             </Button>
           </ModalFooter>
         </ModalContent>
