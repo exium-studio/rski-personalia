@@ -341,7 +341,7 @@ export default function DetailKaryawanModal({
                                   textAlign={"center"}
                                   lineHeight={1.4}
                                 >
-                                  Jadwal
+                                  Jadwal Aktif
                                 </Text>
                               </VStack>
                             </DetailJadwalKaryawanModalDisclosure>
@@ -496,7 +496,7 @@ export default function DetailKaryawanModal({
                                 textAlign={"center"}
                                 lineHeight={1.4}
                               >
-                                Lembur
+                                Lembur Aktif
                               </Text>
                             </VStack>
 
