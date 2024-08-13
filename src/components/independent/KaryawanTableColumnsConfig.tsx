@@ -51,7 +51,7 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
     },
     {
       label: "Keluarga",
-      columns: [0, 11, 12, 13],
+      columns: [0, 2, 11, 12, 13],
     },
     {
       label: "Pekerja Kontrak",
