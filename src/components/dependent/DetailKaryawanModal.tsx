@@ -1,8 +1,12 @@
 import {
-  Alert,
-  AlertDescription,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   Avatar,
   Box,
+  Button,
   HStack,
   Icon,
   Modal,
@@ -14,6 +18,7 @@ import {
   Text,
   Tooltip,
   VStack,
+  Wrap,
 } from "@chakra-ui/react";
 import {
   RiArchiveStackFill,
@@ -28,7 +33,7 @@ import {
 } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { useLightDarkColor, useWarningColor } from "../../constant/colors";
+import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -41,6 +46,9 @@ import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import AktifkanNonaktifkanButton from "./AktifkanNonaktifkanButton";
+import DetailAktivitasKaryawanModalDisclosure from "./DetailAktivitasKaryawanModalDisclosure";
+import DetailCutiKaryawanModalDisclosure from "./DetailCutiKaryawanModalDisclosure";
+import DetailJadwalKaryawanModalDisclosure from "./DetailJadwalKaryawanModalDisclosure";
 import DetailKeluargaKaryawanModalDisclosure from "./DetailKeluargaKaryawanModalDisclosure";
 import DetailRekamJejakKaryawanModalDisclosure from "./DetailRekamJejakKaryawanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
@@ -51,10 +59,8 @@ import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
-import DetailJadwalKaryawanModalDisclosure from "./DetailJadwalKaryawanModalDisclosure";
-import DetailCutiKaryawanModalDisclosure from "./DetailCutiKaryawanModalDisclosure";
-import DetailAktivitasKaryawanModalDisclosure from "./DetailAktivitasKaryawanModalDisclosure";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
+import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
 interface Props {
   id?: string;
   user_id?: number;
@@ -99,46 +105,35 @@ export default function DetailKaryawanModal({
     setSearchQuery(modifiedWords);
   }, [search]);
 
-  const [countDataKosong, setCountDataKosong] = useState<number | undefined>(
-    undefined
-  );
-  function countEmptyValues(obj: Record<string, any>): number {
-    let count = 0;
+  const [emtyDataLabel, setEmptyDataLabel] = useState<any>(undefined);
+  function countEmptyValues(obj: Record<string, any>): any[] {
+    let emptyDataLabels: any[] = [];
 
     for (const key in obj) {
-      switch (key) {
-        case "path_sip":
-        case "path_nik_ktp":
-        case "path_kartu_keluarga":
-        case "path_ijazah":
-        case "path_str":
-          break;
-        default:
-          if (obj.hasOwnProperty(key)) {
-            const value = obj[key];
-            if (
-              value === null ||
-              value === undefined ||
-              value === "" ||
-              value?.length === 0
-            ) {
-              count++;
-            }
-          }
+      if (obj.hasOwnProperty(key)) {
+        const value = obj[key];
+        if (
+          value === null ||
+          value === undefined ||
+          value === "" ||
+          value?.length === 0
+        ) {
+          emptyDataLabels.push(key);
+        }
       }
     }
 
-    return count;
+    return emptyDataLabels;
   }
+
   useEffect(() => {
     if (data) {
-      setCountDataKosong(countEmptyValues(data));
+      setEmptyDataLabel(countEmptyValues(data));
     }
   }, [data]);
 
   // SX
   const lightDarkColor = useLightDarkColor();
-  const warningColor = useWarningColor();
 
   return (
     <Modal
@@ -530,7 +525,7 @@ export default function DetailKaryawanModal({
                           className="scrollY"
                         >
                           <HStack
-                            px={[0, null, 4]}
+                            px={[0, null, 5]}
                             position={"sticky"}
                             top={"0"}
                             bg={lightDarkColor}
@@ -555,34 +550,6 @@ export default function DetailKaryawanModal({
                             <EditKaryawanModal initialData={data} />
                           </HStack>
 
-                          <Box px={4}>
-                            {typeof countDataKosong !== "number" ? (
-                              <Skeleton h={"51.19px"} />
-                            ) : (
-                              <Alert
-                                status={
-                                  countDataKosong === 0 ? "success" : "warning"
-                                }
-                                py={1}
-                                borderRadius={"8px !important"}
-                              >
-                                <AlertDescription
-                                  m={0}
-                                  fontWeight={600}
-                                  color={
-                                    countDataKosong === 0
-                                      ? "green.400"
-                                      : warningColor
-                                  }
-                                >
-                                  {countDataKosong === 0
-                                    ? "Data pegawai lengkap"
-                                    : `${countDataKosong} data masih kosong`}
-                                </AlertDescription>
-                              </Alert>
-                            )}
-                          </Box>
-
                           <CContainer
                             flex={1}
                             overflowY={"auto"}
@@ -591,6 +558,56 @@ export default function DetailKaryawanModal({
                             gap={responsiveSpacing}
                             px={responsiveSpacing}
                           >
+                            <Box>
+                              <Accordion allowMultiple>
+                                <AccordionItem
+                                  border={"none"}
+                                  bg={"var(--divider)"}
+                                  borderRadius={8}
+                                  overflow={"clip"}
+                                >
+                                  <AccordionButton
+                                    w={"100%"}
+                                    h={"50px"}
+                                    gap={2}
+                                    justifyContent={"space-between"}
+                                    fontWeight={600}
+                                    color={
+                                      emtyDataLabel?.length === 0
+                                        ? "green.400"
+                                        : "red.400"
+                                    }
+                                    _expanded={{ bg: "var(--divider2)" }}
+                                  >
+                                    {emtyDataLabel?.length === 0
+                                      ? "Data pegawai lengkap"
+                                      : `${emtyDataLabel?.length} data masih kosong`}
+                                    <AccordionIcon />
+                                  </AccordionButton>
+
+                                  <AccordionPanel py={4}>
+                                    <Wrap>
+                                      {emtyDataLabel.map(
+                                        (key: any, i: number) => (
+                                          <Button
+                                            key={i}
+                                            className="btn-outline"
+                                            borderRadius={"full"}
+                                            cursor={"auto"}
+                                          >
+                                            <Text opacity={0.6}>
+                                              {/* @ts-ignore */}
+                                              {dataKaryawanLabel[key]}
+                                            </Text>
+                                          </Button>
+                                        )
+                                      )}
+                                    </Wrap>
+                                  </AccordionPanel>
+                                </AccordionItem>
+                              </Accordion>
+                            </Box>
+
                             <VStack align={"stretch"} gap={0}>
                               <Text fontSize={20} fontWeight={600} mb={4}>
                                 Data Pribadi
