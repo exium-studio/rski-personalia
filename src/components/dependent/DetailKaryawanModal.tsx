@@ -691,16 +691,19 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <HStack>
+                                    {data?.path_nik_ktp && (
+                                      <SmallLink to={data?.path_nik_ktp}>
+                                        Lihat
+                                      </SmallLink>
+                                    )}
+
                                     {data?.nik_ktp && (
-                                      <>
-                                        <SmallLink to="#">Lihat</SmallLink>
-                                        <Text
-                                          fontWeight={500}
-                                          textAlign={"right"}
-                                        >
-                                          {data?.nik_ktp}
-                                        </Text>
-                                      </>
+                                      <Text
+                                        fontWeight={500}
+                                        textAlign={"right"}
+                                      >
+                                        {data?.nik_ktp}
+                                      </Text>
                                     )}
                                   </HStack>
                                 </HStack>
@@ -718,16 +721,19 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <HStack>
+                                    {data?.path_no_kk && (
+                                      <SmallLink to={data?.path_no_kk}>
+                                        Lihat
+                                      </SmallLink>
+                                    )}
+
                                     {data?.no_kk && (
-                                      <>
-                                        <SmallLink to="#">Lihat</SmallLink>
-                                        <Text
-                                          fontWeight={500}
-                                          textAlign={"right"}
-                                        >
-                                          {data?.no_kk}
-                                        </Text>
-                                      </>
+                                      <Text
+                                        fontWeight={500}
+                                        textAlign={"right"}
+                                      >
+                                        {data?.no_kk}
+                                      </Text>
                                     )}
                                   </HStack>
                                 </HStack>
@@ -916,16 +922,19 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <HStack>
+                                    {data?.path_no_bpjsksh && (
+                                      <SmallLink to={data?.path_no_bpjsksh}>
+                                        Lihat
+                                      </SmallLink>
+                                    )}
+
                                     {data.no_bpjsksh && (
-                                      <>
-                                        <SmallLink to="#">Lihat</SmallLink>
-                                        <Text
-                                          fontWeight={500}
-                                          textAlign={"right"}
-                                        >
-                                          {data.no_bpjsksh}
-                                        </Text>
-                                      </>
+                                      <Text
+                                        fontWeight={500}
+                                        textAlign={"right"}
+                                      >
+                                        {data.no_bpjsksh}
+                                      </Text>
                                     )}
                                   </HStack>
                                 </HStack>
@@ -942,9 +951,17 @@ export default function DetailKaryawanModal({
                                     />
                                   </Box>
                                   <FlexLine />
-                                  <Text fontWeight={500} textAlign={"right"}>
-                                    {data.no_bpjsktk}
-                                  </Text>
+                                  {data?.path_no_bpjsktk && (
+                                    <SmallLink to={data?.path_no_bpjsktk}>
+                                      Lihat
+                                    </SmallLink>
+                                  )}
+
+                                  {data?.no_bpjsktk && (
+                                    <Text fontWeight={500} textAlign={"right"}>
+                                      {data.no_bpjsktk}
+                                    </Text>
+                                  )}
                                 </HStack>
 
                                 <HStack justify={"space-between"}>
@@ -1197,16 +1214,19 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <HStack>
+                                    {data?.path_no_ijazah && (
+                                      <SmallLink to={data?.path_no_ijazah}>
+                                        Lihat
+                                      </SmallLink>
+                                    )}
+
                                     {data.no_ijazah && (
-                                      <>
-                                        <SmallLink to="#">Lihat</SmallLink>
-                                        <Text
-                                          fontWeight={500}
-                                          textAlign={"right"}
-                                        >
-                                          {data.no_ijazah}
-                                        </Text>
-                                      </>
+                                      <Text
+                                        fontWeight={500}
+                                        textAlign={"right"}
+                                      >
+                                        {data.no_ijazah}
+                                      </Text>
                                     )}
                                   </HStack>
                                 </HStack>
@@ -1241,16 +1261,17 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <HStack>
+                                    {data?.path_no_str && (
+                                      <SmallLink to="#">Lihat</SmallLink>
+                                    )}
+
                                     {data.no_str && (
-                                      <>
-                                        <SmallLink to="#">Lihat</SmallLink>
-                                        <Text
-                                          fontWeight={500}
-                                          textAlign={"right"}
-                                        >
-                                          {data.no_str}
-                                        </Text>
-                                      </>
+                                      <Text
+                                        fontWeight={500}
+                                        textAlign={"right"}
+                                      >
+                                        {data.no_str}
+                                      </Text>
                                     )}
                                   </HStack>
                                 </HStack>
@@ -1285,16 +1306,19 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <HStack>
+                                    {data?.path_no_sip && (
+                                      <SmallLink to={data?.path_no_sip}>
+                                        Lihat
+                                      </SmallLink>
+                                    )}
+
                                     {data.no_sip && (
-                                      <>
-                                        <SmallLink to="#">Lihat</SmallLink>
-                                        <Text
-                                          fontWeight={500}
-                                          textAlign={"right"}
-                                        >
-                                          {data.no_sip}
-                                        </Text>
-                                      </>
+                                      <Text
+                                        fontWeight={500}
+                                        textAlign={"right"}
+                                      >
+                                        {data.no_sip}
+                                      </Text>
                                     )}
                                   </HStack>
                                 </HStack>
