@@ -67,7 +67,13 @@ export default function DashboardPengumumanItemDetail({
           <Text fontWeight={500}>{data.judul}</Text>
 
           {isDatePassed(data.tgl_berakhir) && (
-            <Badge color={"red.400"} bg={"var--divider)"}>
+            <Badge
+              color={"red.400"}
+              bg={"var(--divider)"}
+              borderRadius={"full"}
+              textTransform={"none"}
+              fontWeight={500}
+            >
               Berakhir
             </Badge>
           )}
