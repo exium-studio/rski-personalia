@@ -82,6 +82,7 @@ export default function DetailKaryawanModal({
     onClose
   );
   const initialRef = useRef(null);
+
   const { error, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-user/${user_id}`,
@@ -105,7 +106,7 @@ export default function DetailKaryawanModal({
     setSearchQuery(modifiedWords);
   }, [search]);
 
-  const [emtyDataLabel, setEmptyDataLabel] = useState<any>(undefined);
+  const [emptyDataLabel, setEmptyDataLabel] = useState<any>(undefined);
   function countEmptyValues(obj: Record<string, any>): any[] {
     let emptyDataLabels: any[] = [];
 
@@ -155,6 +156,7 @@ export default function DetailKaryawanModal({
               <Retry loading={loading} retry={retry} />
             </Box>
           )}
+
           {!error && (
             <>
               {loading && (
@@ -215,6 +217,8 @@ export default function DetailKaryawanModal({
                         <Skeleton h={"40px"} maxW={"140px"} />
                         <Skeleton h={"40px"} maxW={"100px"} />
                       </HStack>
+
+                      <Skeleton flexShrink={0} h={"50px"} />
 
                       <Skeleton flexShrink={0} h={"400px"} />
                       <Skeleton flexShrink={0} h={"400px"} />
@@ -559,53 +563,57 @@ export default function DetailKaryawanModal({
                             px={responsiveSpacing}
                           >
                             <Box>
-                              <Accordion allowMultiple>
-                                <AccordionItem
-                                  border={"none"}
-                                  bg={"var(--divider)"}
-                                  borderRadius={8}
-                                  overflow={"clip"}
-                                >
-                                  <AccordionButton
-                                    w={"100%"}
-                                    h={"50px"}
-                                    gap={2}
-                                    justifyContent={"space-between"}
-                                    fontWeight={600}
-                                    color={
-                                      emtyDataLabel?.length === 0
-                                        ? "green.400"
-                                        : "red.400"
-                                    }
-                                    _expanded={{ bg: "var(--divider2)" }}
-                                  >
-                                    {emtyDataLabel?.length === 0
-                                      ? "Data pegawai lengkap"
-                                      : `${emtyDataLabel?.length} data masih kosong`}
-                                    <AccordionIcon />
-                                  </AccordionButton>
+                              {!emptyDataLabel && <Skeleton h={"50px"} />}
 
-                                  <AccordionPanel py={4}>
-                                    <Wrap>
-                                      {emtyDataLabel.map(
-                                        (key: any, i: number) => (
-                                          <Button
-                                            key={i}
-                                            className="btn-outline"
-                                            borderRadius={"full"}
-                                            cursor={"auto"}
-                                          >
-                                            <Text opacity={0.6}>
-                                              {/* @ts-ignore */}
-                                              {dataKaryawanLabel[key]}
-                                            </Text>
-                                          </Button>
-                                        )
-                                      )}
-                                    </Wrap>
-                                  </AccordionPanel>
-                                </AccordionItem>
-                              </Accordion>
+                              {emptyDataLabel && (
+                                <Accordion allowMultiple>
+                                  <AccordionItem
+                                    border={"none"}
+                                    bg={"var(--divider)"}
+                                    borderRadius={8}
+                                    overflow={"clip"}
+                                  >
+                                    <AccordionButton
+                                      w={"100%"}
+                                      h={"50px"}
+                                      gap={2}
+                                      justifyContent={"space-between"}
+                                      fontWeight={600}
+                                      color={
+                                        emptyDataLabel?.length === 0
+                                          ? "green.400"
+                                          : "red.400"
+                                      }
+                                      _expanded={{ bg: "var(--divider2)" }}
+                                    >
+                                      {emptyDataLabel?.length === 0
+                                        ? "Data pegawai lengkap"
+                                        : `${emptyDataLabel?.length} data masih kosong`}
+                                      <AccordionIcon />
+                                    </AccordionButton>
+
+                                    <AccordionPanel py={4}>
+                                      <Wrap>
+                                        {emptyDataLabel?.map(
+                                          (key: any, i: number) => (
+                                            <Button
+                                              key={i}
+                                              className="btn-outline"
+                                              borderRadius={"full"}
+                                              cursor={"auto"}
+                                            >
+                                              <Text opacity={0.6}>
+                                                {/* @ts-ignore */}
+                                                {dataKaryawanLabel[key]}
+                                              </Text>
+                                            </Button>
+                                          )
+                                        )}
+                                      </Wrap>
+                                    </AccordionPanel>
+                                  </AccordionItem>
+                                </Accordion>
+                              )}
                             </Box>
 
                             <VStack align={"stretch"} gap={0}>
