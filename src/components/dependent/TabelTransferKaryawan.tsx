@@ -50,8 +50,6 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
       ],
     });
 
-  console.log(formatDate("01-09-2024"));
-
   const formattedHeader = [
     {
       th: "Nama",
