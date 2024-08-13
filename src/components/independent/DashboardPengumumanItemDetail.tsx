@@ -39,13 +39,8 @@ export default function DashboardPengumumanItemDetail({
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(isOpen, onClose);
   const initialRef = useRef(null);
-  const [loadingUpdate, setLoadingUpdate] = useState<boolean>(false);
 
-  function updatePengumuman() {
-    setLoadingUpdate(true);
-
-    //TODO api update pengumuman
-  }
+  const [loading, setLoading] = useState<boolean>(false);
 
   // SX
   const errorAlphaColor = useErrorAlphaColor();
@@ -110,7 +105,11 @@ export default function DashboardPengumumanItemDetail({
               <Icon as={RiCalendar2Fill} fontSize={iconSize} opacity={0.6} />
               <Text>{formatDate(data.created_at)}</Text>
             </HStack>
-            <FormDashboardUpdatePengumuman data={data} />
+
+            <FormDashboardUpdatePengumuman
+              data={data}
+              setLoading={setLoading}
+            />
           </ModalBody>
 
           <ModalFooter>
@@ -120,7 +119,7 @@ export default function DashboardPengumumanItemDetail({
                 className="clicky"
                 colorScheme="error"
                 variant={"ghost"}
-                isDisabled={loadingUpdate}
+                isDisabled={loading}
                 bg={errorAlphaColor}
               >
                 Hapus
@@ -131,8 +130,7 @@ export default function DashboardPengumumanItemDetail({
                 w={"50%"}
                 className="btn-ap clicky"
                 colorScheme="ap"
-                isLoading={loadingUpdate}
-                onClick={updatePengumuman}
+                isLoading={loading}
               >
                 Simpan
               </Button>

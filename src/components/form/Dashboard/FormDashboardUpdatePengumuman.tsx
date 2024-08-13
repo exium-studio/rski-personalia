@@ -6,26 +6,77 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import RequiredForm from "../RequiredForm";
 import Textarea from "../../dependent/input/Textarea";
+import { Dispatch } from "react";
+import req from "../../../constant/req";
+import formatDate from "../../../lib/formatDate";
+import useRenderTrigger from "../../../global/useRenderTrigger";
 
 interface Props {
   data: Pengumuman__Interface;
+  setLoading: Dispatch<boolean>;
 }
 
-export default function FormDashboardUpdatePengumuman({ data }: Props) {
+export default function FormDashboardUpdatePengumuman({
+  data,
+  setLoading,
+}: Props) {
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { judul: data.judul, konten: data.konten },
+    initialValues: {
+      judul: data.judul,
+      konten: data.konten,
+      tgl_berakhir: data.tgl_berakhir,
+    },
     validationSchema: yup.object().shape({
       judul: yup.string().required("Judul harus diisi"),
       konten: yup.string().required("Pengumuman harus diisi"),
+      tgl_berakhir: yup.string().required("Pengumuman harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-
-      //TODO api update pengumuman
+      const payload = {
+        judul: values.judul,
+        konten: values.konten,
+        tgl_berakhir: formatDate(values.tgl_berakhir, "short"),
+        _method: "patch",
+      };
+      console.log(payload);
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/pengumuman/${data.id}`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 

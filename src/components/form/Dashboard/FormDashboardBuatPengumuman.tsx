@@ -31,18 +31,18 @@ export default function FormDashboardBuatPengumuman({
     validateOnChange: false,
     initialValues: {
       judul: "",
-      pengumuman: "",
+      konten: "",
       tgl_berakhir: undefined as any,
     },
     validationSchema: yup.object().shape({
       judul: yup.string().required("Judul harus diisi"),
-      pengumuman: yup.string().required("Pengumuman harus diisi"),
+      konten: yup.string().required("Pengumuman harus diisi"),
       tgl_berakhir: yup.string().required("Pengumuman harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         judul: values.judul,
-        konten: values.pengumuman,
+        konten: values.konten,
         tgl_berakhir: formatDate(values.tgl_berakhir, "short"),
       };
       console.log(payload);
@@ -115,20 +115,20 @@ export default function FormDashboardBuatPengumuman({
         </FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={formik.errors.pengumuman ? true : false}>
+      <FormControl isInvalid={formik.errors.konten ? true : false}>
         <FormLabel>
           Pengumuman
           <RequiredForm />
         </FormLabel>
         <Textarea
-          name="pengumuman"
-          placeholder="isi pengumuman"
+          name="konten"
+          placeholder="isi konten"
           onChangeSetter={(input) => {
-            formik.setFieldValue("pengumuman", input);
+            formik.setFieldValue("konten", input);
           }}
-          inputValue={formik.values.pengumuman}
+          inputValue={formik.values.konten}
         />
-        <FormErrorMessage>{formik.errors.pengumuman}</FormErrorMessage>
+        <FormErrorMessage>{formik.errors.konten}</FormErrorMessage>
       </FormControl>
     </form>
   );
