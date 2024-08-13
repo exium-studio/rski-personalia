@@ -89,7 +89,7 @@ export default function Jadwal() {
             <DateRangePickerModal
               id="jadwal-date-range"
               name="date-range"
-              minW={"140px"}
+              minW={"165px"}
               w={"fit-content"}
               onConfirm={confirmDateRange}
               inputValue={{
