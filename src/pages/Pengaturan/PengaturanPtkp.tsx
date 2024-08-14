@@ -47,6 +47,8 @@ export default function PengaturanPtkp() {
             }));
           }}
           inputValue={filterConfig.search}
+          tooltipLabel="Cari dengan kode PTKP"
+          placeholder="nama kode PTKP"
         />
 
         <MultiSelectPengaturanDeletedAt

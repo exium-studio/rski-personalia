@@ -6,6 +6,7 @@ interface Props extends ButtonProps {}
 
 export default function RefreshButton({ ...props }: Props) {
   const [rotate, setRotate] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleRotate = () => {
     setRotate(true);
@@ -16,6 +17,7 @@ export default function RefreshButton({ ...props }: Props) {
   };
 
   const handleClick = () => {
+    setLoading(true);
     setTimeout(() => {
       window.location.reload();
     }, 300); // Delay to allow rotation to be visible
@@ -36,6 +38,7 @@ export default function RefreshButton({ ...props }: Props) {
           onClick={handleClick}
         />
       }
+      isLoading={loading}
       {...props}
     />
   );
