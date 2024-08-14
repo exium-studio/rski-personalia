@@ -115,14 +115,14 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
       },
     },
     {
-      th: "Min. Penghasilan Bruto Bulanan",
+      th: "Min. Pengh. Bruto Bulanan",
       isSortable: true,
       cProps: {
         justify: "right",
       },
     },
     {
-      th: "Maks. Penghasilan Bruto Bulanan",
+      th: "Maks. Pengh. Bruto Bulanan",
       isSortable: true,
       cProps: {
         justify: "right",
