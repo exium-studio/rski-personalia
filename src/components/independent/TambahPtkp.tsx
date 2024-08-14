@@ -27,6 +27,7 @@ import RequiredForm from "../form/RequiredForm";
 import StringInput from "../dependent/input/StringInput";
 import req from "../../constant/req";
 import useRenderTrigger from "../../global/useRenderTrigger";
+import NumberInput from "../dependent/input/NumberInput";
 
 interface Props extends ButtonProps {}
 
@@ -43,11 +44,11 @@ export default function TambahPtkp({ ...props }: Props) {
     validateOnChange: false,
     initialValues: {
       kode_ptkp: "" as any,
-      kategori_ter: "" as any,
-      nilai: "" as any,
+      kategori_ter: undefined as any,
+      nilai: undefined as any,
     },
     validationSchema: yup.object().shape({
-      kode_ptkp: yup.number().required("Harus diisi"),
+      kode_ptkp: yup.string().required("Harus diisi"),
       kategori_ter: yup.object().required("Harus diisi"),
       nilai: yup.number().required("Harus diisi"),
     }),
@@ -172,13 +173,13 @@ export default function TambahPtkp({ ...props }: Props) {
                   Nilai PTKP
                   <RequiredForm />
                 </FormLabel>
-                <StringInput
+                <NumberInput
                   name="nilai"
                   onChangeSetter={(input) => {
                     formik.setFieldValue("nilai", input);
                   }}
                   inputValue={formik.values.nilai}
-                  placeholder="TK/0"
+                  placeholder="20.000.000"
                 />
                 <FormErrorMessage>
                   {formik.errors.nilai as string}

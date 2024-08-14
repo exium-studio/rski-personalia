@@ -21,10 +21,11 @@ import req from "../../constant/req";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
+import SelectKategoriTer from "../dependent/_Select/SelectKategoriTer";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import NumberInput from "../dependent/input/NumberInput";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
-import SelectKategoriTer from "../dependent/_Select/SelectKategoriTer";
 
 interface Props extends BoxProps {
   rowData: any;
@@ -185,13 +186,13 @@ export default function EditPtkpModalDisclosure({
                   Nilai PTKP
                   <RequiredForm />
                 </FormLabel>
-                <StringInput
+                <NumberInput
                   name="nilai"
                   onChangeSetter={(input) => {
                     formik.setFieldValue("nilai", input);
                   }}
                   inputValue={formik.values.nilai}
-                  placeholder="TK/0"
+                  placeholder="20.000.000"
                 />
                 <FormErrorMessage>
                   {formik.errors.nilai as string}
