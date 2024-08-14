@@ -25,10 +25,6 @@ export default function PenilaianKaryawan() {
     };
   }, [search, setFilterKaryawan]);
 
-  useEffect(() => {
-    console.log(filterKaryawan);
-  }, [filterKaryawan]);
-
   // SX
   const lightDarkColor = useLightDarkColor();
 
