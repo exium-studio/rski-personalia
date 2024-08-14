@@ -59,7 +59,7 @@ export default function DashboardPengumumanItemDetail({
         <HStack justify={"space-between"} align={"start"}>
           <Text fontWeight={500}>{data.judul}</Text>
 
-          {isDatePassed(data.tgl_berakhir) && (
+          {isDatePassed(data.tgl_berakhir, true) && (
             <Badge
               color={"red.400"}
               bg={"var(--divider)"}
