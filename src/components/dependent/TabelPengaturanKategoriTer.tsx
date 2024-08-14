@@ -114,7 +114,7 @@ export default function TabelPengaturanKategoriTer({ filterConfig }: Props) {
       },
     },
   ];
-  const formattedData = data?.map((item: any) => ({
+  const formattedData = fd?.map((item: any) => ({
     id: item.id,
     columnsFormat: [
       {
