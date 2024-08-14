@@ -257,7 +257,7 @@ export default function TabelJadwalItem({
                       formik.setFieldValue("shift", input);
                     }}
                     inputValue={formik.values.shift}
-                    isDisabled={isDatePassed(data.tgl_masuk)}
+                    isDisabled={isDatePassed(data.tgl_masuk) || libur}
                     mb={4}
                   />
                   <Checkbox
