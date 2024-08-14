@@ -1,5 +1,3 @@
-import formatDate from "./formatDate";
-
 export default function isDatePassed(
   date: string | Date,
   isTodayCounted?: boolean
