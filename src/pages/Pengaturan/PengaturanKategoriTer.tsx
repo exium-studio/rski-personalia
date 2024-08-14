@@ -3,7 +3,7 @@ import { useState } from "react";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
 import TabelPengaturanKategoriTer from "../../components/dependent/TabelPengaturanKategoriTer";
-import TambahTerPph21 from "../../components/independent/TambahTerPph21";
+import TambahKategoriTer from "../../components/independent/TambahKategoriTer";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
@@ -63,7 +63,7 @@ export default function PengaturanKategoriTer() {
           maxW={"165px"}
         />
 
-        <TambahTerPph21 minW={"fit-content"} />
+        <TambahKategoriTer minW={"fit-content"} />
       </HStack>
 
       <TabelPengaturanKategoriTer filterConfig={filterConfig} />

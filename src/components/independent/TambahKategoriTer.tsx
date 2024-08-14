@@ -1,10 +1,10 @@
 import {
-  Box,
-  BoxProps,
   Button,
+  ButtonProps,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Icon,
   Modal,
   ModalBody,
   ModalContent,
@@ -14,10 +14,12 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
 import req from "../../constant/req";
+import { iconSize } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
@@ -25,23 +27,11 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
 
-interface Props extends BoxProps {
-  rowData: any;
-  children?: ReactNode;
-}
+interface Props extends ButtonProps {}
 
-export default function EditKategoriTerModalDisclosure({
-  rowData,
-  children,
-  ...props
-}: Props) {
+export default function TambahKategoriTer({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(
-    `edit-kategori-ter-modal-${rowData.id}`,
-    isOpen,
-    onOpen,
-    onClose
-  );
+  useBackOnClose("tambah-kategori-ter-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,24 +40,17 @@ export default function EditKategoriTerModalDisclosure({
 
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: {
-      nama_kategori_ter: rowData.columnsFormat[0].value,
-    },
+    initialValues: { nama_kategori_ter: "" },
     validationSchema: yup.object().shape({
       nama_kategori_ter: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_kategori_ter: values.nama_kategori_ter,
-        _method: "patch",
       };
-      console.log(payload);
       setLoading(true);
       req
-        .post(
-          `/api/rski/dashboard/pengaturan/kategori-ter/${rowData.id}`,
-          payload
-        )
+        .post(`/api/rski/dashboard/pengaturan/kategori-ter`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -76,8 +59,8 @@ export default function EditKategoriTerModalDisclosure({
               isClosable: true,
               position: "bottom-right",
             });
-            backOnClose();
             setRt(!rt);
+            resetForm();
           }
         })
         .catch((e) => {
@@ -97,21 +80,18 @@ export default function EditKategoriTerModalDisclosure({
         });
     },
   });
-
-  const formikRef = useRef(formik);
-
-  useEffect(() => {
-    formikRef.current.setFieldValue(
-      "nama_kategori_ter",
-      rowData.columnsFormat[0].value
-    );
-  }, [rowData]);
-
   return (
     <>
-      <Box onClick={onOpen} {...props}>
-        {children}
-      </Box>
+      <Button
+        className="btn-ap clicky"
+        colorScheme="ap"
+        onClick={onOpen}
+        leftIcon={<Icon as={RiAddCircleFill} fontSize={iconSize} />}
+        pl={5}
+        {...props}
+      >
+        Tambah Kategori TER
+      </Button>
 
       <Modal
         isOpen={isOpen}
@@ -127,14 +107,14 @@ export default function EditKategoriTerModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit kategori TER"
+              title="Tambah Kategori TER"
               onClose={() => {
                 formik.resetForm();
               }}
             />
           </ModalHeader>
           <ModalBody>
-            <form id="editUnitKerjaForm" onSubmit={formik.handleSubmit}>
+            <form id="tambahKategoriTerForm" onSubmit={formik.handleSubmit}>
               <FormControl
                 isInvalid={formik.errors.nama_kategori_ter ? true : false}
               >
@@ -160,13 +140,13 @@ export default function EditKategoriTerModalDisclosure({
           <ModalFooter>
             <Button
               type="submit"
-              form="editUnitKerjaForm"
+              form="tambahKategoriTerForm"
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}
               isLoading={loading}
             >
-              Simpan
+              Tambahkan
             </Button>
           </ModalFooter>
         </ModalContent>

@@ -52,7 +52,7 @@ export default function StringInput({
         `}
       />
 
-      <Box position={"relative"} w={"100%"} overflow={"hidden"} {...boxProps}>
+      <Box position={"relative"} w={"100%"} overflow={"visible"} {...boxProps}>
         <ChakraInput
           ref={fRef}
           name={name}
