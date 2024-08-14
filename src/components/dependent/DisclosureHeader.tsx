@@ -5,20 +5,24 @@ interface Props extends BoxProps {
   title: string;
   withoutCloseButton?: boolean;
   onClose?: () => void;
+  addition?: any;
 }
 
 export default function DisclosureHeader({
   title,
   withoutCloseButton,
   onClose,
+  addition,
   ...props
 }: Props) {
   return (
     <Box pt={"18px"} pr={5} pb={5} pl={6} {...props}>
-      <HStack justify={"space-between"} align={"start"}>
+      <HStack justify={"space-between"}>
         <Text fontSize={20} fontWeight={600}>
           {title}
         </Text>
+
+        {addition}
 
         {!withoutCloseButton && (
           <BackOnCloseButton
