@@ -63,7 +63,7 @@ export default function PengaturanTerPph21() {
           optionsDisplay="chip"
           placeholder="Filter Dihapus"
           maxW={"165px"}
-          _focus={{ border: "none" }}
+          _focus={{ border: "1px solid var(--divider3)" }}
         />
 
         <TambahTerPph21 minW={"fit-content"} />

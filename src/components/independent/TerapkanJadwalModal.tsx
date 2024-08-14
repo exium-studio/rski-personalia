@@ -63,8 +63,8 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
         user_id: values?.list_karyawan?.map(
           (user: Interface__SelectOption) => user.value
         ),
-        tgl_mulai: formatDate(values.tgl_mulai, "iso"),
-        tgl_selesai: formatDate(values.tgl_mulai, "iso"),
+        tgl_mulai: formatDate(values.tgl_mulai, "short"),
+        tgl_selesai: formatDate(values.tgl_mulai, "short"),
         shift_id: values.shift.value,
       };
 
@@ -103,7 +103,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
 
   const [libur, setLibur] = useState<boolean>(false);
   useEffect(() => {
-    formik.resetForm();
+    formik.setFieldValue("shift", undefined);
     if (libur) {
       formik.setFieldValue("shift", { value: 0, label: "Libur" });
     }

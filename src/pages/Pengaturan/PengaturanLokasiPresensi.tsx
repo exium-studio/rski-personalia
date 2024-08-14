@@ -290,6 +290,7 @@ export default function PengaturanLokasiPresensi() {
                       <Text opacity={0.4}>
                         Terakhir diperbarui : {formatDate(data?.updated_at)}
                       </Text>
+                      
                       <Button
                         type="submit"
                         form="lokasiPresensiForm"

@@ -70,7 +70,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
     onSubmit: (values, { resetForm }) => {
       const payload = {
         shift_id: values.shift.value,
-        tgl_mulai: formatDate(values.tgl_mulai as string, "iso"),
+        tgl_mulai: formatDate(values.tgl_mulai as string, "short"),
       };
       setLoading(true);
       req
@@ -87,7 +87,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
               position: "bottom-right",
             });
             setRt(!rt);
-            resetForm();
+            backOnClose();
           }
         })
         .catch((e) => {

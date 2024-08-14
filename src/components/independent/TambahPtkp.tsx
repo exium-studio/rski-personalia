@@ -159,6 +159,7 @@ export default function TambahPtkp({ ...props }: Props) {
                     formik.setFieldValue("kategori_ter", input);
                   }}
                   inputValue={formik.values.kategori_ter}
+                  isError={!!formik.errors.kategori_ter}
                 />
                 <FormErrorMessage>
                   {formik.errors.kategori_ter as string}

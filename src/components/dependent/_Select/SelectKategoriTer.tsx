@@ -36,7 +36,7 @@ export default function SelectKategoriTer({
   useEffect(() => {
     if (isOpen && !options) {
       req
-        .get("/api/rski/dashboard/pengaturan/kategori-ter")
+        .get("/api/get-list-kategori-ter")
         .then((r) => {
           if (r.status === 200) {
             const options = r.data.data.map((item: any) => ({

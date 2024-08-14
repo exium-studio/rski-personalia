@@ -153,6 +153,7 @@ export default function TambahUnitKerja({ ...props }: Props) {
                   }}
                   inputValue={formik.values.jenis_karyawan}
                   placeholder="Pilih Jenis Pegawai"
+                  isError={!!formik.errors.jenis_karyawan}
                 />
                 <FormErrorMessage>
                   {formik.errors.jenis_karyawan as string}

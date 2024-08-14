@@ -55,8 +55,8 @@ export default function AjukanCutiModal({ ...props }: Props) {
       const payload = {
         user_id: values.karyawan.value,
         tipe_cuti_id: values.tipe_cuti.value,
-        tgl_from: formatDate(values.range_tgl?.from as string, "iso"),
-        tgl_to: formatDate(values.range_tgl?.to as string, "iso"),
+        tgl_from: formatDate(values.range_tgl?.from as string, "short"),
+        tgl_to: formatDate(values.range_tgl?.to as string, "short"),
       };
       setLoading(true);
       req

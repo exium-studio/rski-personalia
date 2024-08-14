@@ -5,6 +5,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   SimpleGrid,
   Text,
   useToast,
@@ -21,6 +22,7 @@ import req from "../../constant/req";
 import { responsiveSpacing } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useDataState from "../../hooks/useDataState";
+import formatDate from "../../lib/formatDate";
 
 export default function PengaturanJadwalPenggajian() {
   const { error, notFound, loading, data, retry } = useDataState<any>({
@@ -117,14 +119,16 @@ export default function PengaturanJadwalPenggajian() {
               ))}
             </SimpleGrid>
 
-            <Box mt={"auto"}>
+            <HStack mt={"auto"} justify={"space-between"}>
+              <Skeleton h={"16px"} maxW={"200px"} />
+
               <Skeleton
                 mt={responsiveSpacing}
                 ml={"auto"}
                 w={"120px"}
                 h={"40px"}
               />
-            </Box>
+            </HStack>
           </>
         )}
 
@@ -179,19 +183,30 @@ export default function PengaturanJadwalPenggajian() {
               </FormControl>
             </form>
 
-            <Button
+            <HStack
               mt={"auto"}
-              ml={"auto"}
-              w={"120px"}
-              className="btn-ap clicky"
-              flexShrink={0}
-              colorScheme="ap"
-              type="submit"
-              form="pengaturanJadwalPenggajianForm"
-              isLoading={loadingSimpan}
+              pt={responsiveSpacing}
+              justify={"space-between"}
+              align={"end"}
             >
-              Simpan
-            </Button>
+              <Text opacity={0.4}>
+                Terakhir diperbarui : {formatDate(data?.updated_at)}
+              </Text>
+
+              <Button
+                mt={"auto"}
+                ml={"auto"}
+                w={"120px"}
+                className="btn-ap clicky"
+                flexShrink={0}
+                colorScheme="ap"
+                type="submit"
+                form="pengaturanJadwalPenggajianForm"
+                isLoading={loadingSimpan}
+              >
+                Simpan
+              </Button>
+            </HStack>
           </>
         )}
       </>

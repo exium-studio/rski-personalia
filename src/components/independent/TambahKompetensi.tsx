@@ -163,6 +163,7 @@ export default function TambahKompetensi({ ...props }: Props) {
                     formik.setFieldValue("jenis_kompetensi", input);
                   }}
                   inputValue={formik.values.jenis_kompetensi}
+                  isError={!!formik.errors.jenis_kompetensi}
                 />
                 <FormErrorMessage>
                   {formik.errors.jenis_kompetensi as string}
