@@ -142,7 +142,7 @@ export default function EditTerPph21ModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit kategori TER"
+              title="Edit TER pph21"
               onClose={() => {
                 formik.resetForm();
               }}
