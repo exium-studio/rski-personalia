@@ -47,6 +47,8 @@ export default function PengaturanKategoriTer() {
             }));
           }}
           inputValue={filterConfig.search}
+          tooltipLabel="Cari dengan nama kategori TER"
+          placeholder="nama kategori TER"
         />
 
         <MultiSelectPengaturanDeletedAt
