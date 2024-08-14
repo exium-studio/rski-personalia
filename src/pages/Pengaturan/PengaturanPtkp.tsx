@@ -3,7 +3,7 @@ import { useState } from "react";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
 import TabelPengaturanPtkp from "../../components/dependent/TabelPengaturanPtkp";
-import TambahTerPph21 from "../../components/independent/TambahTerPph21";
+import TambahPtkp from "../../components/independent/TambahPtkp";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
@@ -65,7 +65,7 @@ export default function PengaturanPtkp() {
           maxW={"165px"}
         />
 
-        <TambahTerPph21 minW={"fit-content"} />
+        <TambahPtkp minW={"fit-content"} />
       </HStack>
 
       <TabelPengaturanPtkp filterConfig={filterConfig} />

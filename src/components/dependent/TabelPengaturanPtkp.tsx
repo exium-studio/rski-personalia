@@ -14,6 +14,7 @@ import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisc
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import EditPtkpModalDisclosure from "../independent/EditPtkpModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -26,17 +27,19 @@ export default function TabelPengaturanPtkp({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <MenuItem>
-          <Text>Edit</Text>
-          <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <EditPtkpModalDisclosure rowData={rowData}>
+          <MenuItem>
+            <Text>Edit</Text>
+            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </EditPtkpModalDisclosure>
       );
     },
     (rowData: any) => {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url="/api/rski/dashboard/pengaturan/ter-pph-21/restore"
+          url="/api/rski/dashboard/pengaturan/ptkp/restore"
         >
           <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
             <Text>Restore</Text>
@@ -50,7 +53,7 @@ export default function TabelPengaturanPtkp({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url="/api/rski/dashboard/pengaturan/ter-pph-21"
+          url="/api/rski/dashboard/pengaturan/ptkp"
         >
           <MenuItem
             fontWeight={500}
@@ -110,17 +113,14 @@ export default function TabelPengaturanPtkp({ filterConfig }: Props) {
       },
     },
     {
-      th: "Penghasilan Bruto Bulanan",
+      th: "Kategori TER",
       isSortable: true,
-      cProps: {
-        justify: "center",
-      },
     },
     {
-      th: "Persentase TER (%)",
+      th: "Min. Gaji Pokok",
       isSortable: true,
       cProps: {
-        justify: "center",
+        justify: "right",
       },
     },
   ];
@@ -149,18 +149,16 @@ export default function TabelPengaturanPtkp({ filterConfig }: Props) {
         },
       },
       {
-        value: item.from_ter,
-        td: `Rp ${formatNumber(item.from_ter)} - Rp ${formatNumber(
-          item.to_ter
-        )}`,
-        isNumeric: true,
+        original_value: item.kategori_ter,
+        value: item.kategori_ter?.nama_kategori_ter,
+        td: item.kategori_ter?.nama_kategori_ter,
       },
       {
-        value: item.percetage_ter,
-        td: `${item.percentage_ter}%`,
+        value: item.nilai,
+        td: formatNumber(item.nilai),
         isNumeric: true,
         cProps: {
-          justify: "center",
+          justify: "right",
         },
       },
     ],

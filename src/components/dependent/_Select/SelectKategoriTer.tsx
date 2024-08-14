@@ -1,6 +1,8 @@
-import { ButtonProps, useDisclosure } from "@chakra-ui/react";
+import { ButtonProps, useDisclosure, useToast } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import SingleSelectModal from "../input/SingleSelectModal";
+import { useEffect, useState } from "react";
+import req from "../../../constant/req";
 
 interface Props extends ButtonProps {
   name: string;
@@ -26,24 +28,42 @@ export default function SelectKategoriTer({
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const options = [
-    {
-      value: 2,
-      label: "Terlalu",
-    },
-    {
-      value: 3,
-      label: "Terpadu",
-    },
-    {
-      value: 4,
-      label: "Tersendiri",
-    },
-  ];
+  const toast = useToast();
+  const [options, setOptions] = useState<Interface__SelectOption[] | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    if (isOpen && !options) {
+      req
+        .get("/api/rski/dashboard/pengaturan/kategori-ter")
+        .then((r) => {
+          if (r.status === 200) {
+            const options = r.data.data.map((item: any) => ({
+              value: item.id,
+              label: item.nama_kategori_ter,
+            }));
+            setOptions(options);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        });
+    }
+  }, [isOpen, options, toast]);
 
   return (
     <SingleSelectModal
-      id="select-status-karyawan-modal"
+      id="select-kategori-ter-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
@@ -56,7 +76,7 @@ export default function SelectKategoriTer({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Status Kepegawaian"}
+      placeholder={placeholder || "Pilih Kategori TER"}
       nonNullable={nonNullable}
       {...props}
     />
