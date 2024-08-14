@@ -23,16 +23,15 @@ import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
+import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import SelectPtkp from "../dependent/_Select/SelectPtkp";
+import SelectKategoriTer from "../dependent/_Select/SelectKategoriTer";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
 import RequiredForm from "../form/RequiredForm";
-import useRenderTrigger from "../../global/useRenderTrigger";
-import req from "../../constant/req";
-import SelectKategoriTer from "../dependent/_Select/SelectKategoriTer";
 
 interface Props extends ButtonProps {}
 
@@ -49,14 +48,14 @@ export default function TambahTerPph21({ ...props }: Props) {
     validateOnChange: false,
     initialValues: {
       kategori_ter: undefined as any,
-      ptkp: undefined as any,
+      // ptkp: undefined as any,
       from_ter: undefined,
       to_ter: undefined,
       percentage: undefined,
     },
     validationSchema: yup.object().shape({
       kategori_ter: yup.object().required("Harus diisi"),
-      ptkp: yup.object().required("Harus diisi"),
+      // ptkp: yup.object().required("Harus diisi"),
       from_ter: yup.number().required("Harus diisi"),
       to_ter: yup.number().required("Harus diisi"),
       percentage: yup.number().required("Harus diisi"),
@@ -64,10 +63,10 @@ export default function TambahTerPph21({ ...props }: Props) {
     onSubmit: (values, { resetForm }) => {
       const payload = {
         kategori_ter_id: values.kategori_ter?.value,
-        ptkp_id: values.ptkp?.value,
+        // ptkp_id: values.ptkp?.value,
         from_ter: values.from_ter,
         to_ter: values.to_ter,
-        percentage_ter: values.percentage,
+        percentage: values.percentage,
       };
       setLoading(true);
       req
@@ -101,6 +100,7 @@ export default function TambahTerPph21({ ...props }: Props) {
         });
     },
   });
+
   return (
     <>
       <Button
@@ -156,7 +156,7 @@ export default function TambahTerPph21({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl mb={4} isInvalid={formik.errors.ptkp ? true : false}>
+              {/* <FormControl mb={4} isInvalid={formik.errors.ptkp ? true : false}>
                 <FormLabel>
                   PTKP
                   <RequiredForm />
@@ -172,7 +172,7 @@ export default function TambahTerPph21({ ...props }: Props) {
                 <FormErrorMessage>
                   {formik.errors.ptkp as string}
                 </FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
 
               <FormLabel>
                 Penghasilan Bruto Bulanan
