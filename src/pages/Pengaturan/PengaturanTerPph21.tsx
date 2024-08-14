@@ -47,6 +47,8 @@ export default function PengaturanTerPph21() {
             }));
           }}
           inputValue={filterConfig.search}
+          tooltipLabel="Cari dengan nama kategori TER"
+          placeholder="nama kategori TER"
         />
 
         <MultiSelectPengaturanDeletedAt
@@ -61,6 +63,7 @@ export default function PengaturanTerPph21() {
           optionsDisplay="chip"
           placeholder="Filter Dihapus"
           maxW={"165px"}
+          _focus={{ border: "none" }}
         />
 
         <TambahTerPph21 minW={"fit-content"} />

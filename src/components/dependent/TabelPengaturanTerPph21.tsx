@@ -14,6 +14,7 @@ import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisc
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import EditTerPph21ModalDisclosure from "../independent/EditTerPph21ModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -26,17 +27,19 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <MenuItem>
-          <Text>Edit</Text>
-          <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <EditTerPph21ModalDisclosure rowData={rowData}>
+          <MenuItem>
+            <Text>Edit</Text>
+            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </EditTerPph21ModalDisclosure>
       );
     },
     (rowData: any) => {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url="/api/rski/dashboard/pengaturan/ter-pph-21/restore"
+          url="/api/rski/dashboard/pengaturan/pph-21/restore"
         >
           <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
             <Text>Restore</Text>
@@ -50,7 +53,7 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url="/api/rski/dashboard/pengaturan/ter-pph-21"
+          url="/api/rski/dashboard/pengaturan/pph-21"
         >
           <MenuItem
             fontWeight={500}
@@ -93,7 +96,7 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
 
   const formattedHeader = [
     {
-      th: "Kode PTKP",
+      th: "Kategori TER",
       isSortable: true,
       props: {
         position: "sticky",
@@ -112,10 +115,17 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
       },
     },
     {
-      th: "Penghasilan Bruto Bulanan",
+      th: "Min. Penghasilan Bruto Bulanan",
       isSortable: true,
       cProps: {
-        justify: "center",
+        justify: "right",
+      },
+    },
+    {
+      th: "Maks. Penghasilan Bruto Bulanan",
+      isSortable: true,
+      cProps: {
+        justify: "right",
       },
     },
     {
@@ -126,12 +136,12 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
       },
     },
   ];
-  const formattedData = data?.map((item: any) => ({
+  const formattedData = fd?.map((item: any) => ({
     id: item.id,
     columnsFormat: [
       {
-        value: item.ptkp?.kode_ptkp,
-        td: item.ptkp?.kode_ptkp,
+        value: item.kategori_ter_id?.nama_kategori_ter,
+        td: item.kategori_ter_id?.nama_kategori_ter,
         isSortable: true,
         props: {
           position: "sticky",
@@ -152,14 +162,23 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
       },
       {
         value: item.from_ter,
-        td: `Rp ${formatNumber(item.from_ter)} - Rp ${formatNumber(
-          item.to_ter
-        )}`,
+        td: `Rp ${formatNumber(item.from_ter)}`,
         isNumeric: true,
+        cProps: {
+          justify: "right",
+        },
       },
       {
-        value: item.percetage_ter,
-        td: `${item.percentage_ter}%`,
+        value: item.to_ter,
+        td: `Rp ${formatNumber(item.to_ter)}`,
+        isNumeric: true,
+        cProps: {
+          justify: "right",
+        },
+      },
+      {
+        value: item.percentage,
+        td: item.percentage && `${item.percentage}%`,
         isNumeric: true,
         cProps: {
           justify: "center",
