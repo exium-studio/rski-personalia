@@ -14,6 +14,7 @@ import StringInput from "../../dependent/input/StringInput";
 import Textarea from "../../dependent/input/Textarea";
 import RequiredForm from "../RequiredForm";
 import formatDate from "../../../lib/formatDate";
+import backOnClose from "../../../lib/backOnClose";
 
 interface Props {
   forwardRef: MutableRefObject<null>;
@@ -58,6 +59,7 @@ export default function FormDashboardBuatPengumuman({
             });
             setRt(!rt);
             resetForm();
+            backOnClose();
           }
         })
         .catch((e) => {
