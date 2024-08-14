@@ -22,6 +22,7 @@ import Login from "./pages/Login/Login";
 import PengaturanHariLibur from "./pages/Pengaturan/PengaturanHariLibur";
 import PengaturanJabatan from "./pages/Pengaturan/PengaturanJabatan";
 import PengaturanJadwalPenggajian from "./pages/Pengaturan/PengaturanJadwalPenggajian";
+import PengaturanKategoriTer from "./pages/Pengaturan/PengaturanKategoriTer";
 import PengaturanKelolaRole from "./pages/Pengaturan/PengaturanKelolaRole";
 import PengaturanKelompokGaji from "./pages/Pengaturan/PengaturanKelompokGaji";
 import PengaturanKompetensi from "./pages/Pengaturan/PengaturanKompetensi";
@@ -387,31 +388,31 @@ export const App = () => (
           }
         />
         <Route
-          path="/pengaturan/keuangan/ptkp"
-          element={
-            <NavContainer
-              active={7}
-              topNavsData={navs[7].subNavs}
-              topNavActive={0}
-              title="Pengaturan - TER pph21"
-            >
-              <PengaturanContainer activeGroup={2} active={1}>
-                <PengaturanPtkp />
-              </PengaturanContainer>
-            </NavContainer>
-          }
-        />
-        <Route
           path="/pengaturan/keuangan/kategori-ter-pph21"
           element={
             <NavContainer
               active={7}
               topNavsData={navs[7].subNavs}
               topNavActive={0}
-              title="Pengaturan - TER pph21"
+              title="Pengaturan - Kategori TER"
+            >
+              <PengaturanContainer activeGroup={2} active={1}>
+                <PengaturanKategoriTer />
+              </PengaturanContainer>
+            </NavContainer>
+          }
+        />
+        <Route
+          path="/pengaturan/keuangan/ptkp"
+          element={
+            <NavContainer
+              active={7}
+              topNavsData={navs[7].subNavs}
+              topNavActive={0}
+              title="Pengaturan - PTKP"
             >
               <PengaturanContainer activeGroup={2} active={2}>
-                <PengaturanTerPph21 />
+                <PengaturanPtkp />
               </PengaturanContainer>
             </NavContainer>
           }

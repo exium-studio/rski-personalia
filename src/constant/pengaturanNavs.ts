@@ -73,14 +73,14 @@ const pengaturanNavs = [
         link: "/pengaturan/keuangan/premi",
       },
       {
-        icon: RiArticleLine,
-        label: "PTKP",
-        link: "/pengaturan/keuangan/ptkp",
-      },
-      {
         icon: RiListIndefinite,
         label: "Kategori TER",
         link: "/pengaturan/keuangan/kategori-ter-pph21",
+      },
+      {
+        icon: RiArticleLine,
+        label: "PTKP",
+        link: "/pengaturan/keuangan/ptkp",
       },
       {
         icon: RiFilePaper2Line,
