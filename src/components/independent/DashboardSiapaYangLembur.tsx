@@ -26,6 +26,7 @@ export default function DashboardSiapaYangLembur({ ...props }: Props) {
     initialData: undefined,
     url: `/api/rski/dashboard/get-lembur-today`,
     dependencies: [],
+    noRt: true,
   });
 
   // SX

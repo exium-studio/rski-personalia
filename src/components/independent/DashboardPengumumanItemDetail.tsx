@@ -35,7 +35,7 @@ export default function DashboardPengumumanItemDetail({
   ...props
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`buat-pengumuman-modal-${data.id}`, isOpen, onOpen, onClose);
+  useBackOnClose(`detail-pengumuman-modal-${data.id}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);

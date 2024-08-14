@@ -10,6 +10,7 @@ interface Props<T> {
   dependencies?: any[];
   conditions?: boolean;
   page?: number;
+  noRt?: boolean;
 }
 
 const useDataState = <T>({
@@ -20,6 +21,7 @@ const useDataState = <T>({
   dependencies = [],
   conditions = true,
   page = 1,
+  noRt = false,
 }: Props<T>) => {
   const [error, setError] = useState<boolean>(false);
   const [notFound, setNotFound] = useState<boolean>(false);
@@ -40,7 +42,7 @@ const useDataState = <T>({
       makeRequest();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [conditions, url, rt, page, ...dependencies]);
+  }, [conditions, url, page, ...(noRt ? [] : [rt]), ...dependencies]);
 
   const makeRequest = () => {
     if (abortControllerRef.current) {

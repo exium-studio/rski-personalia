@@ -57,6 +57,7 @@ export default function DashboardTotal({ ...props }: Props) {
     initialData: undefined,
     url: `/api/rski/dashboard/calculated-header`,
     dependencies: [],
+    noRt: true,
   });
 
   return (

@@ -26,6 +26,7 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
     initialData: undefined,
     url: `/api/rski/dashboard/calculated-kepegawaian`,
     dependencies: [],
+    noRt: true,
   });
   const labels = ["Pria", "Wanita", "Magang"];
   const datasets = [

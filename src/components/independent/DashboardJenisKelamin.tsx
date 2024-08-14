@@ -26,6 +26,7 @@ export default function DashboardJenisKelamin({ ...props }: Props) {
     initialData: undefined,
     url: `/api/rski/dashboard/calculated-jenis-kelamin`,
     dependencies: [],
+    noRt: true,
   });
 
   const labels = ["Pria", "Wanita"];

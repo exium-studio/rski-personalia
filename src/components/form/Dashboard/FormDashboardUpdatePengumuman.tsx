@@ -1,20 +1,21 @@
-import { useFormik } from "formik";
-import { Pengumuman__Interface } from "../../../constant/interfaces";
-import * as yup from "yup";
 import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input,
   useToast,
 } from "@chakra-ui/react";
-import RequiredForm from "../RequiredForm";
-import Textarea from "../../dependent/input/Textarea";
+import { useFormik } from "formik";
 import { Dispatch } from "react";
+import * as yup from "yup";
+import { Pengumuman__Interface } from "../../../constant/interfaces";
 import req from "../../../constant/req";
-import formatDate from "../../../lib/formatDate";
 import useRenderTrigger from "../../../global/useRenderTrigger";
+import backOnClose from "../../../lib/backOnClose";
+import formatDate from "../../../lib/formatDate";
 import DatePickerModal from "../../dependent/input/DatePickerModal";
+import StringInput from "../../dependent/input/StringInput";
+import Textarea from "../../dependent/input/Textarea";
+import RequiredForm from "../RequiredForm";
 
 interface Props {
   data: Pengumuman__Interface;
@@ -59,7 +60,7 @@ export default function FormDashboardUpdatePengumuman({
               position: "bottom-right",
             });
             setRt(!rt);
-            resetForm();
+            backOnClose();
           }
         })
         .catch((e) => {
@@ -87,11 +88,13 @@ export default function FormDashboardUpdatePengumuman({
           Judul
           <RequiredForm />
         </FormLabel>
-        <Input
+        <StringInput
           name="judul"
           placeholder="Judul Pengumuman"
-          onChange={formik.handleChange}
-          value={formik.values.judul}
+          onChangeSetter={(input) => {
+            formik.setFieldValue("judul", input);
+          }}
+          inputValue={formik.values.judul}
         />
         <FormErrorMessage>{formik.errors.judul}</FormErrorMessage>
       </FormControl>

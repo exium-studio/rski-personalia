@@ -19,7 +19,6 @@ import {
   responsiveSpacing,
 } from "../../constant/sizes";
 import Skeleton from "./Skeleton";
-
 import useDataState from "../../hooks/useDataState";
 import DashboardBuatPengumumanModal from "./DashboardBuatPengumumanModal";
 import DashboardPengumumanItemDetail from "./DashboardPengumumanItemDetail";
