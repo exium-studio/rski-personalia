@@ -12,7 +12,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
@@ -333,11 +332,6 @@ export default function TabelPenilaianKaryawan({ filterConfig }: Props) {
           {loading && (
             <>
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
-              <HStack justify={"space-between"} mt={responsiveSpacing}>
-                <Skeleton maxW={"120px"} />
-                <Skeleton maxW={"300px"} h={"20px"} />
-                <Skeleton maxW={"112px"} />
-              </HStack>
             </>
           )}
           {!loading && (
