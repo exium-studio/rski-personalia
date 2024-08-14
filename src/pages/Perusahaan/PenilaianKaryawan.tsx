@@ -9,6 +9,7 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import RunPenilaian from "../../components/independent/RunPenilaian";
 
 export default function PenilaianKaryawan() {
   // Filter Config
@@ -61,6 +62,8 @@ export default function PenilaianKaryawan() {
             <FilterKaryawan title="Filter Karyawan Pelapor" />
 
             <ExportModal url="" title="Export Penggajian" />
+
+            <RunPenilaian minW={"fit-content"} />
           </HStack>
 
           <TabelPenilaianKaryawan filterConfig={filterKaryawan} />
