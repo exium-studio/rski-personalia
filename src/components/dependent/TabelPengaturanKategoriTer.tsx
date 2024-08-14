@@ -52,7 +52,7 @@ export default function TabelPengaturanKategoriTer({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url="/api/rski/dashboard/pengaturan/kategori-ter/"
+          url="/api/rski/dashboard/pengaturan/kategori-ter"
         >
           <MenuItem
             fontWeight={500}
