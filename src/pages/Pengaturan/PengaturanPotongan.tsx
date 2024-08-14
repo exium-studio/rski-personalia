@@ -50,6 +50,8 @@ export default function PengaturanPremi() {
             }));
           }}
           inputValue={filterConfig.search}
+          tooltipLabel="Cari dengan nama potongan"
+          placeholder="nama potongan"
         />
 
         <MultiSelectPengaturanDeletedAt
@@ -63,7 +65,8 @@ export default function PengaturanPremi() {
           inputValue={filterConfig.is_deleted}
           optionsDisplay="chip"
           placeholder="Filter Dihapus"
-          flex={"0 1 fit-content"}
+          maxW={"165px"}
+          _focus={{ border: "1px solid var(--divider3)" }}
         />
 
         <MultiSelectJenisPotongan

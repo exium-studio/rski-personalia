@@ -61,6 +61,7 @@ export default function PengaturanTipeCuti() {
           optionsDisplay="chip"
           placeholder="Filter Dihapus"
           maxW={"165px"}
+          _focus={{ border: "1px solid var(--divider3)" }}
         />
 
         <TambahCuti minW={"fit-content"} />

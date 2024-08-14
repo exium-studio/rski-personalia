@@ -63,6 +63,7 @@ export default function PengaturanKategoriTer() {
           optionsDisplay="chip"
           placeholder="Filter Dihapus"
           maxW={"165px"}
+          _focus={{ border: "1px solid var(--divider3)" }}
         />
 
         <TambahKategoriTer minW={"fit-content"} />

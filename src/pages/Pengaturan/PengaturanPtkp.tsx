@@ -63,6 +63,7 @@ export default function PengaturanPtkp() {
           optionsDisplay="chip"
           placeholder="Filter Dihapus"
           maxW={"165px"}
+          _focus={{ border: "1px solid var(--divider3)" }}
         />
 
         <TambahPtkp minW={"fit-content"} />

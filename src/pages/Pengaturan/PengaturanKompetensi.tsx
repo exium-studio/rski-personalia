@@ -50,6 +50,8 @@ export default function PengaturanKompetensi() {
             }));
           }}
           inputValue={filterConfig.search}
+          tooltipLabel="Cari dengan nama kompetensi"
+          placeholder="nama kompetensi"
         />
 
         <MultiSelectPengaturanDeletedAt
@@ -63,9 +65,9 @@ export default function PengaturanKompetensi() {
           inputValue={filterConfig.is_deleted}
           optionsDisplay="chip"
           placeholder="Filter Dihapus"
-          flex={"0 1 fit-content"}
+          maxW={"165px"}
+          _focus={{ border: "1px solid var(--divider3)" }}
         />
-
         <TambahKompetensi minW={"fit-content"} />
       </HStack>
 
