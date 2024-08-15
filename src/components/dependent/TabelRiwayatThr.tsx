@@ -28,7 +28,7 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any[]>({
       initialData: undefined,
-      url: "api/rski/dashboard/keuangan/get-thr",
+      url: "/api/rski/dashboard/keuangan/get-thr",
       payload: {
         filterConfig: filterConfig,
       },

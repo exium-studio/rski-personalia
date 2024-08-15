@@ -135,7 +135,7 @@ const optionsInboxType = [
 const optionsJenisPotongan = [
   {
     value: 1,
-    label: "Nominal",
+    label: "Nominal (Rp)",
   },
   {
     value: 0,

@@ -51,8 +51,8 @@ export default function TambahPotongan({ ...props }: Props) {
     initialValues: {
       nama_premi: "",
       jenis_premi: {
-        value: 0,
-        label: "Persentase (%)",
+        value: 1,
+        label: "Nominal (Rp)",
       },
       sumber_potongan: undefined as any,
       besaran_premi: undefined,
@@ -128,6 +128,7 @@ export default function TambahPotongan({ ...props }: Props) {
         }}
         initialFocusRef={initialRef}
         isCentered
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent>
@@ -216,7 +217,7 @@ export default function TambahPotongan({ ...props }: Props) {
                 {formik?.values.jenis_premi &&
                 formik?.values.jenis_premi?.value === 0 ? (
                   <InputGroup>
-                    <InputRightElement pr={4}>
+                    <InputRightElement pr={3}>
                       <Text>%</Text>
                     </InputRightElement>
                     <Input
