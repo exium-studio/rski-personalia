@@ -11,6 +11,7 @@ interface Props extends InputProps {
   placeholder?: string;
   noFormat?: boolean;
   boxProps?: BoxProps;
+  formatValue?: (value: number | undefined) => string;
 }
 
 export default function NumberInput({
@@ -21,8 +22,15 @@ export default function NumberInput({
   placeholder,
   noFormat,
   boxProps,
+  formatValue,
   ...props
 }: Props) {
+  const formattedInputValue = formatValue
+    ? formatValue(inputValue)
+    : noFormat
+    ? inputValue?.toString()
+    : formatNumber(inputValue);
+
   return (
     <StringInput
       name={name}
@@ -35,9 +43,7 @@ export default function NumberInput({
           onChangeSetter(parseNumber(i));
         }
       }}
-      inputValue={
-        (noFormat ? inputValue?.toString() : formatNumber(inputValue)) || ""
-      }
+      inputValue={formattedInputValue || ""}
       placeholder={placeholder || "Masukan Nominal"}
       boxProps={boxProps}
       {...props}

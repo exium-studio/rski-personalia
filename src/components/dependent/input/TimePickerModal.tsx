@@ -15,19 +15,19 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { RiArrowDownSLine, RiArrowUpSLine, RiTimeLine } from "@remixicon/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useErrorColor } from "../../../constant/colors";
 import useBackOnClose from "../../../hooks/useBackOnClose";
 import backOnClose from "../../../lib/backOnClose";
-import formatTimeFromDate from "../../../lib/formatTimeFromDate";
+import { getHours, getMinutes, getSeconds } from "../../../lib/getTime";
 import DisclosureHeader from "../DisclosureHeader";
+import StringInput from "./StringInput";
 
 interface Props extends ButtonProps {
   id: string;
   name: string;
-  onConfirm: (inputValue: Date | undefined) => void;
-  inputValue: Date | undefined;
-  withSeconds?: boolean;
+  onConfirm: (inputValue: string | undefined) => void;
+  inputValue: string | undefined;
   placeholder?: string;
   nonNullable?: boolean;
   isError?: boolean;
@@ -38,7 +38,6 @@ export default function TimePickerModal({
   name,
   onConfirm,
   inputValue,
-  withSeconds,
   placeholder,
   nonNullable,
   isError,
@@ -49,22 +48,25 @@ export default function TimePickerModal({
   // const hoursArray = Array.from({ length: 23 }, (_, i) => i + 1);
   // const minutesArray = Array.from({ length: 59 }, (_, i) => i + 1);
 
-  const defaultTime = new Date();
-  defaultTime.setHours(0, 0, 0, 0);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`${id}-${name}`, isOpen, onOpen, onClose);
 
-  const [time, setTime] = useState<Date | undefined>(inputValue || defaultTime);
-  const [hours, setHours] = useState<number>(
-    inputValue?.getHours() || defaultTime.getHours()
+  const defaultTime = "00:00:00";
+  const [time, setTime] = useState<string | undefined>(
+    inputValue ? inputValue : defaultTime
   );
-  const [minutes, setMinutes] = useState<number>(
-    inputValue?.getMinutes() || defaultTime.getMinutes()
-  );
-  const [seconds, setSeconds] = useState<number>(
-    inputValue?.getSeconds() || defaultTime.getSeconds()
-  );
+  const [hours, setHours] = useState<number>(getHours(time));
+  const [minutes, setMinutes] = useState<number>(getMinutes(time));
+  const [seconds, setSeconds] = useState<number>(getSeconds(time));
+
+  useEffect(() => {
+    const fHours = String(hours).padStart(2, "0");
+    const fMinutes = String(minutes).padStart(2, "0");
+    const fSeconds = String(seconds).padStart(2, "0");
+    setTime(`${fHours}:${fMinutes}:${fSeconds}`);
+  }, [hours, minutes, seconds]);
+
+  // console.log(inputValue, time, hours, minutes, seconds);
 
   const intervalIncrementRef = useRef<ReturnType<typeof setInterval> | null>(
     null
@@ -142,11 +144,7 @@ export default function TimePickerModal({
 
     if (confirmable) {
       if (time) {
-        const confirmedTime = time;
-        confirmedTime.setHours(hours);
-        confirmedTime.setMinutes(minutes);
-        confirmedTime.setSeconds(seconds);
-        onConfirm(confirmedTime);
+        onConfirm(time);
       } else {
         onConfirm(undefined);
       }
@@ -173,17 +171,16 @@ export default function TimePickerModal({
         cursor={"pointer"}
         onClick={() => {
           onOpen();
-          setTime(inputValue || defaultTime);
-          setHours(inputValue?.getHours() || defaultTime.getHours());
-          setMinutes(inputValue?.getMinutes() || defaultTime.getMinutes());
-          setSeconds(inputValue?.getSeconds() || defaultTime.getSeconds());
+          if (inputValue) {
+            setTime(inputValue);
+          }
         }}
         // _focus={{ boxShadow: "0 0 0px 2px var(--p500)" }}
         _focus={{ border: "1px solid var(--p500)", boxShadow: "none" }}
         {...props}
       >
         {inputValue ? (
-          <Text>{formatTimeFromDate(inputValue, withSeconds)}</Text>
+          <Text>{inputValue}</Text>
         ) : (
           <Text //@ts-ignore
             color={props?._placeholder?.color || "#96969691"}
@@ -208,7 +205,7 @@ export default function TimePickerModal({
           </ModalHeader>
 
           <ModalBody className="scrollY">
-            <HStack justify={"space-between"}>
+            <HStack justify={"space-between"} gap={1}>
               <VStack flex={"1 1 0"} align={"stretch"} gap={0}>
                 <IconButton
                   aria-label="add hour button"
@@ -232,15 +229,21 @@ export default function TimePickerModal({
                 />
 
                 <VStack my={4}>
-                  <Text
-                    fontSize={64}
+                  <StringInput
+                    name="jam"
+                    onChangeSetter={(input) => {
+                      if (parseInt(input as string) < 24) {
+                        setHours(parseInt(input as string));
+                      }
+                    }}
+                    inputValue={time ? String(hours).padStart(2, "0") : "--"}
+                    fontSize={"64px !important"}
                     fontWeight={600}
+                    h={"64px"}
                     textAlign={"center"}
-                    lineHeight={1}
-                    className="num"
-                  >
-                    {time ? String(hours).padStart(2, "0") : "--"}
-                  </Text>
+                    border={"none !important"}
+                    _focus={{ border: "none !important" }}
+                  />
                   <Text textAlign={"center"}>Jam</Text>
                 </VStack>
 
@@ -293,15 +296,21 @@ export default function TimePickerModal({
                 />
 
                 <VStack my={4}>
-                  <Text
-                    fontSize={64}
+                  <StringInput
+                    name="jam"
+                    onChangeSetter={(input) => {
+                      if (parseInt(input as string) < 60) {
+                        setMinutes(parseInt(input as string));
+                      }
+                    }}
+                    inputValue={time ? String(minutes).padStart(2, "0") : "--"}
+                    fontSize={"64px !important"}
                     fontWeight={600}
+                    h={"64px"}
                     textAlign={"center"}
-                    lineHeight={1}
-                    className="num"
-                  >
-                    {time ? String(minutes).padStart(2, "0") : "--"}
-                  </Text>
+                    border={"none !important"}
+                    _focus={{ border: "none !important" }}
+                  />
                   <Text textAlign={"center"}>Menit</Text>
                 </VStack>
 
@@ -327,70 +336,72 @@ export default function TimePickerModal({
                 />
               </VStack>
 
-              {withSeconds && (
-                <>
-                  <Text fontSize={50} opacity={0.2} mt={-9}>
-                    :
-                  </Text>
+              <Text fontSize={50} opacity={0.2} mt={-9}>
+                :
+              </Text>
 
-                  <VStack flex={"1 1 0"} align={"stretch"} gap={0}>
-                    <IconButton
-                      aria-label="add hour button"
-                      icon={<Icon as={RiArrowUpSLine} fontSize={20} />}
-                      className="btn-outline clicky"
-                      onClick={() => {
-                        setSeconds((ps) => (ps < 59 ? ps + 1 : 0));
-                        if (!time) {
-                          setTime(defaultTime);
-                        }
-                      }}
-                      onMouseDown={() => {
-                        handleMouseDownIncrement("seconds");
-                      }}
-                      onMouseUp={handleMouseUpIncrement}
-                      onMouseLeave={handleMouseUpIncrement}
-                      onTouchStart={() => {
-                        handleMouseDownIncrement("seconds");
-                      }}
-                      onTouchEnd={handleMouseUpIncrement}
-                    />
+              <VStack flex={"1 1 0"} align={"stretch"} gap={0}>
+                <IconButton
+                  aria-label="add hour button"
+                  icon={<Icon as={RiArrowUpSLine} fontSize={20} />}
+                  className="btn-outline clicky"
+                  onClick={() => {
+                    setSeconds((ps) => (ps < 59 ? ps + 1 : 0));
+                    if (!time) {
+                      setTime(defaultTime);
+                    }
+                  }}
+                  onMouseDown={() => {
+                    handleMouseDownIncrement("seconds");
+                  }}
+                  onMouseUp={handleMouseUpIncrement}
+                  onMouseLeave={handleMouseUpIncrement}
+                  onTouchStart={() => {
+                    handleMouseDownIncrement("seconds");
+                  }}
+                  onTouchEnd={handleMouseUpIncrement}
+                />
 
-                    <VStack my={4}>
-                      <Text
-                        fontSize={64}
-                        fontWeight={600}
-                        textAlign={"center"}
-                        lineHeight={1}
-                        className="num"
-                      >
-                        {time ? String(seconds).padStart(2, "0") : "--"}
-                      </Text>
-                      <Text textAlign={"center"}>Detik</Text>
-                    </VStack>
+                <VStack my={4}>
+                  <StringInput
+                    name="jam"
+                    onChangeSetter={(input) => {
+                      if (parseInt(input as string) < 60) {
+                        setSeconds(parseInt(input as string));
+                      }
+                    }}
+                    inputValue={time ? String(seconds).padStart(2, "0") : "--"}
+                    fontSize={"64px !important"}
+                    fontWeight={600}
+                    h={"64px"}
+                    textAlign={"center"}
+                    border={"none !important"}
+                    _focus={{ border: "none !important" }}
+                  />
+                  <Text textAlign={"center"}>Detik</Text>
+                </VStack>
 
-                    <IconButton
-                      aria-label="reduce hour button"
-                      icon={<Icon as={RiArrowDownSLine} fontSize={20} />}
-                      className="btn-outline clicky"
-                      onClick={() => {
-                        setSeconds((ps) => (ps > 0 ? ps - 1 : 59));
-                        if (!time) {
-                          setTime(defaultTime);
-                        }
-                      }}
-                      onMouseDown={() => {
-                        handleMouseDownDecrement("seconds");
-                      }}
-                      onMouseUp={handleMouseUpDecrement}
-                      onMouseLeave={handleMouseUpDecrement}
-                      onTouchStart={() => {
-                        handleMouseDownDecrement("seconds");
-                      }}
-                      onTouchEnd={handleMouseUpDecrement}
-                    />
-                  </VStack>
-                </>
-              )}
+                <IconButton
+                  aria-label="reduce hour button"
+                  icon={<Icon as={RiArrowDownSLine} fontSize={20} />}
+                  className="btn-outline clicky"
+                  onClick={() => {
+                    setSeconds((ps) => (ps > 0 ? ps - 1 : 59));
+                    if (!time) {
+                      setTime(defaultTime);
+                    }
+                  }}
+                  onMouseDown={() => {
+                    handleMouseDownDecrement("seconds");
+                  }}
+                  onMouseUp={handleMouseUpDecrement}
+                  onMouseLeave={handleMouseUpDecrement}
+                  onTouchStart={() => {
+                    handleMouseDownDecrement("seconds");
+                  }}
+                  onTouchEnd={handleMouseUpDecrement}
+                />
+              </VStack>
             </HStack>
           </ModalBody>
 
