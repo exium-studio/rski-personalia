@@ -56,7 +56,7 @@ export default function TambahHariLibur({ ...props }: Props) {
       };
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/hari-libur`, payload)
+        .post(`/api/rski/dasboard/hari-liburs`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -137,10 +137,7 @@ export default function TambahHariLibur({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                flex={"1 1"}
-                isInvalid={formik.errors.tanggal ? true : false}
-              >
+              <FormControl flex={"1 1"} isInvalid={!!formik.errors.tanggal}>
                 <FormLabel>
                   Tanggal
                   <RequiredForm />
@@ -156,6 +153,7 @@ export default function TambahHariLibur({ ...props }: Props) {
                       ? new Date(formik.values.tanggal)
                       : undefined
                   }
+                  isError={!!formik.errors.tanggal}
                 />
 
                 <FormErrorMessage>
