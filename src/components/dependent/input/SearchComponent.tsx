@@ -38,7 +38,7 @@ export default function SearchComponent({
     >
       <InputGroup {...props}>
         <InputLeftElement>
-          <Icon as={RiSearchLine} opacity={0.3} fontSize={iconSize} />
+          <Icon as={RiSearchLine} fontSize={iconSize} mb={"1px"} />
         </InputLeftElement>
 
         <StringInput
