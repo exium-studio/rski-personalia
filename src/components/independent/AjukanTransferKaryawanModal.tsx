@@ -38,6 +38,7 @@ import FileInput from "../dependent/input/FileInput";
 import Textarea from "../dependent/input/Textarea";
 import PleaseWaitModal from "../dependent/PleaseWaitModal";
 import RequiredForm from "../form/RequiredForm";
+import CContainer from "../wrapper/CContainer";
 
 interface Props extends ButtonProps {}
 
@@ -59,6 +60,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
       unit_kerja_tujuan: undefined as any,
       jabatan_tujuan: undefined as any,
       kelompok_gaji_tujuan: undefined as any,
+      role_tujuan: undefined as any,
       dokumen: undefined as any,
       alasan: "",
       beri_tahu_manajer_direktur: false,
@@ -71,6 +73,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
       unit_kerja_tujuan: yup.object(),
       jabatan_tujuan: yup.object(),
       kelompok_gaji_tujuan: yup.object(),
+      role_tujuan: yup.object(),
       dokumen: yup.mixed().required("Harus diisi"),
       alasan: yup.string().required("Harus diisi"),
       beri_tahu_manajer_direktur: yup.boolean(),
@@ -81,8 +84,19 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
       payload.append("user_id", values.karyawan?.value);
       payload.append("tgl_mulai", new Date(values.tgl_mulai).toISOString());
       payload.append("kategori_transfer_id", values.kategori_transfer?.value);
-      payload.append("unit_kerja_tujuan", values.unit_kerja_tujuan?.value);
-      payload.append("jabatan_tujuan", values.jabatan_tujuan?.value);
+      if (values.unit_kerja_tujuan?.value !== undefined) {
+        payload.append("unit_kerja_tujuan", values.unit_kerja_tujuan?.value);
+      }
+      if (values.jabatan_tujuan?.value !== undefined) {
+        payload.append("jabatan_tujuan", values.jabatan_tujuan?.value);
+      }
+      if (values.kelompok_gaji_tujuan?.value !== undefined) {
+        payload.append("kelompok_gaji", values.kelompok_gaji_tujuan?.value);
+      }
+      if (values.role_tujuan?.value !== undefined) {
+        payload.append("role", values.role_tujuan?.value);
+      }
+
       payload.append("alasan", values.alasan);
       payload.append("dokumen", values.dokumen);
 
@@ -281,6 +295,24 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                   </FormErrorMessage>
                 </FormControl>
 
+                <FormControl mb={4} isInvalid={!!formik.errors.role_tujuan}>
+                  <FormLabel>Role Tujuan</FormLabel>
+                  <SelectKelompokGaji
+                    name="role_tujuan"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("role_tujuan", input);
+                    }}
+                    inputValue={formik.values.role_tujuan}
+                    placeholder="Pilih Kelompok Gaji Tujuan"
+                  />
+                  <FormHelperText>
+                    Kosongkan jika data sama seperti sebelumnya
+                  </FormHelperText>
+                  <FormErrorMessage>
+                    {formik.errors.role_tujuan as string}
+                  </FormErrorMessage>
+                </FormControl>
+
                 <FormControl mb={4} isInvalid={!!formik.errors.dokumen}>
                   <FormLabel>
                     Dokumen (maks. 10 MB)
@@ -319,25 +351,27 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                   </FormErrorMessage>
                 </FormControl>
 
-                <FormControl>
-                  <Checkbox colorScheme="ap" alignItems={"start"}>
-                    <Text mt={"-2px"}>
-                      Beritahu Manajer Karyawan dan Direktur Melalui Email
-                    </Text>
-                  </Checkbox>
-                  <FormErrorMessage>
-                    {formik.errors.beri_tahu_manajer_direktur as string}
-                  </FormErrorMessage>
-                </FormControl>
+                <CContainer gap={4} pt={8}>
+                  <FormControl>
+                    <Checkbox colorScheme="ap" alignItems={"start"}>
+                      <Text mt={"-2px"}>
+                        Beritahu Manajer Karyawan dan Direktur Melalui Email
+                      </Text>
+                    </Checkbox>
+                    <FormErrorMessage>
+                      {formik.errors.beri_tahu_manajer_direktur as string}
+                    </FormErrorMessage>
+                  </FormControl>
 
-                <FormControl>
-                  <Checkbox colorScheme="ap">
-                    <Text mt={"-2px"}>Beritahu Karyawan Melalui Email</Text>
-                  </Checkbox>
-                  <FormErrorMessage>
-                    {formik.errors.beri_tahu_karyawan as string}
-                  </FormErrorMessage>
-                </FormControl>
+                  <FormControl>
+                    <Checkbox colorScheme="ap">
+                      <Text mt={"-2px"}>Beritahu Karyawan Melalui Email</Text>
+                    </Checkbox>
+                    <FormErrorMessage>
+                      {formik.errors.beri_tahu_karyawan as string}
+                    </FormErrorMessage>
+                  </FormControl>
+                </CContainer>
               </SimpleGrid>
             </form>
           </ModalBody>
