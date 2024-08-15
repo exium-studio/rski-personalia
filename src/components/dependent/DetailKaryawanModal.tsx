@@ -85,7 +85,6 @@ export default function DetailKaryawanModal({
   const lightDarkColor = useLightDarkColor();
 
   const initialRef = useRef(null);
-
   const { error, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-user/${user_id}`,
@@ -187,8 +186,10 @@ export default function DetailKaryawanModal({
                           mx={"auto"}
                         />
                         <Skeleton maxW={"400px"} />
-                        <Skeleton maxW={"400px"} h={"30px"} />
-                        <Skeleton maxW={"100px"} h={"30px"} />
+                        <HStack w={"100%"} maxW={"400px"}>
+                          <Skeleton w={"100%"} maxW={"400px"} h={"30px"} />
+                          <Skeleton w={"100%"} maxW={"100px"} h={"30px"} />
+                        </HStack>
                       </VStack>
 
                       <SimpleGrid gap={3} columns={[1, 2, null, 3]}>
@@ -277,10 +278,12 @@ export default function DetailKaryawanModal({
                               </Text>
 
                               <HStack mb={2}>
-                                <HStack opacity={0.6}>
-                                  <Text>{data.email}</Text>
-                                </HStack>
-
+                                <Text fontSize={20}>{data.email}</Text>
+                                <Icon
+                                  as={RiCircleFill}
+                                  fontSize={8}
+                                  opacity={0.2}
+                                />
                                 <StatusAktifBadge
                                   data={data.user.status_aktif}
                                 />
@@ -598,13 +601,13 @@ export default function DetailKaryawanModal({
                                       >
                                         {emptyDataLabel?.map(
                                           (key: any, i: number) => (
-                                            <HStack>
+                                            <HStack key={i}>
                                               <Icon
                                                 as={RiCircleFill}
                                                 opacity={0.2}
                                                 fontSize={8}
                                               />
-                                              <Text opacity={0.6} key={i}>
+                                              <Text opacity={0.6}>
                                                 {/* @ts-ignore */}
                                                 {dataKaryawanLabel[key]}
                                               </Text>
