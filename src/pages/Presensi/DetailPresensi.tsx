@@ -22,7 +22,7 @@ import { useBodyColor } from "../../constant/colors";
 import { responsiveSpacing, responsiveSpacing2 } from "../../constant/sizes";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
-import formatTime from "../../lib/formatTime";
+import formatTime from "../../lib/formatTimeOld";
 
 export default function DetailPresensi() {
   const dummy = {

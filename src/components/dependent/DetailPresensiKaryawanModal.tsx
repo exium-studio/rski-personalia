@@ -21,7 +21,7 @@ import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
-import formatTime from "../../lib/formatTime";
+import formatTime from "../../lib/formatTimeOld";
 import ComponentSpinner from "../independent/ComponentSpinner";
 import FlexLine from "../independent/FlexLine";
 import Img from "../independent/Img";

@@ -30,7 +30,7 @@ import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
-import formatTime from "../../lib/formatTime";
+import formatTime from "../../lib/formatTimeOld";
 import isDatePassed from "../../lib/isDatePassed";
 import RequiredForm from "../form/RequiredForm";
 import SelectShift from "./_Select/SelectShift";

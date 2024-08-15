@@ -1,7 +1,7 @@
 import { Center, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import useDataState from "../../hooks/useDataState";
-import formatTime from "../../lib/formatTime";
+import formatTime from "../../lib/formatTimeOld";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";

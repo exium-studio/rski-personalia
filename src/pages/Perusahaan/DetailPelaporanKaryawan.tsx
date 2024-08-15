@@ -22,7 +22,7 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useBodyColor } from "../../constant/colors";
 import { responsiveSpacing, responsiveSpacing2 } from "../../constant/sizes";
 import formatDate from "../../lib/formatDate";
-import formatTime from "../../lib/formatTime";
+import formatTime from "../../lib/formatTimeOld";
 export default function DetailPelaporanKaryawan() {
   const dummyBerkasFoto = [
     "/reza.jpg",

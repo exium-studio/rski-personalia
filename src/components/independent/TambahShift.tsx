@@ -25,7 +25,7 @@ import { iconSize } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import formatTime from "../../lib/formatTime";
+import formatTime from "../../lib/formatTimeOld";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import TimePickerModal from "../dependent/input/TimePickerModal";

@@ -20,7 +20,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
-import formatTime from "../../lib/formatTime";
+import formatTime from "../../lib/formatTimeOld";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";

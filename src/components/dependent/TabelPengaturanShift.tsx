@@ -14,6 +14,7 @@ import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDi
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
 import EditShiftModalDisclosure from "../independent/EditShiftModalDisclosure";
+import formatTime from "../../lib/formatTime";
 
 interface Props {
   filterConfig?: any;
@@ -148,7 +149,7 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
           jam_to: item.jam_to,
         },
         value: item.jam_from,
-        td: `${item.jam_from} - ${item.jam_to}`,
+        td: `${formatTime(item.jam_from)} - ${formatTime(item.jam_to)}`,
         isTime: true,
         cProps: {
           justify: "center",

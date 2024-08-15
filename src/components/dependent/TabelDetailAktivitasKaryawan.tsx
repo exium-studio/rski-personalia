@@ -2,7 +2,7 @@ import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { Interface__JadwalItem } from "../../constant/interfaces";
 import { responsiveSpacing } from "../../constant/sizes";
-import formatTime from "../../lib/formatTime";
+import formatTime from "../../lib/formatTimeOld";
 import NotFound from "../independent/NotFound";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
