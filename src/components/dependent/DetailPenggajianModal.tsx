@@ -51,117 +51,10 @@ export default function DetailPenggajianModal({
   );
   const initialRef = useRef(null);
 
-  const dummy = {
-    data_riwayat: {
-      id: 3,
-      periode: "2024-07-01",
-      karyawan_verifikasi: 361,
-      status_riwayat_gaji: 0,
-      update_terakhir: "2024-07-06T13:04:47.000000Z",
-    },
-    data_penggajian: [
-      {
-        id: 5,
-        user: {
-          id: 2,
-          nama: "User 0",
-          username: "username0",
-          role_id: null,
-          foto_profil: null,
-          status_akun: 1,
-          data_completion_step: 0,
-          created_at: "2024-07-06 10:04:37",
-          updated_at: "2024-07-06 10:04:37",
-        },
-        unit_kerja: {
-          id: 18,
-          nama_unit: "Kebersihan",
-          jenis_karyawan: 1,
-          deleted_at: null,
-          created_at: "2023-11-09 10:04:37",
-          updated_at: "2024-07-06 10:04:37",
-        },
-        kelompok_gaji: {
-          id: 10,
-          nama_kelompok: "Kelompok Gaji J",
-          besaran_gaji: 7950315,
-          deleted_at: null,
-          created_at: "2023-11-23 10:04:37",
-          updated_at: "2024-07-06 10:04:37",
-        },
-        take_home_pay: 9469015,
-        status_penggajian: 1,
-      },
-      {
-        id: 6,
-        user: {
-          id: 3,
-          nama: "User 1",
-          username: "username1",
-          role_id: null,
-          foto_profil: null,
-          status_akun: 1,
-          data_completion_step: 0,
-          created_at: "2024-07-06 10:04:38",
-          updated_at: "2024-07-06 10:04:38",
-        },
-        unit_kerja: {
-          id: 17,
-          nama_unit: "Psikiatri",
-          jenis_karyawan: 0,
-          deleted_at: null,
-          created_at: "2024-06-06 10:04:37",
-          updated_at: "2024-07-06 10:04:37",
-        },
-        kelompok_gaji: {
-          id: 4,
-          nama_kelompok: "Kelompok Gaji D",
-          besaran_gaji: 5307936,
-          deleted_at: null,
-          created_at: "2023-10-07 10:04:37",
-          updated_at: "2024-07-06 10:04:37",
-        },
-        take_home_pay: 6674661,
-        status_penggajian: 0,
-      },
-      {
-        id: 7,
-        user: {
-          id: 4,
-          nama: "User 2",
-          username: "username2",
-          role_id: null,
-          foto_profil: null,
-          status_akun: 1,
-          data_completion_step: 0,
-          created_at: "2024-07-06 10:04:38",
-          updated_at: "2024-07-06 10:04:38",
-        },
-        unit_kerja: {
-          id: 13,
-          nama_unit: "Pendidikan dan Pelatihan",
-          jenis_karyawan: 1,
-          deleted_at: null,
-          created_at: "2024-06-10 10:04:37",
-          updated_at: "2024-07-06 10:04:37",
-        },
-        kelompok_gaji: {
-          id: 21,
-          nama_kelompok: "Kelompok Gaji U",
-          besaran_gaji: 9126962,
-          deleted_at: null,
-          created_at: "2024-03-05 10:04:37",
-          updated_at: "2024-07-06 10:04:37",
-        },
-        take_home_pay: 10211356,
-        status_penggajian: 0,
-      },
-    ],
-  };
-
-  const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummy,
-    url: "",
+  const loading = true;
+  const { error, data, retry } = useDataState<any>({
+    initialData: undefined,
+    url: `/api/rski/dashboard/keuangan/data-penggajian/${penggajian_id}`,
     dependencies: [],
     conditions: !!(isOpen && penggajian_id),
   });
@@ -188,6 +81,7 @@ export default function DetailPenggajianModal({
               <Retry loading={loading} retry={retry} />
             </Box>
           )}
+
           {!error && (
             <>
               {loading && (
