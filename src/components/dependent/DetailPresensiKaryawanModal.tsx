@@ -130,14 +130,14 @@ export default function DetailPresensiKaryawanModal({
                           w={"55px"}
                           h={"55px"}
                           src={data.user?.foto_profil}
-                          name={data.user.nama}
+                          name={data.user?.nama}
                         />
 
                         <VStack gap={1} align={"stretch"}>
                           <Text fontSize={14} opacity={0.6}>
                             Nama Karyawan
                           </Text>
-                          <Text fontWeight={500}>{data.user.nama}</Text>
+                          <Text fontWeight={500}>{data.user?.nama}</Text>
                         </VStack>
 
                         <VStack gap={1} align={"stretch"}>
@@ -145,7 +145,7 @@ export default function DetailPresensiKaryawanModal({
                             Unit Kerja
                           </Text>
                           <Text fontWeight={500}>
-                            {data.unit_kerja.nama_unit}
+                            {data.unit_kerja?.nama_unit}
                           </Text>
                         </VStack>
 
@@ -155,7 +155,7 @@ export default function DetailPresensiKaryawanModal({
                           </Text>
                           <Text fontWeight={500}>
                             <JenisKaryawanBadge
-                              data={data.unit_kerja.jenis_karyawan}
+                              data={data.unit_kerja?.jenis_karyawan}
                             />
                           </Text>
                         </VStack>
@@ -184,12 +184,12 @@ export default function DetailPresensiKaryawanModal({
                                 <Box position={"relative"}>
                                   <LokasiPresensi
                                     center={{
-                                      lat: data.lat_masuk || 0,
-                                      lng: data.long_masuk || 0,
+                                      lat: data?.lat_masuk || 0,
+                                      lng: data?.long_masuk || 0,
                                     }}
                                     officeCenter={{
-                                      lat: data.lokasi_kantor.lat_masuk || 0,
-                                      lng: data.lokasi_kantor.long_masuk || 0,
+                                      lat: data.lokasi_kantor?.lat_masuk || 0,
+                                      lng: data.lokasi_kantor?.long_masuk || 0,
                                     }}
                                     presence_radius={100}
                                   />
@@ -201,12 +201,12 @@ export default function DetailPresensiKaryawanModal({
                                 <Box position={"relative"}>
                                   <LokasiPresensi
                                     center={{
-                                      lat: data.lat_keluar || 0,
-                                      lng: data.long_keluar || 0,
+                                      lat: data?.lat_keluar || 0,
+                                      lng: data?.long_keluar || 0,
                                     }}
                                     officeCenter={{
-                                      lat: data.lokasi_kantor.lat_keluar || 0,
-                                      lng: data.lokasi_kantor.long_keluar || 0,
+                                      lat: data.lokasi_kantor?.lat_keluar || 0,
+                                      lng: data.lokasi_kantor?.long_keluar || 0,
                                     }}
                                     presence_radius={100}
                                   />
@@ -228,7 +228,7 @@ export default function DetailPresensiKaryawanModal({
                               >
                                 <Box position={"relative"} flex={"1 1 200px"}>
                                   <Img
-                                    initialSrc={data.foto_masuk.path}
+                                    initialSrc={data.foto_masuk?.path}
                                     fallbackSrc="/images/defaultProfilePhoto.webp"
                                     borderRadius={12}
                                     aspectRatio={1}
@@ -241,7 +241,7 @@ export default function DetailPresensiKaryawanModal({
 
                                 <Box position={"relative"} flex={"1 1 200px"}>
                                   <Img
-                                    initialSrc={data.foto_keluar.path}
+                                    initialSrc={data.foto_keluar?.path}
                                     fallbackSrc="/images/defaultProfilePhoto.webp"
                                     borderRadius={12}
                                     aspectRatio={1}
@@ -297,7 +297,7 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {data.jadwal.nama}
+                                      {data.jadwal?.nama}
                                     </Text>
                                   </HStack>
 
@@ -314,7 +314,7 @@ export default function DetailPresensiKaryawanModal({
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatDate(
-                                        data.jadwal.tgl_mulai,
+                                        data.jadwal?.tgl_mulai,
                                         "short"
                                       )}
                                     </Text>
@@ -335,7 +335,7 @@ export default function DetailPresensiKaryawanModal({
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatDate(
-                                        data.jadwal.tgl_selesai,
+                                        data.jadwal?.tgl_selesai,
                                         "short"
                                       )}
                                     </Text>
@@ -353,7 +353,7 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(data.jadwal.shift.jam_from)}
+                                      {formatTime(data.jadwal?.shift?.jam_from)}
                                     </Text>
                                   </HStack>
 
@@ -369,7 +369,7 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(data.jadwal.shift.jam_to)}
+                                      {formatTime(data.jadwal?.shift?.jam_to)}
                                     </Text>
                                   </HStack>
                                 </CContainer>
@@ -393,7 +393,7 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(data.jam_masuk)}
+                                      {formatTime(data?.jam_masuk)}
                                     </Text>
                                   </HStack>
 
@@ -401,7 +401,7 @@ export default function DetailPresensiKaryawanModal({
                                     <Text opacity={0.6}>Presensi Keluar</Text>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(data.jam_keluar)}
+                                      {formatTime(data?.jam_keluar)}
                                     </Text>
                                   </HStack>
 

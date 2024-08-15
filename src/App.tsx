@@ -480,7 +480,7 @@ export const App = () => {
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pengaturan - Shift"
+                title="Pengaturan - Jam Kerja Shift"
               >
                 <PengaturanContainer activeGroup={3} active={1}>
                   <PengaturanShift />
@@ -489,13 +489,13 @@ export const App = () => {
             }
           />
           <Route
-            path="/pengaturan/manajemen-waktu/shift"
+            path="/pengaturan/manajemen-waktu/non-shift"
             element={
               <NavContainer
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pengaturan - Shift"
+                title="Pengaturan - Jam Kerja Non Shift"
               >
                 <PengaturanContainer activeGroup={3} active={1}>
                   <PengaturanShift />

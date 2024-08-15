@@ -57,8 +57,8 @@ export default function TambahShift({ ...props }: Props) {
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama: values.nama,
-        jam_from: formatTime(values.jam_from as unknown as string),
-        jam_to: formatTime(values.jam_to as unknown as string),
+        jam_from: values.jam_from,
+        jam_to: values.jam_to,
       };
       setLoading(true);
       req

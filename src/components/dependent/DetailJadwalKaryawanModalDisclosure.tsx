@@ -80,7 +80,7 @@ export default function DetailJadwalKaryawanModalDisclosure({
           <ModalHeader ref={initialRef}>
             <DisclosureHeader title={"Detail Jadwal Pegawai"} />
           </ModalHeader>
-          <ModalBody>
+          <ModalBody overflowY={"auto"}>
             {error && (
               <>
                 {notFound && <NoData minH={"300px"} />}
@@ -136,6 +136,7 @@ export default function DetailJadwalKaryawanModalDisclosure({
                     {(data || (data && data.length > 0)) && (
                       <CContainer
                         overflowY={"auto"}
+                        overflowX={"clip"}
                         className="scrollY"
                         borderRadius={12}
                         flex={1}
