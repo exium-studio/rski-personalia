@@ -7,10 +7,10 @@ import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
-import BooleanBadge from "./BooleanBadge";
 import CustomTable from "./CustomTable";
 import DetailPenggajianModal from "./DetailPenggajianModal";
 import Retry from "./Retry";
+import StatusPublikasiPenggajian from "./StatusPublikasiPenggajian";
 import TabelFooterConfig from "./TabelFooterConfig";
 interface Props {
   filterConfig: any;
@@ -92,11 +92,9 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
       {
         value: item.status_riwayat_gaji,
         td: (
-          <BooleanBadge
+          <StatusPublikasiPenggajian
             w={"150px"}
             data={item.status_riwayat_gaji}
-            trueValue="Dipublikasi"
-            falseValue="Belum Dipublikasi"
           />
         ),
         isNumeric: true,
@@ -110,8 +108,8 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
         isDate: true,
       },
       {
-        value: item.karyawan_verifikasi,
-        td: item.karyawan_verifikasi,
+        value: item.karyawan_digaji,
+        td: item.karyawan_digaji,
         isNumeric: true,
         cProps: {
           justify: "center",
