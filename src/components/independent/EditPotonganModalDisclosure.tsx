@@ -125,8 +125,8 @@ export default function EditPotonganModalDisclosure({
       label: rowData.columnsFormat[2].value ? "Nominal" : "Persentase (%)",
     });
     formikRef.current.setFieldValue("sumber_potongan", {
-      value: rowData.columnsFormat[3].original_value.id,
-      label: rowData.columnsFormat[3].original_value.label,
+      value: rowData.columnsFormat[3].original_data.id,
+      label: rowData.columnsFormat[3].original_data.label,
     });
     formikRef.current.setFieldValue(
       "besaran_premi",

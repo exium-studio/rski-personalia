@@ -49,8 +49,8 @@ export default function EditKuisionerModalDisclosure({
     initialValues: {
       pertanyaan: rowData.columnsFormat[0].value,
       jabatan: {
-        value: rowData.columnsFormat[2].original_value?.id,
-        label: rowData.columnsFormat[2].original_value?.nama_jabatan,
+        value: rowData.columnsFormat[2].original_data?.id,
+        label: rowData.columnsFormat[2].original_data?.nama_jabatan,
       },
     },
     validationSchema: yup.object().shape({
@@ -108,8 +108,8 @@ export default function EditKuisionerModalDisclosure({
       rowData.columnsFormat[0].value
     );
     formikRef.current.setFieldValue("jabatan", {
-      value: rowData.columnsFormat[2].original_value?.id,
-      label: rowData.columnsFormat[2].original_value?.nama_jabatan,
+      value: rowData.columnsFormat[2].original_data?.id,
+      label: rowData.columnsFormat[2].original_data?.nama_jabatan,
     });
   }, [rowData]);
 

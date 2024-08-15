@@ -389,7 +389,7 @@ export interface Interface__FormattedTableData {
   id: number;
   columnsFormat: {
     column?: string;
-    original_value?: any;
+    original_data?: any;
     value: any;
     td: any;
     isNumeric?: boolean; // default false

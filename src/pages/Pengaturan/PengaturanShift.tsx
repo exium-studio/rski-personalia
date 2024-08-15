@@ -47,6 +47,8 @@ export default function PengaturanShift() {
             }));
           }}
           inputValue={filterConfig.search}
+          tooltipLabel="Cari dengan nama shift"
+          placeholder="nama shift"
         />
 
         <MultiSelectPengaturanDeletedAt

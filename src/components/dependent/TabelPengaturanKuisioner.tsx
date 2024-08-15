@@ -146,7 +146,7 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
         },
       },
       {
-        original_value: item.jabatan,
+        original_data: item.jabatan,
         value: item.jabatan?.nama_jabatan,
         td: item.jabatan?.nama_jabatan,
       },

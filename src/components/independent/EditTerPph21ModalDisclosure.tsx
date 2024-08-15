@@ -111,8 +111,8 @@ export default function EditTerPph21ModalDisclosure({
 
   useEffect(() => {
     formikRef.current.setFieldValue("kategori_ter", {
-      value: rowData.columnsFormat[0].original_value?.id,
-      label: rowData.columnsFormat[0].original_value?.nama_kategori_ter,
+      value: rowData.columnsFormat[0].original_data?.id,
+      label: rowData.columnsFormat[0].original_data?.nama_kategori_ter,
     });
     formikRef.current.setFieldValue("from_ter", rowData.columnsFormat[2].value);
     formikRef.current.setFieldValue("to_ter", rowData.columnsFormat[3].value);

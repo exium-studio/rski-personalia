@@ -106,8 +106,8 @@ export default function EditPtkpModalDisclosure({
       rowData.columnsFormat[0].value
     );
     formikRef.current.setFieldValue("kategori_ter", {
-      value: rowData.columnsFormat[2]?.original_value?.id,
-      label: rowData.columnsFormat[2]?.original_value?.nama_kategori_ter,
+      value: rowData.columnsFormat[2]?.original_data?.id,
+      label: rowData.columnsFormat[2]?.original_data?.nama_kategori_ter,
     });
     formikRef.current.setFieldValue("nilai", rowData.columnsFormat[3].value);
   }, [rowData]);

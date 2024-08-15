@@ -140,7 +140,7 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
     id: item.id,
     columnsFormat: [
       {
-        original_value: item.kategori_ter_id,
+        original_data: item.kategori_ter_id,
         value: item.kategori_ter_id?.nama_kategori_ter,
         td: item.kategori_ter_id?.nama_kategori_ter,
         isSortable: true,

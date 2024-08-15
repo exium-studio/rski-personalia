@@ -192,7 +192,7 @@ export default function TabelPengaturanPotongan({ filterConfig }: Props) {
         isNumeric: true,
       },
       {
-        original_value: item.kategori_potongan,
+        original_data: item.kategori_potongan,
         value: item.kategori_potongan.label,
         td: item.kategori_potongan.label,
       },

@@ -149,7 +149,7 @@ export default function TabelPengaturanPtkp({ filterConfig }: Props) {
         },
       },
       {
-        original_value: item.kategori_ter,
+        original_data: item.kategori_ter,
         value: item.kategori_ter?.nama_kategori_ter,
         td: item.kategori_ter?.nama_kategori_ter,
       },
