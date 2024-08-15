@@ -3,7 +3,9 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Text,
   useToast,
+  Wrap,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -29,16 +31,19 @@ export default function PengaturanJamKerjaNonShift() {
     validateOnChange: false,
     initialValues: {
       nama: "",
-      jam_kerja: "",
+      jam_from: "",
+      jam_to: "",
     },
     validationSchema: yup.object().shape({
       nama: yup.string().required("Harus diisi"),
-      jam_kerja: yup.string().required("Harus diisi"),
+      jam_from: yup.string().required("Harus diisi"),
+      jam_to: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama: values.nama,
-        jam_kerja: values.jam_kerja,
+        jam_from: values.jam_from,
+        jam_to: values.jam_to,
       };
       setLoading(true);
       req
@@ -84,7 +89,7 @@ export default function PengaturanJamKerjaNonShift() {
       overflowY={"auto"}
     >
       <form id="jamKerjaNonShiftForm" onSubmit={formik.handleSubmit}>
-        <FormControl mb={4} isInvalid={!!formik.errors.jam_kerja}>
+        <FormControl mb={4} isInvalid={!!formik.errors.jam_from}>
           <FormLabel>
             Nama
             <RequiredForm />
@@ -98,28 +103,52 @@ export default function PengaturanJamKerjaNonShift() {
             placeholder="Nama Jam Kerja"
           />
           <FormErrorMessage>
-            {formik.errors.jam_kerja as string}
+            {formik.errors.jam_from as string}
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl mb={4} isInvalid={!!formik.errors.jam_kerja}>
-          <FormLabel>
-            Jam Kerja
-            <RequiredForm />
-          </FormLabel>
-          <TimePickerModal
-            id="create-jam-kerja-non-shift-modal"
-            name="jam_kerja"
-            onConfirm={(input) => {
-              formik.setFieldValue("jam_kerja", input);
-            }}
-            inputValue={formik.values.jam_kerja}
-            isError={!!formik.errors.jam_kerja}
-          />
-          <FormErrorMessage>
-            {formik.errors.jam_kerja as string}
-          </FormErrorMessage>
-        </FormControl>
+        <FormLabel>
+          Jam Kerja
+          <RequiredForm />
+        </FormLabel>
+
+        <Wrap spacing={4}>
+          <FormControl flex={"1 1"} isInvalid={!!formik.errors.jam_from}>
+            <TimePickerModal
+              id="tambah-shift-jam-from-modal"
+              name="jam_from"
+              onConfirm={(input) => {
+                formik.setFieldValue("jam_from", input);
+              }}
+              inputValue={formik.values.jam_from}
+              isError={!!formik.errors.jam_from}
+            />
+
+            <FormErrorMessage>
+              {formik.errors.jam_from as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <Text mt={"5px"} textAlign={"center"}>
+            -
+          </Text>
+
+          <FormControl flex={"1 1"} isInvalid={!!formik.errors.jam_to}>
+            <TimePickerModal
+              id="tambah-shift-jam-to-modal"
+              name="jam_to"
+              onConfirm={(input) => {
+                formik.setFieldValue("jam_to", input);
+              }}
+              inputValue={formik.values.jam_to}
+              isError={!!formik.errors.jam_to}
+            />
+
+            <FormErrorMessage>
+              {formik.errors.jam_to as string}
+            </FormErrorMessage>
+          </FormControl>
+        </Wrap>
       </form>
 
       <Button
