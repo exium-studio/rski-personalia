@@ -70,7 +70,6 @@ export default function EditShiftModalDisclosure({
         jam_to: values.jam_from,
         _method: "patch",
       };
-      console.log(payload);
       setLoading(true);
       req
         .post(
@@ -110,7 +109,7 @@ export default function EditShiftModalDisclosure({
   const formikRef = useRef(formik);
 
   useEffect(() => {
-    formikRef.current.setFieldValue("nama", rowData.columnsFormat[0]);
+    formikRef.current.setFieldValue("nama", rowData.columnsFormat[0].value);
     formikRef.current.setFieldValue(
       "jam_from",
       rowData.columnsFormat[2].original_data.jam_from
@@ -180,7 +179,7 @@ export default function EditShiftModalDisclosure({
                     onConfirm={(input) => {
                       formik.setFieldValue("jam_from", input);
                     }}
-                    inputValue={formik.values.jam_from}
+                    inputValue={formik.values?.jam_from}
                   />
 
                   <FormErrorMessage>
@@ -199,7 +198,7 @@ export default function EditShiftModalDisclosure({
                     onConfirm={(input) => {
                       formik.setFieldValue("jam_to", input);
                     }}
-                    inputValue={formik.values.jam_to}
+                    inputValue={formik.values?.jam_to}
                   />
 
                   <FormErrorMessage>

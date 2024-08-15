@@ -148,7 +148,7 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
           jam_to: item.jam_to,
         },
         value: item.jam_from,
-        td: `${item.jam_from.slice(0, 5)} - ${item.jam_to.slice(0, 5)}`,
+        td: `${item.jam_from} - ${item.jam_to}`,
         isTime: true,
         cProps: {
           justify: "center",
