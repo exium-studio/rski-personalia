@@ -539,8 +539,8 @@ export default function DetailKaryawanModal({
                                 setSearch(input);
                               }}
                               inputValue={search}
-                              placeholder="Data Pegawai"
-                              tooltipLabel="Cari Data Pegawai"
+                              placeholder="data pegawai"
+                              tooltipLabel="Cari data pegawai"
                             />
 
                             <AktifkanNonaktifkanButton
