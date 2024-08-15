@@ -13,7 +13,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiDownloadLine } from "@remixicon/react";
+import { RiDownload2Line, RiDownloadLine } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
@@ -23,17 +23,20 @@ import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "./DisclosureHeader";
 import FileInputLarge from "./input/FileInputLarge";
 import req from "../../constant/req";
+import download from "../../lib/download";
 
 interface Props extends ButtonProps {
   url: string;
   reqBodyKey?: string;
   title?: string;
+  templateDownloadUrl?: string;
 }
 
 export default function ImportModal({
   url,
   reqBodyKey = "file",
   title,
+  templateDownloadUrl,
   ...props
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,6 +44,7 @@ export default function ImportModal({
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [dloading, setdLoading] = useState<boolean>(false);
   const toast = useToast();
 
   const formik = useFormik({
@@ -99,6 +103,42 @@ export default function ImportModal({
     },
   });
 
+  const downloadTemplate = () => {
+    setdLoading(true);
+    req
+      .get(url, {
+        responseType: "blob", // Penting untuk menangani file biner
+      })
+      .then((r) => {
+        if (r.status === 200) {
+          download(r.data, `${title} template`, "xls");
+          backOnClose();
+        } else {
+          toast({
+            status: "error",
+            title: "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+        toast({
+          status: "error",
+          title:
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Maaf terjadi kesalahan pada sistem",
+          isClosable: true,
+          position: "bottom-right",
+        });
+      })
+      .finally(() => {
+        setdLoading(false);
+      });
+  };
+
   return (
     <>
       <Button
@@ -151,6 +191,17 @@ export default function ImportModal({
                   {formik.errors.file as string}
                 </FormErrorMessage>
               </FormControl>
+
+              <Button
+                mt={4}
+                leftIcon={<Icon as={RiDownload2Line} fontSize={iconSize} />}
+                w={"100%"}
+                className="btn-outline clicky"
+                onClick={downloadTemplate}
+                isLoading={dloading}
+              >
+                Unduh Template
+              </Button>
             </form>
           </ModalBody>
           <ModalFooter gap={2}>

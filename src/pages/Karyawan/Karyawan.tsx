@@ -67,13 +67,13 @@ export default function Karyawan() {
 
             <KaryawanTableColumnsConfig title="Config Kolom Tabel Karyawan" />
 
-            <ExportKaryawanModal px={6} />
+            <ExportKaryawanModal />
 
             <ImportModal
               url={"/api/rski/dashboard/jadwal-karyawan/jadwal-import"}
               title={"Import Karyawan"}
               reqBodyKey="jadwal_karyawan_file"
-              px={6}
+              templateDownloadUrl="api/rski/dashboard/download-template-jadwal"
             />
 
             <TambahKaryawanModal minW={"fit-content"} />
