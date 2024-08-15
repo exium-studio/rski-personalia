@@ -25,10 +25,6 @@ export default function PelaporanKaryawan() {
     };
   }, [search, setFilterKaryawan]);
 
-  useEffect(() => {
-    console.log(filterKaryawan);
-  }, [filterKaryawan]);
-
   // SX
   const lightDarkColor = useLightDarkColor();
 
