@@ -159,6 +159,7 @@ export default function TambahShift({ ...props }: Props) {
                       formik.setFieldValue("jam_from", input);
                     }}
                     inputValue={formik.values.jam_from}
+                    isError={!!formik.errors.jam_from}
                   />
 
                   <FormErrorMessage>
@@ -178,6 +179,7 @@ export default function TambahShift({ ...props }: Props) {
                       formik.setFieldValue("jam_to", input);
                     }}
                     inputValue={formik.values.jam_to}
+                    isError={!!formik.errors.jam_to}
                   />
 
                   <FormErrorMessage>
