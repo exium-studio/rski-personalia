@@ -69,7 +69,7 @@ export default function Header({
 
       {!smScreen && (
         <>
-          <Text ml={"auto"} opacity={0.6}>
+          <Text ml={"auto"} opacity={0.6} whiteSpace={"nowrap"}>
             {formatDate(new Date(), "long")}
           </Text>
 
