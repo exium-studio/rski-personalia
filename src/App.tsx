@@ -81,7 +81,7 @@ export const App = () => {
             element={
               <NavContainer
                 active={1}
-                title="Karyawan"
+                title="Pegawai"
                 topNavsData={navs[1].subNavs}
                 topNavActive={0}
               >
@@ -510,7 +510,7 @@ export const App = () => {
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pengaturan - Hari Libur Karyawan Non-Shift"
+                title="Pengaturan - Hari Libur Non-Shift"
               >
                 <PengaturanContainer activeGroup={3} active={3}>
                   <PengaturanHariLibur />
