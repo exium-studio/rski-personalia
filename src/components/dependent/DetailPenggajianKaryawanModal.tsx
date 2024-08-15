@@ -31,124 +31,29 @@ import Retry from "./Retry";
 import SearchComponent from "./input/SearchComponent";
 
 interface Props {
-  karyawan_id: number;
+  riwayat_id: number;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
 }
 
 export default function DetailPenggajianKaryawanModal({
-  karyawan_id,
+  riwayat_id,
   isOpen,
   onOpen,
   onClose,
 }: Props) {
   useBackOnClose(
-    `detail-penggajian-karyawan-modal-${karyawan_id}`,
+    `detail-penggajian-karyawan-modal-${riwayat_id}`,
     isOpen,
     onOpen,
     onClose
   );
   const initialRef = useRef(null);
 
-  const dummy = {
-    user: {
-      id: 2,
-      nama: "User 0",
-      username: "username0",
-      role_id: null,
-      foto_profil: null,
-      status_akun: 1,
-      data_completion_step: 0,
-      created_at: "2024-07-06 10:04:37",
-      updated_at: "2024-07-06 10:04:37",
-    },
-    unit_kerja: {
-      id: 18,
-      nama_unit: "Kebersihan",
-      jenis_karyawan: 1,
-      deleted_at: null,
-      created_at: "2023-11-09 10:04:37",
-      updated_at: "2024-07-06 10:04:37",
-    },
-    kelompok_gaji: {
-      id: 10,
-      nama_kelompok: "Kelompok Gaji J",
-      besaran_gaji: 7950315,
-      deleted_at: null,
-      created_at: "2023-11-23 10:04:37",
-      updated_at: "2024-07-06 10:04:37",
-    },
-    ptkp: {
-      id: 2,
-      kode_ptkp: "TK/1",
-      kategori_ter_id: 1,
-      nilai: 58500000,
-      created_at: "2024-07-06 10:04:37",
-      updated_at: "2024-07-06 10:04:37",
-    },
-    pendapatan: [
-      {
-        kategori: "Gaji Pokok",
-        nama_detail: "Gaji Pokok",
-        besaran: 7950315,
-      },
-      {
-        kategori: "Penambah",
-        nama_detail: "Tunjangan Jabatan",
-        besaran: 323835,
-      },
-      {
-        kategori: "Penambah",
-        nama_detail: "Tunjangan Fungsional",
-        besaran: 151795,
-      },
-      {
-        kategori: "Penambah",
-        nama_detail: "Tunjangan Khusus",
-        besaran: 28640,
-      },
-      {
-        kategori: "Penambah",
-        nama_detail: "Tunjangan Lainnya",
-        besaran: 792781,
-      },
-      {
-        kategori: "Penambah",
-        nama_detail: "Uang Lembur",
-        besaran: 42740,
-      },
-      {
-        kategori: "Penambah",
-        nama_detail: "Uang Makan",
-        besaran: 47568,
-      },
-      {
-        kategori: "Penambah",
-        nama_detail: "Bonus BOR",
-        besaran: null,
-      },
-      {
-        kategori: "Penambah",
-        nama_detail: "Bonus Presensi",
-        besaran: 300000,
-      },
-    ],
-    total_pendapatan: 7800400,
-    potongan: [
-      {
-        kategori: "Pengurang",
-        nama_detail: "PPH21",
-        besaran: 168659,
-      },
-    ],
-    total_potongan: 1800400,
-    take_home_pay: 9469015,
-  };
-
   const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummy,
-    url: "",
+    initialData: undefined,
+    url: `api/rski/dashboard/keuangan/penggajian/detail/${riwayat_id}`,
     dependencies: [],
   });
   const [search, setSearch] = useState<string>("");
@@ -167,6 +72,30 @@ export default function DetailPenggajianKaryawanModal({
     }, []);
     setSearchQuery(modifiedWords);
   }, [search]);
+
+  const totalPendapatan = (detailGaji: any[]): number => {
+    let total: number = 0;
+
+    detailGaji.forEach((item) => {
+      if (item.kategori_gaji?.id === 1 || item.kategori_gaji?.id === 2) {
+        total += item?.besaran;
+      }
+    });
+
+    return total;
+  };
+
+  const totalPotongan = (detailGaji: any[]): number => {
+    let total: number = 0;
+
+    detailGaji.forEach((item) => {
+      if (item.kategori_gaji?.id === 3) {
+        total += item?.besaran;
+      }
+    });
+
+    return total;
+  };
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -310,35 +239,42 @@ export default function DetailPenggajianKaryawanModal({
                                   </HStack>
 
                                   <CContainer py={2}>
-                                    {data.pendapatan.map(
+                                    {data.detail_gaji?.map(
                                       (item: any, i: number) => {
+                                        const ok =
+                                          item?.kategori_gaji?.id === 1 ||
+                                          item?.kategori_gaji?.id == 2;
+
                                         return (
-                                          <HStack
-                                            key={i}
-                                            justify={"space-between"}
-                                            py={2}
-                                            px={4}
-                                          >
-                                            <Box>
-                                              <Highlighter
-                                                highlightClassName="hw"
-                                                unhighlightClassName="uw"
-                                                searchWords={searchQuery}
-                                                autoEscape={true}
-                                                textToHighlight={
-                                                  item.nama_detail
-                                                }
-                                              />
-                                            </Box>
-                                            <FlexLine />
-                                            <Text
-                                              fontWeight={500}
-                                              textAlign={"right"}
+                                          ok && (
+                                            <HStack
+                                              key={i}
+                                              justify={"space-between"}
+                                              py={2}
+                                              px={4}
                                             >
-                                              Rp{" "}
-                                              {formatNumber(item.besaran) || 0}
-                                            </Text>
-                                          </HStack>
+                                              <Box>
+                                                <Highlighter
+                                                  highlightClassName="hw"
+                                                  unhighlightClassName="uw"
+                                                  searchWords={searchQuery}
+                                                  autoEscape={true}
+                                                  textToHighlight={
+                                                    item.nama_detail
+                                                  }
+                                                />
+                                              </Box>
+                                              <FlexLine />
+                                              <Text
+                                                fontWeight={500}
+                                                textAlign={"right"}
+                                              >
+                                                Rp{" "}
+                                                {formatNumber(item.besaran) ||
+                                                  0}
+                                              </Text>
+                                            </HStack>
+                                          )
                                         );
                                       }
                                     )}
@@ -363,7 +299,9 @@ export default function DetailPenggajianKaryawanModal({
                                     <FlexLine />
                                     <Text fontWeight={600} textAlign={"right"}>
                                       Rp{" "}
-                                      {formatNumber(data.total_pendapatan) || 0}
+                                      {formatNumber(
+                                        totalPendapatan(data.detail_gaji)
+                                      ) || 0}
                                     </Text>
                                   </HStack>
                                 </CContainer>
@@ -384,35 +322,41 @@ export default function DetailPenggajianKaryawanModal({
                                   </HStack>
 
                                   <CContainer py={2}>
-                                    {data.potongan.map(
+                                    {data.detail_gaji?.map(
                                       (item: any, i: number) => {
+                                        const ok =
+                                          item?.kategori_gaji?.id === 3;
+
                                         return (
-                                          <HStack
-                                            key={i}
-                                            justify={"space-between"}
-                                            py={2}
-                                            px={4}
-                                          >
-                                            <Box>
-                                              <Highlighter
-                                                highlightClassName="hw"
-                                                unhighlightClassName="uw"
-                                                searchWords={searchQuery}
-                                                autoEscape={true}
-                                                textToHighlight={
-                                                  item.nama_detail
-                                                }
-                                              />
-                                            </Box>
-                                            <FlexLine />
-                                            <Text
-                                              fontWeight={500}
-                                              textAlign={"right"}
+                                          ok && (
+                                            <HStack
+                                              key={i}
+                                              justify={"space-between"}
+                                              py={2}
+                                              px={4}
                                             >
-                                              Rp{" "}
-                                              {formatNumber(item.besaran) || 0}
-                                            </Text>
-                                          </HStack>
+                                              <Box>
+                                                <Highlighter
+                                                  highlightClassName="hw"
+                                                  unhighlightClassName="uw"
+                                                  searchWords={searchQuery}
+                                                  autoEscape={true}
+                                                  textToHighlight={
+                                                    item.nama_detail
+                                                  }
+                                                />
+                                              </Box>
+                                              <FlexLine />
+                                              <Text
+                                                fontWeight={500}
+                                                textAlign={"right"}
+                                              >
+                                                Rp{" "}
+                                                {formatNumber(item.besaran) ||
+                                                  0}
+                                              </Text>
+                                            </HStack>
+                                          )
                                         );
                                       }
                                     )}
@@ -437,7 +381,9 @@ export default function DetailPenggajianKaryawanModal({
                                     <FlexLine />
                                     <Text fontWeight={600} textAlign={"right"}>
                                       Rp{" "}
-                                      {formatNumber(data.total_potongan) || 0}
+                                      {formatNumber(
+                                        totalPotongan(data.detail_gaji)
+                                      ) || 0}
                                     </Text>
                                   </HStack>
                                 </CContainer>
@@ -449,7 +395,6 @@ export default function DetailPenggajianKaryawanModal({
                                 justify={"space-between"}
                                 p={4}
                                 px={5}
-                                bg={"var(--p500a5)"}
                                 borderRadius={12}
                                 w={"fit-content"}
                               >
@@ -464,8 +409,7 @@ export default function DetailPenggajianKaryawanModal({
                                 <FlexLine />
 
                                 <Text
-                                  color={"p.500"}
-                                  fontSize={24}
+                                  fontSize={28}
                                   fontWeight={600}
                                   textAlign={"right"}
                                 >

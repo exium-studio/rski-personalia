@@ -185,7 +185,7 @@ export default function TabelDetailPenggajian({ data }: Props) {
       )}
 
       <DetailPenggajianKaryawanModal
-        karyawan_id={1}
+        riwayat_id={1}
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}

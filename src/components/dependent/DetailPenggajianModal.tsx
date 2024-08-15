@@ -51,10 +51,9 @@ export default function DetailPenggajianModal({
   );
   const initialRef = useRef(null);
 
-  const loading = true;
-  const { error, data, retry } = useDataState<any>({
+  const { error, loading, data, retry } = useDataState<any>({
     initialData: undefined,
-    url: `/api/rski/dashboard/keuangan/data-penggajian/${penggajian_id}`,
+    url: `/api/rski/dashboard/keuangan/penggajian/${penggajian_id}`,
     dependencies: [],
     conditions: !!(isOpen && penggajian_id),
   });
