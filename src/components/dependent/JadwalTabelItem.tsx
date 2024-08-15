@@ -24,7 +24,9 @@ import { RiEditBoxLine } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
+import req from "../../constant/req";
 import { responsiveSpacing } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
@@ -32,11 +34,8 @@ import formatTime from "../../lib/formatTime";
 import isDatePassed from "../../lib/isDatePassed";
 import RequiredForm from "../form/RequiredForm";
 import SelectShift from "./_Select/SelectShift";
-import DeleteJadwalModal from "./DeleteJadwalModal";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
-import req from "../../constant/req";
-import useRenderTrigger from "../../global/useRenderTrigger";
 
 interface Props {
   data: any;
@@ -278,12 +277,6 @@ export default function TabelJadwalItem({
           <ModalFooter gap={2}>
             {data.unit_kerja?.jenis_karyawan === 1 && (
               <ButtonGroup w={"100%"}>
-                <DeleteJadwalModal
-                  data={data}
-                  isDisabled={isDatePassed(data.tgl_masuk) || loading}
-                  noUseBackOnClose
-                />
-
                 <Button
                   w={"100%"}
                   type="submit"
