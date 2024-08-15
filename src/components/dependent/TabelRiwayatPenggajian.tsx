@@ -123,6 +123,10 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
     ],
   }));
 
+  const penggajian_id = parseInt(
+    localStorage.getItem("penggajian_id") as string
+  );
+
   return (
     <>
       {error && (
@@ -159,13 +163,15 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}
                       initialSortOrder="desc"
-                      onRowClick={onOpen}
+                      onRowClick={(row) => {
+                        localStorage.setItem("penggajian_id", row.id);
+                        onOpen();
+                      }}
                     />
                   </CustomTableContainer>
 
                   <DetailPenggajianModal
-                    id={``}
-                    penggajian_id={1}
+                    penggajian_id={penggajian_id}
                     isOpen={isOpen}
                     onOpen={onOpen}
                     onClose={onClose}

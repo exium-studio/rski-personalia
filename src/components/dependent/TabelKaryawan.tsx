@@ -284,7 +284,6 @@ export default function TabelKaryawan() {
                 formattedHeader={formattedHeader}
                 formattedData={formattedData}
                 onRowClick={(row) => {
-                  // setSearchParam("userId", row.id);
                   localStorage.setItem("user_id", row.id);
                   onOpen();
                 }}
