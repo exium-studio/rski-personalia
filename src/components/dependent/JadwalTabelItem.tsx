@@ -69,8 +69,8 @@ export default function TabelJadwalItem({
       shift: {
         value: jadwal?.shift?.id,
         label: jadwal?.shift?.nama,
-        label2: `${formatTime(jadwal.shift.jam_from)}-${formatTime(
-          jadwal.shift.jam_to
+        label2: `${formatTime(jadwal?.shift?.jam_from)}-${formatTime(
+          jadwal?.shift?.jam_to
         )}`,
       },
       tgl_mulai: tgl,

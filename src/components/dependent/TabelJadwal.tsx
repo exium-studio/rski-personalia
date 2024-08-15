@@ -1,4 +1,4 @@
-import { Center } from "@chakra-ui/react";
+import { Center, Text } from "@chakra-ui/react";
 import { eachDayOfInterval } from "date-fns";
 import { useState } from "react";
 import useDataState from "../../hooks/useDataState";
@@ -15,6 +15,7 @@ import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 import TerapkanJadwalKaryawanTerpilih from "./TerapkanJadwalKaryawanTerpilih";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import CContainer from "../wrapper/CContainer";
 
 interface Props {
   filterConfig?: any;
@@ -106,14 +107,30 @@ export default function TabelJadwal({ filterConfig }: Props) {
                 index={i}
                 rowIndex={rowIndex}
               />
-            ) : (
-              // "-"
+            ) : item.unit_kerja?.jenis_karyawan === 1 ? (
               <TerapkanJadwalKaryawanTerpilih
                 data={item}
                 tgl={dateList[i]}
                 index={i}
                 rowIndex={rowIndex}
               />
+            ) : (
+              <CContainer
+                bg={"var(--divider)"}
+                p={4}
+                borderRadius={8}
+                maxW={"200px"}
+                justify={"center"}
+              >
+                <Text
+                  textAlign={"center"}
+                  opacity={0.4}
+                  whiteSpace={"wrap"}
+                  fontSize={"sm"}
+                >
+                  Terapkan Jadwal di Pengaturan Jam Kerja Non-Shift
+                </Text>
+              </CContainer>
             ),
           cProps: {
             align: "stretch",
