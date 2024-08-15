@@ -6,7 +6,6 @@ import {
   AccordionPanel,
   Avatar,
   Box,
-  Button,
   HStack,
   Icon,
   Modal,
@@ -26,6 +25,7 @@ import {
   RiCalendarCloseFill,
   RiCalendarFill,
   RiCalendarScheduleFill,
+  RiCircleFill,
   RiFeedbackFill,
   RiFileChartFill,
   RiHeartFill,
@@ -592,20 +592,23 @@ export default function DetailKaryawanModal({
                                     </AccordionButton>
 
                                     <AccordionPanel py={4}>
-                                      <Wrap>
+                                      <Wrap
+                                        align={"center"}
+                                        spacing={responsiveSpacing}
+                                      >
                                         {emptyDataLabel?.map(
                                           (key: any, i: number) => (
-                                            <Button
-                                              key={i}
-                                              className="btn-outline"
-                                              borderRadius={"full"}
-                                              cursor={"auto"}
-                                            >
-                                              <Text opacity={0.6}>
+                                            <HStack>
+                                              <Icon
+                                                as={RiCircleFill}
+                                                opacity={0.2}
+                                                fontSize={8}
+                                              />
+                                              <Text opacity={0.6} key={i}>
                                                 {/* @ts-ignore */}
                                                 {dataKaryawanLabel[key]}
                                               </Text>
-                                            </Button>
+                                            </HStack>
                                           )
                                         )}
                                       </Wrap>
