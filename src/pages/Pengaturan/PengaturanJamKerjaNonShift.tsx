@@ -83,7 +83,7 @@ export default function PengaturanJamKerjaNonShift() {
       h={"100%"}
       overflowY={"auto"}
     >
-      <form id="jamKerjaNonShiftForm">
+      <form id="jamKerjaNonShiftForm" onSubmit={formik.handleSubmit}>
         <FormControl mb={4} isInvalid={!!formik.errors.jam_kerja}>
           <FormLabel>
             Nama
