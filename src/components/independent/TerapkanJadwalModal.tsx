@@ -64,7 +64,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
           (user: Interface__SelectOption) => user.value
         ),
         tgl_mulai: formatDate(values.tgl_mulai, "short"),
-        tgl_selesai: formatDate(values.tgl_mulai, "short"),
+        // tgl_selesai: formatDate(values.tgl_mulai, "short"),
         shift_id: values.shift.value,
       };
 
@@ -81,6 +81,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
             });
             setRt(!rt);
             resetForm();
+            setLibur(false);
           }
         })
         .catch((e) => {
@@ -126,6 +127,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
         onClose={() => {
           backOnClose(onClose);
           formik.resetForm();
+          setLibur(false);
         }}
         isCentered
         blockScrollOnMount={false}
@@ -137,6 +139,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
               title="Terapkan Jadwal"
               onClose={() => {
                 formik.resetForm();
+                setLibur(false);
               }}
             />
           </ModalHeader>
@@ -206,6 +209,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                   onChange={(e) => {
                     setLibur(e.target.checked);
                   }}
+                  isChecked={libur}
                 >
                   <Text mt={"-3px"}>Jadwalkan Libur</Text>
                 </Checkbox>

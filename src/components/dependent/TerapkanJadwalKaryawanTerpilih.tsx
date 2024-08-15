@@ -145,6 +145,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
         onClose={() => {
           backOnClose();
           formik.resetForm();
+          setLibur(false);
         }}
         isCentered
         blockScrollOnMount={false}
@@ -156,6 +157,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
               title="Terapkan Jadwal"
               onClose={() => {
                 formik.resetForm();
+                setLibur(false);
               }}
             />
           </ModalHeader>
@@ -219,6 +221,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
                   onChange={(e) => {
                     setLibur(e.target.checked);
                   }}
+                  isChecked={libur}
                 >
                   <Text mt={"-3px"}>Jadwalkan Libur</Text>
                 </Checkbox>
