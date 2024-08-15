@@ -9,7 +9,7 @@ const useTableStripedColor = () => {
 };
 
 const useBodyColor = () => {
-  return useColorModeValue("white", "dark");
+  return useColorModeValue("white", "#191919");
 };
 
 const useWhiteDarkColor = () => {

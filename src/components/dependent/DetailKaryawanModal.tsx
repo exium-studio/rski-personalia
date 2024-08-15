@@ -34,6 +34,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useLightDarkColor } from "../../constant/colors";
+import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
 import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -60,7 +61,6 @@ import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
-import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
 interface Props {
   id?: string;
   user_id?: number;
@@ -81,6 +81,9 @@ export default function DetailKaryawanModal({
     onOpen,
     onClose
   );
+  // SX
+  const lightDarkColor = useLightDarkColor();
+
   const initialRef = useRef(null);
 
   const { error, loading, data, retry } = useDataState<any>({
@@ -132,9 +135,6 @@ export default function DetailKaryawanModal({
       setEmptyDataLabel(countEmptyValues(data));
     }
   }, [data]);
-
-  // SX
-  const lightDarkColor = useLightDarkColor();
 
   return (
     <Modal
@@ -515,7 +515,7 @@ export default function DetailKaryawanModal({
                                 textAlign={"center"}
                                 lineHeight={1.4}
                               >
-                                Feedback
+                                Penilaian
                               </Text>
                             </VStack>
                           </SimpleGrid>
