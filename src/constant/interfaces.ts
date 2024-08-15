@@ -132,7 +132,7 @@ export interface Pengumuman__Interface {
   judul: string;
   konten: string;
   is_read: boolean | number;
-  tgl_berakhir: string | Date;
+  tgl_berakhir: string;
   created_at: string | Date;
   updated_at: string | Date | undefined;
 }
