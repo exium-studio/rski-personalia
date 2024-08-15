@@ -28,7 +28,7 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
     dependencies: [],
     noRt: true,
   });
-  const labels = ["Pria", "Wanita", "Magang"];
+  const labels = ["Tetap", "Kontrak", "Magang"];
   const datasets = [
     {
       label: "Jumlah Pegawai",

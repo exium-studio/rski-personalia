@@ -42,10 +42,10 @@ export default function SelectJadwal({
           if (r.status === 200) {
             const options = r.data.data.map((item: any) => ({
               value: item.id,
-              label: item.nama,
-              label2: `${formatTime(item.jam_from)} - ${formatTime(
+              label: `${formatTime(item.jam_from)} - ${formatTime(
                 item.jam_to
               )}`,
+              label2: item.nama,
             }));
             // setOptions([{ value: 0, label: "Libur" }, ...options]);
             setOptions(options);
