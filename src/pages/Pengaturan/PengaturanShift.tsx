@@ -1,81 +1,27 @@
-import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  useToast,
-} from "@chakra-ui/react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import StringInput from "../../components/dependent/input/StringInput";
-import TimePickerModal from "../../components/dependent/input/TimePickerModal";
-import RequiredForm from "../../components/form/RequiredForm";
+import { HStack } from "@chakra-ui/react";
+import { useState } from "react";
+import SearchComponent from "../../components/dependent/input/SearchComponent";
+import TabelShift from "../../components/dependent/TabelPengaturanShift";
+import TambahShift from "../../components/independent/TambahShift";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import { useState } from "react";
-import useRenderTrigger from "../../global/useRenderTrigger";
-import req from "../../constant/req";
+import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
 
 export default function PengaturanShift() {
   // SX
   const lightDarkColor = useLightDarkColor();
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const toast = useToast();
-  const { rt, setRt } = useRenderTrigger();
-
-  const formik = useFormik({
-    validateOnChange: false,
-    initialValues: {
-      nama: "",
-      jam_kerja: "",
-    },
-    validationSchema: yup.object().shape({
-      nama: yup.string().required("Harus diisi"),
-      jam_kerja: yup.string().required("Harus diisi"),
-    }),
-    onSubmit: (values, { resetForm }) => {
-      const payload = {
-        nama: values.nama,
-        jam_kerja: values.jam_kerja,
-      };
-      setLoading(true);
-      req
-        .post(`/api/rski/dashboard/pengaturan/shift`, payload)
-        .then((r) => {
-          if (r.status === 200) {
-            toast({
-              status: "success",
-              title: r.data.message,
-              isClosable: true,
-              position: "bottom-right",
-            });
-            setRt(!rt);
-            resetForm();
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          toast({
-            status: "error",
-            title:
-              (typeof e?.response?.data?.message === "string" &&
-                (e?.response?.data?.message as string)) ||
-              "Maaf terjadi kesalahan pada sistem",
-            isClosable: true,
-            position: "bottom-right",
-          });
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    },
-  });
+  // Filter Config
+  const defaultFilterConfig = {
+    search: "",
+    is_deleted: [],
+  };
+  const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
 
   return (
     <CContainer
-      p={responsiveSpacing}
+      px={responsiveSpacing}
       pb={responsiveSpacing}
       bg={lightDarkColor}
       borderRadius={12}
@@ -83,56 +29,45 @@ export default function PengaturanShift() {
       h={"100%"}
       overflowY={"auto"}
     >
-      <form id="jamKerjaNonShiftForm">
-        <FormControl mb={4} isInvalid={!!formik.errors.jam_kerja}>
-          <FormLabel>
-            Nama
-            <RequiredForm />
-          </FormLabel>
-          <StringInput
-            name="nama"
-            onChangeSetter={(input) => {
-              formik.setFieldValue("nama", input);
-            }}
-            inputValue={formik.values.nama}
-            placeholder="Nama Jam Kerja"
-          />
-          <FormErrorMessage>
-            {formik.errors.jam_kerja as string}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl mb={4} isInvalid={!!formik.errors.jam_kerja}>
-          <FormLabel>
-            Jam Kerja
-            <RequiredForm />
-          </FormLabel>
-          <TimePickerModal
-            id="create-jam-kerja-non-shift-modal"
-            name="jam_kerja"
-            onConfirm={(input) => {
-              formik.setFieldValue("jam_kerja", input);
-            }}
-            inputValue={formik.values.jam_kerja}
-            isError={!!formik.errors.jam_kerja}
-          />
-          <FormErrorMessage>
-            {formik.errors.jam_kerja as string}
-          </FormErrorMessage>
-        </FormControl>
-      </form>
-
-      <Button
-        className="btn-ap clicky"
-        colorScheme="ap"
-        ml={"auto"}
-        mt={"auto"}
-        type="submit"
-        form="jamKerjaNonShiftForm"
-        isLoading={loading}
+      <HStack
+        py={responsiveSpacing}
+        justify={"space-between"}
+        w={"100%"}
+        className="tabelConfig scrollX"
+        overflowX={"auto"}
+        flexShrink={0}
       >
-        Simpan
-      </Button>
+        <SearchComponent
+          minW={"165px"}
+          name="search"
+          onChangeSetter={(input) => {
+            setFilterConfig((ps: any) => ({
+              ...ps,
+              search: input,
+            }));
+          }}
+          inputValue={filterConfig.search}
+        />
+
+        <MultiSelectPengaturanDeletedAt
+          name="is_deleted"
+          onConfirm={(input) => {
+            setFilterConfig((ps: any) => ({
+              ...ps,
+              is_deleted: input,
+            }));
+          }}
+          inputValue={filterConfig.is_deleted}
+          optionsDisplay="chip"
+          placeholder="Filter Dihapus"
+          maxW={"165px"}
+          _focus={{ border: "1px solid var(--divider3)" }}
+        />
+
+        <TambahShift minW={"fit-content"} />
+      </HStack>
+
+      <TabelShift filterConfig={filterConfig} />
     </CContainer>
   );
 }

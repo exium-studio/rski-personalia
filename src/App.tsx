@@ -1,9 +1,11 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import "leaflet/dist/leaflet.css";
+import { useEffect, useRef } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavContainer from "./components/wrapper/NavContainer";
 import PengaturanContainer from "./components/wrapper/PengaturanContainer";
 import navs from "./constant/navs";
+import useBodyRef from "./global/useBodyRef";
 import "./globalStyle.css";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import InternalServerErrorPage from "./pages/Error/InternalServerErrorPage";
@@ -22,6 +24,7 @@ import Login from "./pages/Login/Login";
 import PengaturanHariLibur from "./pages/Pengaturan/PengaturanHariLibur";
 import PengaturanJabatan from "./pages/Pengaturan/PengaturanJabatan";
 import PengaturanJadwalPenggajian from "./pages/Pengaturan/PengaturanJadwalPenggajian";
+import PengaturanJamKerjaNonShift from "./pages/Pengaturan/PengaturanJamKerjaNonShift";
 import PengaturanKategoriTer from "./pages/Pengaturan/PengaturanKategoriTer";
 import PengaturanKelolaRole from "./pages/Pengaturan/PengaturanKelolaRole";
 import PengaturanKelompokGaji from "./pages/Pengaturan/PengaturanKelompokGaji";
@@ -42,8 +45,6 @@ import PenilaianKaryawan from "./pages/Perusahaan/PenilaianKaryawan";
 import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
-import { useEffect, useRef } from "react";
-import useBodyRef from "./global/useBodyRef";
 
 // github pekok
 
@@ -497,8 +498,8 @@ export const App = () => {
                 topNavActive={0}
                 title="Pengaturan - Jam Kerja Non Shift"
               >
-                <PengaturanContainer activeGroup={3} active={1}>
-                  <PengaturanShift />
+                <PengaturanContainer activeGroup={3} active={2}>
+                  <PengaturanJamKerjaNonShift />
                 </PengaturanContainer>
               </NavContainer>
             }

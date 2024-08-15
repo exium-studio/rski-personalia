@@ -24,8 +24,8 @@ import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
-import formatTime from "../../lib/formatTimeOld";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import TimePickerModal from "../dependent/input/TimePickerModal";
@@ -38,7 +38,7 @@ export default function TambahShift({ ...props }: Props) {
   useBackOnClose("tambah-shift-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [updateLoading, setUpdateLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
@@ -60,7 +60,7 @@ export default function TambahShift({ ...props }: Props) {
         jam_from: values.jam_from,
         jam_to: values.jam_to,
       };
-      setLoading(true);
+      setUpdateLoading(true);
       req
         .post(`/api/rski/dashboard/pengaturan/shift`, payload)
         .then((r) => {
@@ -88,9 +88,15 @@ export default function TambahShift({ ...props }: Props) {
           });
         })
         .finally(() => {
-          setLoading(false);
+          setUpdateLoading(false);
         });
     },
+  });
+
+  const { error, loading, data, retry } = useDataState<any>({
+    initialData: undefined,
+    url: "",
+    dependencies: [],
   });
 
   return (
@@ -196,7 +202,7 @@ export default function TambahShift({ ...props }: Props) {
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}
-              isLoading={loading}
+              isLoading={updateLoading}
             >
               Tambahkan
             </Button>
