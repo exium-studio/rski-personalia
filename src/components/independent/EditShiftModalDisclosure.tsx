@@ -54,9 +54,9 @@ export default function EditShiftModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama: rowData.columnsFormat[0].value,
-      jam_from: rowData.columnsFormat[2],
-      jam_to: rowData.columnsFormat[2],
+      nama: "",
+      jam_from: undefined as any,
+      jam_to: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama: yup.string().required("Harus diisi"),
