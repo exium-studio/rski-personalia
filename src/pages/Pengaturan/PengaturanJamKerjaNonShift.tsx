@@ -4,6 +4,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   Text,
   useToast,
   Wrap,
@@ -110,10 +111,12 @@ export default function PengaturanJamKerjaNonShift() {
         <>
           {loading && (
             <CContainer flex={1} gap={4}>
-              <Skeleton />
-              <Skeleton />
-              <Skeleton />
-              <Skeleton mt={"auto"} ml={"auto"} w={"100px"} />
+              <Skeleton h={"60px"} />
+              <HStack gap={4}>
+                <Skeleton h={"60px"} />
+                <Skeleton h={"60px"} />
+              </HStack>
+              <Skeleton mt={"auto"} ml={"auto"} w={"120px"} />
             </CContainer>
           )}
 
