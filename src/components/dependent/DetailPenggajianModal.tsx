@@ -13,8 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { RiSendPlaneFill } from "@remixicon/react";
 import { useRef } from "react";
-import { responsiveSpacing } from "../../constant/sizes";
-import { iconSize } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
@@ -23,9 +22,9 @@ import formatNumber from "../../lib/formatNumber";
 import ComponentSpinner from "../independent/ComponentSpinner";
 import NoData from "../independent/NoData";
 import CContainer from "../wrapper/CContainer";
-import BooleanBadge from "./BooleanBadge";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
+import StatusPublikasiPenggajian from "./StatusPublikasiPenggajian";
 import TabelDetailPenggajian from "./TabelDetailPenggajian";
 
 interface Props {
@@ -120,7 +119,7 @@ export default function DetailPenggajianModal({
                             Pembaruan Terakhir
                           </Text>
                           <Text fontWeight={500}>
-                            {formatDate(data.data_riwayat.update_terakhir)}
+                            {formatDate(data.data_riwayat.pembaruan_terakhir)}
                           </Text>
                         </VStack>
 
@@ -129,9 +128,7 @@ export default function DetailPenggajianModal({
                             Karyawan Digaji
                           </Text>
                           <Text fontWeight={500}>
-                            {formatNumber(
-                              data.data_riwayat.karyawan_verifikasi
-                            )}
+                            {formatNumber(data.data_riwayat.karyawan_digaji)}
                           </Text>
                         </VStack>
 
@@ -139,11 +136,8 @@ export default function DetailPenggajianModal({
                           <Text fontSize={14} opacity={0.6}>
                             Status Penggajian
                           </Text>
-                          <BooleanBadge
-                            w={"150px"}
-                            data={data.data_riwayat.status_riwayat_gaji}
-                            trueValue="Dipublikasi"
-                            falseValue="Belum Dipublikasi"
+                          <StatusPublikasiPenggajian
+                            data={data.data_riwayat?.status_riwayat_gaji}
                           />
                         </VStack>
 

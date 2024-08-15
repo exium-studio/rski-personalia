@@ -243,7 +243,7 @@ export default function DetailPenggajianKaryawanModal({
                                       (item: any, i: number) => {
                                         const ok =
                                           item?.kategori_gaji?.id === 1 ||
-                                          item?.kategori_gaji?.id == 2;
+                                          item?.kategori_gaji?.id === 2;
 
                                         return (
                                           ok && (
