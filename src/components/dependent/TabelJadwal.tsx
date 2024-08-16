@@ -119,7 +119,6 @@ export default function TabelJadwal({ filterConfig }: Props) {
                 bg={"var(--divider)"}
                 p={4}
                 borderRadius={8}
-                maxW={"200px"}
                 justify={"center"}
               >
                 <Text
