@@ -38,11 +38,11 @@ export default function TambahCuti({ ...props }: Props) {
     validateOnChange: false,
     initialValues: {
       nama: "",
-      durasi: "" as any,
+      kuota: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama: yup.string().required("Harus diisi"),
-      durasi: yup.number().required("Harus diisi"),
+      kuota: yup.number().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       console.log(values);
@@ -101,21 +101,21 @@ export default function TambahCuti({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={formik.errors.durasi ? true : false}>
+              <FormControl isInvalid={formik.errors.kuota ? true : false}>
                 <FormLabel>
                   Maksimal Cuti (Hari)
                   <RequiredForm />
                 </FormLabel>
 
                 <InputGroup>
-                  <Input name="durasi" placeholder="5" pr={16} />
+                  <Input name="kuota" placeholder="5" pr={16} />
                   <InputRightElement w={"fit-content"} flexShrink={0} px={4}>
                     <Text>Hari</Text>
                   </InputRightElement>
                 </InputGroup>
 
                 <FormErrorMessage>
-                  {formik.errors.durasi as string}
+                  {formik.errors.kuota as string}
                 </FormErrorMessage>
               </FormControl>
             </form>

@@ -102,10 +102,11 @@ export default function PengaturanJadwalPenggajian() {
       <>
         {loading && (
           <>
-            <FormLabel>
+            <FormLabel mb={4}>
               Tanggal Penggajian
               <RequiredForm />
             </FormLabel>
+
             <SimpleGrid w={"100%"} columns={[7]} gap={4}>
               {Array.from({ length: 28 }).map((_, i) => (
                 <Skeleton
