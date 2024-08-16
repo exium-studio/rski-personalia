@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  HStack,
   Icon,
   Modal,
   ModalBody,
@@ -19,8 +20,8 @@ import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
-import ComponentSpinner from "../independent/ComponentSpinner";
 import NoData from "../independent/NoData";
+import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
@@ -83,9 +84,49 @@ export default function DetailPenggajianModal({
           {!error && (
             <>
               {loading && (
-                <>
-                  <ComponentSpinner />
-                </>
+                <CContainer flex={1} px={responsiveSpacing}>
+                  <Wrap
+                    spacing={responsiveSpacing}
+                    mb={responsiveSpacing}
+                    align={"center"}
+                  >
+                    <VStack align={"stretch"}>
+                      <Skeleton w={"100px"} h={"16px"} />
+                      <Skeleton w={"100px"} h={"16px"} />
+                    </VStack>
+
+                    <VStack align={"stretch"}>
+                      <Skeleton w={"100px"} h={"16px"} />
+                      <Skeleton w={"100px"} h={"16px"} />
+                    </VStack>
+
+                    <VStack align={"stretch"}>
+                      <Skeleton w={"100px"} h={"16px"} />
+                      <Skeleton w={"100px"} h={"16px"} />
+                    </VStack>
+
+                    <VStack align={"stretch"}>
+                      <Skeleton w={"100px"} h={"16px"} />
+                      <Skeleton w={"100px"} h={"16px"} />
+                    </VStack>
+
+                    <Skeleton w={"120px"} ml={"auto"} />
+                  </Wrap>
+
+                  <CContainer
+                    flex={1}
+                    gap={responsiveSpacing}
+                    pb={responsiveSpacing}
+                  >
+                    <HStack>
+                      <Skeleton h={"40px"} flex={1} />
+                      <Skeleton h={"40px"} flex={0} minW={"140px"} />
+                      <Skeleton h={"40px"} flex={0} minW={"140px"} />
+                    </HStack>
+
+                    <Skeleton flex={1} w={"100%"} />
+                  </CContainer>
+                </CContainer>
               )}
               {!loading && (
                 <>
