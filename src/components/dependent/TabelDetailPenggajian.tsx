@@ -1,7 +1,6 @@
 import { HStack, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
-import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
 import NotFound from "../independent/NotFound";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
@@ -9,7 +8,7 @@ import MultiSelectUnitKerja from "./_Select/MultiSelectUnitKerja";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import DetailPenggajianKaryawanModal from "./DetailPenggajianKaryawanModal";
-import ExportModal from "./ExportModal";
+import ExportRiwayatPenggajianModal from "./ExportRiwayatPenggajianModal";
 import SearchComponent from "./input/SearchComponent";
 
 interface Props {
@@ -158,13 +157,7 @@ export default function TabelDetailPenggajian({ data }: Props) {
           w={"fit-content"}
         />
 
-        <ExportModal
-          url=""
-          title={`Export Penggajian ${formatDate(
-            data.data_riwayat.periode,
-            "periode"
-          )}`}
-        />
+        <ExportRiwayatPenggajianModal periode={data.data_riwayat?.periode} />
       </HStack>
 
       {fd.length === 0 && <NotFound />}

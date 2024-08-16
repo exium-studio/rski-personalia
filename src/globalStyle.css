@@ -170,6 +170,12 @@ button:focus-visible {
   transform: scale(0.97);
 }
 
+.selected {
+  background: var(--p500a5) !important;
+  color: var(--p500) !important;
+  border: 1px solid var(--p500) !important;
+}
+
 input,
 textarea {
   border-radius: 8px !important;

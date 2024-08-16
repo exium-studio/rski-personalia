@@ -7,9 +7,11 @@ import {
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Text,
+  useDisclosure,
   useToast,
   VStack,
   Wrap,
@@ -32,9 +34,16 @@ import TabelDetailPenggajian from "./TabelDetailPenggajian";
 import req from "../../constant/req";
 import useRenderTrigger from "../../global/useRenderTrigger";
 
-interface PublikasiButtonProps extends ButtonProps {}
+interface PublikasiButtonProps extends ButtonProps {
+  penggajian_id: number;
+  periode: string;
+}
 
-function PublikasiButtonModal({ ...props }: PublikasiButtonProps) {
+function PublikasiButtonModal({
+  penggajian_id,
+  periode,
+  ...props
+}: PublikasiButtonProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
@@ -47,6 +56,12 @@ function PublikasiButtonModal({ ...props }: PublikasiButtonProps) {
         if (r.status === 200) {
           setRt(!rt);
           backOnClose();
+          toast({
+            status: "success",
+            title: r.data.message,
+            position: "bottom-right",
+            isClosable: true,
+          });
         }
       })
       .catch((e) => {
@@ -64,10 +79,61 @@ function PublikasiButtonModal({ ...props }: PublikasiButtonProps) {
       });
   }
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    `publikasi-penggajian-modal-${penggajian_id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
+
   return (
-    <Button onClick={publikasiPenggajian} isLoading={loading} {...props}>
-      Publikasi
-    </Button>
+    <>
+      <Button onClick={onOpen} isLoading={loading} {...props}>
+        Publikasi
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader
+              title={`Publikasi Penggajian ${formatDate(periode, "periode")}`}
+            />
+          </ModalHeader>
+          <ModalBody>
+            <Text opacity={0.6}>
+              Apakah anda yakin akan publikasi penggajian perode{" "}
+              {formatDate(periode, "periode")}
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              w={"100%"}
+              className="btn-solid clicky"
+              onClick={backOnClose}
+              isDisabled={loading}
+            >
+              Tidak
+            </Button>
+            <Button
+              w={"100%"}
+              className="btn-ap clicky"
+              colorScheme="ap"
+              onClick={publikasiPenggajian}
+              isLoading={loading}
+            >
+              Ya
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
 
@@ -228,6 +294,8 @@ export default function DetailPenggajianModal({
                         </VStack>
 
                         <PublikasiButtonModal
+                          penggajian_id={penggajian_id}
+                          periode={data.data_riwayat?.periode}
                           ml={"auto"}
                           size={"lg"}
                           colorScheme="ap"

@@ -60,7 +60,7 @@ export default function BuatPenggajianModal({ ...props }: Props) {
               position: "bottom-right",
             });
             setRt(!rt);
-            resetForm();
+            backOnClose();
           }
         })
         .catch((e) => {
