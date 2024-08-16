@@ -190,7 +190,9 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
         setPageConfig={setPageConfig}
         paginationData={paginationData}
         footer={
-          <Text opacity={0.4}>Klik row untuk melihat laporan penggajian</Text>
+          <Text opacity={0.4}>
+            Klik row untuk melihat detail laporan penggajian
+          </Text>
         }
       />
     </>

@@ -79,7 +79,7 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
       nama_detail: yup.string().required("Harus diisi"),
       jenis_penyesuaian: yup.number().required("Harus diisi"),
       besaran: yup.number().required("Harus diisi"),
-      date_range: simpan ? yup.string().required("Harus diisi") : yup.string(),
+      date_range: simpan ? yup.object().required("Harus diisi") : yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
@@ -102,6 +102,7 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
         .post(url, payload)
         .then((r) => {
           if (r.status === 200) {
+            backOnClose();
             backOnClose();
             toast({
               status: "success",
@@ -178,30 +179,30 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
                   <Button
                     w={"100%"}
                     className="btn-outline clicky"
-                    border={
-                      formik.values.jenis_penyesuaian === 1
-                        ? "1px solid var(--p500)"
-                        : ""
+                    colorScheme={
+                      formik.values.jenis_penyesuaian === 1 ? "green" : ""
+                    }
+                    variant={
+                      formik.values.jenis_penyesuaian === 1 ? "outline" : ""
                     }
                     onClick={() => {
                       formik.setFieldValue("jenis_penyesuaian", 1);
                     }}
-                    color={"green.400"}
                   >
                     Tambah Pendapatan
                   </Button>
                   <Button
                     w={"100%"}
                     className="btn-outline clicky"
-                    border={
-                      formik.values.jenis_penyesuaian === 2
-                        ? "1px solid var(--p500)"
-                        : ""
+                    colorScheme={
+                      formik.values.jenis_penyesuaian === 2 ? "red" : ""
+                    }
+                    variant={
+                      formik.values.jenis_penyesuaian === 2 ? "outline" : ""
                     }
                     onClick={() => {
                       formik.setFieldValue("jenis_penyesuaian", 2);
                     }}
-                    color={"red.400"}
                   >
                     Tambah Potongan
                   </Button>

@@ -351,7 +351,7 @@ export default function MultipleSelectModal({
                     )}
 
                     {optionsDisplay === "chip" && (
-                      <Wrap>
+                      <Wrap pb={"1px"}>
                         {fo.map((option, i) => (
                           <Button
                             key={i}
