@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   HStack,
+  Icon,
   Modal,
   ModalBody,
   ModalContent,
@@ -16,7 +17,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useErrorColor, useLightDarkColor } from "../../constant/colors";
-import { responsiveSpacing } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
@@ -29,6 +30,7 @@ import DetailKaryawanModalDisclosure from "./DetailKaryawanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import SearchComponent from "./input/SearchComponent";
+import { RiArrowUpDownLine } from "@remixicon/react";
 
 interface Props {
   riwayat_id?: number;
@@ -130,6 +132,7 @@ export default function DetailPenggajianKaryawanModal({
                     mb={responsiveSpacing}
                     align={"center"}
                   >
+                    <Skeleton w={"55px"} h={"55px"} borderRadius={"full"} />
                     <VStack align={"stretch"}>
                       <Skeleton w={"100px"} h={"16px"} />
                       <Skeleton w={"100px"} h={"16px"} />
@@ -153,7 +156,7 @@ export default function DetailPenggajianKaryawanModal({
                   >
                     <HStack>
                       <Skeleton h={"40px"} flex={1} />
-                      <Skeleton h={"40px"} flex={0} minW={"140px"} />
+                      <Skeleton h={"40px"} flex={0} minW={"172px"} />
                     </HStack>
 
                     <HStack gap={responsiveSpacing} flex={1} align={"stretch"}>
@@ -235,7 +238,14 @@ export default function DetailPenggajianKaryawanModal({
                           inputValue={search}
                         />
 
-                        <Button className="btn-ap clicky" colorScheme="ap">
+                        <Button
+                          leftIcon={
+                            <Icon as={RiArrowUpDownLine} fontSize={iconSize} />
+                          }
+                          className="btn-ap clicky"
+                          colorScheme="ap"
+                          w={"fit-content"}
+                        >
                           Penyesuaian Gaji
                         </Button>
                       </HStack>

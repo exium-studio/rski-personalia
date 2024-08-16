@@ -132,6 +132,7 @@ export default function DetailPenggajianModal({
                     spacing={responsiveSpacing}
                     mb={responsiveSpacing}
                     align={"center"}
+                    h={"55px"}
                   >
                     <VStack align={"stretch"}>
                       <Skeleton w={"100px"} h={"16px"} />
