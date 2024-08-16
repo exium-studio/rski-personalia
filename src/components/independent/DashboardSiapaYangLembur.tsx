@@ -34,75 +34,79 @@ export default function DashboardSiapaYangLembur({ ...props }: Props) {
 
   return (
     <>
-      {error && (
-        <>
-          {notFound && <NoData minH={"300px"} />}
-
-          {!notFound && (
-            <Center my={"auto"} minH={"300px"}>
-              <Retry loading={loading} retry={retry} />
-            </Center>
-          )}
-        </>
+      {loading && (
+        <Skeleton
+          flex={"1 1 0"}
+          borderRadius={12}
+          h={dashboardItemHeight}
+          minW={dashboardItemMinWidth}
+        />
       )}
 
-      {!error && (
-        <>
-          {loading && (
-            <Skeleton
-              flex={"1 1 0"}
-              borderRadius={12}
-              h={dashboardItemHeight}
-              minW={dashboardItemMinWidth}
-            />
+      {!loading && (
+        <VStack
+          align={"stretch"}
+          bg={bodyColor}
+          borderRadius={12}
+          gap={0}
+          minW={dashboardItemMinWidth}
+          pb={responsiveSpacing}
+          h={dashboardItemHeight}
+          {...props}
+        >
+          <Box p={responsiveSpacing}>
+            <Text fontWeight={600}>Pegawai Lembur</Text>
+            <Text fontSize={14} opacity={0.6}>
+              Pegawai yang lembur hari ini
+            </Text>
+          </Box>
+
+          {error && (
+            <>
+              {notFound && <NoData minH={"300px"} />}
+
+              {!notFound && (
+                <Center my={"auto"} minH={"300px"}>
+                  <Retry loading={loading} retry={retry} />
+                </Center>
+              )}
+            </>
           )}
 
-          {!loading && data && (
-            <VStack
-              align={"stretch"}
-              bg={bodyColor}
-              borderRadius={12}
-              gap={0}
-              minW={dashboardItemMinWidth}
-              pb={responsiveSpacing}
-              h={dashboardItemHeight}
-              {...props}
-            >
-              <Box p={responsiveSpacing}>
-                <Text fontWeight={600}>Pegawai Lembur</Text>
-                <Text fontSize={14} opacity={0.6}>
-                  Pegawai yang lembur hari ini
-                </Text>
-              </Box>
+          {!error && (
+            <>
+              {!loading && data && (
+                <VStack
+                  align={"stretch"}
+                  gap={responsiveSpacing}
+                  overflowY={"auto"}
+                  px={responsiveSpacing}
+                  className="scrollX scrollY"
+                  // className="scrollY"
+                >
+                  {data.map((pegawai: any, i: number) => (
+                    <HStack key={i}>
+                      <Avatar
+                        name={pegawai.user.nama}
+                        src={pegawai.user.foto_profil}
+                      />
+                      <Box>
+                        <Text mb={1}>{pegawai.user.nama}</Text>
+                        <Text opacity={0.6} fontSize={12}>
+                          {pegawai.unit_kerja.nama_unit}
+                        </Text>
+                      </Box>
 
-              <VStack
-                align={"stretch"}
-                gap={responsiveSpacing}
-                overflowY={"auto"}
-                px={responsiveSpacing}
-                className="scrollX scrollY"
-                // className="scrollY"
-              >
-                {data.map((pegawai: any, i: number) => (
-                  <HStack key={i}>
-                    <Avatar
-                      name={pegawai.user.nama}
-                      src={pegawai.user.foto_profil}
-                    />
-                    <Box>
-                      <Text mb={1}>{pegawai.user.nama}</Text>
-                      <Text opacity={0.6} fontSize={12}>
-                        {pegawai.unit_kerja.nama_unit}
-                      </Text>
-                    </Box>
-
-                    <Box ml={"auto"}>{formatDurationShort(pegawai.durasi)}</Box>
-                  </HStack>
-                ))}
-              </VStack>
-            </VStack>
+                      <Box ml={"auto"}>
+                        {formatDurationShort(pegawai.durasi)}
+                      </Box>
+                    </HStack>
+                  ))}
+                </VStack>
+              )}
+            </>
           )}
-        </>
+        </VStack>
       )}
     </>
   );
