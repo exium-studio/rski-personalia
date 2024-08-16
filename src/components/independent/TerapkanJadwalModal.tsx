@@ -64,6 +64,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
           (user: Interface__SelectOption) => user.value
         ),
         tgl_mulai: formatDate(values.tgl_mulai as string, "short"),
+        tgl_selesai: "",
         shift_id: values.shift.value,
       };
 

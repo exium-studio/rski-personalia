@@ -71,6 +71,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
       const payload = {
         shift_id: values.shift.value,
         tgl_mulai: formatDate(values.tgl_mulai as string, "short"),
+        tgl_selesai: "",
       };
       setLoading(true);
       req
