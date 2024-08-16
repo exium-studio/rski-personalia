@@ -1,6 +1,5 @@
 import { Center, Icon, MenuItem, Text } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
-import { dummyCuti } from "../../const/dummy";
 import { Interface__SelectOption } from "../../constant/interfaces";
 import { iconSize } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
@@ -10,8 +9,11 @@ import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
+import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
+import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import TabelElipsisText from "./TabelElipsisText";
 
 interface Props {
   filterConfig?: any;
@@ -32,26 +34,39 @@ export default function TabelPengaturanHariLibur({ filterConfig }: Props) {
     },
     (rowData: any) => {
       return (
-        <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
-          <Text>Restore</Text>
-          <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <RestoreDataPengaturanModalDisclosure
+          id={rowData.id}
+          url="/api/rski/dashboard/pengaturan/cuti/restore"
+        >
+          <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
+            <Text>Restore</Text>
+            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </RestoreDataPengaturanModalDisclosure>
       );
     },
     "divider",
     (rowData: any) => {
       return (
-        <MenuItem fontWeight={500} isDisabled={rowData.columnsFormat[1].value}>
-          <Text color={"red.400"}>Delete</Text>
-          <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-        </MenuItem>
+        <DeleteDataPengaturanModalDisclosure
+          id={rowData.id}
+          url="/api/rski/dashboard/pengaturan/cuti"
+        >
+          <MenuItem
+            fontWeight={500}
+            isDisabled={rowData.columnsFormat[1].value}
+          >
+            <Text color={"red.400"}>Delete</Text>
+            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
+          </MenuItem>
+        </DeleteDataPengaturanModalDisclosure>
       );
     },
   ];
 
   const { error, loading, data, retry } = useDataState<any[]>({
-    initialData: dummyCuti,
-    url: "",
+    initialData: undefined,
+    url: `/api/rski/dashboard/pengaturan/cuti`,
     dependencies: [],
   });
 
@@ -95,11 +110,14 @@ export default function TabelPengaturanHariLibur({ filterConfig }: Props) {
       },
     },
     {
-      th: "Durasi Maksimal",
+      th: "Kuota per Tahun",
       isSortable: true,
       cProps: {
-        justify: "end",
+        justify: "center",
       },
+    },
+    {
+      th: "Keterangan",
     },
   ];
   const formattedData = fd?.map((item: any) => ({
@@ -126,12 +144,16 @@ export default function TabelPengaturanHariLibur({ filterConfig }: Props) {
         },
       },
       {
-        value: item.durasi,
-        td: `${formatNumber(item.durasi)} hari`,
+        value: item.kuota,
+        td: `${formatNumber(item.kuota)}`,
         isNumeric: true,
         cProps: {
-          justify: "end",
+          justify: "center",
         },
+      },
+      {
+        value: item.keterangan,
+        td: <TabelElipsisText data={item.keterangan} />,
       },
     ],
   }));
@@ -143,6 +165,7 @@ export default function TabelPengaturanHariLibur({ filterConfig }: Props) {
           <Retry loading={loading} retry={retry} />
         </Center>
       )}
+
       {!error && (
         <>
           {loading && (

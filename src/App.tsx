@@ -415,21 +415,6 @@ export const App = () => {
             }
           />
           <Route
-            path="/pengaturan/keuangan/ptkp"
-            element={
-              <NavContainer
-                active={7}
-                topNavsData={navs[7].subNavs}
-                topNavActive={0}
-                title="Pengaturan - PTKP"
-              >
-                <PengaturanContainer activeGroup={2} active={2}>
-                  <PengaturanPtkp />
-                </PengaturanContainer>
-              </NavContainer>
-            }
-          />
-          <Route
             path="/pengaturan/keuangan/ter-pph21"
             element={
               <NavContainer
@@ -438,8 +423,23 @@ export const App = () => {
                 topNavActive={0}
                 title="Pengaturan - TER pph21"
               >
-                <PengaturanContainer activeGroup={2} active={3}>
+                <PengaturanContainer activeGroup={2} active={2}>
                   <PengaturanTerPph21 />
+                </PengaturanContainer>
+              </NavContainer>
+            }
+          />
+          <Route
+            path="/pengaturan/keuangan/ptkp"
+            element={
+              <NavContainer
+                active={7}
+                topNavsData={navs[7].subNavs}
+                topNavActive={0}
+                title="Pengaturan - PTKP"
+              >
+                <PengaturanContainer activeGroup={2} active={3}>
+                  <PengaturanPtkp />
                 </PengaturanContainer>
               </NavContainer>
             }

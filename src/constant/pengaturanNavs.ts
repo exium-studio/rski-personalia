@@ -78,14 +78,14 @@ const pengaturanNavs = [
         link: "/pengaturan/keuangan/kategori-ter-pph21",
       },
       {
-        icon: RiArticleLine,
-        label: "PTKP",
-        link: "/pengaturan/keuangan/ptkp",
-      },
-      {
         icon: RiFilePaper2Line,
         label: "TER pph21",
         link: "/pengaturan/keuangan/ter-pph21",
+      },
+      {
+        icon: RiArticleLine,
+        label: "PTKP",
+        link: "/pengaturan/keuangan/ptkp",
       },
       {
         icon: RiCalendarLine,

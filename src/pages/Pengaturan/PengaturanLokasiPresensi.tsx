@@ -94,11 +94,12 @@ export default function PengaturanLokasiPresensi() {
   });
 
   const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<any>(undefined);
 
   const formikRef = useRef(formik);
   function getData() {
+    setLoading(true);
     req
       .get(`/api/rski/dashboard/pengaturan/get-lokasi-kantor/1`)
       .then((r) => {
@@ -144,172 +145,179 @@ export default function PengaturanLokasiPresensi() {
 
   return (
     <>
-      {error ? (
+      {error && (
         <Center m={"auto"} minH={"300px"}>
           <Retry loading={loading} retry={getData} />
         </Center>
-      ) : (
-        <CContainer
-          p={responsiveSpacing}
-          bg={lightDarkColor}
-          borderRadius={12}
-          flex={"1 1 600px"}
-          h={"100%"}
-          overflowY={"auto"}
-          className="scrollY"
-        >
-          {loading && (
-            <CContainer gap={responsiveSpacing}>
-              <Skeleton h={"40px"} />
-              <Skeleton minH={"450px"} />
-              <SimpleGrid columns={[1, null, 3]} gap={4}>
-                <Skeleton h={"40px"} />
-                <Skeleton h={"40px"} />
-                <Skeleton h={"40px"} />
-              </SimpleGrid>
-              <Skeleton h={"83"} />
-              <Skeleton ml={"auto"} w={"100px"} h={"40px"} />
-            </CContainer>
-          )}
+      )}
 
-          {!loading && data && center && (
-            <>
-              {center && (
-                <>
-                  <SetLokasiPresensi
-                    center={center}
-                    officeCenter={
-                      formik.values.lat && formik.values.long
-                        ? {
-                            lat: formik.values.lat,
-                            lng: formik.values.long,
-                          }
-                        : undefined
-                    }
-                    presence_radius={formik.values.radius}
-                    setOfficeLoc={(input) => {
-                      if (input) {
-                        formik.setFieldValue("lat", input.lat);
-                        formik.setFieldValue("long", input.lng);
+      {!error && (
+        <>
+          <CContainer
+            p={responsiveSpacing}
+            bg={lightDarkColor}
+            borderRadius={12}
+            flex={"1 1 600px"}
+            h={"100%"}
+            overflowY={"auto"}
+            className="scrollY"
+          >
+            {loading && (
+              <CContainer gap={responsiveSpacing}>
+                <Skeleton h={"40px"} />
+                <Skeleton minH={"450px"} />
+                <SimpleGrid columns={[1, null, 3]} gap={4}>
+                  <Skeleton h={"40px"} />
+                  <Skeleton h={"40px"} />
+                  <Skeleton h={"40px"} />
+                </SimpleGrid>
+                <Skeleton h={"83"} />
+                <Skeleton ml={"auto"} w={"100px"} h={"40px"} />
+              </CContainer>
+            )}
+
+            {!loading && data && center && (
+              <>
+                {center && (
+                  <>
+                    <SetLokasiPresensi
+                      center={center}
+                      officeCenter={
+                        formik.values.lat && formik.values.long
+                          ? {
+                              lat: formik.values.lat,
+                              lng: formik.values.long,
+                            }
+                          : undefined
                       }
-                    }}
-                  />
-                  <Text mt={2} opacity={0.4}>
-                    *Klik 2x pada peta untuk menentukan titik presensi
-                  </Text>
+                      presence_radius={formik.values.radius}
+                      setOfficeLoc={(input) => {
+                        if (input) {
+                          formik.setFieldValue("lat", input.lat);
+                          formik.setFieldValue("long", input.lng);
+                        }
+                      }}
+                    />
+                    <Text mt={2} opacity={0.4}>
+                      *Klik 2x pada peta untuk menentukan titik presensi
+                    </Text>
 
-                  <CContainer mt={responsiveSpacing} flex={1}>
-                    <form
-                      id="lokasiPresensiForm"
-                      onSubmit={formik.handleSubmit}
-                    >
-                      <SimpleGrid columns={[1, null, 3]} gap={4}>
-                        <FormControl mb={4} isInvalid={!!formik.errors.lat}>
-                          <FormLabel>
-                            Latitude
-                            <RequiredForm />
-                          </FormLabel>
-                          <Input
-                            type="number"
-                            name="lat"
-                            placeholder="-6.28376273"
-                            onChange={formik.handleChange}
-                            value={formik.values.lat || ""}
-                          />
-                          <FormErrorMessage>
-                            {formik.errors.lat as string}
-                          </FormErrorMessage>
-                        </FormControl>
-
-                        <FormControl mb={4} isInvalid={!!formik.errors.long}>
-                          <FormLabel>
-                            Longitude
-                            <RequiredForm />
-                          </FormLabel>
-                          <Input
-                            type="number"
-                            name="long"
-                            placeholder="110.28376273"
-                            onChange={formik.handleChange}
-                            value={formik.values.long || ""}
-                          />
-                          <FormErrorMessage>
-                            {formik.errors.long as string}
-                          </FormErrorMessage>
-                        </FormControl>
-
-                        <FormControl mb={4} isInvalid={!!formik.errors.radius}>
-                          <FormLabel>
-                            Radius Presensi
-                            <RequiredForm />
-                          </FormLabel>
-                          <InputGroup>
-                            <InputRightElement pr={4}>
-                              <Text>m</Text>
-                            </InputRightElement>
-                            <NumberInput
-                              pr={12}
-                              name="radius"
-                              placeholder="100"
-                              onChangeSetter={(input) => {
-                                formik.setFieldValue("radius", input);
-                              }}
-                              inputValue={formik.values.radius}
-                            />
-                          </InputGroup>
-                          <FormErrorMessage>
-                            {formik.errors.radius as string}
-                          </FormErrorMessage>
-                        </FormControl>
-                      </SimpleGrid>
-
-                      <FormControl isInvalid={!!formik.errors.alamat}>
-                        <FormLabel>
-                          Alamat
-                          <RequiredForm />
-                        </FormLabel>
-                        <Textarea
-                          name="alamat"
-                          placeholder="Jalan Soekarno Hatta no.17"
-                          onChangeSetter={(input) => {
-                            formik.setFieldValue("alamat", input);
-                          }}
-                          inputValue={formik.values.alamat}
-                        />
-                        <FormErrorMessage>
-                          {formik.errors.alamat as string}
-                        </FormErrorMessage>
-                      </FormControl>
-                    </form>
-
-                    <HStack
-                      mt={"auto"}
-                      pt={responsiveSpacing}
-                      justify={"space-between"}
-                      align={"end"}
-                    >
-                      <Text opacity={0.4}>
-                        Terakhir diperbarui : {formatDate(data?.updated_at)}
-                      </Text>
-
-                      <Button
-                        type="submit"
-                        form="lokasiPresensiForm"
-                        ml={"auto"}
-                        w={"fit-content"}
-                        colorScheme="ap"
-                        className="btn-ap clicky"
-                        isLoading={loadingSimpan}
+                    <CContainer mt={responsiveSpacing} flex={1}>
+                      <form
+                        id="lokasiPresensiForm"
+                        onSubmit={formik.handleSubmit}
                       >
-                        Simpan
-                      </Button>
-                    </HStack>
-                  </CContainer>
-                </>
-              )}
-            </>
-          )}
-        </CContainer>
+                        <SimpleGrid columns={[1, null, 3]} gap={4}>
+                          <FormControl mb={4} isInvalid={!!formik.errors.lat}>
+                            <FormLabel>
+                              Latitude
+                              <RequiredForm />
+                            </FormLabel>
+                            <Input
+                              type="number"
+                              name="lat"
+                              placeholder="-6.28376273"
+                              onChange={formik.handleChange}
+                              value={formik.values.lat || ""}
+                            />
+                            <FormErrorMessage>
+                              {formik.errors.lat as string}
+                            </FormErrorMessage>
+                          </FormControl>
+
+                          <FormControl mb={4} isInvalid={!!formik.errors.long}>
+                            <FormLabel>
+                              Longitude
+                              <RequiredForm />
+                            </FormLabel>
+                            <Input
+                              type="number"
+                              name="long"
+                              placeholder="110.28376273"
+                              onChange={formik.handleChange}
+                              value={formik.values.long || ""}
+                            />
+                            <FormErrorMessage>
+                              {formik.errors.long as string}
+                            </FormErrorMessage>
+                          </FormControl>
+
+                          <FormControl
+                            mb={4}
+                            isInvalid={!!formik.errors.radius}
+                          >
+                            <FormLabel>
+                              Radius Presensi
+                              <RequiredForm />
+                            </FormLabel>
+                            <InputGroup>
+                              <InputRightElement pr={4}>
+                                <Text>m</Text>
+                              </InputRightElement>
+                              <NumberInput
+                                pr={12}
+                                name="radius"
+                                placeholder="100"
+                                onChangeSetter={(input) => {
+                                  formik.setFieldValue("radius", input);
+                                }}
+                                inputValue={formik.values.radius}
+                              />
+                            </InputGroup>
+                            <FormErrorMessage>
+                              {formik.errors.radius as string}
+                            </FormErrorMessage>
+                          </FormControl>
+                        </SimpleGrid>
+
+                        <FormControl isInvalid={!!formik.errors.alamat}>
+                          <FormLabel>
+                            Alamat
+                            <RequiredForm />
+                          </FormLabel>
+                          <Textarea
+                            name="alamat"
+                            placeholder="Jalan Soekarno Hatta no.17"
+                            onChangeSetter={(input) => {
+                              formik.setFieldValue("alamat", input);
+                            }}
+                            inputValue={formik.values.alamat}
+                          />
+                          <FormErrorMessage>
+                            {formik.errors.alamat as string}
+                          </FormErrorMessage>
+                        </FormControl>
+                      </form>
+
+                      <HStack
+                        mt={"auto"}
+                        pt={responsiveSpacing}
+                        justify={"space-between"}
+                        align={"end"}
+                      >
+                        <Text opacity={0.4}>
+                          Terakhir diperbarui : {formatDate(data?.updated_at)}
+                        </Text>
+
+                        <Button
+                          type="submit"
+                          form="lokasiPresensiForm"
+                          ml={"auto"}
+                          w={"fit-content"}
+                          colorScheme="ap"
+                          className="btn-ap clicky"
+                          isLoading={loadingSimpan}
+                        >
+                          Simpan
+                        </Button>
+                      </HStack>
+                    </CContainer>
+                  </>
+                )}
+              </>
+            )}
+          </CContainer>
+        </>
       )}
     </>
   );

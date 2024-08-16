@@ -1,20 +1,21 @@
-import { Center, Icon, MenuItem, Text, Tooltip } from "@chakra-ui/react";
+import { Center, Icon, MenuItem, Text } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
 import { Interface__SelectOption } from "../../constant/interfaces";
 import { iconSize } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import isObjectEmpty from "../../lib/isObjectEmpty";
+import EditUnitKerjaModalDisclosure from "../independent/EditUnitKerjaModalDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
+import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
+import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
-import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
-import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
-import EditUnitKerjaModalDisclosure from "../independent/EditUnitKerjaModalDisclosure";
+import TabelElipsisText from "./TabelElipsisText";
 
 interface Props {
   filterConfig?: any;
@@ -126,19 +127,7 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
     columnsFormat: [
       {
         value: item.nama_unit,
-        td: (
-          <Tooltip openDelay={500} label={item.nama_unit} placement="right">
-            <Text
-              w={"100%"}
-              maxW={"243px"}
-              overflow={"hidden"}
-              whiteSpace={"nowrap"}
-              textOverflow={"ellipsis"}
-            >
-              {item.nama_unit}
-            </Text>
-          </Tooltip>
-        ),
+        td: <TabelElipsisText data={item.nama_unit} />,
         props: {
           position: "sticky",
           left: 0,
