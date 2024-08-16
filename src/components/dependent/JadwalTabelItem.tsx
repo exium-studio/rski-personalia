@@ -30,12 +30,12 @@ import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
-import formatTime from "../../lib/formatTimeOld";
 import isDatePassed from "../../lib/isDatePassed";
 import RequiredForm from "../form/RequiredForm";
 import SelectShift from "./_Select/SelectShift";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
+import formatTime from "../../lib/formatTime";
 
 interface Props {
   data: any;
@@ -66,13 +66,18 @@ export default function TabelJadwalItem({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      shift: {
-        value: jadwal?.shift?.id,
-        label: jadwal?.shift?.nama,
-        label2: `${formatTime(jadwal?.shift?.jam_from)}-${formatTime(
-          jadwal?.shift?.jam_to
-        )}`,
-      },
+      shift: jadwal?.shift
+        ? {
+            value: jadwal?.shift?.id,
+            label: `${formatTime(jadwal?.shift?.jam_from)}-${formatTime(
+              jadwal?.shift?.jam_to
+            )}`,
+            label2: jadwal?.shift?.nama,
+          }
+        : {
+            value: 0,
+            label: "Libur",
+          },
       tgl_mulai: tgl,
     },
     validationSchema: yup
@@ -150,11 +155,13 @@ export default function TabelJadwalItem({
         <HStack gap={3} justify={"space-between"} flex={1}>
           <Box>
             <Text noOfLines={1} mb={1} fontSize={14}>
-              {jadwal?.shift?.nama}
+              {jadwal?.shift?.nama || "Libur"}
             </Text>
             <Text fontSize={14} whiteSpace={"nowrap"}>
-              {formatTime(jadwal?.shift?.jam_from)} -{" "}
-              {formatTime(jadwal?.shift?.jam_to)}
+              {jadwal?.shift
+                ? `${formatTime(jadwal?.shift?.jam_from)} - 
+              ${formatTime(jadwal?.shift?.jam_to)}`
+                : "-"}
             </Text>
           </Box>
 
@@ -248,12 +255,12 @@ export default function TabelJadwalItem({
               >
                 <FormControl mt={3} isInvalid={!!formik.errors.shift}>
                   <FormLabel>
-                    Jam Kerja
+                    Jam Kerja (Shift)
                     <RequiredForm />
                   </FormLabel>
                   <SelectShift
                     name="shift"
-                    placeholder="Pilih Jam Kerja"
+                    placeholder="Pilih Jam Kerja (Shift)"
                     onConfirm={(input) => {
                       formik.setFieldValue("shift", input);
                     }}
