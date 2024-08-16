@@ -205,17 +205,15 @@ export default function DetailPenggajianKaryawanModal({
                         overflowY={"auto"}
                         className="scrollY"
                       >
-                        <VStack
-                          align={"stretch"}
+                        <CContainer
                           gap={responsiveSpacing}
                           flex={1}
                           overflowY={"auto"}
                           className="scrollY"
                           px={responsiveSpacing}
                         >
-                          <VStack align={"stretch"} gap={0}>
-                            <VStack
-                              align={"stretch"}
+                          <CContainer>
+                            <CContainer
                               gap={4}
                               // ref={dataPresensiRef}
                             >
@@ -391,12 +389,8 @@ export default function DetailPenggajianKaryawanModal({
 
                               <CContainer
                                 mt={1}
-                                ml={"auto"}
                                 justify={"space-between"}
-                                p={4}
-                                px={5}
                                 borderRadius={12}
-                                w={"fit-content"}
                               >
                                 <Text
                                   fontSize={18}
@@ -416,9 +410,9 @@ export default function DetailPenggajianKaryawanModal({
                                   Rp {formatNumber(data.take_home_pay)}
                                 </Text>
                               </CContainer>
-                            </VStack>
-                          </VStack>
-                        </VStack>
+                            </CContainer>
+                          </CContainer>
+                        </CContainer>
                       </CContainer>
                     </CContainer>
                   )}
