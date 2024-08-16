@@ -31,15 +31,15 @@ req.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 500:
-          // window.history.replaceState(null, "", "/servererror");
+          // window.location.href = "/servererror";
           break;
         case 503:
-          window.history.replaceState(null, "", "/maintenance");
+          window.location.href = "/maintenance";
           break;
         case 401:
           removeCookie("__auth_token");
           localStorage.removeItem("__user_data");
-          window.history.replaceState(null, "", "/"); // Redirect to home page
+          window.location.href = "/";
           break;
         default:
           return Promise.reject(error);

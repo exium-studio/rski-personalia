@@ -27,6 +27,7 @@ import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import RequiredForm from "../form/RequiredForm";
+import formatDate from "../../lib/formatDate";
 
 interface Props extends ButtonProps {}
 
@@ -52,11 +53,11 @@ export default function TambahHariLibur({ ...props }: Props) {
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama: values.nama,
-        tanggal: values.tanggal,
+        tanggal: formatDate(values.tanggal, "short"),
       };
       setLoading(true);
       req
-        .post(`/api/rski/dasboard/hari-liburs`, payload)
+        .post(`/api/rski/dashboard/pengaturan/hari-libur`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
