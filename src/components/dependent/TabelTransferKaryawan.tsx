@@ -178,20 +178,20 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
         td: item.jabatan_tujuan?.nama_jabatan,
       },
       {
-        value: "-",
-        td: "-",
+        value: item.kelompok_gaji_asal?.nama_kelompok,
+        td: item.kelompok_gaji_asal?.nama_kelompok,
       },
       {
-        value: "-",
-        td: "-",
+        value: item.kelompok_gaji_tujuan?.nama_kelompok,
+        td: item.kelompok_gaji_tujuan?.nama_kelompok,
       },
       {
-        value: "-",
-        td: "-",
+        value: item.role_asal?.name,
+        td: item.role_asal?.name,
       },
       {
-        value: "-",
-        td: "-",
+        value: item.role_tujuan?.name,
+        td: item.role_tujuan?.name,
       },
       {
         value: item.alasan,
