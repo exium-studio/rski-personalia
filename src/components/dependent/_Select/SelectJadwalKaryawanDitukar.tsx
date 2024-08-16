@@ -49,7 +49,7 @@ export default function SelectJadwalKaryawanDitukar({
               if (item) {
                 return {
                   value: item?.id,
-                  label: formatDate(item?.tgl_mulai),
+                  label: formatDate(item?.tanggal, "basicShort"),
                   label2: `${formatTime(item?.jam_from)} - ${formatTime(
                     item?.jam_to
                   )}`,

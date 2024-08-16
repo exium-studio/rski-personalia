@@ -2,9 +2,10 @@ import { ButtonProps, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import req from "../../../constant/req";
-import formatTime from "../../../lib/formatTimeOld";
 import SingleSelectModal from "../input/SingleSelectModal";
 import formatDate from "../../../lib/formatDate";
+import backOnClose from "../../../lib/backOnClose";
+import formatTime from "../../../lib/formatTime";
 
 interface Props extends ButtonProps {
   user_id?: number;
@@ -50,12 +51,11 @@ export default function SelectJadwalKaryawan({
             optionsRaw = optionsRaw.filter((item: any) => item !== null);
             const options = optionsRaw.map((item: any) => ({
               value: item?.id,
-              label: formatDate(item?.tgl_mulai),
+              label: formatDate(item?.tanggal, "basicShort"),
               label2: `${formatTime(item?.jam_from)} - ${formatTime(
                 item?.jam_to
               )}`,
             }));
-
             setOptions(options);
           }
         })
@@ -70,6 +70,7 @@ export default function SelectJadwalKaryawan({
             isClosable: true,
             position: "bottom-right",
           });
+          backOnClose();
         });
     }
   }, [isOpen, toast, user_id]);

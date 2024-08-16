@@ -35,7 +35,7 @@ export default function NotificationModal({ ...props }: Props) {
   useBackOnClose("notification-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
-  const { error, loading, data, retry } = useDataState<any>({
+  const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/notifikasi`,
     dependencies: [],
@@ -102,9 +102,15 @@ export default function NotificationModal({ ...props }: Props) {
           </ModalHeader>
           <ModalBody className="scrollY" px={0}>
             {error && (
-              <Box my={"auto"}>
-                <Retry loading={loading} retry={retry} />
-              </Box>
+              <>
+                {notFound && <NoData minH={"300px"} />}
+
+                {!notFound && (
+                  <Box my={"auto"}>
+                    <Retry loading={loading} retry={retry} />
+                  </Box>
+                )}
+              </>
             )}
 
             {!error && (
@@ -174,9 +180,11 @@ export default function NotificationModal({ ...props }: Props) {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button w={"100%"} className="btn-solid clicky">
-              Hapus Semua yang Sudah Dibaca
-            </Button>
+            {!error && (
+              <Button w={"100%"} className="btn-solid clicky">
+                Hapus Semua yang Sudah Dibaca
+              </Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
