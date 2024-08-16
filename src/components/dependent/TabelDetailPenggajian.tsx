@@ -127,7 +127,7 @@ export default function TabelDetailPenggajian({ data }: Props) {
     ],
   }));
 
-  const [riwayatId, setRiwayatId] = useState<number | undefined>(undefined);
+  const riwayatId = parseInt(localStorage.getItem("riwayat_id") as string);
 
   return (
     <>
@@ -176,7 +176,7 @@ export default function TabelDetailPenggajian({ data }: Props) {
               formattedHeader={formattedHeader}
               formattedData={formattedData}
               onRowClick={(rowData) => {
-                setRiwayatId(rowData.id);
+                localStorage.setItem("riwayat_id", rowData.id);
                 onOpen();
               }}
               // rowOptions={rowOptions}
@@ -190,6 +190,7 @@ export default function TabelDetailPenggajian({ data }: Props) {
       )}
 
       <DetailPenggajianKaryawanModal
+        id={"detail-penggajian-karyawan-by-row-click"}
         riwayat_id={riwayatId}
         isOpen={isOpen}
         onOpen={onOpen}

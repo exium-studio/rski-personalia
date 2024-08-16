@@ -430,6 +430,7 @@ export default function MultipleSelectModal({
               w={"100%"}
               onClick={() => {
                 setSelected([]);
+                setSelectAll(false);
               }}
             >
               Clear

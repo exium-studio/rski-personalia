@@ -2,26 +2,37 @@ import {
   Avatar,
   Box,
   Button,
+  Checkbox,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
   HStack,
   Icon,
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
   Text,
+  useDisclosure,
+  useToast,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
+import { RiArrowUpDownLine } from "@remixicon/react";
+import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
+import * as yup from "yup";
 import { useErrorColor, useLightDarkColor } from "../../constant/colors";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import formatNumber from "../../lib/formatNumber";
+import RequiredForm from "../form/RequiredForm";
 import FlexLine from "../independent/FlexLine";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
@@ -29,10 +40,281 @@ import CContainer from "../wrapper/CContainer";
 import DetailKaryawanModalDisclosure from "./DetailKaryawanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
+import DateRangePickerModal from "./input/DateRangePickerModal";
+import NumberInput from "./input/NumberInput";
 import SearchComponent from "./input/SearchComponent";
-import { RiArrowUpDownLine } from "@remixicon/react";
+import StringInput from "./input/StringInput";
+import useRenderTrigger from "../../global/useRenderTrigger";
+import req from "../../constant/req";
+import formatDate from "../../lib/formatDate";
+
+interface PenyesuaianProps {
+  riwayat_id?: number;
+}
+
+function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    `penyesuaian-gaji-modal-${riwayat_id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
+
+  const [simpan, setSimpan] = useState<boolean>(false);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      nama_detail: "",
+      jenis_penyesuaian: undefined as any,
+      besaran: undefined as any,
+      date_range: undefined as any,
+    },
+    validationSchema: yup.object().shape({
+      nama_detail: yup.string().required("Harus diisi"),
+      jenis_penyesuaian: yup.number().required("Harus diisi"),
+      besaran: yup.number().required("Harus diisi"),
+      date_range: simpan ? yup.string().required("Harus diisi") : yup.string(),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      const payload = {
+        nama_detail: values.nama_detail,
+        besaran: values.besaran,
+        bulan_mulai:
+          values.date_range && formatDate(values.date_range?.from, "short"),
+        bulan_selesai:
+          values.date_range && formatDate(values.date_range?.to, "short"),
+      };
+      setLoading(true);
+      let url = "";
+      if (values.jenis_penyesuaian === 1) {
+        url = `/api/rski/dashboard/keuangan/penggajian/detail/${riwayat_id}/create-penambah-gaji`;
+      } else {
+        url = `/api/rski/dashboard/keuangan/penggajian/detail/${riwayat_id}/create-pengurang-gaji`;
+      }
+
+      req
+        .post(url, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            backOnClose();
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+  });
+
+  return (
+    <>
+      <Button
+        leftIcon={<Icon as={RiArrowUpDownLine} fontSize={iconSize} />}
+        className="btn-ap clicky"
+        colorScheme="ap"
+        minW={"fit-content"}
+        onClick={onOpen}
+        pl={5}
+      >
+        Penyesuaian Take Home Pay
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          backOnClose();
+          formik.resetForm();
+          setSimpan(false);
+        }}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader
+              title={"Penyesuaian Take Home Pay"}
+              onClose={() => {
+                formik.resetForm();
+                setSimpan(false);
+              }}
+            />
+          </ModalHeader>
+          <ModalBody>
+            <form
+              id="penyesuaianTakeHomePayForm"
+              onSubmit={formik.handleSubmit}
+            >
+              <FormControl mb={4} isInvalid={!!formik.errors.jenis_penyesuaian}>
+                <FormLabel>
+                  Jenis Penyesuaian
+                  <RequiredForm />
+                </FormLabel>
+                <HStack>
+                  <Button
+                    w={"100%"}
+                    className="btn-outline clicky"
+                    border={
+                      formik.values.jenis_penyesuaian === 1
+                        ? "1px solid var(--p500)"
+                        : ""
+                    }
+                    onClick={() => {
+                      formik.setFieldValue("jenis_penyesuaian", 1);
+                    }}
+                    color={"green.400"}
+                  >
+                    Tambah Pendapatan
+                  </Button>
+                  <Button
+                    w={"100%"}
+                    className="btn-outline clicky"
+                    border={
+                      formik.values.jenis_penyesuaian === 2
+                        ? "1px solid var(--p500)"
+                        : ""
+                    }
+                    onClick={() => {
+                      formik.setFieldValue("jenis_penyesuaian", 2);
+                    }}
+                    color={"red.400"}
+                  >
+                    Tambah Potongan
+                  </Button>
+                </HStack>
+                <FormErrorMessage>
+                  {formik.errors.jenis_penyesuaian as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={4} isInvalid={!!formik.errors.nama_detail}>
+                <FormLabel>
+                  Nama Detail (Keterangan)
+                  <RequiredForm />
+                </FormLabel>
+                <StringInput
+                  name="nama_detail"
+                  placeholder={
+                    formik.values.jenis_penyesuaian === 1
+                      ? "Insentif bulan ini"
+                      : formik.values.jenis_penyesuaian === 2
+                      ? "Potongan ganti rugi"
+                      : "Keterangan"
+                  }
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("nama_detail", input);
+                  }}
+                  inputValue={formik.values.nama_detail}
+                />
+                <FormErrorMessage>
+                  {formik.errors.nama_detail as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={4} isInvalid={!!formik.errors.besaran}>
+                <FormLabel>
+                  Besaran
+                  <RequiredForm />
+                </FormLabel>
+                <NumberInput
+                  name="besaran"
+                  placeholder="500.000"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("besaran", input);
+                  }}
+                  inputValue={formik.values.besaran}
+                />
+                <FormErrorMessage>
+                  {formik.errors.besaran as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <Checkbox
+                colorScheme="ap"
+                onChange={(e) => {
+                  if (!e.target.checked) {
+                    formik.setFieldValue("date_range", undefined);
+                  }
+                  setSimpan(e.target.checked);
+                }}
+                isChecked={simpan}
+                mt={4}
+              >
+                <Text mt={"-3px"}>Simpan Penyesuaian pada Pegawai Ini</Text>
+              </Checkbox>
+
+              {simpan && (
+                <>
+                  <FormControl my={4} isInvalid={!!formik.errors.date_range}>
+                    <FormLabel>
+                      Rentang Tanggal
+                      <RequiredForm />
+                    </FormLabel>
+                    <DateRangePickerModal
+                      id="penyesuaian-gaji-date-range-modal"
+                      name="date_range"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("date_range", input);
+                      }}
+                      inputValue={formik.values.date_range}
+                      isError={!!formik.errors.date_range}
+                    />
+                    <FormErrorMessage>
+                      {formik.errors.date_range as string}
+                    </FormErrorMessage>
+                  </FormControl>
+                  <Text opacity={0.4} fontSize={"sm"}>
+                    Penyesuaian ini akan disimpan dalam sistem dan diterapkan
+                    sesuai dengan periode yang telah ditentukan.
+                  </Text>
+                </>
+              )}
+            </form>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              w={"100%"}
+              className="btn-ap clicky"
+              colorScheme="ap"
+              type="submit"
+              form="penyesuaianTakeHomePayForm"
+              isLoading={loading}
+            >
+              Terapkan
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}
 
 interface Props {
+  id?: string;
   riwayat_id?: number;
   isOpen: boolean;
   onOpen: () => void;
@@ -40,13 +322,14 @@ interface Props {
 }
 
 export default function DetailPenggajianKaryawanModal({
+  id,
   riwayat_id,
   isOpen,
   onOpen,
   onClose,
 }: Props) {
   useBackOnClose(
-    `detail-penggajian-karyawan-modal-${riwayat_id}`,
+    id || `detail-penggajian-karyawan-modal-${riwayat_id}`,
     isOpen,
     onOpen,
     onClose
@@ -55,8 +338,8 @@ export default function DetailPenggajianKaryawanModal({
   const { error, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `api/rski/dashboard/keuangan/penggajian/detail/${riwayat_id}`,
+    dependencies: [],
     conditions: !!(isOpen && riwayat_id),
-    dependencies: [isOpen, riwayat_id],
   });
   const [search, setSearch] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string[]>([]);
@@ -156,7 +439,7 @@ export default function DetailPenggajianKaryawanModal({
                   >
                     <HStack>
                       <Skeleton h={"40px"} flex={1} />
-                      <Skeleton h={"40px"} flex={0} minW={"172px"} />
+                      <Skeleton h={"40px"} flex={0} minW={"280px"} />
                     </HStack>
 
                     <HStack gap={responsiveSpacing} flex={1} align={"stretch"}>
@@ -238,16 +521,7 @@ export default function DetailPenggajianKaryawanModal({
                           inputValue={search}
                         />
 
-                        <Button
-                          leftIcon={
-                            <Icon as={RiArrowUpDownLine} fontSize={iconSize} />
-                          }
-                          className="btn-ap clicky"
-                          colorScheme="ap"
-                          w={"fit-content"}
-                        >
-                          Penyesuaian Gaji
-                        </Button>
+                        <PenyesuaianGajiButtonModal riwayat_id={riwayat_id} />
                       </HStack>
 
                       <CContainer
