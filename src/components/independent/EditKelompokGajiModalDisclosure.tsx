@@ -54,8 +54,8 @@ export default function EditKelompokGajiModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama_kelompok: rowData.columnsFormat[0].value,
-      besaran_gaji: rowData.columnsFormat[2].value,
+      nama_kelompok: undefined as any,
+      besaran_gaji: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_kelompok: yup.string().required("Harus diisi"),
@@ -114,7 +114,7 @@ export default function EditKelompokGajiModalDisclosure({
       "besaran_gaji",
       rowData.columnsFormat[2].value
     );
-  }, [rowData]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

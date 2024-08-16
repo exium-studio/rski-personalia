@@ -54,9 +54,9 @@ export default function EditTerPph21ModalDisclosure({
     initialValues: {
       kategori_ter: undefined as any,
       // ptkp: undefined as any,
-      from_ter: undefined,
-      to_ter: undefined,
-      percentage: undefined,
+      from_ter: undefined as any,
+      to_ter: undefined as any,
+      percentage: undefined as any,
     },
     validationSchema: yup.object().shape({
       kategori_ter: yup.object().required("Harus diisi"),
@@ -120,7 +120,7 @@ export default function EditTerPph21ModalDisclosure({
       "percentage",
       rowData.columnsFormat[4].value
     );
-  }, [rowData]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

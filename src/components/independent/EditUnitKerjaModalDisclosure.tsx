@@ -52,11 +52,8 @@ export default function EditUnitKerjaModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama_unit: rowData.columnsFormat[0].value,
-      jenis_karyawan: {
-        value: rowData.columnsFormat[2].value,
-        label: rowData.columnsFormat[2].value ? "Shift" : "Non-Shift",
-      },
+      nama_unit: undefined as any,
+      jenis_karyawan: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_unit: yup.string().required("Harus diisi"),
@@ -116,7 +113,7 @@ export default function EditUnitKerjaModalDisclosure({
       value: rowData.columnsFormat[2].value,
       label: rowData.columnsFormat[2].value ? "Shift" : "Non-Shift",
     });
-  }, [rowData]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

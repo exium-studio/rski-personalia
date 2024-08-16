@@ -118,7 +118,7 @@ export default function EditShiftModalDisclosure({
       "jam_to",
       rowData.columnsFormat[2].original_data.jam_to
     );
-  }, [rowData]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

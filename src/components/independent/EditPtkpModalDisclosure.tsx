@@ -48,9 +48,9 @@ export default function EditPtkpModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      kode_ptkp: rowData.columnsFormat[0].value,
-      kategori_ter: rowData.columnsFormat[0].value,
-      nilai: rowData.columnsFormat[0].value,
+      kode_ptkp: "",
+      kategori_ter: undefined as any,
+      nilai: undefined as any,
     },
     validationSchema: yup.object().shape({
       kode_ptkp: yup.string().required("Harus diisi"),
@@ -110,7 +110,7 @@ export default function EditPtkpModalDisclosure({
       label: rowData.columnsFormat[2]?.original_data?.nama_kategori_ter,
     });
     formikRef.current.setFieldValue("nilai", rowData.columnsFormat[3].value);
-  }, [rowData]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

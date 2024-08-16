@@ -50,8 +50,8 @@ export default function EditJabatanModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama_jabatan: rowData.columnsFormat[0].value,
-      tunjangan: rowData.columnsFormat[2].value,
+      nama_jabatan: undefined as any,
+      tunjangan: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_jabatan: yup.string().required("Harus diisi"),
@@ -107,7 +107,7 @@ export default function EditJabatanModalDisclosure({
       "tunjangan",
       rowData.columnsFormat[2].value
     );
-  }, [rowData]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

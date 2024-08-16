@@ -53,7 +53,7 @@ export default function EditHariLiburModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama: undefined as any,
+      nama: "",
       tanggal: undefined as any,
     },
     validationSchema: yup.object().shape({
@@ -108,7 +108,7 @@ export default function EditHariLiburModalDisclosure({
   useEffect(() => {
     formikRef.current.setFieldValue("nama", rowData.columnsFormat[0].value);
     formikRef.current.setFieldValue("tanggal", rowData.columnsFormat[2].value);
-  }, [rowData]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

@@ -51,7 +51,7 @@ export default function EditKategoriTerModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama_kategori_ter: rowData.columnsFormat[0].value,
+      nama_kategori_ter: "",
     },
     validationSchema: yup.object().shape({
       nama_kategori_ter: yup.string().required("Harus diisi"),
@@ -105,7 +105,7 @@ export default function EditKategoriTerModalDisclosure({
       "nama_kategori_ter",
       rowData.columnsFormat[0].value
     );
-  }, [rowData]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

@@ -56,13 +56,10 @@ export default function EditKompetensiModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama_kompetensi: rowData.columnsFormat[0]?.value,
-      jenis_kompetensi: {
-        value: rowData.columnsFormat[2]?.value,
-        label: rowData.columnsFormat[2]?.value ? "Medis" : "Non-Medis",
-      },
-      total_tunjangan: rowData.columnsFormat[3]?.value,
-      nilai_bor: rowData.columnsFormat[4]?.value,
+      nama_kompetensi: undefined as any,
+      jenis_kompetensi: undefined as any,
+      total_tunjangan: undefined as any,
+      nilai_bor: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_kompetensi: yup.string().required("Harus diisi"),
@@ -134,7 +131,7 @@ export default function EditKompetensiModalDisclosure({
       "nilai_bor",
       rowData.columnsFormat[4].value
     );
-  }, [rowData]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

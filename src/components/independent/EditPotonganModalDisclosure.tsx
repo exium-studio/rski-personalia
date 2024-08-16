@@ -55,14 +55,11 @@ export default function EditPotonganModalDisclosure({
     validateOnChange: false,
     initialValues: {
       nama_premi: "",
-      jenis_premi: {
-        value: 0,
-        label: "Persentase (%)",
-      },
+      jenis_premi: undefined as any,
       sumber_potongan: undefined as any,
-      besaran_premi: undefined,
-      minimal_rate: undefined,
-      maksimal_rate: undefined,
+      besaran_premi: undefined as any,
+      minimal_rate: undefined as any,
+      maksimal_rate: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_premi: yup.string().required("Harus diisi"),
@@ -140,7 +137,7 @@ export default function EditPotonganModalDisclosure({
       "maximal_rate",
       rowData.columnsFormat[6]?.value
     );
-  }, [rowData]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>
