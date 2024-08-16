@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  ButtonProps,
   HStack,
   Icon,
   Modal,
@@ -9,11 +10,12 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  useToast,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
 import { RiSendPlaneFill } from "@remixicon/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -27,6 +29,47 @@ import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusPublikasiPenggajian from "./StatusPublikasiPenggajian";
 import TabelDetailPenggajian from "./TabelDetailPenggajian";
+import req from "../../constant/req";
+import useRenderTrigger from "../../global/useRenderTrigger";
+
+interface PublikasiButtonProps extends ButtonProps {}
+
+function PublikasiButtonModal({ ...props }: PublikasiButtonProps) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
+  function publikasiPenggajian() {
+    setLoading(true);
+    req
+      .post("/api/rski/dashboard/keuangan/publikasi-penggajian")
+      .then((r) => {
+        if (r.status === 200) {
+          setRt(!rt);
+          backOnClose();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  return (
+    <Button onClick={publikasiPenggajian} isLoading={loading} {...props}>
+      Publikasi
+    </Button>
+  );
+}
 
 interface Props {
   id?: string;
@@ -128,6 +171,7 @@ export default function DetailPenggajianModal({
                   </CContainer>
                 </CContainer>
               )}
+
               {!loading && (
                 <>
                   {(!data || (data && data.length === 0)) && <NoData />}
@@ -182,7 +226,7 @@ export default function DetailPenggajianModal({
                           />
                         </VStack>
 
-                        <Button
+                        <PublikasiButtonModal
                           ml={"auto"}
                           size={"lg"}
                           colorScheme="ap"
@@ -191,10 +235,10 @@ export default function DetailPenggajianModal({
                             <Icon as={RiSendPlaneFill} fontSize={iconSize} />
                           }
                           pl={5}
-                          isDisabled={!data.data_riwayat.status_riwayat_gaji}
-                        >
-                          Publikasi
-                        </Button>
+                          isDisabled={
+                            data.data_riwayat.status_riwayat_gaji.id === 2
+                          }
+                        />
                       </Wrap>
 
                       <TabelDetailPenggajian data={data} />
