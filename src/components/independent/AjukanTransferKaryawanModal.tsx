@@ -39,6 +39,7 @@ import Textarea from "../dependent/input/Textarea";
 import PleaseWaitModal from "../dependent/PleaseWaitModal";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
+import SelectRole from "../dependent/_Select/SelectRole";
 
 interface Props extends ButtonProps {}
 
@@ -297,13 +298,13 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
 
                 <FormControl mb={4} isInvalid={!!formik.errors.role_tujuan}>
                   <FormLabel>Role Tujuan</FormLabel>
-                  <SelectKelompokGaji
+                  <SelectRole
                     name="role_tujuan"
                     onConfirm={(input) => {
                       formik.setFieldValue("role_tujuan", input);
                     }}
                     inputValue={formik.values.role_tujuan}
-                    placeholder="Pilih Kelompok Gaji Tujuan"
+                    placeholder="Pilih Role Tujuan"
                   />
                   <FormHelperText>
                     Kosongkan jika data sama seperti sebelumnya
