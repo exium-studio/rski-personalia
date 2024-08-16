@@ -73,7 +73,7 @@ export default function SelectJadwalKaryawanDitukar({
           });
         });
     }
-  }, [isOpen, options, toast]);
+  }, [isOpen, options, toast, jadwal_id]);
 
   return (
     <SingleSelectModal

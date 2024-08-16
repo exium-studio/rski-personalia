@@ -83,7 +83,8 @@ export default function PengaturanJamKerjaNonShift() {
     },
   });
 
-  const { error, loading, data, retry } = useDataState<any>({
+  // TODO ambil data nya bro
+  const { error, loading, retry } = useDataState<any>({
     initialData: undefined,
     url: "",
     dependencies: [],

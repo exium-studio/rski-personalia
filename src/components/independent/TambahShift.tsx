@@ -24,7 +24,6 @@ import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
-import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
@@ -91,12 +90,6 @@ export default function TambahShift({ ...props }: Props) {
           setUpdateLoading(false);
         });
     },
-  });
-
-  const { error, loading, data, retry } = useDataState<any>({
-    initialData: undefined,
-    url: "",
-    dependencies: [],
   });
 
   return (

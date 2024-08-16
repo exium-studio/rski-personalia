@@ -137,9 +137,10 @@ export default function PengaturanLokasiPresensi() {
         setLoading(false);
       });
   }
+  const getDataRef = useRef(getData);
   useEffect(() => {
-    getData();
-  }, []);
+    getDataRef.current();
+  }, [getDataRef]);
 
   return (
     <>
@@ -290,7 +291,7 @@ export default function PengaturanLokasiPresensi() {
                       <Text opacity={0.4}>
                         Terakhir diperbarui : {formatDate(data?.updated_at)}
                       </Text>
-                      
+
                       <Button
                         type="submit"
                         form="lokasiPresensiForm"

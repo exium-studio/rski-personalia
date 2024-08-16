@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { RiCalendarFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import { Interface__SelectOption } from "../../constant/interfaces";
 import req from "../../constant/req";
@@ -100,14 +100,14 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
         });
     },
   });
-
+  const formikRef = useRef(formik);
   const [libur, setLibur] = useState<boolean>(false);
   useEffect(() => {
-    formik.setFieldValue("shift", undefined);
+    formikRef.current.setFieldValue("shift", undefined);
     if (libur) {
-      formik.setFieldValue("shift", { value: 0, label: "Libur" });
+      formikRef.current.setFieldValue("shift", { value: 0, label: "Libur" });
     }
-  }, [libur]);
+  }, [libur, formikRef]);
 
   return (
     <>

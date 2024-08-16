@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { RiEditBoxLine } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import req from "../../constant/req";
 import { responsiveSpacing } from "../../constant/sizes";
@@ -109,12 +109,14 @@ export default function TerapkanJadwalKaryawanTerpilih({
   });
 
   const [libur, setLibur] = useState<boolean>(false);
+
+  const formikRef = useRef(formik);
   useEffect(() => {
-    formik.resetForm();
+    formikRef.current.resetForm();
     if (libur) {
-      formik.setFieldValue("shift", { value: 0, label: "Libur" });
+      formikRef.current.setFieldValue("shift", { value: 0, label: "Libur" });
     }
-  }, [libur]);
+  }, [libur, formikRef]);
 
   // SX
 
