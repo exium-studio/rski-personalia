@@ -547,8 +547,8 @@ export default function DetailKaryawanModal({
                             />
 
                             <AktifkanNonaktifkanButton
-                              user_id={data.user.id}
-                              data={data?.status_aktifs}
+                              karyawan_id={data.id}
+                              data={data?.user?.status_aktif}
                             />
 
                             {/* Edit */}

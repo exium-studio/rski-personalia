@@ -21,10 +21,13 @@ import DisclosureHeader from "./DisclosureHeader";
 import useBackOnClose from "../../hooks/useBackOnClose";
 
 interface Props {
-  user_id: number;
+  karyawan_id: number;
   data?: number | boolean;
 }
-export default function AktifkanNonaktifkanButton({ user_id, data }: Props) {
+export default function AktifkanNonaktifkanButton({
+  karyawan_id,
+  data,
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
     "konfirmasi-aktifkan-nonaktifkan-modal",
@@ -39,13 +42,17 @@ export default function AktifkanNonaktifkanButton({ user_id, data }: Props) {
 
   function handleToggleAktifkan() {
     setLoading(true);
-    const payload = {
-      user_id: user_id,
-    };
+
     req
-      .post(`/api/rski/dashboard/karyawan/53/status-karyawan`, payload)
+      .post(`/api/rski/dashboard/karyawan/${karyawan_id}/status-karyawan`)
       .then((r) => {
         if (r.status === 200) {
+          toast({
+            status: "success",
+            title: r.data.message,
+            isClosable: true,
+            position: "bottom-right",
+          });
           setRt(!rt);
           backOnClose();
         }
@@ -75,7 +82,7 @@ export default function AktifkanNonaktifkanButton({ user_id, data }: Props) {
           <Icon
             as={RiShutDownLine}
             fontSize={iconSize}
-            color={!data ? "p.500" : "red.400"}
+            color={data == 2 ? "red.400" : "p.500"}
           />
         }
         className="btn-outline clicky"
@@ -83,7 +90,7 @@ export default function AktifkanNonaktifkanButton({ user_id, data }: Props) {
         onClick={onOpen}
         isLoading={loading}
       >
-        {data ? "Non-aktifkan" : "Aktifkan"}
+        {data == 2 ? "Non-aktifkan" : "Aktifkan"}
       </Button>
 
       <Modal
