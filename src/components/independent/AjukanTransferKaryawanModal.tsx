@@ -92,10 +92,13 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
         payload.append("jabatan_tujuan", values.jabatan_tujuan?.value);
       }
       if (values.kelompok_gaji_tujuan?.value !== undefined) {
-        payload.append("kelompok_gaji", values.kelompok_gaji_tujuan?.value);
+        payload.append(
+          "kelompok_gaji_tujuan",
+          values.kelompok_gaji_tujuan?.value
+        );
       }
       if (values.role_tujuan?.value !== undefined) {
-        payload.append("role", values.role_tujuan?.value);
+        payload.append("role_tujuan", values.role_tujuan?.value);
       }
 
       payload.append("alasan", values.alasan);
