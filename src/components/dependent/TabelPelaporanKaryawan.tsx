@@ -124,7 +124,7 @@ export default function TabelPelaporanKaryawan({ filterConfig }: Props) {
       },
       {
         value: item.foto,
-        td: (
+        td: item.foto && (
           <ViewPhotoModalDisclosure src={item.foto}>
             <Button colorScheme="ap" variant={"ghost"} className="clicky">
               Lihat
