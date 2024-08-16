@@ -193,7 +193,7 @@ export default function ImportModal({
               </FormControl>
 
               <Button
-                mt={4}
+                mt={2}
                 leftIcon={<Icon as={RiDownload2Line} fontSize={iconSize} />}
                 w={"100%"}
                 className="btn-outline clicky"

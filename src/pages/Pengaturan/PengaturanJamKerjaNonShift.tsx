@@ -10,7 +10,7 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import StringInput from "../../components/dependent/input/StringInput";
 import TimePickerModal from "../../components/dependent/input/TimePickerModal";
@@ -83,12 +83,20 @@ export default function PengaturanJamKerjaNonShift() {
     },
   });
 
-  // TODO ambil data nya bro
-  const { error, loading, retry } = useDataState<any>({
+  const { error, data, loading, retry } = useDataState<any>({
     initialData: undefined,
-    url: "",
+    url: "/api/rski/dashboard/pengaturan/non-shift",
     dependencies: [],
   });
+
+  const formikRef = useRef(formik);
+  useEffect(() => {
+    if (data) {
+      formikRef.current.setFieldValue("nama", data[0].nama);
+      formikRef.current.setFieldValue("jam_from", data[0].jam_from);
+      formikRef.current.setFieldValue("jam_to", data[0].jam_to);
+    }
+  }, [data, formikRef]);
 
   return (
     <CContainer

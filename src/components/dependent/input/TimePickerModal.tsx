@@ -58,9 +58,16 @@ export default function TimePickerModal({
   const [time, setTime] = useState<string | undefined>(
     inputValue ? inputValue : defaultTime
   );
-  const [hours, setHours] = useState<number>(getHours(time));
-  const [minutes, setMinutes] = useState<number>(getMinutes(time));
-  const [seconds, setSeconds] = useState<number>(getSeconds(time));
+  const [hours, setHours] = useState<number>(getHours(inputValue));
+  const [minutes, setMinutes] = useState<number>(getMinutes(inputValue));
+  const [seconds, setSeconds] = useState<number>(getSeconds(inputValue));
+  useEffect(() => {
+    if (inputValue) {
+      setHours(getHours(inputValue));
+      setMinutes(getMinutes(inputValue));
+      setSeconds(getSeconds(inputValue));
+    }
+  }, [inputValue]);
 
   useEffect(() => {
     const fHours = String(hours).padStart(2, "0");
