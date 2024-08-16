@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   ButtonProps,
   Icon,
@@ -39,7 +42,7 @@ export default function ExportRiwayatPenggajianModal({
   console.log(periode);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`export-modal-${1}`, isOpen, onOpen, onClose);
+  useBackOnClose(`export-modal-${periode}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -94,6 +97,7 @@ export default function ExportRiwayatPenggajianModal({
       })
       .finally(() => {
         backOnClose();
+        setTipeExport(undefined);
         setLoading(false);
       });
   };
@@ -113,14 +117,22 @@ export default function ExportRiwayatPenggajianModal({
 
       <Modal
         isOpen={isOpen}
-        onClose={backOnClose}
+        onClose={() => {
+          backOnClose();
+          setTipeExport(undefined);
+        }}
         initialFocusRef={initialRef}
         isCentered
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Export Penggajian"} />
+            <DisclosureHeader
+              title={"Export Penggajian"}
+              onClose={() => {
+                setTipeExport(undefined);
+              }}
+            />
           </ModalHeader>
           <ModalBody>
             <CContainer gap={2} mb={responsiveSpacing}>
@@ -162,17 +174,27 @@ export default function ExportRiwayatPenggajianModal({
               </Button>
             </CContainer>
 
-            <Text opacity={0.6}>
-              {tipeExport
-                ? "Apakah anda yakin akan export tabel ini?"
-                : "Pilih metode export dahulu"}
-            </Text>
+            {!tipeExport && (
+              <Alert status="warning">
+                <AlertIcon />
+                <AlertDescription>Pilih tipe export dahulu</AlertDescription>
+              </Alert>
+            )}
+
+            {tipeExport && (
+              <Text opacity={0.6}>
+                Apakah anda yakin akan export tabel ini?
+              </Text>
+            )}
           </ModalBody>
           <ModalFooter gap={2}>
             <Button
               w={"100%"}
               className="btn-solid clicky"
-              onClick={backOnClose}
+              onClick={() => {
+                backOnClose();
+                setTipeExport(undefined);
+              }}
               isDisabled={loading || !tipeExport}
             >
               Tidak

@@ -241,7 +241,7 @@ button[aria-label="Close"] > svg {
 .chakra-alert__desc {
   font-size: 14px;
   line-height: normal !important;
-  margin-top: 4px;
+  /* margin-top: 4px; */
   max-width: 450px !important;
 }
 .alert {
