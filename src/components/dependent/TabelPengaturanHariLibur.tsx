@@ -36,7 +36,7 @@ export default function TabelPengaturanHariLibur({ filterConfig }: Props) {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url="/api/rski/dahsboard/hari-liburs/restore"
+          url="/api/rski/dashboard/pengaturan/hari-libur/restore"
         >
           <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
             <Text>Restore</Text>
@@ -50,7 +50,7 @@ export default function TabelPengaturanHariLibur({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url="/api/rski/dahsboard/hari-liburs"
+          url="/api/rski/dashboard/pengaturan/hari-libur"
         >
           <MenuItem
             fontWeight={500}
@@ -66,7 +66,7 @@ export default function TabelPengaturanHariLibur({ filterConfig }: Props) {
 
   const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
-    url: "/api/rski/dahsboard/hari-liburs",
+    url: "/api/rski/dashboard/pengaturan/hari-libur",
     dependencies: [],
   });
 
