@@ -31,7 +31,7 @@ import Retry from "./Retry";
 import SearchComponent from "./input/SearchComponent";
 
 interface Props {
-  riwayat_id: number;
+  riwayat_id?: number;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -54,7 +54,8 @@ export default function DetailPenggajianKaryawanModal({
   const { error, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `api/rski/dashboard/keuangan/penggajian/detail/${riwayat_id}`,
-    dependencies: [],
+    conditions: !!(isOpen && riwayat_id),
+    dependencies: [isOpen, riwayat_id],
   });
   const [search, setSearch] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string[]>([]);

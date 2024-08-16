@@ -127,6 +127,8 @@ export default function TabelDetailPenggajian({ data }: Props) {
     ],
   }));
 
+  const [riwayatId, setRiwayatId] = useState<number | undefined>(undefined);
+
   return (
     <>
       <HStack mb={responsiveSpacing}>
@@ -173,7 +175,10 @@ export default function TabelDetailPenggajian({ data }: Props) {
             <CustomTable
               formattedHeader={formattedHeader}
               formattedData={formattedData}
-              onRowClick={onOpen}
+              onRowClick={(rowData) => {
+                setRiwayatId(rowData.id);
+                onOpen();
+              }}
               // rowOptions={rowOptions}
             />
           </CustomTableContainer>
@@ -185,7 +190,7 @@ export default function TabelDetailPenggajian({ data }: Props) {
       )}
 
       <DetailPenggajianKaryawanModal
-        riwayat_id={1}
+        riwayat_id={riwayatId}
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
