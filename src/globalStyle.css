@@ -718,7 +718,8 @@ img[alt="Google"] {
   button {
     font-size: 15px !important;
   }
-  input {
+  input,
+  textarea {
     font-size: 15px !important;
   }
   select {

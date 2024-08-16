@@ -14,6 +14,8 @@ import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDi
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
 import TabelElipsisText from "./TabelElipsisText";
+import EditTipeCutiModalDisclosure from "../independent/EditTipeCutiModalDisclosure";
+import BooleanBadge from "./BooleanBadge";
 
 interface Props {
   filterConfig?: any;
@@ -26,10 +28,12 @@ export default function TabelPengaturanHariLibur({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <MenuItem>
-          <Text>Edit</Text>
-          <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <EditTipeCutiModalDisclosure rowData={rowData}>
+          <MenuItem>
+            <Text>Edit</Text>
+            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </EditTipeCutiModalDisclosure>
       );
     },
     (rowData: any) => {
@@ -117,6 +121,20 @@ export default function TabelPengaturanHariLibur({ filterConfig }: Props) {
       },
     },
     {
+      th: "Dihitung Sebagai Hadir",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
+      th: "Perlu Syarat",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
       th: "Keterangan",
     },
   ];
@@ -146,6 +164,36 @@ export default function TabelPengaturanHariLibur({ filterConfig }: Props) {
       {
         value: item.kuota,
         td: `${formatNumber(item.kuota)}`,
+        isNumeric: true,
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item.cuti_administratif,
+        td: (
+          <BooleanBadge
+            data={item.cuti_administratif}
+            trueValue="Ya"
+            falseValue="Tidak"
+            w={"100px"}
+          />
+        ),
+        isNumeric: true,
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item.is_need_requirement,
+        td: (
+          <BooleanBadge
+            data={item.is_need_requirement}
+            trueValue="Ya"
+            falseValue="Tidak"
+            w={"100px"}
+          />
+        ),
         isNumeric: true,
         cProps: {
           justify: "center",

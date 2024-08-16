@@ -1,10 +1,10 @@
 import {
+  Box,
+  BoxProps,
   Button,
-  ButtonProps,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Icon,
   InputGroup,
   InputRightElement,
   Modal,
@@ -17,12 +17,10 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import req from "../../constant/req";
-import { iconSize } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
@@ -33,11 +31,23 @@ import StringInput from "../dependent/input/StringInput";
 import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
 
-interface Props extends ButtonProps {}
+interface Props extends BoxProps {
+  rowData: any;
+  children?: ReactNode;
+}
 
-export default function TambahCuti({ ...props }: Props) {
+export default function EditTipeCutiModalDisclosure({
+  rowData,
+  children,
+  ...props
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("tambah-tipe-cuti-modal", isOpen, onOpen, onClose);
+  useBackOnClose(
+    `edit-unit-kerja-modal-${rowData.id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -67,10 +77,11 @@ export default function TambahCuti({ ...props }: Props) {
         cuti_administratif: values.cuti_administratif.value,
         is_need_requirement: values.is_need_requirement.value,
         keterangan: values.keterangan,
+        _method: "patch",
       };
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/cuti`, payload)
+        .post(`/api/rski/dashboard/pengaturan/cuti/${rowData.id}`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -79,8 +90,8 @@ export default function TambahCuti({ ...props }: Props) {
               isClosable: true,
               position: "bottom-right",
             });
+            backOnClose();
             setRt(!rt);
-            resetForm();
           }
         })
         .catch((e) => {
@@ -101,18 +112,30 @@ export default function TambahCuti({ ...props }: Props) {
     },
   });
 
+  const formikRef = useRef(formik);
+
+  useEffect(() => {
+    formikRef.current.setFieldValue("nama", rowData.columnsFormat[0].value);
+    formikRef.current.setFieldValue("kuota", rowData.columnsFormat[2].value);
+    formikRef.current.setFieldValue("cuti_administratif", {
+      value: rowData.columnsFormat[3].value,
+      label: rowData.columnsFormat[3].value ? "Ya" : "Tidak",
+    });
+    formikRef.current.setFieldValue("is_need_requirement", {
+      value: rowData.columnsFormat[4].value,
+      label: rowData.columnsFormat[5].value ? "Ya" : "Tidak",
+    });
+    formikRef.current.setFieldValue(
+      "keterangan",
+      rowData.columnsFormat[5].value
+    );
+  }, [isOpen, rowData, formikRef]);
+
   return (
     <>
-      <Button
-        className="btn-ap clicky"
-        colorScheme="ap"
-        onClick={onOpen}
-        leftIcon={<Icon as={RiAddCircleFill} fontSize={iconSize} />}
-        pl={5}
-        {...props}
-      >
-        Tambah Tipe Cuti
-      </Button>
+      <Box onClick={onOpen} {...props}>
+        {children}
+      </Box>
 
       <Modal
         isOpen={isOpen}
@@ -122,19 +145,20 @@ export default function TambahCuti({ ...props }: Props) {
         }}
         initialFocusRef={initialRef}
         isCentered
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Tambah Tipe Cuti"
+              title="Edit Unit Kerja"
               onClose={() => {
                 formik.resetForm();
               }}
             />
           </ModalHeader>
           <ModalBody>
-            <form id="tambahUnitKerjaForm" onSubmit={formik.handleSubmit}>
+            <form id="editTipeCutiForm" onSubmit={formik.handleSubmit}>
               <FormControl mb={4} isInvalid={!!formik.errors.nama}>
                 <FormLabel>
                   Nama Cuti
@@ -252,16 +276,17 @@ export default function TambahCuti({ ...props }: Props) {
               </FormControl>
             </form>
           </ModalBody>
+
           <ModalFooter>
             <Button
               type="submit"
-              form="tambahUnitKerjaForm"
+              form="editTipeCutiForm"
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}
               isLoading={loading}
             >
-              Tambahkan
+              Simpan
             </Button>
           </ModalFooter>
         </ModalContent>
