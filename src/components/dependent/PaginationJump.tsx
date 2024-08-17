@@ -20,7 +20,6 @@ type Props = {
 };
 export default function PaginationJump({ page, setPage, pagination }: Props) {
   const [data, setData] = useState<number | undefined>(page);
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const validation = () => {
     if (
@@ -46,7 +45,7 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
 
   return (
     <>
-      <Menu isOpen={isOpen}>
+      <Menu>
         <MenuButton
           as={VStack}
           justify={"center"}
@@ -58,16 +57,15 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
           cursor={"pointer"}
           transition={"200ms"}
           px={2}
-          onClick={onOpen}
         >
           <Text fontWeight={600} mt={1}>
             {page}
           </Text>
         </MenuButton>
 
-        <MenuList minW={"243px"} maxW={"243px"} zIndex={99}>
+        <MenuList minW={"200px"} maxW={"200px"} zIndex={99}>
           <MenuGroup
-            title={`Terakhir : ${pagination?.meta?.last_page}`}
+            title={`Terakhir : ${pagination?.meta?.last_page || "-"}`}
             fontWeight={400}
           ></MenuGroup>
           <form id={"jumpToPageForm"} onSubmit={handleSubmit}>
@@ -92,7 +90,6 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
                 isDisabled={!validation()}
                 borderRadius={"0 0 8px 8px"}
                 w={"100%"}
-                onClick={onClose}
               >
                 Lompat
               </Button>
