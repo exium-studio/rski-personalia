@@ -4,6 +4,7 @@ const optionsAgama = [
   { value: 3, label: "Katolik" },
   { value: 4, label: "Budha" },
   { value: 5, label: "Hindu" },
+  { value: 6, label: "Konghucu" },
 ];
 
 const optionsHubunganKeluarga = [
