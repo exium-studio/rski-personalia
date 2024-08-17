@@ -22,7 +22,7 @@ import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import SelectJabatan from "../dependent/_Select/SelectJabatan";
-import SelectJenisKompetensi from "../dependent/_Select/SelectJenisKompetensi";
+import SelectStatusKaryawan from "../dependent/_Select/SelectStatusKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
@@ -61,20 +61,23 @@ export default function EditJenisPenilaianModalDisclosure({
     validationSchema: yup.object().shape({
       nama: yup.string().required("Harus diisi"),
       status_karyawan: yup.object().required("Harus diisi"),
-      jabatan_penilai: yup.number().required("Harus diisi"),
-      jabatan_dinilai: yup.number().required("Harus diisi"),
+      jabatan_penilai: yup.object().required("Harus diisi"),
+      jabatan_dinilai: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama: values.nama,
-        status_karyawan: values.status_karyawan.value,
+        status_karyawan_id: values.status_karyawan.value,
         jabatan_penilai: values.jabatan_penilai.value,
         jabatan_dinilai: values.jabatan_dinilai.value,
         _method: "patch",
       };
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/cuti/${rowData.id}`, payload)
+        .post(
+          `/api/rski/dashboard/perusahaan/jenis-penilaian/${rowData.id}`,
+          payload
+        )
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -112,7 +115,7 @@ export default function EditJenisPenilaianModalDisclosure({
       formikRef.current.setFieldValue("nama", rowData.columnsFormat[0]?.value);
       formikRef.current.setFieldValue("status_karyawan", {
         value: rowData.columnsFormat[2]?.value,
-        label: rowData.columnsFormat[2]?.value ? "Shift" : "Non-Shift",
+        label: rowData.columnsFormat[2]?.original_data?.label,
       });
       formikRef.current.setFieldValue("jabatan_penilai", {
         value: rowData.columnsFormat[3]?.original_data?.id,
@@ -145,7 +148,7 @@ export default function EditJenisPenilaianModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit Unit Kerja"
+              title="Edit Jenis Penilaian"
               onClose={() => {
                 formik.resetForm();
               }}
@@ -153,7 +156,7 @@ export default function EditJenisPenilaianModalDisclosure({
           </ModalHeader>
           <ModalBody>
             <form id="editJabatanForm" onSubmit={formik.handleSubmit}>
-              <FormControl mb={4} isInvalid={formik.errors.nama ? true : false}>
+              <FormControl mb={4} isInvalid={!!formik.errors.nama}>
                 <FormLabel>
                   Nama
                   <RequiredForm />
@@ -171,15 +174,12 @@ export default function EditJenisPenilaianModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.status_karyawan ? true : false}
-              >
+              <FormControl mb={4} isInvalid={!!formik.errors.status_karyawan}>
                 <FormLabel>
                   Status Kepegawaian
                   <RequiredForm />
                 </FormLabel>
-                <SelectJenisKompetensi
+                <SelectStatusKaryawan
                   name="status_karyawan"
                   onConfirm={(input) => {
                     formik.setFieldValue("status_karyawan", input);
@@ -192,10 +192,7 @@ export default function EditJenisPenilaianModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.jabatan_penilai ? true : false}
-              >
+              <FormControl mb={4} isInvalid={!!formik.errors.jabatan_penilai}>
                 <FormLabel>
                   Jabatan Penilai
                   <RequiredForm />
@@ -206,15 +203,14 @@ export default function EditJenisPenilaianModalDisclosure({
                     formik.setFieldValue("jabatan_penilai", input);
                   }}
                   inputValue={formik.values.jabatan_penilai}
+                  isError={!!formik.errors.jabatan_penilai}
                 />
                 <FormErrorMessage>
                   {formik.errors.jabatan_penilai as string}
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                isInvalid={formik.errors.jabatan_dinilai ? true : false}
-              >
+              <FormControl isInvalid={!!formik.errors.jabatan_dinilai}>
                 <FormLabel>
                   Jabatan Dinilai
                   <RequiredForm />
@@ -225,6 +221,7 @@ export default function EditJenisPenilaianModalDisclosure({
                     formik.setFieldValue("jabatan_dinilai", input);
                   }}
                   inputValue={formik.values.jabatan_dinilai}
+                  isError={!!formik.errors.jabatan_dinilai}
                 />
                 <FormErrorMessage>
                   {formik.errors.jabatan_dinilai as string}

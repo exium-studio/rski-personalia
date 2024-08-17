@@ -24,7 +24,7 @@ import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import SelectJabatan from "../dependent/_Select/SelectJabatan";
-import SelectJenisKompetensi from "../dependent/_Select/SelectJenisKompetensi";
+import SelectStatusKaryawan from "../dependent/_Select/SelectStatusKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
@@ -51,19 +51,19 @@ export default function TambahJenisPenilaian({ ...props }: Props) {
     validationSchema: yup.object().shape({
       nama: yup.string().required("Harus diisi"),
       status_karyawan: yup.object().required("Harus diisi"),
-      jabatan_penilai: yup.number().required("Harus diisi"),
-      jabatan_dinilai: yup.number().required("Harus diisi"),
+      jabatan_penilai: yup.object().required("Harus diisi"),
+      jabatan_dinilai: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama: values.nama,
-        status_karyawan: values.status_karyawan.value,
+        status_karyawan_id: values.status_karyawan.value,
         jabatan_penilai: values.jabatan_penilai.value,
         jabatan_dinilai: values.jabatan_dinilai.value,
       };
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/kompetensi`, payload)
+        .post(`/api/rski/dashboard/perusahaan/jenis-penilaian`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -127,7 +127,7 @@ export default function TambahJenisPenilaian({ ...props }: Props) {
           </ModalHeader>
           <ModalBody>
             <form id="tambahJabatanForm" onSubmit={formik.handleSubmit}>
-              <FormControl mb={4} isInvalid={formik.errors.nama ? true : false}>
+              <FormControl mb={4} isInvalid={!!formik.errors.nama}>
                 <FormLabel>
                   Nama
                   <RequiredForm />
@@ -145,15 +145,12 @@ export default function TambahJenisPenilaian({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.status_karyawan ? true : false}
-              >
+              <FormControl mb={4} isInvalid={!!formik.errors.status_karyawan}>
                 <FormLabel>
                   Status Kepegawaian
                   <RequiredForm />
                 </FormLabel>
-                <SelectJenisKompetensi
+                <SelectStatusKaryawan
                   name="status_karyawan"
                   onConfirm={(input) => {
                     formik.setFieldValue("status_karyawan", input);
@@ -166,10 +163,7 @@ export default function TambahJenisPenilaian({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.jabatan_penilai ? true : false}
-              >
+              <FormControl mb={4} isInvalid={!!formik.errors.jabatan_penilai}>
                 <FormLabel>
                   Jabatan Penilai
                   <RequiredForm />
@@ -180,15 +174,14 @@ export default function TambahJenisPenilaian({ ...props }: Props) {
                     formik.setFieldValue("jabatan_penilai", input);
                   }}
                   inputValue={formik.values.jabatan_penilai}
+                  isError={!!formik.errors.jabatan_penilai}
                 />
                 <FormErrorMessage>
                   {formik.errors.jabatan_penilai as string}
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                isInvalid={formik.errors.jabatan_dinilai ? true : false}
-              >
+              <FormControl isInvalid={!!formik.errors.jabatan_dinilai}>
                 <FormLabel>
                   Jabatan Dinilai
                   <RequiredForm />
@@ -199,6 +192,7 @@ export default function TambahJenisPenilaian({ ...props }: Props) {
                     formik.setFieldValue("jabatan_dinilai", input);
                   }}
                   inputValue={formik.values.jabatan_dinilai}
+                  isError={!!formik.errors.jabatan_dinilai}
                 />
                 <FormErrorMessage>
                   {formik.errors.jabatan_dinilai as string}

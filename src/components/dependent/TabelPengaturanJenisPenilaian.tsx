@@ -151,8 +151,10 @@ export default function TabelPengaturanJenisPenilaian({ filterConfig }: Props) {
         },
       },
       {
-        value: item.status_karyawan?.label,
+        original_data: item.status_karyawan,
+        value: item.status_karyawan?.id,
         td: <StatusKaryawanBadge data={item.status_karyawan} w={"120px"} />,
+        isNumeric: true,
         cProps: {
           justify: "center",
         },
