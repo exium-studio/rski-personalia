@@ -1,6 +1,9 @@
 import {
   Button,
   Center,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
   Modal,
   ModalBody,
   ModalContent,
@@ -30,6 +33,10 @@ import PerubahanDataRender from "./PerubahanDataRender";
 import Retry from "./Retry";
 import StatusApprovalBadge from "./StatusApprovalBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import RequiredForm from "../form/RequiredForm";
+import Textarea from "./input/Textarea";
 
 interface KonfirmasiProps {
   data: any;
@@ -48,32 +55,69 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
-  function verifikasi() {
-    setLoading(true);
-    req
-      .post(
-        `/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${data.id}`
-      )
-      .then((r) => {
-        if (r.status === 200) {
-          setRt(!rt);
-          backOnClose();
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      verifikasi: undefined as number | undefined,
+      alasan: "",
+    },
+    validationSchema: yup.object().shape({
+      verifikasi: yup.number().required("Harus diisi"),
+      alasan: yup.string().when("verifikasi", (verifikasi, schema) => {
+        if (typeof verifikasi === "number" && verifikasi === 0) {
+          return schema.required("Harus diisi");
         }
-      })
-      .catch((e) => {
-        console.log(e);
-        toast({
-          status: "error",
-          title:
-            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
-          position: "bottom-right",
-          isClosable: true,
+        return schema;
+      }),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      setLoading(true);
+
+      let payload;
+
+      const payload1 = {
+        verifikasi_disetujui: 1,
+      };
+      const payload2 = {
+        verifikasi_ditolak: 1,
+        alasan: values.alasan,
+      };
+      if (values.verifikasi === 1) {
+        payload = payload1;
+      } else {
+        payload = payload2;
+      }
+
+      console.log(payload);
+
+      req
+        .post(
+          `/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${data.id}`,
+          payload
+        )
+        .then((r) => {
+          if (r.status === 200) {
+            setRt(!rt);
+            backOnClose();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+            position: "bottom-right",
+            isClosable: true,
+          });
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }
+    },
+  });
+
+  console.log(formik.values);
 
   return (
     <>
@@ -98,14 +142,62 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
             <DisclosureHeader title={"Konfirmasi Permintaan"} />
           </ModalHeader>
           <ModalBody>
-            <SimpleGrid columns={[1, 2]} gap={2}>
-              <Button className="clicky" colorScheme="ap" variant={"outline"}>
-                Disetujui
-              </Button>
-              <Button className="clicky" colorScheme="red" variant={"outline"}>
-                Ditolak
-              </Button>
-            </SimpleGrid>
+            <form
+              id="verifikasiPermintaanPerubahanBerkasForm"
+              onSubmit={formik.handleSubmit}
+            >
+              <FormControl isInvalid={!!formik.errors.verifikasi}>
+                <FormLabel>
+                  Verifikasi
+                  <RequiredForm />
+                </FormLabel>
+                <SimpleGrid columns={[1, 2]} gap={2}>
+                  <Button
+                    w={"100%"}
+                    className="btn-outline clicky"
+                    colorScheme={formik.values.verifikasi === 1 ? "green" : ""}
+                    variant={formik.values.verifikasi === 1 ? "outline" : ""}
+                    onClick={() => {
+                      formik.setFieldValue("verifikasi", 1);
+                    }}
+                  >
+                    Disetujui
+                  </Button>
+                  <Button
+                    w={"100%"}
+                    className="btn-outline clicky"
+                    colorScheme={formik.values.verifikasi === 0 ? "red" : ""}
+                    variant={formik.values.verifikasi === 0 ? "outline" : ""}
+                    onClick={() => {
+                      formik.setFieldValue("verifikasi", 0);
+                    }}
+                  >
+                    Ditolak
+                  </Button>
+                </SimpleGrid>
+                <FormErrorMessage>
+                  {formik.errors.verifikasi as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mt={4} isInvalid={!!formik.errors.alasan}>
+                <FormLabel>
+                  Alasan
+                  <RequiredForm />
+                </FormLabel>
+                <Textarea
+                  name="alasan"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("alasan", input);
+                  }}
+                  inputValue={formik.values.alasan}
+                  isDisabled={formik.values.verifikasi !== 0}
+                />
+                <FormErrorMessage>
+                  {formik.errors.alasan as string}
+                </FormErrorMessage>
+              </FormControl>
+            </form>
           </ModalBody>
           <ModalFooter gap={2}>
             <Button
@@ -113,7 +205,8 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
               className="btn-ap clicky"
               colorScheme="ap"
               isLoading={loading}
-              onClick={verifikasi}
+              type="submit"
+              form="verifikasiPermintaanPerubahanDataForm"
             >
               Verifikasi
             </Button>

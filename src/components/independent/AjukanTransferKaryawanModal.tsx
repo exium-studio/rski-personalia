@@ -231,6 +231,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                       formik.setFieldValue("kategori_transfer", input);
                     }}
                     inputValue={formik.values.kategori_transfer}
+                    isError={!!formik.errors.kategori_transfer}
                   />
                   <FormErrorMessage>
                     {formik.errors.kategori_transfer as string}
@@ -249,7 +250,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                     }}
                     inputValue={formik.values.unit_kerja_tujuan}
                     placeholder="Pilih Unit Kerja Tujuan"
-                    withSearch
+                    isError={!!formik.errors.unit_kerja_tujuan}
                   />
                   <FormHelperText>
                     Kosongkan jika data sama seperti sebelumnya
@@ -268,7 +269,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                     }}
                     inputValue={formik.values.jabatan_tujuan}
                     placeholder="Pilih Jabatan Tujuan"
-                    withSearch
+                    isError={!!formik.errors.jabatan_tujuan}
                   />
                   <FormHelperText>
                     Kosongkan jika data sama seperti sebelumnya
@@ -290,6 +291,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                     }}
                     inputValue={formik.values.kelompok_gaji_tujuan}
                     placeholder="Pilih Kelompok Gaji Tujuan"
+                    isError={!!formik.errors.kelompok_gaji_tujuan}
                   />
                   <FormHelperText>
                     Kosongkan jika data sama seperti sebelumnya
@@ -308,6 +310,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                     }}
                     inputValue={formik.values.role_tujuan}
                     placeholder="Pilih Role Tujuan"
+                    isError={!!formik.errors.role_tujuan}
                   />
                   <FormHelperText>
                     Kosongkan jika data sama seperti sebelumnya
@@ -328,6 +331,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                       formik.setFieldValue("dokumen", input);
                     }}
                     inputValue={formik.values.dokumen}
+                    isError={!!formik.errors.dokumen}
                   />
                   <FormErrorMessage>
                     {formik.errors.dokumen as string}
