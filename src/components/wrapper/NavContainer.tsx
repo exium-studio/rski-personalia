@@ -21,15 +21,15 @@ import { useContentBgColor, useLightDarkColor } from "../../constant/colors";
 import navs from "../../constant/navs";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useGetUserData from "../../hooks/useGetUserData";
+import useLogout from "../../hooks/useLogout";
 import useScreenWidth from "../../lib/useScreenWidth";
 import Header from "../dependent/Header";
 import TopNavs from "../dependent/TopNavs";
 import ComponentSpinner from "../independent/ComponentSpinner";
 import CContainer from "./CContainer";
 import Container from "./Container";
-import useLogout from "../../hooks/useLogout";
 
-const NavMenu = ({ nav, i, active, topNavActive }: any) => {
+const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const timeoutRef = useRef<any>(null);
@@ -82,9 +82,9 @@ const NavMenu = ({ nav, i, active, topNavActive }: any) => {
         onMouseLeave={handleMouseLeave}
       />
 
-      <Portal>
+      <Portal containerRef={navsRef}>
         <MenuList
-          zIndex={20}
+          zIndex={99}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={() => {
             setIsOpen(false);
@@ -176,11 +176,14 @@ export default function NavContainer({
     }
   }, [allowed, userData?.permissions, navigate, logout]);
 
+  const navsRef = useRef(null);
+
   return (
-    <Container maxH={"100vh"} overflowY={"auto"}>
+    <Container maxH={"100vh"} overflowY={"clip"}>
       <HStack flex={1} align={"stretch"} gap={0}>
         {!noNavs && !smScreen && (
           <VStack
+            ref={navsRef}
             id="navs"
             p={4}
             justify={"space-between"}
@@ -191,6 +194,7 @@ export default function NavContainer({
             top={0}
             w={"72px"}
             flexShrink={0}
+            zIndex={20}
           >
             <VStack flex={1}>
               <Image src="/logo512.png" w={"40px"} mb={8} />
@@ -198,6 +202,7 @@ export default function NavContainer({
               {navs.map((nav, i) => (
                 <Box key={i} mt={nav.label === "Profil" ? "auto" : ""}>
                   <NavMenu
+                    containerRef={navsRef}
                     nav={nav}
                     i={i}
                     topNavActive={topNavActive}

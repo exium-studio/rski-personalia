@@ -411,6 +411,7 @@ button[aria-label="Close"] > svg {
 
 .rowHoverOnClick {
   transition: 200ms;
+  position: relative;
 }
 .rowHoverOnClick::after {
   content: "";
