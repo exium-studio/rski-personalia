@@ -42,7 +42,7 @@ interface KonfirmasiProps {
   data: any;
 }
 
-function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
+const KonfirmasiPermintaan = ({ data }: KonfirmasiProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
     `konfirmasi-permintaan-perubahan-data-${data.id}`,
@@ -122,9 +122,9 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
   return (
     <>
       <Button
-        className="clicky"
+        isDisabled={data.status_perubahan.id !== 1}
+        className="btn-ap clicky"
         colorScheme="ap"
-        variant={"ghost"}
         onClick={onOpen}
       >
         Verifikasi
@@ -217,7 +217,7 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
       </Modal>
     </>
   );
-}
+};
 
 export default function TabelPermintaanPerubahanData() {
   // Limit Config
@@ -274,7 +274,7 @@ export default function TabelPermintaanPerubahanData() {
       },
     },
     {
-      th: "",
+      th: "Verifikasi",
       props: {
         position: "sticky",
         right: 0,
