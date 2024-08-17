@@ -179,7 +179,11 @@ export default function NavContainer({
   const navsRef = useRef(null);
 
   return (
-    <Container maxH={"100vh"} overflowY={"clip"}>
+    <Container
+      maxH={"100vh"}
+      overflowY={"clip"}
+      border={"1px solid transparent"}
+    >
       <HStack flex={1} align={"stretch"} gap={0}>
         {!noNavs && !smScreen && (
           <VStack
