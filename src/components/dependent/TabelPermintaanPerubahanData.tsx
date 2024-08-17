@@ -55,6 +55,8 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
+  const [verifikasi, setVerifikasi] = useState<number | undefined>(undefined);
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
@@ -63,12 +65,8 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
     },
     validationSchema: yup.object().shape({
       verifikasi: yup.number().required("Harus diisi"),
-      alasan: yup.string().when("verifikasi", (verifikasi, schema) => {
-        if (typeof verifikasi === "number" && verifikasi === 0) {
-          return schema.required("Harus diisi");
-        }
-        return schema;
-      }),
+      alasan:
+        verifikasi === 0 ? yup.string().required("Harus diisi") : yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
       setLoading(true);
@@ -88,8 +86,6 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
         payload = payload2;
       }
 
-      console.log(payload);
-
       req
         .post(
           `/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${data.id}`,
@@ -97,6 +93,12 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
         )
         .then((r) => {
           if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              position: "bottom-right",
+              isClosable: true,
+            });
             setRt(!rt);
             backOnClose();
           }
@@ -116,8 +118,6 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
         });
     },
   });
-
-  console.log(formik.values);
 
   return (
     <>
@@ -143,7 +143,7 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
           </ModalHeader>
           <ModalBody>
             <form
-              id="verifikasiPermintaanPerubahanBerkasForm"
+              id="verifikasiPermintaanPerubahanDataForm"
               onSubmit={formik.handleSubmit}
             >
               <FormControl isInvalid={!!formik.errors.verifikasi}>
@@ -159,6 +159,7 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
                     variant={formik.values.verifikasi === 1 ? "outline" : ""}
                     onClick={() => {
                       formik.setFieldValue("verifikasi", 1);
+                      setVerifikasi(1);
                     }}
                   >
                     Disetujui
@@ -170,6 +171,7 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
                     variant={formik.values.verifikasi === 0 ? "outline" : ""}
                     onClick={() => {
                       formik.setFieldValue("verifikasi", 0);
+                      setVerifikasi(0);
                     }}
                   >
                     Ditolak
