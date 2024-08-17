@@ -1,191 +1,106 @@
 import { Box, Button, Checkbox, HStack, Text, Wrap } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import Retry from "../../components/dependent/Retry";
-import TabelKeizinan from "../../components/dependent/TabelPengaturanKeizinan";
+import TabelPengaturanKeizinan from "../../components/dependent/TabelPengaturanKeizinan";
 import NoData from "../../components/independent/NoData";
 import Skeleton from "../../components/independent/Skeleton";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 interface Props {
   role_id: number;
-  role_name: string;
 }
 
-export default function PengaturanKeizinan({ role_id, role_name }: Props) {
-  //! DEBUG
-  const dummy = {
-    User: {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-    "Data Karyawan": {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-    Role: {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-    Permission: {
-      view: null,
-      create: true,
-      edit: true,
-      delete: true,
-      import: null,
-      export: null,
-      reset: null,
-    },
-    "Unit Kerja": {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-    Jabatan: {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-    Kompetensi: {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-    "Kelompok Gaji": {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-    Premi: {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-    TER21: {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-    "Jadwal Penggajian": {
-      view: null,
-      create: true,
-      edit: null,
-      delete: null,
-      import: null,
-      export: null,
-      reset: true,
-    },
-    THR: {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: null,
-      export: null,
-      reset: null,
-    },
-    Shift: {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-    "Hari Libur": {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-    Cuti: {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      import: true,
-      export: true,
-      reset: null,
-    },
-  };
-  //! DEBUG
-
+export default function PengaturanKeizinan({ role_id }: Props) {
   const { error, loading, data, retry } = useDataState<any>({
-    initialData: dummy,
-    url: "",
+    initialData: undefined,
+    url: `/api/rski/dashboard/pengaturan/role/${role_id}`,
     dependencies: [],
   });
-  const [semuaIzin, setSemuaIzin] = useState<boolean>(false);
-  const [toggleSemuaIzin, setToggleSemuaIzin] = useState<boolean>(false);
+
+  const [totalPermissions, setTotalPermissions] = useState<number>(0);
+  const [totalPermissionsAllowed, setTotalPermissionsAllowed] =
+    useState<number>(0);
+  const [allPermissions, setAllPermissions] = useState<boolean>(false);
   const [simpanLoading, setSimpanLoading] = useState<boolean>(false);
   const [simpanTrigger, setSimpanTrigger] = useState<boolean | null>(null);
 
-  const dataToArray = Object.keys(data).map((key) => ({
-    group: key,
-    permissions: data[key],
-  }));
-  const dataToArrayRef = useRef(dataToArray);
+  useEffect(() => {
+    let tp = 0;
+    let tpa = 0;
 
-  const checkAllPermissionsTrue = (permissionsArray: any): boolean => {
-    return permissionsArray.every((item: any) => {
-      return Object.values(item.permissions).every(
-        (permission) => permission === null || permission === true
-      );
+    if (data) {
+      data?.initialValues?.forEach((item: any) => {
+        Object.keys(item?.permissions)?.forEach((permissionKey) => {
+          if (permissionKey !== null) {
+            tp++;
+          }
+          if (permissionKey) {
+            tpa++;
+          }
+        });
+      });
+    }
+
+    setTotalPermissions(tp);
+    setTotalPermissionsAllowed(tpa);
+
+    if (tp === tpa) {
+      setAllPermissions(true);
+    }
+  }, [data]);
+
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: { permissions: data },
+    validationSchema: yup
+      .object()
+      .shape({ permissions: yup.array().required("Harus diisi") }),
+    onSubmit: (values, { resetForm }) => {
+      console.log(values);
+    },
+  });
+
+  const formikRef = useRef(formik);
+  useEffect(() => {
+    if (data?.initialValues) {
+      formikRef.current.setFieldValue("permissions", data?.initialValues);
+    }
+  }, [data, formikRef]);
+
+  const permissionsSetter = (state: boolean) => {
+    const newPermissionsData = formik.values.permissions.map((item: any) => {
+      let newPermissions = {};
+      Object.keys(item.permissions).forEach((permKey) => {
+        if (item.permissions[permKey] !== null) {
+          //@ts-ignore
+          newPermissions[permKey] = state;
+        } else {
+          //@ts-ignore
+          newPermissions[permKey] = null;
+        }
+      });
+
+      return {
+        name: item.name,
+        permissions: newPermissions,
+      };
     });
+
+    return newPermissionsData;
   };
 
-  useEffect(() => {
-    //TODO get permission by rolew id
-
-    if (checkAllPermissionsTrue(dataToArrayRef.current)) {
-      setSemuaIzin(true);
+  function toggleAllPermissions() {
+    if (!allPermissions) {
+      formik.setFieldValue("permissions", permissionsSetter(true));
+    } else {
+      formik.setFieldValue("permissions", permissionsSetter(false));
     }
-  }, [role_id]);
+  }
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -204,27 +119,23 @@ export default function PengaturanKeizinan({ role_id, role_name }: Props) {
         <HStack gap={8}>
           <HStack>
             <Text>Role :</Text>
-            <Text fontWeight={600}>{role_name}</Text>
+            <Text fontWeight={600}>{data?.name}</Text>
           </HStack>
 
-          <HStack
-            onClick={() => {
-              setToggleSemuaIzin(!toggleSemuaIzin);
-            }}
-          >
+          <Box onClick={toggleAllPermissions}>
             <Checkbox
               colorScheme="ap"
-              onChange={() => {
-                setSemuaIzin(!semuaIzin);
-              }} // Mengubah nilai toggleSemuaIzin
-              onClick={(e) => e.stopPropagation()} // Menghentikan propagasi event agar tidak memicu perubahan checkbox
-              isChecked={semuaIzin} // Menggunakan toggleSemuaIzin sebagai nilai isChecked
+              onChange={(e) => {
+                setAllPermissions(e.target.checked);
+              }}
+              isChecked={allPermissions}
+              // onClick={(e) => e.stopPropagation()}
             >
               <Text fontWeight={500} mt={"-3px"}>
                 Semua izin
               </Text>
             </Checkbox>
-          </HStack>
+          </Box>
         </HStack>
 
         <Button
@@ -245,6 +156,7 @@ export default function PengaturanKeizinan({ role_id, role_name }: Props) {
           <Retry loading={loading} retry={retry} />
         </Box>
       )}
+
       {!error && (
         <>
           {loading && (
@@ -252,19 +164,30 @@ export default function PengaturanKeizinan({ role_id, role_name }: Props) {
               <Skeleton flex={1} />
             </>
           )}
+
           {!loading && (
             <>
-              {(!data || (data && data.length === 0)) && <NoData />}
-              {(data || (data && data.length > 0)) && (
+              {(!data ||
+                (data && formik.values?.permissions?.length === 0)) && (
+                <NoData />
+              )}
+
+              {(data || (data && formik.values?.permissions?.length > 0)) && (
                 <>
-                  <TabelKeizinan
-                    data={dataToArray}
-                    toggleSemuaIzin={toggleSemuaIzin}
-                    semuaIzin={semuaIzin}
-                    setSemuaIzin={setSemuaIzin}
-                    simpanTrigger={simpanTrigger}
-                    setSimpanLoading={setSimpanLoading}
-                    checkAllPermissionsTrue={checkAllPermissionsTrue}
+                  <TabelPengaturanKeizinan
+                    data={formik.values?.permissions}
+                    totalPermissions={totalPermissions}
+                    setTotalPermissions={setTotalPermissions}
+                    totalPermissionsAllowed={totalPermissionsAllowed}
+                    setTotalPermissionsAllowed={setTotalPermissionsAllowed}
+                    setAllPermissions={setAllPermissions}
+                    formik={formik}
+                    // toggleSemuaIzin={toggleSemuaIzin}
+                    // semuaIzin={semuaIzin}
+                    // setSemuaIzin={setSemuaIzin}
+                    // simpanTrigger={simpanTrigger}
+                    // setSimpanLoading={setSimpanLoading}
+                    // checkAllPermissionsTrue={checkAllPermissionsTrue}
                   />
                 </>
               )}

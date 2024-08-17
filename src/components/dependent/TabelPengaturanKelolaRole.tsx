@@ -1,21 +1,19 @@
 import { Center, Icon, MenuItem, Text, useDisclosure } from "@chakra-ui/react";
-import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
-import { useState } from "react";
+import { RiEditLine, RiHistoryLine } from "@remixicon/react";
 import { dummyKelolaRole } from "../../const/dummy";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
+import EditRoleModalDisclosure from "../independent/EditUnitKerjaModalDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
-import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 import DetailKelolaRoleModal from "./DetailKelolaRoleModal";
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
 import TabelElipsisText from "./TabelElipsisText";
-import EditRoleModalDisclosure from "../independent/EditUnitKerjaModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -47,29 +45,27 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
         </RestoreDataPengaturanModalDisclosure>
       );
     },
-    "divider",
-    (rowData: any) => {
-      return (
-        <DeleteDataPengaturanModalDisclosure
-          id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/role`}
-        >
-          <MenuItem
-            fontWeight={500}
-            isDisabled={rowData.columnsFormat[1]?.value}
-          >
-            <Text color={"red.400"}>Delete</Text>
-            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-          </MenuItem>
-        </DeleteDataPengaturanModalDisclosure>
-      );
-    },
+    // "divider",
+    // (rowData: any) => {
+    //   return (
+    //     <DeleteDataPengaturanModalDisclosure
+    //       id={rowData.id}
+    //       url={`/api/rski/dashboard/pengaturan/role`}
+    //     >
+    //       <MenuItem
+    //         fontWeight={500}
+    //         isDisabled={rowData.columnsFormat[1]?.value}
+    //       >
+    //         <Text color={"red.400"}>Delete</Text>
+    //         <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
+    //       </MenuItem>
+    //     </DeleteDataPengaturanModalDisclosure>
+    //   );
+    // },
   ];
 
   // Disclosure Config
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const [role, setRole] = useState<any>(undefined);
 
   const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: dummyKelolaRole,
@@ -141,6 +137,8 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
     ],
   }));
 
+  const role_id = parseInt(localStorage.getItem("role_id") as string);
+
   return (
     <>
       {error && (
@@ -177,7 +175,7 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
                           formattedHeader={formattedHeader}
                           formattedData={formattedData}
                           onRowClick={(rowData) => {
-                            setRole(rowData);
+                            localStorage.setItem("role_id", rowData.id);
                             onOpen();
                           }}
                           rowOptions={rowOptions}
@@ -195,8 +193,7 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
 
                       <DetailKelolaRoleModal
                         id="atur-keizinan-modal"
-                        role_id={role?.id}
-                        role_name={role?.columnsFormat[0]?.value}
+                        role_id={role_id}
                         isOpen={isOpen}
                         onOpen={onOpen}
                         onClose={onClose}

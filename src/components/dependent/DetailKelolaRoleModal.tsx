@@ -6,7 +6,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import PengaturanKeizinan from "../../pages/Pengaturan/PengaturanKeizinan";
@@ -16,7 +16,6 @@ import DisclosureHeader from "./DisclosureHeader";
 interface Props extends BoxProps {
   id?: string;
   role_id: number;
-  role_name: string;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -24,20 +23,11 @@ interface Props extends BoxProps {
 export default function DetailKelolaRoleModal({
   id,
   role_id,
-  role_name,
   isOpen,
   onOpen,
   onClose,
   ...props
 }: Props) {
-  useEffect(() => {
-    if (id && isOpen) {
-      if (!role_id) {
-        backOnClose();
-      }
-    }
-  }, [id, role_id, isOpen]);
-
   useBackOnClose(
     id || `detail-kelola-role-modal-${role_id}`,
     isOpen,
@@ -72,7 +62,7 @@ export default function DetailKelolaRoleModal({
             flex={1}
             pb={6}
           >
-            <PengaturanKeizinan role_id={role_id} role_name={role_name} />
+            <PengaturanKeizinan role_id={role_id} />
           </CContainer>
         </ModalBody>
       </ModalContent>
