@@ -164,19 +164,24 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
         td: item.jenis_penilaian?.nama,
       },
       {
-        original_data: item.status_karaywan,
-        value: item.status_karaywan?.id,
-        td: <StatusKaryawanBadge data={item?.status_karaywan} />,
+        original_data: item.jenis_penilaian?.status_karyawans,
+        value: item.jenis_penilaian?.status_karyawans?.id,
+        td: (
+          <StatusKaryawanBadge
+            data={item.jenis_penilaian?.status_karyawans}
+            w={"120px"}
+          />
+        ),
       },
       {
-        original_data: item.jabatan_penilai,
-        value: item.jabatan_penilai?.nama_jabatan,
-        td: item.jabatan_penilai?.nama_jabatan,
+        original_data: item.jenis_penilaians?.jabatan_penilai,
+        value: item.jenis_penilaian?.jabatan_penilais?.nama_jabatan,
+        td: item.jenis_penilaian?.jabatan_penilais?.nama_jabatan,
       },
       {
-        original_data: item.jabatan_dinilai,
-        value: item.jabatan_dinilai?.nama_jabatan,
-        td: item.jabatan_dinilai?.nama_jabatan,
+        original_data: item.jenis_penilaian?.jabatan_dinilai,
+        value: item.jenis_penilaian?.jabatan_dinilais?.nama_jabatan,
+        td: item.jenis_penilaian?.jabatan_dinilais?.nama_jabatan,
       },
     ],
   }));

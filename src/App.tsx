@@ -392,7 +392,7 @@ export const App = () => {
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pengaturan - Pertanyaan Penilaian"
+                title="Pengaturan - Kuisioner Penilaian"
               >
                 <PengaturanContainer activeGroup={1} active={5}>
                   <PengaturanKuisioner />
