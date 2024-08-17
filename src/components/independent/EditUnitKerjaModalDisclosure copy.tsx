@@ -1,10 +1,10 @@
 import {
+  Box,
+  BoxProps,
   Button,
-  ButtonProps,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Icon,
   Modal,
   ModalBody,
   ModalContent,
@@ -14,25 +14,35 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import req from "../../constant/req";
-import { iconSize } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
-import backOnClose from "../../lib/backOnCloseOld";
-import useBackOnClose from "../../lib/useBackOnCloseOld";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import backOnClose from "../../lib/backOnClose";
+import SelectJenisKaryawan from "../dependent/_Select/SelectJenisKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
-import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
 
-interface Props extends ButtonProps {}
+interface Props extends BoxProps {
+  rowData: any;
+  children?: ReactNode;
+}
 
-export default function TambahRole({ ...props }: Props) {
+export default function EditUnitKerjaModalDisclosure({
+  rowData,
+  children,
+  ...props
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(isOpen, onClose);
+  useBackOnClose(
+    `edit-unit-kerja-modal-${rowData.id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,19 +51,27 @@ export default function TambahRole({ ...props }: Props) {
 
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { name: "", deskripsi: "" },
+    initialValues: {
+      nama_unit: undefined as any,
+      jenis_karyawan: undefined as any,
+    },
     validationSchema: yup.object().shape({
-      name: yup.string().required("Harus diisi"),
-      deskripsi: yup.string().required("Harus diisi"),
+      nama_unit: yup.string().required("Harus diisi"),
+      jenis_karyawan: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        name: values.name,
-        deskripsi: values.deskripsi,
+        nama_unit: values.nama_unit,
+        jenis_karyawan: values.jenis_karyawan.value,
+        _method: "patch",
       };
+      console.log(payload);
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/role`, payload)
+        .post(
+          `/api/rski/dashboard/pengaturan/unit-kerja/${rowData.id}`,
+          payload
+        )
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -62,8 +80,8 @@ export default function TambahRole({ ...props }: Props) {
               isClosable: true,
               position: "bottom-right",
             });
+            backOnClose();
             setRt(!rt);
-            resetForm();
           }
         })
         .catch((e) => {
@@ -84,81 +102,94 @@ export default function TambahRole({ ...props }: Props) {
     },
   });
 
+  const formikRef = useRef(formik);
+
+  useEffect(() => {
+    formikRef.current.setFieldValue(
+      "nama_unit",
+      rowData.columnsFormat[0].value
+    );
+    formikRef.current.setFieldValue("jenis_karyawan", {
+      value: rowData.columnsFormat[2].value,
+      label: rowData.columnsFormat[2].value ? "Shift" : "Non-Shift",
+    });
+  }, [isOpen, rowData, formikRef]);
+
   return (
     <>
-      <Button
-        className="btn-ap clicky"
-        colorScheme="ap"
-        onClick={onOpen}
-        leftIcon={<Icon as={RiAddCircleFill} fontSize={iconSize} />}
-        pl={5}
-        {...props}
-      >
-        Tambah Role
-      </Button>
+      <Box onClick={onOpen} {...props}>
+        {children}
+      </Box>
 
       <Modal
         isOpen={isOpen}
         onClose={() => {
-          backOnClose(onClose);
+          backOnClose();
           formik.resetForm();
         }}
         initialFocusRef={initialRef}
         isCentered
+        blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Tambah Role"
+              title="Edit Unit Kerja"
               onClose={() => {
                 formik.resetForm();
               }}
             />
           </ModalHeader>
           <ModalBody>
-            <form id="tambahRoleForm" onSubmit={formik.handleSubmit}>
-              <FormControl mb={4} isInvalid={formik.errors.name ? true : false}>
+            <form id="editUnitKerjaForm" onSubmit={formik.handleSubmit}>
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.nama_unit ? true : false}
+              >
                 <FormLabel>
-                  Nama Role
+                  Nama Unit
                   <RequiredForm />
                 </FormLabel>
                 <StringInput
-                  name="name"
+                  name="nama_unit"
                   placeholder="Human Resource"
                   onChangeSetter={(input) => {
-                    formik.setFieldValue("name", input);
+                    formik.setFieldValue("nama_unit", input);
                   }}
-                  inputValue={formik.values.name}
+                  inputValue={formik.values.nama_unit}
                 />
                 <FormErrorMessage>
-                  {formik.errors.name as string}
+                  {formik.errors.nama_unit as string}
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={formik.errors.deskripsi ? true : false}>
+              <FormControl
+                isInvalid={formik.errors.jenis_karyawan ? true : false}
+              >
                 <FormLabel>
-                  Deskripsi
+                  Jenis Pegawai
                   <RequiredForm />
                 </FormLabel>
-                <Textarea
-                  name="deskripsi"
-                  placeholder="Diperuntukan untuk jabatan HR"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("deskripsi", input);
+                <SelectJenisKaryawan
+                  name="jenis_karyawan"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("jenis_karyawan", input);
                   }}
-                  inputValue={formik.values.deskripsi}
+                  inputValue={formik.values.jenis_karyawan}
                 />
+
                 <FormErrorMessage>
-                  {formik.errors.deskripsi as string}
+                  {formik.errors.jenis_karyawan as string}
                 </FormErrorMessage>
               </FormControl>
             </form>
           </ModalBody>
+
           <ModalFooter>
             <Button
               type="submit"
-              form="tambahRoleForm"
+              form="editUnitKerjaForm"
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}

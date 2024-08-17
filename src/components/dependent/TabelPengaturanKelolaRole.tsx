@@ -13,6 +13,9 @@ import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisc
 import DetailKelolaRoleModal from "./DetailKelolaRoleModal";
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
+import StatusDihapus from "./StatusDihapus";
+import TabelElipsisText from "./TabelElipsisText";
+import EditRoleModalDisclosure from "../independent/EditUnitKerjaModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -23,17 +26,19 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <MenuItem>
-          <Text>Edit</Text>
-          <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-        </MenuItem>
+        <EditRoleModalDisclosure rowData={rowData}>
+          <MenuItem>
+            <Text>Edit</Text>
+            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </EditRoleModalDisclosure>
       );
     },
     (rowData: any) => {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/kelompok-gaji/restore/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/role/restore`}
         >
           <MenuItem isDisabled={!rowData.columnsFormat[1]?.value}>
             <Text>Restore</Text>
@@ -47,7 +52,7 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/kelompok-gaji/${rowData.id}`}
+          url={`/api/rski/dashboard/pengaturan/role`}
         >
           <MenuItem
             fontWeight={500}
@@ -95,6 +100,13 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
       },
     },
     {
+      th: "Status Dihapus",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
       th: "Deskripsi",
       isSortable: true,
     },
@@ -115,8 +127,16 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
         },
       },
       {
+        value: item.deleted_at,
+        td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
+        isDate: true,
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
         value: item.deskripsi,
-        td: item.deskripsi,
+        td: <TabelElipsisText data={item.deskripsi} />,
       },
     ],
   }));

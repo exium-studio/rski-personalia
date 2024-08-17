@@ -21,9 +21,9 @@ import req from "../../constant/req";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import SelectJenisKaryawan from "../dependent/_Select/SelectJenisKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
+import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
 
 interface Props extends BoxProps {
@@ -31,7 +31,7 @@ interface Props extends BoxProps {
   children?: ReactNode;
 }
 
-export default function EditUnitKerjaModalDisclosure({
+export default function EditRoleModalDisclosure({
   rowData,
   children,
   ...props
@@ -52,26 +52,23 @@ export default function EditUnitKerjaModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama_unit: undefined as any,
-      jenis_karyawan: undefined as any,
+      name: "",
+      deskripsi: "",
     },
     validationSchema: yup.object().shape({
-      nama_unit: yup.string().required("Harus diisi"),
-      jenis_karyawan: yup.object().required("Harus diisi"),
+      name: yup.string().required("Harus diisi"),
+      deskripsi: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        nama_unit: values.nama_unit,
-        jenis_karyawan: values.jenis_karyawan.value,
+        name: values.name,
+        deskripsi: values.deskripsi,
         _method: "patch",
       };
       console.log(payload);
       setLoading(true);
       req
-        .post(
-          `/api/rski/dashboard/pengaturan/unit-kerja/${rowData.id}`,
-          payload
-        )
+        .post(`/api/rski/dashboard/pengaturan/role/${rowData.id}`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -105,14 +102,11 @@ export default function EditUnitKerjaModalDisclosure({
   const formikRef = useRef(formik);
 
   useEffect(() => {
+    formikRef.current.setFieldValue("name", rowData.columnsFormat[0].value);
     formikRef.current.setFieldValue(
-      "nama_unit",
-      rowData.columnsFormat[0].value
+      "deskripsi",
+      rowData.columnsFormat[2].value
     );
-    formikRef.current.setFieldValue("jenis_karyawan", {
-      value: rowData.columnsFormat[2].value,
-      label: rowData.columnsFormat[2].value ? "Shift" : "Non-Shift",
-    });
   }, [isOpen, rowData, formikRef]);
 
   return (
@@ -142,45 +136,40 @@ export default function EditUnitKerjaModalDisclosure({
             />
           </ModalHeader>
           <ModalBody>
-            <form id="editUnitKerjaForm" onSubmit={formik.handleSubmit}>
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.nama_unit ? true : false}
-              >
+            <form id="editRoleForm" onSubmit={formik.handleSubmit}>
+              <FormControl mb={4} isInvalid={formik.errors.name ? true : false}>
                 <FormLabel>
-                  Nama Unit
+                  Nama Role
                   <RequiredForm />
                 </FormLabel>
                 <StringInput
-                  name="nama_unit"
-                  placeholder="Human Resource"
+                  name="name"
+                  placeholder="Kepala Ruang"
                   onChangeSetter={(input) => {
-                    formik.setFieldValue("nama_unit", input);
+                    formik.setFieldValue("name", input);
                   }}
-                  inputValue={formik.values.nama_unit}
+                  inputValue={formik.values.name}
                 />
                 <FormErrorMessage>
-                  {formik.errors.nama_unit as string}
+                  {formik.errors.name as string}
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                isInvalid={formik.errors.jenis_karyawan ? true : false}
-              >
+              <FormControl isInvalid={formik.errors.deskripsi ? true : false}>
                 <FormLabel>
-                  Jenis Pegawai
+                  Deskripsi
                   <RequiredForm />
                 </FormLabel>
-                <SelectJenisKaryawan
-                  name="jenis_karyawan"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("jenis_karyawan", input);
+                <Textarea
+                  name="deskripsi"
+                  placeholder="Diperuntukan untuk jabatan HR"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("deskripsi", input);
                   }}
-                  inputValue={formik.values.jenis_karyawan}
+                  inputValue={formik.values.deskripsi}
                 />
-
                 <FormErrorMessage>
-                  {formik.errors.jenis_karyawan as string}
+                  {formik.errors.deskripsi as string}
                 </FormErrorMessage>
               </FormControl>
             </form>
@@ -189,7 +178,7 @@ export default function EditUnitKerjaModalDisclosure({
           <ModalFooter>
             <Button
               type="submit"
-              form="editUnitKerjaForm"
+              form="editRoleForm"
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}
