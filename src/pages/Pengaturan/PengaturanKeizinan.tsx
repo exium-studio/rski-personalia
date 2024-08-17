@@ -152,42 +152,6 @@ export default function PengaturanKeizinan({ role_id }: Props) {
       overflowY={"auto"}
       className="scrollY"
     >
-      <Wrap justify={"space-between"} mb={responsiveSpacing}>
-        <HStack gap={8}>
-          <HStack>
-            <Text>Role :</Text>
-            <Text fontWeight={600}>{data?.name}</Text>
-          </HStack>
-
-          <Box onClick={toggleAllPermissions}>
-            <Checkbox
-              colorScheme="ap"
-              onChange={(e) => {
-                setAllPermissions(e.target.checked);
-              }}
-              isChecked={allPermissions}
-              // onClick={(e) => e.stopPropagation()}
-            >
-              <Text fontWeight={500} mt={"-3px"}>
-                Semua izin
-              </Text>
-            </Checkbox>
-          </Box>
-        </HStack>
-
-        <Button
-          colorScheme="ap"
-          className="btn-ap clicky"
-          minW={"120px"}
-          isLoading={simpanLoading}
-          onClick={() => {
-            formik.submitForm();
-          }}
-        >
-          Simpan
-        </Button>
-      </Wrap>
-
       {error && (
         <Box my={"auto"}>
           <Retry loading={loading} retry={retry} />
@@ -198,6 +162,11 @@ export default function PengaturanKeizinan({ role_id }: Props) {
         <>
           {loading && (
             <>
+              <HStack mb={responsiveSpacing}>
+                <Skeleton w={"120px"} />
+                <Skeleton w={"120px"} />
+                <Skeleton w={"120px"} ml={"auto"} />
+              </HStack>
               <Skeleton flex={1} />
             </>
           )}
@@ -211,6 +180,42 @@ export default function PengaturanKeizinan({ role_id }: Props) {
 
               {(data || (data && formik.values?.permissions?.length > 0)) && (
                 <>
+                  <Wrap justify={"space-between"} mb={responsiveSpacing}>
+                    <HStack gap={8}>
+                      <HStack>
+                        <Text>Role :</Text>
+                        <Text fontWeight={600}>{data?.name}</Text>
+                      </HStack>
+
+                      <Box onClick={toggleAllPermissions}>
+                        <Checkbox
+                          colorScheme="ap"
+                          onChange={(e) => {
+                            setAllPermissions(e.target.checked);
+                          }}
+                          isChecked={allPermissions}
+                          // onClick={(e) => e.stopPropagation()}
+                        >
+                          <Text fontWeight={500} mt={"-3px"}>
+                            Semua izin
+                          </Text>
+                        </Checkbox>
+                      </Box>
+                    </HStack>
+
+                    <Button
+                      colorScheme="ap"
+                      className="btn-ap clicky"
+                      minW={"120px"}
+                      isLoading={simpanLoading}
+                      onClick={() => {
+                        formik.submitForm();
+                      }}
+                    >
+                      Simpan
+                    </Button>
+                  </Wrap>
+
                   <TabelPengaturanKeizinan
                     data={formik.values?.permissions}
                     totalPermissions={totalPermissions}
