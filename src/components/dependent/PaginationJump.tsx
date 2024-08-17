@@ -5,6 +5,7 @@ import {
   Menu,
   MenuButton,
   MenuGroup,
+  MenuItem,
   MenuList,
   Text,
   useDisclosure,
@@ -81,18 +82,18 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
                 borderRight={"none !important"}
                 textAlign={"center"}
               />
-              <Button
-                variant={"ghost"}
-                colorScheme="ap"
-                // className="btn-solid"
+              <MenuItem
+                as={Button}
+                justifyContent={"center"}
                 type="submit"
                 form="jumpToPageForm"
                 isDisabled={!validation()}
                 borderRadius={"0 0 8px 8px"}
                 w={"100%"}
+                color={"p.500"}
               >
                 Lompat
-              </Button>
+              </MenuItem>
               <FormErrorMessage
                 px={3}
                 pb={2}
