@@ -13,6 +13,7 @@ import {
   RiLockLine,
   RiMapPinLine,
   RiQuestionLine,
+  RiQuestionMark,
   RiUserSettingsLine,
   RiVerifiedBadgeLine,
   RiWalletLine,
@@ -60,10 +61,10 @@ const pengaturanNavs = [
       {
         icon: RiQuestionLine,
         label: "Jenis Penilaian",
-        link: "/pengaturan/karyawan/kuisioner",
+        link: "/pengaturan/karyawan/jenis-penilaian",
       },
       {
-        icon: RiQuestionLine,
+        icon: RiQuestionMark,
         label: "Pertanyaan Penilaian",
         link: "/pengaturan/karyawan/kuisioner",
       },

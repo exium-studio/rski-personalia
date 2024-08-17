@@ -3,7 +3,7 @@ import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
 import { Interface__SelectOption } from "../../constant/interfaces";
 import { iconSize } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
-import formatNumber from "../../lib/formatNumber";
+import EditJenisPenilaianModalDisclosure from "../independent/EditJenisPenilaianModalDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
@@ -13,34 +13,32 @@ import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisc
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
-import TabelElipsisText from "./TabelElipsisText";
-import EditTipeCutiModalDisclosure from "../independent/EditTipeCutiModalDisclosure";
-import BooleanBadge from "./BooleanBadge";
+import StatusKaryawanBadge from "./StatusKaryawanBadge";
 
 interface Props {
   filterConfig?: any;
 }
 
-export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
+export default function TabelPengaturanJenisPenilaian({ filterConfig }: Props) {
   // SX
 
   // Row Options Config
   const rowOptions = [
     (rowData: any) => {
       return (
-        <EditTipeCutiModalDisclosure rowData={rowData}>
+        <EditJenisPenilaianModalDisclosure rowData={rowData}>
           <MenuItem>
             <Text>Edit</Text>
             <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
           </MenuItem>
-        </EditTipeCutiModalDisclosure>
+        </EditJenisPenilaianModalDisclosure>
       );
     },
     (rowData: any) => {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url="/api/rski/dashboard/pengaturan/cuti/restore"
+          url="/api/rski/dashboard/perusahaan/jenis-penilaian/restore"
         >
           <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
             <Text>Restore</Text>
@@ -54,7 +52,7 @@ export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url="/api/rski/dashboard/pengaturan/cuti"
+          url="/api/rski/dashboard/perusahaan/jenis-penilaian"
         >
           <MenuItem
             fontWeight={500}
@@ -70,7 +68,7 @@ export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
 
   const { error, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
-    url: `/api/rski/dashboard/pengaturan/cuti`,
+    url: `/api/rski/dashboard/perusahaan/jenis-penilaian`,
     dependencies: [],
   });
 
@@ -114,28 +112,19 @@ export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
       },
     },
     {
-      th: "Kuota per Tahun",
+      th: "Status Kepegawaian",
       isSortable: true,
       cProps: {
         justify: "center",
       },
     },
     {
-      th: "Dihitung Sebagai Hadir",
+      th: "Jabatan Penilai",
       isSortable: true,
-      cProps: {
-        justify: "center",
-      },
     },
     {
-      th: "Perlu Syarat",
+      th: "Jabatan Dinilai",
       isSortable: true,
-      cProps: {
-        justify: "center",
-      },
-    },
-    {
-      th: "Keterangan",
     },
   ];
   const formattedData = fd?.map((item: any) => ({
@@ -162,46 +151,23 @@ export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
         },
       },
       {
-        value: item.kuota,
-        td: `${formatNumber(item.kuota)}`,
-        isNumeric: true,
+        value: item.status_karyawan?.label,
+        td: <StatusKaryawanBadge data={item.status_karyawan} w={"120px"} />,
         cProps: {
           justify: "center",
         },
       },
       {
-        value: item.cuti_administratif,
-        td: (
-          <BooleanBadge
-            data={item.cuti_administratif}
-            trueValue="Ya"
-            falseValue="Tidak"
-            w={"100px"}
-          />
-        ),
+        original_data: item.jabatan_penilai,
+        value: item.jabatan_penilai?.nama_jabatan,
+        td: item.jabatan_penilai?.nama_jabatan,
         isNumeric: true,
-        cProps: {
-          justify: "center",
-        },
       },
       {
-        value: item.is_need_requirement,
-        td: (
-          <BooleanBadge
-            data={item.is_need_requirement}
-            trueValue="Ya"
-            falseValue="Tidak"
-            w={"100px"}
-          />
-        ),
+        original_data: item.jabatan_dinilai,
+        value: item.jabatan_dinilai?.nama_jabatan,
+        td: item.jabatan_dinilai?.nama_jabatan,
         isNumeric: true,
-        cProps: {
-          justify: "center",
-        },
-      },
-      {
-        value: item.keterangan,
-        td: <TabelElipsisText data={item.keterangan} />,
       },
     ],
   }));

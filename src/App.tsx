@@ -45,6 +45,7 @@ import PenilaianKaryawan from "./pages/Perusahaan/PenilaianKaryawan";
 import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
+import PengaturanJenisPenilaian from "./pages/Pengaturan/PengaturanJenisPenilaian";
 
 // github pekok
 
@@ -370,7 +371,7 @@ export const App = () => {
             }
           />
           <Route
-            path="/pengaturan/karyawan/kuisioner"
+            path="/pengaturan/karyawan/jenis-penilaian"
             element={
               <NavContainer
                 active={7}
@@ -379,7 +380,7 @@ export const App = () => {
                 title="Pengaturan - Jenis Penilaian"
               >
                 <PengaturanContainer activeGroup={1} active={4}>
-                  <PengaturanKuisioner />
+                  <PengaturanJenisPenilaian />
                 </PengaturanContainer>
               </NavContainer>
             }
