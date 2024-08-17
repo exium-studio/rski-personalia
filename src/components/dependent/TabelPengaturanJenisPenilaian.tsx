@@ -92,7 +92,7 @@ export default function TabelPengaturanJenisPenilaian({ filterConfig }: Props) {
   });
   const formattedHeader = [
     {
-      th: "Nama Cuti",
+      th: "Nama",
       isSortable: true,
       props: {
         position: "sticky",
