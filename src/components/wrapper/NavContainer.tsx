@@ -177,7 +177,7 @@ export default function NavContainer({
   }, [allowed, userData?.permissions, navigate, logout]);
 
   return (
-    <Container>
+    <Container maxH={"100vh"} overflowY={"auto"}>
       <HStack flex={1} align={"stretch"} gap={0}>
         {!noNavs && !smScreen && (
           <VStack
