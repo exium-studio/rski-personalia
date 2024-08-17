@@ -34,7 +34,7 @@ interface KonfirmasiProps {
 function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
-    `konfirmasi-permintaan-perubahab-data-${data.id}`,
+    `konfirmasi-permintaan-perubahan-data-${data.id}`,
     isOpen,
     onOpen,
     onClose
@@ -48,7 +48,7 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
         variant={"ghost"}
         onClick={onOpen}
       >
-        Konfirmasi
+        Verifikasi
       </Button>
 
       <Modal
