@@ -6,7 +6,7 @@ interface Props extends BadgeProps {
 
 export default function StatusKaryawanBadge({ data, ...props }: Props) {
   let colorScheme;
-  switch (data.id) {
+  switch (data?.id) {
     case 1:
       colorScheme = "orange";
       break;
@@ -17,6 +17,7 @@ export default function StatusKaryawanBadge({ data, ...props }: Props) {
       colorScheme = "green";
       break;
   }
+
   return (
     <Badge
       textAlign={"center"}
@@ -24,7 +25,7 @@ export default function StatusKaryawanBadge({ data, ...props }: Props) {
       colorScheme={colorScheme}
       {...props}
     >
-      {data.label}
+      {data?.label}
     </Badge>
   );
 }

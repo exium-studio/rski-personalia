@@ -23,7 +23,7 @@ import { iconSize } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import SelectJabatan from "../dependent/_Select/SelectJabatan";
+import SelectJenisPenilaian from "../dependent/_Select/SelectJenisPenilaian";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
@@ -43,16 +43,16 @@ export default function TambahKuisioner({ ...props }: Props) {
     validateOnChange: false,
     initialValues: {
       pertanyaan: "" as any,
-      jabatan: undefined as any,
+      jenis_penilaian: undefined as any,
     },
     validationSchema: yup.object().shape({
       pertanyaan: yup.string().required("Harus diisi"),
-      jabatan: yup.object().required("Harus diisi"),
+      jenis_penilaian: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         pertanyaan: values.pertanyaan,
-        jabatan_id: values?.jabatan?.value,
+        jenis_penilaian_id: values?.jenis_penilaian?.value,
       };
       setLoading(true);
       req
@@ -119,7 +119,7 @@ export default function TambahKuisioner({ ...props }: Props) {
             />
           </ModalHeader>
           <ModalBody>
-            <form id="tambahJabatanForm" onSubmit={formik.handleSubmit}>
+            <form id="tambahKuisionerForm" onSubmit={formik.handleSubmit}>
               <FormControl mb={4} isInvalid={!!formik.errors.pertanyaan}>
                 <FormLabel>
                   Pertanyaan
@@ -138,20 +138,20 @@ export default function TambahKuisioner({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={!!formik.errors.jabatan}>
+              <FormControl isInvalid={!!formik.errors.jenis_penilaian}>
                 <FormLabel>
-                  Jabatan
+                  Jenis Penilaian
                   <RequiredForm />
                 </FormLabel>
-                <SelectJabatan
-                  name="jabatan"
+                <SelectJenisPenilaian
+                  name="jenis_penilaian"
                   onConfirm={(input) => {
-                    formik.setFieldValue("jabatan", input);
+                    formik.setFieldValue("jenis_penilaian", input);
                   }}
-                  inputValue={formik.values.jabatan}
+                  inputValue={formik.values.jenis_penilaian}
                 />
                 <FormErrorMessage>
-                  {formik.errors.jabatan as string}
+                  {formik.errors.jenis_penilaian as string}
                 </FormErrorMessage>
               </FormControl>
             </form>
@@ -159,7 +159,7 @@ export default function TambahKuisioner({ ...props }: Props) {
           <ModalFooter>
             <Button
               type="submit"
-              form="tambahJabatanForm"
+              form="tambahKuisionerForm"
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}

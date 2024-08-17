@@ -4,6 +4,7 @@ import { Interface__SelectOption } from "../../constant/interfaces";
 import { iconSize } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import isObjectEmpty from "../../lib/isObjectEmpty";
+import EditKuisionerModalDisclosure from "../independent/EditKuisionerModalDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
@@ -13,7 +14,6 @@ import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisc
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
-import EditKuisionerModalDisclosure from "../independent/EditKuisionerModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -113,9 +113,21 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
       },
     },
     {
-      th: "Jabatan",
+      th: "Jenis Penilaian",
       isSortable: true,
     },
+    // {
+    //   th: "Status Kepegawaian",
+    //   isSortable: true,
+    // },
+    // {
+    //   th: "Jabatan Penilai",
+    //   isSortable: true,
+    // },
+    // {
+    //   th: "Jabatan Dinilai",
+    //   isSortable: true,
+    // },
   ];
   const formattedData = fd?.map((item: any) => ({
     id: item.id,
@@ -146,10 +158,25 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
         },
       },
       {
-        original_data: item.jabatan,
-        value: item.jabatan?.nama_jabatan,
-        td: item.jabatan?.nama_jabatan,
+        original_data: item.jenis_penilaian,
+        value: item.jenis_penilaian?.nama,
+        td: item.jenis_penilaian?.nama,
       },
+      // {
+      //   original_data: item.status_karaywan,
+      //   value: item.status_karaywan?.id,
+      //   td: <StatusKaryawanBadge data={item?.status_karaywan} />,
+      // },
+      // {
+      //   original_data: item.jabatan_penilai,
+      //   value: item.jabatan_penilai?.nama_jabatan,
+      //   td: item.jabatan_penilai?.nama_jabatan,
+      // },
+      // {
+      //   original_data: item.jabatan_dinilai,
+      //   value: item.jabatan_dinilai?.nama_jabatan,
+      //   td: item.jabatan_dinilai?.nama_jabatan,
+      // },
     ],
   }));
 

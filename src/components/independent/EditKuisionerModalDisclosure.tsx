@@ -21,7 +21,7 @@ import req from "../../constant/req";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import SelectJabatan from "../dependent/_Select/SelectJabatan";
+import SelectJenisPenilaian from "../dependent/_Select/SelectJenisPenilaian";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
@@ -47,23 +47,19 @@ export default function EditKuisionerModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      pertanyaan: rowData.columnsFormat[0].value,
-      jabatan: {
-        value: rowData.columnsFormat[2].original_data?.id,
-        label: rowData.columnsFormat[2].original_data?.nama_jabatan,
-      },
+      pertanyaan: undefined as any,
+      jenis_penilaian: undefined as any,
     },
     validationSchema: yup.object().shape({
       pertanyaan: yup.string().required("Harus diisi"),
-      jabatan: yup.object().required("Harus diisi"),
+      jenis_penilaian: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         pertanyaan: values.pertanyaan,
-        jabatan_id: values.jabatan.value,
+        jenis_penilaian_id: values.jenis_penilaian.value,
         _method: "patch",
       };
-      console.log(payload);
       setLoading(true);
       req
         .post(
@@ -107,11 +103,11 @@ export default function EditKuisionerModalDisclosure({
       "pertanyaan",
       rowData.columnsFormat[0].value
     );
-    formikRef.current.setFieldValue("jabatan", {
+    formikRef.current.setFieldValue("jenis_penilaian", {
       value: rowData.columnsFormat[2].original_data?.id,
-      label: rowData.columnsFormat[2].original_data?.nama_jabatan,
+      label: rowData.columnsFormat[2].original_data?.nama,
     });
-  }, [rowData]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>
@@ -141,10 +137,7 @@ export default function EditKuisionerModalDisclosure({
           </ModalHeader>
           <ModalBody>
             <form id="editKuisionerForm" onSubmit={formik.handleSubmit}>
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.pertanyaan ? true : false}
-              >
+              <FormControl mb={4} isInvalid={!!formik.errors.pertanyaan}>
                 <FormLabel>
                   Pertanyaan
                   <RequiredForm />
@@ -162,21 +155,22 @@ export default function EditKuisionerModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={formik.errors.jabatan ? true : false}>
+              <FormControl isInvalid={!!formik.errors.jenis_penilaian}>
                 <FormLabel>
-                  Jabatan
+                  Jenis Penilaian
                   <RequiredForm />
                 </FormLabel>
-                <SelectJabatan
-                  name="jabatan"
+                <SelectJenisPenilaian
+                  name="jenis_penilaian"
                   onConfirm={(input) => {
-                    formik.setFieldValue("jabatan", input);
+                    formik.setFieldValue("jenis_penilaian", input);
                   }}
-                  inputValue={formik.values.jabatan}
+                  inputValue={formik.values.jenis_penilaian}
+                  isError={!!formik.errors.jenis_penilaian}
                 />
 
                 <FormErrorMessage>
-                  {formik.errors.jabatan as string}
+                  {formik.errors.jenis_penilaian as string}
                 </FormErrorMessage>
               </FormControl>
             </form>
