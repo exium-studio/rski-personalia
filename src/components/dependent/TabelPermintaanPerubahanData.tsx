@@ -132,14 +132,22 @@ const KonfirmasiPermintaan = ({ data }: KonfirmasiProps) => {
 
       <Modal
         isOpen={isOpen}
-        onClose={backOnClose}
+        onClose={() => {
+          backOnClose();
+          formik.resetForm();
+        }}
         isCentered
         blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <DisclosureHeader title={"Konfirmasi Permintaan"} />
+            <DisclosureHeader
+              title={"Konfirmasi Permintaan"}
+              onClose={() => {
+                formik.resetForm();
+              }}
+            />
           </ModalHeader>
           <ModalBody>
             <form

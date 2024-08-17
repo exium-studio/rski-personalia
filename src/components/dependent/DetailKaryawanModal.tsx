@@ -53,7 +53,7 @@ import DetailJadwalKaryawanModalDisclosure from "./DetailJadwalKaryawanModalDisc
 import DetailKeluargaKaryawanModalDisclosure from "./DetailKeluargaKaryawanModalDisclosure";
 import DetailRekamJejakKaryawanModalDisclosure from "./DetailRekamJejakKaryawanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
-import DokumenKaryawanModalDisclosure from "./DokumenKaryawanModalDisclosure";
+import DokumenKaryawanModalDisclosure from "./DetailDokumenKaryawanModalDisclosure";
 import EditKaryawanModal from "./EditKaryawanModal";
 import SearchComponent from "./input/SearchComponent";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";

@@ -8,17 +8,18 @@ import {
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
   Text,
   useDisclosure,
+  useToast,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
 import { RiVerifiedBadgeFill } from "@remixicon/react";
-import { useRef } from "react";
-import { dummyDokumens } from "../../const/dummy";
+import { useRef, useState } from "react";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -31,12 +32,91 @@ import BooleanBadge from "./BooleanBadge";
 import DisclosureHeader from "./DisclosureHeader";
 import DokumenFileItem from "./DokumenFileItem";
 import Retry from "./Retry";
+import useRenderTrigger from "../../global/useRenderTrigger";
+
+interface VerifikasiProps {
+  data: any;
+}
+
+const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    `verifikasi-dokumen-pegawai-${data.id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
+  function verifikasiDokumen() {
+    setLoading(true);
+
+    //TODO api verifikasi dokumen
+  }
+
+  return (
+    <>
+      <Button
+        ml={"auto"}
+        size={"lg"}
+        colorScheme="ap"
+        className="btn-ap clicky"
+        leftIcon={<Icon as={RiVerifiedBadgeFill} fontSize={iconSize} />}
+        pl={5}
+        isDisabled={data.status_verifikasi_berkas}
+        onClick={onOpen}
+      >
+        Verifikasi
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Verfikasi Dokumen"} />
+          </ModalHeader>
+          <ModalBody>
+            <Text opacity={0.6}>
+              Apakah anda yakin untuk verifikasi dokumen pegawai ini?
+            </Text>
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button
+              w={"100%"}
+              className="btn-solid clicky"
+              onClick={backOnClose}
+              isDisabled={loading}
+            >
+              Tidak
+            </Button>
+            <Button
+              w={"100%"}
+              className="btn-ap clicky"
+              colorScheme="ap"
+              onClick={verifikasiDokumen}
+            >
+              Ya
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 interface Props extends BoxProps {
   karyawan_id: number;
   children?: any;
 }
-export default function DokumenKaryawanModalDisclosure({
+export default function DetailDokumenKaryawanModalDisclosure({
   karyawan_id,
   children,
   ...props
@@ -51,89 +131,9 @@ export default function DokumenKaryawanModalDisclosure({
   );
   const initialRef = useRef(null);
 
-  const dummy = {
-    user: {
-      id: 4,
-      nama: "Jolitos Kurniawan",
-      username: "jolitozzz",
-      email_verified_at: null,
-      role_id: null,
-      foto_profil: null,
-      data_completion_step: 1,
-      status_akun: 0,
-      created_at: "2024-06-08T03:43:48.000000Z",
-      updated_at: "2024-06-08T03:43:48.000000Z",
-    },
-    data_karyawan: {
-      id: 3,
-      user_id: 4,
-      email: "user2@example.com",
-      no_rm: 4911794,
-      no_manulife: 509624,
-      tgl_masuk: "2022-05-13",
-      tgl_keluar: "2023-03-22",
-      unit_kerja_id: 14,
-      jabatan_id: 2,
-      kompetensi_id: 6,
-      tunjangan_jabatan: 7308539,
-      tunjangan_fungsional: 2746210,
-      tunjangan_khusus: 2309345,
-      tunjangan_lainnya: 1806428,
-      uang_makan: 1300797,
-      uang_lembur: 1161239,
-      nik: "1093205",
-      nik_ktp: "76679",
-      gelar_depan: "apt.",
-      tempat_lahir: "Majalengka",
-      tgl_lahir: "1941-07-23",
-      alamat:
-        "missing impossible coach amount welcome here night trail diameter nervous graph outline shinning perfectly try refer classroom climb burn spider grabbed waste little provide",
-      no_hp: "349403291",
-      no_bpjsksh: "372032221",
-      no_bpjsktk: "326998911",
-      tgl_diangkat: "2023-03-22",
-      masa_kerja: 59,
-      npwp: "494721295",
-      no_rekening: "256558441",
-      jenis_kelamin: "L",
-      agama: "Islam",
-      golongan_darah: "O+",
-      tinggi_badan: 196,
-      berat_badan: 67,
-      no_ijazah: "IJ/VII/328061598",
-      tahun_lulus: 1951,
-      no_kk: "259583723",
-      status_karyawan: "Tetap",
-      kelompok_gaji_id: 4,
-      no_str: "STR/01/RA/398754",
-      masa_berlaku_str: "2024-03-23",
-      no_sip: "212274",
-      masa_berlaku_sip: "2024-03-23",
-      ptkp_id: 8,
-      tgl_berakhir_pks: "2023-03-22",
-      masa_diklat: 3,
-      created_at: "2024-06-08T03:43:48.000000Z",
-      updated_at: "2024-06-08T03:43:48.000000Z",
-      users: {
-        id: 4,
-        nama: "User 2",
-        username: "username2",
-        email_verified_at: null,
-        role_id: null,
-        foto_profil: null,
-        data_completion_step: 1,
-        status_akun: 0,
-        created_at: "2024-06-08T03:43:48.000000Z",
-        updated_at: "2024-06-08T03:43:48.000000Z",
-      },
-    },
-    jumlah_dokumen: 4,
-    data_dokumen: dummyDokumens,
-  };
-
   // const loading = true;
   const { error, notFound, loading, data, retry } = useDataState<any>({
-    initialData: dummy,
+    initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-dokumen/${karyawan_id}`,
     dependencies: [],
     conditions: !!(isOpen && karyawan_id),
@@ -189,7 +189,7 @@ export default function DokumenKaryawanModalDisclosure({
                   >
                     <Wrap
                       spacing={responsiveSpacing}
-                      mb={responsiveSpacing}
+                      mb={8}
                       align={"center"}
                       px={responsiveSpacing}
                     >
@@ -253,7 +253,7 @@ export default function DokumenKaryawanModalDisclosure({
                       >
                         <Wrap
                           spacing={responsiveSpacing}
-                          mb={responsiveSpacing}
+                          mb={8}
                           align={"center"}
                         >
                           <Avatar
@@ -292,22 +292,7 @@ export default function DokumenKaryawanModalDisclosure({
                             </Text>
                           </VStack>
 
-                          <Button
-                            ml={"auto"}
-                            size={"lg"}
-                            colorScheme="ap"
-                            className="btn-ap clcicky"
-                            leftIcon={
-                              <Icon
-                                as={RiVerifiedBadgeFill}
-                                fontSize={iconSize}
-                              />
-                            }
-                            pl={5}
-                            isDisabled={data.status_verifikasi_berkas}
-                          >
-                            Verifikasi
-                          </Button>
+                          <VerifikasiButtonModal data={data} />
                         </Wrap>
 
                         {data && data.data_dokumen.length === 0 && <NotFound />}
