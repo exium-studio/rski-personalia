@@ -38,8 +38,6 @@ export default function TabelPengaturanKeizinan({
     return matchesSearchTerm;
   });
 
-  console.log(totalPermissions, totalPermissionsAllowed);
-
   const handleCheckboxChange = (index: number, key: string) => {
     const updatedPermissions = [...formik.values.permissions];
     const prevValue = updatedPermissions[index].permissions[key];
