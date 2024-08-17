@@ -230,6 +230,7 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
                     formik.setFieldValue("nama_detail", input);
                   }}
                   inputValue={formik.values.nama_detail}
+                  isDisabled={!formik.values.jenis_penyesuaian}
                 />
                 <FormErrorMessage>
                   {formik.errors.nama_detail as string}
@@ -248,6 +249,7 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
                     formik.setFieldValue("besaran", input);
                   }}
                   inputValue={formik.values.besaran}
+                  isDisabled={!formik.values.jenis_penyesuaian}
                 />
                 <FormErrorMessage>
                   {formik.errors.besaran as string}

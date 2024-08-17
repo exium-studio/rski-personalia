@@ -1,4 +1,12 @@
-import { Box, Button, Checkbox, HStack, Text, Wrap } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Checkbox,
+  HStack,
+  Text,
+  useToast,
+  Wrap,
+} from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import Retry from "../../components/dependent/Retry";
 import TabelPengaturanKeizinan from "../../components/dependent/TabelPengaturanKeizinan";
@@ -10,6 +18,8 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import req from "../../constant/req";
+import useRenderTrigger from "../../global/useRenderTrigger";
 
 interface Props {
   role_id: number;
@@ -27,7 +37,8 @@ export default function PengaturanKeizinan({ role_id }: Props) {
     useState<number>(0);
   const [allPermissions, setAllPermissions] = useState<boolean>(false);
   const [simpanLoading, setSimpanLoading] = useState<boolean>(false);
-  const [simpanTrigger, setSimpanTrigger] = useState<boolean | null>(null);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
 
   useEffect(() => {
     let tp = 0;
@@ -61,7 +72,33 @@ export default function PengaturanKeizinan({ role_id }: Props) {
       .object()
       .shape({ permissions: yup.array().required("Harus diisi") }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      setSimpanLoading(true);
+
+      const payload = {
+        permissions: values.permissions,
+        _method: "patch",
+      };
+
+      req
+        .post(`/api/rski/dashboard/pengaturan/permissions/${1}`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            setRt(!rt);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+            position: "bottom-right",
+            isClosable: true,
+          });
+        })
+        .finally(() => {
+          setSimpanLoading(false);
+        });
     },
   });
 
@@ -144,7 +181,7 @@ export default function PengaturanKeizinan({ role_id }: Props) {
           minW={"120px"}
           isLoading={simpanLoading}
           onClick={() => {
-            setSimpanTrigger(!simpanTrigger);
+            formik.submitForm();
           }}
         >
           Simpan
