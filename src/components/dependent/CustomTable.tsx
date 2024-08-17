@@ -322,6 +322,12 @@ export default function CustomTable({
       >
         <Thead>
           <Tr position={"sticky"} top={0} zIndex={3}>
+            {onRowClick && (
+              <Td minW={"2px"} maxW={"2px"} p={0} position={"sticky"} left={0}>
+                <Box w={"2px"} h={"60px"} bg={lightDarkColor} />
+              </Td>
+            )}
+
             {batchActions && (
               <Td
                 h={"52px"}
@@ -417,9 +423,26 @@ export default function CustomTable({
                 px={2}
                 borderBottom={"1px solid var(--divider)"}
                 position={"relative"}
-                className={onRowClick ? "rowHoverOnClick" : ""}
+                // className={onRowClick ? "rowHoverOnClick" : ""}
                 {...trBodyProps}
               >
+                {onRowClick && (
+                  <Td
+                    minW={"2px"}
+                    maxW={"2px"}
+                    p={0}
+                    position={"sticky"}
+                    left={0}
+                  >
+                    <Box
+                      w={"2px"}
+                      h={"60px"}
+                      bg={lightDarkColor}
+                      _groupHover={{ bg: "p.500" }}
+                    />
+                  </Td>
+                )}
+
                 {batchActions && (
                   <Td
                     h={"60px"}

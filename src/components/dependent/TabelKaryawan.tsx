@@ -48,7 +48,7 @@ export default function TabelKaryawan() {
       isSortable: true,
       props: {
         position: "sticky",
-        left: 0,
+        left: "2px",
         zIndex: 99,
         w: "243px",
       },
@@ -152,7 +152,7 @@ export default function TabelKaryawan() {
         ),
         props: {
           position: "sticky",
-          left: 0,
+          left: "2px",
           zIndex: 2,
         },
         cProps: {
