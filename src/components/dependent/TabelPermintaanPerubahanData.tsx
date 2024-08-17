@@ -7,11 +7,17 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  SimpleGrid,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import req from "../../constant/req";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useRenderTrigger from "../../global/useRenderTrigger";
+import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import backOnClose from "../../lib/backOnClose";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -19,13 +25,11 @@ import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
+import DisclosureHeader from "./DisclosureHeader";
 import PerubahanDataRender from "./PerubahanDataRender";
 import Retry from "./Retry";
 import StatusApprovalBadge from "./StatusApprovalBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "./DisclosureHeader";
 
 interface KonfirmasiProps {
   data: any;
@@ -39,6 +43,37 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
     onOpen,
     onClose
   );
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
+  function verifikasi() {
+    setLoading(true);
+    req
+      .post(
+        `/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${data.id}`
+      )
+      .then((r) => {
+        if (r.status === 200) {
+          setRt(!rt);
+          backOnClose();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
 
   return (
     <>
@@ -62,8 +97,27 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
           <ModalHeader>
             <DisclosureHeader title={"Konfirmasi Permintaan"} />
           </ModalHeader>
-          <ModalBody></ModalBody>
-          <ModalFooter></ModalFooter>
+          <ModalBody>
+            <SimpleGrid columns={[1, 2]} gap={2}>
+              <Button className="clicky" colorScheme="ap" variant={"outline"}>
+                Disetujui
+              </Button>
+              <Button className="clicky" colorScheme="red" variant={"outline"}>
+                Ditolak
+              </Button>
+            </SimpleGrid>
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button
+              w={"100%"}
+              className="btn-ap clicky"
+              colorScheme="ap"
+              isLoading={loading}
+              onClick={verifikasi}
+            >
+              Verifikasi
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

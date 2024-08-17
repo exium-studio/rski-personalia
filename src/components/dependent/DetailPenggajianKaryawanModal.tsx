@@ -141,7 +141,7 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
         onClick={onOpen}
         pl={5}
       >
-        Penyesuaian Take Home Pay
+        Penyesuaian Gaji Bruto
       </Button>
 
       <Modal
@@ -158,7 +158,7 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
         <ModalContent>
           <ModalHeader>
             <DisclosureHeader
-              title={"Penyesuaian Take Home Pay"}
+              title={"Penyesuaian Gaji Bruto"}
               onClose={() => {
                 formik.resetForm();
                 setSimpan(false);
