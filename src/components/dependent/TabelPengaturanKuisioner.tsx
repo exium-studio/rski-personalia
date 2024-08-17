@@ -120,6 +120,9 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
     {
       th: "Status Kepegawaian",
       isSortable: true,
+      cProps: {
+        justify: "center",
+      },
     },
     {
       th: "Jabatan Penilai",
@@ -172,6 +175,10 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
             w={"120px"}
           />
         ),
+        isNumeric: true,
+        cProps: {
+          justify: "center",
+        },
       },
       {
         original_data: item.jenis_penilaians?.jabatan_penilai,
