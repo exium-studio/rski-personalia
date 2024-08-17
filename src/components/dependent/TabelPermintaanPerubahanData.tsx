@@ -70,7 +70,7 @@ function KonfirmasiPermintaan({ data }: KonfirmasiProps) {
   );
 }
 
-export default function TabelVerifikasiData() {
+export default function TabelPermintaanPerubahanData() {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config

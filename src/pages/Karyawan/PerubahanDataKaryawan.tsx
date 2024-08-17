@@ -1,7 +1,7 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import TabelPerubahanData from "../../components/dependent/TabelPerubahanData";
+import TabelPerubahanData from "../../components/dependent/TabelPermintaanPerubahanData";
 import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
