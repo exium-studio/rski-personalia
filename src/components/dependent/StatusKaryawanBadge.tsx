@@ -19,13 +19,15 @@ export default function StatusKaryawanBadge({ data, ...props }: Props) {
   }
 
   return (
-    <Badge
-      textAlign={"center"}
-      borderRadius={"full"}
-      colorScheme={colorScheme}
-      {...props}
-    >
-      {data?.label}
-    </Badge>
+    data && (
+      <Badge
+        textAlign={"center"}
+        borderRadius={"full"}
+        colorScheme={colorScheme}
+        {...props}
+      >
+        {data?.label}
+      </Badge>
+    )
   );
 }

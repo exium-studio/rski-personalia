@@ -76,7 +76,7 @@ export default function EditTerPph21ModalDisclosure({
       };
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/pph-21`, payload)
+        .post(`/api/rski/dashboard/pengaturan/pph-21/${rowData.id}`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -86,7 +86,7 @@ export default function EditTerPph21ModalDisclosure({
               position: "bottom-right",
             });
             setRt(!rt);
-            resetForm();
+            backOnClose();
           }
         })
         .catch((e) => {
