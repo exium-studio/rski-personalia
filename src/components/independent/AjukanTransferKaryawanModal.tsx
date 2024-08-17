@@ -10,7 +10,6 @@ import {
   Modal,
   ModalBody,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
@@ -30,6 +29,7 @@ import backOnClose from "../../lib/backOnCloseOld";
 import SelectJabatan from "../dependent/_Select/SelectJabatan";
 import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
 import SelectKelompokGaji from "../dependent/_Select/SelectKelompokGaji";
+import SelectRole from "../dependent/_Select/SelectRole";
 import SelectTipeTransfer from "../dependent/_Select/SelectTipeTransfer";
 import SelectUnitKerja from "../dependent/_Select/SelectUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
@@ -39,7 +39,6 @@ import Textarea from "../dependent/input/Textarea";
 import PleaseWaitModal from "../dependent/PleaseWaitModal";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
-import SelectRole from "../dependent/_Select/SelectRole";
 
 interface Props extends ButtonProps {}
 
@@ -172,7 +171,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
               }}
             />
           </ModalHeader>
-          <ModalBody className="scrollY">
+          <ModalBody className="scrollY" pb={6}>
             <form id="transferKaryawanForm" onSubmit={formik.handleSubmit}>
               <SimpleGrid columns={[1, 2]} spacingX={4}>
                 <FormControl mb={4} isInvalid={!!formik.errors.karyawan}>
@@ -382,9 +381,10 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                 </CContainer>
               </SimpleGrid>
             </form>
-          </ModalBody>
-          <ModalFooter>
+
             <Button
+              mt={4}
+              flexShrink={0}
               type="submit"
               form="transferKaryawanForm"
               w={"100%"}
@@ -393,7 +393,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
             >
               Transfer Pegawai
             </Button>
-          </ModalFooter>
+          </ModalBody>
         </ModalContent>
       </Modal>
 
