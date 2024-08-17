@@ -69,7 +69,7 @@ export default function SelectKaryawanDitukar({
 
   return (
     <SingleSelectModal
-      id="select-pegawai-ditukar-modal"
+      id="select-karyawan-ditukar-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
@@ -82,7 +82,7 @@ export default function SelectKaryawanDitukar({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Pegawai Ditukar"}
+      placeholder={placeholder || "Pilih Karyawan Ditukar"}
       nonNullable={nonNullable}
       {...props}
     />

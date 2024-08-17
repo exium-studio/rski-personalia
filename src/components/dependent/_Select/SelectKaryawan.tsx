@@ -76,7 +76,7 @@ export default function SelectKaryawan({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Pegawai"}
+      placeholder={placeholder || "Pilih Karyawan"}
       nonNullable={nonNullable}
       {...props}
     />

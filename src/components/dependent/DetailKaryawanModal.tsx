@@ -542,8 +542,8 @@ export default function DetailKaryawanModal({
                                 setSearch(input);
                               }}
                               inputValue={search}
-                              placeholder="data pegawai"
-                              tooltipLabel="Cari data pegawai"
+                              placeholder="data karyawan"
+                              tooltipLabel="Cari data karyawan"
                             />
 
                             <AktifkanNonaktifkanButton
@@ -588,7 +588,7 @@ export default function DetailKaryawanModal({
                                     >
                                       <Text mt={"2px"}>
                                         {emptyDataLabel?.length === 0
-                                          ? "Data pegawai lengkap"
+                                          ? "Data karyawan lengkap"
                                           : `${emptyDataLabel?.length} data masih kosong`}
                                       </Text>
                                       <AccordionIcon />
@@ -641,7 +641,7 @@ export default function DetailKaryawanModal({
                                       unhighlightClassName="uw"
                                       searchWords={searchQuery}
                                       autoEscape={true}
-                                      textToHighlight="Jenis Pegawai"
+                                      textToHighlight="Jenis Karyawan"
                                     />
                                   </Box>
                                   <FlexLine />

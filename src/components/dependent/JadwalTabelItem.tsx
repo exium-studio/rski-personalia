@@ -235,7 +235,7 @@ export default function TabelJadwalItem({
 
                 <HStack justify={"space-between"}>
                   <Text fontSize={14} w={"120px"} opacity={0.6}>
-                    Jenis Pegawai
+                    Jenis Karyawan
                   </Text>
                   <JenisKaryawanBadge data={data.unit_kerja?.jenis_karyawan} />
                 </HStack>

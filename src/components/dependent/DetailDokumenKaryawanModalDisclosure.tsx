@@ -41,7 +41,7 @@ interface VerifikasiProps {
 const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
-    `verifikasi-dokumen-pegawai-${data.id}`,
+    `verifikasi-dokumen-karyawan-${data.id}`,
     isOpen,
     onOpen,
     onClose
@@ -85,7 +85,7 @@ const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.6}>
-              Apakah anda yakin untuk verifikasi dokumen pegawai ini?
+              Apakah anda yakin untuk verifikasi dokumen karyawan ini?
             </Text>
           </ModalBody>
           <ModalFooter gap={2}>

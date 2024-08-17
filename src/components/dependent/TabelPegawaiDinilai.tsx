@@ -69,7 +69,7 @@ export default function TabelPegawaiDinilai({ filterConfig }: Props) {
       },
     },
     {
-      th: "Jenis Pegawai",
+      th: "Jenis Karyawan",
       isSortable: true,
       cProps: {
         justify: "center",

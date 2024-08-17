@@ -90,7 +90,7 @@ export default function SelectJadwalKaryawan({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Jadwal Pegawai Pengajuan"}
+      placeholder={placeholder || "Pilih Jadwal Karyawan Pengajuan"}
       nonNullable={nonNullable}
       {...props}
     />

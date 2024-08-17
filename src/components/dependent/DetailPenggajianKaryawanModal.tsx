@@ -267,7 +267,7 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
                 isChecked={simpan}
                 mt={4}
               >
-                <Text mt={"-3px"}>Simpan Penyesuaian pada Pegawai Ini</Text>
+                <Text mt={"-3px"}>Simpan Penyesuaian pada Karyawan Ini</Text>
               </Checkbox>
 
               {simpan && (

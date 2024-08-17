@@ -168,7 +168,7 @@ export default function EditUnitKerjaModalDisclosure({
                 isInvalid={formik.errors.jenis_karyawan ? true : false}
               >
                 <FormLabel>
-                  Jenis Pegawai
+                  Jenis Karyawan
                   <RequiredForm />
                 </FormLabel>
                 <SelectJenisKaryawan

@@ -22,16 +22,16 @@ const navs = [
     ],
   },
   {
-    label: "Pegawai",
+    label: "Karyawan",
     link: "/karyawan",
     icon: RiGroupFill,
     subNavs: [
       {
-        label: "Pegawai",
+        label: "Karyawan",
         link: "/karyawan",
       },
       {
-        label: "Transfer Pegawai",
+        label: "Transfer Karyawan",
         link: "/karyawan/transfer-karyawan",
       },
       {

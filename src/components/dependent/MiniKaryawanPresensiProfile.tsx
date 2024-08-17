@@ -48,7 +48,7 @@ export default function MiniKaryawanPresensiProfile({ data, ...props }: Props) {
 
         <HStack justify={"space-between"}>
           <Text fontSize={14} opacity={0.6}>
-            Jenis Pegawai
+            Jenis Karyawan
           </Text>
           <FlexLine />
           <Badge

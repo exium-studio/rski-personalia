@@ -55,9 +55,9 @@ export default function DashboardSiapaYangLembur({ ...props }: Props) {
           {...props}
         >
           <Box p={responsiveSpacing}>
-            <Text fontWeight={600}>Pegawai Lembur</Text>
+            <Text fontWeight={600}>Karyawan Lembur</Text>
             <Text fontSize={14} opacity={0.6}>
-              Pegawai yang lembur hari ini
+              Karyawan yang lembur hari ini
             </Text>
           </Box>
 
@@ -84,21 +84,21 @@ export default function DashboardSiapaYangLembur({ ...props }: Props) {
                   className="scrollX scrollY"
                   // className="scrollY"
                 >
-                  {data.map((pegawai: any, i: number) => (
+                  {data.map((karyawan: any, i: number) => (
                     <HStack key={i}>
                       <Avatar
-                        name={pegawai.user.nama}
-                        src={pegawai.user.foto_profil}
+                        name={karyawan.user.nama}
+                        src={karyawan.user.foto_profil}
                       />
                       <Box>
-                        <Text mb={1}>{pegawai.user.nama}</Text>
+                        <Text mb={1}>{karyawan.user.nama}</Text>
                         <Text opacity={0.6} fontSize={12}>
-                          {pegawai.unit_kerja.nama_unit}
+                          {karyawan.unit_kerja.nama_unit}
                         </Text>
                       </Box>
 
                       <Box ml={"auto"}>
-                        {formatDurationShort(pegawai.durasi)}
+                        {formatDurationShort(karyawan.durasi)}
                       </Box>
                     </HStack>
                   ))}

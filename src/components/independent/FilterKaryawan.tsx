@@ -190,7 +190,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
 
         <ModalContent minW={"328px"}>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={title || "Filter Pegawai"} />
+            <DisclosureHeader title={title || "Filter Karyawan"} />
           </ModalHeader>
 
           <ModalBody className="scrollY">

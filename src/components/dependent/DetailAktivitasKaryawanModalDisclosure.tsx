@@ -78,7 +78,7 @@ export default function DetailAktivitasKaryawanModalDisclosure({
         <ModalOverlay />
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Detail Aktifitas Presensi Pegawai"} />
+            <DisclosureHeader title={"Detail Aktifitas Presensi Karyawan"} />
           </ModalHeader>
           <ModalBody>
             {error && (

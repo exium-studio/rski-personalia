@@ -158,7 +158,7 @@ export default function EditHariLiburModalDisclosure({
 
               <FormControl isInvalid={!!formik.errors.tanggal}>
                 <FormLabel>
-                  Jenis Pegawai
+                  Jenis Karyawan
                   <RequiredForm />
                 </FormLabel>
                 <DatePickerModal

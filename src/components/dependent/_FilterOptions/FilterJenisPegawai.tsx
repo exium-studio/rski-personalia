@@ -19,7 +19,7 @@ export default function FilterJenisPegawai({
 
   return (
     <FilterItemWrapper
-      title="Jenis Pegawai"
+      title="Jenis Karyawan"
       filterValue={filterConfig.jenis_karyawan}
       setFilterConfig={setFilterConfig}
       filterKey="jenis_karyawan"

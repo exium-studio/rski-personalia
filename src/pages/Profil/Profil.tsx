@@ -331,7 +331,7 @@ export default function Profil() {
                         unhighlightClassName="uw"
                         searchWords={searchQuery}
                         autoEscape={true}
-                        textToHighlight="Jenis Pegawai"
+                        textToHighlight="Jenis Karyawan"
                       />
                     </Box>
                     <FlexLine />

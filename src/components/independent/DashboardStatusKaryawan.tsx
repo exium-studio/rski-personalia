@@ -31,7 +31,7 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
   const labels = ["Tetap", "Kontrak", "Magang"];
   const datasets = [
     {
-      label: "Jumlah Pegawai",
+      label: "Jumlah Karyawan",
       data: [
         data?.[0]?.jumlah_karyawan,
         data?.[1]?.jumlah_karyawan,

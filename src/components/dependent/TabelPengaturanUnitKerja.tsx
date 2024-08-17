@@ -115,7 +115,7 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
       },
     },
     {
-      th: "Jenis Pegawai",
+      th: "Jenis Karyawan",
       isSortable: true,
       cProps: {
         justify: "center",

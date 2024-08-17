@@ -45,7 +45,7 @@ export default function ExportKaryawanModal({ ...props }: Props) {
       })
       .then((r) => {
         if (r.status === 200) {
-          download(r.data, "Data Pegawai", "xls");
+          download(r.data, "Data Karyawan", "xls");
         } else {
           toast({
             status: "error",
@@ -104,7 +104,7 @@ export default function ExportKaryawanModal({ ...props }: Props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Export Pegawai"} />
+            <DisclosureHeader title={"Export Karyawan"} />
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.6}>Apakah anda yakin akan export tabel ini?</Text>

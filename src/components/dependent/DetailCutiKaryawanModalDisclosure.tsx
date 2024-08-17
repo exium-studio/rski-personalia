@@ -78,7 +78,7 @@ export default function DetailCutiKaryawanModalDisclosure({
         <ModalOverlay />
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Detail Cuti Pegawai"} />
+            <DisclosureHeader title={"Detail Cuti Karyawan"} />
           </ModalHeader>
           <ModalBody>
             {error && (

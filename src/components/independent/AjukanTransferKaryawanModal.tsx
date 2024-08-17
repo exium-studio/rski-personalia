@@ -176,7 +176,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
               <SimpleGrid columns={[1, 2]} spacingX={4}>
                 <FormControl mb={4} isInvalid={!!formik.errors.karyawan}>
                   <FormLabel>
-                    Pegawai
+                    Karyawan
                     <RequiredForm />
                   </FormLabel>
                   <SelectKaryawan
@@ -347,7 +347,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                   </FormLabel>
                   <Textarea
                     name="alasan"
-                    placeholder="Alasan transfer pegawai"
+                    placeholder="Alasan transfer karyawan"
                     onChangeSetter={(input) => {
                       formik.setFieldValue("alasan", input);
                     }}
@@ -391,7 +391,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
               colorScheme="ap"
               className="btn-ap clicky"
             >
-              Transfer Pegawai
+              Transfer Karyawan
             </Button>
           </ModalBody>
         </ModalContent>

@@ -56,7 +56,7 @@ export default function RunPenilaian({ ...props }: Props) {
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Run Penilaian Pegawai"
+              title="Run Penilaian Karyawan"
               addition={
                 <SelectStatusKaryawan
                   name="status_karyawan"
@@ -85,7 +85,7 @@ export default function RunPenilaian({ ...props }: Props) {
                 <Icon as={RiIdCardLine} fontSize={150} opacity={0.6} />
                 <Text textAlign={"center"} opacity={0.4}>
                   Pilih status kepegawaian di atas, kemudian sistem akan
-                  menampilkan pegawai yang memerlukan penilaian.
+                  menampilkan karyawan yang memerlukan penilaian.
                 </Text>
               </VStack>
             )}

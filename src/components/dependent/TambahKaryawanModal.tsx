@@ -775,7 +775,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title={"Tambah Pegawai"}
+              title={"Tambah Karyawan"}
               onClose={() => {
                 formik.resetForm();
               }}

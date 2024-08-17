@@ -143,7 +143,7 @@ export default function TambahUnitKerja({ ...props }: Props) {
                 isInvalid={formik.errors.jenis_karyawan ? true : false}
               >
                 <FormLabel>
-                  Jenis Pegawai
+                  Jenis Karyawan
                   <RequiredForm />
                 </FormLabel>
                 <SelectJenisKaryawan
@@ -152,7 +152,7 @@ export default function TambahUnitKerja({ ...props }: Props) {
                     formik.setFieldValue("jenis_karyawan", input);
                   }}
                   inputValue={formik.values.jenis_karyawan}
-                  placeholder="Pilih Jenis Pegawai"
+                  placeholder="Pilih Jenis Karyawan"
                   isError={!!formik.errors.jenis_karyawan}
                 />
                 <FormErrorMessage>

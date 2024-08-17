@@ -83,7 +83,7 @@ export const App = () => {
             element={
               <NavContainer
                 active={1}
-                title="Pegawai"
+                title="Karyawan"
                 topNavsData={navs[1].subNavs}
                 topNavActive={0}
               >

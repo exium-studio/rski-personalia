@@ -57,7 +57,7 @@ export default function TabelPresensi({ filterConfig }: Props) {
       },
     },
     {
-      th: "Jenis Pegawai",
+      th: "Jenis Karyawan",
       isSortable: true,
       cProps: {
         justify: "center",
