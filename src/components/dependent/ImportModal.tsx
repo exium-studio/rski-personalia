@@ -106,7 +106,7 @@ export default function ImportModal({
   const downloadTemplate = () => {
     setdLoading(true);
     req
-      .get(url, {
+      .get(templateDownloadUrl as string, {
         responseType: "blob", // Penting untuk menangani file biner
       })
       .then((r) => {

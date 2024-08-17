@@ -14,17 +14,19 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { RiMailDownloadLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
+import req from "../../constant/req";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "../dependent/DisclosureHeader";
-import CContainer from "../wrapper/CContainer";
 import timeSince from "../../lib/timeSince";
+import DisclosureHeader from "../dependent/DisclosureHeader";
 import Retry from "../dependent/Retry";
+import CContainer from "../wrapper/CContainer";
 import NoData from "./NoData";
 import Skeleton from "./Skeleton";
 
@@ -35,11 +37,15 @@ export default function NotificationModal({ ...props }: Props) {
   useBackOnClose("notification-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
-  const { error, notFound, loading, data, retry } = useDataState<any>({
-    initialData: undefined,
-    url: `/api/rski/dashboard/notifikasi`,
-    dependencies: [],
-  });
+  const [rt, setRt] = useState<boolean>(false);
+
+  const { error, notFound, loading, setLoading, data, retry } =
+    useDataState<any>({
+      initialData: undefined,
+      url: `/api/rski/dashboard/notifikasi`,
+      dependencies: [rt],
+      noRt: true,
+    });
 
   const [notRedCount, setNotReadCount] = useState<number | undefined>(
     undefined
@@ -55,6 +61,59 @@ export default function NotificationModal({ ...props }: Props) {
       setNotReadCount(count);
     }
   }, [data]);
+
+  const [deleteLoading, setDeleteloading] = useState<boolean>(false);
+  const toast = useToast();
+
+  function tandaiBaca(notif_id: number) {
+    setLoading(true);
+
+    req
+      .get(`/api/rski/dashboard/notifikasi/${notif_id}`)
+      .then((r) => {
+        if (r.status === 200) {
+          setRt(!rt);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  function deleteNotif() {
+    setDeleteloading(true);
+
+    req
+      .delete(`/api/rski/dashboard/notifikasi/delete-read-notifikasi`)
+      .then((r) => {
+        if (r.status === 200) {
+          setRt(!rt);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
+        });
+      })
+      .finally(() => {
+        setDeleteloading(false);
+      });
+  }
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -98,7 +157,14 @@ export default function NotificationModal({ ...props }: Props) {
         <ModalOverlay />
         <ModalContent borderRadius={12}>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Inbox"} />
+            <DisclosureHeader
+              title={"Inbox"}
+              addition={
+                <Text opacity={0.4} fontWeight={400} ml={2} mr={"auto"}>
+                  Klik untuk tandai sudah dibaca
+                </Text>
+              }
+            />
           </ModalHeader>
           <ModalBody className="scrollY" px={0}>
             {error && (
@@ -118,7 +184,7 @@ export default function NotificationModal({ ...props }: Props) {
                 {loading && (
                   <>
                     <Skeleton
-                      minH={"300px"}
+                      minH={"500px"}
                       flex={1}
                       mx={"auto"}
                       borderRadius={0}
@@ -136,6 +202,9 @@ export default function NotificationModal({ ...props }: Props) {
                         <CContainer>
                           {data.map((inbox: any, i: number) => (
                             <HStack
+                              onClick={() => {
+                                tandaiBaca(inbox.id);
+                              }}
                               align={"start"}
                               key={i}
                               px={6}
@@ -181,7 +250,12 @@ export default function NotificationModal({ ...props }: Props) {
           </ModalBody>
           <ModalFooter>
             {!error && (
-              <Button w={"100%"} className="btn-solid clicky">
+              <Button
+                w={"100%"}
+                className="btn-solid clicky"
+                onClick={deleteNotif}
+                isLoading={deleteLoading}
+              >
                 Hapus Semua yang Sudah Dibaca
               </Button>
             )}

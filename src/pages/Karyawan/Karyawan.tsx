@@ -73,7 +73,7 @@ export default function Karyawan() {
               url={"/api/rski/dashboard/jadwal-karyawan/jadwal-import"}
               title={"Import Karyawan"}
               reqBodyKey="jadwal_karyawan_file"
-              templateDownloadUrl="api/rski/dashboard/download-template-jadwal"
+              templateDownloadUrl="api/rski/dashboard/download-template-karyawan"
             />
 
             <TambahKaryawanModal minW={"fit-content"} />

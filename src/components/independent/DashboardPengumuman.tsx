@@ -13,17 +13,13 @@ import {
 import { RiSearch2Line } from "@remixicon/react";
 import { useState } from "react";
 import { useBodyColor } from "../../constant/colors";
-import {
-  dashboardItemHeight,
-  dashboardItemMinWidth,
-  responsiveSpacing,
-} from "../../constant/sizes";
-import Skeleton from "./Skeleton";
+import { dashboardItemHeight, responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
+import Retry from "../dependent/Retry";
 import DashboardBuatPengumumanModal from "./DashboardBuatPengumumanModal";
 import DashboardPengumumanItemDetail from "./DashboardPengumumanItemDetail";
 import NoData from "./NoData";
-import Retry from "../dependent/Retry";
+import Skeleton from "./Skeleton";
 
 interface Props extends StackProps {}
 
@@ -59,7 +55,7 @@ export default function DashboardPengumuman({ ...props }: Props) {
               flex={"1 1 0"}
               borderRadius={12}
               h={dashboardItemHeight}
-              minW={dashboardItemMinWidth}
+              minW={"450px"}
             />
           )}
 
@@ -69,7 +65,7 @@ export default function DashboardPengumuman({ ...props }: Props) {
               bg={bodyColor}
               borderRadius={12}
               gap={0}
-              minW={dashboardItemMinWidth}
+              minW={"450px"}
               overflowX={"hidden"}
               h={dashboardItemHeight}
               pb={responsiveSpacing}
