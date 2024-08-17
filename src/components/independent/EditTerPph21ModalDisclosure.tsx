@@ -5,6 +5,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
@@ -257,14 +258,13 @@ export default function EditTerPph21ModalDisclosure({
                   <InputRightElement pr={4}>
                     <Text>%</Text>
                   </InputRightElement>
-                  <NumberInput
+                  <Input
+                    type="number"
                     pr={12}
                     name="percentage"
-                    placeholder="16"
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("percentage", input);
-                    }}
-                    inputValue={formik.values.percentage}
+                    placeholder="3.5"
+                    onChange={formik.handleChange}
+                    value={formik.values.percentage || ""}
                   />
                 </InputGroup>
                 <FormErrorMessage>

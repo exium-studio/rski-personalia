@@ -5,6 +5,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Icon,
+  Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
@@ -242,14 +243,13 @@ export default function TambahTerPph21({ ...props }: Props) {
                   <InputRightElement pr={4}>
                     <Text>%</Text>
                   </InputRightElement>
-                  <NumberInput
+                  <Input
+                    type="number"
                     pr={12}
                     name="percentage"
-                    placeholder="16"
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("percentage", input);
-                    }}
-                    inputValue={formik.values.percentage}
+                    placeholder="3.5"
+                    onChange={formik.handleChange}
+                    value={formik.values.percentage || ""}
                   />
                 </InputGroup>
                 <FormErrorMessage>
