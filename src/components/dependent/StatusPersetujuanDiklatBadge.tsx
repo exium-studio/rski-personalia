@@ -9,17 +9,28 @@ export default function StatusPersetujuanDiklatBadge({
   ...props
 }: Props) {
   let colorScheme;
+  let label = "";
   switch (data.id) {
     case 1:
       colorScheme = "orange";
+      label = "Menunggu Disetujui 1";
       break;
     case 2:
-    case 4:
       colorScheme = "green";
+      label = "Disetujui 1";
       break;
     case 3:
+      colorScheme = "red";
+      label = "Ditolak 1";
+      break;
+    case 4:
+      colorScheme = "green";
+      label = "Disetujui 2";
+      break;
     case 5:
       colorScheme = "red";
+      label = "Ditolak 2";
+      break;
   }
 
   return (
@@ -29,7 +40,7 @@ export default function StatusPersetujuanDiklatBadge({
       textAlign={"center"}
       {...props}
     >
-      {data?.label || "Invalid"}
+      {label || "Invalid"}
     </Badge>
   );
 }

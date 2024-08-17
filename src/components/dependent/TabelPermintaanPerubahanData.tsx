@@ -127,7 +127,7 @@ const KonfirmasiPermintaan = ({ data }: KonfirmasiProps) => {
         colorScheme="ap"
         onClick={onOpen}
       >
-        Verifikasi
+        Persetujuan
       </Button>
 
       <Modal
@@ -218,7 +218,7 @@ const KonfirmasiPermintaan = ({ data }: KonfirmasiProps) => {
               type="submit"
               form="verifikasiPermintaanPerubahanDataForm"
             >
-              Verifikasi
+              Konfirmasi
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -259,7 +259,7 @@ export default function TabelPermintaanPerubahanData() {
       },
     },
     {
-      th: "Status Verifikasi",
+      th: "Status Persetujuan",
       isSortable: true,
       cProps: {
         justify: "center",
@@ -282,7 +282,7 @@ export default function TabelPermintaanPerubahanData() {
       },
     },
     {
-      th: "Verifikasi",
+      th: "Persetujuan",
       props: {
         position: "sticky",
         right: 0,

@@ -225,7 +225,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
                         gap={3}
                         borderRadius={12}
                       >
-                        {Array.from({ length: 10 }).map((_, i) => (
+                        {Array.from({ length: 12 }).map((_, i) => (
                           <Skeleton
                             key={i}
                             w={"100%"}

@@ -16,6 +16,7 @@ import TabelFooterConfig from "./TabelFooterConfig";
 import TerapkanJadwalKaryawanTerpilih from "./TerapkanJadwalKaryawanTerpilih";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import CContainer from "../wrapper/CContainer";
+import formatTime from "../../lib/formatTime";
 
 interface Props {
   filterConfig?: any;
@@ -100,13 +101,58 @@ export default function TabelJadwal({ filterConfig }: Props) {
           value: jadwal?.label,
           td:
             jadwal !== null ? (
-              <TabelJadwalItem
-                data={item}
-                jadwal={jadwal}
-                tgl={dateList[i]}
-                index={i}
-                rowIndex={rowIndex}
-              />
+              <>
+                {item.unit_kerja?.jenis_karyawan === 1 ? (
+                  <TabelJadwalItem
+                    data={item}
+                    jadwal={jadwal}
+                    tgl={dateList[i]}
+                    index={i}
+                    rowIndex={rowIndex}
+                  />
+                ) : dateList[i]?.getDay() === 0 ? (
+                  <CContainer
+                    bg={"var(--divider)"}
+                    p={4}
+                    borderRadius={8}
+                    justify={"center"}
+                    gap={1}
+                  >
+                    <Text fontSize={14}>Libur</Text>
+                    <Text fontSize={14}>Minggu</Text>
+                  </CContainer>
+                ) : jadwal?.status === 2 ? (
+                  <CContainer
+                    bg={"var(--divider)"}
+                    p={4}
+                    borderRadius={8}
+                    justify={"center"}
+                    gap={1}
+                  >
+                    <Text fontSize={14}>Jam Kerja Non-Shift</Text>
+                    <Text fontSize={14} whiteSpace={"nowrap"}>
+                      {jadwal
+                        ? `${formatTime(jadwal?.jam_from)} - ${formatTime(
+                            jadwal?.jam_to
+                          )}`
+                        : "-"}
+                    </Text>
+                  </CContainer>
+                ) : (
+                  <CContainer
+                    bg={"var(--divider)"}
+                    p={4}
+                    borderRadius={8}
+                    justify={"center"}
+                    gap={1}
+                  >
+                    <Text fontSize={14}>Libur</Text>
+                    <Text fontSize={14} whiteSpace={"nowrap"}>
+                      {jadwal?.nama}
+                    </Text>
+                  </CContainer>
+                )}
+              </>
             ) : item.unit_kerja?.jenis_karyawan === 1 ? (
               <TerapkanJadwalKaryawanTerpilih
                 data={item}

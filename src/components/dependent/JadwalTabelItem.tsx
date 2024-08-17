@@ -158,7 +158,11 @@ export default function TabelJadwalItem({
             <Text noOfLines={1} mb={1} fontSize={14}>
               {jadwal?.shift?.nama || "Libur"}
             </Text>
-            <Text fontSize={14} whiteSpace={"nowrap"}>
+            <Text
+              fontSize={14}
+              whiteSpace={"nowrap"}
+              // opacity={jadwal?.shift ? 1 : 0}
+            >
               {jadwal?.shift
                 ? `${formatTime(jadwal?.shift?.jam_from)} - 
               ${formatTime(jadwal?.shift?.jam_to)}`

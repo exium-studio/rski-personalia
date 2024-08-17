@@ -49,10 +49,11 @@ export default function PengaturanJamKerjaNonShift() {
         nama: values.nama,
         jam_from: values.jam_from,
         jam_to: values.jam_to,
+        _method: "patch",
       };
       setUpdateLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/non-shift`, payload)
+        .post(`/api/rski/dashboard/pengaturan/non-shift/1`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
