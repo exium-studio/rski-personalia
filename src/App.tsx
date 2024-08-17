@@ -376,9 +376,24 @@ export const App = () => {
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pengaturan - Kuisioner"
+                title="Pengaturan - Jenis Penilaian"
               >
                 <PengaturanContainer activeGroup={1} active={4}>
+                  <PengaturanKuisioner />
+                </PengaturanContainer>
+              </NavContainer>
+            }
+          />
+          <Route
+            path="/pengaturan/karyawan/kuisioner"
+            element={
+              <NavContainer
+                active={7}
+                topNavsData={navs[7].subNavs}
+                topNavActive={0}
+                title="Pengaturan - Pertanyaan Penilaian"
+              >
+                <PengaturanContainer activeGroup={1} active={5}>
                   <PengaturanKuisioner />
                 </PengaturanContainer>
               </NavContainer>

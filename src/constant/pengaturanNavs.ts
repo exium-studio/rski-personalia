@@ -59,7 +59,12 @@ const pengaturanNavs = [
       },
       {
         icon: RiQuestionLine,
-        label: "Kuisioner",
+        label: "Jenis Penilaian",
+        link: "/pengaturan/karyawan/kuisioner",
+      },
+      {
+        icon: RiQuestionLine,
+        label: "Pertanyaan Penilaian",
         link: "/pengaturan/karyawan/kuisioner",
       },
     ],
