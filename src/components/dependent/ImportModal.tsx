@@ -24,6 +24,7 @@ import DisclosureHeader from "./DisclosureHeader";
 import FileInputLarge from "./input/FileInputLarge";
 import req from "../../constant/req";
 import download from "../../lib/download";
+import useRenderTrigger from "../../global/useRenderTrigger";
 
 interface Props extends ButtonProps {
   url: string;
@@ -46,6 +47,7 @@ export default function ImportModal({
   const [loading, setLoading] = useState<boolean>(false);
   const [dloading, setdLoading] = useState<boolean>(false);
   const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
 
   const formik = useFormik({
     validateOnChange: false,
@@ -112,6 +114,7 @@ export default function ImportModal({
       .then((r) => {
         if (r.status === 200) {
           download(r.data, `${title} template`, "xls");
+          setRt(!rt);
           backOnClose();
         } else {
           toast({

@@ -111,7 +111,7 @@ export default function Jadwal() {
             />
 
             <ImportModal
-              url="/api/rski/dashboard/jadwal-karyawan/jadwal-import"
+              url="/api/rski/dashboard/jadwal-karyawan/import"
               title="Import Jadwal"
               reqBodyKey="jadwal_karyawan_file"
               templateDownloadUrl="api/rski/dashboard/download-template-jadwal"
