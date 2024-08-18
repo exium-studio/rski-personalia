@@ -70,9 +70,9 @@ export default function Karyawan() {
             <ExportKaryawanModal />
 
             <ImportModal
-              url={"/api/rski/dashboard/jadwal-karyawan/jadwal-import"}
+              url={"/api/rski/dashboard/karyawan/import"}
               title={"Import Karyawan"}
-              reqBodyKey="jadwal_karyawan_file"
+              reqBodyKey="karyawan_file"
               templateDownloadUrl="api/rski/dashboard/download-template-karyawan"
             />
 

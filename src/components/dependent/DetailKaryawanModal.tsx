@@ -271,8 +271,8 @@ export default function DetailKaryawanModal({
                               h={"200px"}
                               size={"xxl"}
                               fontSize={"64px !important"}
-                              src={data.user.foto_profil}
-                              name={data.user.nama}
+                              src={data.user?.foto_profil}
+                              name={data.user?.nama}
                             />
 
                             <VStack gap={1}>
@@ -281,7 +281,7 @@ export default function DetailKaryawanModal({
                                 fontSize={32}
                                 lineHeight={1.3}
                               >
-                                {data.user.nama}
+                                {data.user?.nama}
                               </Text>
 
                               <HStack mb={2}>
@@ -292,7 +292,7 @@ export default function DetailKaryawanModal({
                                   opacity={0.2}
                                 />
                                 <StatusAktifBadge
-                                  data={data.user.status_aktif}
+                                  data={data.user?.status_aktif}
                                 />
                               </HStack>
                             </VStack>

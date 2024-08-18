@@ -81,9 +81,6 @@ export default function EditKaryawanForm({
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
-  console.log(new Date(formatDate(data.tgl_berakhir_pks as string, "iso")));
-  console.log(formatDate(data.tgl_berakhir_pks));
-
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
