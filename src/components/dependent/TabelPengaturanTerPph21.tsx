@@ -1,7 +1,5 @@
-import { Center, Icon, MenuItem, Text } from "@chakra-ui/react";
-import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
+import { Center, Text } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../constant/interfaces";
-import { iconSize } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import formatNumber from "../../lib/formatNumber";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -10,11 +8,8 @@ import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
-import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
-import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
-import EditTerPph21ModalDisclosure from "../independent/EditTerPph21ModalDisclosure";
 
 interface Props {
   filterConfig?: any;
@@ -24,48 +19,48 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
   // SX
 
   // Row Options Config
-  const rowOptions = [
-    (rowData: any) => {
-      return (
-        <EditTerPph21ModalDisclosure rowData={rowData}>
-          <MenuItem>
-            <Text>Edit</Text>
-            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
-        </EditTerPph21ModalDisclosure>
-      );
-    },
-    (rowData: any) => {
-      return (
-        <RestoreDataPengaturanModalDisclosure
-          id={rowData.id}
-          url="/api/rski/dashboard/pengaturan/pph-21/restore"
-        >
-          <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
-            <Text>Restore</Text>
-            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
-        </RestoreDataPengaturanModalDisclosure>
-      );
-    },
-    "divider",
-    (rowData: any) => {
-      return (
-        <DeleteDataPengaturanModalDisclosure
-          id={rowData.id}
-          url="/api/rski/dashboard/pengaturan/pph-21"
-        >
-          <MenuItem
-            fontWeight={500}
-            isDisabled={rowData.columnsFormat[1].value}
-          >
-            <Text color={"red.400"}>Delete</Text>
-            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-          </MenuItem>
-        </DeleteDataPengaturanModalDisclosure>
-      );
-    },
-  ];
+  // const rowOptions = [
+  //   (rowData: any) => {
+  //     return (
+  //       <EditTerPph21ModalDisclosure rowData={rowData}>
+  //         <MenuItem>
+  //           <Text>Edit</Text>
+  //           <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+  //         </MenuItem>
+  //       </EditTerPph21ModalDisclosure>
+  //     );
+  //   },
+  //   (rowData: any) => {
+  //     return (
+  //       <RestoreDataPengaturanModalDisclosure
+  //         id={rowData.id}
+  //         url="/api/rski/dashboard/pengaturan/pph-21/restore"
+  //       >
+  //         <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
+  //           <Text>Restore</Text>
+  //           <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+  //         </MenuItem>
+  //       </RestoreDataPengaturanModalDisclosure>
+  //     );
+  //   },
+  //   "divider",
+  //   (rowData: any) => {
+  //     return (
+  //       <DeleteDataPengaturanModalDisclosure
+  //         id={rowData.id}
+  //         url="/api/rski/dashboard/pengaturan/pph-21"
+  //       >
+  //         <MenuItem
+  //           fontWeight={500}
+  //           isDisabled={rowData.columnsFormat[1].value}
+  //         >
+  //           <Text color={"red.400"}>Delete</Text>
+  //           <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
+  //         </MenuItem>
+  //       </DeleteDataPengaturanModalDisclosure>
+  //     );
+  //   },
+  // ];
 
   const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
@@ -227,9 +222,14 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
                         <CustomTable
                           formattedHeader={formattedHeader}
                           formattedData={formattedData}
-                          rowOptions={rowOptions}
+                          // rowOptions={rowOptions}
                         />
                       </CustomTableContainer>
+
+                      <Text mt={4}>
+                        Data ini sesuai dengan Peraturan Pemerintah (PP) No. 58
+                        Tahun 2023
+                      </Text>
                     </>
                   )}
                 </>

@@ -80,7 +80,6 @@ const useDataState = <T>({
           setLoading(false);
 
           if (error?.response?.status === 404) {
-            console.log("asu", error?.response?.status === 404);
             setNotFound(true);
           }
           setError(true);

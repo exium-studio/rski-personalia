@@ -3,6 +3,7 @@ import {
   ButtonProps,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Icon,
   Input,
@@ -249,9 +250,12 @@ export default function TambahTerPph21({ ...props }: Props) {
                     name="percentage"
                     placeholder="3.5"
                     onChange={formik.handleChange}
-                    value={formik.values.percentage || ""}
+                    value={formik.values.percentage}
                   />
                 </InputGroup>
+                <FormHelperText opacity={0.4}>
+                  Pecahan desimal harus pakai titik
+                </FormHelperText>
                 <FormErrorMessage>
                   {formik.errors.percentage as string}
                 </FormErrorMessage>

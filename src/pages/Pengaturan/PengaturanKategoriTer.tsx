@@ -3,7 +3,6 @@ import { useState } from "react";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
 import TabelPengaturanKategoriTer from "../../components/dependent/TabelPengaturanKategoriTer";
-import TambahKategoriTer from "../../components/independent/TambahKategoriTer";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
@@ -66,7 +65,7 @@ export default function PengaturanKategoriTer() {
           _focus={{ border: "1px solid var(--divider3)" }}
         />
 
-        <TambahKategoriTer minW={"fit-content"} />
+        {/* <TambahKategoriTer minW={"fit-content"} /> */}
       </HStack>
 
       <TabelPengaturanKategoriTer filterConfig={filterConfig} />

@@ -1,12 +1,11 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
+import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
 import TabelPengaturanTerPph21 from "../../components/dependent/TabelPengaturanTerPph21";
-import TambahTerPph21 from "../../components/independent/TambahTerPph21";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
 
 export default function PengaturanTerPph21() {
   // Filter Config
@@ -66,7 +65,7 @@ export default function PengaturanTerPph21() {
           _focus={{ border: "1px solid var(--divider3)" }}
         />
 
-        <TambahTerPph21 minW={"fit-content"} />
+        {/* <TambahTerPph21 minW={"fit-content"} /> */}
       </HStack>
 
       <TabelPengaturanTerPph21 filterConfig={filterConfig} />

@@ -72,10 +72,7 @@ export default function EditShiftModalDisclosure({
       };
       setLoading(true);
       req
-        .post(
-          `/api/rski/dashboard/pengaturan/unit-kerja/${rowData.id}`,
-          payload
-        )
+        .post(`/api/rski/dashboard/pengaturan/shift/${rowData.id}`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -140,7 +137,7 @@ export default function EditShiftModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit Unit Kerja"
+              title="Edit Jam Kerja Shift"
               onClose={() => {
                 formik.resetForm();
               }}
