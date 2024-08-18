@@ -53,7 +53,7 @@ export default function PengaturanJamKerjaNonShift() {
       };
       setUpdateLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/non-shift/1`, payload)
+        .post(`/api/rski/dashboard/pengaturan/non-shift`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -86,7 +86,7 @@ export default function PengaturanJamKerjaNonShift() {
 
   const { error, data, loading, retry } = useDataState<any>({
     initialData: undefined,
-    url: "/api/rski/dashboard/pengaturan/non-shift",
+    url: "/api/rski/dashboard/pengaturan/non-shift/1",
     dependencies: [],
   });
 
