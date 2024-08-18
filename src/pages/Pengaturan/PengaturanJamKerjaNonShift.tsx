@@ -93,9 +93,9 @@ export default function PengaturanJamKerjaNonShift() {
   const formikRef = useRef(formik);
   useEffect(() => {
     if (data) {
-      formikRef.current.setFieldValue("nama", data[0].nama);
-      formikRef.current.setFieldValue("jam_from", data[0].jam_from);
-      formikRef.current.setFieldValue("jam_to", data[0].jam_to);
+      formikRef.current.setFieldValue("nama", data?.nama);
+      formikRef.current.setFieldValue("jam_from", data?.jam_from);
+      formikRef.current.setFieldValue("jam_to", data?.jam_to);
     }
   }, [data, formikRef]);
 
