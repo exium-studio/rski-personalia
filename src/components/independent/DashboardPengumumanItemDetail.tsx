@@ -46,12 +46,12 @@ const DeletePengumuman = ({ data, ...props }: DeletePengumumanProps) => {
     setLoading(true);
 
     req
-      .delete(``)
+      .delete(`/api/rski/dashboard/pengumuman/${data.id}`)
       .then((r) => {
         if (r.status === 200) {
           toast({
             status: "success",
-            title: r.data.messasge,
+            title: r.data.message,
             position: "bottom-right",
             isClosable: true,
           });
@@ -81,6 +81,7 @@ const DeletePengumuman = ({ data, ...props }: DeletePengumumanProps) => {
         className="clicky"
         colorScheme="error"
         variant={"ghost"}
+        onClick={onOpen}
         {...props}
       >
         Hapus
@@ -112,7 +113,8 @@ const DeletePengumuman = ({ data, ...props }: DeletePengumumanProps) => {
             </Button>
             <Button
               w={"100%"}
-              className="btn-solid clicky"
+              className="clicky"
+              colorScheme="red"
               isLoading={loading}
               onClick={deletePengumuman}
             >
@@ -175,7 +177,7 @@ export default function DashboardPengumumanItemDetail({
 
         <HStack mt={"auto"} pt={2} justify={"space-between"}>
           <Text fontSize={14} opacity={0.4}>
-            {timeSince(data.created_at)}
+            diperbarui : {timeSince(data.updated_at as string)}
           </Text>
           <Text fontSize={14} opacity={0.4}>
             berakhir {formatDate(data.tgl_berakhir)}

@@ -46,6 +46,39 @@ export default function DashboardPengumuman({ ...props }: Props) {
       pb={responsiveSpacing}
       {...props}
     >
+      <Box p={responsiveSpacing}>
+        <HStack
+          justify={"space-between"}
+          mb={responsiveSpacing}
+          align={"start"}
+        >
+          <Box>
+            <Text fontWeight={600}>Pengumuman</Text>
+            <Text fontSize={14} opacity={0.6}>
+              Pengumuman saat ini
+            </Text>
+          </Box>
+
+          <DashboardBuatPengumumanModal />
+        </HStack>
+
+        <HStack>
+          <InputGroup>
+            <InputLeftElement>
+              <Icon as={RiSearch2Line} />
+            </InputLeftElement>
+            <Input
+              name="search"
+              placeholder="Pencarian"
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+              value={search}
+            />
+          </InputGroup>
+        </HStack>
+      </Box>
+
       {error && (
         <>
           {notFound && <NoData minH={"300px"} />}
@@ -71,39 +104,6 @@ export default function DashboardPengumuman({ ...props }: Props) {
 
           {!loading && (
             <>
-              <Box p={responsiveSpacing}>
-                <HStack
-                  justify={"space-between"}
-                  mb={responsiveSpacing}
-                  align={"start"}
-                >
-                  <Box>
-                    <Text fontWeight={600}>Pengumuman</Text>
-                    <Text fontSize={14} opacity={0.6}>
-                      Pengumuman saat ini
-                    </Text>
-                  </Box>
-
-                  <DashboardBuatPengumumanModal />
-                </HStack>
-
-                <HStack>
-                  <InputGroup>
-                    <InputLeftElement>
-                      <Icon as={RiSearch2Line} />
-                    </InputLeftElement>
-                    <Input
-                      name="search"
-                      placeholder="Pencarian"
-                      onChange={(e) => {
-                        setSearch(e.target.value);
-                      }}
-                      value={search}
-                    />
-                  </InputGroup>
-                </HStack>
-              </Box>
-
               <VStack
                 align={"stretch"}
                 overflowY={"auto"}

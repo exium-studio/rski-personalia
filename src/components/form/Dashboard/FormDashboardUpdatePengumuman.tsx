@@ -34,7 +34,7 @@ export default function FormDashboardUpdatePengumuman({
     initialValues: {
       judul: data.judul,
       konten: data.konten,
-      tgl_berakhir: new Date(data.tgl_berakhir),
+      tgl_berakhir: new Date(formatDate(data.tgl_berakhir, "iso")),
     },
     validationSchema: yup.object().shape({
       judul: yup.string().required("Judul harus diisi"),
@@ -105,7 +105,7 @@ export default function FormDashboardUpdatePengumuman({
           <RequiredForm />
         </FormLabel>
         <DatePickerModal
-          id="tambah-pengumuman"
+          id={`tambah-pengumuman-${data.id}`}
           name="tgl_berakhir"
           onConfirm={(input) => {
             formik.setFieldValue("tgl_berakhir", input);

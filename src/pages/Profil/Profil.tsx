@@ -245,7 +245,7 @@ export default function Profil() {
                   <Text opacity={0.4}>{userData.role.name}</Text>
 
                   <HStack align={"end"} mt={12}>
-                    <Text fontSize={14}>{userData?.email}</Text>
+                    <Text fontSize={14}>{userData?.nik}</Text>
                   </HStack>
 
                   <Image
