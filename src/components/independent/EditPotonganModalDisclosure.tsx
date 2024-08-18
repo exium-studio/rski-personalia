@@ -89,7 +89,7 @@ export default function EditPotonganModalDisclosure({
               position: "bottom-right",
             });
             setRt(!rt);
-            resetForm();
+            backOnClose();
           }
         })
         .catch((e) => {
