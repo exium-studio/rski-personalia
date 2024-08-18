@@ -134,7 +134,7 @@ export default function EditPotonganModalDisclosure({
       rowData.columnsFormat[5]?.value
     );
     formikRef.current.setFieldValue(
-      "maximal_rate",
+      "maksimal_rate",
       rowData.columnsFormat[6]?.value
     );
   }, [isOpen, rowData, formikRef]);
@@ -159,7 +159,7 @@ export default function EditPotonganModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit Unit Kerja"
+              title="Edit Potongan"
               onClose={() => {
                 formik.resetForm();
               }}
