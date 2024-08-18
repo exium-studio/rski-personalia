@@ -123,7 +123,7 @@ export default function EditTipeCutiModalDisclosure({
     });
     formikRef.current.setFieldValue("is_need_requirement", {
       value: rowData.columnsFormat[4].value,
-      label: rowData.columnsFormat[5].value ? "Ya" : "Tidak",
+      label: rowData.columnsFormat[4].value ? "Ya" : "Tidak",
     });
     formikRef.current.setFieldValue(
       "keterangan",
