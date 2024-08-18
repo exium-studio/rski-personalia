@@ -86,7 +86,7 @@ export default function PengaturanJamKerjaNonShift() {
 
   const { error, data, loading, retry } = useDataState<any>({
     initialData: undefined,
-    url: "/api/rski/dashboard/pengaturan/non-shift",
+    url: "/api/rski/dashboard/pengaturan/non-shift/1",
     dependencies: [],
   });
 
