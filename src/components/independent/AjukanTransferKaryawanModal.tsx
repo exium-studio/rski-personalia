@@ -39,6 +39,7 @@ import Textarea from "../dependent/input/Textarea";
 import PleaseWaitModal from "../dependent/PleaseWaitModal";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
+import formatDate from "../../lib/formatDate";
 
 interface Props extends ButtonProps {}
 
@@ -82,7 +83,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
     onSubmit: (values, { resetForm }) => {
       const payload = new FormData();
       payload.append("user_id", values.karyawan?.value);
-      payload.append("tgl_mulai", new Date(values.tgl_mulai).toISOString());
+      payload.append("tgl_mulai", formatDate(values.tgl_mulai, "short"));
       payload.append("kategori_transfer_id", values.kategori_transfer?.value);
       if (values.unit_kerja_tujuan?.value !== undefined) {
         payload.append("unit_kerja_tujuan", values.unit_kerja_tujuan?.value);
@@ -186,7 +187,6 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                     }}
                     inputValue={formik.values.karyawan}
                     isError={!!formik.errors.karyawan}
-                    withSearch
                   />
                   <FormErrorMessage>
                     {formik.errors.karyawan as string}

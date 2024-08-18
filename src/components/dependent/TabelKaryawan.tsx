@@ -193,7 +193,12 @@ export default function TabelKaryawan() {
       }, // 6
       {
         value: item.jenis_kelamin,
-        td: item.jenis_kelamin ? "Laki - laki" : "Perempuan",
+        td:
+          item.jenis_kelamin === 1
+            ? "Laki - laki"
+            : item.jenis_kelamin === 0
+            ? "Perempuan"
+            : "",
         isNumeric: true,
       }, // 7
       {

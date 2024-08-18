@@ -15,7 +15,7 @@ import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 export default function TransferKaryawan() {
   // Filter Config
-  const { setFilterKaryawan } = useFilterKaryawan();
+  const { setFormattedFilterKaryawan } = useFilterKaryawan();
   const [search, setSearch] = useState("");
   const [filterConfig, setFilterConfig] = useState({
     kategori_transfer: undefined,
@@ -23,13 +23,13 @@ export default function TransferKaryawan() {
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setFilterKaryawan({ search });
+      setFormattedFilterKaryawan({ search });
     }, 300);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [search, setFilterKaryawan]);
+  }, [search, setFormattedFilterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();

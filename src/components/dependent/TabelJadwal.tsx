@@ -129,7 +129,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
                     justify={"center"}
                     gap={1}
                   >
-                    <Text fontSize={14}>Jam Kerja Non-Shift</Text>
+                    <Text fontSize={14}>{jadwal.nama}</Text>
                     <Text fontSize={14} whiteSpace={"nowrap"}>
                       {jadwal
                         ? `${formatTime(jadwal?.jam_from)} - ${formatTime(

@@ -234,7 +234,7 @@ export interface DetailKaryawan {
   tgl_diangkat: Date;
   masa_kerja: string;
   npwp: string;
-  jenis_kelamin: string;
+  jenis_kelamin: number | boolean;
   agama: string;
   golongan_darah: string;
   tinggi_badan: number;
@@ -575,7 +575,7 @@ export interface Interface__DetailKaryawan {
   tgl_diangkat: Date | string;
   masa_kerja: number;
   npwp: string;
-  jenis_kelamin: Interface__ConstantTable;
+  jenis_kelamin: number | boolean;
   agama: Interface__ConstantTable;
   golongan_darah: Interface__ConstantTable;
   tinggi_badan: number;
