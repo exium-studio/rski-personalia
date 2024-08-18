@@ -141,7 +141,7 @@ export default function PengaturanLokasiPresensi() {
   const getDataRef = useRef(getData);
   useEffect(() => {
     getDataRef.current();
-  }, [getDataRef]);
+  }, [rt, getDataRef]);
 
   return (
     <>

@@ -130,6 +130,7 @@ export default function DetailKaryawanModal({
   }
 
   useEffect(() => {
+    setEmptyDataLabel(undefined);
     if (data) {
       setEmptyDataLabel(countEmptyValues(data));
     }
