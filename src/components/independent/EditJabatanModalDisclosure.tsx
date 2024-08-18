@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   Button,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -50,17 +51,20 @@ export default function EditJabatanModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama_jabatan: undefined as any,
-      tunjangan: undefined as any,
+      nama_jabatan: undefined,
+      tunjangan: undefined,
+      is_struktural: false,
     },
     validationSchema: yup.object().shape({
       nama_jabatan: yup.string().required("Harus diisi"),
       tunjangan: yup.number().required("Harus diisi"),
+      is_struktural: yup.boolean(),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_jabatan: values.nama_jabatan,
         tunjangan: values.tunjangan,
+        is_struktural: values.is_struktural ? 1 : 0,
         _method: "patch",
       };
       setLoading(true);
@@ -104,8 +108,12 @@ export default function EditJabatanModalDisclosure({
       rowData.columnsFormat[0].value
     );
     formikRef.current.setFieldValue(
-      "tunjangan",
+      "is_struktural",
       rowData.columnsFormat[2].value
+    );
+    formikRef.current.setFieldValue(
+      "tunjangan",
+      rowData.columnsFormat[3].value
     );
   }, [isOpen, rowData, formikRef]);
 
@@ -158,7 +166,10 @@ export default function EditJabatanModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={formik.errors.tunjangan ? true : false}>
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.tunjangan ? true : false}
+              >
                 <FormLabel>
                   Tunjangan
                   <RequiredForm />
@@ -179,6 +190,23 @@ export default function EditJabatanModalDisclosure({
                 </InputGroup>
                 <FormErrorMessage>
                   {formik.errors.tunjangan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                isInvalid={formik.errors.is_struktural ? true : false}
+              >
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    formik.setFieldValue("is_struktural", e.target.checked);
+                  }}
+                  isChecked={formik.values.is_struktural}
+                >
+                  <Text mt={"-3px"}>Jabatan Struktural</Text>
+                </Checkbox>
+                <FormErrorMessage>
+                  {formik.errors.is_struktural as string}
                 </FormErrorMessage>
               </FormControl>
             </form>

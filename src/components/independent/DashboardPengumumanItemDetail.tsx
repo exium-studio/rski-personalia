@@ -2,6 +2,7 @@ import {
   Badge,
   Button,
   ButtonGroup,
+  ButtonProps,
   HStack,
   Modal,
   ModalBody,
@@ -12,6 +13,7 @@ import {
   StackProps,
   Text,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
@@ -25,6 +27,103 @@ import isDatePassed from "../../lib/isDatePassed";
 import timeSince from "../../lib/timeSince";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardUpdatePengumuman from "../form/Dashboard/FormDashboardUpdatePengumuman";
+import useRenderTrigger from "../../global/useRenderTrigger";
+import req from "../../constant/req";
+
+interface DeletePengumumanProps extends ButtonProps {
+  data: any;
+}
+
+const DeletePengumuman = ({ data, ...props }: DeletePengumumanProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`delete-pengmuman-${data.id}`, isOpen, onOpen, onClose);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
+  function deletePengumuman() {
+    setLoading(true);
+
+    req
+      .delete(``)
+      .then((r) => {
+        if (r.status === 200) {
+          toast({
+            status: "success",
+            title: r.data.messasge,
+            position: "bottom-right",
+            isClosable: true,
+          });
+          setRt(!rt);
+          backOnClose();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  return (
+    <>
+      <Button
+        w={"50%"}
+        className="clicky"
+        colorScheme="error"
+        variant={"ghost"}
+        {...props}
+      >
+        Hapus
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Delete Pengumuman"} />
+          </ModalHeader>
+          <ModalBody>
+            <Text opacity={0.6}>
+              Apakah anda yakin akan menghapus pengumuman ini?
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              w={"100%"}
+              className="btn-solid clicky"
+              isDisabled={loading}
+            >
+              Tidak
+            </Button>
+            <Button
+              w={"100%"}
+              className="btn-solid clicky"
+              isLoading={loading}
+              onClick={deletePengumuman}
+            >
+              Ya
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 interface Props extends StackProps {
   data: Pengumuman__Interface;
@@ -107,16 +206,11 @@ export default function DashboardPengumumanItemDetail({
 
           <ModalFooter>
             <ButtonGroup w={"100%"}>
-              <Button
-                w={"50%"}
-                className="clicky"
-                colorScheme="error"
-                variant={"ghost"}
+              <DeletePengumuman
+                data={data}
                 isDisabled={loading}
                 bg={errorAlphaColor}
-              >
-                Hapus
-              </Button>
+              />
               <Button
                 type="submit"
                 form="updatePengumumanForm"

@@ -1,6 +1,7 @@
 import {
   Button,
   ButtonProps,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -44,15 +45,21 @@ export default function TambahJabatan({ ...props }: Props) {
 
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { nama_jabatan: undefined, tunjangan: undefined },
+    initialValues: {
+      nama_jabatan: undefined,
+      tunjangan: undefined,
+      is_struktural: false,
+    },
     validationSchema: yup.object().shape({
       nama_jabatan: yup.string().required("Harus diisi"),
       tunjangan: yup.number().required("Harus diisi"),
+      is_struktural: yup.boolean(),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_jabatan: values.nama_jabatan,
         tunjangan: values.tunjangan,
+        is_struktural: values.is_struktural ? 1 : 0,
       };
       setLoading(true);
       req
@@ -143,7 +150,10 @@ export default function TambahJabatan({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={formik.errors.tunjangan ? true : false}>
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.tunjangan ? true : false}
+              >
                 <FormLabel>
                   Tunjangan
                   <RequiredForm />
@@ -164,6 +174,23 @@ export default function TambahJabatan({ ...props }: Props) {
                 </InputGroup>
                 <FormErrorMessage>
                   {formik.errors.tunjangan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                isInvalid={formik.errors.is_struktural ? true : false}
+              >
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    formik.setFieldValue("is_struktural", e.target.checked);
+                  }}
+                  isChecked={formik.values.is_struktural}
+                >
+                  <Text mt={"-3px"}>Jabatan Struktural</Text>
+                </Checkbox>
+                <FormErrorMessage>
+                  {formik.errors.is_struktural as string}
                 </FormErrorMessage>
               </FormControl>
             </form>

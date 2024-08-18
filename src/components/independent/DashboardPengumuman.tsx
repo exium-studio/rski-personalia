@@ -35,7 +35,17 @@ export default function DashboardPengumuman({ ...props }: Props) {
   const bodyColor = useBodyColor();
 
   return (
-    <>
+    <VStack
+      align={"stretch"}
+      bg={bodyColor}
+      borderRadius={12}
+      gap={0}
+      minW={"450px"}
+      overflowX={"hidden"}
+      h={dashboardItemHeight}
+      pb={responsiveSpacing}
+      {...props}
+    >
       {error && (
         <>
           {notFound && <NoData minH={"300px"} />}
@@ -60,17 +70,7 @@ export default function DashboardPengumuman({ ...props }: Props) {
           )}
 
           {!loading && (
-            <VStack
-              align={"stretch"}
-              bg={bodyColor}
-              borderRadius={12}
-              gap={0}
-              minW={"450px"}
-              overflowX={"hidden"}
-              h={dashboardItemHeight}
-              pb={responsiveSpacing}
-              {...props}
-            >
+            <>
               <Box p={responsiveSpacing}>
                 <HStack
                   justify={"space-between"}
@@ -128,10 +128,10 @@ export default function DashboardPengumuman({ ...props }: Props) {
                     />
                   ))}
               </VStack>
-            </VStack>
+            </>
           )}
         </>
       )}
-    </>
+    </VStack>
   );
 }

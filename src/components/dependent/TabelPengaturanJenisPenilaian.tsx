@@ -14,6 +14,7 @@ import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDi
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 
 interface Props {
   filterConfig?: any;
@@ -66,7 +67,7 @@ export default function TabelPengaturanJenisPenilaian({ filterConfig }: Props) {
     },
   ];
 
-  const { error, loading, data, retry } = useDataState<any[]>({
+  const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
     url: `/api/rski/dashboard/perusahaan/jenis-penilaian`,
     dependencies: [],
@@ -177,9 +178,19 @@ export default function TabelPengaturanJenisPenilaian({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"300px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
+
+          {notFound && !isObjectEmpty(filterConfig) && (
+            <NotFound minH={"300px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"300px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
 
       {!error && (
