@@ -33,7 +33,11 @@ import {
 } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { useLightDarkColor } from "../../constant/colors";
+import {
+  useLightDarkColor,
+  useWarningAlphaColor,
+  useWarningColor,
+} from "../../constant/colors";
 import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
 import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
@@ -83,6 +87,8 @@ export default function DetailKaryawanModal({
   );
   // SX
   const lightDarkColor = useLightDarkColor();
+  const warningColor = useWarningColor();
+  const warningAlphaColor = useWarningAlphaColor();
 
   const initialRef = useRef(null);
   const { error, loading, data, retry } = useDataState<any>({
@@ -567,12 +573,13 @@ export default function DetailKaryawanModal({
                             <Box>
                               {!emptyDataLabel && <Skeleton h={"50px"} />}
 
-                              {emptyDataLabel && (
+                              {emptyDataLabel && emptyDataLabel.length > 0 && (
                                 <Accordion allowMultiple>
                                   <AccordionItem
-                                    border={"1px solid var(--divider3)"}
+                                    border={"none"}
                                     borderRadius={8}
                                     overflow={"clip"}
+                                    bg={warningAlphaColor}
                                   >
                                     <AccordionButton
                                       w={"100%"}
@@ -580,12 +587,10 @@ export default function DetailKaryawanModal({
                                       gap={2}
                                       justifyContent={"space-between"}
                                       fontWeight={600}
-                                      color={
-                                        emptyDataLabel?.length === 0
-                                          ? "green.400"
-                                          : "red.400"
-                                      }
-                                      _expanded={{ bg: "var(--divider2)" }}
+                                      bg={warningAlphaColor}
+                                      color={warningColor}
+                                      _hover={{ bg: warningAlphaColor }}
+                                      // _expanded={{ bg: "var(--divider2)" }}
                                     >
                                       <Text mt={"2px"}>
                                         {emptyDataLabel?.length === 0

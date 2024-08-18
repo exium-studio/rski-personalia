@@ -8,10 +8,10 @@ export default function StatusKaryawanBadge({ data, ...props }: Props) {
   let colorScheme;
   switch (data?.id) {
     case 1:
-      colorScheme = "orange";
+      colorScheme = "purple";
       break;
     case 2:
-      colorScheme = "purple";
+      colorScheme = "blue";
       break;
     case 3:
       colorScheme = "green";

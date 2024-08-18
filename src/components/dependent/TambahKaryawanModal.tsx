@@ -56,9 +56,11 @@ import MultiselectPotongan from "./_Select/MultiselectPotongan";
 import DisclosureHeader from "./DisclosureHeader";
 import NumberInput from "./input/NumberInput";
 import PleaseWaitModal from "./PleaseWaitModal";
+import StringInput from "./input/StringInput";
 
 const validationSchemaStep1 = yup.object({
   nama_karyawan: yup.string().required("Harus diisi"),
+  nik: yup.string().required("Harus diisi"),
   email: yup.string().email("Email tidak valid").required("Harus diisi"),
   no_rm: yup.string().required("Harus diisi"),
   no_manulife: yup.string().required("Harus diisi"),
@@ -110,6 +112,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
     validateOnChange: false,
     initialValues: {
       nama_karyawan: "",
+      nik: "",
       email: "",
       no_rm: "",
       no_manulife: "",
@@ -234,13 +237,31 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             Nama Karyawan
             <RequiredForm />
           </FormLabel>
-          <Input
+          <StringInput
             name="nama_karyawan"
             placeholder="Jolitos Kurniawan"
-            onChange={formik.handleChange}
-            value={formik.values.nama_karyawan}
+            onChangeSetter={(input) => {
+              formik.setFieldValue("nama_karyawan", input);
+            }}
+            inputValue={formik.values.nama_karyawan}
           />
           <FormErrorMessage>{formik.errors.nama_karyawan}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl mb={4} flex={"1 1 300px"} isInvalid={!!formik.errors.nik}>
+          <FormLabel>
+            No. Induk Karyawan
+            <RequiredForm />
+          </FormLabel>
+          <StringInput
+            name="nik"
+            placeholder="Jolitos Kurniawan"
+            onChangeSetter={(input) => {
+              formik.setFieldValue("nik", input);
+            }}
+            inputValue={formik.values.nik}
+          />
+          <FormErrorMessage>{formik.errors.nik}</FormErrorMessage>
         </FormControl>
 
         <FormControl
@@ -252,11 +273,13 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             Email
             <RequiredForm />
           </FormLabel>
-          <Input
+          <StringInput
             name="email"
-            placeholder="jolitos@gmail.com"
-            onChange={formik.handleChange}
-            value={formik.values.email}
+            placeholder="Jolitos Kurniawan"
+            onChangeSetter={(input) => {
+              formik.setFieldValue("email", input);
+            }}
+            inputValue={formik.values.email}
           />
           <FormHelperText opacity={0.4}>
             Email ini digunakan untuk masuk ke RSKI Karyawan (login)
@@ -273,11 +296,13 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             No. Rekam Medis
             <RequiredForm />
           </FormLabel>
-          <Input
+          <StringInput
             name="no_rm"
-            placeholder="871***"
-            onChange={formik.handleChange}
-            value={formik.values.no_rm}
+            placeholder="Jolitos Kurniawan"
+            onChangeSetter={(input) => {
+              formik.setFieldValue("no_rm", input);
+            }}
+            inputValue={formik.values.no_rm}
           />
           <FormErrorMessage>{formik.errors.no_rm}</FormErrorMessage>
         </FormControl>
@@ -291,11 +316,13 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             No. Manulife
             <RequiredForm />
           </FormLabel>
-          <Input
+          <StringInput
             name="no_manulife"
-            placeholder="019***"
-            onChange={formik.handleChange}
-            value={formik.values.no_manulife}
+            placeholder="Jolitos Kurniawan"
+            onChangeSetter={(input) => {
+              formik.setFieldValue("no_manulife", input);
+            }}
+            inputValue={formik.values.no_manulife}
           />
           <FormErrorMessage>{formik.errors.no_manulife}</FormErrorMessage>
         </FormControl>
