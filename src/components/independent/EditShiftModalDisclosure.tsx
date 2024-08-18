@@ -67,7 +67,7 @@ export default function EditShiftModalDisclosure({
       const payload = {
         nama: values.nama,
         jam_from: values.jam_from,
-        jam_to: values.jam_from,
+        jam_to: values.jam_to,
         _method: "patch",
       };
       setLoading(true);
