@@ -20,6 +20,7 @@ export default function PresensiTotal({ ...props }: Props) {
       libur: 41,
     },
   };
+  
   const [loading] = useState<boolean>(false);
   const [data] = useState<any | null>(dummy);
 
