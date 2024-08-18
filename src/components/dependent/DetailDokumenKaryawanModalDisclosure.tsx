@@ -33,6 +33,7 @@ import DisclosureHeader from "./DisclosureHeader";
 import DokumenFileItem from "./DokumenFileItem";
 import Retry from "./Retry";
 import useRenderTrigger from "../../global/useRenderTrigger";
+import req from "../../constant/req";
 
 interface VerifikasiProps {
   data: any;
@@ -53,6 +54,36 @@ const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
 
   function verifikasiDokumen() {
     setLoading(true);
+
+    req
+      .post(
+        `/api/rski/dashboard/karyawan/detail-karyawan-dokumen/${data.user.data_karyawan_id}/verifikasi`
+      )
+      .then((r) => {
+        if (r.status === 200) {
+          toast({
+            status: "success",
+            title: r.data.message,
+            position: "bottom-right",
+            isClosable: true,
+          });
+          setRt(!rt);
+          backOnClose();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
 
     //TODO api verifikasi dokumen
   }
@@ -102,6 +133,7 @@ const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
               className="btn-ap clicky"
               colorScheme="ap"
               onClick={verifikasiDokumen}
+              isLoading={loading}
             >
               Ya
             </Button>
