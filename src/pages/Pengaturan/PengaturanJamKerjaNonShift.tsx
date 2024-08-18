@@ -23,6 +23,7 @@ import req from "../../constant/req";
 import { responsiveSpacing } from "../../constant/sizes";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import useDataState from "../../hooks/useDataState";
+import formatDate from "../../lib/formatDate";
 
 export default function PengaturanJamKerjaNonShift() {
   // SX
@@ -49,7 +50,6 @@ export default function PengaturanJamKerjaNonShift() {
         nama: values.nama,
         jam_from: values.jam_from,
         jam_to: values.jam_to,
-        _method: "patch",
       };
       setUpdateLoading(true);
       req
@@ -156,7 +156,7 @@ export default function PengaturanJamKerjaNonShift() {
                   <RequiredForm />
                 </FormLabel>
 
-                <Wrap spacing={4}>
+                <Wrap spacing={4} mb={4}>
                   <FormControl
                     flex={"1 1"}
                     isInvalid={!!formik.errors.jam_from}
@@ -198,17 +198,22 @@ export default function PengaturanJamKerjaNonShift() {
                 </Wrap>
               </form>
 
-              <Button
-                className="btn-ap clicky"
-                colorScheme="ap"
-                ml={"auto"}
-                mt={"auto"}
-                type="submit"
-                form="jamKerjaNonShiftForm"
-                isLoading={updateLoading}
-              >
-                Simpan
-              </Button>
+              <HStack justify={"space-between"} mt={"auto"}>
+                <Text opacity={0.6}>
+                  Terakhir diperbarui : {formatDate(data.updated_at)}
+                </Text>
+                <Button
+                  className="btn-ap clicky"
+                  colorScheme="ap"
+                  ml={"auto"}
+                  mt={"auto"}
+                  type="submit"
+                  form="jamKerjaNonShiftForm"
+                  isLoading={updateLoading}
+                >
+                  Simpan
+                </Button>
+              </HStack>
             </>
           )}
         </>

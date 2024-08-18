@@ -195,7 +195,7 @@ export default function TambahCuti({ ...props }: Props) {
                   }}
                   inputValue={formik.values.cuti_administratif}
                   isError={!!formik.errors.cuti_administratif}
-                  placeContent={"Dihitung Sebagai Hadir?"}
+                  placeholder={"Dihitung Sebagai Hadir?"}
                 />
                 <Text fontSize={"sm"} opacity={0.4} mt={2}>
                   Cuti ini dihitung hadir, sehingga bonus presensi tetap
@@ -223,7 +223,7 @@ export default function TambahCuti({ ...props }: Props) {
                   }}
                   inputValue={formik.values.is_need_requirement}
                   isError={!!formik.errors.is_need_requirement}
-                  placeContent={"Perlu Syarat?"}
+                  placeholder={"Perlu Syarat?"}
                 />
 
                 <FormErrorMessage>
