@@ -814,9 +814,11 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    {data.jenis_kelamin
+                                    {data.jenis_kelamin === 1
                                       ? "Laki - laki"
-                                      : "Perempuan"}
+                                      : data.jenis_kelamin === 0
+                                      ? "Perempuan"
+                                      : ""}
                                   </Text>
                                 </HStack>
 

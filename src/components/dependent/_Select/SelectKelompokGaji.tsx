@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import req from "../../../constant/req";
 import SingleSelectModal from "../input/SingleSelectModal";
+import formatNumber from "../../../lib/formatNumber";
 
 interface Props extends ButtonProps {
   name: string;
@@ -42,6 +43,7 @@ export default function SelectKelompokGaji({
             const options = r.data.data.map((item: any) => ({
               value: item.id,
               label: item.nama_kelompok,
+              label2: formatNumber(item.besaran),
             }));
             setOptions(options);
           }

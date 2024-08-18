@@ -57,11 +57,13 @@ import DisclosureHeader from "./DisclosureHeader";
 import NumberInput from "./input/NumberInput";
 import PleaseWaitModal from "./PleaseWaitModal";
 import StringInput from "./input/StringInput";
+import formatDate from "../../lib/formatDate";
 
 const validationSchemaStep1 = yup.object({
   nama_karyawan: yup.string().required("Harus diisi"),
   nik: yup.string().required("Harus diisi"),
   email: yup.string().email("Email tidak valid").required("Harus diisi"),
+  tgl_berakhir_pks: yup.string().required("Harus diisi"),
   no_rm: yup.string().required("Harus diisi"),
   no_manulife: yup.string().required("Harus diisi"),
   tgl_masuk: yup.string().required("Harus diisi"),
@@ -114,6 +116,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
       nama_karyawan: "",
       nik: "",
       email: "",
+      tgl_berakhir_pks: "",
       no_rm: "",
       no_manulife: "",
       tgl_masuk: "",
@@ -142,10 +145,12 @@ export default function TambahKaryawanModal({ ...props }: Props) {
 
       const payload = {
         nama: values.nama_karyawan,
+        nik: values.nik,
         email: values.email,
+        tgl_berakhir_pks: formatDate(values.tgl_berakhir_pks, "short"),
         no_rm: values.no_rm,
         no_manulife: values.no_manulife,
-        tgl_masuk: values.tgl_masuk,
+        tgl_masuk: formatDate(values.tgl_masuk, "short"),
         status_karyawan_id: values.status_karyawan?.value,
         unit_kerja_id: values.unit_kerja?.value,
         jabatan_id: values.jabatan?.value,
@@ -285,6 +290,32 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             Email ini digunakan untuk masuk ke RSKI Karyawan (login)
           </FormHelperText>
           <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          mb={4}
+          flex={"1 1 300px"}
+          isInvalid={!!formik.errors.tgl_berakhir_pks}
+        >
+          <FormLabel>
+            Tanggal Berakhir PKS
+            <RequiredForm />
+          </FormLabel>
+          <DatePickerModal
+            id="tambah-karyawan-date-picker"
+            name="tgl_berakhir_pks"
+            placeholder="Pilih Tanggal Berakhir PKS"
+            onConfirm={(input) => {
+              formik.setFieldValue("tgl_berakhir_pks", input);
+            }}
+            inputValue={
+              formik.values.tgl_berakhir_pks
+                ? new Date(formik.values.tgl_berakhir_pks)
+                : undefined
+            }
+            isError={!!formik.errors.tgl_berakhir_pks}
+          />
+          <FormErrorMessage>{formik.errors.tgl_berakhir_pks}</FormErrorMessage>
         </FormControl>
 
         <FormControl

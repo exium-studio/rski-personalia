@@ -31,11 +31,13 @@ import req from "../../constant/req";
 import useRenderTrigger from "../../global/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import StringInput from "../../components/dependent/input/StringInput";
+import formatDate from "../../lib/formatDate";
 
 const validationSchemaStep1 = yup.object({
   nama_karyawan: yup.string().required("Harus diisi"),
   nik: yup.string().required("Harus diisi"),
   email: yup.string().email("Email tidak valid").required("Harus diisi"),
+  tgl_berakhir_pks: yup.string().required("Harus diisi"),
   no_rm: yup.string().required("Harus diisi"),
   no_manulife: yup.string().required("Harus diisi"),
   tgl_masuk: yup.string().required("Harus diisi"),
@@ -79,15 +81,21 @@ export default function EditKaryawanForm({
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
+  console.log(new Date(formatDate(data.tgl_berakhir_pks as string, "iso")));
+  console.log(formatDate(data.tgl_berakhir_pks));
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
       nama_karyawan: data.user.nama,
       nik: data.nik,
       email: data.email,
+      tgl_berakhir_pks:
+        (new Date(formatDate(data.tgl_berakhir_pks as string, "iso")) as any) ||
+        undefined,
       no_rm: data.no_rm as string,
       no_manulife: data.no_manulife as string,
-      tgl_masuk: data.tgl_masuk,
+      tgl_masuk: new Date(formatDate(data.tgl_masuk as string, "iso")) as any,
       status_karyawan: {
         value: data.status_karyawan?.id,
         label: data.status_karyawan?.label,
@@ -134,9 +142,13 @@ export default function EditKaryawanForm({
         nama: values.nama_karyawan,
         nik: values.nik,
         email: values.email,
+        tgl_berakhir_pks: formatDate(
+          values.tgl_berakhir_pks as string,
+          "short"
+        ),
         no_rm: values.no_rm.toString(),
         no_manulife: values.no_manulife.toString(),
-        tgl_masuk: values.tgl_masuk,
+        tgl_masuk: formatDate(values.tgl_masuk as string, "short"),
         status_karyawan_id: values.status_karyawan.value,
         unit_kerja_id: values.unit_kerja.value,
         jabatan_id: values.jabatan.value,
@@ -271,6 +283,34 @@ export default function EditKaryawanForm({
             Email ini digunakan untuk masuk ke RSKI Karyawan (login)
           </FormHelperText>
           <FormErrorMessage>{formik.errors.email as string}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          mb={4}
+          flex={"1 1 300px"}
+          isInvalid={!!formik.errors.tgl_berakhir_pks}
+        >
+          <FormLabel>
+            Tanggal Berakhir PKS
+            <RequiredForm />
+          </FormLabel>
+          <DatePickerModal
+            id="tambah-karyawan-date-picker"
+            name="tgl_berakhir_pks"
+            placeholder="Pilih Tanggal Berakhir PKS"
+            onConfirm={(input) => {
+              formik.setFieldValue("tgl_berakhir_pks", input);
+            }}
+            inputValue={
+              formik.values.tgl_berakhir_pks
+                ? new Date(formik.values.tgl_berakhir_pks)
+                : undefined
+            }
+            isError={!!formik.errors.tgl_berakhir_pks}
+          />
+          <FormErrorMessage>
+            {formik.errors.tgl_berakhir_pks as string}
+          </FormErrorMessage>
         </FormControl>
 
         <FormControl
