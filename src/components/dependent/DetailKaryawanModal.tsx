@@ -587,10 +587,9 @@ export default function DetailKaryawanModal({
                                       gap={2}
                                       justifyContent={"space-between"}
                                       fontWeight={600}
-                                      bg={warningAlphaColor}
                                       color={warningColor}
                                       _hover={{ bg: warningAlphaColor }}
-                                      // _expanded={{ bg: "var(--divider2)" }}
+                                      _expanded={{ bg: warningAlphaColor }}
                                     >
                                       <Text mt={"2px"}>
                                         {emptyDataLabel?.length === 0

@@ -191,9 +191,11 @@ export default function TabelJadwal({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
+          {notFound && isObjectEmpty(formattedFilterKaryawan) && (
+            <NoData minH={"300px"} />
+          )}
 
-          {notFound && !isObjectEmpty(filterConfig) && (
+          {notFound && !isObjectEmpty(formattedFilterKaryawan) && (
             <NotFound minH={"300px"} />
           )}
 
