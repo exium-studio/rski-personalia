@@ -188,7 +188,7 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
                         textAlign={"center"}
                         mx={"auto"}
                       >
-                        Klik row untuk melihat detail role
+                        Klik row untuk melihat detail role/permissions nya
                       </Text>
 
                       <DetailKelolaRoleModal
