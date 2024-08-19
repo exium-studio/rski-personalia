@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import ExportModal from "../../components/dependent/ExportModal";
+import NumberInput from "../../components/dependent/input/NumberInput";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelRiwayatPenggajian from "../../components/dependent/TabelRiwayatPenggajian";
 import BuatPenggajianModal from "../../components/independent/BuatPenggajianModal";
@@ -8,7 +8,6 @@ import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import NumberInput from "../../components/dependent/input/NumberInput";
 
 export default function Penggajian() {
   // Filter Config
@@ -74,7 +73,7 @@ export default function Penggajian() {
               boxProps={{ w: "fit-content" }}
             />
 
-            <ExportModal url="" title="Export Penggajian" />
+            {/* <ExportModal url="" title="Export Penggajian" /> */}
 
             <BuatPenggajianModal minW={"fit-content"} />
           </HStack>

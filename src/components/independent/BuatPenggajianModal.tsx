@@ -1,7 +1,4 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Button,
   ButtonProps,
   Checkbox,
@@ -20,14 +17,14 @@ import { RiFileList3Fill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
+import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import CContainer from "../wrapper/CContainer";
-import useRenderTrigger from "../../global/useRenderTrigger";
-import req from "../../constant/req";
 import PleaseWaitModal from "../dependent/PleaseWaitModal";
+import CContainer from "../wrapper/CContainer";
 
 interface Props extends ButtonProps {}
 
@@ -124,13 +121,13 @@ export default function BuatPenggajianModal({ ...props }: Props) {
 
           <ModalFooter>
             <CContainer>
-              <Alert status="warning" alignItems={"start"} mb={4}>
+              {/* <Alert status="warning" alignItems={"start"} mb={4}>
                 <AlertIcon mt={1} />
                 <AlertDescription>
                   Silakan cek atau refresh tabel penggajian secara berkala
                   karena pembuatan gaji memerlukan waktu.
                 </AlertDescription>
-              </Alert>
+              </Alert> */}
 
               <Button
                 onClick={() => {

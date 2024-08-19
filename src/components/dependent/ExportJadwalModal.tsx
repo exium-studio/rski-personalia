@@ -108,14 +108,22 @@ export default function ExportJadwalModal({ ...props }: Props) {
 
       <Modal
         isOpen={isOpen}
-        onClose={backOnClose}
+        onClose={() => {
+          backOnClose();
+          setJenisKaryawan(undefined);
+        }}
         initialFocusRef={initialRef}
         isCentered
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Export Jadwal"} />
+            <DisclosureHeader
+              title={"Export Jadwal"}
+              onClose={() => {
+                setJenisKaryawan(undefined);
+              }}
+            />
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.6}>Apakah anda yakin akan export tabel ini?</Text>
@@ -133,7 +141,10 @@ export default function ExportJadwalModal({ ...props }: Props) {
                 <Button
                   w={"100%"}
                   className="btn-solid clicky"
-                  onClick={backOnClose}
+                  onClick={() => {
+                    backOnClose();
+                    setJenisKaryawan(undefined);
+                  }}
                   isDisabled={loading || jenisKaryawan === undefined}
                 >
                   Tidak
