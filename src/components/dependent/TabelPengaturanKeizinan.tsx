@@ -96,6 +96,18 @@ export default function TabelPengaturanKeizinan({
         justify: "center",
       },
     },
+    {
+      th: "Verifikasi 1",
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
+      th: "Verifikasi 2",
+      cProps: {
+        justify: "center",
+      },
+    },
   ];
   const permissionsColumn = (item: any, groupIndex: number) => {
     const np = Object.keys(item).map((key, i) => ({
@@ -131,6 +143,8 @@ export default function TabelPengaturanKeizinan({
   }));
 
   // SX
+
+  // console.log("permission", data);
 
   return (
     <>

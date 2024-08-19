@@ -67,7 +67,7 @@ export default function PengaturanKeizinan({ role_id }: Props) {
 
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { permissions: data },
+    initialValues: { permissions: data?.permissions },
     validationSchema: yup
       .object()
       .shape({ permissions: yup.array().required("Harus diisi") }),
@@ -104,8 +104,8 @@ export default function PengaturanKeizinan({ role_id }: Props) {
 
   const formikRef = useRef(formik);
   useEffect(() => {
-    if (data?.initialValues) {
-      formikRef.current.setFieldValue("permissions", data?.initialValues);
+    if (data?.permissions) {
+      formikRef.current.setFieldValue("permissions", data?.permissions);
     }
   }, [data, formikRef]);
 
