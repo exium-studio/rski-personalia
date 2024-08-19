@@ -18,19 +18,18 @@ import { RiCalendarScheduleFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
+import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
+import useRenderTrigger from "../../global/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import SelectJadwalKaryawan from "../dependent/_Select/SelectJadwalKaryawan";
 import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
-import SelectKompensasi from "../dependent/_Select/SelectKompensasi";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import Textarea from "../dependent/input/Textarea";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
-import req from "../../constant/req";
-import useRenderTrigger from "../../global/useRenderTrigger";
 
 interface Props extends ButtonProps {}
 
@@ -49,7 +48,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
       karyawan: undefined as any,
       tgl_pengajuan: undefined as any,
       jadwal: undefined as any,
-      kompensasi: undefined as any,
+      // kompensasi: undefined as any,
       durasi: undefined as any,
       catatan: "",
     },
@@ -57,7 +56,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
       karyawan: yup.object().required("Harus diisi"),
       tgl_pengajuan: yup.string().required("Harus diisi"),
       jadwal: yup.object().required("Harus diisi"),
-      kompensasi: yup.object().required("Harus diisi"),
+      // kompensasi: yup.object().required("Harus diisi"),
       durasi: yup.string().required("Harus diisi"),
       catatan: yup.string().required("Harus diisi"),
     }),
@@ -66,7 +65,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
         tgl_pengajuan: values.tgl_pengajuan,
         user_id: values.karyawan.value,
         jadwal_id: values.jadwal.value,
-        kompensasi_lembur_id: values.kompensasi.value,
+        // kompensasi_lembur_id: values.kompensasi.value,
         durasi: values.durasi,
         catatan: values.catatan,
         // status_lembur_id: 1,
@@ -199,7 +198,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl mb={4} isInvalid={!!formik.errors.kompensasi}>
+              {/* <FormControl mb={4} isInvalid={!!formik.errors.kompensasi}>
                 <FormLabel>
                   Kompensasi
                   <RequiredForm />
@@ -214,7 +213,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
                 <FormErrorMessage>
                   {formik.errors.kompensasi as string}
                 </FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
 
               <FormControl mb={4} isInvalid={!!formik.errors.durasi}>
                 <FormLabel>
