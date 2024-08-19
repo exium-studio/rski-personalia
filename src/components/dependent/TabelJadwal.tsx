@@ -102,7 +102,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
           td:
             jadwal !== null ? (
               <>
-                {item.unit_kerja?.jenis_karyawan === 1 ? (
+                {parseInt(item.unit_kerja?.jenis_karyawan) === 1 ? (
                   <TabelJadwalItem
                     data={item}
                     jadwal={jadwal}
@@ -121,7 +121,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
                     <Text fontSize={14}>Libur</Text>
                     <Text fontSize={14}>Minggu</Text>
                   </CContainer>
-                ) : jadwal?.status === 2 ? (
+                ) : parseInt(jadwal?.status) === 2 ? (
                   <CContainer
                     bg={"var(--divider)"}
                     p={4}
@@ -153,7 +153,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
                   </CContainer>
                 )}
               </>
-            ) : item.unit_kerja?.jenis_karyawan === 1 ? (
+            ) : parseInt(item.unit_kerja?.jenis_karyawan) === 1 ? (
               <TerapkanJadwalKaryawanTerpilih
                 data={item}
                 tgl={dateList[i]}

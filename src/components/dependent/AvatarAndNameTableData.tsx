@@ -58,8 +58,12 @@ export default function AvatarAndNameTableData({
 
         {data.unit_kerja && (
           <BooleanBadge
-            data={data.unit_kerja.jenis_karyawan}
-            colorScheme={data.unit_kerja.jenis_karyawan ? "cyan" : "orange"}
+            data={parseInt(data.unit_kerja.jenis_karyawan as unknown as string)}
+            colorScheme={
+              parseInt(data.unit_kerja.jenis_karyawan as unknown as string)
+                ? "cyan"
+                : "orange"
+            }
             trueValue="Shift"
             falseValue="Non-Shift"
             w={"100px"}

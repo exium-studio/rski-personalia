@@ -142,6 +142,8 @@ export default function DetailKaryawanModal({
     }
   }, [data]);
 
+  // console.log(data);
+
   return (
     <Modal
       isOpen={isOpen}
