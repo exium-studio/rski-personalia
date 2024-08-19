@@ -167,7 +167,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
               <SimpleGrid columns={[1]} gap={4}>
                 <FormControl mb={4} isInvalid={!!formik.errors.tgl_mulai}>
                   <FormLabel>
-                    Tanggal Mulai
+                    Tanggal
                     <RequiredForm />
                   </FormLabel>
                   <DatePickerModal
