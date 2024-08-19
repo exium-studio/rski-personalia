@@ -492,9 +492,11 @@ export default function Profil() {
                     </Box>
                     <FlexLine />
                     <Text fontWeight={500} textAlign={"right"}>
-                      {userData.data_karyawan.jenis_kelamin
+                      {userData.data_karyawan.jenis_kelamin === 1
                         ? "Laki - laki"
-                        : "Perempuan"}
+                        : userData.data_karyawan.jenis_kelamin === 0
+                        ? "Perempuan"
+                        : ""}
                     </Text>
                   </HStack>
 
