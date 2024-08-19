@@ -295,11 +295,11 @@ export default function NavContainer({
               <VStack justify={"center"} flex={1} position={"relative"}>
                 <ComponentSpinner
                   position={"absolute"}
-                  spinnerProps={{ size: "xl" }}
+                  spinnerProps={{ size: "xl", w: "80px", h: "80px" }}
                   opacity={0.4}
                 />
 
-                <Icon as={RiShieldUserFill} fontSize={24} opacity={0.4} />
+                <Icon as={RiShieldUserFill} fontSize={32} opacity={0.4} />
               </VStack>
             )}
 
