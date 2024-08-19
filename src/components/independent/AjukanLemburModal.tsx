@@ -227,6 +227,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
                     formik.setFieldValue("durasi", input);
                   }}
                   inputValue={formik.values.durasi}
+                  placeholder="Tentukan Durasi"
                   isError={!!formik.errors.durasi}
                 />
                 <FormErrorMessage>
