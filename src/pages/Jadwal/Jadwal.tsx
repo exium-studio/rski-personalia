@@ -1,7 +1,7 @@
 import { HStack } from "@chakra-ui/react";
 import { endOfWeek, startOfWeek } from "date-fns";
 import { useEffect, useState } from "react";
-import ExportModal from "../../components/dependent/ExportModal";
+import ExportJadwalModal from "../../components/dependent/ExportJadwalModal";
 import ImportModal from "../../components/dependent/ImportModal";
 import DateRangePickerModal from "../../components/dependent/input/DateRangePickerModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
@@ -104,11 +104,7 @@ export default function Jadwal() {
 
             <FilterKaryawan />
 
-            <ExportModal
-              url="/api/rski/dashboard/jadwal-karyawan/export"
-              title="Export Jadwal"
-              downloadFileName="Data Jadwal"
-            />
+            <ExportJadwalModal />
 
             <ImportModal
               url="/api/rski/dashboard/jadwal-karyawan/import"
