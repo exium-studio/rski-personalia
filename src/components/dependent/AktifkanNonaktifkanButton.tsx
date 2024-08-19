@@ -82,7 +82,7 @@ export default function AktifkanNonaktifkanButton({
           <Icon
             as={RiShutDownLine}
             fontSize={iconSize}
-            color={data == 2 ? "red.400" : "p.500"}
+            color={data === 2 ? "red.400" : "p.500"}
           />
         }
         className="btn-outline clicky"
@@ -90,7 +90,7 @@ export default function AktifkanNonaktifkanButton({
         onClick={onOpen}
         isLoading={loading}
       >
-        {data == 2 ? "Non-aktifkan" : "Aktifkan"}
+        {data === 2 ? "Non-aktifkan" : "Aktifkan"}
       </Button>
 
       <Modal
