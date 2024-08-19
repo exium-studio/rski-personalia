@@ -5,8 +5,6 @@ export default function isDatePassed(
   const inputDate = new Date(date);
   const today = new Date();
 
-  console.log(date);
-
   // Mengatur waktu (hours, minutes, seconds, ms) ke 0 untuk memastikan perbandingan hanya berdasarkan tanggal
   inputDate.setHours(0, 0, 0, 0);
   today.setHours(0, 0, 0, 0);
