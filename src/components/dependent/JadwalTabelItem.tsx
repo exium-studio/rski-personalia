@@ -128,6 +128,11 @@ export default function TabelJadwalItem({
   });
 
   const [libur, setLibur] = useState<boolean>(false);
+  useEffect(() => {
+    if (!jadwal?.shift) {
+      setLibur(true);
+    }
+  }, [jadwal?.shift]);
 
   const formikRef = useRef(formik);
   useEffect(() => {
@@ -270,7 +275,7 @@ export default function TabelJadwalItem({
                       formik.setFieldValue("shift", input);
                     }}
                     inputValue={formik.values.shift}
-                    isDisabled={isDatePassed(data.tgl_masuk) || libur}
+                    isDisabled={isDatePassed(tgl as string) || libur}
                     mb={4}
                   />
                   <Checkbox
@@ -278,6 +283,8 @@ export default function TabelJadwalItem({
                     onChange={(e) => {
                       setLibur(e.target.checked);
                     }}
+                    isChecked={libur}
+                    isDisabled={isDatePassed(tgl as string)}
                   >
                     <Text mt={"-3px"}>Jadwalkan Libur</Text>
                   </Checkbox>
@@ -298,7 +305,7 @@ export default function TabelJadwalItem({
                   colorScheme="ap"
                   className="btn-ap clicky"
                   isLoading={loading}
-                  isDisabled={isDatePassed(data.tgl_masuk)}
+                  isDisabled={isDatePassed(tgl as string)}
                 >
                   Simpan
                 </Button>
