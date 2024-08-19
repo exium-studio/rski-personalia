@@ -40,7 +40,7 @@ export default function TabelPengaturanKeizinan({
 
   const handleCheckboxChange = (index: number, key: string) => {
     const updatedPermissions = [...formik.values.permissions];
-    const prevValue = updatedPermissions[index].permissions[key];
+    const prevValue = updatedPermissions[index].permissions[key].has_permission;
     if (!prevValue) {
       setTotalPermissionsAllowed(totalPermissionsAllowed + 1);
       if (totalPermissionsAllowed + 1 === totalPermissions) {
@@ -50,60 +50,88 @@ export default function TabelPengaturanKeizinan({
       setTotalPermissionsAllowed(totalPermissionsAllowed - 1);
       setAllPermissions(false);
     }
-    updatedPermissions[index].permissions[key] =
-      !updatedPermissions[index].permissions[key];
+    updatedPermissions[index].permissions[key].has_permission =
+      !updatedPermissions[index].permissions[key].has_permission;
     formik.setFieldValue("permissions", updatedPermissions);
   };
 
   const formattedHeader = [
     {
       th: "Nama Modul",
+      props: {
+        minW: "136px",
+      },
+
       isSortable: true,
     },
     {
       th: "View",
+      props: {
+        minW: "136px",
+      },
       cProps: {
         justify: "center",
       },
     },
     {
       th: "Create",
+      props: {
+        minW: "136px",
+      },
       cProps: {
         justify: "center",
       },
     },
     {
       th: "Edit",
+      props: {
+        minW: "136px",
+      },
       cProps: {
         justify: "center",
       },
     },
     {
       th: "Delete",
+      props: {
+        minW: "136px",
+      },
       cProps: {
         justify: "center",
       },
     },
     {
       th: "Export",
+      props: {
+        minW: "136px",
+      },
       cProps: {
         justify: "center",
       },
     },
     {
       th: "Import",
+      props: {
+        minW: "136px",
+      },
       cProps: {
         justify: "center",
       },
     },
     {
       th: "Verifikasi 1",
+      props: {
+        minW: "136px",
+      },
       cProps: {
         justify: "center",
       },
     },
     {
       th: "Verifikasi 2",
+      props: {
+        minW: "136px",
+      },
       cProps: {
         justify: "center",
       },
@@ -111,15 +139,15 @@ export default function TabelPengaturanKeizinan({
   ];
   const permissionsColumn = (item: any, groupIndex: number) => {
     const np = Object.keys(item).map((key, i) => ({
-      value: item[key],
+      value: item[key]?.has_permission,
       td: (
         <Checkbox
           colorScheme="ap"
           size={"lg"}
-          display={item[key] === null ? "none" : "block"}
-          opacity={item[key] === null ? 0 : 1}
-          isDisabled={item[key] === null}
-          isChecked={item[key]}
+          display={item[key]?.has_permission === null ? "none" : "block"}
+          opacity={item[key]?.has_permission === null ? 0 : 1}
+          isDisabled={item[key]?.has_permission === null}
+          isChecked={item[key]?.has_permission}
           onChange={() => handleCheckboxChange(groupIndex, key)}
         ></Checkbox>
       ),

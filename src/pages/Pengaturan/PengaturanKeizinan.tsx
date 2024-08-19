@@ -7,7 +7,9 @@ import {
   useToast,
   Wrap,
 } from "@chakra-ui/react";
+import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
+import * as yup from "yup";
 import Retry from "../../components/dependent/Retry";
 import TabelPengaturanKeizinan from "../../components/dependent/TabelPengaturanKeizinan";
 import NoData from "../../components/independent/NoData";
@@ -15,11 +17,9 @@ import Skeleton from "../../components/independent/Skeleton";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import useDataState from "../../hooks/useDataState";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import req from "../../constant/req";
 import useRenderTrigger from "../../global/useRenderTrigger";
+import useDataState from "../../hooks/useDataState";
+import req from "../../constant/req";
 
 interface Props {
   role_id: number;
@@ -45,12 +45,12 @@ export default function PengaturanKeizinan({ role_id }: Props) {
     let tpa = 0;
 
     if (data) {
-      data?.initialValues?.forEach((item: any) => {
-        Object.keys(item?.permissions)?.forEach((permissionKey) => {
-          if (permissionKey !== null) {
+      data?.permissions?.forEach((item: any, i: number) => {
+        Object.keys(item?.permissions)?.forEach((permissionKey: any) => {
+          if (item.permissions[permissionKey]?.id !== null) {
             tp++;
           }
-          if (permissionKey) {
+          if (item.permissions[permissionKey]?.has_permission) {
             tpa++;
           }
         });
@@ -62,8 +62,18 @@ export default function PengaturanKeizinan({ role_id }: Props) {
 
     if (tp === tpa) {
       setAllPermissions(true);
+    } else {
+      setAllPermissions(false);
     }
   }, [data]);
+
+  const getIdsWithPermissionTrue = (data: any) => {
+    return data.flatMap((item: any) =>
+      Object.values(item.permissions)
+        .filter((permission: any) => permission.has_permission === true)
+        .map((permission: any) => permission.id)
+    );
+  };
 
   const formik = useFormik({
     validateOnChange: false,
@@ -73,14 +83,15 @@ export default function PengaturanKeizinan({ role_id }: Props) {
       .shape({ permissions: yup.array().required("Harus diisi") }),
     onSubmit: (values, { resetForm }) => {
       setSimpanLoading(true);
-
       const payload = {
-        permissions: values.permissions,
-        _method: "patch",
+        permission_ids: getIdsWithPermissionTrue(values.permissions),
       };
 
+      console.log(values.permissions);
+      console.log(payload);
+
       req
-        .post(`/api/rski/dashboard/pengaturan/permissions/${1}`, payload)
+        .post(`/api/rski/dashboard/pengaturan/permissions/${role_id}`, payload)
         .then((r) => {
           if (r.status === 200) {
             setRt(!rt);
@@ -91,7 +102,9 @@ export default function PengaturanKeizinan({ role_id }: Props) {
           toast({
             status: "error",
             title:
-              e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
             position: "bottom-right",
             isClosable: true,
           });
@@ -113,12 +126,20 @@ export default function PengaturanKeizinan({ role_id }: Props) {
     const newPermissionsData = formik.values.permissions.map((item: any) => {
       let newPermissions = {};
       Object.keys(item.permissions).forEach((permKey) => {
-        if (item.permissions[permKey] !== null) {
+        if (item.permissions[permKey].id !== null) {
           //@ts-ignore
-          newPermissions[permKey] = state;
+          newPermissions[permKey] = {
+            //@ts-ignore
+            id: item.permissions[permKey]?.id,
+            //@ts-ignore
+            has_permission: state,
+          };
         } else {
           //@ts-ignore
-          newPermissions[permKey] = null;
+          newPermissions[permKey] = {
+            id: null,
+            has_permission: null,
+          };
         }
       });
 
