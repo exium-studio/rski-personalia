@@ -128,12 +128,14 @@ export default function EditKaryawanForm({
         value: data.ptkp?.id,
         label: data.ptkp?.kode_ptkp,
       },
-      potongan: data.potongan?.map((potongan: any) => ({
+      potongan: data.potongan_gaji?.map((potongan: any) => ({
         value: potongan?.id,
-        label: potongan?.nama_potongan,
+        label: potongan?.nama_premi,
       })),
     },
+
     validationSchema: validationSchema[activeStep],
+
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama: values.nama_karyawan,
