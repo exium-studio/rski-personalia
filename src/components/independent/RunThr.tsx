@@ -29,6 +29,7 @@ import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import RequiredForm from "../form/RequiredForm";
+import formatDate from "../../lib/formatDate";
 
 interface Props extends ButtonProps {}
 
@@ -51,7 +52,7 @@ export default function RunThr({ ...props }: Props) {
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        tgl_run_thr: values.tgl_run_thr,
+        tgl_run_thr: formatDate(values.tgl_run_thr, "short"),
       };
       setLoading(true);
       req
@@ -146,7 +147,7 @@ export default function RunThr({ ...props }: Props) {
               </FormControl>
             </form>
 
-            <Alert mt={2} status="warning" alignItems={"start"}>
+            <Alert mt={4} status="warning" alignItems={"start"}>
               <AlertIcon />
               <AlertDescription>
                 Jika tanggal run THR melebihi tanggal penggajian, maka THR akan

@@ -120,6 +120,14 @@ export default function BuatPenggajianModal({ ...props }: Props) {
             >
               <Text mt={"-3px"}>Sertakan BOR</Text>
             </Checkbox>
+
+            <Alert mt={4} status="warning" alignItems={"start"}>
+              <AlertIcon />
+              <AlertDescription>
+                Jika penggajian bulan ini ada THR, maka seharusnya Run THR
+                terlebih dahulu.
+              </AlertDescription>
+            </Alert>
           </ModalBody>
 
           <ModalFooter>
@@ -131,14 +139,6 @@ export default function BuatPenggajianModal({ ...props }: Props) {
                   karena pembuatan gaji memerlukan waktu.
                 </AlertDescription>
               </Alert> */}
-
-              <Alert mt={2} status="warning" alignItems={"start"}>
-                <AlertIcon />
-                <AlertDescription>
-                  Jika tanggal run THR melebihi tanggal penggajian, maka THR
-                  akan diaplikasikan pada penggajian berikutnya.
-                </AlertDescription>
-              </Alert>
 
               <Button
                 onClick={() => {
