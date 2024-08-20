@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   ButtonProps,
   FormControl,
@@ -142,6 +145,14 @@ export default function RunThr({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
             </form>
+
+            <Alert mt={2} status="warning" alignItems={"start"}>
+              <AlertIcon />
+              <AlertDescription>
+                Jika tanggal run THR melebihi tanggal penggajian, maka THR akan
+                diaplikasikan pada penggajian berikutnya.
+              </AlertDescription>
+            </Alert>
           </ModalBody>
           <ModalFooter>
             <Button

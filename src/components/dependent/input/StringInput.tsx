@@ -4,6 +4,7 @@ import {
   Input as ChakraInput,
   InputProps,
   Text,
+  TextProps,
   useColorMode,
 } from "@chakra-ui/react";
 import { css, Global } from "@emotion/react";
@@ -16,6 +17,7 @@ interface Props extends InputProps {
   isError?: boolean;
   placeholder?: string;
   boxProps?: BoxProps;
+  placeholderprops?: TextProps;
 }
 
 export default function StringInput({
@@ -26,6 +28,7 @@ export default function StringInput({
   isError,
   placeholder = "",
   boxProps,
+  placeholderprops,
   ...props
 }: Props) {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -78,6 +81,7 @@ export default function StringInput({
             textOverflow={"ellipsis"}
             color={`#96969691`}
             pointerEvents={"none"}
+            {...placeholderprops}
           >
             {placeholder}
           </Text>

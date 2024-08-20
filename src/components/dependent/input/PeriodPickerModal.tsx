@@ -6,7 +6,6 @@ import {
   HStack,
   Icon,
   IconButton,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -25,8 +24,8 @@ import { iconSize } from "../../../constant/sizes";
 import useBackOnClose from "../../../hooks/useBackOnClose";
 import backOnClose from "../../../lib/backOnClose";
 import formatDate from "../../../lib/formatDate";
-import parseNumber from "../../../lib/parseNumber";
 import DisclosureHeader from "../DisclosureHeader";
+import StringInput from "./StringInput";
 
 interface Props extends StackProps {
   id: string;
@@ -211,19 +210,17 @@ export default function PeriodPickerModal({
                   }}
                   onTouchEnd={handleMouseUpDecrement}
                 />
-                <Input
+                <StringInput
                   name="tahun"
                   textAlign={"center"}
                   placeholder="Tahun"
-                  onChange={(e) => {
-                    const value = parseNumber(e.target.value);
-                    if (value) {
-                      setTahunLocal(value);
-                    } else if (value === null) {
-                      setTahunLocal(0);
-                    }
+                  onChangeSetter={(input) => {
+                    setTahunLocal(parseInt(input as string));
                   }}
-                  value={tahunLocal === 0 ? "" : tahunLocal}
+                  inputValue={tahunLocal ? tahunLocal.toString() : ""}
+                  placeholderprops={{
+                    textAlign: "center",
+                  }}
                 />
                 <IconButton
                   aria-label="year plus button"
