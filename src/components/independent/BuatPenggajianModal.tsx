@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   ButtonProps,
   Checkbox,
@@ -128,6 +131,14 @@ export default function BuatPenggajianModal({ ...props }: Props) {
                   karena pembuatan gaji memerlukan waktu.
                 </AlertDescription>
               </Alert> */}
+
+              <Alert mt={2} status="warning" alignItems={"start"}>
+                <AlertIcon />
+                <AlertDescription>
+                  Jika tanggal run THR melebihi tanggal penggajian, maka THR
+                  akan diaplikasikan pada penggajian berikutnya.
+                </AlertDescription>
+              </Alert>
 
               <Button
                 onClick={() => {
