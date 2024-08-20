@@ -13,9 +13,13 @@ import SearchComponent from "./input/SearchComponent";
 
 interface Props {
   data: any;
+  status_riwayat_gaji: any;
 }
 
-export default function TabelDetailPenggajian({ data }: Props) {
+export default function TabelDetailPenggajian({
+  data,
+  status_riwayat_gaji,
+}: Props) {
   // Detail Penggajian Karyawan Disclosure
   const { isOpen, onOpen, onClose } = useDisclosure();
   // Filter Config
@@ -188,6 +192,7 @@ export default function TabelDetailPenggajian({ data }: Props) {
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
+        status_riwayat_gaji={status_riwayat_gaji}
       />
     </>
   );

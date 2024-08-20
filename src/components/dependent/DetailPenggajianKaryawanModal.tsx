@@ -2,9 +2,11 @@ import {
   Avatar,
   Box,
   Button,
+  ButtonProps,
   Checkbox,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   HStack,
   Icon,
@@ -48,11 +50,14 @@ import useRenderTrigger from "../../global/useRenderTrigger";
 import req from "../../constant/req";
 import formatDate from "../../lib/formatDate";
 
-interface PenyesuaianProps {
+interface PenyesuaianProps extends ButtonProps {
   riwayat_id?: number;
 }
 
-function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
+function PenyesuaianGajiButtonModal({
+  riwayat_id,
+  ...props
+}: PenyesuaianProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
     `penyesuaian-gaji-modal-${riwayat_id}`,
@@ -140,8 +145,9 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
         minW={"fit-content"}
         onClick={onOpen}
         pl={5}
+        {...props}
       >
-        Penyesuaian Gaji Bruto
+        Penyesuaian Gaji
       </Button>
 
       <Modal
@@ -158,7 +164,7 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
         <ModalContent>
           <ModalHeader>
             <DisclosureHeader
-              title={"Penyesuaian Gaji Bruto"}
+              title={"Penyesuaian Gaji"}
               onClose={() => {
                 formik.resetForm();
                 setSimpan(false);
@@ -191,6 +197,7 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
                   >
                     Tambah Pendapatan
                   </Button>
+
                   <Button
                     w={"100%"}
                     className="btn-outline clicky"
@@ -207,6 +214,16 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
                     Tambah Potongan
                   </Button>
                 </HStack>
+                {formik.values.jenis_penyesuaian === 1 && (
+                  <FormHelperText>
+                    Tambah Pendapatan akan dikenakan perhitungan PPh21
+                  </FormHelperText>
+                )}
+                {formik.values.jenis_penyesuaian === 2 && (
+                  <FormHelperText>
+                    Tambah Potongan akan mengurangi Take Home Pay
+                  </FormHelperText>
+                )}
                 <FormErrorMessage>
                   {formik.errors.jenis_penyesuaian as string}
                 </FormErrorMessage>
@@ -265,6 +282,7 @@ function PenyesuaianGajiButtonModal({ riwayat_id }: PenyesuaianProps) {
                   setSimpan(e.target.checked);
                 }}
                 isChecked={simpan}
+                isDisabled={!formik.values.jenis_penyesuaian}
                 mt={4}
               >
                 <Text mt={"-3px"}>Simpan Penyesuaian pada Karyawan Ini</Text>
@@ -322,6 +340,7 @@ interface Props {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  status_riwayat_gaji: any;
 }
 
 export default function DetailPenggajianKaryawanModal({
@@ -330,6 +349,7 @@ export default function DetailPenggajianKaryawanModal({
   isOpen,
   onOpen,
   onClose,
+  status_riwayat_gaji,
 }: Props) {
   useBackOnClose(
     id || `detail-penggajian-karyawan-modal-${riwayat_id}`,
@@ -524,7 +544,10 @@ export default function DetailPenggajianKaryawanModal({
                           inputValue={search}
                         />
 
-                        <PenyesuaianGajiButtonModal riwayat_id={riwayat_id} />
+                        <PenyesuaianGajiButtonModal
+                          riwayat_id={riwayat_id}
+                          isDisabled={status_riwayat_gaji?.id === 2}
+                        />
                       </HStack>
 
                       <CContainer

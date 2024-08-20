@@ -310,7 +310,12 @@ export default function DetailPenggajianModal({
                         />
                       </Wrap>
 
-                      <TabelDetailPenggajian data={data} />
+                      <TabelDetailPenggajian
+                        data={data}
+                        status_riwayat_gaji={
+                          data?.data_riwayat?.status_riwayat_gaji
+                        }
+                      />
                     </CContainer>
                   )}
                 </>
