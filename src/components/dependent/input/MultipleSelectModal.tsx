@@ -106,7 +106,6 @@ export default function MultipleSelectModal({
   }
 
   useEffect(() => {
-    console.log(options?.length, selected?.length);
     if (options?.length === selected?.length) {
       setSelectAll(true);
     } else {
