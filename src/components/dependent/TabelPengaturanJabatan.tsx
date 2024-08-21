@@ -124,7 +124,7 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
       },
     },
     {
-      th: "Besaran Tunjangan",
+      th: "Tunjangan Jabatan",
       isSortable: true,
       cProps: {
         justify: "end",

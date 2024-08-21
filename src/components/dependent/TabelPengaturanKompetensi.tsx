@@ -124,7 +124,7 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
       },
     },
     {
-      th: "Besaran Tunjangan",
+      th: "Tunjangan Kompetensi",
       isSortable: true,
       cProps: {
         justify: "end",
@@ -194,8 +194,8 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
         },
       },
       {
-        value: item.total_tunjangan,
-        td: `Rp ${formatNumber(item.total_tunjangan)}`,
+        value: item.tunjangan_kompetensi,
+        td: `Rp ${formatNumber(item.tunjangan_kompetensi)}`,
         isNumeric: true,
         cProps: {
           justify: "end",

@@ -61,7 +61,7 @@ export default function TambahKompetensi({ ...props }: Props) {
       const payload = {
         nama_kompetensi: values.nama_kompetensi,
         jenis_kompetensi: values.jenis_kompetensi.value,
-        total_tunjangan: values.total_tunjangan,
+        tunjangan_kompetensi: values.total_tunjangan,
         nilai_bor: values.nilai_bor,
       };
       setLoading(true);
