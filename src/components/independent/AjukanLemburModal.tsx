@@ -30,6 +30,7 @@ import DatePickerModal from "../dependent/input/DatePickerModal";
 import Textarea from "../dependent/input/Textarea";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
+import formatDate from "../../lib/formatDate";
 
 interface Props extends ButtonProps {}
 
@@ -62,7 +63,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        tgl_pengajuan: values.tgl_pengajuan,
+        tgl_pengajuan: formatDate(values.tgl_pengajuan, "short"),
         user_id: values.karyawan.value,
         jadwal_id: values.jadwal.value,
         // kompensasi_lembur_id: values.kompensasi.value,
