@@ -46,13 +46,13 @@ const dataKaryawanLabel = {
   masa_berlaku_str: "Masa Berlaku STR",
   tgl_berakhir_pks: "Tanggal Berakhir PKS",
   masa_diklat: "Masa Diklat",
-  path_sip: "File SIP",
-  path_nik_ktp: "File KTP",
-  path_kartu_keluarga: "File Kartu Keluarga",
-  path_bpjsksh: "File BPJS Kesehatan",
-  path_bpjsktk: "File BPJS Ketenagakerjaan",
-  path_ijazah: "File Ijazah",
-  path_str: "File STR",
+  file_sip: "File SIP",
+  file_ktp: "File KTP",
+  file_kk: "File Kartu Keluarga",
+  file_bpjs_kesehatan: "File BPJS Kesehatan",
+  file_bpjs_ketenagakerjaan: "File BPJS Ketenagakerjaan",
+  file_ijazah: "File Ijazah",
+  file_sertifikat: "File STR",
 };
 
 export default dataKaryawanLabel;
