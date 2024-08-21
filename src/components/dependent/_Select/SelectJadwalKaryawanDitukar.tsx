@@ -2,13 +2,13 @@ import { ButtonProps, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import req from "../../../constant/req";
-import formatTime from "../../../lib/formatTimeOld";
+import formatTime from "../../../lib/formatTime";
 import SingleSelectModal from "../input/SingleSelectModal";
 import formatDate from "../../../lib/formatDate";
 import backOnClose from "../../../lib/backOnClose";
 
 interface Props extends ButtonProps {
-  jadwal_id?: number;
+  user_id?: number;
   name: string;
   onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
   inputValue: Interface__SelectOption | undefined;
@@ -20,7 +20,7 @@ interface Props extends ButtonProps {
 }
 
 export default function SelectJadwalKaryawanDitukar({
-  jadwal_id,
+  user_id,
   name,
   onConfirm,
   inputValue,
@@ -42,7 +42,7 @@ export default function SelectJadwalKaryawanDitukar({
     if (isOpen && !options) {
       req
         .get(
-          `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal/jadwal-ditukar/${jadwal_id}`
+          `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal/jadwal-ditukar/${user_id}`
         )
         .then((r) => {
           if (r.status === 200) {
@@ -75,7 +75,7 @@ export default function SelectJadwalKaryawanDitukar({
           });
         });
     }
-  }, [isOpen, options, toast, jadwal_id]);
+  }, [isOpen, options, toast, user_id]);
 
   return (
     <SingleSelectModal
