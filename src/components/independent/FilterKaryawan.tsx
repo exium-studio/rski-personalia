@@ -57,7 +57,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   } = useFilterKaryawan();
 
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
-    defaultFilterKaryawan
+    filterKaryawan
   );
 
   function filterCount(values: any) {

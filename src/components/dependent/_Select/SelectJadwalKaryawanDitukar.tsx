@@ -5,6 +5,7 @@ import req from "../../../constant/req";
 import formatTime from "../../../lib/formatTimeOld";
 import SingleSelectModal from "../input/SingleSelectModal";
 import formatDate from "../../../lib/formatDate";
+import backOnClose from "../../../lib/backOnClose";
 
 interface Props extends ButtonProps {
   jadwal_id?: number;
@@ -62,6 +63,7 @@ export default function SelectJadwalKaryawanDitukar({
         })
         .catch((e) => {
           console.log("Error:", e);
+          backOnClose();
           toast({
             status: "error",
             title:

@@ -10,7 +10,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NumberInput from "./input/NumberInput";
 
 type Props = {
@@ -20,6 +20,12 @@ type Props = {
 };
 export default function PaginationJump({ page, setPage, pagination }: Props) {
   const [data, setData] = useState<number | undefined>(page);
+
+  useEffect(() => {
+    if (page) {
+      setData(page);
+    }
+  }, [page]);
 
   const validation = () => {
     if (
