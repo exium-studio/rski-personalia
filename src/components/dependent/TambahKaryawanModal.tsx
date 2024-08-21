@@ -128,6 +128,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
       kelompok_gaji: undefined as any,
       no_rekening: "",
       tunjangan_jabatan: undefined as any,
+      tunjangan_kompetensi: undefined as any,
       tunjangan_fungsional: undefined as any,
       tunjangan_khusus: undefined as any,
       tunjangan_lainnya: undefined as any,
@@ -158,7 +159,6 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         role_id: values.role?.value,
         kelompok_gaji_id: values.kelompok_gaji?.value,
         no_rekening: values.no_rekening,
-        tunjangan_jabatan: values.tunjangan_jabatan,
         tunjangan_fungsional: values.tunjangan_fungsional,
         tunjangan_khusus: values.tunjangan_khusus,
         tunjangan_lainnya: values.tunjangan_lainnya,
@@ -260,7 +260,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           </FormLabel>
           <StringInput
             name="nik"
-            placeholder="Jolitos Kurniawan"
+            placeholder="331**********"
             onChangeSetter={(input) => {
               formik.setFieldValue("nik", input);
             }}
@@ -280,7 +280,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           </FormLabel>
           <StringInput
             name="email"
-            placeholder="Jolitos Kurniawan"
+            placeholder="example@email.com"
             onChangeSetter={(input) => {
               formik.setFieldValue("email", input);
             }}
@@ -329,7 +329,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           </FormLabel>
           <StringInput
             name="no_rm"
-            placeholder="Jolitos Kurniawan"
+            placeholder="331**********"
             onChangeSetter={(input) => {
               formik.setFieldValue("no_rm", input);
             }}
@@ -349,7 +349,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           </FormLabel>
           <StringInput
             name="no_manulife"
-            placeholder="Jolitos Kurniawan"
+            placeholder="331**********"
             onChangeSetter={(input) => {
               formik.setFieldValue("no_manulife", input);
             }}
@@ -582,6 +582,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               <Text>Rp</Text>
             </InputLeftElement>
             <NumberInput
+              isReadOnly
               pl={12}
               name="tunjangan_jabatan"
               placeholder="500.000"
@@ -591,6 +592,9 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               inputValue={formik.values.tunjangan_jabatan}
             />
           </InputGroup>
+          <FormHelperText>
+            Tunjangan diambil dari master data jabatan
+          </FormHelperText>
           <FormErrorMessage>
             {formik.errors.tunjangan_jabatan as string}
           </FormErrorMessage>
@@ -599,10 +603,10 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         <FormControl
           mb={4}
           flex={"1 1 300px"}
-          isInvalid={!!formik.errors.tunjangan_fungsional}
+          isInvalid={!!formik.errors.tunjangan_kompetensi}
         >
           <FormLabel>
-            Tunjangan Fungsional
+            Tunjangan Kompetensi
             <RequiredForm />
           </FormLabel>
           <InputGroup>
@@ -610,17 +614,21 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               <Text>Rp</Text>
             </InputLeftElement>
             <NumberInput
+              isReadOnly
               pl={12}
-              name="tunjangan_fungsional"
+              name="tunjangan_kompetensi"
               placeholder="500.000"
               onChangeSetter={(input) => {
-                formik.setFieldValue("tunjangan_fungsional", input);
+                formik.setFieldValue("tunjangan_kompetensi", input);
               }}
-              inputValue={formik.values.tunjangan_fungsional}
+              inputValue={formik.values.tunjangan_kompetensi}
             />
           </InputGroup>
+          <FormHelperText>
+            Tunjangan diambil dari master data kompetensi
+          </FormHelperText>
           <FormErrorMessage>
-            {formik.errors.tunjangan_fungsional as string}
+            {formik.errors.tunjangan_kompetensi as string}
           </FormErrorMessage>
         </FormControl>
 

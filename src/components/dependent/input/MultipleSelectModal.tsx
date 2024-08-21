@@ -106,10 +106,13 @@ export default function MultipleSelectModal({
   }
 
   useEffect(() => {
+    console.log(options?.length, selected?.length);
     if (options?.length === selected?.length) {
       setSelectAll(true);
+    } else {
+      setSelectAll(false);
     }
-  }, [options, selected]);
+  }, [isOpen, options, selected]);
 
   // SX
   const sh = useScreenHeight();

@@ -40,7 +40,11 @@ export default function EditKaryawanModal({ initialData, ...props }: Props) {
   useBackOnClose(`edit-karyawan-modal`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
-  const steps = [{ title: "Data Karyawan" }, { title: "Penggajian" }];
+  const steps = [
+    { title: "Data Karyawan" },
+    { title: "Penggajian" },
+    { title: "Personal" },
+  ];
   const { activeStep, setActiveStep } = useSteps();
   const activeStepText = steps[activeStep].title;
 
