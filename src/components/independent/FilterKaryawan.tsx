@@ -48,11 +48,11 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     defaultFilterKaryawan,
     filterKaryawan,
     setFilterKaryawan,
-    formattedFilterKaryawan,
+    // formattedFilterKaryawan,
     setFormattedFilterKaryawan,
   } = useFilterKaryawan();
 
-  console.log(formattedFilterKaryawan);
+  // console.log(formattedFilterKaryawan);
 
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
     filterKaryawan
@@ -121,7 +121,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     };
 
     // Menghapus properti dengan array kosong kecuali 'search'
-    const filteredFilters = Object.entries(formattedFilters)
+    const filteredFormattedFilterKaryawan = Object.entries(formattedFilters)
       .filter(
         ([key, value]) =>
           key === "search" || (Array.isArray(value) && value.length > 0)
@@ -133,7 +133,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
 
     // Mengupdate state dengan filter yang diformat
     setFilterKaryawan(localFilterConfig);
-    setFormattedFilterKaryawan(filteredFilters);
+    setFormattedFilterKaryawan(filteredFormattedFilterKaryawan);
     backOnClose();
   }
 

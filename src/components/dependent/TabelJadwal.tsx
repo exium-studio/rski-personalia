@@ -30,6 +30,9 @@ export default function TabelJadwal({ filterConfig }: Props) {
   // Filter Karyawan Config
   const { formattedFilterKaryawan } = useFilterKaryawan();
 
+  // console.log(filterKaryawan);
+  // console.log(formattedFilterKaryawan);
+
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any>({
       initialData: undefined,
