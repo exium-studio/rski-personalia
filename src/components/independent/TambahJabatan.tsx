@@ -58,7 +58,7 @@ export default function TambahJabatan({ ...props }: Props) {
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_jabatan: values.nama_jabatan,
-        tunjangan: values.tunjangan,
+        tunjangan_jabatan: values.tunjangan,
         is_struktural: values.is_struktural ? 1 : 0,
       };
       setLoading(true);

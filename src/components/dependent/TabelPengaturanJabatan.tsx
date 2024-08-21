@@ -182,8 +182,10 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
         },
       },
       {
-        value: item.tunjangan,
-        td: `Rp ${formatNumber(item.tunjangan)}`,
+        value: item.tunjangan_jabatan,
+        td:
+          item.tunjangan_jabatan &&
+          `Rp ${formatNumber(item.tunjangan_jabatan)}`,
         isNumeric: true,
         cProps: {
           justify: "end",
