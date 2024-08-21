@@ -202,7 +202,7 @@ export default function TabelJadwalItem({
             <DisclosureHeader title={"Detail Jadwal"} />
           </ModalHeader>
           <ModalBody>
-            <VStack gap={responsiveSpacing} px={1} flexShrink={0}>
+            <VStack gap={responsiveSpacing} flexShrink={0}>
               <Avatar
                 mb={"auto"}
                 size={"xl"}
@@ -212,7 +212,7 @@ export default function TabelJadwalItem({
 
               <VStack align={"stretch"} w={"100%"} gap={4}>
                 <HStack justify={"space-between"}>
-                  <Text fontSize={14} w={"120px"} opacity={0.6}>
+                  <Text w={"120px"} opacity={0.6}>
                     Nama
                   </Text>
                   <Text textAlign={"right"} fontWeight={500}>
@@ -221,7 +221,7 @@ export default function TabelJadwalItem({
                 </HStack>
 
                 <HStack justify={"space-between"}>
-                  <Text fontSize={14} w={"120px"} opacity={0.6}>
+                  <Text w={"120px"} opacity={0.6}>
                     Tanggal Masuk
                   </Text>
                   <Text textAlign={"right"}>
@@ -230,7 +230,7 @@ export default function TabelJadwalItem({
                 </HStack>
 
                 <HStack justify={"space-between"}>
-                  <Text fontSize={14} w={"120px"} opacity={0.6}>
+                  <Text w={"120px"} opacity={0.6}>
                     Tanggal Selesai
                   </Text>
                   <Text textAlign={"right"}>
@@ -239,7 +239,7 @@ export default function TabelJadwalItem({
                 </HStack>
 
                 <HStack justify={"space-between"}>
-                  <Text fontSize={14} w={"120px"} opacity={0.6}>
+                  <Text w={"120px"} opacity={0.6}>
                     Jenis Karyawan
                   </Text>
                   <JenisKaryawanBadge data={data.unit_kerja?.jenis_karyawan} />
@@ -247,7 +247,7 @@ export default function TabelJadwalItem({
 
                 {data.unit_kerja?.jenis_karyawan === 0 && (
                   <HStack justify={"space-between"}>
-                    <Text fontSize={14} w={"120px"} opacity={0.6}>
+                    <Text w={"120px"} opacity={0.6}>
                       Jam Kerja
                     </Text>
                     <Text>{`${formatTime(
