@@ -26,7 +26,7 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import RequiredForm from "../form/RequiredForm";
 import StringInput from "../dependent/input/StringInput";
 import req from "../../constant/req";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import NumberInput from "../dependent/input/NumberInput";
 
 interface Props extends ButtonProps {}

@@ -25,7 +25,7 @@ import * as yup from "yup";
 import { Interface__SelectOption } from "../../constant/interfaces";
 import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnCloseOld";
 import MultiSelectKaryawan from "../dependent/_Select/MultiSelectKaryawan";

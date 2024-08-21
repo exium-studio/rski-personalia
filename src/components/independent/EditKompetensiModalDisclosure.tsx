@@ -21,7 +21,7 @@ import { useFormik } from "formik";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import req from "../../constant/req";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import SelectJenisKompetensi from "../dependent/_Select/SelectJenisKompetensi";

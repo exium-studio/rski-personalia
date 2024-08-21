@@ -27,7 +27,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import req from "../../constant/req";
 import { useState } from "react";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import formatDate from "../../lib/formatDate";
 interface Props extends ButtonProps {}
 

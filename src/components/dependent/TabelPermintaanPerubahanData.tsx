@@ -17,7 +17,7 @@ import {
 import { useState } from "react";
 import req from "../../constant/req";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";

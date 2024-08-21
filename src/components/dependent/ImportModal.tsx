@@ -24,7 +24,7 @@ import DisclosureHeader from "./DisclosureHeader";
 import FileInputLarge from "./input/FileInputLarge";
 import req from "../../constant/req";
 import download from "../../lib/download";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 
 interface Props extends ButtonProps {
   url: string;

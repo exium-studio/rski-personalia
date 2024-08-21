@@ -32,7 +32,7 @@ import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
 import req from "../../constant/req";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 
 interface Props extends ButtonProps {}
 

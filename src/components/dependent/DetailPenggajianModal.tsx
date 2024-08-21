@@ -32,7 +32,7 @@ import Retry from "./Retry";
 import StatusPublikasiPenggajian from "./StatusPublikasiPenggajian";
 import TabelDetailPenggajian from "./TabelDetailPenggajian";
 import req from "../../constant/req";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 
 interface PublikasiButtonProps extends ButtonProps {
   penggajian_id: number;

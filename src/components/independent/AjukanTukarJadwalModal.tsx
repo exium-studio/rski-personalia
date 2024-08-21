@@ -29,7 +29,7 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import RequiredForm from "../form/RequiredForm";
 import SelectKaryawanDitukar from "../dependent/_Select/SelectKaryawanDitukar";
 import SelectJadwalKaryawanDitukar from "../dependent/_Select/SelectJadwalKaryawanDitukar";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import req from "../../constant/req";
 
 interface Props extends ButtonProps {}

@@ -15,7 +15,7 @@ import { RiShutDownLine } from "@remixicon/react";
 import { iconSize } from "../../constant/sizes";
 import req from "../../constant/req";
 import { useState } from "react";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "./DisclosureHeader";
 import useBackOnClose from "../../hooks/useBackOnClose";

@@ -46,7 +46,7 @@ import RequiredForm from "../../components/form/RequiredForm";
 import { useLightDarkColor } from "../../constant/colors";
 import req from "../../constant/req";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import useScreenHeight from "../../lib/useScreenHeight";

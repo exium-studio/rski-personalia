@@ -20,7 +20,7 @@ import { useRef, useState } from "react";
 import * as yup from "yup";
 import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnCloseOld";
 import useBackOnClose from "../../lib/useBackOnCloseOld";
 import DisclosureHeader from "../dependent/DisclosureHeader";

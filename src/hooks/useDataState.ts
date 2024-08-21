@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import req from "../constant/req";
-import useRenderTrigger from "../global/useRenderTrigger";
+import useRenderTrigger from "./useRenderTrigger";
 
 interface Props<T> {
   initialData?: T;

@@ -26,7 +26,7 @@ import { useLightDarkColor } from "../../constant/colors";
 import { LatLng } from "../../constant/interfaces";
 import req from "../../constant/req";
 import { responsiveSpacing } from "../../constant/sizes";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import formatDate from "../../lib/formatDate";
 import getLocation from "../../lib/getLocation";
 

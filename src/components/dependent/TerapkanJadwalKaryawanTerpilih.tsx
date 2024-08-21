@@ -25,7 +25,7 @@ import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import req from "../../constant/req";
 import { responsiveSpacing } from "../../constant/sizes";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";

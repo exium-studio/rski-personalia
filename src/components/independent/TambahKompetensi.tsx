@@ -29,7 +29,7 @@ import SelectJenisKompetensi from "../dependent/_Select/SelectJenisKompetensi";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
 import RequiredForm from "../form/RequiredForm";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import req from "../../constant/req";
 
 interface Props extends ButtonProps {}

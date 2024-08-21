@@ -32,7 +32,7 @@ import BooleanBadge from "./BooleanBadge";
 import DisclosureHeader from "./DisclosureHeader";
 import DokumenFileItem from "./DokumenFileItem";
 import Retry from "./Retry";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import req from "../../constant/req";
 
 interface VerifikasiProps {

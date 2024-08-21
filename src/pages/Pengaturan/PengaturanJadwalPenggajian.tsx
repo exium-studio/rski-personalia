@@ -20,7 +20,7 @@ import CContainer from "../../components/wrapper/CContainer";
 import { useBodyColor } from "../../constant/colors";
 import req from "../../constant/req";
 import { responsiveSpacing } from "../../constant/sizes";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
 

@@ -28,7 +28,7 @@ import DatePickerModal from "../../components/dependent/input/DatePickerModal";
 import NumberInput from "../../components/dependent/input/NumberInput";
 import RequiredForm from "../../components/form/RequiredForm";
 import req from "../../constant/req";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import StringInput from "../../components/dependent/input/StringInput";
 import formatDate from "../../lib/formatDate";

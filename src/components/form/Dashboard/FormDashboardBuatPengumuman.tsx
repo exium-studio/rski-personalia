@@ -8,7 +8,7 @@ import { useFormik } from "formik";
 import { Dispatch, MutableRefObject } from "react";
 import * as yup from "yup";
 import req from "../../../constant/req";
-import useRenderTrigger from "../../../global/useRenderTrigger";
+import useRenderTrigger from "../../../hooks/useRenderTrigger";
 import DatePickerModal from "../../dependent/input/DatePickerModal";
 import StringInput from "../../dependent/input/StringInput";
 import Textarea from "../../dependent/input/Textarea";

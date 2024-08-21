@@ -9,7 +9,7 @@ import { Dispatch } from "react";
 import * as yup from "yup";
 import { Pengumuman__Interface } from "../../../constant/interfaces";
 import req from "../../../constant/req";
-import useRenderTrigger from "../../../global/useRenderTrigger";
+import useRenderTrigger from "../../../hooks/useRenderTrigger";
 import backOnClose from "../../../lib/backOnClose";
 import formatDate from "../../../lib/formatDate";
 import DatePickerModal from "../../dependent/input/DatePickerModal";

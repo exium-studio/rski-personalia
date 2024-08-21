@@ -17,7 +17,7 @@ import Skeleton from "../../components/independent/Skeleton";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import useRenderTrigger from "../../global/useRenderTrigger";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useDataState from "../../hooks/useDataState";
 import req from "../../constant/req";
 
