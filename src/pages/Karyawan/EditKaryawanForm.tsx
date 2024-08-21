@@ -61,6 +61,19 @@ const validationSchemaStep2 = yup.object({
   potongan: yup.array(),
 });
 
+// const validationSchemaStep3 = yup.object({
+//   tempat_lahir: yup.string().required("Harus diisi"),
+//   tanggal_lahir: yup.string().required("Harus diisi"),
+//   no_hp: yup.string().required("Harus diisi"),
+//   tunjangan_fungsional: yup.string().required("Harus diisi"),
+//   tunjangan_khusus: yup.string().required("Harus diisi"),
+//   tunjangan_lainnya: yup.string().required("Harus diisi"),
+//   uang_lembur: yup.string().required("Harus diisi"),
+//   uang_makan: yup.string().required("Harus diisi"),
+//   ptkp: yup.object().required("Harus diisi"),
+//   potongan: yup.array(),
+// });
+
 const validationSchema = [validationSchemaStep1, validationSchemaStep2];
 
 interface Props {

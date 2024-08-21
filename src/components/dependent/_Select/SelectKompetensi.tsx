@@ -42,6 +42,7 @@ export default function SelectKompetensi({
             const options = r.data.data.map((item: any) => ({
               value: item.id,
               label: item.nama_kompetensi,
+              original_data: item,
             }));
             setOptions(options);
           }

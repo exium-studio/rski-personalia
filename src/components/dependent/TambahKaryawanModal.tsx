@@ -441,6 +441,10 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             name="jabatan"
             onConfirm={(input) => {
               formik.setFieldValue("jabatan", input);
+              formik.setFieldValue(
+                "tunjangan_jabatan",
+                input?.original_data.tunjangan_jabatan
+              );
             }}
             inputValue={formik.values.jabatan}
             isError={!!formik.errors.jabatan}
@@ -458,6 +462,10 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             name="kompetensi"
             onConfirm={(input) => {
               formik.setFieldValue("kompetensi", input);
+              formik.setFieldValue(
+                "tunjangan_kompetensi",
+                input?.original_data.tunjangan_kompetensi
+              );
             }}
             inputValue={formik.values.kompetensi}
             isError={!!formik.errors.kompetensi}

@@ -41,6 +41,7 @@ export default function SelectJabatan({
             const options = r.data.data.map((item: any) => ({
               value: item.id,
               label: item.nama_jabatan,
+              original_data: item,
             }));
             setOptions(options);
           }

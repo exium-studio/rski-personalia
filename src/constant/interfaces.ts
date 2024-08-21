@@ -4,6 +4,7 @@ export interface Interface__SelectOption {
   value: any;
   label: string;
   label2?: string;
+  original_data?: any;
 }
 
 export interface Attendance__Data__Interface {
