@@ -118,7 +118,8 @@ export default function EditKaryawanForm({
         label: data.kelompok_gaji?.nama_kelompok,
       },
       no_rekening: data.no_rekening,
-      tunjangan_jabatan: data.tunjangan_jabatan,
+      tunjangan_jabatan: data.jabatan.tunjangan_jabatan,
+      tunjangan_kompetensi: data.kompetensi.tunjangan_kompetensi,
       tunjangan_fungsional: data.tunjangan_fungsional,
       tunjangan_khusus: data.tunjangan_khusus,
       tunjangan_lainnya: data.tunjangan_lainnya,
@@ -565,6 +566,7 @@ export default function EditKaryawanForm({
               <Text>Rp</Text>
             </InputLeftElement>
             <NumberInput
+              isReadOnly
               pl={12}
               name="tunjangan_jabatan"
               placeholder="500.000"
@@ -574,8 +576,43 @@ export default function EditKaryawanForm({
               inputValue={formik.values.tunjangan_jabatan}
             />
           </InputGroup>
+          <FormHelperText>
+            Tunjangan diambil dari master data jabatan
+          </FormHelperText>
           <FormErrorMessage>
             {formik.errors.tunjangan_jabatan as string}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          mb={4}
+          flex={"1 1 300px"}
+          isInvalid={!!formik.errors.tunjangan_kompetensi}
+        >
+          <FormLabel>
+            Tunjangan Kompetensi
+            <RequiredForm />
+          </FormLabel>
+          <InputGroup>
+            <InputLeftElement pl={4}>
+              <Text>Rp</Text>
+            </InputLeftElement>
+            <NumberInput
+              isReadOnly
+              pl={12}
+              name="tunjangan_kompetensi"
+              placeholder="500.000"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("tunjangan_kompetensi", input);
+              }}
+              inputValue={formik.values.tunjangan_kompetensi}
+            />
+          </InputGroup>
+          <FormHelperText>
+            Tunjangan diambil dari master data kompetensi
+          </FormHelperText>
+          <FormErrorMessage>
+            {formik.errors.tunjangan_kompetensi as string}
           </FormErrorMessage>
         </FormControl>
 
