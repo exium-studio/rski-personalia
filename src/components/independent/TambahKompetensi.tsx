@@ -30,7 +30,7 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
 import RequiredForm from "../form/RequiredForm";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
-import req from "../../constant/req";
+import req from "../../lib/req";
 
 interface Props extends ButtonProps {}
 

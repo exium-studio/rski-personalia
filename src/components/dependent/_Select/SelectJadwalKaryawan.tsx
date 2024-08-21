@@ -1,7 +1,7 @@
 import { ButtonProps, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
-import req from "../../../constant/req";
+import req from "../../../lib/req";
 import SingleSelectModal from "../input/SingleSelectModal";
 import formatDate from "../../../lib/formatDate";
 import backOnClose from "../../../lib/backOnClose";

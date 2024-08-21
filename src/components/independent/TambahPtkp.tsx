@@ -25,7 +25,7 @@ import SelectKategoriTer from "../dependent/_Select/SelectKategoriTer";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import RequiredForm from "../form/RequiredForm";
 import StringInput from "../dependent/input/StringInput";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import NumberInput from "../dependent/input/NumberInput";
 

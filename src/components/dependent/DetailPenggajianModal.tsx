@@ -31,7 +31,7 @@ import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusPublikasiPenggajian from "./StatusPublikasiPenggajian";
 import TabelDetailPenggajian from "./TabelDetailPenggajian";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 
 interface PublikasiButtonProps extends ButtonProps {

@@ -30,7 +30,7 @@ import RequiredForm from "../form/RequiredForm";
 import SelectKaryawanDitukar from "../dependent/_Select/SelectKaryawanDitukar";
 import SelectJadwalKaryawanDitukar from "../dependent/_Select/SelectJadwalKaryawanDitukar";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
-import req from "../../constant/req";
+import req from "../../lib/req";
 
 interface Props extends ButtonProps {}
 

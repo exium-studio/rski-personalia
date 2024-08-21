@@ -16,7 +16,7 @@ import {
 import { RiUploadLine } from "@remixicon/react";
 import { useRef, useState } from "react";
 import { Interface__SelectOption } from "../../constant/interfaces";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";

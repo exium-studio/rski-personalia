@@ -22,7 +22,7 @@ import {
   RiUploadLine,
 } from "@remixicon/react";
 import { useRef, useState } from "react";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";

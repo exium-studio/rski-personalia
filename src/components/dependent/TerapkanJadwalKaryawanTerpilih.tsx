@@ -23,7 +23,7 @@ import { RiEditBoxLine } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import { responsiveSpacing } from "../../constant/sizes";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";

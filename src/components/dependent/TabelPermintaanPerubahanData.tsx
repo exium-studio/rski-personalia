@@ -15,7 +15,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";

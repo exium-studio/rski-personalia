@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { RiShutDownLine } from "@remixicon/react";
 import { iconSize } from "../../constant/sizes";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import { useState } from "react";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";

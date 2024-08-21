@@ -28,7 +28,7 @@ import timeSince from "../../lib/timeSince";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardUpdatePengumuman from "../form/Dashboard/FormDashboardUpdatePengumuman";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
-import req from "../../constant/req";
+import req from "../../lib/req";
 
 interface DeletePengumumanProps extends ButtonProps {
   data: any;

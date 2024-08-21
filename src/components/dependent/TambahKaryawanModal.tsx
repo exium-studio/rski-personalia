@@ -44,7 +44,7 @@ import SelectUnitKerja from "../../components/dependent/_Select/SelectUnitKerja"
 import DatePickerModal from "../../components/dependent/input/DatePickerModal";
 import RequiredForm from "../../components/form/RequiredForm";
 import { useLightDarkColor } from "../../constant/colors";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";

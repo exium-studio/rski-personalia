@@ -33,7 +33,7 @@ import DisclosureHeader from "./DisclosureHeader";
 import DokumenFileItem from "./DokumenFileItem";
 import Retry from "./Retry";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
-import req from "../../constant/req";
+import req from "../../lib/req";
 
 interface VerifikasiProps {
   data: any;

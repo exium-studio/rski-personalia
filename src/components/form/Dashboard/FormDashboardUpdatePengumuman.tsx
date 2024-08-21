@@ -8,7 +8,7 @@ import { useFormik } from "formik";
 import { Dispatch } from "react";
 import * as yup from "yup";
 import { Pengumuman__Interface } from "../../../constant/interfaces";
-import req from "../../../constant/req";
+import req from "../../../lib/req";
 import useRenderTrigger from "../../../hooks/useRenderTrigger";
 import backOnClose from "../../../lib/backOnClose";
 import formatDate from "../../../lib/formatDate";

@@ -12,7 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { ReactNode, useState } from "react";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";

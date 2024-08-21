@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { removeCookie } from "typescript-cookie";
-import req from "../constant/req";
+import req from "../lib/req";
 
 export default function useLogout() {
   const [logoutLoading, setLogoutLoading] = useState<boolean>(false);

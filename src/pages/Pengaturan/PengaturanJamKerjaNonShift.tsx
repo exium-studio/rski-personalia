@@ -19,7 +19,7 @@ import RequiredForm from "../../components/form/RequiredForm";
 import Skeleton from "../../components/independent/Skeleton";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import { responsiveSpacing } from "../../constant/sizes";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useDataState from "../../hooks/useDataState";

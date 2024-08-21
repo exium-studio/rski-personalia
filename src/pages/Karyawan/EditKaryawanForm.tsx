@@ -27,7 +27,7 @@ import SelectUnitKerja from "../../components/dependent/_Select/SelectUnitKerja"
 import DatePickerModal from "../../components/dependent/input/DatePickerModal";
 import NumberInput from "../../components/dependent/input/NumberInput";
 import RequiredForm from "../../components/form/RequiredForm";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import StringInput from "../../components/dependent/input/StringInput";

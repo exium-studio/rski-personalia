@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "typescript-cookie";
 import * as yup from "yup";
-import req from "../../../constant/req";
+import req from "../../../lib/req";
 import PasswordInput from "../../dependent/input/PasswordInput";
 import StringInput from "../../dependent/input/StringInput";
 import RequiredForm from "../RequiredForm";

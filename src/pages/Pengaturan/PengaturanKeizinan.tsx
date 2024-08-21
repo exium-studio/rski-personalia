@@ -19,7 +19,7 @@ import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useDataState from "../../hooks/useDataState";
-import req from "../../constant/req";
+import req from "../../lib/req";
 
 interface Props {
   role_id: number;

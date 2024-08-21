@@ -19,7 +19,7 @@ import {
 import { RiMailDownloadLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";

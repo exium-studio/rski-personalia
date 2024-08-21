@@ -31,7 +31,7 @@ import Textarea from "../dependent/input/Textarea";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 
 interface Props extends ButtonProps {}

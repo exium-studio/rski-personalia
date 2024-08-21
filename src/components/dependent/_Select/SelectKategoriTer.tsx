@@ -2,7 +2,7 @@ import { ButtonProps, useDisclosure, useToast } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import SingleSelectModal from "../input/SingleSelectModal";
 import { useEffect, useState } from "react";
-import req from "../../../constant/req";
+import req from "../../../lib/req";
 
 interface Props extends ButtonProps {
   name: string;

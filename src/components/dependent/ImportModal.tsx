@@ -22,7 +22,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "./DisclosureHeader";
 import FileInputLarge from "./input/FileInputLarge";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import download from "../../lib/download";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 

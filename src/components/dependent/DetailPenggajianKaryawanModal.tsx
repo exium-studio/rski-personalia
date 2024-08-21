@@ -47,7 +47,7 @@ import NumberInput from "./input/NumberInput";
 import SearchComponent from "./input/SearchComponent";
 import StringInput from "./input/StringInput";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
-import req from "../../constant/req";
+import req from "../../lib/req";
 import formatDate from "../../lib/formatDate";
 
 interface PenyesuaianProps extends ButtonProps {

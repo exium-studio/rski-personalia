@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import req from "../constant/req";
+import req from "../lib/req";
 import useRenderTrigger from "./useRenderTrigger";
 
 interface Props<T> {

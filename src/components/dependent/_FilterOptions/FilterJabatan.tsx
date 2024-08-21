@@ -11,7 +11,7 @@ import {
 import { RiSearch2Line } from "@remixicon/react";
 import { Dispatch, useEffect, useState } from "react";
 import { useBodyColor } from "../../../constant/colors";
-import req from "../../../constant/req";
+import req from "../../../lib/req";
 import { iconSize } from "../../../constant/sizes";
 import DataNotFound from "../../independent/DataNotFound";
 import FilterItemWrapper from "../../wrapper/FilterItemWrapper";
