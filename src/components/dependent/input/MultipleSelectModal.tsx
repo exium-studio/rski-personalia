@@ -16,7 +16,7 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { RiArrowDownSLine } from "@remixicon/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useErrorColor } from "../../../constant/colors";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import { responsiveSpacing } from "../../../constant/sizes";
@@ -104,6 +104,12 @@ export default function MultipleSelectModal({
       backOnClose();
     }
   }
+
+  useEffect(() => {
+    if (options?.length === selected?.length) {
+      setSelectAll(true);
+    }
+  }, [options, selected]);
 
   // SX
   const sh = useScreenHeight();

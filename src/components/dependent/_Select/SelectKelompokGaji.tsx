@@ -43,7 +43,7 @@ export default function SelectKelompokGaji({
             const options = r.data.data.map((item: any) => ({
               value: item.id,
               label: item.nama_kelompok,
-              label2: formatNumber(item.besaran),
+              label2: `Rp ${formatNumber(item.besaran_gaji)}`,
             }));
             setOptions(options);
           }
