@@ -65,6 +65,7 @@ import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
+import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 interface Props {
   id?: string;
   user_id?: number;
@@ -1102,7 +1103,9 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    {formatMasaKerja(data.masa_kerja)}
+                                    {calculateMasaKerjaFromTanggalMasuk(
+                                      data.tgl_masuk
+                                    )}
                                   </Text>
                                 </HStack>
 
