@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { RiFileList3Fill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import req from "../../constant/req";
 import { iconSize } from "../../constant/sizes";
@@ -39,6 +39,25 @@ export default function BuatPenggajianModal({ ...props }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
+  const [countDown, setCountDown] = useState(10);
+  useEffect(() => {
+    if (isOpen) {
+      const interval = setInterval(() => {
+        setCountDown((prevCount) => {
+          if (prevCount > 0) {
+            return prevCount - 1;
+          } else {
+            clearInterval(interval);
+            return prevCount;
+          }
+        });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    } else {
+      setCountDown(10);
+    }
+  }, [isOpen]);
 
   const formik = useFormik({
     validateOnChange: false,
@@ -147,8 +166,11 @@ export default function BuatPenggajianModal({ ...props }: Props) {
                 w={"100%"}
                 className="btn-ap clicky"
                 colorScheme="ap"
+                isDisabled={countDown !== 0}
               >
-                Buat Penggajian
+                {countDown !== 0
+                  ? `Tunggu ${countDown} detik`
+                  : "Buat Penggajian"}
               </Button>
             </CContainer>
           </ModalFooter>
