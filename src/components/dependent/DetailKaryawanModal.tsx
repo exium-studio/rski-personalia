@@ -118,11 +118,13 @@ export default function DetailKaryawanModal({
   const [emptyDataLabel, setEmptyDataLabel] = useState<any>(undefined);
   function countEmptyValues(obj: Record<string, any>): any[] {
     const allowedNullKeys = [
-      "masa_berlaku_str",
-      "masa_berlaku_sip",
+      // "masa_berlaku_str",
+      // "masa_berlaku_sip",
       "gelar_depan",
       "masa_kerja",
       "tunjangan_jabatan",
+      "tgl_keluar",
+      "tgl_diangkat",
     ];
     let emptyDataLabels: any[] = [];
 
