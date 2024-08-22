@@ -117,16 +117,24 @@ export default function DetailKaryawanModal({
 
   const [emptyDataLabel, setEmptyDataLabel] = useState<any>(undefined);
   function countEmptyValues(obj: Record<string, any>): any[] {
+    const allowedNullKeys = [
+      "masa_berlaku_str",
+      "masa_berlaku_sip",
+      "gelar_depan",
+      "masa_kerja",
+      "tunjangan_jabatan",
+    ];
     let emptyDataLabels: any[] = [];
 
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         const value = obj[key];
         if (
-          value === null ||
-          value === undefined ||
-          value === "" ||
-          value?.length === 0
+          !allowedNullKeys.includes(key) &&
+          (value === null ||
+            value === undefined ||
+            value === "" ||
+            value?.length === 0)
         ) {
           emptyDataLabels.push(key);
         }
@@ -535,6 +543,7 @@ export default function DetailKaryawanModal({
                         </CContainer>
 
                         <CContainer
+                          mt={[5, null, null, 0]}
                           gap={responsiveSpacing}
                           overflowY={[null, null, null, "auto"]}
                           className="scrollY"
@@ -1504,12 +1513,35 @@ export default function DetailKaryawanModal({
                                       unhighlightClassName="uw"
                                       searchWords={searchQuery}
                                       autoEscape={true}
-                                      textToHighlight="Jabatan"
+                                      textToHighlight="Tunjangan Jabatan"
                                     />
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    Rp {formatNumber(data.tunjangan_jabatan)}
+                                    Rp{" "}
+                                    {formatNumber(
+                                      data.jabatan?.tunjangan_jabatan
+                                    )}
+                                  </Text>
+                                </HStack>
+
+                                <HStack justify={"space-between"}>
+                                  {/* <Text opacity={0.6}>Jabatan</Text> */}
+                                  <Box opacity={0.6}>
+                                    <Highlighter
+                                      highlightClassName="hw"
+                                      unhighlightClassName="uw"
+                                      searchWords={searchQuery}
+                                      autoEscape={true}
+                                      textToHighlight="Tunjangan Kompetensi"
+                                    />
+                                  </Box>
+                                  <FlexLine />
+                                  <Text fontWeight={500} textAlign={"right"}>
+                                    Rp{" "}
+                                    {formatNumber(
+                                      data.kompetensi?.tunjangan_kompetensi
+                                    )}
                                   </Text>
                                 </HStack>
 
@@ -1521,7 +1553,7 @@ export default function DetailKaryawanModal({
                                       unhighlightClassName="uw"
                                       searchWords={searchQuery}
                                       autoEscape={true}
-                                      textToHighlight="Fungsional"
+                                      textToHighlight="Tunjangan Fungsional"
                                     />
                                   </Box>
                                   <FlexLine />
@@ -1538,7 +1570,7 @@ export default function DetailKaryawanModal({
                                       unhighlightClassName="uw"
                                       searchWords={searchQuery}
                                       autoEscape={true}
-                                      textToHighlight="Khusus"
+                                      textToHighlight="Tunjangan Khusus"
                                     />
                                   </Box>
                                   <FlexLine />
@@ -1555,7 +1587,7 @@ export default function DetailKaryawanModal({
                                       unhighlightClassName="uw"
                                       searchWords={searchQuery}
                                       autoEscape={true}
-                                      textToHighlight="Lainnya"
+                                      textToHighlight="Tunjangan Lainnya"
                                     />
                                   </Box>
                                   <FlexLine />

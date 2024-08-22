@@ -232,7 +232,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
     return (
       <SimpleGrid
         display={activeStep === 0 ? "grid" : "none"}
-        columns={[1, 2, 3]}
+        columns={[1, 2, null, 3]}
         spacingX={4}
       >
         <FormControl
@@ -534,7 +534,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
     return (
       <SimpleGrid
         display={activeStep === 1 ? "grid" : "none"}
-        columns={[1, 2, 3]}
+        columns={[1, 2, null, 3]}
         spacingX={4}
       >
         <FormControl
@@ -732,7 +732,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           isInvalid={!!formik.errors.uang_lembur}
         >
           <FormLabel>
-            Uang Lembur
+            Uang Lembur per Jam
             <RequiredForm />
           </FormLabel>
           <InputGroup>

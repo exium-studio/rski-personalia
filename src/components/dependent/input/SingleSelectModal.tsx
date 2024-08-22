@@ -10,6 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  Tooltip,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
@@ -102,65 +103,72 @@ export default function SingleSelectModal({
 
   return (
     <>
-      <Button
-        className="btn-clear"
-        border={"1px solid var(--divider3)"}
-        borderColor={isError ? errorColor : ""}
-        borderRadius={8}
-        gap={3}
-        _focus={{
-          border: "1px solid var(--p500)",
-          boxShadow: "none !important",
-        }}
-        cursor={"pointer"}
-        onClick={() => {
-          onOpen();
-          setSelected(inputValue);
-        }}
-        justifyContent={"space-between"}
-        w={"100%"}
-        role="group"
-        px={"12px !important"}
-        pl={"16px !important"}
-        {...props}
+      <Tooltip
+        label={
+          (inputValue?.label || inputValue?.label2) &&
+          `${inputValue?.label} ${inputValue?.label2}`
+        }
       >
-        <HStack w={"100%"}>
-          {inputValue ? (
+        <Button
+          className="btn-clear"
+          border={"1px solid var(--divider3)"}
+          borderColor={isError ? errorColor : ""}
+          borderRadius={8}
+          gap={3}
+          _focus={{
+            border: "1px solid var(--p500)",
+            boxShadow: "none !important",
+          }}
+          cursor={"pointer"}
+          onClick={() => {
+            onOpen();
+            setSelected(inputValue);
+          }}
+          justifyContent={"space-between"}
+          w={"100%"}
+          role="group"
+          px={"12px !important"}
+          pl={"16px !important"}
+          {...props}
+        >
+          <HStack w={"100%"}>
+            {inputValue ? (
+              <Text
+                fontWeight={400}
+                overflow={"hidden"}
+                whiteSpace={"nowrap"}
+                textOverflow={"ellipsis"}
+              >
+                {inputValue.label}
+              </Text>
+            ) : (
+              <Text
+                //@ts-ignore
+                color={props?._placeholder?.color || "#96969691"}
+                fontWeight={400}
+                overflow={"hidden"}
+                whiteSpace={"nowrap"}
+                textOverflow={"ellipsis"}
+              >
+                {placeholder || "Pilih Salah Satu"}
+              </Text>
+            )}
+
             <Text
               fontWeight={400}
+              opacity={0.4}
+              ml={2}
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}
             >
-              {inputValue.label}
+              {inputValue && inputValue.label2}
             </Text>
-          ) : (
-            <Text
-              //@ts-ignore
-              color={props?._placeholder?.color || "#96969691"}
-              fontWeight={400}
-              overflow={"hidden"}
-              whiteSpace={"nowrap"}
-              textOverflow={"ellipsis"}
-            >
-              {placeholder || "Pilih Salah Satu"}
-            </Text>
-          )}
+          </HStack>
 
-          <Text
-            fontWeight={400}
-            opacity={0.4}
-            ml={2}
-            overflow={"hidden"}
-            whiteSpace={"nowrap"}
-            textOverflow={"ellipsis"}
-          >
-            {inputValue && inputValue.label2}
-          </Text>
-        </HStack>
-
-        <Icon as={RiArrowDownSLine} fontSize={18} />
-      </Button>
+          <Icon as={RiArrowDownSLine} fontSize={18} />
+        </Button>
+      </Tooltip>
 
       <Modal
         isOpen={isOpen}

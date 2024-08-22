@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormHelperText,
@@ -15,7 +16,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { Dispatch } from "react";
+import { Dispatch, useState } from "react";
 import * as yup from "yup";
 import MultiselectPotongan from "../../components/dependent/_Select/MultiselectPotongan";
 import SelectJabatan from "../../components/dependent/_Select/SelectJabatan";
@@ -39,49 +40,7 @@ import SelectGoldar from "../../components/dependent/_Select/SelectGoldar";
 import parseNumber from "../../lib/parseNumber";
 import formatNumber from "../../lib/formatNumber";
 import Textarea from "../../components/dependent/input/Textarea";
-
-const validationSchemaStep1 = yup.object({
-  nama_karyawan: yup.string().required("Harus diisi"),
-  nik: yup.string().required("Harus diisi"),
-  email: yup.string().email("Email tidak valid").required("Harus diisi"),
-  tgl_berakhir_pks: yup.string().required("Harus diisi"),
-  no_rm: yup.string().required("Harus diisi"),
-  no_manulife: yup.string().required("Harus diisi"),
-  tgl_masuk: yup.string().required("Harus diisi"),
-  status_karyawan: yup.object().required("Harus diisi"),
-  unit_kerja: yup.object().required("Harus diisi"),
-  jabatan: yup.object().required("Harus diisi"),
-  kompetensi: yup.object(),
-  role: yup.object().required("Harus diisi"),
-});
-
-const validationSchemaStep2 = yup.object({
-  kelompok_gaji: yup.object().required("Harus diisi"),
-  no_rekening: yup.string().required("Harus diisi"),
-  tunjangan_jabatan: yup.string().required("Harus diisi"),
-  tunjangan_fungsional: yup.string().required("Harus diisi"),
-  tunjangan_khusus: yup.string().required("Harus diisi"),
-  tunjangan_lainnya: yup.string().required("Harus diisi"),
-  uang_lembur: yup.string().required("Harus diisi"),
-  uang_makan: yup.string().required("Harus diisi"),
-  ptkp: yup.object().required("Harus diisi"),
-  potongan: yup.array(),
-});
-
-// const validationSchemaStep3 = yup.object({
-//   tempat_lahir: yup.string().required("Harus diisi"),
-//   tanggal_lahir: yup.string().required("Harus diisi"),
-//   no_hp: yup.string().required("Harus diisi"),
-//   tunjangan_fungsional: yup.string().required("Harus diisi"),
-//   tunjangan_khusus: yup.string().required("Harus diisi"),
-//   tunjangan_lainnya: yup.string().required("Harus diisi"),
-//   uang_lembur: yup.string().required("Harus diisi"),
-//   uang_makan: yup.string().required("Harus diisi"),
-//   ptkp: yup.object().required("Harus diisi"),
-//   potongan: yup.array(),
-// });
-
-const validationSchema = [validationSchemaStep1, validationSchemaStep2];
+import SelectPendidikan from "../../components/dependent/_Select/SelectPendidikan";
 
 interface Props {
   activeStep: number;
@@ -100,6 +59,75 @@ export default function EditKaryawanForm({
 }: Props) {
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
+
+  const [noLimitStr, setNoLimitStr] = useState<boolean>(false);
+  const [noLimitSip, setNoLimitSip] = useState<boolean>(false);
+
+  const validationSchemaStep1 = yup.object({
+    nama_karyawan: yup.string().required("Harus diisi"),
+    nik: yup.string().required("Harus diisi"),
+    email: yup.string().email("Email tidak valid").required("Harus diisi"),
+    tgl_berakhir_pks: yup.string().required("Harus diisi"),
+    no_rm: yup.string().required("Harus diisi"),
+    no_manulife: yup.string().required("Harus diisi"),
+    tgl_masuk: yup.string().required("Harus diisi"),
+    status_karyawan: yup.object().required("Harus diisi"),
+    unit_kerja: yup.object().required("Harus diisi"),
+    jabatan: yup.object().required("Harus diisi"),
+    kompetensi: yup.object(),
+    role: yup.object().required("Harus diisi"),
+  });
+
+  const validationSchemaStep2 = yup.object({
+    kelompok_gaji: yup.object().required("Harus diisi"),
+    no_rekening: yup.string().required("Harus diisi"),
+    tunjangan_jabatan: yup.string().required("Harus diisi"),
+    tunjangan_fungsional: yup.string().required("Harus diisi"),
+    tunjangan_khusus: yup.string().required("Harus diisi"),
+    tunjangan_lainnya: yup.string().required("Harus diisi"),
+    uang_lembur: yup.string().required("Harus diisi"),
+    uang_makan: yup.string().required("Harus diisi"),
+    ptkp: yup.object().required("Harus diisi"),
+    potongan: yup.array(),
+  });
+
+  const validationSchemaStep3 = yup.object({
+    tempat_lahir: yup.string().required("Harus diisi"),
+    tgl_lahir: yup.date().required("Harus diisi"),
+    no_hp: yup.string().required("Harus diisi"),
+    jenis_kelamin: yup.object().required("Harus diisi"),
+    nik_ktp: yup
+      .string()
+      .required("Harus diisi")
+      .length(16, "Harus 16 karakter"),
+    no_kk: yup.string().required("Harus diisi").length(16, "Harus 16 karakter"),
+    agama: yup.object().required("Harus diisi"),
+    golongan_darah: yup.object().required("Harus diisi"),
+    tinggi_badan: yup.string().required("Harus diisi"),
+    berat_badan: yup.string().required("Harus diisi"),
+    alamat: yup.string().required("Harus diisi"),
+    no_ijazah: yup.string().required("Harus diisi"),
+    tahun_lulus: yup.string().required("Harus diisi"),
+    pendidikan_terakhir: yup.object().required("Harus diisi"),
+    gelar_depan: yup.mixed(),
+    str: yup.string().required("Harus diisi"),
+    masa_berlaku_str: noLimitStr
+      ? yup.mixed()
+      : yup.string().required("Harus diisi"),
+    sip: yup.string().required("Harus diisi"),
+    masa_berlaku_sip: noLimitSip
+      ? yup.mixed()
+      : yup.string().required("Harus diisi"),
+    no_bpjsksh: yup.string().required("Harus diisi"),
+    no_bpjsktk: yup.string(),
+    npwp: yup.string().required("Harus diisi"),
+  });
+
+  const validationSchema = [
+    validationSchemaStep1,
+    validationSchemaStep2,
+    validationSchemaStep3,
+  ];
 
   const formik = useFormik({
     validateOnChange: false,
@@ -136,6 +164,7 @@ export default function EditKaryawanForm({
       kelompok_gaji: {
         value: data.kelompok_gaji?.id,
         label: data.kelompok_gaji?.nama_kelompok,
+        label2: `Rp ${formatNumber(data.kelompok_gaji?.besaran_gaji)}`,
       },
       no_rekening: data.no_rekening,
       tunjangan_jabatan: data.jabatan.tunjangan_jabatan,
@@ -153,25 +182,52 @@ export default function EditKaryawanForm({
         value: potongan?.id,
         label: potongan?.nama_premi,
       })),
-      tempat_lahir: "" as any,
-      tgl_lahir: undefined as any,
-      telepon: "" as any,
-      jenis_kelamin: undefined as any,
-      nik_ktp: "" as any,
-      no_kk: "" as any,
-      agama: undefined as any,
-      golongan_darah: undefined as any,
-      tinggi_badan: undefined as any,
-      berat_badan: undefined as any,
-      alamat: undefined as any,
-      no_ijazah: "" as any,
-      tahun_lulus: "" as any,
+      tempat_lahir: data?.tempat_lahir,
+      tgl_lahir: new Date(data?.tgl_lahir),
+      no_hp: data?.no_hp,
+      jenis_kelamin: {
+        value: data?.jenis_kelamin,
+        label: data?.jenis_kelamin === 1 ? "Laki - Laki" : "Perempuan",
+      },
+      nik_ktp: data?.nik_ktp,
+      no_kk: data?.nik_kk,
+      agama: {
+        value: data.agama.id,
+        label: data.agama.label,
+      },
+      golongan_darah: {
+        value: data.golongan_darah.id,
+        label: data.golongan_darah.label,
+      },
+      tinggi_badan: data?.tinggi_badan,
+      berat_badan: data?.berat_badan,
+      alamat: data?.alamat,
+      no_ijazah: data?.no_ijazah,
+      tahun_lulus: data?.tahun_lulus,
+      pendidikan_terakhir: data?.pendidikan_terakhir
+        ? {
+            value: data?.pendidikan_terakhir?.id,
+            label: data?.pendidikan_terakhir?.label,
+          }
+        : undefined,
+      gelar_depan: data?.gelar_depan,
+
+      str: data?.no_str,
+      masa_berlaku_str:
+        data?.masa_berlaku_str && new Date(data?.masa_berlaku_str),
+      sip: data?.no_sip,
+      masa_berlaku_sip:
+        data?.masa_berkalu_sip && new Date(data?.masa_berlaku_sip),
+      no_bpjsksh: data?.no_bpjsksh,
+      no_bpjsktk: data?.no_bpjsktk,
+      npwp: data?.npwp,
     },
 
     validationSchema: validationSchema[activeStep],
 
     onSubmit: (values, { resetForm }) => {
       const payload = {
+        _method: "patch",
         nama: values.nama_karyawan,
         nik: values.nik,
         email: values.email,
@@ -197,8 +253,34 @@ export default function EditKaryawanForm({
         uang_makan: values.uang_makan,
         ptkp_id: values.ptkp.value,
         premi_id: values.potongan?.map((pot: any) => pot.value),
-        _method: "patch",
+
+        tempat_lahir: values?.tempat_lahir,
+        tanggal_lahir: formatDate(values?.tgl_lahir, "short"),
+        no_hp: values?.no_hp,
+        jenis_kelamin: values?.jenis_kelamin.value,
+        nik_ktp: values?.nik_ktp,
+        no_kk: values?.no_kk,
+        kategori_agama_id: values?.agama.value,
+        kategori_darah_id: values?.golongan_darah.value,
+        tinggi_badan: values?.tinggi_badan,
+        berat_badan: values?.berat_badan,
+        alamat: values.alamat,
+        no_ijazah: values.no_ijazah,
+        tahun_lulus: values.tahun_lulus,
+        pendidikan_terakhir: values.pendidikan_terakhir?.value,
+        gelar_depan: values.gelar_depan || "",
+
+        no_str: values?.str,
+        masa_berlaku_str: values?.masa_berlaku_str || "",
+        no_sip: values?.sip,
+        masa_berlaku_sip: values?.masa_berlaku_sip || "",
+        no_bpjsksh: values?.no_bpjsksh,
+        no_bpjsktk: values?.no_bpjsktk,
+        npwp: values?.npwp,
       };
+
+      console.log(payload);
+
       setLoading(true);
       req
         .post(`/api/rski/dashboard/karyawan/data-karyawan/${data.id}`, payload)
@@ -256,7 +338,7 @@ export default function EditKaryawanForm({
 
   const Step1 = () => {
     return (
-      <SimpleGrid columns={[1, 2, 3]} spacingX={4}>
+      <SimpleGrid columns={[1, 2, null, 3]} spacingX={4}>
         <FormControl
           mb={4}
           flex={"1 1 300px"}
@@ -542,7 +624,7 @@ export default function EditKaryawanForm({
 
   const Step2 = () => {
     return (
-      <SimpleGrid columns={[1, 2, 3]} spacingX={4}>
+      <SimpleGrid columns={[1, 2, null, 3]} spacingX={4}>
         <FormControl
           mb={4}
           flex={"1 1 300px"}
@@ -852,256 +934,465 @@ export default function EditKaryawanForm({
 
   const Step3 = () => {
     return (
-      <SimpleGrid columns={[1, 2, 3]} spacingX={4}>
-        <FormControl mb={4} isInvalid={!!formik.errors.tempat_lahir}>
-          <FormLabel>
-            Tempat Lahir
-            <RequiredForm />
-          </FormLabel>
-          <StringInput
-            name="tempat_lahir"
-            placeholder="Semarang"
-            onChangeSetter={(input) => {
-              formik.setFieldValue("tempat_lahir", input);
-            }}
-            inputValue={formik.values.tempat_lahir}
-          />
-          <FormErrorMessage>
-            {formik.errors.tempat_lahir as string}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl mb={4} isInvalid={!!formik.errors.tgl_lahir}>
-          <FormLabel>
-            Tanggal Lahir
-            <RequiredForm />
-          </FormLabel>
-          <DatePickerModal
-            id="lengkapi-data-user-1-select-tgl_lahir"
-            name={"tgl_lahir"}
-            onConfirm={(inputValue) => {
-              formik.setFieldValue("tgl_lahir", inputValue);
-            }}
-            inputValue={formik.values.tgl_lahir}
-            isError={!!formik.errors.tgl_lahir}
-          />
-          <FormErrorMessage>
-            {formik.errors.tgl_lahir as string}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl mb={4} isInvalid={!!formik.errors.telepon}>
-          <FormLabel>
-            Nomor Telepon
-            <RequiredForm />
-          </FormLabel>
-
-          <InputGroup>
-            <InputLeftElement ml={2}>
-              <Text>+62</Text>
-            </InputLeftElement>
-            <Input
-              pl={12}
-              name="telepon"
-              placeholder="8***********"
-              onChange={formik.handleChange}
-            />
-          </InputGroup>
-          <FormErrorMessage>{formik.errors.telepon as string}</FormErrorMessage>
-        </FormControl>
-
-        <FormControl mb={4} isInvalid={!!formik.errors.jenis_kelamin}>
-          <FormLabel>
-            Jenis Kelamin
-            <RequiredForm />
-          </FormLabel>
-          <SelectGender
-            id="lengkapi-data-user-1-select-gender"
-            name="jenis_kelamin"
-            onConfirm={(inputValue) => {
-              formik.setFieldValue("jenis_kelamin", inputValue);
-            }}
-            inputValue={formik.values.jenis_kelamin}
-            isError={!!formik.errors.jenis_kelamin}
-            placeholder="Pilih Jenis Kelamin"
-          />
-          <FormErrorMessage>
-            {formik.errors.jenis_kelamin as string}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl mb={4} isInvalid={!!formik.errors.nik_ktp}>
-          <FormLabel>
-            Nomor Induk Kependudukan
-            <RequiredForm />
-          </FormLabel>
-          <StringInput
-            name="nik_ktp"
-            placeholder="3301************"
-            onChangeSetter={(input) => {
-              formik.setFieldValue("nik_ktp", input);
-            }}
-            inputValue={formik.values.nik_ktp}
-          />
-          <FormErrorMessage>{formik.errors.nik_ktp as string}</FormErrorMessage>
-        </FormControl>
-
-        <FormControl mb={4} isInvalid={!!formik.errors.no_kk}>
-          <FormLabel>
-            Nomor Kartu Keluarga
-            <RequiredForm />
-          </FormLabel>
-          <StringInput
-            name="no_kk"
-            placeholder="3301************"
-            onChangeSetter={(input) => {
-              formik.setFieldValue("no_kk", input);
-            }}
-            inputValue={formik.values.no_kk}
-          />
-          <FormErrorMessage>{formik.errors.no_kk as string}</FormErrorMessage>
-        </FormControl>
-
-        <FormControl mb={4} isInvalid={!!formik.errors.agama}>
-          <FormLabel>
-            Agama
-            <RequiredForm />
-          </FormLabel>
-          <SelectAgama
-            id="lengkapi-data-user-1-select-agama"
-            name="agama"
-            onConfirm={(inputValue) => {
-              formik.setFieldValue("agama", inputValue);
-            }}
-            inputValue={formik.values.agama}
-            placeholder="Pilih Agama"
-            isError={!!formik.errors.agama}
-          />
-          <FormErrorMessage>{formik.errors.agama as string}</FormErrorMessage>
-        </FormControl>
-
-        <FormControl mb={4} isInvalid={!!formik.errors.golongan_darah}>
-          <FormLabel>
-            Golongan Darah
-            <RequiredForm />
-          </FormLabel>
-          <SelectGoldar
-            id="lengkapi-data-user-1-select"
-            name="golongan_darah"
-            onConfirm={(inputValue) => {
-              formik.setFieldValue("golongan_darah", inputValue);
-            }}
-            inputValue={formik.values.golongan_darah}
-            placeholder="Pilih Golongan Darah"
-            isError={!!formik.errors.golongan_darah}
-          />
-          <FormErrorMessage>
-            {formik.errors.golongan_darah as string}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl mb={4} isInvalid={!!formik.errors.tinggi_badan}>
-          <FormLabel>
-            Tinggi Badan
-            <RequiredForm />
-          </FormLabel>
-          <InputGroup>
-            <InputRightElement mr={1}>
-              <Text>cm</Text>
-            </InputRightElement>
-            <NumberInput
-              name="tinggi_badan"
+      <>
+        <SimpleGrid columns={[1, 2, null, 3]} spacingX={4}>
+          <FormControl mb={4} isInvalid={!!formik.errors.tempat_lahir}>
+            <FormLabel>
+              Tempat Lahir
+              <RequiredForm />
+            </FormLabel>
+            <StringInput
+              name="tempat_lahir"
+              placeholder="Semarang"
               onChangeSetter={(input) => {
-                formik.setFieldValue("tinggi_badan", input);
+                formik.setFieldValue("tempat_lahir", input);
               }}
-              inputValue={formik.values.tinggi_badan}
+              inputValue={formik.values.tempat_lahir}
             />
-          </InputGroup>
-          <FormErrorMessage>
-            {formik.errors.tinggi_badan as string}
-          </FormErrorMessage>
-        </FormControl>
+            <FormErrorMessage>
+              {formik.errors.tempat_lahir as string}
+            </FormErrorMessage>
+          </FormControl>
 
-        <FormControl mb={4} isInvalid={!!formik.errors.berat_badan}>
-          <FormLabel>
-            Berat Badan
-            <RequiredForm />
-          </FormLabel>
-          <InputGroup>
-            <InputRightElement mr={1}>
-              <Text>kg</Text>
-            </InputRightElement>
-            <Input
-              pr={12}
-              name="berat_badan"
+          <FormControl mb={4} isInvalid={!!formik.errors.tgl_lahir}>
+            <FormLabel>
+              Tanggal Lahir
+              <RequiredForm />
+            </FormLabel>
+            <DatePickerModal
+              id="lengkapi-data-user-1-select-tgl_lahir"
+              name={"tgl_lahir"}
+              onConfirm={(inputValue) => {
+                formik.setFieldValue("tgl_lahir", inputValue);
+              }}
+              inputValue={formik.values.tgl_lahir}
+              isError={!!formik.errors.tgl_lahir}
+            />
+            <FormErrorMessage>
+              {formik.errors.tgl_lahir as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.no_hp}>
+            <FormLabel>
+              Nomor Telepon
+              <RequiredForm />
+            </FormLabel>
+
+            <InputGroup>
+              <InputLeftElement ml={2}>
+                <Text>+62</Text>
+              </InputLeftElement>
+              <StringInput
+                pl={12}
+                name="no_hp"
+                placeholder="8***********"
+                onChangeSetter={(input) => {
+                  formik.setFieldValue("no_hp", input);
+                }}
+                inputValue={formik.values.no_hp}
+              />
+            </InputGroup>
+            <FormErrorMessage>{formik.errors.no_hp as string}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.jenis_kelamin}>
+            <FormLabel>
+              Jenis Kelamin
+              <RequiredForm />
+            </FormLabel>
+            <SelectGender
+              id="lengkapi-data-user-1-select-gender"
+              name="jenis_kelamin"
+              onConfirm={(inputValue) => {
+                formik.setFieldValue("jenis_kelamin", inputValue);
+              }}
+              inputValue={formik.values.jenis_kelamin}
+              isError={!!formik.errors.jenis_kelamin}
+              placeholder="Pilih Jenis Kelamin"
+            />
+            <FormErrorMessage>
+              {formik.errors.jenis_kelamin as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.nik_ktp}>
+            <FormLabel>
+              Nomor Induk Kependudukan
+              <RequiredForm />
+            </FormLabel>
+            <StringInput
+              name="nik_ktp"
+              placeholder="3301************"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("nik_ktp", input);
+              }}
+              inputValue={formik.values.nik_ktp}
+            />
+            <FormErrorMessage>
+              {formik.errors.nik_ktp as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.no_kk}>
+            <FormLabel>
+              Nomor Kartu Keluarga
+              <RequiredForm />
+            </FormLabel>
+            <StringInput
+              name="no_kk"
+              placeholder="3301************"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("no_kk", input);
+              }}
+              inputValue={formik.values.no_kk}
+            />
+            <FormErrorMessage>{formik.errors.no_kk as string}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.agama}>
+            <FormLabel>
+              Agama
+              <RequiredForm />
+            </FormLabel>
+            <SelectAgama
+              id="lengkapi-data-user-1-select-agama"
+              name="agama"
+              onConfirm={(inputValue) => {
+                formik.setFieldValue("agama", inputValue);
+              }}
+              inputValue={formik.values.agama}
+              placeholder="Pilih Agama"
+              isError={!!formik.errors.agama}
+            />
+            <FormErrorMessage>{formik.errors.agama as string}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.golongan_darah}>
+            <FormLabel>
+              Golongan Darah
+              <RequiredForm />
+            </FormLabel>
+            <SelectGoldar
+              id="lengkapi-data-user-1-select"
+              name="golongan_darah"
+              onConfirm={(inputValue) => {
+                formik.setFieldValue("golongan_darah", inputValue);
+              }}
+              inputValue={formik.values.golongan_darah}
+              placeholder="Pilih Golongan Darah"
+              isError={!!formik.errors.golongan_darah}
+            />
+            <FormErrorMessage>
+              {formik.errors.golongan_darah as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.tinggi_badan}>
+            <FormLabel>
+              Tinggi Badan
+              <RequiredForm />
+            </FormLabel>
+            <InputGroup>
+              <InputRightElement mr={1}>
+                <Text>cm</Text>
+              </InputRightElement>
+              <NumberInput
+                name="tinggi_badan"
+                onChangeSetter={(input) => {
+                  formik.setFieldValue("tinggi_badan", input);
+                }}
+                inputValue={formik.values.tinggi_badan}
+              />
+            </InputGroup>
+            <FormErrorMessage>
+              {formik.errors.tinggi_badan as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.berat_badan}>
+            <FormLabel>
+              Berat Badan
+              <RequiredForm />
+            </FormLabel>
+            <InputGroup>
+              <InputRightElement mr={1}>
+                <Text>kg</Text>
+              </InputRightElement>
+              <Input
+                pr={12}
+                name="berat_badan"
+                onChange={(e) => {
+                  formik.setFieldValue(
+                    "berat_badan",
+                    parseNumber(e.target.value)
+                  );
+                }}
+                value={
+                  formik.values.berat_badan === 0
+                    ? ""
+                    : formatNumber(formik.values.berat_badan)
+                }
+                placeholder="65"
+              />
+            </InputGroup>
+            <FormErrorMessage>
+              {formik.errors.berat_badan as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.alamat}>
+            <FormLabel>
+              Alamat
+              <RequiredForm />
+            </FormLabel>
+            <Textarea
+              name="alamat"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("alamat", input);
+              }}
+              inputValue={formik.values.alamat}
+              placeholder="Jalan Malaka no.100"
+            />
+            <FormErrorMessage>
+              {formik.errors.alamat as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.no_ijazah}>
+            <FormLabel>
+              Nomor Ijazah Terakhir
+              <RequiredForm />
+            </FormLabel>
+            <StringInput
+              name="no_ijazah"
+              placeholder="1101************"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("no_ijazah", input);
+              }}
+              inputValue={formik.values.no_ijazah}
+            />
+            <FormErrorMessage>
+              {formik.errors.no_ijazah as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.tahun_lulus}>
+            <FormLabel>
+              Tahun Lulus Ijazah Terakhir
+              <RequiredForm />
+            </FormLabel>
+            <StringInput
+              name="tahun_lulus"
+              placeholder="2024"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("tahun_lulus", input);
+              }}
+              inputValue={formik.values.tahun_lulus}
+            />
+            <FormErrorMessage>
+              {formik.errors.tahun_lulus as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.pendidikan_terakhir}>
+            <FormLabel>
+              Pendidikan Terakhir
+              <RequiredForm />
+            </FormLabel>
+            <SelectPendidikan
+              name="pendidikan_terakhir"
+              placeholder="Diploma 1 (D1)"
+              onConfirm={(input) => {
+                formik.setFieldValue("pendidikan_terakhir", input);
+              }}
+              inputValue={formik.values.pendidikan_terakhir}
+              isError={!!formik.errors.pendidikan_terakhir}
+            />
+            <FormErrorMessage>
+              {formik.errors.pendidikan_terakhir as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.gelar_depan}>
+            <FormLabel>Gelar Depan</FormLabel>
+            <StringInput
+              name="gelar_depan"
+              placeholder="dr."
+              onChangeSetter={(input) => {
+                formik.setFieldValue("gelar_depan", input);
+              }}
+              inputValue={formik.values.gelar_depan || ""}
+            />
+            <FormErrorMessage>
+              {formik.errors.gelar_depan as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.str}>
+            <FormLabel>
+              No. STR
+              <RequiredForm />
+            </FormLabel>
+            <StringInput
+              name="str"
+              placeholder="3310**********"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("str", input);
+              }}
+              inputValue={formik.values.str}
+            />
+            <FormErrorMessage>{formik.errors.str as string}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl
+            mb={4}
+            isInvalid={formik.errors.masa_berlaku_str ? true : false}
+          >
+            <FormLabel>
+              Masa Berlaku STR
+              <RequiredForm />
+            </FormLabel>
+            <DatePickerModal
+              id="lengkapi-data-user-3-select-masa-berlaku-str"
+              name={"masa_berlaku_str"}
+              onConfirm={(inputValue) => {
+                formik.setFieldValue("masa_berlaku_str", inputValue);
+              }}
+              inputValue={formik.values.masa_berlaku_str}
+              isError={!!formik.errors.masa_berlaku_str}
+              isDisabled={noLimitStr}
+            />
+            <Checkbox
+              colorScheme="ap"
               onChange={(e) => {
-                formik.setFieldValue(
-                  "berat_badan",
-                  parseNumber(e.target.value)
-                );
+                setNoLimitStr(e.target.checked);
+                if (e.target.checked) {
+                  formik.setFieldValue("masa_berlaku_str", undefined);
+                }
               }}
-              value={
-                formik.values.berat_badan === 0
-                  ? ""
-                  : formatNumber(formik.values.berat_badan)
-              }
-              placeholder="179"
+              mt={3}
+              isChecked={noLimitStr}
+            >
+              <Text mt={"-2.5px"} opacity={noLimitStr ? 1 : 0.4}>
+                Masa berlaku seumur hidup
+              </Text>
+            </Checkbox>
+            <FormErrorMessage>
+              {formik.errors.masa_berlaku_str as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.sip}>
+            <FormLabel>
+              No. SIP
+              <RequiredForm />
+            </FormLabel>
+            <StringInput
+              name="sip"
+              placeholder="3310**********"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("sip", input);
+              }}
+              inputValue={formik.values.sip}
             />
-          </InputGroup>
-          <FormErrorMessage>
-            {formik.errors.berat_badan as string}
-          </FormErrorMessage>
-        </FormControl>
+            <FormErrorMessage>{formik.errors.sip as string}</FormErrorMessage>
+          </FormControl>
 
-        <FormControl mb={4} isInvalid={!!formik.errors.alamat}>
-          <FormLabel>
-            Alamat
-            <RequiredForm />
-          </FormLabel>
-          <Textarea
-            name="alamat"
-            onChangeSetter={(input) => {
-              formik.setFieldValue("alamat", input);
-            }}
-            inputValue={formik.values.alamat}
-            placeholder="Jalan Malaka no.100"
-          />
-          <FormErrorMessage>{formik.errors.alamat as string}</FormErrorMessage>
-        </FormControl>
+          <FormControl
+            mb={4}
+            isInvalid={formik.errors.masa_berlaku_sip ? true : false}
+          >
+            <FormLabel>
+              Masa Berlaku SIP
+              <RequiredForm />
+            </FormLabel>
+            <DatePickerModal
+              id="lengkapi-data-user-3-select-masa-berlaku-sip"
+              name={"masa_berlaku_sip"}
+              onConfirm={(inputValue) => {
+                formik.setFieldValue("masa_berlaku_sip", inputValue);
+              }}
+              inputValue={formik.values.masa_berlaku_sip}
+              isError={!!formik.errors.masa_berlaku_sip}
+              isDisabled={noLimitSip}
+            />
+            <Checkbox
+              colorScheme="ap"
+              onChange={(e) => {
+                setNoLimitSip(e.target.checked);
+                if (e.target.checked) {
+                  formik.setFieldValue("masa_berlaku_sip", undefined);
+                }
+              }}
+              mt={3}
+              isChecked={noLimitSip}
+            >
+              <Text mt={"-2.5px"} opacity={noLimitSip ? 1 : 0.4}>
+                Masa berlaku seumur hidup
+              </Text>
+            </Checkbox>
+            <FormErrorMessage>
+              {formik.errors.masa_berlaku_sip as string}
+            </FormErrorMessage>
+          </FormControl>
 
-        <FormControl mb={4} isInvalid={!!formik.errors.no_ijazah}>
-          <FormLabel>
-            Nomor Ijazah Terakhir
-            <RequiredForm />
-          </FormLabel>
-          <StringInput
-            name="no_ijazah"
-            placeholder="1101************"
-            onChangeSetter={(input) => {
-              formik.setFieldValue("no_ijazah", input);
-            }}
-            inputValue={formik.values.no_ijazah}
-          />
-          <FormErrorMessage>
-            {formik.errors.no_ijazah as string}
-          </FormErrorMessage>
-        </FormControl>
+          <FormControl
+            mb={4}
+            isInvalid={formik.errors.no_bpjsksh ? true : false}
+          >
+            <FormLabel>
+              No. BPJS Kesehatan
+              <RequiredForm />
+            </FormLabel>
+            <StringInput
+              name="no_bpjsksh"
+              placeholder="231*****"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("no_bpjsksh", input);
+              }}
+              inputValue={formik.values.no_bpjsksh}
+            />
+            <FormErrorMessage>
+              {formik.errors.no_bpjsksh as string}
+            </FormErrorMessage>
+          </FormControl>
 
-        <FormControl isInvalid={formik.errors.tahun_lulus ? true : false}>
-          <FormLabel>Tahun Lulus Ijazah Terakhir</FormLabel>
-          <StringInput
-            name="tahun_lulus"
-            placeholder="2024"
-            onChangeSetter={(input) => {
-              formik.setFieldValue("tahun_lulus", input);
-            }}
-            inputValue={formik.values.tahun_lulus}
-          />
-          <FormErrorMessage>
-            {formik.errors.tahun_lulus as string}
-          </FormErrorMessage>
-        </FormControl>
-      </SimpleGrid>
+          <FormControl
+            mb={6}
+            isInvalid={formik.errors.no_bpjsktk ? true : false}
+          >
+            <FormLabel>No. BPJS Ketenagakerjaan</FormLabel>
+            <StringInput
+              name="no_bpjsktk"
+              placeholder="231*****"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("no_bpjsktk", input);
+              }}
+              inputValue={formik.values.no_bpjsktk || ""}
+            />
+            <FormErrorMessage>
+              {formik.errors.no_bpjsktk as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={6} isInvalid={formik.errors.npwp ? true : false}>
+            <FormLabel>
+              NPWP
+              <RequiredForm />
+            </FormLabel>
+            <StringInput
+              name="npwp"
+              placeholder="231*****"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("npwp", input);
+              }}
+              inputValue={formik.values.npwp}
+            />
+            <FormErrorMessage>{formik.errors.npwp as string}</FormErrorMessage>
+          </FormControl>
+        </SimpleGrid>
+      </>
     );
   };
 
@@ -1141,7 +1432,7 @@ export default function EditKaryawanForm({
         {stepComponents[activeStep]()}
       </form>
 
-      {stepFooterComponents[activeStep]()}
+      <Box mt={"auto"}>{stepFooterComponents[activeStep]()}</Box>
     </>
   );
 }

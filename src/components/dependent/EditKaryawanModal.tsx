@@ -129,9 +129,6 @@ export default function EditKaryawanModal({ initialData, ...props }: Props) {
               <Text fontSize={22} fontWeight={600} mb={6}>
                 {steps[activeStep].title}
               </Text>
-              {/* <Text opacity={0.6}>
-                Silahkan Isi Semua Data Informasi Dasar Karyawan
-              </Text> */}
 
               <EditKaryawanForm
                 data={initialData}
