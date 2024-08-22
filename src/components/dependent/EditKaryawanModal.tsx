@@ -126,12 +126,12 @@ export default function EditKaryawanModal({ initialData, ...props }: Props) {
               flex={1}
               className="scrollY"
             >
-              <Text fontSize={22} fontWeight={600}>
+              <Text fontSize={22} fontWeight={600} mb={6}>
                 {steps[activeStep].title}
               </Text>
-              <Text opacity={0.6} mb={6}>
+              {/* <Text opacity={0.6}>
                 Silahkan Isi Semua Data Informasi Dasar Karyawan
-              </Text>
+              </Text> */}
 
               <EditKaryawanForm
                 data={initialData}

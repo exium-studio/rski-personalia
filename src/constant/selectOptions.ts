@@ -258,7 +258,15 @@ const optionsStatusAktif = [
   },
 ];
 
+const optionsGoldar = [
+  { value: 1, label: "A" },
+  { value: 2, label: "B" },
+  { value: 3, label: "AB" },
+  { value: 4, label: "O" },
+];
+
 export {
+  optionsGoldar,
   optionsStatusAktif,
   optionsPendidikan,
   optionsStatusKepegawaian,
