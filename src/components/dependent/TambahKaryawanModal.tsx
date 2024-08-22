@@ -204,6 +204,8 @@ export default function TambahKaryawanModal({ ...props }: Props) {
     },
   });
 
+  // console.log(formik.values);
+
   const handleNext = () => {
     formik.validateForm().then((errors) => {
       if (Object.keys(errors).length === 0) {
@@ -637,6 +639,34 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           </FormHelperText>
           <FormErrorMessage>
             {formik.errors.tunjangan_kompetensi as string}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          mb={4}
+          flex={"1 1 300px"}
+          isInvalid={!!formik.errors.tunjangan_fungsional}
+        >
+          <FormLabel>
+            Tunjangan Fungsional
+            <RequiredForm />
+          </FormLabel>
+          <InputGroup>
+            <InputLeftElement pl={4}>
+              <Text>Rp</Text>
+            </InputLeftElement>
+            <NumberInput
+              pl={12}
+              name="tunjangan_fungsional"
+              placeholder="500.000"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("tunjangan_fungsional", input);
+              }}
+              inputValue={formik.values.tunjangan_fungsional}
+            />
+          </InputGroup>
+          <FormErrorMessage>
+            {formik.errors.tunjangan_fungsional as string}
           </FormErrorMessage>
         </FormControl>
 
