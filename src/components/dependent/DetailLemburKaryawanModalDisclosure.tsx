@@ -24,13 +24,13 @@ import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
-import TabelDetailTukarJadwalKaryawan from "./TabelDetailTukarJadwalKaryawan";
+import TabelDetailLemburKaryawan from "./TabelDetailLemburKaryawan";
 
 interface Props extends BoxProps {
   karyawan_id: number;
   children?: any;
 }
-export default function DetailTukarJadwalKaryawanModalDisclosure({
+export default function DetailLemburKaryawanModalDisclosure({
   karyawan_id,
   children,
   ...props
@@ -38,7 +38,7 @@ export default function DetailTukarJadwalKaryawanModalDisclosure({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useBackOnClose(
-    `detail-tukar-jadwal-karyawan-modal-${karyawan_id}`,
+    `detail-lembur-karyawan-modal-${karyawan_id}`,
     isOpen,
     onOpen,
     onClose
@@ -46,7 +46,7 @@ export default function DetailTukarJadwalKaryawanModalDisclosure({
   const initialRef = useRef(null);
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
-    url: `/api/rski/dashboard/karyawan/detail-karyawan-tukar-jadwal/${karyawan_id}`,
+    url: `/api/rski/dashboard/karyawan/detail-karyawan-lembur/${karyawan_id}`,
     dependencies: [],
     conditions: !!(isOpen && karyawan_id),
   });
@@ -78,7 +78,7 @@ export default function DetailTukarJadwalKaryawanModalDisclosure({
         <ModalOverlay />
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Detail Tukar Jadwal Karyawan"} />
+            <DisclosureHeader title={"Detail Lembur Karyawan"} />
           </ModalHeader>
           <ModalBody>
             {error && (
@@ -138,6 +138,7 @@ export default function DetailTukarJadwalKaryawanModalDisclosure({
                     {(data || (data && data.length > 0)) && (
                       <CContainer
                         overflowY={"auto"}
+                        overflowX={"clip"}
                         className="scrollY"
                         borderRadius={12}
                         flex={1}
@@ -173,9 +174,7 @@ export default function DetailTukarJadwalKaryawanModalDisclosure({
                           </VStack>
                         </Wrap>
 
-                        <TabelDetailTukarJadwalKaryawan
-                          data={data?.list_tukar_jadwal}
-                        />
+                        <TabelDetailLemburKaryawan data={data?.list_lembur} />
                       </CContainer>
                     )}
                   </>

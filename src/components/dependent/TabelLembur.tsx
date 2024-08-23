@@ -12,7 +12,7 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
-import StatusLemburBadge from "./StatusLemburBadge";
+import StatusLemburBadge from "./StatusLemburBadgeOld";
 import TabelFooterConfig from "./TabelFooterConfig";
 
 interface Props {

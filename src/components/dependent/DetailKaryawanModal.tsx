@@ -67,6 +67,7 @@ import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
 import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 import DetailTukarJadwalKaryawanModalDisclosure from "./DetailTukarJadwalKaryawanModalDisclosure";
+import DetailLemburKaryawanModalDisclosure from "./DetailLemburKaryawanModalDisclosure";
 interface Props {
   id?: string;
   user_id?: number;
@@ -507,26 +508,31 @@ export default function DetailKaryawanModal({
                             </DetailTukarJadwalKaryawanModalDisclosure>
 
                             {/* Lembur */}
-                            <VStack
-                              cursor={"pointer"}
-                              borderRadius={12}
-                              justify={"center"}
-                              p={4}
-                              className="btn-solid clicky"
+                            <DetailLemburKaryawanModalDisclosure
+                              karyawan_id={data.id}
+                              flexShrink={0}
                             >
-                              <Icon
-                                opacity={0.4}
-                                as={RiCalendarScheduleFill}
-                                fontSize={32}
-                              />
-                              <Text
-                                fontWeight={500}
-                                textAlign={"center"}
-                                lineHeight={1.4}
+                              <VStack
+                                cursor={"pointer"}
+                                borderRadius={12}
+                                justify={"center"}
+                                p={4}
+                                className="btn-solid clicky"
                               >
-                                Lembur Aktif
-                              </Text>
-                            </VStack>
+                                <Icon
+                                  opacity={0.4}
+                                  as={RiCalendarScheduleFill}
+                                  fontSize={32}
+                                />
+                                <Text
+                                  fontWeight={500}
+                                  textAlign={"center"}
+                                  lineHeight={1.4}
+                                >
+                                  Lembur
+                                </Text>
+                              </VStack>
+                            </DetailLemburKaryawanModalDisclosure>
 
                             {/* Penilaian */}
                             <VStack
