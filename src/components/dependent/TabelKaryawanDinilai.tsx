@@ -17,14 +17,17 @@ interface Props {
   filterConfig?: any;
 }
 
-export default function TabelPegawaiDinilai({ filterConfig }: Props) {
+export default function TabelKaryawanDinilai({ filterConfig }: Props) {
   // SX
 
   const [search, setSearch] = useState("");
 
   const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
-    url: `/api/rski/dashboard/pengaturan/unit-kerja`,
+    url: `/api/rski/dashboard/perusahaan/get-user-belum-dinilai`,
+    payload: {
+      ...filterConfig,
+    },
     dependencies: [],
   });
 
@@ -126,9 +129,11 @@ export default function TabelPegawaiDinilai({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
+          {notFound && isObjectEmpty(filterConfig, ["status_karyawan"]) && (
+            <NoData minH={"300px"} />
+          )}
 
-          {notFound && !isObjectEmpty(filterConfig) && (
+          {notFound && !isObjectEmpty(filterConfig, ["status_karyawan"]) && (
             <NotFound minH={"300px"} />
           )}
 

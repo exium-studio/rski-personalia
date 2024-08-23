@@ -26,6 +26,8 @@ import CustomTable from "./CustomTable";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+import isObjectEmpty from "../../lib/isObjectEmpty";
+import NotFound from "../independent/NotFound";
 
 const PenilaianList = ({ data }: { data: any }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -104,125 +106,11 @@ export default function TabelPenilaianKaryawan({ filterConfig }: Props) {
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
 
-  const dummy = [
-    {
-      periode: "2024-05-22",
-      user_dinilai: {
-        id: 3,
-        nama: "Jolitos Kurniawan",
-        username: "username1",
-        email_verified_at: null,
-        role_id: null,
-        foto_profil: "https://bit.ly/dan-abramov",
-        data_completion_step: 1,
-        status_aktif: 1,
-        created_at: "2024-06-06T23:48:35.000000Z",
-        updated_at: "2024-06-06T23:48:35.000000Z",
-        roles: [
-          {
-            id: 3,
-            name: "Admin",
-            deskripsi:
-              "satellites native some bottle blanket extra continued young married lost far great door short quick example tin teeth variety shadow does line met these",
-            guard_name: "web",
-            created_at: "2024-04-19T23:48:34.000000Z",
-            updated_at: "2024-06-06T23:48:34.000000Z",
-            pivot: {
-              model_type: "App\\Models\\User",
-              model_id: 3,
-              role_id: 3,
-            },
-          },
-        ],
-      },
-      unit_kerja_dinilai: {
-        id: 12,
-        nama_unit: "Sumber Daya Manusia (SDM)",
-        jenis_karyawan: 1,
-        created_at: "2024-03-20T23:48:34.000000Z",
-        updated_at: "2024-06-06T23:48:34.000000Z",
-      },
-      jabatan_dinilai: {
-        id: 16,
-        nama_jabatan: "Tenaga Radiologi",
-        is_struktural: 0,
-        tunjangan: 1697689,
-        created_at: "2023-07-14T23:48:34.000000Z",
-        updated_at: "2024-06-06T23:48:34.000000Z",
-      },
-      penilaians: [
-        {
-          user_penilai: {
-            id: 3,
-            nama: "Karlitos Marsukik",
-            username: "username1",
-            email_verified_at: null,
-            role_id: null,
-            foto_profil: "https://bit.ly/dan-abramov",
-            data_completion_step: 1,
-            status_aktif: 1,
-            created_at: "2024-06-06T23:48:35.000000Z",
-            updated_at: "2024-06-06T23:48:35.000000Z",
-            roles: [
-              {
-                id: 3,
-                name: "Admin",
-                deskripsi:
-                  "satellites native some bottle blanket extra continued young married lost far great door short quick example tin teeth variety shadow does line met these",
-                guard_name: "web",
-                created_at: "2024-04-19T23:48:34.000000Z",
-                updated_at: "2024-06-06T23:48:34.000000Z",
-                pivot: {
-                  model_type: "App\\Models\\User",
-                  model_id: 3,
-                  role_id: 3,
-                },
-              },
-            ],
-          },
-          rata_rata: 90,
-        },
-        {
-          user_penilai: {
-            id: 3,
-            nama: "Nanda Simonsely",
-            username: "username1",
-            email_verified_at: null,
-            role_id: null,
-            foto_profil: "https://bit.ly/dan-abramov",
-            data_completion_step: 1,
-            status_aktif: 1,
-            created_at: "2024-06-06T23:48:35.000000Z",
-            updated_at: "2024-06-06T23:48:35.000000Z",
-            roles: [
-              {
-                id: 3,
-                name: "Admin",
-                deskripsi:
-                  "satellites native some bottle blanket extra continued young married lost far great door short quick example tin teeth variety shadow does line met these",
-                guard_name: "web",
-                created_at: "2024-04-19T23:48:34.000000Z",
-                updated_at: "2024-06-06T23:48:34.000000Z",
-                pivot: {
-                  model_type: "App\\Models\\User",
-                  model_id: 3,
-                  role_id: 3,
-                },
-              },
-            ],
-          },
-          rata_rata: 10,
-        },
-      ],
-      rata_rata: 95,
-    },
-  ];
-
-  const { error, loading, data, retry } = useDataState<any[]>({
-    initialData: dummy,
-    url: "",
+  const { error, notFound, loading, data, retry } = useDataState<any[]>({
+    initialData: undefined,
+    url: `/api/rski/dashboard/perusahaan/get-data-penilaian?page=${pageConfig}`,
     payload: {
-      filterConfig: filterConfig,
+      ...filterConfig,
     },
     limit: limitConfig,
     dependencies: [limitConfig, pageConfig, filterConfig],
@@ -323,9 +211,19 @@ export default function TabelPenilaianKaryawan({ filterConfig }: Props) {
   return (
     <>
       {error && (
-        <Center my={"auto"} minH={"300px"}>
-          <Retry loading={loading} retry={retry} />
-        </Center>
+        <>
+          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
+
+          {notFound && !isObjectEmpty(filterConfig) && (
+            <NotFound minH={"300px"} />
+          )}
+
+          {!notFound && (
+            <Center my={"auto"} minH={"300px"}>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
+        </>
       )}
       {!error && (
         <>

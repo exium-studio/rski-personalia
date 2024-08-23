@@ -18,7 +18,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import SelectStatusKaryawan from "../dependent/_Select/SelectStatusKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import TabelPegawaiDinilai from "../dependent/TabelPegawaiDinilai";
+import TabelKaryawanDinilai from "../dependent/TabelKaryawanDinilai";
 
 interface Props extends ButtonProps {}
 
@@ -91,7 +91,7 @@ export default function RunPenilaian({ ...props }: Props) {
             )}
 
             {filterConfig?.status_karyawan && (
-              <TabelPegawaiDinilai filterConfig={filterConfig} />
+              <TabelKaryawanDinilai filterConfig={filterConfig} />
             )}
           </ModalBody>
         </ModalContent>
