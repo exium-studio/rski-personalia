@@ -1,4 +1,10 @@
-import { HStack, StackProps, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  HStack,
+  StackProps,
+  Text,
+  Tooltip,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useLightDarkColor } from "../../constant/colors";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import formatBytes from "../../lib/formatBytes";
@@ -48,7 +54,12 @@ export default function DokumenFileItem({ data, ...props }: Props) {
           <Text fontSize={11} opacity={0.4}>
             {formatBytes(data.size)}
           </Text>
-          <Text fontSize={11}>{formatDate(data.created_at, "short")}</Text>
+          <Tooltip
+            label={`Diunggah pada ${formatDate(data.created_at)}`}
+            openDelay={500}
+          >
+            <Text fontSize={11}>{formatDate(data.created_at, "short")}</Text>
+          </Tooltip>
         </HStack>
       </CContainer>
     </Link>

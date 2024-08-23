@@ -42,6 +42,8 @@ import DisclosureHeader from "./DisclosureHeader";
 import DokumenFileItem from "./DokumenFileItem";
 import Textarea from "./input/Textarea";
 import Retry from "./Retry";
+import formatDate from "../../lib/formatDate";
+import SearchComponent from "./input/SearchComponent";
 
 interface VerifikasiProps {
   data: any;
@@ -260,6 +262,19 @@ export default function DetailDokumenKaryawanModalDisclosure({
     conditions: !!(isOpen && karyawan_id),
   });
 
+  const [search, setSearch] = useState("");
+
+  const fd = data?.data_dokumen?.filter((item: any) => {
+    const searchTerm = search?.toLowerCase();
+
+    const matchesSearchTerm = item.nama.toLowerCase().includes(searchTerm);
+    const matchesSearchTerm2 = item.nama_file
+      .toLowerCase()
+      .includes(searchTerm);
+
+    return matchesSearchTerm && matchesSearchTerm2;
+  });
+
   // SX
 
   return (
@@ -401,6 +416,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
                               {data.jumlah_dokumen || 0}
                             </Text>
                           </VStack>
+
                           <VStack align={"stretch"}>
                             <Text fontSize={14} opacity={0.6}>
                               Status Verifikasi
@@ -409,39 +425,59 @@ export default function DetailDokumenKaryawanModalDisclosure({
                               <Tooltip label={data?.alasan}>
                                 <Badge
                                   colorScheme={
-                                    data?.status_berkas === "Diverifikasi"
+                                    data?.status_berkas?.status ===
+                                    "Diverifikasi"
                                       ? "green"
-                                      : data?.status_berkas === "Menunggu"
+                                      : data?.status_berkas?.status ===
+                                        "Menunggu"
                                       ? "orange"
                                       : "red"
                                   }
                                 >
-                                  {data?.status_berkas}
+                                  {data?.status_berkas?.status}
                                 </Badge>
                               </Tooltip>
+                            </Text>
+                          </VStack>
+
+                          <VStack align={"stretch"}>
+                            <Text fontSize={14} opacity={0.6}>
+                              Terakhir Diverifikasi
+                            </Text>
+                            <Text fontWeight={500}>
+                              {formatDate(
+                                data?.status_berkas?.terakhir_diperbarui
+                              )}
                             </Text>
                           </VStack>
 
                           <VerifikasiButtonModal data={data} />
                         </Wrap>
 
-                        {data && data.data_dokumen.length === 0 && <NotFound />}
+                        <SearchComponent
+                          name="search"
+                          onChangeSetter={(input) => {
+                            setSearch(input);
+                          }}
+                          inputValue={search}
+                          mb={responsiveSpacing}
+                        />
 
-                        {(data || (data && data.data_dokumen.length) > 0) && (
+                        {fd?.length === 0 && <NotFound />}
+
+                        {fd?.length > 0 && (
                           <SimpleGrid
                             columns={[2, 3, null, 4, 5]}
                             gap={3}
                             borderRadius={12}
                           >
-                            {data.data_dokumen.map(
-                              (dokumen: any, i: number) => (
-                                <DokumenFileItem
-                                  key={i}
-                                  data={dokumen}
-                                  bg={"var(--divider)"}
-                                />
-                              )
-                            )}
+                            {fd.map((dokumen: any, i: number) => (
+                              <DokumenFileItem
+                                key={i}
+                                data={dokumen}
+                                bg={"var(--divider)"}
+                              />
+                            ))}
                           </SimpleGrid>
                         )}
                       </CContainer>
