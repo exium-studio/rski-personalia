@@ -12,12 +12,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
-import formatDate from "../../lib/formatDate";
-import FlexLine from "../independent/FlexLine";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
+import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
@@ -26,8 +27,6 @@ import CustomTable from "./CustomTable";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
-import isObjectEmpty from "../../lib/isObjectEmpty";
-import NotFound from "../independent/NotFound";
 
 const PenilaianList = ({ data }: { data: any }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -57,25 +56,23 @@ const PenilaianList = ({ data }: { data: any }) => {
           </ModalHeader>
 
           <ModalBody px={0}>
-            <CContainer gap={2}>
-              <HStack justify={"space-between"} gap={4} px={6}>
-                <Text fontWeight={600}>Rata - Rata</Text>
-                <Text fontWeight={600}>{data.rata_rata}</Text>
-              </HStack>
-
-              {data.penilaians.map((item: any, i: number) => (
-                <HStack key={i} px={6} py={2} justify={"space-between"}>
-                  <AvatarAndNameTableData
-                    data={{
-                      id: item.user_penilai.id,
-                      nama: item.user_penilai.nama,
-                      foto_profil: item.user_penilai.foto_profil,
-                    }}
-                  />
-
-                  <FlexLine />
-
-                  <Text>{item.rata_rata}</Text>
+            <CContainer>
+              {/* <HStack justify={"space-between"} opacity={0.4} px={6}>
+                <Text>Pertanyaan</Text>
+                <Text>Jawaban</Text>
+              </HStack> */}
+              {data.map((item: any, i: number) => (
+                <HStack
+                  key={i}
+                  justify={"space-between"}
+                  align={"start"}
+                  px={6}
+                  py={4}
+                  borderTop={i === 0 ? "1px solid var(--divider)" : ""}
+                  borderBottom={"1px solid var(--divider)"}
+                >
+                  <Text opacity={0.4}>{item?.pertanyaan}</Text>
+                  <Text>{item?.jawaban}</Text>
                 </HStack>
               ))}
             </CContainer>
@@ -105,15 +102,17 @@ export default function TabelPenilaianKaryawan({ filterConfig }: Props) {
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
+  // Filter Config
+  const { formattedFilterKaryawan } = useFilterKaryawan();
 
   const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
     url: `/api/rski/dashboard/perusahaan/get-data-penilaian?page=${pageConfig}`,
     payload: {
-      ...filterConfig,
+      ...formattedFilterKaryawan,
     },
     limit: limitConfig,
-    dependencies: [limitConfig, pageConfig, filterConfig],
+    dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
   });
 
   const formattedHeader = [
@@ -131,26 +130,29 @@ export default function TabelPenilaianKaryawan({ filterConfig }: Props) {
       },
     },
     {
-      th: "Periode",
+      th: "Penilai",
       isSortable: true,
     },
     {
-      th: "Unit Kerja",
+      th: "Jenis Penilaian",
       isSortable: true,
     },
     {
-      th: "Jabatan",
-      isSortable: true,
-    },
-    {
-      th: "Rata - Rata",
+      th: "Jumlah Pertanyaan",
       isSortable: true,
       cProps: {
         justify: "center",
       },
     },
     {
-      th: "Penilaian",
+      th: "Nilai Rata - Rata (maks. 5)",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
+      th: "Pertanyaan & Jawaban",
       cProps: {
         justify: "center",
       },
@@ -180,16 +182,27 @@ export default function TabelPenilaianKaryawan({ filterConfig }: Props) {
         },
       },
       {
-        value: item.periode,
-        td: formatDate(item.periode, "periode"),
+        value: item?.user_penilai?.nama,
+        td: (
+          <AvatarAndNameTableData
+            data={{
+              id: item.user_penilai.id,
+              nama: item.user_penilai.nama,
+              foto_profil: item.user_penilai.foto_profil,
+            }}
+          />
+        ),
       },
       {
-        value: item.unit_kerja_dinilai.nama_unit,
-        td: item.unit_kerja_dinilai.nama_unit,
+        value: item?.jenis_penilaian?.nama,
+        td: item?.jenis_penilaian?.nama,
       },
       {
-        value: item.jabatan_dinilai.nama_jabatan,
-        td: item.jabatan_dinilai.nama_jabatan,
+        value: item.total_pertanyaan,
+        td: item.total_pertanyaan,
+        cProps: {
+          justify: "center",
+        },
       },
       {
         value: item.rata_rata,
@@ -200,7 +213,7 @@ export default function TabelPenilaianKaryawan({ filterConfig }: Props) {
       },
       {
         value: item.penilaians,
-        td: <PenilaianList data={item} />,
+        td: <PenilaianList data={item?.pertanyaan_jawaban} />,
         cProps: {
           justify: "center",
         },
