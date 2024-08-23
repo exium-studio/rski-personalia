@@ -83,7 +83,7 @@ export default function VerifikasiModal({
         [disapprovePayloadKey || "verifikasi_ditolak"]: 1,
         alasan: values.alasan,
       };
-      if (values.verifikasi === 1) {
+      if (verifikasi) {
         payload = payload1;
       } else {
         payload = payload2;

@@ -33,6 +33,7 @@ import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusPersetujuanDiklatBadge from "./StatusPersetujuanDiklatBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
+import VerifikasiModal from "./VerifikasiModal";
 
 const PesertaModal = ({ data }: { data: any }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -184,6 +185,30 @@ export default function TabelDiklat({ filterConfig }: Props) {
       th: "Durasi",
       isSortable: true,
     },
+    {
+      th: "Verif. 1",
+      props: {
+        position: "sticky",
+        right: 0,
+        zIndex: 3,
+      },
+      cProps: {
+        justify: "center",
+        borderLeft: "1px solid var(--divider3)",
+      },
+    },
+    {
+      th: "Verif. 2",
+      props: {
+        position: "sticky",
+        right: 0,
+        zIndex: 2,
+      },
+      cProps: {
+        justify: "center",
+        borderLeft: "1px solid var(--divider3)",
+      },
+    },
   ];
   const formattedData = data?.map((item: any) => ({
     id: item.id,
@@ -252,6 +277,50 @@ export default function TabelDiklat({ filterConfig }: Props) {
         value: item.durasi,
         td: formatDuration(item.durasi),
         isTime: true,
+      },
+      {
+        value: "",
+        td: (
+          <VerifikasiModal
+            aria-label={`perubahan-data-verif-1-button-${item.id}"`}
+            id={`verifikasi-diklat-modal-${item.id}`}
+            submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
+            approvePayloadKey="verifikasi_pertama_disetujui"
+            disapprovePayloadKey="verifikasi_pertama_ditolak"
+            isDisabled={item?.status_diklat?.id !== 1}
+          />
+        ),
+        props: {
+          position: "sticky",
+          right: 0,
+          zIndex: 3,
+        },
+        cProps: {
+          justify: "center",
+          borderLeft: "1px solid var(--divider3)",
+        },
+      },
+      {
+        value: "",
+        td: (
+          <VerifikasiModal
+            aria-label={`perubahan-data-verif-2-button-${item.id}"`}
+            id={`verifikasi-diklat-modal-2-${item.id}`}
+            submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
+            approvePayloadKey="verifikasi_kedua_disetujui"
+            disapprovePayloadKey="verifikasi_kedua_ditolak"
+            isDisabled={item?.status_diklat?.id !== 4}
+          />
+        ),
+        props: {
+          position: "sticky",
+          right: 0,
+          zIndex: 2,
+        },
+        cProps: {
+          justify: "center",
+          borderLeft: "1px solid var(--divider3)",
+        },
       },
     ],
   }));
