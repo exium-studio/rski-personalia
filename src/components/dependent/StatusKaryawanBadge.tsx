@@ -14,7 +14,7 @@ export default function StatusKaryawanBadge({ data, ...props }: Props) {
       colorScheme = "blue";
       break;
     case 3:
-      colorScheme = "green";
+      colorScheme = "orange";
       break;
   }
 
