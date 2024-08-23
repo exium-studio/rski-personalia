@@ -104,10 +104,9 @@ export default function SingleSelectModal({
   return (
     <>
       <Tooltip
-        label={
-          (inputValue?.label || inputValue?.label2) &&
-          `${inputValue?.label} ${inputValue?.label2}`
-        }
+        label={`${inputValue?.label || ""} ${inputValue?.label2 || ""}`}
+        openDelay={500}
+        placement="bottom-start"
       >
         <Button
           className="btn-clear"

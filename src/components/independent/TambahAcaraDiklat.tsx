@@ -50,7 +50,10 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
     initialValues: {
       gambar: "",
       nama: "",
-      kategori: undefined as any,
+      kategori: {
+        value: 1,
+        label: "Internal",
+      },
       deskripsi: "",
       kuota: undefined as any,
       lokasi: "",
@@ -75,7 +78,6 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       const payload = new FormData();
       payload.append("dokumen", values.gambar);
       payload.append("nama", values.nama);
-      payload.append("kategori_diklat_id", values.kategori.value);
       payload.append("deskripsi", values.deskripsi);
       payload.append("kuota", values.kuota);
       payload.append("tgl_mulai", values.tgl_mulai);
@@ -206,6 +208,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                       }}
                       inputValue={formik.values.kategori}
                       isError={!!formik.errors.kategori}
+                      isDisabled
                     />
                     <FormErrorMessage>
                       {formik.errors.kategori as string}

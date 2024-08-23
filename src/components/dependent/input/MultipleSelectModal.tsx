@@ -125,6 +125,7 @@ export default function MultipleSelectModal({
             ? `${inputValue && inputValue.map((item) => ` ${item.label}`)}`
             : placeholder
         }
+        placement="bottom-start"
         openDelay={500}
       >
         <Button
