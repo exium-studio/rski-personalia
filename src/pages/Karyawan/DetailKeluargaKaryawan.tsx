@@ -72,7 +72,7 @@ export default function DetailKeluargaKaryawan() {
                   className="btn-ap clicky"
                   colorScheme="ap"
                 >
-                  Persetujuan
+                  Verifikasi
                 </Button>
               </HStack>
             </Wrap>

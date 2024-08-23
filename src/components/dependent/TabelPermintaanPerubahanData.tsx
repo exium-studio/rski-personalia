@@ -47,7 +47,7 @@ export default function TabelPermintaanPerubahanData() {
       },
     },
     {
-      th: "Status Persetujuan",
+      th: "Status Verifikasi",
       isSortable: true,
       cProps: {
         justify: "center",

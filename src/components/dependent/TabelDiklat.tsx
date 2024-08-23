@@ -142,7 +142,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
     },
     {
-      th: "Status Persetujuan",
+      th: "Status Verifikasi",
       isSortable: true,
       cProps: {
         justify: "center",
