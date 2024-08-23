@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import MultiSelectStatusCuti from "../../components/dependent/_Select/MultiSelectStatusCuti";
+import MultiSelectStatusCuti from "../../components/dependent/_Select/SelectMultiStatusVerifikasi";
 import MultiSelectTipeCuti from "../../components/dependent/_Select/MultiSelectTipeCuti";
 import ExportModal from "../../components/dependent/ExportModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";

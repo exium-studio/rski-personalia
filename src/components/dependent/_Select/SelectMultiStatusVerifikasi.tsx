@@ -14,7 +14,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function SelectMultiKaryawan({
+export default function SelectMultiStatusVerifikasi({
   name,
   onConfirm,
   inputValue,
@@ -45,7 +45,7 @@ export default function SelectMultiKaryawan({
 
   return (
     <MultipleSelectModal
-      id="multi-select-status-cuti-modal"
+      id="multi-select-status-verifikasi-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
