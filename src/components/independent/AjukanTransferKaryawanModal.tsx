@@ -382,17 +382,19 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
               </SimpleGrid>
             </form>
 
-            <Button
-              mt={4}
-              flexShrink={0}
-              type="submit"
-              form="transferKaryawanForm"
-              w={"100%"}
-              colorScheme="ap"
-              className="btn-ap clicky"
-            >
-              Transfer Karyawan
-            </Button>
+            <CContainer mt={"auto"}>
+              <Button
+                mt={4}
+                flexShrink={0}
+                type="submit"
+                form="transferKaryawanForm"
+                w={"100%"}
+                colorScheme="ap"
+                className="btn-ap clicky"
+              >
+                Transfer Karyawan
+              </Button>
+            </CContainer>
           </ModalBody>
         </ModalContent>
       </Modal>
