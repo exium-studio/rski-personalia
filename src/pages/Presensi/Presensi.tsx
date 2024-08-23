@@ -90,7 +90,7 @@ export default function Presensi() {
               url="/api/rski/dashboard/presensi/import"
               title="Import Presensi"
               reqBodyKey="presensi_file"
-              templateDownloadUrl="pi/rski/dashboard/download-template-presensi"
+              templateDownloadUrl="api/rski/dashboard/download-template-presensi"
             />
           </HStack>
 
