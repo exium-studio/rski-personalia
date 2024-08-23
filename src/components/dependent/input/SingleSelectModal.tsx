@@ -104,7 +104,11 @@ export default function SingleSelectModal({
   return (
     <>
       <Tooltip
-        label={`${inputValue?.label || ""} ${inputValue?.label2 || ""}`}
+        label={
+          inputValue
+            ? `${inputValue?.label || ""} ${inputValue?.label2 || ""}`
+            : placeholder
+        }
         openDelay={500}
         placement="bottom-start"
       >

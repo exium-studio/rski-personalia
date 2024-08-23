@@ -18,9 +18,7 @@ export default function BooleanBadge({
     <Badge
       borderRadius={"full"}
       textAlign={"center"}
-      colorScheme={
-        data ? "green" : data === null && nullValue ? "orange" : "red"
-      }
+      colorScheme={data ? "p" : data === null && nullValue ? "orange" : "gray"}
       {...props}
     >
       {data ? trueValue : data === null && nullValue ? nullValue : falseValue}
