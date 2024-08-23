@@ -8,9 +8,13 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import SelectMultiStatusVerifikasi from "../../components/dependent/_Select/SelectMultiStatusVerifikasi";
 
 export default function PerubahanDataKaryawan() {
   // Filter Config
+  const [filterConfig, setFilterConfig] = useState({
+    status_verifikasi: undefined,
+  });
   const { setFilterKaryawan } = useFilterKaryawan();
   const [search, setSearch] = useState("");
 
@@ -57,10 +61,25 @@ export default function PerubahanDataKaryawan() {
               inputValue={search}
             />
 
+            <SelectMultiStatusVerifikasi
+              name="status_verifikasi"
+              onConfirm={(input) => {
+                setFilterConfig((ps: any) => ({
+                  ...ps,
+                  status_verifikasi: input,
+                }));
+              }}
+              inputValue={filterConfig.status_verifikasi}
+              placeholder="Filter Status Verifikasi"
+              maxW={"165px !important"}
+              optionsDisplay="chip"
+              _focus={{ border: "1px solid var(--divider)" }}
+            />
+
             <FilterKaryawan />
           </HStack>
 
-          <TabelPerubahanData />
+          <TabelPerubahanData filterConfig={filterConfig} />
         </CContainer>
       </CWrapper>
     </>

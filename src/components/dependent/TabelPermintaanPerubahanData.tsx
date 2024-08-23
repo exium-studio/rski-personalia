@@ -15,7 +15,11 @@ import StatusApprovalBadge from "./StatusApprovalBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 
-export default function TabelPermintaanPerubahanData() {
+interface Props {
+  filterConfig: any;
+}
+
+export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
@@ -27,9 +31,21 @@ export default function TabelPermintaanPerubahanData() {
     useDataState<any>({
       initialData: undefined,
       url: `/api/rski/dashboard/karyawan/riwayat-perubahan/get-riwayat-perubahan-karyawan?page=${pageConfig}`,
-      payload: { ...formattedFilterKaryawan },
+      payload: {
+        ...formattedFilterKaryawan,
+        ...(filterConfig?.status_verifikasi?.length > 0 && {
+          status_verifikasi: filterConfig.status_verifikasi.map(
+            (sp: any) => sp.value
+          ),
+        }),
+      },
       limit: limitConfig,
-      dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
+      dependencies: [
+        limitConfig,
+        pageConfig,
+        formattedFilterKaryawan,
+        filterConfig,
+      ],
     });
 
   const formattedHeader = [
