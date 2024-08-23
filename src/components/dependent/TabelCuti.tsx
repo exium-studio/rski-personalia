@@ -110,7 +110,7 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
       {
         value: item.status_cuti,
-        td: <StatusPermintaanCutiBadge data={item.status_cuti} w={"120px"} />,
+        td: <StatusPermintaanCutiBadge data={item.status_cuti} w={"180px"} />,
         cProps: {
           justify: "center",
         },

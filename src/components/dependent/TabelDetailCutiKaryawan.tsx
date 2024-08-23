@@ -98,6 +98,8 @@ export default function TabelDetailCutiKaryawan({ data }: Props) {
             }));
           }}
           inputValue={filterConfig.search}
+          placeholder="cari dengan"
+          tooltipLabel="cari dengan"
         />
       </HStack>
 
