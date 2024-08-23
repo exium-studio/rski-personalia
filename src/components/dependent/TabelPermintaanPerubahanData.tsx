@@ -127,7 +127,7 @@ const KonfirmasiPermintaan = ({ data }: KonfirmasiProps) => {
         colorScheme="ap"
         onClick={onOpen}
       >
-        Persetujuan
+        Verifikasi
       </Button>
 
       <Modal
@@ -282,7 +282,7 @@ export default function TabelPermintaanPerubahanData() {
       },
     },
     {
-      th: "Persetujuan",
+      th: "Verifikasi",
       props: {
         position: "sticky",
         right: 0,
