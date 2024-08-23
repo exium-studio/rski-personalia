@@ -260,7 +260,11 @@ export default function DatePickerModal({
                 justify={"center"}
                 h={"40px"}
               >
-                <Text opacity={selected ? 1 : 0.6} fontWeight={500}>
+                <Text
+                  opacity={selected ? 1 : 0.6}
+                  color={selected?.from && selected?.to && "p.500"}
+                  fontWeight={selected?.from && selected?.to && "600"}
+                >
                   {selected
                     ? `${formatDate(selected, "longShort")}`
                     : "Pilih tanggal"}
