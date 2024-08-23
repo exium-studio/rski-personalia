@@ -1,30 +1,26 @@
-import { Box, HStack, Text, VStack, Wrap, WrapProps } from "@chakra-ui/react";
-import { useState } from "react";
+import {
+  Box,
+  Center,
+  HStack,
+  Text,
+  VStack,
+  Wrap,
+  WrapProps,
+} from "@chakra-ui/react";
 import { responsiveSpacing } from "../../constant/sizes";
+import useDataState from "../../hooks/useDataState";
 import formatNumber from "../../lib/formatNumber";
 import Skeleton from "./Skeleton";
+import Retry from "../dependent/Retry";
 
 interface Props extends WrapProps {}
 
 export default function PresensiTotal({ ...props }: Props) {
-  const dummy = {
-    hadir: {
-      hadir: 489 + 31,
-      tepat_waktu: 489,
-      terlambat: 31,
-    },
-    tidak_hadir: {
-      tidak_hadir: 38,
-      absen: 2,
-      cuti: 7,
-      libur: 41,
-    },
-  };
-  
-  const [loading] = useState<boolean>(false);
-  const [data] = useState<any | null>(dummy);
-
-  // SX
+  const { error, loading, data, retry } = useDataState<any>({
+    initialData: undefined,
+    url: `/api/rski/dashboard/presensi/calculated`,
+    dependencies: [],
+  });
 
   return (
     <Wrap spacing={responsiveSpacing} {...props}>
@@ -35,124 +31,165 @@ export default function PresensiTotal({ ...props }: Props) {
           <Skeleton flex={"1 1"} h={"80px"} />
         </>
       )}
-      {!loading && data && (
+
+      {!loading && (
         <>
-          <VStack
-            borderRadius={12}
-            px={responsiveSpacing}
-            justify={"center"}
-            bg={"var(--p500a4)"}
-            align={"flex-start"}
-            flex={"1 1 350px"}
-            h={"80px"}
-          >
-            <HStack
-              align={"stretch"}
-              gap={6}
-              justify={"space-between"}
-              w={"100%"}
-            >
-              <VStack gap={0} flex={"1 1"}>
-                <Text fontSize={26} fontWeight={600} color={"p.500"}>
-                  {formatNumber(data?.hadir.hadir)}
-                </Text>
-                <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
-                  Hadir
-                </Text>
-              </VStack>
+          {error && (
+            <Center>
+              <Retry loading={loading} retry={retry} />
+            </Center>
+          )}
 
-              <Box w={"1px"} bg={"var(--p500a4)"} />
+          {!error && (
+            <>
+              {data && (
+                <>
+                  <VStack
+                    borderRadius={12}
+                    px={responsiveSpacing}
+                    justify={"center"}
+                    bg={"var(--p500a4)"}
+                    align={"flex-start"}
+                    h={"80px"}
+                    border={"1px solid var(--p500)"}
+                  >
+                    <HStack
+                      align={"stretch"}
+                      gap={6}
+                      justify={"space-between"}
+                      w={"100%"}
+                    >
+                      <VStack gap={0}>
+                        <Text fontSize={26} fontWeight={600} color={"p.500"}>
+                          {formatNumber(data?.total_karyawan)}
+                        </Text>
+                        <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
+                          Total Karyawan
+                        </Text>
+                      </VStack>
+                    </HStack>
+                  </VStack>
 
-              <VStack gap={0} flex={"1 1"}>
-                <Text fontSize={26} fontWeight={600} color={"p.500"}>
-                  {formatNumber(data?.hadir.tepat_waktu)}
-                </Text>
-                <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
-                  Tepat Waktu
-                </Text>
-              </VStack>
+                  <VStack
+                    borderRadius={12}
+                    px={responsiveSpacing}
+                    justify={"center"}
+                    bg={"var(--p500a4)"}
+                    align={"flex-start"}
+                    flex={"1 1 350px"}
+                    h={"80px"}
+                  >
+                    <HStack
+                      align={"stretch"}
+                      gap={6}
+                      justify={"space-between"}
+                      w={"100%"}
+                    >
+                      <VStack gap={0} flex={"1 1"}>
+                        <Text fontSize={26} fontWeight={600} color={"p.500"}>
+                          {formatNumber(data?.total_hadir)}
+                        </Text>
+                        <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
+                          Hadir
+                        </Text>
+                      </VStack>
 
-              <VStack gap={0} flex={"1 1"}>
-                <Text fontSize={26} fontWeight={600} color={"p.500"}>
-                  {formatNumber(data?.hadir.terlambat)}
-                </Text>
-                <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
-                  Terlambat
-                </Text>
-              </VStack>
-            </HStack>
-          </VStack>
+                      <Box w={"1px"} bg={"var(--p500a4)"} />
 
-          <VStack
-            borderRadius={12}
-            px={responsiveSpacing}
-            justify={"center"}
-            bg={"var(--divider)"}
-            align={"flex-start"}
-            flex={"1 1 450px"}
-            h={"80px"}
-          >
-            <HStack
-              align={"stretch"}
-              gap={6}
-              justify={"space-between"}
-              w={"100%"}
-            >
-              <VStack
-                gap={0}
-                flex={"1 1"}
-                // borderRight={"1px solid var(--divider3)"}
-              >
-                <Text
-                  fontSize={26}
-                  fontWeight={600}
-                  color={"var(--divider-text)"}
-                >
-                  {formatNumber(data.tidak_hadir.tidak_hadir)}
-                </Text>
-                <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
-                  Tidak Hadir
-                </Text>
-              </VStack>
+                      <VStack gap={0} flex={"1 1"}>
+                        <Text fontSize={26} fontWeight={600} color={"p.500"}>
+                          {formatNumber(data?.total_tepat_waktu)}
+                        </Text>
+                        <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
+                          Tepat Waktu
+                        </Text>
+                      </VStack>
 
-              <Box w={"1px"} bg={"var(--divider3)"} />
+                      <VStack gap={0} flex={"1 1"}>
+                        <Text fontSize={26} fontWeight={600} color={"p.500"}>
+                          {formatNumber(data?.total_terlambat)}
+                        </Text>
+                        <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
+                          Terlambat
+                        </Text>
+                      </VStack>
+                    </HStack>
+                  </VStack>
 
-              <VStack gap={0} flex={"1 1"}>
-                <Text
-                  fontSize={26}
-                  fontWeight={600}
-                  color={"var(--divider-text)"}
-                >
-                  {formatNumber(data.tidak_hadir.libur)}
-                </Text>
-                <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
-                  Libur
-                </Text>
-              </VStack>
+                  <VStack
+                    borderRadius={12}
+                    px={responsiveSpacing}
+                    justify={"center"}
+                    bg={"var(--divider)"}
+                    align={"flex-start"}
+                    flex={"1 1 450px"}
+                    h={"80px"}
+                  >
+                    <HStack
+                      align={"stretch"}
+                      gap={6}
+                      justify={"space-between"}
+                      w={"100%"}
+                    >
+                      <VStack
+                        gap={0}
+                        flex={"1 1"}
+                        // borderRight={"1px solid var(--divider3)"}
+                      >
+                        <Text
+                          fontSize={26}
+                          fontWeight={600}
+                          color={"var(--divider-text)"}
+                        >
+                          {formatNumber(data.total_tidak_hadir)}
+                        </Text>
+                        <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
+                          Tidak Hadir
+                        </Text>
+                      </VStack>
 
-              <VStack gap={0} flex={"1 1"}>
-                <Text
-                  fontSize={26}
-                  fontWeight={600}
-                  color={"var(--divider-text)"}
-                >
-                  {formatNumber(data.tidak_hadir.cuti)}
-                </Text>
-                <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
-                  Cuti
-                </Text>
-              </VStack>
+                      <Box w={"1px"} bg={"var(--divider3)"} />
 
-              <VStack gap={0} flex={"1 1"}>
-                <Text fontSize={26} fontWeight={600} color={"red.400"}>
-                  {formatNumber(data.tidak_hadir.absen)}
-                </Text>
-                <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
-                  Absen
-                </Text>
-              </VStack>
-            </HStack>
-          </VStack>
+                      <VStack gap={0} flex={"1 1"}>
+                        <Text
+                          fontSize={26}
+                          fontWeight={600}
+                          color={"var(--divider-text)"}
+                        >
+                          {formatNumber(data.total_libur)}
+                        </Text>
+                        <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
+                          Libur
+                        </Text>
+                      </VStack>
+
+                      <VStack gap={0} flex={"1 1"}>
+                        <Text
+                          fontSize={26}
+                          fontWeight={600}
+                          color={"var(--divider-text)"}
+                        >
+                          {formatNumber(data.total_cuti)}
+                        </Text>
+                        <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
+                          Cuti
+                        </Text>
+                      </VStack>
+
+                      <VStack gap={0} flex={"1 1"}>
+                        <Text fontSize={26} fontWeight={600} color={"red.400"}>
+                          {formatNumber(data.total_absen)}
+                        </Text>
+                        <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
+                          Absen
+                        </Text>
+                      </VStack>
+                    </HStack>
+                  </VStack>
+                </>
+              )}
+            </>
+          )}
         </>
       )}
     </Wrap>
