@@ -131,9 +131,11 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
+          {notFound && isObjectEmpty(filterConfig, ["tahun"]) && (
+            <NoData minH={"300px"} />
+          )}
 
-          {notFound && !isObjectEmpty(filterConfig) && (
+          {notFound && !isObjectEmpty(filterConfig, ["tahun"]) && (
             <NotFound minH={"300px"} />
           )}
 

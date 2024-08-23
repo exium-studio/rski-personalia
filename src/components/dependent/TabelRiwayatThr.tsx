@@ -30,7 +30,7 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
       initialData: undefined,
       url: "/api/rski/dashboard/keuangan/get-thr",
       payload: {
-        filterConfig: filterConfig,
+        ...filterConfig,
       },
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, filterConfig],
@@ -130,9 +130,11 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
+          {notFound && isObjectEmpty(filterConfig, ["tahun"]) && (
+            <NoData minH={"300px"} />
+          )}
 
-          {notFound && !isObjectEmpty(filterConfig) && (
+          {notFound && !isObjectEmpty(filterConfig, ["tahun"]) && (
             <NotFound minH={"300px"} />
           )}
 

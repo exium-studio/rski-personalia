@@ -48,10 +48,10 @@ export default function PresensiTotal({ ...props }: Props) {
                     borderRadius={12}
                     px={responsiveSpacing}
                     justify={"center"}
-                    bg={"var(--p500a4)"}
+                    // bg={"var(--p500a4)"}
                     align={"flex-start"}
                     h={"80px"}
-                    border={"1px solid var(--p500)"}
+                    // border={"1px solid var(--divider3)"}
                   >
                     <HStack
                       align={"stretch"}
