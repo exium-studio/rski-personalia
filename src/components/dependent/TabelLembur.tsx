@@ -12,8 +12,9 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
-import StatusLemburBadge from "./StatusLemburBadgeOld";
+import StatusLemburBadge from "./StatusLemburBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
+import formatTime from "../../lib/formatTimeOld";
 
 interface Props {
   filterConfig?: any;
@@ -56,17 +57,24 @@ export default function TabelLembur({ filterConfig }: Props) {
     {
       th: "Status Lembur",
       isSortable: true,
+    },
+    {
+      th: "Jadwal",
+      isSortable: true,
+    },
+    {
+      th: "Jam Kerja Jadwal",
+      isSortable: true,
       cProps: {
         justify: "center",
       },
     },
     {
-      th: "Tanggal Pengajuan",
-      isSortable: true,
-    },
-    {
       th: "Durasi",
       isSortable: true,
+      cProps: {
+        justify: "center",
+      },
     },
     {
       th: "Catatan",
@@ -97,21 +105,35 @@ export default function TabelLembur({ filterConfig }: Props) {
         },
       },
       {
-        value: item.status_lembur?.label,
-        td: <StatusLemburBadge data={item.status_lembur} w={"120px"} />,
+        value: item.created_at,
+        td: (
+          <StatusLemburBadge
+            tgl_mulai_jadwal={item.jadwal?.tgl_mulai}
+            w={"120px"}
+          />
+        ),
+      },
+      {
+        value: item.jadwal?.tgl_mulai,
+        td: formatDate(item.jadwal?.tgl_mulai),
+        isDate: true,
+      },
+      {
+        value: item.jadwal?.shift?.jam_from,
+        td: `${formatTime(item.jadwal?.shift?.jam_from)} - ${formatTime(
+          item.jadwal?.shift?.jam_to
+        )}`,
+        isTime: true,
         cProps: {
           justify: "center",
         },
       },
       {
-        value: item.tgl_pengajuan,
-        td: formatDate(item.tgl_pengajuan),
-        isDate: true,
-      },
-      {
         value: item.durasi,
         td: formatDurationShort(item.durasi),
-        isNumeric: true,
+        cProps: {
+          justify: "center",
+        },
       },
       {
         value: item.catatan,

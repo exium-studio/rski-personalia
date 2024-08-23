@@ -38,7 +38,7 @@ export default function TabelDetailLemburKaryawan({ data }: Props) {
       isSortable: true,
     },
     {
-      th: "Tanggal Jadwal",
+      th: "Jadwal",
       isSortable: true,
     },
     {
