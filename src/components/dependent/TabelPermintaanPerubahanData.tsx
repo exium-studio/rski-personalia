@@ -1,4 +1,4 @@
-import { Center } from "@chakra-ui/react";
+import { Box, Center, Text, Tooltip } from "@chakra-ui/react";
 import { useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
@@ -124,7 +124,27 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
       {
         value: item?.status_perubahan?.id,
         td: (
-          <StatusApprovalBadge data={item?.status_perubahan.id} w={"120px"} />
+          <Tooltip
+            label={
+              item?.alasan && (
+                <>
+                  <Text>Alasan Ditolak</Text>
+
+                  <Text opacity={0.4} mt={2}>
+                    {item?.alasan}
+                  </Text>
+                </>
+              )
+            }
+            placement="right"
+          >
+            <Box>
+              <StatusApprovalBadge
+                data={item?.status_perubahan.id}
+                w={"120px"}
+              />
+            </Box>
+          </Tooltip>
         ),
         isNumeric: true,
         cProps: {

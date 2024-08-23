@@ -8,7 +8,7 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
-import SelectMultiStatusVerifikasi from "../../components/dependent/_Select/SelectMultiStatusVerifikasi";
+import SelectMultiStatusVerifikasi from "../../components/dependent/_Select/MultiSelectStatusVerifikasi";
 
 export default function PerubahanDataKaryawan() {
   // Filter Config

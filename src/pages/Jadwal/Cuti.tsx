@@ -1,17 +1,17 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import MultiSelectStatusCuti from "../../components/dependent/_Select/SelectMultiStatusVerifikasi";
+import MultiSelectStatusVerifikasi2 from "../../components/dependent/_Select/MultiSelectStatusVerifikasi2";
 import MultiSelectTipeCuti from "../../components/dependent/_Select/MultiSelectTipeCuti";
 import ExportModal from "../../components/dependent/ExportModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelCuti from "../../components/dependent/TabelCuti";
 import AjukanCutiModal from "../../components/independent/AjukanCutiModal";
+import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
-import FilterKaryawan from "../../components/independent/FilterKaryawan";
 
 export default function Cuti() {
   // Filter Config
@@ -86,7 +86,7 @@ export default function Cuti() {
               _focus={{ border: "1px solid var(--divider3) !important" }}
             />
 
-            <MultiSelectStatusCuti
+            <MultiSelectStatusVerifikasi2
               name={"status_cuti"}
               // minW={"fit-content"}
               maxW={"165px !important"}
