@@ -12,6 +12,8 @@ import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import StatusPermintaanCutiBadge from "./StatusPermintaanCutiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
+import VerifikasiModal from "./VerifikasiModal";
+import formatDate from "../../lib/formatDate";
 
 interface Props {
   filterConfig: any;
@@ -73,6 +75,14 @@ export default function TabelCuti({ filterConfig }: Props) {
       isSortable: true,
     },
     {
+      th: "Tanggal Mulai",
+      isSortable: true,
+    },
+    {
+      th: "Tanggal Selesai",
+      isSortable: true,
+    },
+    {
       th: "Durasi",
       isSortable: true,
       cProps: {
@@ -82,6 +92,30 @@ export default function TabelCuti({ filterConfig }: Props) {
     {
       th: "Unit Kerja",
       isSortable: true,
+    },
+    {
+      th: "Verif. 1",
+      props: {
+        position: "sticky",
+        right: 0,
+        zIndex: 3,
+      },
+      cProps: {
+        justify: "center",
+        borderLeft: "1px solid var(--divider3)",
+      },
+    },
+    {
+      th: "Verif. 2",
+      props: {
+        position: "sticky",
+        right: 0,
+        zIndex: 2,
+      },
+      cProps: {
+        justify: "center",
+        borderLeft: "1px solid var(--divider3)",
+      },
     },
   ];
   const formattedData = data?.map((item: any) => ({
@@ -121,6 +155,19 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
       {
         value: item.durasi,
+        td: formatDate(item?.tgl_from),
+        isDate: true,
+      },
+      {
+        value: item.durasi,
+        td: formatDate(item?.tgl_to),
+        isDate: true,
+        cProps: {
+          justify: "end",
+        },
+      },
+      {
+        value: item.durasi,
         td: `${item.durasi} hari`,
         isNumeric: true,
         cProps: {
@@ -131,6 +178,50 @@ export default function TabelCuti({ filterConfig }: Props) {
         value: item.unit_kerja.nama_unit,
         td: item.unit_kerja.nama_unit,
         isNumeric: true,
+      },
+      {
+        value: "",
+        td: (
+          <VerifikasiModal
+            aria-label={`perubahan-data-verif-1-button-${item.id}"`}
+            id={`verifikasi-perubahan-data-modal-${item.id}`}
+            submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1`}
+            approvePayloadKey="verifikasi_pertama_disetujui"
+            disapprovePayloadKey="verifikasi_pertama_ditolak"
+            isDisabled={item?.status_cuti?.id !== 1}
+          />
+        ),
+        props: {
+          position: "sticky",
+          right: 0,
+          zIndex: 3,
+        },
+        cProps: {
+          justify: "center",
+          borderLeft: "1px solid var(--divider3)",
+        },
+      },
+      {
+        value: "",
+        td: (
+          <VerifikasiModal
+            aria-label={`perubahan-data-verif-2-button-${item.id}"`}
+            id={`verifikasi-perubahan-data-modal-${item.id}`}
+            submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
+            approvePayloadKey="verifikasi_kedua_disetujui"
+            disapprovePayloadKey="verifikasi_kedua_ditolak"
+            isDisabled={item?.status_cuti?.id !== 4}
+          />
+        ),
+        props: {
+          position: "sticky",
+          right: 0,
+          zIndex: 2,
+        },
+        cProps: {
+          justify: "center",
+          borderLeft: "1px solid var(--divider3)",
+        },
       },
     ],
   }));

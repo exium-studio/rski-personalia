@@ -3,6 +3,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   Icon,
   IconButton,
   IconButtonProps,
@@ -12,12 +13,12 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  SimpleGrid,
+  Text,
   Tooltip,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiCheckLine } from "@remixicon/react";
+import { RiCheckLine, RiCloseLine } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from "yup";
@@ -33,22 +34,31 @@ interface Props extends IconButtonProps {
   id: string;
   submitUrl: string;
   title?: string;
+  approvePayloadKey?: string;
+  disapprovePayloadKey?: string;
 }
 
 export default function VerifikasiModal({
   id,
   submitUrl,
   title,
+  approvePayloadKey,
+  disapprovePayloadKey,
   ...props
 }: Props) {
+  const [verifikasi, setVerifikasi] = useState<boolean | undefined>(undefined);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(id, isOpen, onOpen, onClose);
+  useBackOnClose(
+    `${id}-${verifikasi ? "disetujui" : "ditolak"}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
 
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
-
-  const [verifikasi, setVerifikasi] = useState<number | undefined>(undefined);
 
   const formik = useFormik({
     validateOnChange: false,
@@ -57,9 +67,7 @@ export default function VerifikasiModal({
       alasan: "",
     },
     validationSchema: yup.object().shape({
-      verifikasi: yup.number().required("Harus diisi"),
-      alasan:
-        verifikasi === 0 ? yup.string().required("Harus diisi") : yup.string(),
+      alasan: !verifikasi ? yup.string().required("Harus diisi") : yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
       setLoading(true);
@@ -67,10 +75,10 @@ export default function VerifikasiModal({
       let payload;
 
       const payload1 = {
-        verifikasi_disetujui: 1,
+        [approvePayloadKey || "verifikasi_disetujui"]: 1,
       };
       const payload2 = {
-        verifikasi_ditolak: 1,
+        [disapprovePayloadKey || "verifikasi_ditolak"]: 1,
         alasan: values.alasan,
       };
       if (values.verifikasi === 1) {
@@ -111,16 +119,36 @@ export default function VerifikasiModal({
 
   return (
     <>
-      <Tooltip label={title || "Verifikasi"} openDelay={500}>
-        <IconButton
-          icon={<Icon as={RiCheckLine} fontSize={24} />}
-          className="btn-apa clicky"
-          // colorScheme="ap"
-          // variant={"outline"}
-          onClick={onOpen}
-          {...props}
-        />
-      </Tooltip>
+      <HStack>
+        <Tooltip label={title || "Ditolak"} openDelay={500}>
+          <IconButton
+            icon={<Icon as={RiCloseLine} fontSize={24} />}
+            className="clicky"
+            colorScheme="red"
+            variant={"ghost"}
+            onClick={() => {
+              setVerifikasi(false);
+              onOpen();
+            }}
+            {...props}
+          />
+        </Tooltip>
+
+        <Tooltip label={title || "Disetujui"} openDelay={500}>
+          <IconButton
+            icon={<Icon as={RiCheckLine} fontSize={24} />}
+            className="clicky"
+            colorScheme="green"
+            variant={"ghost"}
+            onClick={() => {
+              formik.setFieldValue("alasan", "");
+              setVerifikasi(true);
+              onOpen();
+            }}
+            {...props}
+          />
+        </Tooltip>
+      </HStack>
 
       <Modal
         isOpen={isOpen}
@@ -142,64 +170,42 @@ export default function VerifikasiModal({
             />
           </ModalHeader>
           <ModalBody>
+            {verifikasi && (
+              <Text opacity={0.6}>
+                Apakah anda yakin <b>verifikasi</b> ini akan <b>disetujui</b>?
+              </Text>
+            )}
+
+            {!verifikasi && (
+              <Text opacity={0.6}>
+                Apakah anda yakin <b>verifikasi</b> ini akan <b>ditolak</b>{" "}
+                dengan alasan berikut?
+              </Text>
+            )}
+
             <form
               id="verifikasiPermintaanPerubahanDataForm"
               onSubmit={formik.handleSubmit}
             >
-              <FormControl isInvalid={!!formik.errors.verifikasi}>
-                <FormLabel>
-                  Verifikasi
-                  <RequiredForm />
-                </FormLabel>
-                <SimpleGrid columns={[1, 2]} gap={2}>
-                  <Button
-                    w={"100%"}
-                    className="btn-outline clicky"
-                    colorScheme={formik.values.verifikasi === 1 ? "green" : ""}
-                    variant={formik.values.verifikasi === 1 ? "outline" : ""}
-                    onClick={() => {
-                      formik.setFieldValue("verifikasi", 1);
-                      formik.setFieldValue("alasan", "");
-                      setVerifikasi(1);
+              {!verifikasi && (
+                <FormControl mt={4} isInvalid={!!formik.errors.alasan}>
+                  <FormLabel>
+                    Alasan
+                    <RequiredForm />
+                  </FormLabel>
+                  <Textarea
+                    name="alasan"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("alasan", input);
                     }}
-                  >
-                    Disetujui
-                  </Button>
-                  <Button
-                    w={"100%"}
-                    className="btn-outline clicky"
-                    colorScheme={formik.values.verifikasi === 0 ? "red" : ""}
-                    variant={formik.values.verifikasi === 0 ? "outline" : ""}
-                    onClick={() => {
-                      formik.setFieldValue("verifikasi", 0);
-                      setVerifikasi(0);
-                    }}
-                  >
-                    Ditolak
-                  </Button>
-                </SimpleGrid>
-                <FormErrorMessage>
-                  {formik.errors.verifikasi as string}
-                </FormErrorMessage>
-              </FormControl>
-
-              <FormControl mt={4} isInvalid={!!formik.errors.alasan}>
-                <FormLabel>
-                  Alasan
-                  <RequiredForm />
-                </FormLabel>
-                <Textarea
-                  name="alasan"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("alasan", input);
-                  }}
-                  inputValue={formik.values.alasan}
-                  isDisabled={formik.values.verifikasi !== 0}
-                />
-                <FormErrorMessage>
-                  {formik.errors.alasan as string}
-                </FormErrorMessage>
-              </FormControl>
+                    inputValue={formik.values.alasan}
+                    isDisabled={verifikasi}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.alasan as string}
+                  </FormErrorMessage>
+                </FormControl>
+              )}
             </form>
           </ModalBody>
           <ModalFooter gap={2}>
