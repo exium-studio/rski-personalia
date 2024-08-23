@@ -102,6 +102,7 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
               <FormErrorMessage
                 px={3}
                 pb={2}
+                color={"red.400"}
               >{`Input harus lebih dari 0 dan kurang dari/sama dengan halaman terakhir`}</FormErrorMessage>
             </FormControl>
           </form>
