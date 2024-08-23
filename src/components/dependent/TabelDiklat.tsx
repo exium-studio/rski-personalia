@@ -190,7 +190,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       props: {
         position: "sticky",
         right: 0,
-        zIndex: 3,
+        zIndex: 4,
       },
       cProps: {
         justify: "center",
@@ -202,7 +202,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       props: {
         position: "sticky",
         right: 0,
-        zIndex: 2,
+        zIndex: 3,
       },
       cProps: {
         justify: "center",
@@ -293,7 +293,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
         props: {
           position: "sticky",
           right: 0,
-          zIndex: 3,
+          zIndex: 2,
         },
         cProps: {
           justify: "center",
@@ -315,7 +315,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
         props: {
           position: "sticky",
           right: 0,
-          zIndex: 2,
+          zIndex: 1,
         },
         cProps: {
           justify: "center",

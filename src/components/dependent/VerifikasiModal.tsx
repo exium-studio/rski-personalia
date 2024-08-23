@@ -125,8 +125,10 @@ export default function VerifikasiModal({
         <Tooltip label={titleDitolak || "Ditolak"} openDelay={500}>
           <IconButton
             icon={<Icon as={RiCloseLine} fontSize={24} />}
-            className="clicky"
-            colorScheme="red"
+            className="btn clicky"
+            color={"var(--divider-text)"}
+            _hover={{ color: "red.400" }}
+            // colorScheme="red"
             variant={"ghost"}
             onClick={() => {
               setVerifikasi(false);
@@ -139,8 +141,10 @@ export default function VerifikasiModal({
         <Tooltip label={titleDisetujui || "Disetujui"} openDelay={500}>
           <IconButton
             icon={<Icon as={RiCheckLine} fontSize={24} />}
-            className="clicky"
-            colorScheme="green"
+            className="btn clicky"
+            color={"var(--divider-text)"}
+            _hover={{ color: "green.400" }}
+            // colorScheme="green"
             variant={"ghost"}
             onClick={() => {
               formik.setFieldValue("alasan", "");
