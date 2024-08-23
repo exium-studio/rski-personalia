@@ -80,16 +80,17 @@ export default function DetailKaryawanModal({
   onOpen,
   onClose,
 }: Props) {
+  // SX
+  const lightDarkColor = useLightDarkColor();
+  const warningColor = useWarningColor();
+  const warningAlphaColor = useWarningAlphaColor();
+
   useBackOnClose(
     id || `detail-karyawan-modal-${user_id}`,
     isOpen,
     onOpen,
     onClose
   );
-  // SX
-  const lightDarkColor = useLightDarkColor();
-  const warningColor = useWarningColor();
-  const warningAlphaColor = useWarningAlphaColor();
 
   const initialRef = useRef(null);
   const { error, loading, data, retry } = useDataState<any>({
