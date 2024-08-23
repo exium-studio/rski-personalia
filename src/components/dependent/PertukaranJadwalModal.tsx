@@ -11,15 +11,14 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
-  Wrap,
 } from "@chakra-ui/react";
+import { RiArrowLeftRightLine, RiLoginBoxLine } from "@remixicon/react";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "./DisclosureHeader";
-import CContainer from "../wrapper/CContainer";
 import formatDate from "../../lib/formatDate";
-import { RiArrowLeftRightLine, RiLoginBoxLine } from "@remixicon/react";
 import formatTime from "../../lib/formatTime";
+import CContainer from "../wrapper/CContainer";
+import DisclosureHeader from "./DisclosureHeader";
 
 interface PertukaranJadwalProps {
   id: number;
@@ -57,7 +56,7 @@ export default function PertukaranJadwalModal({
           </ModalHeader>
           <ModalBody>
             {data.map((pertukaran: any, i: number) => (
-              <Wrap key={i}>
+              <HStack key={i}>
                 <CContainer gap={2} flex={1}>
                   <Text opacity={0.4}>
                     {pertukaran.jadwal_karyawan_pengajuan.shift.nama}
@@ -131,7 +130,7 @@ export default function PertukaranJadwalModal({
                     </HStack>
                   </HStack>
                 </CContainer>
-              </Wrap>
+              </HStack>
             ))}
           </ModalBody>
           <ModalFooter>
