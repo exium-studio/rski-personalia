@@ -262,12 +262,8 @@ export default function CustomTable({
           //@ts-ignore
           b.columnsFormat[sortConfig.sortColumnIndex].isTime
         ) {
-          // Konversi string waktu menjadi objek Date dan ambil hanya bagian waktu
-          const dateA = new Date(aValue as string);
-          const dateB = new Date(bValue as string);
-
-          const timeA = dateA.toTimeString().split(" ")[0];
-          const timeB = dateB.toTimeString().split(" ")[0];
+          const timeA = aValue as string;
+          const timeB = bValue as string;
 
           // Bandingkan waktu
           if (sortConfig.direction === "asc") {
