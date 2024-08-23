@@ -33,7 +33,8 @@ import Textarea from "./input/Textarea";
 interface Props extends IconButtonProps {
   id: string;
   submitUrl: string;
-  title?: string;
+  titleDitolak?: string;
+  titleDisetujui?: string;
   approvePayloadKey?: string;
   disapprovePayloadKey?: string;
 }
@@ -41,7 +42,8 @@ interface Props extends IconButtonProps {
 export default function VerifikasiModal({
   id,
   submitUrl,
-  title,
+  titleDitolak,
+  titleDisetujui,
   approvePayloadKey,
   disapprovePayloadKey,
   ...props
@@ -120,7 +122,7 @@ export default function VerifikasiModal({
   return (
     <>
       <HStack>
-        <Tooltip label={title || "Ditolak"} openDelay={500}>
+        <Tooltip label={titleDitolak || "Ditolak"} openDelay={500}>
           <IconButton
             icon={<Icon as={RiCloseLine} fontSize={24} />}
             className="clicky"
@@ -134,7 +136,7 @@ export default function VerifikasiModal({
           />
         </Tooltip>
 
-        <Tooltip label={title || "Disetujui"} openDelay={500}>
+        <Tooltip label={titleDisetujui || "Disetujui"} openDelay={500}>
           <IconButton
             icon={<Icon as={RiCheckLine} fontSize={24} />}
             className="clicky"
@@ -163,7 +165,11 @@ export default function VerifikasiModal({
         <ModalContent>
           <ModalHeader>
             <DisclosureHeader
-              title={title || "Verifikasi"}
+              title={
+                verifikasi
+                  ? titleDisetujui || "Verifikasi Disetujui?"
+                  : titleDitolak || "Verifikasi Ditolak?"
+              }
               onClose={() => {
                 formik.resetForm();
               }}
