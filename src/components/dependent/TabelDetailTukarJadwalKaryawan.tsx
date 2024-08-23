@@ -141,6 +141,8 @@ export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
             }));
           }}
           inputValue={filterConfig.search}
+          placeholder="cari dengan nama karyawan pengajuan/ditukar"
+          tooltipLabel="cari dengan nama karyawan pengajuan/ditukar"
         />
       </HStack>
 
