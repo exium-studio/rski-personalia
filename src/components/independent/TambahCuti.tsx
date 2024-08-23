@@ -1,8 +1,10 @@
 import {
   Button,
   ButtonProps,
+  Checkbox,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Icon,
   InputGroup,
@@ -21,12 +23,11 @@ import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
 import { iconSize } from "../../constant/sizes";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
-import SelectBoolean from "../dependent/_Select/SelectBoolean";
+import req from "../../lib/req";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
 import StringInput from "../dependent/input/StringInput";
@@ -49,23 +50,23 @@ export default function TambahCuti({ ...props }: Props) {
     initialValues: {
       nama: "",
       kuota: undefined as any,
-      cuti_administratif: undefined as any,
-      is_need_requirement: undefined as any,
+      cuti_administratif: 0,
+      is_need_requirement: 0,
       keterangan: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama: yup.string().required("Harus diisi"),
       kuota: yup.number().required("Harus diisi"),
-      cuti_administratif: yup.object().required("Harus diisi"),
-      is_need_requirement: yup.object().required("Harus diisi"),
+      cuti_administratif: yup.number(),
+      is_need_requirement: yup.number(),
       keterangan: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama: values.nama,
         kuota: values.kuota,
-        cuti_administratif: values.cuti_administratif.value,
-        is_need_requirement: values.is_need_requirement.value,
+        cuti_administratif: values.cuti_administratif,
+        is_need_requirement: values.is_need_requirement,
         keterangan: values.keterangan,
       };
       setLoading(true);
@@ -179,59 +180,7 @@ export default function TambahCuti({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mb={4}
-                isInvalid={!!formik.errors.cuti_administratif}
-              >
-                <FormLabel>
-                  Dihitung Sebagai Hadir
-                  <RequiredForm />
-                </FormLabel>
-
-                <SelectBoolean
-                  name="cuti_administratif"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("cuti_administratif", input);
-                  }}
-                  inputValue={formik.values.cuti_administratif}
-                  isError={!!formik.errors.cuti_administratif}
-                  placeholder={"Dihitung Sebagai Hadir?"}
-                />
-                <Text fontSize={"sm"} opacity={0.4} mt={2}>
-                  Cuti ini dihitung hadir, sehingga bonus presensi tetap
-                  diterima.
-                </Text>
-
-                <FormErrorMessage>
-                  {formik.errors.cuti_administratif as string}
-                </FormErrorMessage>
-              </FormControl>
-
-              <FormControl
-                mb={4}
-                isInvalid={!!formik.errors.is_need_requirement}
-              >
-                <FormLabel>
-                  Perlu Syarat
-                  <RequiredForm />
-                </FormLabel>
-
-                <SelectBoolean
-                  name="is_need_requirement"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("is_need_requirement", input);
-                  }}
-                  inputValue={formik.values.is_need_requirement}
-                  isError={!!formik.errors.is_need_requirement}
-                  placeholder={"Perlu Syarat?"}
-                />
-
-                <FormErrorMessage>
-                  {formik.errors.is_need_requirement as string}
-                </FormErrorMessage>
-              </FormControl>
-
-              <FormControl isInvalid={!!formik.errors.keterangan}>
+              <FormControl mb={4} isInvalid={!!formik.errors.keterangan}>
                 <FormLabel>
                   Keterangan
                   <RequiredForm />
@@ -248,6 +197,86 @@ export default function TambahCuti({ ...props }: Props) {
 
                 <FormErrorMessage>
                   {formik.errors.keterangan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={!!formik.errors.cuti_administratif}
+              >
+                {/* <FormLabel>
+                  Dihitung Sebagai Hadir
+                  <RequiredForm />
+                </FormLabel>
+
+                <SelectBoolean
+                  name="cuti_administratif"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("cuti_administratif", input);
+                  }}
+                  inputValue={formik.values.cuti_administratif}
+                  isError={!!formik.errors.cuti_administratif}
+                  placeholder={"Dihitung Sebagai Hadir?"}
+                /> */}
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      formik.setFieldValue("cuti_administratif", 1);
+                    } else {
+                      formik.setFieldValue("cuti_administratif", 0);
+                    }
+                  }}
+                >
+                  <Text mt={"-2.5px"}>Dihitung sebagai hadir</Text>
+                </Checkbox>
+                <FormHelperText mt={2}>
+                  Cuti ini dihitung hadir, jadi bonus presensi tidak dibatalkan.
+                </FormHelperText>
+
+                <FormErrorMessage>
+                  {formik.errors.cuti_administratif as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={!!formik.errors.is_need_requirement}
+              >
+                {/* <FormLabel>
+                  Dihitung Sebagai Hadir
+                  <RequiredForm />
+                </FormLabel>
+
+                <SelectBoolean
+                  name="is_need_requirement"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("is_need_requirement", input);
+                  }}
+                  inputValue={formik.values.is_need_requirement}
+                  isError={!!formik.errors.is_need_requirement}
+                  placeholder={"Dihitung Sebagai Hadir?"}
+                /> */}
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      console.log("kontol");
+                      formik.setFieldValue("is_need_requirement", 1);
+                    } else {
+                      formik.setFieldValue("is_need_requirement", 0);
+                    }
+                  }}
+                >
+                  <Text mt={"-2.5px"}>Perlu Syarat</Text>
+                </Checkbox>
+                <FormHelperText mt={2}>
+                  Untuk menandai bahwa cuti ini memerlukan syarat. Syarat dapat
+                  ditulis pada form keterangan di atas.
+                </FormHelperText>
+
+                <FormErrorMessage>
+                  {formik.errors.is_need_requirement as string}
                 </FormErrorMessage>
               </FormControl>
             </form>

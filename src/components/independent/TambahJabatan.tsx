@@ -4,6 +4,7 @@ import {
   Checkbox,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Icon,
   InputGroup,
@@ -187,8 +188,11 @@ export default function TambahJabatan({ ...props }: Props) {
                   }}
                   isChecked={formik.values.is_struktural}
                 >
-                  <Text mt={"-3px"}>Jabatan Struktural</Text>
+                  <Text mt={"-2.5px"}>Jabatan Struktural</Text>
                 </Checkbox>
+                <FormHelperText mt={2}>
+                  Untuk menandai bahwa jabatan ini adalah jabatan struktural.
+                </FormHelperText>
                 <FormErrorMessage>
                   {formik.errors.is_struktural as string}
                 </FormErrorMessage>

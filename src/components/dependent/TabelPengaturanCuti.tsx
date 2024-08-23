@@ -122,7 +122,7 @@ export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
       },
     },
     {
-      th: "Dihitung Sebagai Hadir",
+      th: "Dihitung Hadir",
       isSortable: true,
       cProps: {
         justify: "center",
