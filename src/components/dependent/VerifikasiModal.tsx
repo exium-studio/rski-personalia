@@ -127,12 +127,15 @@ export default function VerifikasiModal({
             icon={<Icon as={RiCloseLine} fontSize={24} />}
             className="btn clicky"
             color={"var(--divider-text)"}
-            _hover={{ color: "red.400" }}
-            // colorScheme="red"
             variant={"ghost"}
             onClick={() => {
               setVerifikasi(false);
               onOpen();
+            }}
+            sx={{
+              "&:not(:disabled):hover": {
+                color: "red.400",
+              },
             }}
             {...props}
           />
@@ -143,13 +146,15 @@ export default function VerifikasiModal({
             icon={<Icon as={RiCheckLine} fontSize={24} />}
             className="btn clicky"
             color={"var(--divider-text)"}
-            _hover={{ color: "green.400" }}
-            // colorScheme="green"
             variant={"ghost"}
             onClick={() => {
-              formik.setFieldValue("alasan", "");
-              setVerifikasi(true);
+              setVerifikasi(false);
               onOpen();
+            }}
+            sx={{
+              "&:not(:disabled):hover": {
+                color: "green.400",
+              },
             }}
             {...props}
           />
