@@ -66,6 +66,7 @@ import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
 import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
+import DetailTukarJadwalKaryawanModalDisclosure from "./DetailTukarJadwalKaryawanModalDisclosure";
 interface Props {
   id?: string;
   user_id?: number;
@@ -479,26 +480,31 @@ export default function DetailKaryawanModal({
                             </DetailCutiKaryawanModalDisclosure>
 
                             {/* Tukar Jadwal */}
-                            <VStack
-                              cursor={"pointer"}
-                              borderRadius={12}
-                              justify={"center"}
-                              p={4}
-                              className="btn-solid clicky"
+                            <DetailTukarJadwalKaryawanModalDisclosure
+                              karyawan_id={data.id}
+                              flexShrink={0}
                             >
-                              <Icon
-                                opacity={0.4}
-                                as={RiCalendarCheckFill}
-                                fontSize={32}
-                              />
-                              <Text
-                                fontWeight={500}
-                                textAlign={"center"}
-                                lineHeight={1.4}
+                              <VStack
+                                cursor={"pointer"}
+                                borderRadius={12}
+                                justify={"center"}
+                                p={4}
+                                className="btn-solid clicky"
                               >
-                                Tukar Jadwal
-                              </Text>
-                            </VStack>
+                                <Icon
+                                  opacity={0.4}
+                                  as={RiCalendarCheckFill}
+                                  fontSize={32}
+                                />
+                                <Text
+                                  fontWeight={500}
+                                  textAlign={"center"}
+                                  lineHeight={1.4}
+                                >
+                                  Tukar Jadwal
+                                </Text>
+                              </VStack>
+                            </DetailTukarJadwalKaryawanModalDisclosure>
 
                             {/* Lembur */}
                             <VStack
@@ -522,6 +528,7 @@ export default function DetailKaryawanModal({
                               </Text>
                             </VStack>
 
+                            {/* Penilaian */}
                             <VStack
                               cursor={"pointer"}
                               borderRadius={12}
