@@ -1,9 +1,11 @@
 import {
   Button,
-  ButtonProps,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Icon,
+  IconButton,
+  IconButtonProps,
   Modal,
   ModalBody,
   ModalContent,
@@ -11,26 +13,34 @@ import {
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
+  Tooltip,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import { useState } from "react";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
+import { RiCheckLine } from "@remixicon/react";
 import { useFormik } from "formik";
+import { useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "./DisclosureHeader";
+import req from "../../lib/req";
 import RequiredForm from "../form/RequiredForm";
+import DisclosureHeader from "./DisclosureHeader";
 import Textarea from "./input/Textarea";
 
-interface Props extends ButtonProps {
+interface Props extends IconButtonProps {
   id: string;
   submitUrl: string;
+  title?: string;
 }
 
-export default function VerifikasiModal({ id, submitUrl, ...props }: Props) {
+export default function VerifikasiModal({
+  id,
+  submitUrl,
+  title,
+  ...props
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(id, isOpen, onOpen, onClose);
 
@@ -101,14 +111,16 @@ export default function VerifikasiModal({ id, submitUrl, ...props }: Props) {
 
   return (
     <>
-      <Button
-        className="btn-ap clicky"
-        colorScheme="ap"
-        onClick={onOpen}
-        {...props}
-      >
-        Verifikasi
-      </Button>
+      <Tooltip label={title || "Verifikasi"} openDelay={500}>
+        <IconButton
+          icon={<Icon as={RiCheckLine} fontSize={24} />}
+          className="btn-apa clicky"
+          // colorScheme="ap"
+          // variant={"outline"}
+          onClick={onOpen}
+          {...props}
+        />
+      </Tooltip>
 
       <Modal
         isOpen={isOpen}
@@ -123,7 +135,7 @@ export default function VerifikasiModal({ id, submitUrl, ...props }: Props) {
         <ModalContent>
           <ModalHeader>
             <DisclosureHeader
-              title={"Konfirmasi Permintaan"}
+              title={title || "Verifikasi"}
               onClose={() => {
                 formik.resetForm();
               }}

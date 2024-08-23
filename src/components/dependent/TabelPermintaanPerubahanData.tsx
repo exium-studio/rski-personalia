@@ -70,7 +70,7 @@ export default function TabelPermintaanPerubahanData() {
       },
     },
     {
-      th: "Verifikasi",
+      th: "Verif.",
       props: {
         position: "sticky",
         right: 0,
@@ -147,6 +147,7 @@ export default function TabelPermintaanPerubahanData() {
         value: "",
         td: (
           <VerifikasiModal
+            aria-label={`perubahan-data-verif-button-${item.id}"`}
             id={`verifikasi-perubahan-data-modal-${item.id}`}
             submitUrl={`/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${item.id}`}
             isDisabled={item?.status_perubahan?.id !== 1}

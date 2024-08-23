@@ -123,7 +123,7 @@ button:focus-visible {
   background: var(--divider3) !important;
 }
 
-.btn-ap:not(:disabled) {
+.btn-ap {
   background: var(--p500) !important;
   /* color: white !important; */
 }
@@ -134,7 +134,7 @@ button:focus-visible {
   background: var(--p700) !important;
 }
 
-.btn-apa:not(:disabled) {
+.btn-apa {
   background: var(--p500a5) !important;
   color: var(--p500) !important;
 }
