@@ -39,7 +39,7 @@ export default function SelectJadwalKaryawanDitukar({
   );
 
   useEffect(() => {
-    if (isOpen && !options) {
+    if (isOpen) {
       req
         .get(
           `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal/jadwal-ditukar/${user_id}`
@@ -75,7 +75,7 @@ export default function SelectJadwalKaryawanDitukar({
           });
         });
     }
-  }, [isOpen, options, toast, user_id]);
+  }, [isOpen, toast, user_id]);
 
   return (
     <SingleSelectModal

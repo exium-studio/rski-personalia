@@ -172,7 +172,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
             </Center>
           )}
 
-          <Text>Filter Peg.</Text>
+          <Text>Filter Kar.</Text>
         </HStack>
       </Button>
 

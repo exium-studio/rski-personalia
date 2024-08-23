@@ -97,6 +97,8 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
     },
   });
 
+  console.log(formik.values);
+
   return (
     <>
       <Button
@@ -211,8 +213,8 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
                   <RequiredForm />
                 </FormLabel>
                 <SelectJadwalKaryawanDitukar
-                  user_id={formik.values.user_pengajuan?.value}
-                  isDisabled={!formik.values.user_pengajuan}
+                  user_id={formik.values.user_ditukar?.value}
+                  isDisabled={!formik.values.user_ditukar}
                   name="jadwal_ditukar"
                   onConfirm={(input) => {
                     formik.setFieldValue("jadwal_ditukar", input);
