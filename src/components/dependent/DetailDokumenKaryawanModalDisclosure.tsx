@@ -1,9 +1,13 @@
 import {
   Avatar,
+  Badge,
   Box,
   BoxProps,
   Button,
   Center,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
   Icon,
   Modal,
   ModalBody,
@@ -13,27 +17,31 @@ import {
   ModalOverlay,
   SimpleGrid,
   Text,
+  Tooltip,
   useDisclosure,
   useToast,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
 import { RiVerifiedBadgeFill } from "@remixicon/react";
+import { useFormik } from "formik";
 import { useRef, useState } from "react";
+import * as yup from "yup";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import req from "../../lib/req";
+import RequiredForm from "../form/RequiredForm";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
-import BooleanBadge from "./BooleanBadge";
 import DisclosureHeader from "./DisclosureHeader";
 import DokumenFileItem from "./DokumenFileItem";
+import Textarea from "./input/Textarea";
 import Retry from "./Retry";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
-import req from "../../lib/req";
 
 interface VerifikasiProps {
   data: any;
@@ -52,41 +60,69 @@ const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
-  function verifikasiDokumen() {
-    setLoading(true);
+  const [verifikasi, setVerifikasi] = useState<number | undefined>(undefined);
 
-    req
-      .post(
-        `/api/rski/dashboard/karyawan/detail-karyawan-dokumen/${data.user.data_karyawan_id}/verifikasi`
-      )
-      .then((r) => {
-        if (r.status === 200) {
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      verifikasi: undefined as number | undefined,
+      alasan: "",
+    },
+    validationSchema: yup.object().shape({
+      verifikasi: yup.number().required("Harus diisi"),
+      alasan:
+        verifikasi === 0 ? yup.string().required("Harus diisi") : yup.string(),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      setLoading(true);
+
+      let payload;
+
+      const payload1 = {
+        verifikasi_disetujui: 1,
+      };
+      const payload2 = {
+        verifikasi_ditolak: 1,
+        alasan: values.alasan,
+      };
+      if (values.verifikasi === 1) {
+        payload = payload1;
+      } else {
+        payload = payload2;
+      }
+
+      req
+        .post(
+          `/api/rski/dashboard/karyawan/detail-karyawan-dokumen/${data.id}/verifikasi`,
+          payload
+        )
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              position: "bottom-right",
+              isClosable: true,
+            });
+            setRt(!rt);
+            backOnClose();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
           toast({
-            status: "success",
-            title: r.data.message,
+            status: "error",
+            title:
+              e.response.data.message || "Maaf terjadi kesalahan pada sistem",
             position: "bottom-right",
             isClosable: true,
           });
-          setRt(!rt);
-          backOnClose();
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        toast({
-          status: "error",
-          title:
-            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
-          position: "bottom-right",
-          isClosable: true,
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-
-    //TODO api verifikasi dokumen
-  }
+    },
+  });
 
   return (
     <>
@@ -97,7 +133,7 @@ const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
         className="btn-ap clicky"
         leftIcon={<Icon as={RiVerifiedBadgeFill} fontSize={iconSize} />}
         pl={5}
-        isDisabled={data.status_verifikasi_berkas}
+        // isDisabled={data.status_berkas !== "Menunggu"}
         onClick={onOpen}
       >
         Verifikasi
@@ -105,37 +141,90 @@ const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
 
       <Modal
         isOpen={isOpen}
-        onClose={backOnClose}
+        onClose={() => {
+          backOnClose();
+          formik.resetForm();
+        }}
         isCentered
         blockScrollOnMount={false}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <DisclosureHeader title={"Verfikasi Dokumen"} />
+            <DisclosureHeader
+              title={"Verifikasi Dokumen"}
+              onClose={() => {
+                formik.resetForm();
+              }}
+            />
           </ModalHeader>
           <ModalBody>
-            <Text opacity={0.6}>
-              Apakah anda yakin untuk verifikasi dokumen karyawan ini?
-            </Text>
+            <form id="verifikasiDokumenForm" onSubmit={formik.handleSubmit}>
+              <FormControl isInvalid={!!formik.errors.verifikasi}>
+                <FormLabel>
+                  Verifikasi
+                  <RequiredForm />
+                </FormLabel>
+                <SimpleGrid columns={[1, 2]} gap={2}>
+                  <Button
+                    w={"100%"}
+                    className="btn-outline clicky"
+                    colorScheme={formik.values.verifikasi === 1 ? "green" : ""}
+                    variant={formik.values.verifikasi === 1 ? "outline" : ""}
+                    onClick={() => {
+                      formik.setFieldValue("verifikasi", 1);
+                      setVerifikasi(1);
+                    }}
+                  >
+                    Disetujui
+                  </Button>
+                  <Button
+                    w={"100%"}
+                    className="btn-outline clicky"
+                    colorScheme={formik.values.verifikasi === 0 ? "red" : ""}
+                    variant={formik.values.verifikasi === 0 ? "outline" : ""}
+                    onClick={() => {
+                      formik.setFieldValue("verifikasi", 0);
+                      setVerifikasi(0);
+                    }}
+                  >
+                    Ditolak
+                  </Button>
+                </SimpleGrid>
+                <FormErrorMessage>
+                  {formik.errors.verifikasi as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mt={4} isInvalid={!!formik.errors.alasan}>
+                <FormLabel>
+                  Alasan
+                  <RequiredForm />
+                </FormLabel>
+                <Textarea
+                  name="alasan"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("alasan", input);
+                  }}
+                  inputValue={formik.values.alasan}
+                  isDisabled={formik.values.verifikasi !== 0}
+                />
+                <FormErrorMessage>
+                  {formik.errors.alasan as string}
+                </FormErrorMessage>
+              </FormControl>
+            </form>
           </ModalBody>
           <ModalFooter gap={2}>
             <Button
               w={"100%"}
-              className="btn-solid clicky"
-              onClick={backOnClose}
-              isDisabled={loading}
-            >
-              Tidak
-            </Button>
-            <Button
-              w={"100%"}
               className="btn-ap clicky"
               colorScheme="ap"
-              onClick={verifikasiDokumen}
               isLoading={loading}
+              type="submit"
+              form="verifikasiDokumenForm"
             >
-              Ya
+              Konfirmasi
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -211,6 +300,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
                 )}
               </>
             )}
+
             {!error && (
               <>
                 {loading && (
@@ -316,11 +406,19 @@ export default function DetailDokumenKaryawanModalDisclosure({
                               Status Verifikasi
                             </Text>
                             <Text fontWeight={500}>
-                              <BooleanBadge
-                                data={data.status_verifikasi_berkas}
-                                trueValue="Diverifikasi"
-                                falseValue="Belum Diverifikasi"
-                              />
+                              <Tooltip label={data?.alasan}>
+                                <Badge
+                                  colorScheme={
+                                    data?.status_berkas === "Diverifikasi"
+                                      ? "green"
+                                      : data?.status_berkas === "Menunggu"
+                                      ? "orange"
+                                      : "red"
+                                  }
+                                >
+                                  {data?.status_berkas}
+                                </Badge>
+                              </Tooltip>
                             </Text>
                           </VStack>
 
