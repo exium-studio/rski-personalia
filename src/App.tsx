@@ -25,6 +25,7 @@ import PengaturanHariLibur from "./pages/Pengaturan/PengaturanHariLibur";
 import PengaturanJabatan from "./pages/Pengaturan/PengaturanJabatan";
 import PengaturanJadwalPenggajian from "./pages/Pengaturan/PengaturanJadwalPenggajian";
 import PengaturanJamKerjaNonShift from "./pages/Pengaturan/PengaturanJamKerjaNonShift";
+import PengaturanJenisPenilaian from "./pages/Pengaturan/PengaturanJenisPenilaian";
 import PengaturanKategoriTer from "./pages/Pengaturan/PengaturanKategoriTer";
 import PengaturanKelolaRole from "./pages/Pengaturan/PengaturanKelolaRole";
 import PengaturanKelompokGaji from "./pages/Pengaturan/PengaturanKelompokGaji";
@@ -40,12 +41,10 @@ import PengaturanCuti from "./pages/Pengaturan/PengaturanTipeCuti";
 import PengaturanUbahKataSandi from "./pages/Pengaturan/PengaturanUbahKataSandi";
 import PengaturanUnitKerja from "./pages/Pengaturan/PengaturanUnitKerja";
 import Perusahaan from "./pages/Perusahaan/Diklat";
-import PelaporanKaryawan from "./pages/Perusahaan/PelaporanKaryawan";
 import PenilaianKaryawan from "./pages/Perusahaan/PenilaianKaryawan";
 import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
-import PengaturanJenisPenilaian from "./pages/Pengaturan/PengaturanJenisPenilaian";
 
 // github pekok
 
@@ -224,7 +223,7 @@ export const App = () => {
               </NavContainer>
             }
           />
-          <Route
+          {/* <Route
             path="/perusahaan/pelaporan-karyawan"
             element={
               <NavContainer
@@ -236,7 +235,7 @@ export const App = () => {
                 <PelaporanKaryawan />
               </NavContainer>
             }
-          />
+          /> */}
           <Route
             path="/perusahaan/penilaian-karyawan"
             element={
@@ -244,7 +243,7 @@ export const App = () => {
                 active={5}
                 title="Penilaian Karyawan"
                 topNavsData={navs[5].subNavs}
-                topNavActive={2}
+                topNavActive={1}
               >
                 <PenilaianKaryawan />
               </NavContainer>

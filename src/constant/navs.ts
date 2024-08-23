@@ -102,10 +102,10 @@ const navs = [
         label: "Diklat",
         link: "/perusahaan/diklat",
       },
-      {
-        label: "Pelaporan Karyawan",
-        link: "/perusahaan/pelaporan-karyawan",
-      },
+      // {
+      //   label: "Pelaporan Karyawan",
+      //   link: "/perusahaan/pelaporan-karyawan",
+      // },
       {
         label: "Penilaian Karyawan",
         link: "/perusahaan/penilaian-karyawan",
