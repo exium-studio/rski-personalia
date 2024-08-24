@@ -31,7 +31,7 @@ const useDataState = <T>({
   const [paginationData, setPaginationData] = useState<T | undefined>(
     initialData
   );
-  const [offset, setOffset] = useState<number>((page - 1) * (limit || 0));
+  // const [offset, setOffset] = useState<number>((page - 1) * (limit || 0));
   const { rt } = useRenderTrigger();
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -55,7 +55,7 @@ const useDataState = <T>({
     const data = {
       ...payload,
       limit: limit,
-      offset: offset,
+      // offset: offset,
     };
 
     req({
@@ -96,9 +96,9 @@ const useDataState = <T>({
 
   function loadMore() {
     setLoadingLoadMore(true);
-    if (limit) {
-      setOffset((ps) => ps + limit);
-    }
+    // if (limit) {
+    //   setOffset((ps) => ps + limit);
+    // }
 
     //TODO http request dan append ke data
   }

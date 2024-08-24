@@ -2,26 +2,21 @@ import {
   Box,
   Center,
   HStack,
-  Icon,
-  Input,
-  InputGroup,
-  InputLeftElement,
   StackProps,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { RiSearch2Line } from "@remixicon/react";
 import { useState } from "react";
 import { useBodyColor } from "../../constant/colors";
 import { dashboardItemHeight, responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
+import SearchComponent from "../dependent/input/SearchComponent";
 import Retry from "../dependent/Retry";
 import DashboardBuatPengumumanModal from "./DashboardBuatPengumumanModal";
 import DashboardPengumumanItemDetail from "./DashboardPengumumanItemDetail";
 import NoData from "./NoData";
-import Skeleton from "./Skeleton";
 import NotFound from "./NotFound";
-import SearchComponent from "../dependent/input/SearchComponent";
+import Skeleton from "./Skeleton";
 
 interface Props extends StackProps {}
 

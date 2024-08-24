@@ -1,16 +1,16 @@
-import { Center, Text, Tooltip } from "@chakra-ui/react";
+import { Center, HStack } from "@chakra-ui/react";
 import { useState } from "react";
-import { Interface__SelectOption } from "../../constant/interfaces";
+import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
-import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
+import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
-import StatusDihapus from "./StatusDihapus";
+import SelectStatusKaryawan from "./_Select/SelectStatusKaryawan";
 import SearchComponent from "./input/SearchComponent";
 
 interface Props {
@@ -21,33 +21,25 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
   // SX
 
   const [search, setSearch] = useState("");
+  const [statusKaryawan, setStatusKaryawan] = useState<any>(undefined);
 
   const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
     url: `/api/rski/dashboard/perusahaan/get-user-belum-dinilai`,
     payload: {
-      ...filterConfig,
+      ...(statusKaryawan && {
+        status_karyawan: statusKaryawan.value,
+      }),
     },
-    dependencies: [],
+    dependencies: [statusKaryawan],
   });
 
   const fd = data?.filter((item: any) => {
-    const searchTerm = filterConfig?.search?.toLowerCase();
-    const isDeletedTerm = filterConfig?.is_deleted?.map(
-      (term: Interface__SelectOption) => term.value
-    );
+    const searchTerm = search?.toLowerCase();
 
-    const matchesSearchTerm = item.nama_unit.toLowerCase().includes(searchTerm);
-    const matchesIsDeletedTerm =
-      isDeletedTerm?.includes(1) && isDeletedTerm?.includes(0)
-        ? true
-        : isDeletedTerm?.includes(1)
-        ? !!item.deleted_at
-        : isDeletedTerm?.includes(0)
-        ? !item.deleted_at
-        : true;
+    const matchesSearchTerm = item?.nama.toLowerCase().includes(searchTerm);
 
-    return matchesSearchTerm && matchesIsDeletedTerm;
+    return matchesSearchTerm;
   });
 
   const formattedHeader = [
@@ -64,13 +56,7 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
         borderRight: "1px solid var(--divider3)",
       },
     },
-    {
-      th: "Status Dihapus",
-      isSortable: true,
-      cProps: {
-        justify: "center",
-      },
-    },
+
     {
       th: "Jenis Karyawan",
       isSortable: true,
@@ -83,19 +69,15 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
     id: item.id,
     columnsFormat: [
       {
-        value: item.nama_unit,
+        value: item.nama,
         td: (
-          <Tooltip openDelay={500} label={item.nama_unit} placement="right">
-            <Text
-              w={"100%"}
-              maxW={"243px"}
-              overflow={"hidden"}
-              whiteSpace={"nowrap"}
-              textOverflow={"ellipsis"}
-            >
-              {item.nama_unit}
-            </Text>
-          </Tooltip>
+          <AvatarAndNameTableData
+            data={{
+              id: item.id,
+              nama: item.nama,
+              foto_profil: item.foto_profil,
+            }}
+          />
         ),
         props: {
           position: "sticky",
@@ -106,14 +88,7 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
           borderRight: "1px solid var(--divider3)",
         },
       },
-      {
-        value: item.deleted_at,
-        td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
-        isDate: true,
-        cProps: {
-          justify: "center",
-        },
-      },
+
       {
         value: item.jenis_karyawan,
         td: <JenisKaryawanBadge w={"120px"} data={item.jenis_karyawan} />,
@@ -129,13 +104,7 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && isObjectEmpty(filterConfig, ["status_karyawan"]) && (
-            <NoData minH={"300px"} />
-          )}
-
-          {notFound && !isObjectEmpty(filterConfig, ["status_karyawan"]) && (
-            <NotFound minH={"300px"} />
-          )}
+          {notFound && <NotFound minH={"300px"} />}
 
           {!notFound && (
             <Center my={"auto"} minH={"300px"}>
@@ -149,6 +118,7 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
         <>
           {loading && (
             <>
+              <Skeleton minH={"40px"} mx={"auto"} mb={responsiveSpacing} />
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
             </>
           )}
@@ -162,13 +132,28 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
 
                   {fd && fd?.length > 0 && (
                     <>
-                      <SearchComponent
-                        name="search"
-                        onChangeSetter={(input) => {
-                          setSearch(input);
-                        }}
-                        inputValue={search}
-                      />
+                      <HStack mb={responsiveSpacing}>
+                        <SearchComponent
+                          name="search"
+                          onChangeSetter={(input) => {
+                            setSearch(input);
+                          }}
+                          inputValue={search}
+                        />
+
+                        <SelectStatusKaryawan
+                          name="status_karyawan"
+                          onConfirm={(input) => {
+                            setStatusKaryawan((ps: any) => ({
+                              ...ps,
+                              status_karyawan: input,
+                            }));
+                          }}
+                          inputValue={statusKaryawan}
+                          maxW={"fit-content"}
+                        />
+                      </HStack>
+
                       <CustomTableContainer>
                         <CustomTable
                           formattedHeader={formattedHeader}
