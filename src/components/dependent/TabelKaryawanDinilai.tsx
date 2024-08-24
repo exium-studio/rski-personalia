@@ -1,4 +1,4 @@
-import { Center, HStack } from "@chakra-ui/react";
+import { Center, HStack, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
@@ -9,8 +9,9 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
+import PenilaianKaryawanModal from "./PenilaianKaryawanModal";
 import Retry from "./Retry";
-import SelectStatusKaryawan from "./_Select/SelectStatusKaryawan";
+import MultiSelectStatusKaryawan from "./_Select/MultiSelectStatusKaryawan";
 import SearchComponent from "./input/SearchComponent";
 
 interface Props {
@@ -27,8 +28,8 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
     initialData: undefined,
     url: `/api/rski/dashboard/perusahaan/get-user-belum-dinilai`,
     payload: {
-      ...(statusKaryawan && {
-        status_karyawan: statusKaryawan.value,
+      ...(statusKaryawan?.length > 0 && {
+        status_cuti: statusKaryawan.map((sp: any) => sp.value),
       }),
     },
     dependencies: [statusKaryawan],
@@ -100,6 +101,11 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
     ],
   }));
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const user_id_penilaian = parseInt(
+    localStorage.getItem("user_id_penilaian") as string
+  );
+
   return (
     <>
       {error && (
@@ -141,16 +147,15 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
                           inputValue={search}
                         />
 
-                        <SelectStatusKaryawan
+                        <MultiSelectStatusKaryawan
                           name="status_karyawan"
                           onConfirm={(input) => {
-                            setStatusKaryawan((ps: any) => ({
-                              ...ps,
-                              status_karyawan: input,
-                            }));
+                            setStatusKaryawan(input);
                           }}
                           inputValue={statusKaryawan}
+                          optionsDisplay="chip"
                           maxW={"fit-content"}
+                          placeholder="Filter Status Kepegawaian"
                         />
                       </HStack>
 
@@ -158,8 +163,28 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
                         <CustomTable
                           formattedHeader={formattedHeader}
                           formattedData={formattedData}
+                          onRowClick={(row) => {
+                            localStorage.setItem("user_id_penilaian", row.id);
+                            onOpen();
+                          }}
                         />
                       </CustomTableContainer>
+
+                      <Text
+                        opacity={0.4}
+                        mt={responsiveSpacing}
+                        textAlign={"center"}
+                        mx={"auto"}
+                      >
+                        Klik row untuk menilai karyawan yang dipilih
+                      </Text>
+
+                      <PenilaianKaryawanModal
+                        user_id_penilaian={user_id_penilaian}
+                        isOpen={isOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                      />
                     </>
                   )}
                 </>

@@ -39,7 +39,7 @@ import SelectKelompokGaji from "../../components/dependent/_Select/SelectKelompo
 import SelectKompetensi from "../../components/dependent/_Select/SelectKompetensi";
 import SelectPtkp from "../../components/dependent/_Select/SelectPtkp";
 import SelectRole from "../../components/dependent/_Select/SelectRole";
-import SelectStatusKaryawan from "../../components/dependent/_Select/SelectStatusKaryawan";
+import SelectStatusKaryawan from "./_Select/SelectStatusKaryawan";
 import SelectUnitKerja from "../../components/dependent/_Select/SelectUnitKerja";
 import DatePickerModal from "../../components/dependent/input/DatePickerModal";
 import RequiredForm from "../../components/form/RequiredForm";

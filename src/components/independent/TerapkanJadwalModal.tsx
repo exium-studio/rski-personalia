@@ -119,7 +119,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
         leftIcon={<Icon as={RiCalendarFill} fontSize={iconSize} />}
         {...props}
       >
-        Terapkan Jadwal
+        Terapkan Jadwal Shift
       </Button>
 
       <Modal
@@ -136,7 +136,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
         <ModalContent>
           <ModalHeader p={0}>
             <DisclosureHeader
-              title="Terapkan Jadwal"
+              title="Terapkan Jadwal Shift"
               onClose={() => {
                 formik.resetForm();
                 setLibur(false);
