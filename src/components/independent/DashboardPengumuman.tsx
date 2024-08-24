@@ -20,6 +20,8 @@ import DashboardBuatPengumumanModal from "./DashboardBuatPengumumanModal";
 import DashboardPengumumanItemDetail from "./DashboardPengumumanItemDetail";
 import NoData from "./NoData";
 import Skeleton from "./Skeleton";
+import NotFound from "./NotFound";
+import SearchComponent from "../dependent/input/SearchComponent";
 
 interface Props extends StackProps {}
 
@@ -29,6 +31,15 @@ export default function DashboardPengumuman({ ...props }: Props) {
     initialData: undefined,
     url: `/api/rski/dashboard/pengumuman`,
     dependencies: [],
+  });
+
+  const fd = data?.filter((pengumuman: any) => {
+    const searchTerm = search?.toLocaleLowerCase();
+
+    const matches1 = pengumuman?.judul?.toLowerCase()?.includes(searchTerm);
+    const matches2 = pengumuman?.konten?.toLowerCase()?.includes(searchTerm);
+
+    return matches1 || matches2;
   });
 
   // SX
@@ -62,21 +73,13 @@ export default function DashboardPengumuman({ ...props }: Props) {
           <DashboardBuatPengumumanModal />
         </HStack>
 
-        <HStack>
-          <InputGroup>
-            <InputLeftElement>
-              <Icon as={RiSearch2Line} />
-            </InputLeftElement>
-            <Input
-              name="search"
-              placeholder="Pencarian"
-              onChange={(e) => {
-                setSearch(e.target.value);
-              }}
-              value={search}
-            />
-          </InputGroup>
-        </HStack>
+        <SearchComponent
+          name="search"
+          onChangeSetter={(input) => {
+            setSearch(input);
+          }}
+          inputValue={search}
+        />
       </Box>
 
       {error && (
@@ -117,16 +120,23 @@ export default function DashboardPengumuman({ ...props }: Props) {
                   </Text>
                 )}
 
-                {data &&
-                  data.map((pengumuman: any, i: number) => (
-                    <DashboardPengumumanItemDetail
-                      key={i}
-                      data={pengumuman}
-                      borderBottom={
-                        i < data.length - 1 ? "1px solid var(--divider2)" : ""
-                      }
-                    />
-                  ))}
+                {data && (
+                  <>
+                    {fd?.length === 0 && (
+                      <NotFound label="Pengumuman tidak ditemukan" />
+                    )}
+
+                    {fd?.map((pengumuman: any, i: number) => (
+                      <DashboardPengumumanItemDetail
+                        key={i}
+                        data={pengumuman}
+                        borderBottom={
+                          i < data.length - 1 ? "1px solid var(--divider2)" : ""
+                        }
+                      />
+                    ))}
+                  </>
+                )}
               </VStack>
             </>
           )}

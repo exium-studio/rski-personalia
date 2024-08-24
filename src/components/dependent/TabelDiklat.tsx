@@ -280,16 +280,18 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
       {
         value: "",
-        td: (
-          <VerifikasiModal
-            aria-label={`perubahan-data-verif-1-button-${item.id}"`}
-            id={`verifikasi-diklat-modal-${item.id}`}
-            submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
-            approvePayloadKey="verifikasi_pertama_disetujui"
-            disapprovePayloadKey="verifikasi_pertama_ditolak"
-            isDisabled={item?.status_diklat?.id !== 1}
-          />
-        ),
+        td:
+          item?.status_diklat?.id === 1 ? (
+            <VerifikasiModal
+              aria-label={`perubahan-data-verif-1-button-${item.id}"`}
+              id={`verifikasi-diklat-modal-${item.id}`}
+              submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
+              approvePayloadKey="verifikasi_pertama_disetujui"
+              disapprovePayloadKey="verifikasi_pertama_ditolak"
+            />
+          ) : (
+            <Text opacity={0.2}>Diverifikasi</Text>
+          ),
         props: {
           position: "sticky",
           right: 0,
@@ -302,16 +304,18 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
       {
         value: "",
-        td: (
-          <VerifikasiModal
-            aria-label={`perubahan-data-verif-2-button-${item.id}"`}
-            id={`verifikasi-diklat-modal-2-${item.id}`}
-            submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
-            approvePayloadKey="verifikasi_kedua_disetujui"
-            disapprovePayloadKey="verifikasi_kedua_ditolak"
-            isDisabled={item?.status_diklat?.id !== 4}
-          />
-        ),
+        td:
+          item?.status_diklat?.id === 4 ? (
+            <VerifikasiModal
+              aria-label={`perubahan-data-verif-2-button-${item.id}"`}
+              id={`verifikasi-diklat-modal-2-${item.id}`}
+              submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
+              approvePayloadKey="verifikasi_kedua_disetujui"
+              disapprovePayloadKey="verifikasi_kedua_ditolak"
+            />
+          ) : (
+            <Text opacity={0.2}>Diverifikasi</Text>
+          ),
         props: {
           position: "sticky",
           right: 0,
