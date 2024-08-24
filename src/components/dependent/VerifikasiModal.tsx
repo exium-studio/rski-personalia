@@ -148,7 +148,7 @@ export default function VerifikasiModal({
             color={"var(--divider-text)"}
             variant={"ghost"}
             onClick={() => {
-              setVerifikasi(false);
+              setVerifikasi(true);
               onOpen();
             }}
             sx={{
@@ -226,13 +226,20 @@ export default function VerifikasiModal({
           <ModalFooter gap={2}>
             <Button
               w={"100%"}
+              className="btn-solid clicky"
+              isDisabled={loading}
+            >
+              Tidak
+            </Button>
+            <Button
+              w={"100%"}
               className="btn-ap clicky"
               colorScheme="ap"
               isLoading={loading}
               type="submit"
               form="verifikasiPermintaanPerubahanDataForm"
             >
-              Konfirmasi
+              Ya
             </Button>
           </ModalFooter>
         </ModalContent>
