@@ -33,6 +33,7 @@ import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
 import req from "../../lib/req";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
+import formatDate from "../../lib/formatDate";
 
 interface Props extends ButtonProps {}
 
@@ -80,8 +81,8 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       payload.append("nama", values.nama);
       payload.append("deskripsi", values.deskripsi);
       payload.append("kuota", values.kuota);
-      payload.append("tgl_mulai", values.tgl_mulai);
-      payload.append("tgl_selesai", values.tgl_selesai);
+      payload.append("tgl_mulai", formatDate(values.tgl_mulai, "short"));
+      payload.append("tgl_selesai", formatDate(values.tgl_selesai, "short"));
       payload.append("jam_mulai", values.jam_mulai);
       payload.append("jam_selesai", values.jam_selesai);
       payload.append("lokasi", values.lokasi);
