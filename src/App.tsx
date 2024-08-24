@@ -16,7 +16,7 @@ import Jadwal from "./pages/Jadwal/Jadwal";
 import Lembur from "./pages/Jadwal/Lembur";
 import TukarJadwal from "./pages/Jadwal/TukarJadwal";
 import Karyawan from "./pages/Karyawan/Karyawan";
-import PerubahanDataKaryawan from "./pages/Karyawan/PerubahanDataKaryawan";
+import PerubahanDataKaryawan from "./pages/Karyawan/PermintaanPerubahanDataKaryawan";
 import TransferKaryawan from "./pages/Karyawan/TransferKaryawan";
 import Penggajian from "./pages/Keuangan/Penggajian";
 import Thr from "./pages/Keuangan/Thr";

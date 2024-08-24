@@ -10,23 +10,23 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import SelectMultiStatusVerifikasi from "../../components/dependent/_Select/MultiSelectStatusVerifikasi";
 
-export default function PerubahanDataKaryawan() {
+export default function PermintaanPerubahanDataKaryawan() {
   // Filter Config
   const [filterConfig, setFilterConfig] = useState({
     status_verifikasi: undefined,
   });
-  const { setFilterKaryawan } = useFilterKaryawan();
+  const { setFormattedFilterKaryawan } = useFilterKaryawan();
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setFilterKaryawan({ search });
+      setFormattedFilterKaryawan({ search });
     }, 300);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [search, setFilterKaryawan]);
+  }, [search, setFormattedFilterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();
