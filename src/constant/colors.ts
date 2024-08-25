@@ -37,7 +37,10 @@ const useErrorAlphaColor = () => {
 };
 
 const useWarningAlphaColor = () => {
-  return useColorModeValue("orange.50", "rgba(251, 211, 141, 0.12)");
+  return useColorModeValue(
+    "rgba(251, 211, 141, 0.12)",
+    "rgba(251, 211, 141, 0.12)"
+  );
 };
 
 const statusKaryawanColorScheme = {
