@@ -55,39 +55,53 @@ export default function PertukaranJadwalModal({
             <DisclosureHeader title={"Pertukaran Jadwal"} />
           </ModalHeader>
           <ModalBody>
-            {data.map((pertukaran: any, i: number) => (
+            {data?.map((pertukaran: any, i: number) => (
               <HStack key={i}>
                 <CContainer gap={2} flex={1}>
-                  <Text opacity={0.4}>
-                    {pertukaran.jadwal_karyawan_pengajuan.shift.nama}
-                  </Text>
+                  {pertukaran?.jadwal_karyawan_pengajuan?.shift ? (
+                    <Text opacity={0.4}>
+                      {pertukaran?.jadwal_karyawan_pengajuan?.shift?.nama}
+                    </Text>
+                  ) : (
+                    <Text>Libur</Text>
+                  )}
+
                   <Text>
                     {formatDate(pertukaran.jadwal_karyawan_pengajuan.tgl_mulai)}
                   </Text>
 
-                  <HStack gap={4}>
-                    <HStack>
-                      <Center borderRadius={"full"} bg={"var(--p500a4)"} p={1}>
-                        <Icon as={RiLoginBoxLine} color={"p.500"} />
-                      </Center>
-                      <Text>
-                        {formatTime(
-                          pertukaran.jadwal_karyawan_pengajuan.shift.jam_from
-                        )}
-                      </Text>
-                    </HStack>
+                  {pertukaran?.jadwal_karyawan_pengajuan?.shift ? (
+                    <HStack gap={4}>
+                      <HStack>
+                        <Center
+                          borderRadius={"full"}
+                          bg={"var(--p500a4)"}
+                          p={1}
+                        >
+                          <Icon as={RiLoginBoxLine} color={"p.500"} />
+                        </Center>
+                        <Text>
+                          {formatTime(
+                            pertukaran?.jadwal_karyawan_pengajuan?.shift
+                              ?.jam_from
+                          )}
+                        </Text>
+                      </HStack>
 
-                    <HStack>
-                      <Center borderRadius={"full"} bg={"var(--reda)"} p={1}>
-                        <Icon as={RiLoginBoxLine} color={"red.400"} />
-                      </Center>
-                      <Text>
-                        {formatTime(
-                          pertukaran.jadwal_karyawan_pengajuan.shift.jam_to
-                        )}
-                      </Text>
+                      <HStack>
+                        <Center borderRadius={"full"} bg={"var(--reda)"} p={1}>
+                          <Icon as={RiLoginBoxLine} color={"red.400"} />
+                        </Center>
+                        <Text>
+                          {formatTime(
+                            pertukaran?.jadwal_karyawan_pengajuan?.shift?.jam_to
+                          )}
+                        </Text>
+                      </HStack>
                     </HStack>
-                  </HStack>
+                  ) : (
+                    <Text>-</Text>
+                  )}
                 </CContainer>
 
                 <Icon
@@ -99,36 +113,49 @@ export default function PertukaranJadwalModal({
                 />
 
                 <CContainer gap={2} flex={1}>
-                  <Text opacity={0.4}>
-                    {pertukaran.jadwal_karyawan_ditukar.shift.nama}
-                  </Text>
+                  {pertukaran?.jadwal_karyawan_ditukar?.shift ? (
+                    <Text opacity={0.4}>
+                      {pertukaran?.jadwal_karyawan_ditukar?.shift?.nama}
+                    </Text>
+                  ) : (
+                    <Text opacity={0.4}>Libur</Text>
+                  )}
+
                   <Text>
-                    {formatDate(pertukaran.jadwal_karyawan_ditukar.tgl_mulai)}
+                    {formatDate(pertukaran?.jadwal_karyawan_ditukar?.tgl_mulai)}
                   </Text>
 
-                  <HStack gap={4}>
-                    <HStack>
-                      <Center borderRadius={"full"} bg={"var(--p500a4)"} p={1}>
-                        <Icon as={RiLoginBoxLine} color={"p.500"} />
-                      </Center>
-                      <Text>
-                        {formatTime(
-                          pertukaran.jadwal_karyawan_ditukar.shift.jam_from
-                        )}
-                      </Text>
-                    </HStack>
+                  {pertukaran?.jadwal_karyawan_ditukar?.shift ? (
+                    <HStack gap={4}>
+                      <HStack>
+                        <Center
+                          borderRadius={"full"}
+                          bg={"var(--p500a4)"}
+                          p={1}
+                        >
+                          <Icon as={RiLoginBoxLine} color={"p.500"} />
+                        </Center>
+                        <Text>
+                          {formatTime(
+                            pertukaran?.jadwal_karyawan_ditukar?.shift?.jam_from
+                          )}
+                        </Text>
+                      </HStack>
 
-                    <HStack>
-                      <Center borderRadius={"full"} bg={"var(--reda)"} p={1}>
-                        <Icon as={RiLoginBoxLine} color={"red.400"} />
-                      </Center>
-                      <Text>
-                        {formatTime(
-                          pertukaran.jadwal_karyawan_ditukar.shift.jam_to
-                        )}
-                      </Text>
+                      <HStack>
+                        <Center borderRadius={"full"} bg={"var(--reda)"} p={1}>
+                          <Icon as={RiLoginBoxLine} color={"red.400"} />
+                        </Center>
+                        <Text>
+                          {formatTime(
+                            pertukaran?.jadwal_karyawan_ditukar?.shift?.jam_to
+                          )}
+                        </Text>
+                      </HStack>
                     </HStack>
-                  </HStack>
+                  ) : (
+                    <Text>-</Text>
+                  )}
                 </CContainer>
               </HStack>
             ))}
