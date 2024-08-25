@@ -52,27 +52,29 @@ export default function Jadwal() {
       tgl_selesai: inputValue?.to,
     }));
   };
+
   const user = useGetUserData();
-  useEffect(() => {
-    if (user) {
-      const unitKerjaUser = user?.data_karyawan?.unit_kerja;
-      if (unitKerjaUser) {
-        setFilterKaryawan((ps: any) => ({
-          ...ps,
-          unit_kerja: [
-            {
-              value: unitKerjaUser?.id,
-              label: unitKerjaUser?.label,
-            },
-          ],
-        }));
-        setFormattedFilterKaryawan((ps: any) => ({
-          ...ps,
-          unit_kerja: [unitKerjaUser?.id],
-        }));
-      }
-    }
-  }, [user, setFilterKaryawan, setFormattedFilterKaryawan]);
+
+  // useEffect(() => {
+  //   if (user) {
+  //     const unitKerjaUser = user?.data_karyawan?.unit_kerja;
+  //     if (unitKerjaUser) {
+  //       setFilterKaryawan((ps: any) => ({
+  //         ...ps,
+  //         unit_kerja: [
+  //           {
+  //             value: unitKerjaUser?.id,
+  //             label: unitKerjaUser?.label,
+  //           },
+  //         ],
+  //       }));
+  //       setFormattedFilterKaryawan((ps: any) => ({
+  //         ...ps,
+  //         unit_kerja: [unitKerjaUser?.id],
+  //       }));
+  //     }
+  //   }
+  // }, [user]);
 
   // SX
   const lightDarkColor = useLightDarkColor();

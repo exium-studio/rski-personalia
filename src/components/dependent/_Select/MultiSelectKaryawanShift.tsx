@@ -15,7 +15,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function MultiSelectKaryawan({
+export default function MultiSelectKaryawanShift({
   name,
   onConfirm,
   inputValue,
@@ -36,7 +36,7 @@ export default function MultiSelectKaryawan({
   useEffect(() => {
     if (isOpen && !options) {
       req
-        .get("/api/get-list-user")
+        .get("/api/get-list-user-shift")
         .then((r) => {
           if (r.status === 200) {
             const options = r.data.data.map((item: any) => ({

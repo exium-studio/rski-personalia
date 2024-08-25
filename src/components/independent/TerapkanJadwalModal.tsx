@@ -23,17 +23,17 @@ import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import { Interface__SelectOption } from "../../constant/interfaces";
-import req from "../../lib/req";
 import { iconSize } from "../../constant/sizes";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnCloseOld";
-import MultiSelectKaryawan from "../dependent/_Select/MultiSelectKaryawan";
+import formatDate from "../../lib/formatDate";
+import req from "../../lib/req";
+import MultiSelectKaryawanShift from "../dependent/_Select/MultiSelectKaryawanShift";
 import SelectShift from "../dependent/_Select/SelectShift";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import RequiredForm from "../form/RequiredForm";
-import formatDate from "../../lib/formatDate";
 
 interface Props extends ButtonProps {}
 
@@ -150,7 +150,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                   Karyawan
                   <RequiredForm />
                 </FormLabel>
-                <MultiSelectKaryawan
+                <MultiSelectKaryawanShift
                   name="list_karyawan"
                   onConfirm={(input) => {
                     formik.setFieldValue("list_karyawan", input);
