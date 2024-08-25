@@ -30,13 +30,13 @@ const PenilaianList = ({ data }: { data: any }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`penilaian-list-modal-${data.id}`, isOpen, onOpen, onClose);
 
-  let pertanyaan_jawaban;
-  try {
-    const parsedData = JSON.parse(data?.pertanyaan_jawaban);
-    pertanyaan_jawaban = parsedData;
-  } catch (error) {
-    console.error("Error parsing JSON:", error);
-  }
+  // let pertanyaan_jawaban;
+  // try {
+  //   const parsedData = JSON.parse(data?.pertanyaan_jawaban);
+  //   pertanyaan_jawaban = parsedData;
+  // } catch (error) {
+  //   console.error("Error parsing JSON:", error);
+  // }
 
   return (
     <>
