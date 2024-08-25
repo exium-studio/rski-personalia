@@ -31,7 +31,7 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
     const matchesHubunganTerm =
       hubunganTerm && hubunganTerm.length > 0
         ? hubunganTerm.some(
-            (filterItem: any) => filterItem.value === item.hubungan.id
+            (filterItem: any) => filterItem.label === item.hubungan
           )
         : true;
     const matchesStatusHidupTerm =

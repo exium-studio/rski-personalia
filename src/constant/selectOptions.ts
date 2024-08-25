@@ -10,9 +10,15 @@ const optionsAgama = [
 const optionsHubunganKeluarga = [
   { value: 1, label: "Ayah" },
   { value: 2, label: "Ibu" },
-  { value: 3, label: "Istri" },
+  { value: 3, label: "Anak" },
   { value: 4, label: "Suami" },
-  { value: 5, label: "Anak" },
+  { value: 5, label: "Istri" },
+  { value: 6, label: "Nenek" },
+  { value: 7, label: "Kakek" },
+  { value: 8, label: "Ayah Suami" },
+  { value: 9, label: "Ibu Suami" },
+  { value: 10, label: "Ayah Istri" },
+  { value: 11, label: "Ibu Istri" },
 ];
 
 const optionsKategoriCuti = [
