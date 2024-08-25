@@ -13,7 +13,6 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
-import useGetUserData from "../../hooks/useGetUserData";
 
 export default function Jadwal() {
   const today = new Date();
@@ -53,7 +52,7 @@ export default function Jadwal() {
     }));
   };
 
-  const user = useGetUserData();
+  // const user = useGetUserData();
 
   // useEffect(() => {
   //   if (user) {
