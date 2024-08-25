@@ -10,6 +10,8 @@ export default function PerubahanDataRender({ column, data }: any) {
   switch (column) {
     default:
       return <Text>{data}</Text>;
+    case "keluarga":
+      return <Text>-</Text>;
     case "foto_profil":
       return (
         <ViewPhotoModalDisclosure src={data}>

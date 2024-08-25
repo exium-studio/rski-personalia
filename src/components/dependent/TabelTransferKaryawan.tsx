@@ -216,7 +216,7 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
             variant={"ghost"}
             className="clicky"
             as={Link}
-            to={`${process.env.REACT_APP_STORAGE_BASE_URL}${item.dokumen}`}
+            to={`${item.dokumen}`}
             target="_blank"
           >
             Lihat
