@@ -835,14 +835,14 @@ export default function Profil() {
                   </HStack>
 
                   <HStack justify={"space-between"}>
-                    {/* <Text opacity={0.6}>Status Kepegawaian</Text> */}
+                    {/* <Text opacity={0.6}>Status Karyawan</Text> */}
                     <Box opacity={0.6}>
                       <Highlighter
                         highlightClassName="hw"
                         unhighlightClassName="uw"
                         searchWords={searchQuery}
                         autoEscape={true}
-                        textToHighlight="Status Kepegawaian"
+                        textToHighlight="Status Karyawan"
                       />
                     </Box>
                     <FlexLine />

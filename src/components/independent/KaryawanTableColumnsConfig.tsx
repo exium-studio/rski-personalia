@@ -18,7 +18,7 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
     { column: "nama", label: "Nama" }, // 0
     { column: "status_aktif", label: "Status Aktif" }, // 1
     { column: "nik", label: "Nik" }, // 2
-    { column: "status_karyawan", label: "Status Kepegawaian" }, // 3
+    { column: "status_karyawan", label: "Status Karyawan" }, // 3
     { column: "no_rm", label: "No. Rekam Medis" }, // 4
     { column: "unit_kerja", label: "Unit Kerja" }, // 5
     { column: "agama", label: "Agama" }, // 6

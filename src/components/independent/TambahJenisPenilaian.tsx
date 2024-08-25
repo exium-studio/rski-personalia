@@ -147,7 +147,7 @@ export default function TambahJenisPenilaian({ ...props }: Props) {
 
               <FormControl mb={4} isInvalid={!!formik.errors.status_karyawan}>
                 <FormLabel>
-                  Status Kepegawaian
+                  Status Karyawan
                   <RequiredForm />
                 </FormLabel>
                 <SelectStatusKaryawan

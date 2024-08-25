@@ -68,7 +68,7 @@ export default function TabelKaryawan() {
       isSortable: true,
     },
     {
-      th: "Status Kepegawaian",
+      th: "Status Karyawan",
       isSortable: true,
       cProps: {
         justify: "center",

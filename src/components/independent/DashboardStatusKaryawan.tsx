@@ -82,7 +82,7 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
               h={dashboardItemHeight}
               {...props}
             >
-              <Text fontWeight={600}>Status Kepegawaian</Text>
+              <Text fontWeight={600}>Status Karyawan</Text>
               <Text fontSize={14} opacity={0.6}>
                 Karyawan saat ini
               </Text>

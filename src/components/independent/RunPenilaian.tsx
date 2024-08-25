@@ -17,10 +17,9 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import TabelKaryawanDinilai from "../dependent/TabelKaryawanDinilai";
-import SearchComponent from "../dependent/input/SearchComponent";
-import MultiSelectStatusKaryawan from "../dependent/_Select/MultiSelectStatusKaryawan";
-import MultiSelectJenisPenilaian from "../dependent/_Select/MultiSelectJenisPenilaian";
 import MultiSelectJabatan from "../dependent/_Select/MultiSelectJabatan";
+import MultiSelectStatusKaryawan from "../dependent/_Select/MultiSelectStatusKaryawan";
+import SearchComponent from "../dependent/input/SearchComponent";
 
 interface Props extends ButtonProps {}
 
@@ -102,7 +101,7 @@ export default function RunPenilaian({ ...props }: Props) {
                 inputValue={filterConfig.status_karyawan}
                 optionsDisplay="chip"
                 maxW={"200px"}
-                placeholder="Filter Status Kepegawaian"
+                placeholder="Filter Status Karyawan"
               />
             </HStack>
             <TabelKaryawanDinilai filterConfig={filterConfig} />

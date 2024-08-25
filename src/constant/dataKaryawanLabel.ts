@@ -12,7 +12,7 @@ const dataKaryawanLabel = {
   jabatan: "Jabatan",
   kompetensi: "Kompetensi",
   nik_ktp: "Nomor Induk Keluarga (NIK KTP)",
-  status_karyawan: "Status Kepegawaian",
+  status_karyawan: "Status Karyawan",
   tempat_lahir: "Tempat Lahir",
   tgl_lahir: "Tanggal Lahir",
   kelompok_gaji: "Kelompok Gaji",

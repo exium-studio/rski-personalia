@@ -60,7 +60,7 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
     },
 
     {
-      th: "Status Kepegawaian",
+      th: "Status Karyawan",
       isSortable: true,
       cProps: {
         justify: "center",

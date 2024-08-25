@@ -504,7 +504,7 @@ export default function EditKaryawanForm({
           isInvalid={!!formik.errors.status_karyawan}
         >
           <FormLabel>
-            Status Kepegawaian
+            Status Karyawan
             <RequiredForm />
           </FormLabel>
           <SelectStatusKaryawan
