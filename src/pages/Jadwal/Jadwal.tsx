@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { endOfWeek, startOfWeek } from "date-fns";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ExportJadwalModal from "../../components/dependent/ExportJadwalModal";
 import ImportModal from "../../components/dependent/ImportModal";
 import DateRangePickerModal from "../../components/dependent/input/DateRangePickerModal";
@@ -13,6 +13,7 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useGetUserData from "../../hooks/useGetUserData";
 
 export default function Jadwal() {
   const today = new Date();
@@ -31,7 +32,11 @@ export default function Jadwal() {
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
   const [search, setSearch] = useState("");
-  const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
+  const {
+    setFilterKaryawan,
+    formattedFilterKaryawan,
+    setFormattedFilterKaryawan,
+  } = useFilterKaryawan();
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterKaryawan({ search });
@@ -52,28 +57,32 @@ export default function Jadwal() {
     }));
   };
 
-  // const user = useGetUserData();
+  const user = useGetUserData();
+  const userRef = useRef(user);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     const unitKerjaUser = user?.data_karyawan?.unit_kerja;
-  //     if (unitKerjaUser) {
-  //       setFilterKaryawan((ps: any) => ({
-  //         ...ps,
-  //         unit_kerja: [
-  //           {
-  //             value: unitKerjaUser?.id,
-  //             label: unitKerjaUser?.label,
-  //           },
-  //         ],
-  //       }));
-  //       setFormattedFilterKaryawan((ps: any) => ({
-  //         ...ps,
-  //         unit_kerja: [unitKerjaUser?.id],
-  //       }));
-  //     }
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (userRef.current) {
+      const unitKerjaUser = user?.data_karyawan?.unit_kerja;
+      console.log(unitKerjaUser);
+      if (unitKerjaUser) {
+        setFilterKaryawan((ps: any) => ({
+          ...ps,
+          unit_kerja: [
+            {
+              value: unitKerjaUser?.id,
+              label: unitKerjaUser?.nama_unit,
+            },
+          ],
+        }));
+        setFormattedFilterKaryawan((ps: any) => ({
+          ...ps,
+          unit_kerja: [unitKerjaUser?.id],
+        }));
+      }
+    }
+  }, [userRef]);
+
+  console.log(formattedFilterKaryawan);
 
   // SX
   const lightDarkColor = useLightDarkColor();

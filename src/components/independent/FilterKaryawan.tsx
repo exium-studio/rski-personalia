@@ -34,6 +34,7 @@ import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryaw
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import useCallBackOnNavigate from "../../hooks/useCallBackOnNavigate";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -52,7 +53,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     setFormattedFilterKaryawan,
   } = useFilterKaryawan();
 
-  // console.log(formattedFilterKaryawan);
+  useCallBackOnNavigate(() => {
+    setFilterKaryawan(defaultFilterKaryawan);
+  });
 
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
     filterKaryawan
