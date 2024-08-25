@@ -45,6 +45,7 @@ const useDataState = <T>({
   }, [conditions, url, page, ...(noRt ? [] : [rt]), ...dependencies]);
 
   const makeRequest = () => {
+    console.log(abortControllerRef.current);
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }

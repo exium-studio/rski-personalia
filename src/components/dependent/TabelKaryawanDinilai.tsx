@@ -1,4 +1,4 @@
-import { Center, HStack, Text, useDisclosure } from "@chakra-ui/react";
+import { Center, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
@@ -11,8 +11,6 @@ import CustomTable from "./CustomTable";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import PenilaianKaryawanModal from "./PenilaianKaryawanModal";
 import Retry from "./Retry";
-import MultiSelectStatusKaryawan from "./_Select/MultiSelectStatusKaryawan";
-import SearchComponent from "./input/SearchComponent";
 
 interface Props {
   filterConfig?: any;
@@ -21,22 +19,22 @@ interface Props {
 export default function TabelKaryawanDinilai({ filterConfig }: Props) {
   // SX
 
-  const [search, setSearch] = useState("");
-  const [statusKaryawan, setStatusKaryawan] = useState<any>(undefined);
-
   const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
     url: `/api/rski/dashboard/perusahaan/get-user-belum-dinilai`,
     payload: {
-      ...(statusKaryawan?.length > 0 && {
-        status_cuti: statusKaryawan.map((sp: any) => sp.value),
+      ...(filterConfig?.jabatan?.length > 0 && {
+        jabatan: filterConfig?.jabatan.map((sp: any) => sp.value),
+      }),
+      ...(filterConfig?.status_karyawan?.length > 0 && {
+        status_cuti: filterConfig?.status_karyawan.map((sp: any) => sp.value),
       }),
     },
-    dependencies: [statusKaryawan],
+    dependencies: [filterConfig],
   });
 
   const fd = data?.filter((item: any) => {
-    const searchTerm = search?.toLowerCase();
+    const searchTerm = filterConfig?.search?.toLowerCase();
 
     const matchesSearchTerm = item?.nama.toLowerCase().includes(searchTerm);
 
@@ -124,7 +122,7 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
         <>
           {loading && (
             <>
-              <Skeleton minH={"40px"} mx={"auto"} mb={responsiveSpacing} />
+              {/* <Skeleton minH={"40px"} mx={"auto"} mb={responsiveSpacing} /> */}
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
             </>
           )}
@@ -138,27 +136,6 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
 
                   {fd && fd?.length > 0 && (
                     <>
-                      <HStack mb={responsiveSpacing}>
-                        <SearchComponent
-                          name="search"
-                          onChangeSetter={(input) => {
-                            setSearch(input);
-                          }}
-                          inputValue={search}
-                        />
-
-                        <MultiSelectStatusKaryawan
-                          name="status_karyawan"
-                          onConfirm={(input) => {
-                            setStatusKaryawan(input);
-                          }}
-                          inputValue={statusKaryawan}
-                          optionsDisplay="chip"
-                          maxW={"fit-content"}
-                          placeholder="Filter Status Kepegawaian"
-                        />
-                      </HStack>
-
                       <CustomTableContainer>
                         <CustomTable
                           formattedHeader={formattedHeader}

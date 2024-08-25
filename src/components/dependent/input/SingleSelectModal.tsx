@@ -134,17 +134,38 @@ export default function SingleSelectModal({
           pl={"16px !important"}
           {...props}
         >
-          <HStack w={"100%"}>
-            {inputValue ? (
-              <Text
-                fontWeight={400}
-                overflow={"hidden"}
-                whiteSpace={"nowrap"}
-                textOverflow={"ellipsis"}
-              >
-                {inputValue.label}
-              </Text>
-            ) : (
+          <HStack
+            maxW={"100%"}
+            flexShrink={1}
+            overflow={"hidden"}
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+          >
+            {inputValue && (
+              <>
+                <Text
+                  fontWeight={400}
+                  overflow={"hidden"}
+                  whiteSpace={"nowrap"}
+                  textOverflow={"ellipsis"}
+                >
+                  {inputValue.label}
+                </Text>
+
+                <Text
+                  fontWeight={400}
+                  opacity={0.4}
+                  ml={2}
+                  overflow={"hidden"}
+                  whiteSpace={"nowrap"}
+                  textOverflow={"ellipsis"}
+                >
+                  {inputValue.label2}
+                </Text>
+              </>
+            )}
+
+            {!inputValue && (
               <Text
                 //@ts-ignore
                 color={props?._placeholder?.color || "#96969691"}
@@ -156,17 +177,6 @@ export default function SingleSelectModal({
                 {placeholder || "Pilih Salah Satu"}
               </Text>
             )}
-
-            <Text
-              fontWeight={400}
-              opacity={0.4}
-              ml={2}
-              overflow={"hidden"}
-              whiteSpace={"nowrap"}
-              textOverflow={"ellipsis"}
-            >
-              {inputValue && inputValue.label2}
-            </Text>
           </HStack>
 
           <Icon as={RiArrowDownSLine} fontSize={18} />

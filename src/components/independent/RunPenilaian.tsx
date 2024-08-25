@@ -1,6 +1,7 @@
 import {
   Button,
   ButtonProps,
+  HStack,
   Icon,
   Modal,
   ModalBody,
@@ -10,12 +11,16 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { RiChatCheckFill } from "@remixicon/react";
-import { useRef } from "react";
-import { iconSize } from "../../constant/sizes";
+import { useRef, useState } from "react";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import TabelKaryawanDinilai from "../dependent/TabelKaryawanDinilai";
+import SearchComponent from "../dependent/input/SearchComponent";
+import MultiSelectStatusKaryawan from "../dependent/_Select/MultiSelectStatusKaryawan";
+import MultiSelectJenisPenilaian from "../dependent/_Select/MultiSelectJenisPenilaian";
+import MultiSelectJabatan from "../dependent/_Select/MultiSelectJabatan";
 
 interface Props extends ButtonProps {}
 
@@ -23,6 +28,12 @@ export default function RunPenilaian({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("run-penilaian-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
+
+  const [filterConfig, setFilterConfig] = useState<any>({
+    search: "",
+    status_karyawan: [],
+    jabatan: [],
+  });
 
   return (
     <>
@@ -54,7 +65,47 @@ export default function RunPenilaian({ ...props }: Props) {
             <DisclosureHeader title="Run Penilaian Karyawan" />
           </ModalHeader>
           <ModalBody pb={6}>
-            <TabelKaryawanDinilai />
+            <HStack mb={responsiveSpacing}>
+              <SearchComponent
+                name="search"
+                onChangeSetter={(input) => {
+                  setFilterConfig((ps: any) => ({
+                    ...ps,
+                    search: input,
+                  }));
+                }}
+                inputValue={filterConfig.search}
+              />
+
+              <MultiSelectJabatan
+                name="jabatan"
+                onConfirm={(input) => {
+                  setFilterConfig((ps: any) => ({
+                    ...ps,
+                    jabatan: input,
+                  }));
+                }}
+                inputValue={filterConfig.jabatan}
+                optionsDisplay="chip"
+                maxW={"200px"}
+                placeholder="Filter Jabatan"
+              />
+
+              <MultiSelectStatusKaryawan
+                name="status_karyawan"
+                onConfirm={(input) => {
+                  setFilterConfig((ps: any) => ({
+                    ...ps,
+                    status_karyawan: input,
+                  }));
+                }}
+                inputValue={filterConfig.status_karyawan}
+                optionsDisplay="chip"
+                maxW={"200px"}
+                placeholder="Filter Status Kepegawaian"
+              />
+            </HStack>
+            <TabelKaryawanDinilai filterConfig={filterConfig} />
           </ModalBody>
         </ModalContent>
       </Modal>
