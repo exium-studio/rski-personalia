@@ -11,6 +11,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { Dispatch, useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
@@ -24,6 +25,10 @@ import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import req from "../../lib/req";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 
 interface ListJenisPenilaianProps {
   isOpen: boolean;
@@ -156,12 +161,95 @@ export default function PenilaianKaryawanModal({
     dependencies: [user_id_penilaian, jenisPenilaian, isOpen],
   });
 
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     setData(undefined);
-  //     setJenisPenilaian(undefined);
-  //   }
-  // }, [isOpen, user_id_penilaian, setData]);
+  const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      answers: [] as any[],
+    },
+    validationSchema: yup.object().shape({
+      answers: yup.array().required("Harus diisi"),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      setLoadingSubmit(true);
+
+      const payload = {
+        jenis_penilaian_id: jenisPenilaian?.id,
+        user_dinilai: user_id_penilaian,
+        pertanyaan_jawaban: JSON.stringify(
+          data?.list_pertanyaan?.map((p: any, i: number) => ({
+            pertanyaan: p.pertanyaan,
+            jawaban: values.answers[i],
+          }))
+        ),
+        total_pertanyaan: data?.jumlah_pertanyaan,
+        rata_rata: countRange(values.answers),
+      };
+
+      req
+        .post(`/api/rski/dashboard/perusahaan/penilaian`, payload)
+        .then((r) => {
+          if (r.status === 201) {
+            toast({
+              status: "success",
+              title: r?.data?.message,
+              position: "bottom-right",
+              isClosable: true,
+            });
+            setRt(!rt);
+            backOnClose();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            position: "bottom-right",
+            isClosable: true,
+          });
+        })
+        .finally(() => {
+          setLoadingSubmit(false);
+        });
+    },
+  });
+
+  function handleNilai(index: number, nilai: number) {
+    if (nilai) {
+      const newPenilaian = [...formik.values.answers];
+      newPenilaian[index] = nilai;
+      formik.setFieldValue("answers", newPenilaian);
+    }
+  }
+
+  const isAnsweredAll = (answers: any[], jumlahPertanyaan: number): boolean => {
+    for (let i = 0; i < jumlahPertanyaan; i++) {
+      if (!answers[i]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const countRange = (answers: number[]): number => {
+    if (answers.length === 0) return 0;
+
+    const sum = answers.reduce((acc, current) => acc + current, 0);
+    const average = sum / answers.length;
+
+    return average;
+  };
+
+  // console.log(formik.values.answers);
+  // console.log(data?.jumlah_pertanyaan);
+  // console.log(isAnsweredAll(formik.values.answers, data?.jumlah_pertanyaan));
 
   return (
     <Modal
@@ -233,16 +321,25 @@ export default function PenilaianKaryawanModal({
                               </HStack>
 
                               <HStack justify={"space-between"}>
-                                {Array.from({ length: 5 }).map((_, i) => (
+                                {Array.from({ length: 5 }).map((_, iNilai) => (
                                   <Center
-                                    key={i}
+                                    key={iNilai}
                                     as={Button}
                                     flex={1}
                                     h={"40px"}
                                     px={0}
                                     className="btn-outline"
+                                    onClick={() => {
+                                      handleNilai(i, iNilai + 1);
+                                    }}
+                                    border={"1px solid"}
+                                    borderColor={
+                                      formik.values.answers[i] === iNilai + 1
+                                        ? "p.500"
+                                        : "var(--divider)"
+                                    }
                                   >
-                                    {i + 1}
+                                    {iNilai + 1}
                                   </Center>
                                 ))}
                               </HStack>
@@ -256,6 +353,22 @@ export default function PenilaianKaryawanModal({
               )}
             </>
           )}
+
+          <Button
+            mt={6}
+            colorScheme="ap"
+            className="btn-ap clicky"
+            w={"100%"}
+            isDisabled={
+              !isAnsweredAll(formik.values.answers, data?.jumlah_pertanyaan)
+            }
+            onClick={() => {
+              formik.submitForm();
+            }}
+            isLoading={loadingSubmit}
+          >
+            Kirim
+          </Button>
         </ModalBody>
 
         {/* <ModalFooter>

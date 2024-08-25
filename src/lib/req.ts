@@ -31,7 +31,7 @@ req.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 500:
-          window.location.href = "/servererror";
+          // window.location.href = "/servererror";
           break;
         case 503:
           window.location.href = "/maintenance";

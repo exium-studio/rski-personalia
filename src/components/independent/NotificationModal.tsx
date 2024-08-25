@@ -80,7 +80,9 @@ export default function NotificationModal({ ...props }: Props) {
         toast({
           status: "error",
           title:
-            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Maaf terjadi kesalahan pada sistem",
           position: "bottom-right",
           isClosable: true,
         });
@@ -105,7 +107,9 @@ export default function NotificationModal({ ...props }: Props) {
         toast({
           status: "error",
           title:
-            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Maaf terjadi kesalahan pada sistem",
           position: "bottom-right",
           isClosable: true,
         });
@@ -200,7 +204,7 @@ export default function NotificationModal({ ...props }: Props) {
                     {(data || (data && data.length > 0)) && (
                       <>
                         <CContainer>
-                          {data.map((inbox: any, i: number) => (
+                          {data?.map((inbox: any, i: number) => (
                             <HStack
                               onClick={() => {
                                 tandaiBaca(inbox.id);
@@ -220,17 +224,17 @@ export default function NotificationModal({ ...props }: Props) {
                             >
                               <CContainer gap={1}>
                                 <Text fontWeight={600}>
-                                  {inbox.kategori_notifikasi?.label}
+                                  {inbox?.kategori_notifikasi?.label}
                                 </Text>
                                 <Text fontSize={14} noOfLines={1} opacity={0.6}>
-                                  {inbox.message}
+                                  {inbox?.message}
                                 </Text>
                                 <Text fontSize={12} opacity={0.4} pt={2}>
-                                  {timeSince(inbox.created_at)}
+                                  {timeSince(inbox?.created_at)}
                                 </Text>
                               </CContainer>
 
-                              {!inbox.is_read && (
+                              {!inbox?.is_read && (
                                 <Box
                                   w={"6px"}
                                   h={"6px"}

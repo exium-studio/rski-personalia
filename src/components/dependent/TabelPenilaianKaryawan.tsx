@@ -1,14 +1,12 @@
 import {
   Button,
   Center,
-  HStack,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
@@ -31,6 +29,14 @@ import TabelFooterConfig from "./TabelFooterConfig";
 const PenilaianList = ({ data }: { data: any }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`penilaian-list-modal-${data.id}`, isOpen, onOpen, onClose);
+
+  let pertanyaan_jawaban;
+  try {
+    const parsedData = JSON.parse(data?.pertanyaan_jawaban);
+    pertanyaan_jawaban = parsedData;
+  } catch (error) {
+    console.error("Error parsing JSON:", error);
+  }
 
   return (
     <>
@@ -57,24 +63,22 @@ const PenilaianList = ({ data }: { data: any }) => {
 
           <ModalBody px={0}>
             <CContainer>
-              {/* <HStack justify={"space-between"} opacity={0.4} px={6}>
-                <Text>Pertanyaan</Text>
-                <Text>Jawaban</Text>
-              </HStack> */}
-              {data.map((item: any, i: number) => (
-                <HStack
-                  key={i}
-                  justify={"space-between"}
-                  align={"start"}
-                  px={6}
-                  py={4}
-                  borderTop={i === 0 ? "1px solid var(--divider)" : ""}
-                  borderBottom={"1px solid var(--divider)"}
-                >
-                  <Text opacity={0.4}>{item?.pertanyaan}</Text>
-                  <Text>{item?.jawaban}</Text>
-                </HStack>
-              ))}
+              {/* {data?.map((item: any, i: number) => {
+                return (
+                  <HStack
+                    key={i}
+                    justify={"space-between"}
+                    align={"start"}
+                    px={6}
+                    py={4}
+                    borderTop={i === 0 ? "1px solid var(--divider)" : ""}
+                    borderBottom={"1px solid var(--divider)"}
+                  >
+                    <Text opacity={0.4}>{item?.pertanyaan}</Text>
+                    <Text>{item?.jawaban}</Text>
+                  </HStack>
+                );
+              })} */}
             </CContainer>
           </ModalBody>
 
@@ -213,7 +217,7 @@ export default function TabelPenilaianKaryawan({ filterConfig }: Props) {
       },
       {
         value: item.penilaians,
-        td: <PenilaianList data={item?.pertanyaan_jawaban} />,
+        td: <PenilaianList data={item} />,
         cProps: {
           justify: "center",
         },
