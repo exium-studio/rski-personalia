@@ -1,5 +1,4 @@
 import { Center, Text, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import NoData from "../independent/NoData";
@@ -8,9 +7,9 @@ import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
-import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import PenilaianKaryawanModal from "./PenilaianKaryawanModal";
 import Retry from "./Retry";
+import StatusKaryawanBadge from "./StatusKaryawanBadge";
 
 interface Props {
   filterConfig?: any;
@@ -27,7 +26,9 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
         jabatan: filterConfig?.jabatan.map((sp: any) => sp.value),
       }),
       ...(filterConfig?.status_karyawan?.length > 0 && {
-        status_cuti: filterConfig?.status_karyawan.map((sp: any) => sp.value),
+        status_karyawan: filterConfig?.status_karyawan.map(
+          (sp: any) => sp.value
+        ),
       }),
     },
     dependencies: [filterConfig],
@@ -36,7 +37,9 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
   const fd = data?.filter((item: any) => {
     const searchTerm = filterConfig?.search?.toLowerCase();
 
-    const matchesSearchTerm = item?.nama.toLowerCase().includes(searchTerm);
+    const matchesSearchTerm = item?.user?.nama
+      ?.toLowerCase()
+      .includes(searchTerm);
 
     return matchesSearchTerm;
   });
@@ -57,24 +60,29 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
     },
 
     {
-      th: "Jenis Karyawan",
+      th: "Status Kepegawaian",
       isSortable: true,
       cProps: {
         justify: "center",
       },
     },
+
+    {
+      th: "Jabatan",
+      isSortable: true,
+    },
   ];
   const formattedData = fd?.map((item: any) => ({
-    id: item.id,
+    id: item?.user?.id,
     columnsFormat: [
       {
-        value: item.nama,
+        value: item?.user?.nama,
         td: (
           <AvatarAndNameTableData
             data={{
-              id: item.id,
-              nama: item.nama,
-              foto_profil: item.foto_profil,
+              id: item?.user?.id,
+              nama: item?.user?.nama,
+              foto_profil: item?.user?.foto_profil,
             }}
           />
         ),
@@ -90,11 +98,17 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
 
       {
         value: item.jenis_karyawan,
-        td: <JenisKaryawanBadge w={"120px"} data={item.jenis_karyawan} />,
+        td: <StatusKaryawanBadge w={"120px"} data={item.status_karyawan} />,
         isNumeric: true,
         cProps: {
           justify: "center",
         },
+      },
+
+      {
+        value: item?.jabatan?.nama_jabatan,
+        td: item?.jabatan?.nama_jabatan,
+        isNumeric: true,
       },
     ],
   }));
