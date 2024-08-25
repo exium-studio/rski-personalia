@@ -13,6 +13,7 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useGetUserData from "../../hooks/useGetUserData";
 
 export default function Jadwal() {
   const today = new Date();
@@ -51,6 +52,27 @@ export default function Jadwal() {
       tgl_selesai: inputValue?.to,
     }));
   };
+  const user = useGetUserData();
+  useEffect(() => {
+    if (user) {
+      const unitKerjaUser = user?.data_karyawan?.unit_kerja;
+      if (unitKerjaUser) {
+        setFilterKaryawan((ps: any) => ({
+          ...ps,
+          unit_kerja: [
+            {
+              value: unitKerjaUser?.id,
+              label: unitKerjaUser?.label,
+            },
+          ],
+        }));
+        setFormattedFilterKaryawan((ps: any) => ({
+          ...ps,
+          unit_kerja: [unitKerjaUser?.id],
+        }));
+      }
+    }
+  }, [user, setFilterKaryawan, setFormattedFilterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();

@@ -119,7 +119,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
         leftIcon={<Icon as={RiCalendarFill} fontSize={iconSize} />}
         {...props}
       >
-        Terapkan Jadwal Shift
+        Terapkan Shift
       </Button>
 
       <Modal
