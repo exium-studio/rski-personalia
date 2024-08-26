@@ -11,7 +11,7 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import PerubahanDataRender from "./PerubahanDataRender";
 import Retry from "./Retry";
-import StatusApprovalBadge from "./StatusApprovalBadge";
+import StatusApprovalBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 

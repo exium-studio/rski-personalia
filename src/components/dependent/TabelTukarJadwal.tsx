@@ -12,7 +12,7 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import PertukaranJadwalModal from "./PertukaranJadwalModal";
 import Retry from "./Retry";
-import ApprovalStatus from "./StatusApprovalBadge";
+import StatusVerifikasiBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 
 interface Props {
@@ -99,7 +99,7 @@ export default function TabelKaryawan({ filterConfig }: Props) {
       },
       {
         value: item.status_penukaran.label,
-        td: <ApprovalStatus data={item.status_penukaran.id} w={"120px"} />,
+        td: <StatusVerifikasiBadge data={item.status_penukaran} w={"120px"} />,
         cProps: {
           justify: "center",
         },

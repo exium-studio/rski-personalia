@@ -31,7 +31,7 @@ import CustomTable from "./CustomTable";
 import DetailKaryawanModalDisclosure from "./DetailKaryawanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
-import StatusPersetujuanDiklatBadge from "./StatusPersetujuanDiklatBadge";
+import StatusVerifikasiBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 
@@ -228,9 +228,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
       {
         value: item.status_diklat.label,
-        td: (
-          <StatusPersetujuanDiklatBadge data={item.status_diklat} w={"180px"} />
-        ),
+        td: <StatusVerifikasiBadge data={item.status_diklat} w={"180px"} />,
       },
       {
         value: item.deskripsi,

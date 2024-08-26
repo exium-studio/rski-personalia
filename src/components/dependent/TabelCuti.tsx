@@ -2,6 +2,7 @@ import { Center } from "@chakra-ui/react";
 import { useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
+import formatDate from "../../lib/formatDate";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -10,10 +11,9 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
-import StatusPermintaanCutiBadge from "./StatusPermintaanCutiBadge";
+import StatusVerifikasiBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
-import formatDate from "../../lib/formatDate";
 
 interface Props {
   filterConfig: any;
@@ -144,7 +144,13 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
       {
         value: item.status_cuti,
-        td: <StatusPermintaanCutiBadge data={item.status_cuti} w={"180px"} />,
+        td: (
+          <StatusVerifikasiBadge
+            data={item.status_cuti}
+            alasan={item?.alasan}
+            w={"180px"}
+          />
+        ),
         cProps: {
           justify: "center",
         },
@@ -210,7 +216,7 @@ export default function TabelCuti({ filterConfig }: Props) {
             submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
             approvePayloadKey="verifikasi_kedua_disetujui"
             disapprovePayloadKey="verifikasi_kedua_ditolak"
-            isDisabled={item?.status_cuti?.id !== 4}
+            isDisabled={item?.status_cuti?.id !== 2}
           />
         ),
         props: {

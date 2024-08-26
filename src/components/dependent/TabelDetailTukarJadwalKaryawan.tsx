@@ -7,7 +7,7 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import SearchComponent from "./input/SearchComponent";
-import ApprovalStatus from "./StatusApprovalBadge";
+import ApprovalStatus from "./StatusVerifikasiBadge";
 
 interface Props {
   data: any[];
