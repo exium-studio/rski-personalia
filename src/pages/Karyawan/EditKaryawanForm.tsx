@@ -191,7 +191,7 @@ export default function EditKaryawanForm({
         label: data?.jenis_kelamin === 1 ? "Laki - Laki" : "Perempuan",
       },
       nik_ktp: data?.nik_ktp,
-      no_kk: data?.nik_kk,
+      no_kk: data?.no_kk,
       agama: {
         value: data?.agama?.id,
         label: data?.agama?.label,
