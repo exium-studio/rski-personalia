@@ -175,15 +175,16 @@ export default function TabelJadwalItem({
             </Text>
           </Box>
 
-          {data.unit_kerja?.jenis_karyawan === 1 && (
-            <Icon
-              as={RiEditBoxLine}
-              fontSize={20}
-              alignSelf={"flex-start"}
-              color={"p.500"}
-              mb={"auto"}
-            />
-          )}
+          {data.unit_kerja?.jenis_karyawan === 1 &&
+            !isDatePassed(tgl as string, true) && (
+              <Icon
+                as={RiEditBoxLine}
+                fontSize={20}
+                alignSelf={"flex-start"}
+                color={"p.500"}
+                mb={"auto"}
+              />
+            )}
         </HStack>
       </VStack>
 
