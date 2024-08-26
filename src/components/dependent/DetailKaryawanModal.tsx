@@ -43,21 +43,23 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
+import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 import formatDate from "../../lib/formatDate";
 import formatMasaKerja from "../../lib/formatMasaKerja";
 import formatNumber from "../../lib/formatNumber";
 import FlexLine from "../independent/FlexLine";
-import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import AktifkanNonaktifkanButton from "./AktifkanNonaktifkanButton";
 import DetailAktivitasKaryawanModalDisclosure from "./DetailAktivitasKaryawanModalDisclosure";
 import DetailCutiKaryawanModalDisclosure from "./DetailCutiKaryawanModalDisclosure";
+import DokumenKaryawanModalDisclosure from "./DetailDokumenKaryawanModalDisclosure";
 import DetailJadwalKaryawanModalDisclosure from "./DetailJadwalKaryawanModalDisclosure";
 import DetailKeluargaKaryawanModalDisclosure from "./DetailKeluargaKaryawanModalDisclosure";
+import DetailLemburKaryawanModalDisclosure from "./DetailLemburKaryawanModalDisclosure";
 import DetailRekamJejakKaryawanModalDisclosure from "./DetailRekamJejakKaryawanModalDisclosure";
+import DetailTukarJadwalKaryawanModalDisclosure from "./DetailTukarJadwalKaryawanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
-import DokumenKaryawanModalDisclosure from "./DetailDokumenKaryawanModalDisclosure";
 import EditKaryawanModal from "./EditKaryawanModal";
 import SearchComponent from "./input/SearchComponent";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
@@ -65,9 +67,6 @@ import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
-import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
-import DetailTukarJadwalKaryawanModalDisclosure from "./DetailTukarJadwalKaryawanModalDisclosure";
-import DetailLemburKaryawanModalDisclosure from "./DetailLemburKaryawanModalDisclosure";
 interface Props {
   id?: string;
   user_id?: number;
@@ -252,9 +251,7 @@ export default function DetailKaryawanModal({
 
               {!loading && (
                 <>
-                  {data && data.length === 0 && <NoData />}
-
-                  {data && data.length > 0 && (
+                  {data && (
                     <CContainer
                       h={"calc(100vh - 70px)"}
                       overflowY={"auto"}

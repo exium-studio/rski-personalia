@@ -16,7 +16,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { Dispatch, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import * as yup from "yup";
 import MultiselectPotongan from "../../components/dependent/_Select/MultiselectPotongan";
 import SelectJabatan from "../../components/dependent/_Select/SelectJabatan";
@@ -60,8 +60,17 @@ export default function EditKaryawanForm({
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
-  const [noLimitStr, setNoLimitStr] = useState<boolean>(false);
-  const [noLimitSip, setNoLimitSip] = useState<boolean>(false);
+  const [noLimitStr, setNoLimitStr] = useState<boolean>(
+    data?.masa_berlaku_str === null ? true : false
+  );
+  const [noLimitSip, setNoLimitSip] = useState<boolean>(
+    data?.masa_berlaku_str === null ? true : false
+  );
+
+  useEffect(() => {
+    setNoLimitStr(data?.masa_berlaku_str === null);
+    setNoLimitSip(data?.masa_berlaku_sip === null);
+  }, [data]);
 
   const validationSchemaStep1 = yup.object({
     nama_karyawan: yup.string().required("Harus diisi"),
@@ -211,14 +220,16 @@ export default function EditKaryawanForm({
             label: data?.pendidikan_terakhir?.label,
           }
         : undefined,
-      gelar_depan: data?.gelar_depan,
+      gelar_depan: data?.gelar_depan || "",
 
       str: data?.no_str,
-      masa_berlaku_str:
-        data?.masa_berlaku_str && new Date(data?.masa_berlaku_str),
+      masa_berlaku_str: data?.masa_berlaku_str
+        ? new Date(data?.masa_berlaku_str)
+        : undefined,
       sip: data?.no_sip,
-      masa_berlaku_sip:
-        data?.masa_berkalu_sip && new Date(data?.masa_berlaku_sip),
+      masa_berlaku_sip: data?.masa_berlaku_sip
+        ? new Date(data?.masa_berlaku_sip)
+        : undefined,
       no_bpjsksh: data?.no_bpjsksh,
       no_bpjsktk: data?.no_bpjsktk,
       npwp: data?.npwp,
