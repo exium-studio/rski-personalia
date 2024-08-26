@@ -105,8 +105,8 @@ export default function DetailKaryawanModal({
   const [searchQuery, setSearchQuery] = useState<string[]>([]);
 
   useEffect(() => {
-    const words = search.split(" ").filter((word) => word.length > 0);
-    const modifiedWords = words.reduce((acc: string[], word) => {
+    const words = search?.split(" ")?.filter((word) => word.length > 0);
+    const modifiedWords = words?.reduce((acc: string[], word) => {
       acc.push(word);
       if (word.toLowerCase() === "nomor") {
         acc.push("no.");
@@ -155,8 +155,6 @@ export default function DetailKaryawanModal({
       setEmptyDataLabel(countEmptyValues(data));
     }
   }, [data]);
-
-  // console.log(data);
 
   return (
     <Modal
@@ -254,9 +252,9 @@ export default function DetailKaryawanModal({
 
               {!loading && (
                 <>
-                  {(!data || (data && data.length === 0)) && <NoData />}
+                  {data && data.length === 0 && <NoData />}
 
-                  {(data || (data && data.length > 0)) && (
+                  {data && data.length > 0 && (
                     <CContainer
                       h={"calc(100vh - 70px)"}
                       overflowY={"auto"}

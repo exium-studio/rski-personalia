@@ -31,7 +31,6 @@ import TabelFooterConfig from "./TabelFooterConfig";
 const PenilaianList = ({ data }: { data: any }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`penilaian-list-modal-${data.id}`, isOpen, onOpen, onClose);
-  console.log(data?.pertanyaan_jawaban);
 
   // let pertanyaan_jawaban;
   // try {
