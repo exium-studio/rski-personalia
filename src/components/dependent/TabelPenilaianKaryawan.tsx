@@ -32,12 +32,19 @@ const PenilaianList = ({ data }: { data: any }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`penilaian-list-modal-${data.id}`, isOpen, onOpen, onClose);
 
-  // let pertanyaan_jawaban;
+  // let responseString = String(data?.pertanyaan_jawaban);
+
+  // // Pastikan responseString adalah string sebelum memeriksa endsWith
+  // if (responseString.endsWith('"/')) {
+  //   responseString = responseString.slice(0, -2);
+  // }
+
+  // // Parsing JSON
   // try {
-  //   const parsedData = JSON.parse(data?.pertanyaan_jawaban);
-  //   pertanyaan_jawaban = parsedData;
+  //   const parsedData = JSON.parse(responseString);
+  //   console.log(parsedData);
   // } catch (error) {
-  //   console.error("Error parsing JSON:", error);
+  //   console.error("JSON parse error:", error);
   // }
 
   return (
@@ -56,6 +63,7 @@ const PenilaianList = ({ data }: { data: any }) => {
         onClose={backOnClose}
         isCentered
         blockScrollOnMount={false}
+        scrollBehavior="inside"
       >
         <ModalOverlay />
         <ModalContent>
@@ -63,7 +71,7 @@ const PenilaianList = ({ data }: { data: any }) => {
             <DisclosureHeader title={"Daftar Penilaian"} />
           </ModalHeader>
 
-          <ModalBody px={0}>
+          <ModalBody px={0} className="scrollY">
             <CContainer>
               {data?.pertanyaan_jawaban?.map((item: any, i: number) => {
                 return (

@@ -96,17 +96,17 @@ const ListJenisPenilaian = ({
                     <HStack>
                       <Text opacity={0.6}>Jabatan Penilai</Text>
                       <FlexLine />
-                      <Text>{jp?.jabatan_penilais?.nama_jabatan}</Text>
+                      <Text>{jp?.jabatan_penilai?.nama_jabatan}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.6}>Jabatan Dinilai</Text>
                       <FlexLine />
-                      <Text>{jp?.jabatan_dinilais?.nama_jabatan}</Text>
+                      <Text>{jp?.jabatan_penilai?.nama_jabatan}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.6}>Status Karyawan Dinilai</Text>
                       <FlexLine />
-                      <StatusKaryawanBadge data={jp?.status_karyawans} />
+                      <StatusKaryawanBadge data={jp?.status_karyawan} />
                     </HStack>
                   </CContainer>
                 </HStack>
@@ -176,15 +176,15 @@ export default function PenilaianKaryawanModal({
     onSubmit: (values, { resetForm }) => {
       setLoadingSubmit(true);
 
+      const pj = data?.list_pertanyaan?.map((p: any, i: number) => ({
+        pertanyaan: p.pertanyaan,
+        jawaban: values.answers[i],
+      }));
+
       const payload = {
         jenis_penilaian_id: jenisPenilaian?.id,
         user_dinilai: user_id_penilaian,
-        pertanyaan_jawaban: JSON.stringify(
-          data?.list_pertanyaan?.map((p: any, i: number) => ({
-            pertanyaan: p.pertanyaan,
-            jawaban: values.answers[i],
-          }))
-        ),
+        pertanyaan_jawaban: JSON.stringify(pj),
         total_pertanyaan: data?.jumlah_pertanyaan,
         rata_rata: countRange(values.answers),
       };
@@ -347,28 +347,31 @@ export default function PenilaianKaryawanModal({
                           </HStack>
                         )
                       )}
+
+                      <Button
+                        mt={6}
+                        colorScheme="ap"
+                        className="btn-ap clicky"
+                        w={"100%"}
+                        isDisabled={
+                          !isAnsweredAll(
+                            formik.values.answers,
+                            data?.jumlah_pertanyaan
+                          )
+                        }
+                        onClick={() => {
+                          formik.submitForm();
+                        }}
+                        isLoading={loadingSubmit}
+                      >
+                        Kirim
+                      </Button>
                     </CContainer>
                   )}
                 </>
               )}
             </>
           )}
-
-          <Button
-            mt={6}
-            colorScheme="ap"
-            className="btn-ap clicky"
-            w={"100%"}
-            isDisabled={
-              !isAnsweredAll(formik.values.answers, data?.jumlah_pertanyaan)
-            }
-            onClick={() => {
-              formik.submitForm();
-            }}
-            isLoading={loadingSubmit}
-          >
-            Kirim
-          </Button>
         </ModalBody>
 
         {/* <ModalFooter>
