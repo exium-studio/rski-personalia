@@ -48,6 +48,7 @@ import formatDate from "../../lib/formatDate";
 import formatMasaKerja from "../../lib/formatMasaKerja";
 import formatNumber from "../../lib/formatNumber";
 import FlexLine from "../independent/FlexLine";
+import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import AktifkanNonaktifkanButton from "./AktifkanNonaktifkanButton";
@@ -94,7 +95,7 @@ export default function DetailKaryawanModal({
   );
 
   const initialRef = useRef(null);
-  const { error, loading, data, retry } = useDataState<any>({
+  const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-user/${user_id}`,
     dependencies: [isOpen, user_id],
@@ -120,8 +121,8 @@ export default function DetailKaryawanModal({
   const [emptyDataLabel, setEmptyDataLabel] = useState<any>(undefined);
   function countEmptyValues(obj: Record<string, any>): any[] {
     const allowedNullKeys = [
-      // "masa_berlaku_str",
-      // "masa_berlaku_sip",
+      "masa_berlaku_str",
+      "masa_berlaku_sip",
       "gelar_depan",
       "masa_kerja",
       "tunjangan_jabatan",
@@ -171,9 +172,15 @@ export default function DetailKaryawanModal({
         </ModalHeader>
         <ModalBody px={0}>
           {error && (
-            <Box my={"auto"}>
-              <Retry loading={loading} retry={retry} />
-            </Box>
+            <>
+              {notFound && <NoData />}
+
+              {!notFound && (
+                <Box my={"auto"}>
+                  <Retry loading={loading} retry={retry} />
+                </Box>
+              )}
+            </>
           )}
 
           {!error && (
