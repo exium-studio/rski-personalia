@@ -121,7 +121,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       ),
     };
 
-    console.log(formattedFilterKaryawanReducer(formattedFilters));
+    // console.log(formattedFilterKaryawanReducer(formattedFilters));
 
     setFilterKaryawan(localFilterConfig);
 
@@ -129,6 +129,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       clearFormattedFilterKaryawan();
     } else {
       clearFormattedFilterKaryawan();
+      // console.log(formattedFilterKaryawanReducer(formattedFilters));
       setFormattedFilterKaryawan(
         formattedFilterKaryawanReducer(formattedFilters)
       );
