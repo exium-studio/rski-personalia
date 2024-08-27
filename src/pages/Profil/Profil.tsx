@@ -246,7 +246,9 @@ export default function Profil() {
 
                   <HStack align={"end"} mt={12}>
                     <Text fontSize={14}>
-                      {userData?.data_karyawan?.nik || userData?.email}
+                      {userData?.data_karyawan?.nik
+                        ? `NIK ${userData?.data_karyawan?.nik}`
+                        : userData?.email}
                     </Text>
                   </HStack>
 
