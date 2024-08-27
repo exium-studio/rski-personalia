@@ -34,7 +34,7 @@ import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryaw
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import useCallBackOnNavigate from "../../hooks/useCallBackOnNavigate";
+import formattedFilterKaryawanReducer from "../../lib/formattedFilterKaryawanReducer";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -45,17 +45,16 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   useBackOnClose("filter-karyawan", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
+  const [clear, setClear] = useState<boolean>(false);
+
   const {
     defaultFilterKaryawan,
     filterKaryawan,
     setFilterKaryawan,
     // formattedFilterKaryawan,
     setFormattedFilterKaryawan,
+    clearFormattedFilterKaryawan,
   } = useFilterKaryawan();
-
-  useCallBackOnNavigate(() => {
-    setFilterKaryawan(defaultFilterKaryawan);
-  });
 
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
     filterKaryawan
@@ -98,7 +97,6 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   }
 
   function handleApplyFilter() {
-    // Membuat formattedFilters dengan semua filter
     const formattedFilters = {
       search: localFilterConfig.search,
       unit_kerja: localFilterConfig.unit_kerja.map((item: any) => item.id),
@@ -123,21 +121,18 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       ),
     };
 
-    // Menghapus properti dengan array kosong kecuali 'search'
-    const filteredFormattedFilterKaryawan = Object.entries(formattedFilters)
-      .filter(
-        ([key, value]) =>
-          key === "search" || (Array.isArray(value) && value.length > 0)
-      )
-      .reduce((acc, [key, value]) => {
-        acc[key] = value;
-        return acc;
-      }, {} as { [key: string]: any });
+    console.log(formattedFilterKaryawanReducer(formattedFilters));
 
-    // Mengupdate state dengan filter yang diformat
     setFilterKaryawan(localFilterConfig);
-    setFormattedFilterKaryawan(filteredFormattedFilterKaryawan);
-    backOnClose();
+
+    if (clear) {
+      clearFormattedFilterKaryawan();
+    } else {
+      clearFormattedFilterKaryawan();
+      setFormattedFilterKaryawan(
+        formattedFilterKaryawanReducer(formattedFilters)
+      );
+    }
   }
 
   // SX
@@ -153,6 +148,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
         onClick={() => {
           onOpen();
           setLocalFilterConfig(filterKaryawan);
+          setClear(false);
         }}
         {...props}
       >
@@ -255,13 +251,17 @@ export default function FilterKaryawan({ title, ...props }: Props) {
                 className="btn-solid clicky"
                 onClick={() => {
                   setLocalFilterConfig(defaultFilterKaryawan);
+                  setClear(true);
                 }}
               >
                 Clear
               </Button>
 
               <Button
-                onClick={handleApplyFilter}
+                onClick={() => {
+                  handleApplyFilter();
+                  backOnClose();
+                }}
                 w={"50%"}
                 colorScheme="ap"
                 className="btn-ap clicky"

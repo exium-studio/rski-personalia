@@ -22,7 +22,10 @@ type State = {
 
 type Actions = {
   setFilterKaryawan: (filterKaryawan: Partial<State["filterKaryawan"]>) => void;
-  setFormattedFilterKaryawan: (filterKaryawan: any) => void;
+  setFormattedFilterKaryawan: (
+    filterKaryawan: Partial<State["formattedFilterKaryawan"]>
+  ) => void;
+  clearFormattedFilterKaryawan: () => void;
 };
 
 const useFilterKaryawan = create<State & Actions>((set) => ({
@@ -39,8 +42,13 @@ const useFilterKaryawan = create<State & Actions>((set) => ({
   setFormattedFilterKaryawan: (newFilter) =>
     set((state) => ({
       formattedFilterKaryawan: {
+        ...state.formattedFilterKaryawan,
         ...newFilter,
       },
+    })),
+  clearFormattedFilterKaryawan: () =>
+    set(() => ({
+      formattedFilterKaryawan: undefined,
     })),
 }));
 
