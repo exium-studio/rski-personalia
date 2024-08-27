@@ -87,14 +87,20 @@ export default function PengaturanKeizinan({ role_id }: Props) {
         permission_ids: getIdsWithPermissionTrue(values.permissions),
       };
 
-      console.log(values.permissions);
-      console.log(payload);
+      // console.log(values.permissions);
+      // console.log(payload);
 
       req
         .post(`/api/rski/dashboard/pengaturan/permissions/${role_id}`, payload)
         .then((r) => {
           if (r.status === 200) {
             setRt(!rt);
+            toast({
+              status: "success",
+              title: r?.data?.message,
+              position: "bottom-right",
+              isClosable: true,
+            });
           }
         })
         .catch((e) => {
