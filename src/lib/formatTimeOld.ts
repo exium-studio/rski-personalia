@@ -1,4 +1,4 @@
-export default function formatTime(timeString: string | undefined) {
+export default function formatTimeOld(timeString: string | undefined) {
   if (timeString) {
     // Buat objek Date dari string waktu yang diberikan
     let date = new Date(timeString);

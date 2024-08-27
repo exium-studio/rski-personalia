@@ -21,7 +21,7 @@ import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
-import formatTime from "../../lib/formatTimeOld";
+import formatTime from "../../lib/formatTime";
 import FlexLine from "../independent/FlexLine";
 import Img from "../independent/Img";
 import NoData from "../independent/NoData";
@@ -32,6 +32,7 @@ import SearchComponent from "./input/SearchComponent";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import LokasiPresensi from "./LokasiPresensi";
 import Retry from "./Retry";
+import formatTimeOld from "../../lib/formatTimeOld";
 
 interface Props {
   presensi_id: number;
@@ -100,6 +101,7 @@ export default function DetailPresensiKaryawanModal({
               <Retry loading={loading} retry={retry} />
             </Box>
           )}
+
           {!error && (
             <>
               {loading && (
@@ -343,12 +345,16 @@ export default function DetailPresensiKaryawanModal({
                                         unhighlightClassName="uw"
                                         searchWords={searchQuery}
                                         autoEscape={true}
-                                        textToHighlight={"Label"}
+                                        textToHighlight={"Nama (Label)"}
                                       />
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {data?.data_presensi?.jadwal?.nama}
+                                      {data?.unit_kerja?.jenis_karyawan === 1
+                                        ? data?.data_presensi?.jadwal_shift
+                                            ?.nama
+                                        : data?.data_presensi?.jadwal_non_shift
+                                            ?.nama}
                                     </Text>
                                   </HStack>
 
@@ -365,7 +371,10 @@ export default function DetailPresensiKaryawanModal({
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatDate(
-                                        data?.data_presensi?.jadwal?.tgl_mulai
+                                        data?.unit_kerja?.jenis_karyawan === 1
+                                          ? data?.data_presensi?.jadwal_shift
+                                              ?.tgl_mulai
+                                          : data?.data_presensi?.created_at
                                       )}
                                     </Text>
                                   </HStack>
@@ -385,7 +394,10 @@ export default function DetailPresensiKaryawanModal({
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatDate(
-                                        data?.data_presensi?.jadwal?.tgl_selesai
+                                        data?.unit_kerja?.jenis_karyawan === 1
+                                          ? data?.data_presensi?.jadwal_shift
+                                              ?.tgl_selesai
+                                          : data?.data_presensi?.updated_at
                                       )}
                                     </Text>
                                   </HStack>
@@ -403,8 +415,11 @@ export default function DetailPresensiKaryawanModal({
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatTime(
-                                        data?.data_presensi?.jadwal?.shift
-                                          ?.jam_from
+                                        data?.unit_kerja?.jenis_karyawan === 1
+                                          ? data?.data_presensi?.jadwal_shift
+                                              ?.shift?.jam_from
+                                          : data?.data_presensi
+                                              ?.jadwal_non_shift?.jam_from
                                       )}
                                     </Text>
                                   </HStack>
@@ -422,8 +437,11 @@ export default function DetailPresensiKaryawanModal({
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatTime(
-                                        data?.data_presensi?.jadwal?.shift
-                                          ?.jam_to
+                                        data?.unit_kerja?.jenis_karyawan === 1
+                                          ? data?.data_presensi?.jadwal_shift
+                                              ?.shift?.jam_to
+                                          : data?.data_presensi
+                                              ?.jadwal_non_shift?.jam_to
                                       )}
                                     </Text>
                                   </HStack>
@@ -448,7 +466,7 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(
+                                      {formatTimeOld(
                                         data?.data_presensi?.jam_masuk
                                       )}
                                     </Text>
@@ -458,7 +476,7 @@ export default function DetailPresensiKaryawanModal({
                                     <Text opacity={0.6}>Presensi Keluar</Text>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(
+                                      {formatTimeOld(
                                         data?.data_presensi?.jam_keluar
                                       )}
                                     </Text>
