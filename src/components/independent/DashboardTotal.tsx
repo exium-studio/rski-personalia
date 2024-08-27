@@ -34,8 +34,8 @@ export default function DashboardTotal({ ...props }: Props) {
       key: "jumlah_libur",
       label: "Total Libur",
       icon: RiHome4Fill,
-      iconBgColor: "red.400",
-      bgColor: "red.200",
+      iconBgColor: "blue.400",
+      bgColor: "blue.200",
     },
     {
       key: "jumlah_cuti",
@@ -48,8 +48,8 @@ export default function DashboardTotal({ ...props }: Props) {
       key: "jumlah_absen",
       label: "Total Absen",
       icon: RiFileCopy2Fill,
-      iconBgColor: "blue.400",
-      bgColor: "blue.200",
+      iconBgColor: "red.400",
+      bgColor: "red.200",
     },
   ];
 
