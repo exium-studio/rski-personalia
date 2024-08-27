@@ -223,19 +223,7 @@ export const App = () => {
               </NavContainer>
             }
           />
-          {/* <Route
-            path="/perusahaan/pelaporan-karyawan"
-            element={
-              <NavContainer
-                active={5}
-                title="Pelaporan Karyawan"
-                topNavsData={navs[5].subNavs}
-                topNavActive={1}
-              >
-                <PelaporanKaryawan />
-              </NavContainer>
-            }
-          /> */}
+
           <Route
             path="/perusahaan/penilaian-karyawan"
             element={

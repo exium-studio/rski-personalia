@@ -7,14 +7,16 @@ interface Props extends BadgeProps {
 export default function JenisKaryawanBadge({ data, ...props }: Props) {
   // SX
 
+  console.log(data);
+
   return (
     <Badge
       borderRadius={"full"}
       textAlign={"center"}
-      colorScheme={data === 1 ? "cyan" : data === 2 ? "orange" : ""}
+      colorScheme={data === 1 ? "cyan" : data === 0 ? "orange" : ""}
       {...props}
     >
-      {data === 1 ? "Shift" : data === 2 ? "Non-Shift" : ""}
+      {data === 1 ? "Shift" : data === 0 ? "Non-Shift" : ""}
     </Badge>
   );
 }
