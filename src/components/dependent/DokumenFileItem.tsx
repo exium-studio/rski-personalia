@@ -46,7 +46,7 @@ export default function DokumenFileItem({ data, ...props }: Props) {
           </HStack>
         </HStack>
 
-        <CContainer align={"center"} py={2} px={4} gap={1}>
+        <CContainer align={"center"} pt={2} pb={4} px={4} gap={1}>
           <FileTypeIcon type={dataType} fontSize={72} />
         </CContainer>
 
