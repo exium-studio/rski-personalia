@@ -989,7 +989,9 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(userData.data_karyawan?.masa_berlaku_str)}
+                        {userData.data_karyawan?.masa_berlaku_str
+                          ? formatDate(userData.data_karyawan?.masa_berlaku_str)
+                          : "Seumur Hidup"}
                       </Text>
                     </HStack>
 
@@ -1033,7 +1035,9 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(userData.data_karyawan?.masa_berlaku_sip)}
+                        {userData.data_karyawan?.masa_berlaku_sip
+                          ? formatDate(userData.data_karyawan?.masa_berlaku_sip)
+                          : "Seumur Hidup"}
                       </Text>
                     </HStack>
                   </VStack>
