@@ -277,7 +277,7 @@ export default function Profil() {
             </Box>
           </Box>
 
-          <VStack flex={1}>
+          <VStack flex={2}>
             <LogoutConfirmation w={"300px"} mb={"auto"} mx={"auto"} />
           </VStack>
         </VStack>
