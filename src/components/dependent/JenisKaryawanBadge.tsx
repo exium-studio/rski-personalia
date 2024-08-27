@@ -7,8 +7,6 @@ interface Props extends BadgeProps {
 export default function JenisKaryawanBadge({ data, ...props }: Props) {
   // SX
 
-  console.log(data);
-
   return (
     <Badge
       borderRadius={"full"}
