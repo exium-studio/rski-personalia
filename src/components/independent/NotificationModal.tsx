@@ -13,6 +13,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  Tooltip,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -223,12 +224,23 @@ export default function NotificationModal({ ...props }: Props) {
                               }
                             >
                               <CContainer gap={1}>
-                                <Text fontWeight={600}>
-                                  {inbox?.kategori_notifikasi?.label}
-                                </Text>
-                                <Text fontSize={14} noOfLines={1} opacity={0.6}>
+                                <Tooltip
+                                  label={inbox?.kategori_notifikasi?.label}
+                                  openDelay={500}
+                                >
+                                  <Text fontWeight={600} w={"fit-content"}>
+                                    {inbox?.kategori_notifikasi?.label}
+                                  </Text>
+                                </Tooltip>
+
+                                <Text
+                                  fontSize={14}
+                                  // noOfLines={1}
+                                  opacity={0.6}
+                                >
                                   {inbox?.message}
                                 </Text>
+
                                 <Text fontSize={12} opacity={0.4} pt={2}>
                                   {timeSince(inbox?.created_at)}
                                 </Text>
