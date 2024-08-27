@@ -59,9 +59,14 @@ export default function TabelPengaturanKeizinan({
     {
       th: "Nama Modul",
       props: {
+        position: "sticky",
+        left: 0,
+        zIndex: 2,
         minW: "136px",
       },
-
+      cProps: {
+        borderRight: "1px solid var(--divider3)",
+      },
       isSortable: true,
     },
     {
@@ -136,7 +141,17 @@ export default function TabelPengaturanKeizinan({
         justify: "center",
       },
     },
+    {
+      th: "Bypass Unit Kerja",
+      props: {
+        minW: "136px",
+      },
+      cProps: {
+        justify: "center",
+      },
+    },
   ];
+
   const permissionsColumn = (item: any, groupIndex: number) => {
     const np = Object.keys(item).map((key, i) => ({
       value: item[key]?.has_permission,
@@ -158,13 +173,21 @@ export default function TabelPengaturanKeizinan({
 
     return np;
   };
-
   const formattedData = fd?.map((item: any, groupIndex: number) => ({
     id: item.id,
     columnsFormat: [
       {
         value: item.name,
         td: item.name,
+        props: {
+          position: "sticky",
+          left: 0,
+          zIndex: 1,
+          minW: "136px",
+        },
+        cProps: {
+          borderRight: "1px solid var(--divider3)",
+        },
       },
       ...permissionsColumn(item.permissions, groupIndex),
     ],
