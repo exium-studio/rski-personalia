@@ -1,16 +1,15 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
-import { Interface__JadwalItem } from "../../constant/interfaces";
 import { responsiveSpacing } from "../../constant/sizes";
-import formatTime from "../../lib/formatTimeOld";
+import formatDate from "../../lib/formatDate";
+import formatTime from "../../lib/formatTime";
 import NotFound from "../independent/NotFound";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
 import SearchComponent from "./input/SearchComponent";
-import formatDate from "../../lib/formatDate";
 
 interface Props {
-  data: Interface__JadwalItem[];
+  data: any[];
 }
 
 export default function TabelDetailAktivitasKaryawan({ data }: Props) {
@@ -22,56 +21,54 @@ export default function TabelDetailAktivitasKaryawan({ data }: Props) {
   });
 
   const fd = data?.filter((item: any) => {
-    const searchTerm = filterConfig.search.toLowerCase();
+    const searchTerm = filterConfig?.search.toLowerCase();
 
-    const matchesSearchTerm = item.shift.nama
-      .toLowerCase()
+    const matchesSearchTerm = item?.presensi
+      ?.toLowerCase()
+      .includes(searchTerm);
+    const matchesSearchTerm2 = formatDate(item?.tanggal)
+      ?.toLowerCase()
       .includes(searchTerm);
 
-    return matchesSearchTerm;
+    return matchesSearchTerm || matchesSearchTerm2;
   });
 
   const formattedHeader = [
     {
-      th: "Label",
+      th: "Aktivitas",
       isSortable: true,
     },
     {
-      th: "Tanggal Mulai",
+      th: "Tanggal",
       isSortable: true,
     },
     {
-      th: "Tanggal Selesai",
+      th: "Waktu Presensi",
       isSortable: true,
-    },
-    {
-      th: "Jam Kerja",
-      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
     },
   ];
   const formattedData = fd?.map((item) => ({
     id: item.id,
     columnsFormat: [
       {
-        value: item.shift.nama,
-        td: item.shift.nama,
+        value: item?.presensi,
+        td: item?.presensi,
       },
       {
-        value: item.tgl_mulai,
-        td: formatDate(item.tgl_mulai),
+        value: item?.tanggal,
+        td: formatDate(item?.tanggal),
         isDate: true,
       },
       {
-        value: item.tgl_selesai,
-        td: formatDate(item.tgl_selesai),
-        isDate: true,
-      },
-      {
-        value: item.shift.jam_from,
-        td: `${formatTime(item.shift.jam_from as string)} - ${formatTime(
-          item.shift.jam_to as string
-        )}`,
+        value: item?.tanggal,
+        td: formatTime(item?.jam),
         isTime: true,
+        cProps: {
+          justify: "center",
+        },
       },
     ],
   }));

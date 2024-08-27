@@ -136,6 +136,7 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                     {(data || (data && data.length > 0)) && (
                       <CContainer
                         overflowY={"auto"}
+                        overflowX={"clip"}
                         className="scrollY"
                         borderRadius={12}
                         flex={1}
@@ -171,7 +172,9 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                           </VStack>
                         </Wrap>
 
-                        <TabelDetailAktivitasKaryawan data={data.list_jadwal} />
+                        <TabelDetailAktivitasKaryawan
+                          data={data.list_presensi}
+                        />
                       </CContainer>
                     )}
                   </>

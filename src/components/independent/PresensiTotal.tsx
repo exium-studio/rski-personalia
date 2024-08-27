@@ -35,7 +35,7 @@ export default function PresensiTotal({ ...props }: Props) {
       {!loading && (
         <>
           {error && (
-            <Center>
+            <Center mx={"auto"}>
               <Retry loading={loading} retry={retry} />
             </Center>
           )}
