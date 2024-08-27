@@ -22,10 +22,10 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
 import formatTime from "../../lib/formatTimeOld";
-import ComponentSpinner from "../independent/ComponentSpinner";
 import FlexLine from "../independent/FlexLine";
 import Img from "../independent/Img";
 import NoData from "../independent/NoData";
+import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import SearchComponent from "./input/SearchComponent";
@@ -103,9 +103,41 @@ export default function DetailPresensiKaryawanModal({
           {!error && (
             <>
               {loading && (
-                <>
-                  <ComponentSpinner m={"auto"} />
-                </>
+                <CContainer flex={1} px={6} pb={6}>
+                  <Wrap
+                    spacing={responsiveSpacing}
+                    mb={responsiveSpacing}
+                    align={"center"}
+                  >
+                    <Skeleton w={"55px"} h={"55px"} borderRadius={"full"} />
+
+                    <VStack align={"stretch"}>
+                      <Skeleton w={"100px"} h={"16px"} />
+                      <Skeleton w={"100px"} h={"16px"} />
+                    </VStack>
+
+                    <VStack align={"stretch"}>
+                      <Skeleton w={"100px"} h={"16px"} />
+                      <Skeleton w={"100px"} h={"16px"} />
+                    </VStack>
+
+                    <VStack align={"stretch"}>
+                      <Skeleton w={"100px"} h={"16px"} />
+                      <Skeleton w={"100px"} h={"16px"} />
+                    </VStack>
+                  </Wrap>
+
+                  <SimpleGrid flex={1} columns={[1, 2]} gap={responsiveSpacing}>
+                    <SimpleGrid columns={[1, 2]} gap={responsiveSpacing}>
+                      <Skeleton h={"100%"} />
+                      <Skeleton h={"100%"} />
+                      <Skeleton h={"100%"} />
+                      <Skeleton h={"100%"} />
+                    </SimpleGrid>
+
+                    <Skeleton h={"100%"} />
+                  </SimpleGrid>
+                </CContainer>
               )}
 
               {!loading && (
@@ -173,6 +205,7 @@ export default function DetailPresensiKaryawanModal({
                             className="scrollY"
                             px={responsiveSpacing}
                           >
+                            {/* Lokasi Presensi */}
                             <Box>
                               <Text fontSize={20} fontWeight={600} mb={4}>
                                 Lokasi Presensi
@@ -184,14 +217,20 @@ export default function DetailPresensiKaryawanModal({
                                 <Box position={"relative"}>
                                   <LokasiPresensi
                                     center={{
-                                      lat: data?.lat_masuk || 0,
-                                      lng: data?.long_masuk || 0,
+                                      lat: data?.data_presensi?.lat_masuk || 0,
+                                      lng: data?.data_presensi?.long_masuk || 0,
                                     }}
                                     officeCenter={{
-                                      lat: data.lokasi_kantor?.lat_masuk || 0,
-                                      lng: data.lokasi_kantor?.long_masuk || 0,
+                                      lat:
+                                        data?.data_presensi?.lokasi_kantor
+                                          ?.lat || 0,
+                                      lng:
+                                        data?.data_presensi?.lokasi_kantor
+                                          ?.long || 0,
                                     }}
-                                    presence_radius={100}
+                                    presence_radius={
+                                      data?.data_presensi?.lokasi_kantor?.radius
+                                    }
                                   />
                                   <Text opacity={0.6} mt={2}>
                                     Lokasi Presensi Masuk
@@ -201,14 +240,21 @@ export default function DetailPresensiKaryawanModal({
                                 <Box position={"relative"}>
                                   <LokasiPresensi
                                     center={{
-                                      lat: data?.lat_keluar || 0,
-                                      lng: data?.long_keluar || 0,
+                                      lat: data?.data_presensi?.lat_keluar || 0,
+                                      lng:
+                                        data?.data_presensi?.long_keluar || 0,
                                     }}
                                     officeCenter={{
-                                      lat: data.lokasi_kantor?.lat_keluar || 0,
-                                      lng: data.lokasi_kantor?.long_keluar || 0,
+                                      lat:
+                                        data?.data_presensi?.lokasi_kantor
+                                          ?.lat || 0,
+                                      lng:
+                                        data?.data_presensi?.lokasi_kantor
+                                          ?.long || 0,
                                     }}
-                                    presence_radius={100}
+                                    presence_radius={
+                                      data?.data_presensi?.lokasi_kantor?.radius
+                                    }
                                   />
                                   <Text opacity={0.6} mt={2}>
                                     Lokasi Presensi Keluar
@@ -217,6 +263,7 @@ export default function DetailPresensiKaryawanModal({
                               </SimpleGrid>
                             </Box>
 
+                            {/* Foto Presensi */}
                             <Box>
                               <Text fontSize={20} fontWeight={600} mb={4}>
                                 Foto Presensi
@@ -228,7 +275,9 @@ export default function DetailPresensiKaryawanModal({
                               >
                                 <Box position={"relative"} flex={"1 1 200px"}>
                                   <Img
-                                    initialSrc={data.foto_masuk?.path}
+                                    initialSrc={
+                                      data?.data_presensi?.foto_masuk?.path
+                                    }
                                     fallbackSrc="/images/defaultProfilePhoto.webp"
                                     borderRadius={12}
                                     aspectRatio={1}
@@ -241,7 +290,9 @@ export default function DetailPresensiKaryawanModal({
 
                                 <Box position={"relative"} flex={"1 1 200px"}>
                                   <Img
-                                    initialSrc={data.foto_keluar?.path}
+                                    initialSrc={
+                                      data?.data_presensi?.foto_keluar?.path
+                                    }
                                     fallbackSrc="/images/defaultProfilePhoto.webp"
                                     borderRadius={12}
                                     aspectRatio={1}
@@ -297,7 +348,7 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {data.jadwal?.nama}
+                                      {data?.data_presensi?.jadwal?.nama}
                                     </Text>
                                   </HStack>
 
@@ -314,8 +365,7 @@ export default function DetailPresensiKaryawanModal({
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatDate(
-                                        data.jadwal?.tgl_mulai,
-                                        "short"
+                                        data?.data_presensi?.jadwal?.tgl_mulai
                                       )}
                                     </Text>
                                   </HStack>
@@ -335,8 +385,7 @@ export default function DetailPresensiKaryawanModal({
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatDate(
-                                        data.jadwal?.tgl_selesai,
-                                        "short"
+                                        data?.data_presensi?.jadwal?.tgl_selesai
                                       )}
                                     </Text>
                                   </HStack>
@@ -353,7 +402,10 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(data.jadwal?.shift?.jam_from)}
+                                      {formatTime(
+                                        data?.data_presensi?.jadwal?.shift
+                                          ?.jam_from
+                                      )}
                                     </Text>
                                   </HStack>
 
@@ -369,7 +421,10 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(data.jadwal?.shift?.jam_to)}
+                                      {formatTime(
+                                        data?.data_presensi?.jadwal?.shift
+                                          ?.jam_to
+                                      )}
                                     </Text>
                                   </HStack>
                                 </CContainer>
@@ -393,7 +448,9 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(data?.jam_masuk)}
+                                      {formatTime(
+                                        data?.data_presensi?.jam_masuk
+                                      )}
                                     </Text>
                                   </HStack>
 
@@ -401,7 +458,9 @@ export default function DetailPresensiKaryawanModal({
                                     <Text opacity={0.6}>Presensi Keluar</Text>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatTime(data?.jam_keluar)}
+                                      {formatTime(
+                                        data?.data_presensi?.jam_keluar
+                                      )}
                                     </Text>
                                   </HStack>
 
@@ -417,7 +476,9 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatDate(data.jam_masuk, "short")}
+                                      {formatDate(
+                                        data?.data_presensi?.jam_masuk
+                                      )}
                                     </Text>
                                   </HStack>
 
@@ -433,7 +494,9 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatDate(data.jam_keluar, "short")}
+                                      {formatDate(
+                                        data?.data_presensi?.jam_keluar
+                                      )}
                                     </Text>
                                   </HStack>
 
@@ -449,7 +512,9 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {formatDuration(data.durasi)}
+                                      {formatDuration(
+                                        data?.data_presensi?.durasi
+                                      )}
                                     </Text>
                                   </HStack>
 
@@ -465,7 +530,8 @@ export default function DetailPresensiKaryawanModal({
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {data.kategori || "-"}
+                                      {data?.data_presensi?.kategori_presensi
+                                        ?.label || "Invalid"}
                                     </Text>
                                   </HStack>
 
@@ -476,12 +542,12 @@ export default function DetailPresensiKaryawanModal({
                                         unhighlightClassName="uw"
                                         searchWords={searchQuery}
                                         autoEscape={true}
-                                        textToHighlight={"Latitude"}
+                                        textToHighlight={"Latitude Masuk"}
                                       />
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {data.lat || "-"}
+                                      {data?.data_presensi?.lat_masuk}
                                     </Text>
                                   </HStack>
 
@@ -492,12 +558,44 @@ export default function DetailPresensiKaryawanModal({
                                         unhighlightClassName="uw"
                                         searchWords={searchQuery}
                                         autoEscape={true}
-                                        textToHighlight={"Longitude"}
+                                        textToHighlight={"Longitude Masuk"}
                                       />
                                     </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
-                                      {data.long || "-"}
+                                      {data?.data_presensi?.long_masuk}
+                                    </Text>
+                                  </HStack>
+
+                                  <HStack justify={"space-between"}>
+                                    <Box opacity={0.6}>
+                                      <Highlighter
+                                        highlightClassName="hw"
+                                        unhighlightClassName="uw"
+                                        searchWords={searchQuery}
+                                        autoEscape={true}
+                                        textToHighlight={"Latitude Keluar"}
+                                      />
+                                    </Box>
+                                    <FlexLine />
+                                    <Text fontWeight={500} textAlign={"right"}>
+                                      {data?.data_presensi?.lat_keluar}
+                                    </Text>
+                                  </HStack>
+
+                                  <HStack justify={"space-between"}>
+                                    <Box opacity={0.6}>
+                                      <Highlighter
+                                        highlightClassName="hw"
+                                        unhighlightClassName="uw"
+                                        searchWords={searchQuery}
+                                        autoEscape={true}
+                                        textToHighlight={"Longitude Keluar"}
+                                      />
+                                    </Box>
+                                    <FlexLine />
+                                    <Text fontWeight={500} textAlign={"right"}>
+                                      {data?.data_presensi?.long_keluar}
                                     </Text>
                                   </HStack>
                                 </CContainer>

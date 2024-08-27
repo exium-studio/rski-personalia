@@ -9,11 +9,13 @@ interface Props extends ImageProps {
 export default function Img({ initialSrc, fallbackSrc, ...props }: Props) {
   const [src, setSrc] = useState<string | undefined>(initialSrc);
 
+  console.log(initialSrc);
+
   return (
     <Image
       src={src}
       onError={() => {
-        setSrc(fallbackSrc);
+        setSrc(fallbackSrc || "/images/defaultProfilePhoto.webp");
       }}
       {...props}
     />

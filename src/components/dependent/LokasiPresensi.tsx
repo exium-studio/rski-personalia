@@ -29,12 +29,12 @@ export default function LokasiPresensi({
 }: Props) {
   const userIcon = new L.Icon({
     iconUrl: "/vectors/icons/userPin.svg",
-    iconSize: [42, 42], // Ukuran ikon
+    iconSize: [64, 64], // Ukuran ikon
   });
 
   const officeIcon = new L.Icon({
     iconUrl: "/vectors/icons/hospital.svg",
-    iconSize: [64, 64], // Ukuran ikon
+    iconSize: [48, 48], // Ukuran ikon
   });
 
   const containerStyle = {
