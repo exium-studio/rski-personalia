@@ -47,7 +47,7 @@ export default function HorizontalScrollableContainer({
   };
 
   return (
-    <VStack position={"relative"} align={"stretch"}>
+    <VStack w={"100%"} position={"relative"} align={"stretch"}>
       <HStack
         position={"absolute"}
         top={0}
@@ -95,6 +95,7 @@ export default function HorizontalScrollableContainer({
       </HStack>
 
       <Box
+        w={"100%"}
         ref={containerRef}
         overflow={"auto"}
         className="noScroll"
