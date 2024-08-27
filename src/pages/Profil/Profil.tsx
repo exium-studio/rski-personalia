@@ -37,6 +37,7 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatMasaKerja from "../../lib/formatMasaKerja";
 import formatNumber from "../../lib/formatNumber";
+import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 
 interface LogoutProps extends ButtonProps {}
 
@@ -788,7 +789,9 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatMasaKerja(userData.data_karyawan?.masa_kerja)}
+                        {calculateMasaKerjaFromTanggalMasuk(
+                          userData.data_karyawan?.tgl_masuk
+                        )}
                       </Text>
                     </HStack>
 
