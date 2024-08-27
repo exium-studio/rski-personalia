@@ -88,7 +88,9 @@ export default function PresensiTotal({ ...props }: Props) {
                     >
                       <VStack gap={0} flex={"1 1"}>
                         <Text fontSize={26} fontWeight={600} color={"p.500"}>
-                          {formatNumber(data?.total_hadir)}
+                          {formatNumber(
+                            data?.total_tepat_waktu + data?.total_terlambat
+                          )}
                         </Text>
                         <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
                           Hadir
@@ -146,7 +148,11 @@ export default function PresensiTotal({ ...props }: Props) {
                         // borderRight={"1px solid var(--divider3)"}
                       >
                         <Text fontSize={26} fontWeight={600} color={"red.400"}>
-                          {formatNumber(data.total_tidak_hadir)}
+                          {formatNumber(
+                            data.total_libur +
+                              data?.total_cuti +
+                              data?.total_absen
+                          )}
                         </Text>
                         <Text fontSize={14} opacity={0.6} whiteSpace={"nowrap"}>
                           Tidak Hadir
