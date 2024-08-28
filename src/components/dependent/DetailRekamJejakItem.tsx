@@ -28,14 +28,14 @@ const PerubahanDataItem = ({ data }: { data: any }) => {
           Kolom
         </Text>
         {/* @ts-ignore */}
-        <Text fontWeight={500}>{perubahanDataKolom[data.kolom]}</Text>
+        <Text fontWeight={500}>{perubahanDataKolom[data?.kolom]}</Text>
       </HStack>
 
       <HStack>
         <Text minW={"160px"} opacity={0.6}>
           Tanggal Diproses
         </Text>
-        <Text fontWeight={500}>{formatDate(data.updated_at)}</Text>
+        <Text fontWeight={500}>{formatDate(data?.updated_at)}</Text>
       </HStack>
 
       <HStack>
@@ -46,15 +46,18 @@ const PerubahanDataItem = ({ data }: { data: any }) => {
         <HStack>
           <Box flex={1}>
             <PerubahanDataRender
-              column={data.kolom}
-              data={data.original_data}
+              column={data?.kolom}
+              data={data?.original_data}
             />
           </Box>
 
           <Icon as={RiArrowRightLine} mx={2} />
 
           <Box flex={1}>
-            <PerubahanDataRender column={data.kolom} data={data.updated_data} />
+            <PerubahanDataRender
+              column={data?.kolom}
+              data={data?.updated_data}
+            />
           </Box>
         </HStack>
       </HStack>
@@ -64,7 +67,7 @@ const PerubahanDataItem = ({ data }: { data: any }) => {
           Status
         </Text>
         <BooleanBadge
-          data={data.status_perubahan}
+          data={data?.status_perubahan}
           trueValue="Disetujui"
           falseValue="Ditolak"
         />
@@ -87,28 +90,28 @@ const TransferKaryanItem = ({ data }: { data: any }) => {
         <Text minW={"160px"} opacity={0.6}>
           Unit Kerja Asal
         </Text>
-        <Text fontWeight={500}>{data?.unit_kerja_asal.nama_unit}</Text>
+        <Text fontWeight={500}>{data?.unit_kerja_asal?.nama_unit}</Text>
       </HStack>
 
       <HStack>
         <Text minW={"160px"} opacity={0.6}>
           Unit Kerja Tujuan
         </Text>
-        <Text fontWeight={500}>{data?.unit_kerja_tujuan.nama_unit}</Text>
+        <Text fontWeight={500}>{data?.unit_kerja_tujuan?.nama_unit}</Text>
       </HStack>
 
       <HStack>
         <Text minW={"160px"} opacity={0.6}>
           Jabatan Asal
         </Text>
-        <Text fontWeight={500}>{data?.jabatan_asal.nama_jabatan}</Text>
+        <Text fontWeight={500}>{data?.jabatan_asal?.nama_jabatan}</Text>
       </HStack>
 
       <HStack>
         <Text minW={"160px"} opacity={0.6}>
           Jabatan Tujuan
         </Text>
-        <Text fontWeight={500}>{data?.jabatan_tujuan.nama_jabatan}</Text>
+        <Text fontWeight={500}>{data?.jabatan_tujuan?.nama_jabatan}</Text>
       </HStack>
 
       <HStack align={"start"}>
