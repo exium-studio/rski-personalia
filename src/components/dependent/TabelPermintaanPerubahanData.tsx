@@ -14,6 +14,7 @@ import Retry from "./Retry";
 import StatusApprovalBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
+import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
 
 interface Props {
   filterConfig: any;
@@ -98,7 +99,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
       },
     },
   ];
-  const formattedData = data?.map((item: any) => ({
+  const formattedData = data?.map((item: any, i:number) => ({
     id: item.id,
     columnsFormat: [
       {
@@ -139,10 +140,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
             placement="right"
           >
             <Box>
-              <StatusApprovalBadge
-                data={item?.status_perubahan.id}
-                w={"120px"}
-              />
+              <StatusApprovalBadge data={item?.status_perubahan} w={"120px"} />
             </Box>
           </Tooltip>
         ),
@@ -153,7 +151,8 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
       },
       {
         value: item.kolom,
-        td: item.kolom,
+        //@ts-ignore
+        td: dataKaryawanLabel[item.kolom] || "Invalid",
       },
       {
         value: item.data,
@@ -173,6 +172,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
           <PerubahanDataRender
             column={item.kolom?.toLowerCase()}
             data={item.updated_data}
+            index={i}
           />
         ),
         cProps: {

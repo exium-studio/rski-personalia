@@ -1,17 +1,69 @@
-import { HStack, Icon, Image, Text } from "@chakra-ui/react";
+import {
+  Button,
+  HStack,
+  Icon,
+  Image,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { RiFileLine } from "@remixicon/react";
 import { Link } from "react-router-dom";
 import { iconSize } from "../../constant/sizes";
 import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
 import ViewPhotoModalDisclosure from "./ViewPhotoModalDisclosure";
+import backOnClose from "../../lib/backOnClose";
+import DisclosureHeader from "./DisclosureHeader";
+import useBackOnClose from "../../hooks/useBackOnClose";
 
-export default function PerubahanDataRender({ column, data }: any) {
+interface Props {
+  data: any;
+  index: number;
+}
+
+const ListKeluargaModal = ({ data, index }: Props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`anggota-keluarga-modal-${index}`, isOpen, onOpen, onClose);
+
+  return (
+    <>
+      <Button colorScheme="ap" variant={"ghost"} className="clicky">
+        Lihat
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Anggota Keluarga"} />
+          </ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button className="btn-solid clicky">Mengerti</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+export default function PerubahanDataRender({ column, data, index }: any) {
   switch (column) {
     default:
       return <Text>Invalid</Text>;
     case "keluarga":
-      return <Text>-</Text>;
+      return <ListKeluargaModal data={data} index={index} />;
     case "foto_profil":
       return (
         <ViewPhotoModalDisclosure src={data}>
