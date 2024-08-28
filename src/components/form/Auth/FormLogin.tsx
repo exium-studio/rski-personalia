@@ -20,7 +20,6 @@ import PasswordInput from "../../dependent/input/PasswordInput";
 import StringInput from "../../dependent/input/StringInput";
 import CContainer from "../../wrapper/CContainer";
 import RequiredForm from "../RequiredForm";
-import LogoutButton from "../../independent/LogoutButton";
 
 export default function FormLogin() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -122,8 +121,6 @@ export default function FormLogin() {
             >
               Klik untuk masuk
             </Button>
-
-            <LogoutButton />
           </CContainer>
         </CContainer>
       )}
