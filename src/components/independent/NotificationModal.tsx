@@ -265,16 +265,15 @@ export default function NotificationModal({ ...props }: Props) {
             )}
           </ModalBody>
           <ModalFooter>
-            {!error && (
-              <Button
-                w={"100%"}
-                className="btn-solid clicky"
-                onClick={deleteNotif}
-                isLoading={deleteLoading}
-              >
-                Hapus Semua yang Sudah Dibaca
-              </Button>
-            )}
+            <Button
+              w={"100%"}
+              className="btn-solid clicky"
+              onClick={deleteNotif}
+              isLoading={deleteLoading}
+              isDisabled={error || loading}
+            >
+              Hapus Semua yang Sudah Dibaca
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
