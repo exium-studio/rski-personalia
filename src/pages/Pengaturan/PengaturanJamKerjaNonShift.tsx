@@ -126,7 +126,12 @@ export default function PengaturanJamKerjaNonShift() {
                 <Skeleton h={"60px"} />
                 <Skeleton h={"60px"} />
               </HStack>
-              <Skeleton mt={"auto"} ml={"auto"} w={"120px"} />
+
+              <HStack mt={"auto"} justify={"space-between"}>
+                <Skeleton h={"16px"} maxW={"200px"} />
+
+                <Skeleton ml={"auto"} w={"120px"} h={"40px"} />
+              </HStack>
             </CContainer>
           )}
 
@@ -199,7 +204,7 @@ export default function PengaturanJamKerjaNonShift() {
               </form>
 
               <HStack justify={"space-between"} mt={"auto"}>
-                <Text opacity={0.6}>
+                <Text opacity={0.4}>
                   Terakhir diperbarui : {formatDate(data.updated_at)}
                 </Text>
                 <Button

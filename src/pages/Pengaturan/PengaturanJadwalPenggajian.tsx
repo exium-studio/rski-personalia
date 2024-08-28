@@ -123,12 +123,7 @@ export default function PengaturanJadwalPenggajian() {
             <HStack mt={"auto"} justify={"space-between"}>
               <Skeleton h={"16px"} maxW={"200px"} />
 
-              <Skeleton
-                mt={responsiveSpacing}
-                ml={"auto"}
-                w={"120px"}
-                h={"40px"}
-              />
+              <Skeleton ml={"auto"} w={"120px"} h={"40px"} />
             </HStack>
           </>
         )}
@@ -188,15 +183,13 @@ export default function PengaturanJadwalPenggajian() {
               mt={"auto"}
               pt={responsiveSpacing}
               justify={"space-between"}
-              align={"end"}
+              align={"center"}
             >
               <Text opacity={0.4}>
                 Terakhir diperbarui : {formatDate(data?.updated_at)}
               </Text>
 
               <Button
-                mt={"auto"}
-                ml={"auto"}
                 w={"120px"}
                 className="btn-ap clicky"
                 flexShrink={0}
