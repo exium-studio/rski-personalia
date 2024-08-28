@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { useLightDarkColor } from "../../constant/colors";
 import pengaturanNavs from "../../constant/pengaturanNavs";
 import { iconSize } from "../../constant/sizes";
+import useGetUserData from "../../hooks/useGetUserData";
+import isHasPermissions from "../../lib/isHasPermissions";
+import isHasSomePermissions from "../../lib/isHasSomePermissions";
 import CContainer from "../wrapper/CContainer";
 
 interface Props {
@@ -13,6 +16,7 @@ interface Props {
 export default function PengaturanNavs({ activeGroup, active }: Props) {
   // SX
   const lightDarkColor = useLightDarkColor();
+  const userData = useGetUserData();
 
   return (
     <CContainer
@@ -36,37 +40,55 @@ export default function PengaturanNavs({ activeGroup, active }: Props) {
         overflowY={"auto"}
         className="scrollY"
       >
-        {pengaturanNavs.map((nav, i) => (
-          <CContainer key={i} gap={2}>
-            <Text fontWeight={600} opacity={0.4}>
-              {nav.groupName}
-            </Text>
-            {nav.navs.map((subNav, ii) => (
-              <Button
-                key={ii}
-                justifyContent={"flex-start"}
-                leftIcon={
-                  <Icon
-                    as={subNav.icon}
-                    fontSize={iconSize}
-                    // opacity={0.4}
-                  />
-                }
-                className={
-                  activeGroup === i && ii === active ? "btn-apa" : "btn"
-                }
-                fontWeight={500}
-                as={Link}
-                to={subNav.link}
-                h={"40px"}
-                size={"sm"}
-                px={"8px !important"}
-              >
-                {subNav.label}
-              </Button>
-            ))}
-          </CContainer>
-        ))}
+        {pengaturanNavs.map((nav, i) => {
+          const hasPermissions = isHasSomePermissions(
+            userData.permission,
+            nav.allowed
+          );
+
+          return (
+            hasPermissions && (
+              <CContainer key={i} gap={2}>
+                <Text fontWeight={600} opacity={0.4}>
+                  {nav.groupName}
+                </Text>
+                {nav.navs.map((subNav, ii) => {
+                  const hasPermissiong = isHasPermissions(
+                    userData.permission,
+                    subNav.allowed
+                  );
+
+                  return (
+                    hasPermissiong && (
+                      <Button
+                        key={ii}
+                        justifyContent={"flex-start"}
+                        leftIcon={
+                          <Icon
+                            as={subNav.icon}
+                            fontSize={iconSize}
+                            // opacity={0.4}
+                          />
+                        }
+                        className={
+                          activeGroup === i && ii === active ? "btn-apa" : "btn"
+                        }
+                        fontWeight={500}
+                        as={Link}
+                        to={subNav.link}
+                        h={"40px"}
+                        size={"sm"}
+                        px={"8px !important"}
+                      >
+                        {subNav.label}
+                      </Button>
+                    )
+                  );
+                })}
+              </CContainer>
+            )
+          );
+        })}
       </CContainer>
     </CContainer>
   );

@@ -21,10 +21,11 @@ import {
 
 const pengaturanNavs = [
   {
+    allowed: [71, null],
     groupName: "Akun",
     navs: [
       {
-        allowed: 71,
+        allowed: [71],
         icon: RiUserSettingsLine,
         label: "Kelola Role",
         link: "/pengaturan/akun/kelola-role",
@@ -41,37 +42,37 @@ const pengaturanNavs = [
     groupName: "Kepegawaian",
     navs: [
       {
-        allowed: 99,
+        allowed: [99],
         icon: RiWalletLine,
         label: "Kelompok Gaji",
         link: "/pengaturan/karyawan/kelompok-gaji",
       },
       {
-        allowed: 87,
+        allowed: [87],
         icon: RiIdCardLine,
         label: "Jabatan",
         link: "/pengaturan/karyawan/jabatan",
       },
       {
-        allowed: 81,
+        allowed: [81],
         icon: RiGroup3Line,
         label: "Unit Kerja",
         link: "/pengaturan/karyawan/unit-kerja",
       },
       {
-        allowed: 91,
+        allowed: [91],
         icon: RiVerifiedBadgeLine,
         label: "Kompetensi",
         link: "/pengaturan/karyawan/kompetensi",
       },
       {
-        allowed: 147,
+        allowed: [147],
         icon: RiQuestionLine,
         label: "Jenis Penilaian",
         link: "/pengaturan/karyawan/jenis-penilaian",
       },
       {
-        allowed: 105,
+        allowed: [105],
         icon: RiQuestionMark,
         label: "Kuesioner Penilaian",
         link: "/pengaturan/karyawan/kuisioner",
@@ -79,35 +80,35 @@ const pengaturanNavs = [
     ],
   },
   {
-    allowed: [111, null, 117, null, 121],
+    allowed: [111, 117, 117, 117, 121],
     groupName: "Keuangan",
     navs: [
       {
-        allowed: 111,
+        allowed: [111],
         icon: RiHandCoinLine,
         label: "Potongan",
         link: "/pengaturan/keuangan/premi",
       },
       {
-        allowed: 117,
+        allowed: [117],
         icon: RiListIndefinite,
         label: "Kategori TER",
         link: "/pengaturan/keuangan/kategori-ter-pph21",
       },
       {
-        allowed: 117,
+        allowed: [117],
         icon: RiFilePaper2Line,
         label: "TER pph21",
         link: "/pengaturan/keuangan/ter-pph21",
       },
       {
-        allowed: 117,
+        allowed: [117],
         icon: RiArticleLine,
         label: "PTKP",
         link: "/pengaturan/keuangan/ptkp",
       },
       {
-        allowed: 121,
+        allowed: [121],
         icon: RiCalendarLine,
         label: "Tanggal Penggajian",
         link: "/pengaturan/keuangan/jadwal-penggajian",
@@ -120,35 +121,35 @@ const pengaturanNavs = [
     ],
   },
   {
-    allowed: [145, 129, null, 52, 135, 141],
+    allowed: [145, 129, 129, 52, 135, 141],
     groupName: "Manajemen Waktu",
     navs: [
       {
-        allowed: 145,
+        allowed: [145],
         icon: RiMapPinLine,
         label: "Lokasi Kantor",
         link: "/pengaturan/manajemen-waktu/lokasi-presensi",
       },
       {
-        allowed: 129,
+        allowed: [129],
         icon: RiCalendarScheduleLine,
         label: "Jam Kerja Shift",
         link: "/pengaturan/manajemen-waktu/shift",
       },
       {
-        allowed: 129,
+        allowed: [129],
         icon: RiCalendarCheckLine,
         label: "Jam Kerja Non-Shift",
         link: "/pengaturan/manajemen-waktu/non-shift",
       },
       {
-        allowed: 135,
+        allowed: [135],
         icon: RiLandscapeLine,
         label: "Hari Libur Non-Shift",
         link: "/pengaturan/manajemen-waktu/hari-libur",
       },
       {
-        allowed: 141,
+        allowed: [141],
         icon: RiCalendarCloseLine,
         label: "Tipe Cuti",
         link: "/pengaturan/manajemen-waktu/cuti",
