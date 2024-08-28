@@ -3,21 +3,28 @@ import {
   AlertDescription,
   AlertIcon,
   Button,
+  ButtonProps,
   Center,
   HStack,
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Text,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { Dispatch, useState } from "react";
+import { useFormik } from "formik";
+import { useState } from "react";
+import * as yup from "yup";
 import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import req from "../../lib/req";
 import ComponentSpinner from "../independent/ComponentSpinner";
 import FlexLine from "../independent/FlexLine";
 import NotFound from "../independent/NotFound";
@@ -25,136 +32,26 @@ import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import req from "../../lib/req";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 
-interface ListJenisPenilaianProps {
-  isOpen: boolean;
-  setJenisPenilaian: Dispatch<any>;
-}
-
-const ListJenisPenilaian = ({
-  isOpen,
-  setJenisPenilaian,
-}: ListJenisPenilaianProps) => {
-  const { error, notFound, loading, data, retry } = useDataState<any>({
-    initialData: undefined,
-    url: `/api/get-list-jenis-penilaian`,
-    conditions: isOpen,
-    dependencies: [isOpen],
-  });
-
-  const [jenisPenilaianLocal, setJenisPenilaianLocal] =
-    useState<any>(undefined);
-
-  return (
-    <>
-      {loading && <ComponentSpinner />}
-
-      {!loading && (
-        <>
-          {error && (
-            <>
-              {notFound && <NotFound />}
-
-              {!notFound && (
-                <Center>
-                  <Retry loading={loading} retry={retry} />
-                </Center>
-              )}
-            </>
-          )}
-
-          {!error && (
-            <CContainer gap={2}>
-              {data?.map((jp: any, i: number) => (
-                <HStack
-                  key={i}
-                  p={4}
-                  borderRadius={8}
-                  border={"1px solid"}
-                  borderColor={
-                    jenisPenilaianLocal?.id === jp?.id
-                      ? "p.500"
-                      : "var(--divider3)"
-                  }
-                  bg={
-                    jenisPenilaianLocal?.id === jp?.id
-                      ? "var(--p500a5) !important"
-                      : ""
-                  }
-                  cursor={"pointer"}
-                  transition={"200ms"}
-                  className="btn clicky"
-                  onClick={() => [setJenisPenilaianLocal(jp)]}
-                >
-                  <CContainer gap={2}>
-                    <Text fontWeight={500}>{jp.nama}</Text>
-
-                    <HStack>
-                      <Text opacity={0.6}>Jabatan Penilai</Text>
-                      <FlexLine />
-                      <Text>{jp?.jabatan_penilai?.nama_jabatan}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.6}>Jabatan Dinilai</Text>
-                      <FlexLine />
-                      <Text>{jp?.jabatan_penilai?.nama_jabatan}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.6}>Status Karyawan Dinilai</Text>
-                      <FlexLine />
-                      <StatusKaryawanBadge data={jp?.status_karyawan} />
-                    </HStack>
-                  </CContainer>
-                </HStack>
-              ))}
-
-              <Button
-                mt={5}
-                w={"100%"}
-                className="btn-ap clicky"
-                colorScheme="ap"
-                isDisabled={!jenisPenilaianLocal}
-                onClick={() => {
-                  setJenisPenilaian(jenisPenilaianLocal);
-                }}
-              >
-                Konfirmasi & Lanjutkan
-              </Button>
-            </CContainer>
-          )}
-        </>
-      )}
-    </>
-  );
-};
-
-interface Props {
+interface ListPertanyaanModalProps extends ButtonProps {
   user_id_penilaian: number;
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
+  jenisPenilaian: any;
 }
 
-export default function PenilaianKaryawanModal({
+const ListPertanyaanModal = ({
   user_id_penilaian,
-  isOpen,
-  onOpen,
-  onClose,
-}: Props) {
+  jenisPenilaian,
+  ...props
+}: ListPertanyaanModalProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
-    `penilaian-karyawan-modal-${user_id_penilaian}`,
+    `pertanyaan-modal-${user_id_penilaian}`,
     isOpen,
     onOpen,
     onClose
   );
 
-  const [jenisPenilaian, setJenisPenilaian] = useState<any>(undefined);
-
-  const { error, notFound, loading, data, setData, retry } = useDataState<any>({
+  const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/perusahaan/jenis-penilaian/${jenisPenilaian?.id}`,
     conditions: user_id_penilaian && isOpen && jenisPenilaian,
@@ -247,50 +144,31 @@ export default function PenilaianKaryawanModal({
     return average;
   };
 
-  // console.log(formik.values.answers);
-  // console.log(data?.jumlah_pertanyaan);
-  // console.log(isAnsweredAll(formik.values.answers, data?.jumlah_pertanyaan));
-
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={() => {
-        backOnClose();
-        setData(undefined);
-        setJenisPenilaian(undefined);
-      }}
-      isCentered
-      blockScrollOnMount={false}
-    >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>
-          <DisclosureHeader title={"Penilaian"} />
-        </ModalHeader>
-        <ModalBody pb={6}>
-          {!jenisPenilaian && (
-            <>
-              <Alert
-                status="warning"
-                alignItems={"start"}
-                mb={responsiveSpacing}
-              >
-                <AlertIcon />
-                <AlertDescription>
-                  Pilih jenis penilaian karyawan kemudian klik Konfirmasi &
-                  Lanjutkan.
-                </AlertDescription>
-              </Alert>
+    <>
+      <Button
+        w={"100%"}
+        className="btn-ap clicky"
+        colorScheme="ap"
+        onClick={onOpen}
+        {...props}
+      >
+        Konfirmasi & Lanjutkan
+      </Button>
 
-              <ListJenisPenilaian
-                isOpen={isOpen}
-                setJenisPenilaian={setJenisPenilaian}
-              />
-            </>
-          )}
-
-          {jenisPenilaian && (
-            <>
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Penilaian"} />
+          </ModalHeader>
+          <ModalBody pb={6}>
+            <CContainer gap={4}>
               {loading && <ComponentSpinner />}
 
               {!loading && (
@@ -308,7 +186,7 @@ export default function PenilaianKaryawanModal({
                   )}
 
                   {!error && (
-                    <CContainer gap={4}>
+                    <>
                       {data?.list_pertanyaan?.map(
                         (pertanyaan: any, i: number) => (
                           <HStack key={i} align={"start"}>
@@ -347,43 +225,161 @@ export default function PenilaianKaryawanModal({
                           </HStack>
                         )
                       )}
-
-                      <Button
-                        mt={6}
-                        colorScheme="ap"
-                        className="btn-ap clicky"
-                        w={"100%"}
-                        isDisabled={
-                          !isAnsweredAll(
-                            formik.values.answers,
-                            data?.jumlah_pertanyaan
-                          )
-                        }
-                        onClick={() => {
-                          formik.submitForm();
-                        }}
-                        isLoading={loadingSubmit}
-                      >
-                        Kirim
-                      </Button>
-                    </CContainer>
+                    </>
                   )}
                 </>
               )}
-            </>
-          )}
+
+              <Button
+                mt={6}
+                colorScheme="ap"
+                className="btn-ap clicky"
+                w={"100%"}
+                isDisabled={
+                  !isAnsweredAll(formik.values.answers, data?.jumlah_pertanyaan)
+                }
+                onClick={() => {
+                  formik.submitForm();
+                }}
+                isLoading={loadingSubmit}
+              >
+                Kirim
+              </Button>
+            </CContainer>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+interface Props {
+  user_id_penilaian: number;
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
+
+export default function PenilaianKaryawanModal({
+  user_id_penilaian,
+  isOpen,
+  onOpen,
+  onClose,
+}: Props) {
+  useBackOnClose(
+    `penilaian-karyawan-modal-${user_id_penilaian}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
+
+  const { error, notFound, loading, data, retry } = useDataState<any>({
+    initialData: undefined,
+    url: `/api/get-list-jenis-penilaian`,
+    conditions: isOpen,
+    dependencies: [isOpen],
+  });
+
+  const [jenisPenilaian, setJenisPenilaian] = useState<any>(undefined);
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        backOnClose();
+      }}
+      isCentered
+      blockScrollOnMount={false}
+    >
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          <DisclosureHeader title={"Pilih Jenis Penilaian"} />
+        </ModalHeader>
+        <ModalBody>
+          <Alert status="warning" alignItems={"start"} mb={responsiveSpacing}>
+            <AlertIcon />
+            <AlertDescription>
+              Pilih jenis penilaian karyawan kemudian klik Konfirmasi &
+              Lanjutkan.
+            </AlertDescription>
+          </Alert>
+
+          <>
+            {loading && <ComponentSpinner />}
+
+            {!loading && (
+              <>
+                {error && (
+                  <>
+                    {notFound && <NotFound />}
+
+                    {!notFound && (
+                      <Center>
+                        <Retry loading={loading} retry={retry} />
+                      </Center>
+                    )}
+                  </>
+                )}
+
+                {!error && (
+                  <CContainer gap={2}>
+                    {data?.map((jp: any, i: number) => (
+                      <HStack
+                        key={i}
+                        p={4}
+                        borderRadius={8}
+                        border={"1px solid"}
+                        borderColor={
+                          jenisPenilaian?.id === jp?.id
+                            ? "p.500"
+                            : "var(--divider3)"
+                        }
+                        bg={
+                          jenisPenilaian?.id === jp?.id
+                            ? "var(--p500a5) !important"
+                            : ""
+                        }
+                        cursor={"pointer"}
+                        transition={"200ms"}
+                        className="btn clicky"
+                        onClick={() => [setJenisPenilaian(jp)]}
+                      >
+                        <CContainer gap={2}>
+                          <Text fontWeight={500}>{jp.nama}</Text>
+
+                          <HStack>
+                            <Text opacity={0.6}>Jabatan Penilai</Text>
+                            <FlexLine />
+                            <Text>{jp?.jabatan_penilai?.nama_jabatan}</Text>
+                          </HStack>
+                          <HStack>
+                            <Text opacity={0.6}>Jabatan Dinilai</Text>
+                            <FlexLine />
+                            <Text>{jp?.jabatan_penilai?.nama_jabatan}</Text>
+                          </HStack>
+                          <HStack>
+                            <Text opacity={0.6}>Status Karyawan Dinilai</Text>
+                            <FlexLine />
+                            <StatusKaryawanBadge data={jp?.status_karyawan} />
+                          </HStack>
+                        </CContainer>
+                      </HStack>
+                    ))}
+                  </CContainer>
+                )}
+              </>
+            )}
+          </>
         </ModalBody>
 
-        {/* <ModalFooter>
-          <Button
-            w={"100%"}
-            className="btn-ap clicky"
-            colorScheme="ap"
+        <ModalFooter>
+          <ListPertanyaanModal
+            user_id_penilaian={user_id_penilaian}
+            jenisPenilaian={jenisPenilaian}
             isDisabled={!jenisPenilaian}
-          >
-            Konfirmasi & Lanjutkan
-          </Button>
-        </ModalFooter> */}
+          />
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );
