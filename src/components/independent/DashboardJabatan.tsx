@@ -26,7 +26,7 @@ export default function DashboardJabatan({ ...props }: Props) {
     initialData: undefined,
     url: `/api/rski/dashboard/calculated-jabatan`,
     dependencies: [],
-    // noRt: true,
+    noRt: true,
   });
 
   // SX
