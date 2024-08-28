@@ -49,34 +49,8 @@ export default function DashboardPengumuman({ ...props }: Props) {
       minW={"450px"}
       overflowX={"hidden"}
       h={dashboardItemHeight}
-      pb={responsiveSpacing}
       {...props}
     >
-      <Box p={responsiveSpacing}>
-        <HStack
-          justify={"space-between"}
-          mb={responsiveSpacing}
-          align={"start"}
-        >
-          <Box>
-            <Text fontWeight={600}>Pengumuman</Text>
-            <Text fontSize={14} opacity={0.6}>
-              Pengumuman saat ini
-            </Text>
-          </Box>
-
-          <DashboardBuatPengumumanModal />
-        </HStack>
-
-        <SearchComponent
-          name="search"
-          onChangeSetter={(input) => {
-            setSearch(input);
-          }}
-          inputValue={search}
-        />
-      </Box>
-
       {error && (
         <>
           {notFound && <NoData minH={"300px"} />}
@@ -102,12 +76,38 @@ export default function DashboardPengumuman({ ...props }: Props) {
 
           {!loading && (
             <>
+              <Box p={responsiveSpacing}>
+                <HStack
+                  justify={"space-between"}
+                  mb={responsiveSpacing}
+                  align={"start"}
+                >
+                  <Box>
+                    <Text fontWeight={600}>Pengumuman</Text>
+                    <Text fontSize={14} opacity={0.6}>
+                      Pengumuman saat ini
+                    </Text>
+                  </Box>
+
+                  <DashboardBuatPengumumanModal />
+                </HStack>
+
+                <SearchComponent
+                  name="search"
+                  onChangeSetter={(input) => {
+                    setSearch(input);
+                  }}
+                  inputValue={search}
+                />
+              </Box>
+
               <VStack
                 align={"stretch"}
                 overflowY={"auto"}
                 className="scrollY"
                 flex={1}
                 gap={0}
+                pb={responsiveSpacing}
               >
                 {!data && (
                   <Text m={"auto"} opacity={0.6}>
