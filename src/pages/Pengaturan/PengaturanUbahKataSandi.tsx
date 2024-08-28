@@ -3,6 +3,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -11,8 +12,13 @@ import CContainer from "../../components/wrapper/CContainer";
 import { useBodyColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import PasswordInput from "../../components/dependent/input/PasswordInput";
+import req from "../../lib/req";
+import { useState } from "react";
 
 export default function PengaturanUbahKataSandi() {
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
@@ -26,8 +32,41 @@ export default function PengaturanUbahKataSandi() {
       konfirmasi_password_baru: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
-      //TODO api simpan password baru
-      console.log(values);
+      const payload = {
+        current_password: values.password_lama,
+        password: values.password_baru,
+        password_confirmation: values.konfirmasi_password_baru,
+        _method: "post",
+      };
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/pengaturan/users/change-passwords`, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     },
   });
 
@@ -116,6 +155,7 @@ export default function PengaturanUbahKataSandi() {
         colorScheme="ap"
         type="submit"
         form="ubahKataSandiForm"
+        isLoading={loading}
       >
         Simpan
       </Button>
