@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   ButtonGroup,
   ButtonProps,
@@ -9,20 +12,21 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiUploadLine } from "@remixicon/react";
+import {
+  RiCalendarCheckLine,
+  RiCalendarScheduleLine,
+  RiUploadLine,
+} from "@remixicon/react";
 import { useRef, useState } from "react";
-import { Interface__SelectOption } from "../../constant/interfaces";
-import req from "../../lib/req";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import download from "../../lib/download";
+import req from "../../lib/req";
 import CContainer from "../wrapper/CContainer";
-import SelectJenisKaryawan from "./_Select/SelectJenisKaryawan";
 import DisclosureHeader from "./DisclosureHeader";
 
 interface Props extends ButtonProps {}
@@ -32,9 +36,9 @@ export default function ExportJadwalModal({ ...props }: Props) {
   useBackOnClose(`export-modal-${1}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
-  const [jenisKaryawan, setJenisKaryawan] = useState<
-    Interface__SelectOption | undefined
-  >(undefined);
+  const [jenisKaryawan, setJenisKaryawan] = useState<number | undefined>(
+    undefined
+  );
 
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
@@ -43,9 +47,9 @@ export default function ExportJadwalModal({ ...props }: Props) {
     setLoading(true);
 
     let url = "";
-    if (jenisKaryawan?.value === 1) {
+    if (jenisKaryawan === 1) {
       url = `api/rski/dashboard/jadwal-karyawan/export-shift`;
-    } else if (jenisKaryawan?.value === 0) {
+    } else if (jenisKaryawan === 0) {
       url = `api/rski/dashboard/jadwal-karyawan/export-non-shift`;
     }
 
@@ -58,9 +62,9 @@ export default function ExportJadwalModal({ ...props }: Props) {
           download(
             r.data,
             `Export Jadwal ${
-              jenisKaryawan?.value === 1
+              jenisKaryawan === 1
                 ? "Shift"
-                : jenisKaryawan?.value === 0
+                : jenisKaryawan === 0
                 ? "Non-Shift"
                 : ""
             }`,
@@ -126,17 +130,44 @@ export default function ExportJadwalModal({ ...props }: Props) {
             />
           </ModalHeader>
           <ModalBody>
-            <Text opacity={0.6}>Apakah anda yakin akan export tabel ini?</Text>
+            <CContainer gap={3}>
+              <Alert status="warning">
+                <AlertIcon />
+                <AlertDescription>Pilih tipe export dahulu</AlertDescription>
+              </Alert>
+
+              <Button
+                onClick={() => {
+                  setJenisKaryawan(1);
+                }}
+                justifyContent={"space-between"}
+                className={
+                  jenisKaryawan === 1 ? "selected clicky" : "btn-outline clicky"
+                }
+                rightIcon={
+                  <Icon as={RiCalendarScheduleLine} fontSize={iconSize} />
+                }
+              >
+                Jadwal Shift
+              </Button>
+              <Button
+                onClick={() => {
+                  setJenisKaryawan(0);
+                }}
+                justifyContent={"space-between"}
+                className={
+                  jenisKaryawan === 0 ? "selected clicky" : "btn-outline clicky"
+                }
+                rightIcon={
+                  <Icon as={RiCalendarCheckLine} fontSize={iconSize} />
+                }
+              >
+                Jadwal Non-Shift
+              </Button>
+            </CContainer>
           </ModalBody>
           <ModalFooter>
             <CContainer gap={2}>
-              <SelectJenisKaryawan
-                name="jenis_karyawan"
-                onConfirm={(input) => {
-                  setJenisKaryawan(input);
-                }}
-                inputValue={jenisKaryawan}
-              />
               <ButtonGroup>
                 <Button
                   w={"100%"}

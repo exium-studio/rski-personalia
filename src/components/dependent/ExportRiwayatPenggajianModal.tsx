@@ -11,7 +11,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -22,12 +21,12 @@ import {
   RiUploadLine,
 } from "@remixicon/react";
 import { useRef, useState } from "react";
-import req from "../../lib/req";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import download from "../../lib/download";
 import formatDate from "../../lib/formatDate";
+import req from "../../lib/req";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 
@@ -39,7 +38,7 @@ export default function ExportRiwayatPenggajianModal({
   periode,
   ...props
 }: Props) {
-  console.log(periode);
+  // console.log(periode);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`export-modal-${periode}`, isOpen, onOpen, onClose);
@@ -135,7 +134,12 @@ export default function ExportRiwayatPenggajianModal({
             />
           </ModalHeader>
           <ModalBody>
-            <CContainer gap={2} mb={responsiveSpacing}>
+            <CContainer gap={2}>
+              <Alert status="warning">
+                <AlertIcon />
+                <AlertDescription>Pilih tipe export dahulu</AlertDescription>
+              </Alert>
+
               <Button
                 onClick={() => {
                   setTipeExport(1);
@@ -173,19 +177,12 @@ export default function ExportRiwayatPenggajianModal({
                 Penggajian Bank
               </Button>
             </CContainer>
-
-            {!tipeExport && (
-              <Alert status="warning">
-                <AlertIcon />
-                <AlertDescription>Pilih tipe export dahulu</AlertDescription>
-              </Alert>
-            )}
-
+            {/* 
             {tipeExport && (
-              <Text opacity={0.6}>
+              <Text opacity={0.6} mt={responsiveSpacing}>
                 Apakah anda yakin akan export tabel ini?
               </Text>
-            )}
+            )} */}
           </ModalBody>
           <ModalFooter gap={2}>
             <Button
