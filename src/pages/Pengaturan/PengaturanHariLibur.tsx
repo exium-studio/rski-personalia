@@ -47,6 +47,8 @@ export default function PengaturanHariLibur() {
             }));
           }}
           inputValue={filterConfig.search}
+          placeholder="nama hari libur"
+          tooltipLabel="Cari dengan nama hari libur"
         />
 
         <MultiSelectPengaturanDeletedAt

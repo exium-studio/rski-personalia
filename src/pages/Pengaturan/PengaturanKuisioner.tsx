@@ -52,6 +52,8 @@ export default function PengaturanKuisioner() {
             }));
           }}
           inputValue={filterConfig.search}
+          placeholder="pertanyaan"
+          tooltipLabel="Cari dengan pertanyaan"
         />
 
         <MultiSelectPengaturanDeletedAt

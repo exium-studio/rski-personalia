@@ -52,7 +52,7 @@ export default function SetLokasiPresensi({
             setSearchAddress(input);
           }}
           inputValue={searchAddress}
-          placeholder="Cari Alamat"
+          placeholder="cari alamat"
           onFocus={onOpen}
           onBlur={onClose}
         />

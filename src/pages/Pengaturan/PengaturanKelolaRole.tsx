@@ -47,6 +47,8 @@ export default function PengaturanKelolaRole() {
             }));
           }}
           inputValue={filterConfig.search}
+          placeholder="nama role"
+          tooltipLabel="Cari dengan nama role"
         />
 
         <TambahRole minW={"fit-content"} />

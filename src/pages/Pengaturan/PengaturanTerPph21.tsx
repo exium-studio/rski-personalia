@@ -45,8 +45,8 @@ export default function PengaturanTerPph21() {
             }));
           }}
           inputValue={filterConfig.search}
-          tooltipLabel="Cari dengan nama kategori TER"
-          placeholder="nama kategori TER"
+          placeholder="kategori TER"
+          tooltipLabel="Cari dengan kategori TER"
         />
 
         {/* <MultiSelectPengaturanDeletedAt

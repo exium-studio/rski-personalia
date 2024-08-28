@@ -47,6 +47,8 @@ export default function PengaturanTipeCuti() {
             }));
           }}
           inputValue={filterConfig.search}
+          placeholder="nama cuti"
+          tooltipLabel="Cari dengan nama cuti"
         />
 
         <MultiSelectPengaturanDeletedAt
