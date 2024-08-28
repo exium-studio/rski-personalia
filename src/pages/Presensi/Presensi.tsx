@@ -40,6 +40,8 @@ export default function Presensi() {
   const lightDarkColor = useLightDarkColor();
 
   const userData = useGetUserData();
+  const exportPermission = isHasPermissions(userData.permission, [54]);
+  const importPermission = isHasPermissions(userData.permission, [53]);
 
   return (
     <>
@@ -88,18 +90,15 @@ export default function Presensi() {
 
             <FilterKaryawan />
 
-            {isHasPermissions(userData.permission, [54]) && (
-              <ExportPresensiModal />
-            )}
+            <ExportPresensiModal isDisabled={!exportPermission} />
 
-            {isHasPermissions(userData.permission, [53]) && (
-              <ImportModal
-                url="/api/rski/dashboard/presensi/import"
-                title="Import Presensi"
-                reqBodyKey="presensi_file"
-                templateDownloadUrl="api/rski/dashboard/download-template-presensi"
-              />
-            )}
+            <ImportModal
+              url="/api/rski/dashboard/presensi/import"
+              title="Import Presensi"
+              reqBodyKey="presensi_file"
+              templateDownloadUrl="api/rski/dashboard/download-template-presensi"
+              isDisabled={!importPermission}
+            />
           </HStack>
 
           <TabelPresensi filterConfig={filterConfig} />

@@ -1,4 +1,4 @@
-import { HStack } from "@chakra-ui/react";
+import { HStack, Tooltip } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ExportKaryawanModal from "../../components/dependent/ExportKaryawanModal";
 import ImportModal from "../../components/dependent/ImportModal";
@@ -34,6 +34,9 @@ export default function Karyawan() {
   const lightDarkColor = useLightDarkColor();
 
   const userData = useGetUserData();
+  const exportPermission = isHasPermissions(userData.permission, [60]);
+  const importPermission = isHasPermissions(userData.permission, [59]);
+  const createPermission = isHasPermissions(userData.permission, [55]);
 
   return (
     <>
@@ -71,22 +74,26 @@ export default function Karyawan() {
 
             <KaryawanTableColumnsConfig title="Config Kolom Tabel Karyawan" />
 
-            {isHasPermissions(userData.permission, [60]) && (
-              <ExportKaryawanModal />
-            )}
+            <Tooltip label={!exportPermission && "Tidak ada akses"}>
+              <ExportKaryawanModal isDisabled={!exportPermission} />
+            </Tooltip>
 
-            {isHasPermissions(userData.permission, [59]) && (
+            <Tooltip label={!importPermission && "Tidak ada akses"}>
               <ImportModal
                 url={"/api/rski/dashboard/karyawan/import"}
                 title={"Import Karyawan"}
                 reqBodyKey="karyawan_file"
                 templateDownloadUrl="api/rski/dashboard/download-template-karyawan"
+                isDisabled={!importPermission}
               />
-            )}
+            </Tooltip>
 
-            {isHasPermissions(userData.permission, [55]) && (
-              <TambahKaryawanModal minW={"fit-content"} />
-            )}
+            <Tooltip label={!createPermission && "Tidak ada akses"}>
+              <TambahKaryawanModal
+                minW={"fit-content"}
+                isDisabled={!createPermission}
+              />
+            </Tooltip>
           </HStack>
 
           <TabelKaryawan />

@@ -1,4 +1,4 @@
-import { HStack } from "@chakra-ui/react";
+import { HStack, Tooltip } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import MultiSelectKategoriTransfer from "../../components/dependent/_Select/MultiSelectKategoriTransfer";
 import ExportModal from "../../components/dependent/ExportModal";
@@ -37,6 +37,8 @@ export default function TransferKaryawan() {
   const lightDarkColor = useLightDarkColor();
 
   const userData = useGetUserData();
+  const exportPermission = isHasPermissions(userData.permission, [59]);
+  const createPermission = isHasPermissions(userData.permission, [55]);
 
   return (
     <>
@@ -89,17 +91,17 @@ export default function TransferKaryawan() {
 
             <TransferKaryawanTableColumnsConfig />
 
-            {isHasPermissions(userData.permission, [60]) && (
+            <Tooltip label={!exportPermission && "Tidak ada akses"}>
               <ExportModal
                 url="/api/rski/dashboard/karyawan/transfer/export"
                 title="Export Transfer Karyawan"
                 downloadFileName={"Transfer Karyawan"}
               />
-            )}
+            </Tooltip>
 
-            {isHasPermissions(userData.permission, [55]) && (
+            <Tooltip label={!createPermission && "Tidak ada akses"}>
               <AjukanTransferKaryawanModal minW={"fit-content"} />
-            )}
+            </Tooltip>
           </HStack>
 
           <TabelTransferKarywan filterConfig={filterConfig} />

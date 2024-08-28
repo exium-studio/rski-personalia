@@ -52,6 +52,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
     });
 
   const userData = useGetUserData();
+  const verif1Permission = isHasPermissions(userData.permission, [2]);
 
   const formattedHeader = [
     {
@@ -190,6 +191,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
             aria-label={`perubahan-data-verif-button-${item.id}"`}
             id={`verifikasi-perubahan-data-3-modal-${item.id}`}
             submitUrl={`/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${item.id}`}
+            isDisabled={!verif1Permission}
           />
         ),
         props: {
@@ -200,88 +202,6 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
         cProps: {
           justify: "center",
           borderLeft: "1px solid var(--divider3)",
-        },
-      },
-    ],
-  }));
-  const formattedData2 = data?.map((item: any, i: number) => ({
-    id: item.id,
-    columnsFormat: [
-      {
-        value: item.user.nama,
-        td: (
-          <AvatarAndNameTableData
-            data={{
-              id: item.user.id,
-              nama: item.user.nama,
-              foto_profil: item.user.foto_profil,
-            }}
-          />
-        ),
-        props: {
-          position: "sticky",
-          left: 0,
-          zIndex: 2,
-        },
-        cProps: {
-          borderRight: "1px solid var(--divider3)",
-        },
-      },
-      {
-        value: item?.status_perubahan?.id,
-        td: (
-          <Tooltip
-            label={
-              item?.alasan && (
-                <>
-                  <Text>Alasan Ditolak</Text>
-
-                  <Text opacity={0.4} mt={2}>
-                    {item?.alasan}
-                  </Text>
-                </>
-              )
-            }
-            placement="right"
-          >
-            <Box>
-              <StatusApprovalBadge data={item?.status_perubahan} w={"120px"} />
-            </Box>
-          </Tooltip>
-        ),
-        isNumeric: true,
-        cProps: {
-          justify: "center",
-        },
-      },
-      {
-        value: item.kolom,
-        //@ts-ignore
-        td: dataKaryawanLabel[item.kolom] || "Invalid",
-      },
-      {
-        value: item.data,
-        td: (
-          <PerubahanDataRender
-            column={item.kolom?.toLowerCase()}
-            data={item.original_data}
-          />
-        ),
-        cProps: {
-          justify: "center",
-        },
-      },
-      {
-        value: item.data,
-        td: (
-          <PerubahanDataRender
-            column={item.kolom?.toLowerCase()}
-            data={item.updated_data}
-            index={i}
-          />
-        ),
-        cProps: {
-          justify: "center",
         },
       },
     ],
@@ -324,11 +244,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
                   <CustomTableContainer>
                     <CustomTable
                       formattedHeader={formattedHeader}
-                      formattedData={
-                        isHasPermissions(userData.permission, [2])
-                          ? formattedData
-                          : formattedData2
-                      }
+                      formattedData={formattedData}
                       // onRowClick={() => {
                       //   onOpen();
                       // }}
