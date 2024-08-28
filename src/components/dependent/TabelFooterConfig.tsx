@@ -46,7 +46,7 @@ export default function TabelFooterConfig({
       spacing={responsiveSpacing}
       justify={"space-between"}
       mt={responsiveSpacing}
-      align={"start"}
+      align={"center"}
     >
       <Box w={"100%"} maxW={"200px"}>
         {typeof limitConfig === "number" && setLimitConfig && (
