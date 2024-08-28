@@ -7,6 +7,7 @@ import CustomTable from "./CustomTable";
 import SearchComponent from "./input/SearchComponent";
 
 interface Props {
+  role_id: number;
   data: any[];
   totalPermissions: number;
   setTotalPermissions: Dispatch<number>;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export default function TabelPengaturanKeizinan({
+  role_id,
   data,
   totalPermissions,
   setTotalPermissions,
@@ -161,7 +163,8 @@ export default function TabelPengaturanKeizinan({
           size={"lg"}
           display={item[key]?.has_permission === null ? "none" : "block"}
           opacity={item[key]?.has_permission === null ? 0 : 1}
-          isDisabled={item[key]?.has_permission === null}
+          // isDisabled={item[key]?.has_permission === null}
+          isDisabled={role_id === 1}
           isChecked={item[key]?.has_permission}
           onChange={() => handleCheckboxChange(groupIndex, key)}
         ></Checkbox>

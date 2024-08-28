@@ -159,10 +159,12 @@ export default function PengaturanKeizinan({ role_id }: Props) {
   };
 
   function toggleAllPermissions() {
-    if (!allPermissions) {
-      formik.setFieldValue("permissions", permissionsSetter(true));
-    } else {
-      formik.setFieldValue("permissions", permissionsSetter(false));
+    if (role_id !== 1) {
+      if (!allPermissions) {
+        formik.setFieldValue("permissions", permissionsSetter(true));
+      } else {
+        formik.setFieldValue("permissions", permissionsSetter(false));
+      }
     }
   }
 
@@ -221,6 +223,7 @@ export default function PengaturanKeizinan({ role_id }: Props) {
                             setAllPermissions(e.target.checked);
                           }}
                           isChecked={allPermissions}
+                          isDisabled={role_id === 1}
                           // onClick={(e) => e.stopPropagation()}
                         >
                           <Text fontWeight={500} mt={"-2.5px"}>
@@ -238,12 +241,14 @@ export default function PengaturanKeizinan({ role_id }: Props) {
                       onClick={() => {
                         formik.submitForm();
                       }}
+                      isDisabled={role_id === 1}
                     >
                       Simpan
                     </Button>
                   </Wrap>
 
                   <TabelPengaturanKeizinan
+                    role_id={role_id}
                     data={formik.values?.permissions}
                     totalPermissions={totalPermissions}
                     setTotalPermissions={setTotalPermissions}
