@@ -32,7 +32,7 @@ export default function PengaturanTerPph21() {
         justify={"space-between"}
         w={"100%"}
         className="tabelConfig scrollX"
-        overflowX={"auto"}
+        // overflowX={"auto"}
         flexShrink={0}
       >
         <SearchComponent

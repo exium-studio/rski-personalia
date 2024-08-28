@@ -32,7 +32,6 @@ export default function PengaturanKategoriTer() {
         justify={"space-between"}
         w={"100%"}
         className="tabelConfig scrollX"
-        overflowX={"auto"}
         flexShrink={0}
       >
         <SearchComponent
