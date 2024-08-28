@@ -17,13 +17,13 @@ import {
 import { useFormik } from "formik";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import req from "../../lib/req";
+import SelectJenisKaryawan from "../dependent/_Select/SelectJenisKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
-import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
 
 interface Props extends BoxProps {
@@ -52,17 +52,17 @@ export default function EditRoleModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      name: "",
-      deskripsi: undefined as any,
+      nama_unit: "",
+      jenis_karyawan: undefined as any,
     },
     validationSchema: yup.object().shape({
-      name: yup.string().required("Harus diisi"),
-      deskripsi: yup.string().required("Harus diisi"),
+      nama_unit: yup.string().required("Harus diisi"),
+      jenis_karyawan: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        name: values.name,
-        deskripsi: values.deskripsi,
+        nama_unit: values.nama_unit,
+        jenis_karyawan: values.jenis_karyawan,
         _method: "patch",
       };
       setLoading(true);
@@ -101,11 +101,16 @@ export default function EditRoleModalDisclosure({
   const formikRef = useRef(formik);
 
   useEffect(() => {
-    formikRef.current.setFieldValue("name", rowData.columnsFormat[0].value);
-    formikRef.current.setFieldValue(
-      "deskripsi",
-      rowData.columnsFormat[2].value
-    );
+    if (isOpen) {
+      formikRef.current.setFieldValue(
+        "nama_unit",
+        rowData.columnsFormat[0].value
+      );
+      formikRef.current.setFieldValue("jenis_karyawan", {
+        value: rowData.columnsFormat[2].value,
+        label: rowData.columnsFormat[2].value === 1 ? "Shift" : "Non-Shift",
+      });
+    }
   }, [isOpen, rowData, formikRef]);
 
   return (
@@ -136,39 +141,45 @@ export default function EditRoleModalDisclosure({
           </ModalHeader>
           <ModalBody>
             <form id="editRoleForm" onSubmit={formik.handleSubmit}>
-              <FormControl mb={4} isInvalid={formik.errors.name ? true : false}>
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.nama_unit ? true : false}
+              >
                 <FormLabel>
-                  Nama Role
+                  Nama Unit
                   <RequiredForm />
                 </FormLabel>
                 <StringInput
-                  name="name"
+                  name="nama_unit"
                   placeholder="Human Resource"
                   onChangeSetter={(input) => {
-                    formik.setFieldValue("name", input);
+                    formik.setFieldValue("nama_unit", input);
                   }}
-                  inputValue={formik.values.name}
+                  inputValue={formik.values.nama_unit}
                 />
                 <FormErrorMessage>
-                  {formik.errors.name as string}
+                  {formik.errors.nama_unit as string}
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={formik.errors.deskripsi ? true : false}>
+              <FormControl
+                isInvalid={formik.errors.jenis_karyawan ? true : false}
+              >
                 <FormLabel>
-                  Deskripsi
+                  Jenis Karyawan
                   <RequiredForm />
                 </FormLabel>
-                <Textarea
-                  name="deskripsi"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("deskripsi", input);
+                <SelectJenisKaryawan
+                  name="jenis_karyawan"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("jenis_karyawan", input);
                   }}
-                  inputValue={formik.values.deskripsi}
-                  isError={!!formik.errors.deskripsi}
+                  inputValue={formik.values.jenis_karyawan}
+                  placeholder="Pilih Jenis Karyawan"
+                  isError={!!formik.errors.jenis_karyawan}
                 />
                 <FormErrorMessage>
-                  {formik.errors.deskripsi as string}
+                  {formik.errors.jenis_karyawan as string}
                 </FormErrorMessage>
               </FormControl>
             </form>
