@@ -15,6 +15,8 @@ import StatusApprovalBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
+import useGetUserData from "../../hooks/useGetUserData";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props {
   filterConfig: any;
@@ -48,6 +50,8 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
         filterConfig,
       ],
     });
+
+  const userData = useGetUserData();
 
   const formattedHeader = [
     {
@@ -99,7 +103,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
       },
     },
   ];
-  const formattedData = data?.map((item: any, i:number) => ({
+  const formattedData = data?.map((item: any, i: number) => ({
     id: item.id,
     columnsFormat: [
       {
@@ -200,6 +204,88 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
       },
     ],
   }));
+  const formattedData2 = data?.map((item: any, i: number) => ({
+    id: item.id,
+    columnsFormat: [
+      {
+        value: item.user.nama,
+        td: (
+          <AvatarAndNameTableData
+            data={{
+              id: item.user.id,
+              nama: item.user.nama,
+              foto_profil: item.user.foto_profil,
+            }}
+          />
+        ),
+        props: {
+          position: "sticky",
+          left: 0,
+          zIndex: 2,
+        },
+        cProps: {
+          borderRight: "1px solid var(--divider3)",
+        },
+      },
+      {
+        value: item?.status_perubahan?.id,
+        td: (
+          <Tooltip
+            label={
+              item?.alasan && (
+                <>
+                  <Text>Alasan Ditolak</Text>
+
+                  <Text opacity={0.4} mt={2}>
+                    {item?.alasan}
+                  </Text>
+                </>
+              )
+            }
+            placement="right"
+          >
+            <Box>
+              <StatusApprovalBadge data={item?.status_perubahan} w={"120px"} />
+            </Box>
+          </Tooltip>
+        ),
+        isNumeric: true,
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item.kolom,
+        //@ts-ignore
+        td: dataKaryawanLabel[item.kolom] || "Invalid",
+      },
+      {
+        value: item.data,
+        td: (
+          <PerubahanDataRender
+            column={item.kolom?.toLowerCase()}
+            data={item.original_data}
+          />
+        ),
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item.data,
+        td: (
+          <PerubahanDataRender
+            column={item.kolom?.toLowerCase()}
+            data={item.updated_data}
+            index={i}
+          />
+        ),
+        cProps: {
+          justify: "center",
+        },
+      },
+    ],
+  }));
 
   return (
     <>
@@ -238,7 +324,11 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
                   <CustomTableContainer>
                     <CustomTable
                       formattedHeader={formattedHeader}
-                      formattedData={formattedData}
+                      formattedData={
+                        isHasPermissions(userData.permission, [2])
+                          ? formattedData
+                          : formattedData2
+                      }
                       // onRowClick={() => {
                       //   onOpen();
                       // }}

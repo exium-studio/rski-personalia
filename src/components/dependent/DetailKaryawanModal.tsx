@@ -68,6 +68,8 @@ import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
+import isHasPermissions from "../../lib/isHasPermissions";
+import useGetUserData from "../../hooks/useGetUserData";
 interface Props {
   id?: string;
   user_id?: number;
@@ -155,6 +157,8 @@ export default function DetailKaryawanModal({
       setEmptyDataLabel(countEmptyValues(data));
     }
   }, [data]);
+
+  const userData = useGetUserData();
 
   return (
     <Modal
@@ -583,13 +587,17 @@ export default function DetailKaryawanModal({
                               tooltipLabel="Cari data karyawan"
                             />
 
-                            <AktifkanNonaktifkanButton
-                              karyawan_id={data.id}
-                              data={data?.user?.status_aktif}
-                            />
-
                             {/* Edit */}
-                            <EditKaryawanModal initialData={data} />
+                            {isHasPermissions(userData.permission, [148]) && (
+                              <>
+                                <AktifkanNonaktifkanButton
+                                  karyawan_id={data.id}
+                                  data={data?.user?.status_aktif}
+                                />
+
+                                <EditKaryawanModal initialData={data} />
+                              </>
+                            )}
                           </HStack>
 
                           <CContainer

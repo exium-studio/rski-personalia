@@ -1,4 +1,4 @@
-import { HStack } from "@chakra-ui/react";
+import { HStack, Tooltip } from "@chakra-ui/react";
 import { endOfWeek, startOfWeek } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import ExportJadwalModal from "../../components/dependent/ExportJadwalModal";
@@ -14,6 +14,7 @@ import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useGetUserData from "../../hooks/useGetUserData";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Jadwal() {
   const today = new Date();
@@ -113,6 +114,11 @@ export default function Jadwal() {
   // SX
   const lightDarkColor = useLightDarkColor();
 
+  const userData = useGetUserData();
+  const exportPermissions = isHasPermissions(userData.permission, [27]);
+  const importPermissions = isHasPermissions(userData.permission, [26]);
+  const createPermissions = isHasPermissions(userData.permission, [22]);
+
   return (
     <>
       <CWrapper>
@@ -162,16 +168,26 @@ export default function Jadwal() {
 
             <FilterKaryawan />
 
-            <ExportJadwalModal />
+            <Tooltip label={!exportPermissions && "Tidak ada akses"}>
+              <ExportJadwalModal isDisabled={!exportPermissions} />
+            </Tooltip>
 
-            <ImportModal
-              url="/api/rski/dashboard/jadwal-karyawan/import"
-              title="Import Jadwal"
-              reqBodyKey="jadwal_karyawan_file"
-              templateDownloadUrl="api/rski/dashboard/download-template-jadwal"
-            />
+            <Tooltip label={!importPermissions && "Tidak ada akses"}>
+              <ImportModal
+                url="/api/rski/dashboard/jadwal-karyawan/import"
+                title="Import Jadwal"
+                reqBodyKey="jadwal_karyawan_file"
+                templateDownloadUrl="api/rski/dashboard/download-template-jadwal"
+                isDisabled={!importPermissions}
+              />
+            </Tooltip>
 
-            <TerapkanJadwalModal minW={"fit-content"} />
+            <Tooltip label={!createPermissions && "Tidak ada akses"}>
+              <TerapkanJadwalModal
+                minW={"fit-content"}
+                isDisabled={!createPermissions}
+              />
+            </Tooltip>
           </HStack>
 
           <TabelJadwal filterConfig={filterConfig} />

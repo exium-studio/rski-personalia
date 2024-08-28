@@ -15,6 +15,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  Tooltip,
   useDisclosure,
   useToast,
   VStack,
@@ -34,6 +35,8 @@ import RequiredForm from "../form/RequiredForm";
 import SelectShift from "./_Select/SelectShift";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
+import isHasPermissions from "../../lib/isHasPermissions";
+import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props {
   data: any;
@@ -121,27 +124,32 @@ export default function TerapkanJadwalKaryawanTerpilih({
 
   // SX
 
+  const userData = useGetUserData();
+  const createPermissions = isHasPermissions(userData.permission, [22]);
+
   return (
     <>
-      <VStack
-        as={Button}
-        p={3}
-        gap={1}
-        borderRadius={8}
-        w={"100%"}
-        h={"100%"}
-        minH={"74px"}
-        cursor={"pointer"}
-        className="btn-ap clicky"
-        colorScheme="ap"
-        onClick={onOpen}
-        justify={"center"}
-        isDisabled={isDatePassed(tgl)}
-        // border={"1px solid var(--divider3) !important"}
-      >
-        <Icon as={RiEditBoxLine} fontSize={20} />
-        <Text fontWeight={500}>Terapkan</Text>
-      </VStack>
+      <Tooltip label={!createPermissions && "Tidak ada akses"}>
+        <VStack
+          as={Button}
+          p={3}
+          gap={1}
+          borderRadius={8}
+          w={"100%"}
+          h={"100%"}
+          minH={"74px"}
+          cursor={"pointer"}
+          className="btn-ap clicky"
+          colorScheme="ap"
+          onClick={onOpen}
+          justify={"center"}
+          isDisabled={isDatePassed(tgl) || !createPermissions}
+          // border={"1px solid var(--divider3) !important"}
+        >
+          <Icon as={RiEditBoxLine} fontSize={20} />
+          <Text fontWeight={500}>Terapkan</Text>
+        </VStack>
+      </Tooltip>
 
       <Modal
         isOpen={isOpen}

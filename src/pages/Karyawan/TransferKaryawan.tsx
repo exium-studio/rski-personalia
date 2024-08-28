@@ -12,6 +12,8 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useGetUserData from "../../hooks/useGetUserData";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function TransferKaryawan() {
   // Filter Config
@@ -33,6 +35,8 @@ export default function TransferKaryawan() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const userData = useGetUserData();
 
   return (
     <>
@@ -85,13 +89,17 @@ export default function TransferKaryawan() {
 
             <TransferKaryawanTableColumnsConfig />
 
-            <ExportModal
-              url="/api/rski/dashboard/karyawan/transfer/export"
-              title="Export Transfer Karyawan"
-              downloadFileName={"Transfer Karyawan"}
-            />
+            {isHasPermissions(userData.permission, [60]) && (
+              <ExportModal
+                url="/api/rski/dashboard/karyawan/transfer/export"
+                title="Export Transfer Karyawan"
+                downloadFileName={"Transfer Karyawan"}
+              />
+            )}
 
-            <AjukanTransferKaryawanModal minW={"fit-content"} />
+            {isHasPermissions(userData.permission, [55]) && (
+              <AjukanTransferKaryawanModal minW={"fit-content"} />
+            )}
           </HStack>
 
           <TabelTransferKarywan filterConfig={filterConfig} />

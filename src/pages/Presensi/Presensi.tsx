@@ -11,6 +11,8 @@ import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useGetUserData from "../../hooks/useGetUserData";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Presensi() {
   const today = new Date();
@@ -36,6 +38,8 @@ export default function Presensi() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const userData = useGetUserData();
 
   return (
     <>
@@ -84,14 +88,18 @@ export default function Presensi() {
 
             <FilterKaryawan />
 
-            <ExportPresensiModal />
+            {isHasPermissions(userData.permission, [54]) && (
+              <ExportPresensiModal />
+            )}
 
-            <ImportModal
-              url="/api/rski/dashboard/presensi/import"
-              title="Import Presensi"
-              reqBodyKey="presensi_file"
-              templateDownloadUrl="api/rski/dashboard/download-template-presensi"
-            />
+            {isHasPermissions(userData.permission, [53]) && (
+              <ImportModal
+                url="/api/rski/dashboard/presensi/import"
+                title="Import Presensi"
+                reqBodyKey="presensi_file"
+                templateDownloadUrl="api/rski/dashboard/download-template-presensi"
+              />
+            )}
           </HStack>
 
           <TabelPresensi filterConfig={filterConfig} />

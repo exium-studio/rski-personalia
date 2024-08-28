@@ -12,6 +12,8 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useGetUserData from "../../hooks/useGetUserData";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Karyawan() {
   // Filter Config
@@ -30,6 +32,8 @@ export default function Karyawan() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const userData = useGetUserData();
 
   return (
     <>
@@ -67,16 +71,22 @@ export default function Karyawan() {
 
             <KaryawanTableColumnsConfig title="Config Kolom Tabel Karyawan" />
 
-            <ExportKaryawanModal />
+            {isHasPermissions(userData.permission, [60]) && (
+              <ExportKaryawanModal />
+            )}
 
-            <ImportModal
-              url={"/api/rski/dashboard/karyawan/import"}
-              title={"Import Karyawan"}
-              reqBodyKey="karyawan_file"
-              templateDownloadUrl="api/rski/dashboard/download-template-karyawan"
-            />
+            {isHasPermissions(userData.permission, [59]) && (
+              <ImportModal
+                url={"/api/rski/dashboard/karyawan/import"}
+                title={"Import Karyawan"}
+                reqBodyKey="karyawan_file"
+                templateDownloadUrl="api/rski/dashboard/download-template-karyawan"
+              />
+            )}
 
-            <TambahKaryawanModal minW={"fit-content"} />
+            {isHasPermissions(userData.permission, [55]) && (
+              <TambahKaryawanModal minW={"fit-content"} />
+            )}
           </HStack>
 
           <TabelKaryawan />

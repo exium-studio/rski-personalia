@@ -5,7 +5,7 @@ interface Props extends BadgeProps {
   alasan?: string;
 }
 
-export default function StatusVerifikasiBadge({
+export default function StatusVerifikasiBadge2({
   data,
   alasan,
   ...props
@@ -15,8 +15,10 @@ export default function StatusVerifikasiBadge({
       default:
         return "green";
       case 1:
+      case 2:
         return "orange";
       case 3:
+      case 5:
         return "red";
     }
   };

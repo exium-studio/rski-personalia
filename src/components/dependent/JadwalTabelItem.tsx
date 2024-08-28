@@ -16,6 +16,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  Tooltip,
   useDisclosure,
   useToast,
   VStack,
@@ -36,6 +37,8 @@ import SelectShift from "./_Select/SelectShift";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import formatTime from "../../lib/formatTime";
+import isHasPermissions from "../../lib/isHasPermissions";
+import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props {
   data: any;
@@ -142,51 +145,58 @@ export default function TabelJadwalItem({
     }
   }, [libur, formikRef]);
 
+  const userData = useGetUserData();
+  const editPermissions = isHasPermissions(userData.permission, [23]);
+
   return (
     <>
-      <VStack
-        p={3}
-        pt={2}
-        pr={2}
-        gap={1}
-        borderRadius={8}
-        w={"100%"}
-        minH={"74px"}
-        align={"stretch"}
-        justify={"center"}
-        className="btn-solid clicky"
-        cursor={"pointer"}
-        onClick={onOpen}
-      >
-        <HStack gap={3} justify={"space-between"} flex={1}>
-          <Box>
-            <Text noOfLines={1} mb={1} fontSize={14}>
-              {jadwal?.shift?.nama || "Libur"}
-            </Text>
-            <Text
-              fontSize={14}
-              whiteSpace={"nowrap"}
-              // opacity={jadwal?.shift ? 1 : 0}
-            >
-              {jadwal?.shift
-                ? `${formatTime(jadwal?.shift?.jam_from)} - 
+      <Tooltip label={!editPermissions && "Tidak ada akses"}>
+        <VStack
+          as={Button}
+          p={3}
+          pt={2}
+          pr={2}
+          gap={1}
+          borderRadius={8}
+          w={"100%"}
+          minH={"74px"}
+          align={"stretch"}
+          justify={"center"}
+          className="btn-solid clicky"
+          cursor={"pointer"}
+          onClick={onOpen}
+          isDisabled={!editPermissions}
+        >
+          <HStack gap={3} justify={"space-between"} flex={1}>
+            <Box>
+              <Text noOfLines={1} mb={1} fontSize={14}>
+                {jadwal?.shift?.nama || "Libur"}
+              </Text>
+              <Text
+                fontSize={14}
+                whiteSpace={"nowrap"}
+                // opacity={jadwal?.shift ? 1 : 0}
+              >
+                {jadwal?.shift
+                  ? `${formatTime(jadwal?.shift?.jam_from)} - 
               ${formatTime(jadwal?.shift?.jam_to)}`
-                : "-"}
-            </Text>
-          </Box>
+                  : "-"}
+              </Text>
+            </Box>
 
-          {data.unit_kerja?.jenis_karyawan === 1 &&
-            !isDatePassed(tgl as string, true) && (
-              <Icon
-                as={RiEditBoxLine}
-                fontSize={20}
-                alignSelf={"flex-start"}
-                color={"p.500"}
-                mb={"auto"}
-              />
-            )}
-        </HStack>
-      </VStack>
+            {data.unit_kerja?.jenis_karyawan === 1 &&
+              !isDatePassed(tgl as string, true) && (
+                <Icon
+                  as={RiEditBoxLine}
+                  fontSize={20}
+                  alignSelf={"flex-start"}
+                  color={"p.500"}
+                  mb={"auto"}
+                />
+              )}
+          </HStack>
+        </VStack>
+      </Tooltip>
 
       <Modal
         isOpen={isOpen}
