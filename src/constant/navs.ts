@@ -17,6 +17,7 @@ const navs = [
     icon: RiHome6Fill,
     subNavs: [
       {
+        allowed: [1],
         label: "Dashboard",
         link: "/dashboard",
       },
@@ -30,19 +31,19 @@ const navs = [
     icon: RiGroupFill,
     subNavs: [
       {
-        allowed: 58,
+        allowed: [58],
         label: "Karyawan",
         link: "/karyawan",
       },
       {
         //TODO belum lengkap
-        allowed: 58,
+        allowed: [58],
         label: "Transfer Karyawan",
         link: "/karyawan/transfer-karyawan",
       },
       {
         //TODO belum lengkap
-        allowed: 58,
+        allowed: [58],
         label: "Permintaan Perubahan Data",
         link: "/karyawan/perubahan-data-karyawan",
       },
@@ -59,7 +60,7 @@ const navs = [
     icon: RiTimerFill,
     subNavs: [
       {
-        allowed: 52,
+        allowed: [52],
         label: "Presensi",
         link: "/presensi",
       },
@@ -72,22 +73,22 @@ const navs = [
     icon: RiTimeFill,
     subNavs: [
       {
-        allowed: 52,
+        allowed: [52],
         label: "Jadwal",
         link: "/jadwal",
       },
       {
-        allowed: 32,
+        allowed: [32],
         label: "Tukar Jadwal",
         link: "/jadwal/penukaran-jadwal",
       },
       {
-        allowed: 40,
+        allowed: [40],
         label: "Lembur",
         link: "/jadwal/lembur",
       },
       {
-        allowed: 141,
+        allowed: [141],
         label: "Cuti",
         link: "/jadwal/cuti",
       },
@@ -100,12 +101,12 @@ const navs = [
     icon: RiMoneyDollarCircleFill,
     subNavs: [
       {
-        allowed: 18,
+        allowed: [18],
         label: "Penggajian",
         link: "/keuangan/penggajian",
       },
       {
-        allowed: 14,
+        allowed: [14],
         label: "THR",
         link: "/keuangan/thr",
       },
@@ -118,7 +119,7 @@ const navs = [
     icon: RiBuilding2Fill,
     subNavs: [
       {
-        allowed: 7,
+        allowed: [7],
         label: "Diklat",
         link: "/perusahaan/diklat",
       },
@@ -127,7 +128,7 @@ const navs = [
       //   link: "/perusahaan/pelaporan-karyawan",
       // },
       {
-        allowed: 147,
+        allowed: [147],
         label: "Penilaian Karyawan",
         link: "/perusahaan/penilaian-karyawan",
       },

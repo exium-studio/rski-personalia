@@ -60,6 +60,8 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
 
   const hasPermissions = isHasPermissions(userData?.permission, nav.allowed);
 
+  // console.log(nav.label, hasPermissions);
+
   return hasPermissions ? (
     <Menu isOpen={isOpen}>
       <MenuButton
@@ -102,19 +104,30 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
             marginLeft: "8px",
           }}
         >
-          {nav.subNavs.map((subNav: any, ii: number) => (
-            <MenuItem
-              key={ii}
-              as={Link}
-              to={subNav.link}
-              fontWeight={(active === i && ii) === topNavActive ? 600 : 500}
-              color={(active === i && ii) === topNavActive ? "p.500" : ""}
-              bg={(active === i && ii) === topNavActive ? "var(--p500a5)" : ""}
-              whiteSpace={"nowrap"}
-            >
-              {subNav.label}
-            </MenuItem>
-          ))}
+          {nav.subNavs.map((subNav: any, ii: number) => {
+            const hasPermission = isHasPermissions(
+              userData.permission,
+              subNav.allowed
+            );
+
+            return (
+              hasPermission && (
+                <MenuItem
+                  key={ii}
+                  as={Link}
+                  to={subNav.link}
+                  fontWeight={(active === i && ii) === topNavActive ? 600 : 500}
+                  color={(active === i && ii) === topNavActive ? "p.500" : ""}
+                  bg={
+                    (active === i && ii) === topNavActive ? "var(--p500a5)" : ""
+                  }
+                  whiteSpace={"nowrap"}
+                >
+                  {subNav.label}
+                </MenuItem>
+              )
+            );
+          })}
         </MenuList>
       </Portal>
     </Menu>
