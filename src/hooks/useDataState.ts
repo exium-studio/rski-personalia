@@ -41,6 +41,12 @@ const useDataState = <T>({
     if (conditions && url) {
       makeRequest();
     }
+
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conditions, url, page, ...(noRt ? [] : [rt]), ...dependencies]);
 
