@@ -71,7 +71,7 @@ export const App = () => {
                 title="Dashboard"
                 topNavsData={navs[0].subNavs}
                 topNavActive={0}
-                allowed={[1]}
+                allowed={[]}
               >
                 <Dashboard />
               </NavContainer>
@@ -99,7 +99,7 @@ export const App = () => {
                 title="Transfer Karyawan"
                 topNavsData={navs[1].subNavs}
                 topNavActive={1}
-                allowed={[]}
+                allowed={[58]}
               >
                 <TransferKaryawan />
               </NavContainer>
@@ -113,7 +113,7 @@ export const App = () => {
                 title="Permintaan Perubahan Data"
                 topNavsData={navs[1].subNavs}
                 topNavActive={2}
-                allowed={[]}
+                allowed={[58]}
               >
                 <PerubahanDataKaryawan />
               </NavContainer>
@@ -381,7 +381,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Jenis Penilaian"
-                allowed={[]}
+                allowed={[147]}
               >
                 <PengaturanContainer activeGroup={1} active={4}>
                   <PengaturanJenisPenilaian />
@@ -396,8 +396,8 @@ export const App = () => {
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pengaturan - Kuisioner Penilaian"
-                allowed={[]}
+                title="Pengaturan - Kuesioner Penilaian"
+                allowed={[147]}
               >
                 <PengaturanContainer activeGroup={1} active={5}>
                   <PengaturanKuisioner />
@@ -429,7 +429,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Kategori TER"
-                allowed={[]}
+                allowed={[117]}
               >
                 <PengaturanContainer activeGroup={2} active={1}>
                   <PengaturanKategoriTer />
@@ -461,7 +461,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - PTKP"
-                allowed={[]}
+                allowed={[117]}
               >
                 <PengaturanContainer activeGroup={2} active={3}>
                   <PengaturanPtkp />
@@ -525,7 +525,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Jam Kerja Non Shift"
-                allowed={[]}
+                allowed={[129]}
               >
                 <PengaturanContainer activeGroup={3} active={2}>
                   <PengaturanJamKerjaNonShift />
