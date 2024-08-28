@@ -205,7 +205,7 @@ export default function DetailRekamJejakItem({ dataList, data, index }: Props) {
               <AccordionIcon ml={4} />
             </AccordionButton>
 
-            <AccordionPanel px={6} pb={5}>
+            <AccordionPanel px={6} py={5}>
               {data.kategori_rekam_jejak.id === 1 && (
                 <PerubahanDataItem data={data.content} />
               )}
