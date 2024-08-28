@@ -210,7 +210,9 @@ export default function TabelPresensi({ filterConfig }: Props) {
         setPageConfig={setPageConfig}
         paginationData={paginationData}
         footer={
-          <Text opacity={0.4}>Klik row untuk melihat detail presensi</Text>
+          <Text opacity={0.4} textAlign={"center"}>
+            Klik row untuk melihat detail presensi
+          </Text>
         }
       />
     </>

@@ -333,7 +333,9 @@ export default function TabelKaryawan() {
         setPageConfig={setPageConfig}
         paginationData={paginationData}
         footer={
-          <Text opacity={0.4}>Klik row untuk melihat detail karyawan</Text>
+          <Text opacity={0.4} textAlign={"center"}>
+            Klik row untuk melihat detail karyawan
+          </Text>
         }
       />
     </>

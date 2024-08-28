@@ -8,12 +8,11 @@ import {
   MenuItem,
   MenuList,
   Text,
-  Wrap,
 } from "@chakra-ui/react";
 import { RiArrowDownSLine } from "@remixicon/react";
+import React, { useEffect, useRef, useState } from "react";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import PaginationNav from "./PaginationNav";
-import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
   limitConfig: number;
@@ -43,11 +42,11 @@ export default function TabelFooterConfig({
   }, [limitButtonRef, limitConfig]);
 
   return (
-    <Wrap
+    <HStack
       spacing={responsiveSpacing}
       justify={"space-between"}
       mt={responsiveSpacing}
-      align={"center"}
+      align={"start"}
     >
       <Box w={"100%"} maxW={"200px"}>
         {typeof limitConfig === "number" && setLimitConfig && (
@@ -125,6 +124,6 @@ export default function TabelFooterConfig({
           />
         )}
       </HStack>
-    </Wrap>
+    </HStack>
   );
 }
