@@ -842,7 +842,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.role?.name}
+                        {userData?.role?.name}
                       </Text>
                     </HStack>
 
