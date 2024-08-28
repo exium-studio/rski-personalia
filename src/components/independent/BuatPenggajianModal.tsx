@@ -137,7 +137,7 @@ export default function BuatPenggajianModal({ ...props }: Props) {
                 formik.setFieldValue("sertakan_bor", e.target.checked);
               }}
             >
-              <Text mt={"-3px"}>Sertakan BOR</Text>
+              <Text mt={"-2.5px"}>Sertakan BOR</Text>
             </Checkbox>
 
             <Alert mt={4} status="warning" alignItems={"start"}>

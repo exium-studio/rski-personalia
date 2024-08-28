@@ -226,7 +226,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
                   }}
                   isChecked={libur}
                 >
-                  <Text mt={"-3px"}>Jadwalkan Libur</Text>
+                  <Text mt={"-2.5px"}>Jadwalkan Libur</Text>
                 </Checkbox>
                 <FormErrorMessage>
                   {formik.errors.shift as string}

@@ -277,7 +277,7 @@ export default function MultipleSelectModal({
                     isChecked={selectAll}
                     colorScheme="ap"
                   >
-                    <Text mt="-3px" color={"p.500"} fontWeight={500}>
+                    <Text mt="-2.5px" color={"p.500"} fontWeight={500}>
                       Pilih Semua
                     </Text>
                   </Checkbox>

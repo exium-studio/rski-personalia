@@ -284,7 +284,7 @@ function PenyesuaianGajiButtonModal({
                 isDisabled={!formik.values.jenis_penyesuaian}
                 mt={4}
               >
-                <Text mt={"-3px"}>Simpan Penyesuaian pada Karyawan Ini</Text>
+                <Text mt={"-2.5px"}>Simpan Penyesuaian pada Karyawan Ini</Text>
               </Checkbox>
 
               {simpan && (

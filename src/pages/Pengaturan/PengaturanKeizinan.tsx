@@ -223,7 +223,7 @@ export default function PengaturanKeizinan({ role_id }: Props) {
                           isChecked={allPermissions}
                           // onClick={(e) => e.stopPropagation()}
                         >
-                          <Text fontWeight={500} mt={"-3px"}>
+                          <Text fontWeight={500} mt={"-2.5px"}>
                             Semua izin
                           </Text>
                         </Checkbox>

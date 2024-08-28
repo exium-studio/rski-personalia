@@ -287,7 +287,7 @@ export default function TabelJadwalItem({
                     isChecked={libur}
                     isDisabled={isDatePassed(tgl as string)}
                   >
-                    <Text mt={"-3px"}>Jadwalkan Libur</Text>
+                    <Text mt={"-2.5px"}>Jadwalkan Libur</Text>
                   </Checkbox>
                   <FormErrorMessage>
                     {formik.errors.shift as string}

@@ -243,7 +243,7 @@ export default function FileInput({
                   className="iconButton"
                   as={RiCloseCircleFill}
                   strokeWidth={4}
-                  mr={"-3px"}
+                  mr={"-2.5px"}
                 />
               }
               variant={"ghost"}

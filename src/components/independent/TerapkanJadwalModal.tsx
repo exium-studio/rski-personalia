@@ -211,7 +211,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                   }}
                   isChecked={libur}
                 >
-                  <Text mt={"-3px"}>Jadwalkan Libur</Text>
+                  <Text mt={"-2.5px"}>Jadwalkan Libur</Text>
                 </Checkbox>
                 <FormErrorMessage>
                   {formik.errors.shift as string}
