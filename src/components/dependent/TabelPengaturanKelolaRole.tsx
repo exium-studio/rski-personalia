@@ -1,5 +1,5 @@
 import { Center, Icon, MenuItem, Text, useDisclosure } from "@chakra-ui/react";
-import { RiEditLine, RiHistoryLine } from "@remixicon/react";
+import { RiEditLine } from "@remixicon/react";
 import { dummyKelolaRole } from "../../const/dummy";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
@@ -10,7 +10,6 @@ import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
 import DetailKelolaRoleModal from "./DetailKelolaRoleModal";
-import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import TabelElipsisText from "./TabelElipsisText";
 
@@ -31,19 +30,19 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
         </EditRoleModalDisclosure>
       );
     },
-    (rowData: any) => {
-      return (
-        <RestoreDataPengaturanModalDisclosure
-          id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/role/restore`}
-        >
-          <MenuItem isDisabled={!rowData.columnsFormat[1]?.value}>
-            <Text>Restore</Text>
-            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
-        </RestoreDataPengaturanModalDisclosure>
-      );
-    },
+    // (rowData: any) => {
+    //   return (
+    //     <RestoreDataPengaturanModalDisclosure
+    //       id={rowData.id}
+    //       url={`/api/rski/dashboard/pengaturan/role/restore`}
+    //     >
+    //       <MenuItem isDisabled={!rowData.columnsFormat[1]?.value}>
+    //         <Text>Restore</Text>
+    //         <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+    //       </MenuItem>
+    //     </RestoreDataPengaturanModalDisclosure>
+    //   );
+    // },
     // "divider",
     // (rowData: any) => {
     //   return (
