@@ -277,7 +277,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                 h={"20px"}
                                 pl={"40px"}
                                 position={"absolute"}
-                                top={"60px"}
+                                top={"54px"}
                                 right={0}
                                 w={"100%"}
                                 zIndex={2}
@@ -289,7 +289,12 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     bg={"var(--divider3)"}
                                   />
                                 </Center>
-                                <Box flex={1} bg={lightDarkColor} />
+                                <Box
+                                  id="tutupan"
+                                  flex={1}
+                                  h={"20px"}
+                                  bg={lightDarkColor}
+                                />
                               </HStack>
 
                               <CContainer
@@ -300,7 +305,7 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                 pr={6}
                                 pt={responsiveSpacing}
                               >
-                                {data.list_rekam_jejak.map(
+                                {data?.list_rekam_jejak.map(
                                   (item: any, i: number) => (
                                     <DetailRekamJejakItem
                                       key={i}
