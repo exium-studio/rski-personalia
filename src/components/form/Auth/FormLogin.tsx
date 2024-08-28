@@ -10,17 +10,19 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "typescript-cookie";
 import * as yup from "yup";
+import useGetUserData from "../../../hooks/useGetUserData";
 import req from "../../../lib/req";
 import PasswordInput from "../../dependent/input/PasswordInput";
 import StringInput from "../../dependent/input/StringInput";
 import RequiredForm from "../RequiredForm";
-import useGetUserData from "../../../hooks/useGetUserData";
 
 export default function FormLogin() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const toast = useToast();
   const userData = useGetUserData();
+
+  // const { setStatusAktif, setUserPermissions } = useAuth();
 
   useEffect(() => {
     if (userData) {
@@ -60,6 +62,9 @@ export default function FormLogin() {
               "__user_data",
               JSON.stringify(r.data.user.data)
             );
+            // setStatusAktif(r.data.user.data.status_aktif);
+            // setUserPermissions(r.data.user.data.permission);
+
             navigate("/profil");
             toast({
               status: "success",

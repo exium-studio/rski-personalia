@@ -32,9 +32,32 @@ import Container from "./Container";
 
 const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
   const [isOpen, setIsOpen] = useState(false);
-  const timeoutRef = useRef<any>(null);
-  // const navigate = useNavigate();
 
+  // const navigate = useNavigate();
+  // const toast = useToast();
+  // const { statusAktif, setStatusAktif, userPermissions, setUserPermissions } =
+  //   useAuth();
+  // const statuskAktifRef = useRef(statusAktif);
+  // useEffect(() => {
+  //   const authToken = getCookie("__auth_token");
+  //   if (!authToken) {
+  //     removeCookie("__auth_token");
+  //     localStorage.removeItem("__user_data");
+  //     navigate("/");
+  //     toast({
+  //       title: "Tidak ada akses",
+  //       status: "error",
+  //       isClosable: true,
+  //       position: "bottom-right",
+  //     });
+  //   } else {
+  //   }
+  // }, []);
+
+  const userData = useGetUserData();
+  const hasPermissions = isHasPermissions(userData?.permission, nav.allowed);
+
+  const timeoutRef = useRef<any>(null);
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
@@ -42,23 +65,17 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
       }
     };
   }, []);
-
   const handleMouseEnter = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
     setIsOpen(true);
   };
-
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setIsOpen(false);
     }, 50);
   };
-
-  const userData = useGetUserData();
-
-  const hasPermissions = isHasPermissions(userData?.permission, nav.allowed);
 
   // console.log(nav.label, hasPermissions);
 
