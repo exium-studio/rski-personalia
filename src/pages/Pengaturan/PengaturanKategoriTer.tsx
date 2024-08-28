@@ -1,7 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
 import TabelPengaturanKategoriTer from "../../components/dependent/TabelPengaturanKategoriTer";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
@@ -50,7 +49,7 @@ export default function PengaturanKategoriTer() {
           placeholder="nama kategori TER"
         />
 
-        <MultiSelectPengaturanDeletedAt
+        {/* <MultiSelectPengaturanDeletedAt
           name="is_deleted"
           onConfirm={(input) => {
             setFilterConfig((ps: any) => ({
@@ -63,7 +62,7 @@ export default function PengaturanKategoriTer() {
           placeholder="Filter Dihapus"
           maxW={"165px"}
           _focus={{ border: "1px solid var(--divider3)" }}
-        />
+        /> */}
 
         {/* <TambahKategoriTer minW={"fit-content"} /> */}
       </HStack>

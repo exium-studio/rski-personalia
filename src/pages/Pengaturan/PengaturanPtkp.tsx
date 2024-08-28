@@ -1,7 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
 import TabelPengaturanPtkp from "../../components/dependent/TabelPengaturanPtkp";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
@@ -49,7 +48,7 @@ export default function PengaturanPtkp() {
           tooltipLabel="Cari dengan kode PTKP"
           placeholder="nama kode PTKP"
         />
-
+        {/* 
         <MultiSelectPengaturanDeletedAt
           name="is_deleted"
           onConfirm={(input) => {
@@ -63,7 +62,7 @@ export default function PengaturanPtkp() {
           placeholder="Filter Dihapus"
           maxW={"165px"}
           _focus={{ border: "1px solid var(--divider3)" }}
-        />
+        /> */}
 
         {/* <TambahPtkp minW={"fit-content"} /> */}
       </HStack>

@@ -9,7 +9,6 @@ import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
-import StatusDihapus from "./StatusDihapus";
 
 interface Props {
   filterConfig?: any;
@@ -100,13 +99,13 @@ export default function TabelPengaturanPtkp({ filterConfig }: Props) {
         borderRight: "1px solid var(--divider3)",
       },
     },
-    {
-      th: "Status Dihapus",
-      isSortable: true,
-      cProps: {
-        justify: "center",
-      },
-    },
+    // {
+    //   th: "Status Dihapus",
+    //   isSortable: true,
+    //   cProps: {
+    //     justify: "center",
+    //   },
+    // },
     {
       th: "Kategori TER",
       isSortable: true,
@@ -135,14 +134,14 @@ export default function TabelPengaturanPtkp({ filterConfig }: Props) {
           borderRight: "1px solid var(--divider3)",
         },
       },
-      {
-        value: item.deleted_at,
-        td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
-        isDate: true,
-        cProps: {
-          justify: "center",
-        },
-      },
+      // {
+      //   value: item.deleted_at,
+      //   td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
+      //   isDate: true,
+      //   cProps: {
+      //     justify: "center",
+      //   },
+      // },
       {
         original_data: item.kategori_ter,
         value: item.kategori_ter?.nama_kategori_ter,

@@ -1,7 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
 import TabelPengaturanTerPph21 from "../../components/dependent/TabelPengaturanTerPph21";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
@@ -50,7 +49,7 @@ export default function PengaturanTerPph21() {
           placeholder="nama kategori TER"
         />
 
-        <MultiSelectPengaturanDeletedAt
+        {/* <MultiSelectPengaturanDeletedAt
           name="is_deleted"
           onConfirm={(input) => {
             setFilterConfig((ps: any) => ({
@@ -63,7 +62,7 @@ export default function PengaturanTerPph21() {
           placeholder="Filter Dihapus"
           maxW={"165px"}
           _focus={{ border: "1px solid var(--divider3)" }}
-        />
+        /> */}
 
         {/* <TambahTerPph21 minW={"fit-content"} /> */}
       </HStack>
