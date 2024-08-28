@@ -170,7 +170,7 @@ export default function RunThr({ ...props }: Props) {
             <Alert mt={4} status="warning" alignItems={"start"}>
               <AlertIcon />
               <AlertDescription>
-                Jika tanggal run THR melebihi tanggal penggajian, maka THR akan
+                Jika tanggal Run THR melebihi tanggal penggajian, maka THR akan
                 diaplikasikan pada penggajian berikutnya.
               </AlertDescription>
             </Alert>
