@@ -153,13 +153,15 @@ export default function NavContainer({
   const { logout } = useLogout();
 
   // Middleware
+
+  // Middleware
   useEffect(() => {
     setLoading(true);
     if (allowed && allowed.length > 0) {
       let hasPermission = false;
 
-      if (userData?.permissions) {
-        hasPermission = userData?.permissions.some((permission: any) =>
+      if (userData?.permission) {
+        hasPermission = userData?.permission.some((permission: any) =>
           allowed.includes(permission)
         );
       }
@@ -175,7 +177,7 @@ export default function NavContainer({
     } else {
       setLoading(false);
     }
-  }, [allowed, userData?.permissions, navigate, logout]);
+  }, [allowed, userData?.permission, navigate, logout]);
 
   const navsRef = useRef(null);
 
