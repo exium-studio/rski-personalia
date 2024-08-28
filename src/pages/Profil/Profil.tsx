@@ -830,6 +830,23 @@ export default function Profil() {
                     </HStack>
 
                     <HStack justify={"space-between"}>
+                      {/* <Text opacity={0.6}>Jabatan</Text> */}
+                      <Box opacity={0.6}>
+                        <Highlighter
+                          highlightClassName="hw"
+                          unhighlightClassName="uw"
+                          searchWords={searchQuery}
+                          autoEscape={true}
+                          textToHighlight="Role"
+                        />
+                      </Box>
+                      <FlexLine />
+                      <Text fontWeight={500} textAlign={"right"}>
+                        {userData.data_karyawan?.role?.name}
+                      </Text>
+                    </HStack>
+
+                    <HStack justify={"space-between"}>
                       {/* <Text opacity={0.6}>Kompetensi</Text> */}
                       <Box opacity={0.6}>
                         <Highlighter
