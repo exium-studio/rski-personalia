@@ -3,7 +3,6 @@ import { RiEditLine } from "@remixicon/react";
 import { dummyKelolaRole } from "../../const/dummy";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
-import EditRoleModalDisclosure from "../independent/EditUnitKerjaModalDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
@@ -12,6 +11,7 @@ import CustomTable from "./CustomTable";
 import DetailKelolaRoleModal from "./DetailKelolaRoleModal";
 import Retry from "./Retry";
 import TabelElipsisText from "./TabelElipsisText";
+import EditRoleModalDisclosure from "../independent/EditRoleModalDisclosure";
 
 interface Props {
   filterConfig?: any;

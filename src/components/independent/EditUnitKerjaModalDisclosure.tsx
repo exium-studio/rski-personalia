@@ -31,7 +31,7 @@ interface Props extends BoxProps {
   children?: ReactNode;
 }
 
-export default function EditRoleModalDisclosure({
+export default function EditUnitKerjaModalDisclosure({
   rowData,
   children,
   ...props
