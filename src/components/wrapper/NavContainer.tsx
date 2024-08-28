@@ -22,6 +22,7 @@ import navs from "../../constant/navs";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useGetUserData from "../../hooks/useGetUserData";
 import useLogout from "../../hooks/useLogout";
+import isHasPermissions from "../../lib/isHasPermissions";
 import useScreenWidth from "../../lib/useScreenWidth";
 import Header from "../dependent/Header";
 import TopNavs from "../dependent/TopNavs";
@@ -31,8 +32,8 @@ import Container from "./Container";
 
 const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
   const timeoutRef = useRef<any>(null);
+  // const navigate = useNavigate();
 
   useEffect(() => {
     return () => {
@@ -55,7 +56,11 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
     }, 50);
   };
 
-  return (
+  const userData = useGetUserData();
+
+  const hasPermissions = isHasPermissions(userData?.permission, nav.allowed);
+
+  return hasPermissions ? (
     <Menu isOpen={isOpen}>
       <MenuButton
         as={IconButton}
@@ -74,9 +79,9 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
           border: "none !important",
         }}
         className="btn"
-        onClick={() => {
-          navigate(nav.link);
-        }}
+        // onClick={() => {
+        //   navigate(nav.link);
+        // }}
         color={active === i ? "p.500" : ""}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -113,7 +118,7 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
         </MenuList>
       </Portal>
     </Menu>
-  );
+  ) : null;
 };
 
 interface Props extends StackProps {

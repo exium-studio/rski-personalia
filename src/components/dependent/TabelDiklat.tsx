@@ -313,7 +313,8 @@ export default function TabelDiklat({ filterConfig }: Props) {
               disapprovePayloadKey="verifikasi_kedua_ditolak"
             />
           ) : (
-            <Text opacity={0.2}>Diverifikasi</Text>
+            ""
+            // <Text opacity={0.2}>Diverifikasi</Text>
           ),
         props: {
           position: "sticky",
