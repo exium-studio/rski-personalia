@@ -96,9 +96,9 @@ export default function TabelPengaturanKategoriTer({ filterConfig }: Props) {
         left: 0,
         zIndex: 2,
       },
-      cProps: {
-        borderRight: "1px solid var(--divider3)",
-      },
+      // cProps: {
+      //   borderRight: "1px solid var(--divider3)",
+      // },
     },
     // {
     //   th: "Status Dihapus",
@@ -120,9 +120,9 @@ export default function TabelPengaturanKategoriTer({ filterConfig }: Props) {
           left: 0,
           zIndex: 2,
         },
-        cProps: {
-          borderRight: "1px solid var(--divider3)",
-        },
+        // cProps: {
+        //   borderRight: "1px solid var(--divider3)",
+        // },
       },
       // {
       //   value: item.deleted_at,
@@ -172,6 +172,7 @@ export default function TabelPengaturanKategoriTer({ filterConfig }: Props) {
                     <>
                       <CustomTableContainer>
                         <CustomTable
+                          w={"100%"}
                           formattedHeader={formattedHeader}
                           formattedData={formattedData}
                           // rowOptions={rowOptions}

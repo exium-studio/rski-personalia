@@ -13,6 +13,7 @@ import {
   MenuList,
   Portal,
   Table,
+  TableProps,
   TableRowProps,
   Tbody,
   Td,
@@ -133,7 +134,7 @@ const RowOptions = ({ rowData, rowOptions, tableRef }: RowOptionsProps) => {
   );
 };
 
-interface Props {
+interface Props extends TableProps {
   formattedHeader: Interface__FormattedTableHeader[];
   formattedData: Interface__FormattedTableData[];
   onRowClick?: (rowData: any) => void;
@@ -157,6 +158,7 @@ export default function CustomTable({
   initialSortOrder,
   initialSortColumnIndex,
   trBodyProps,
+  ...props
 }: Props) {
   const tableHeader = columnsConfig
     ? columnsConfig.map((columnIndex) => formattedHeader[columnIndex])
@@ -315,6 +317,7 @@ export default function CustomTable({
         ref={tableRef}
         minW={"0"}
         w={tableHeader.length > 1 ? "100%" : "fit-content"}
+        {...props}
       >
         <Thead>
           <Tr position={"sticky"} top={0} zIndex={3}>
