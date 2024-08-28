@@ -256,7 +256,9 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Tanggal Keluar
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {formatDate(data.tgl_keluar_karyawan)}
+                                    {data.tgl_keluar_karyawan
+                                      ? formatDate(data.tgl_keluar_karyawan)
+                                      : "-"}
                                   </Text>
                                 </VStack>
 

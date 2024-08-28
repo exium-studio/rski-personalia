@@ -97,7 +97,9 @@ const TransferKaryanItem = ({ data }: { data: any }) => {
         <Text minW={"160px"} opacity={0.6}>
           Unit Kerja Tujuan
         </Text>
-        <Text fontWeight={500}>{data?.unit_kerja_tujuan?.nama_unit}</Text>
+        <Text fontWeight={500}>
+          {data?.unit_kerja_tujuan?.nama_unit || "-"}
+        </Text>
       </HStack>
 
       <HStack>
@@ -111,7 +113,9 @@ const TransferKaryanItem = ({ data }: { data: any }) => {
         <Text minW={"160px"} opacity={0.6}>
           Jabatan Tujuan
         </Text>
-        <Text fontWeight={500}>{data?.jabatan_tujuan?.nama_jabatan}</Text>
+        <Text fontWeight={500}>
+          {data?.jabatan_tujuan?.nama_jabatan || "-"}
+        </Text>
       </HStack>
 
       <HStack align={"start"}>
