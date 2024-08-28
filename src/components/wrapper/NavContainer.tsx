@@ -152,6 +152,7 @@ export default function NavContainer({
   const navigate = useNavigate();
   const { logout } = useLogout();
 
+  // Middleware
   useEffect(() => {
     setLoading(true);
     if (allowed && allowed.length > 0) {
@@ -159,7 +160,7 @@ export default function NavContainer({
 
       if (userData?.permissions) {
         hasPermission = userData?.permissions.some((permission: any) =>
-          allowed.includes(permission.id)
+          allowed.includes(permission)
         );
       }
 
@@ -292,7 +293,13 @@ export default function NavContainer({
             // maxW={"1280px"}
           >
             {loading && (
-              <VStack justify={"center"} flex={1} position={"relative"}>
+              <VStack
+                p={5}
+                h={"100vh"}
+                justify={"center"}
+                flex={1}
+                position={"relative"}
+              >
                 <ComponentSpinner
                   position={"absolute"}
                   spinnerProps={{ size: "xl", w: "80px", h: "80px" }}
