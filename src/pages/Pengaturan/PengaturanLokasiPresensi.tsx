@@ -197,6 +197,7 @@ export default function PengaturanLokasiPresensi() {
                           formik.setFieldValue("long", input.lng);
                         }
                       }}
+                      setCenter={setCenter}
                     />
                     <Text mt={2} opacity={0.4}>
                       *Klik 2x pada peta untuk menentukan titik presensi

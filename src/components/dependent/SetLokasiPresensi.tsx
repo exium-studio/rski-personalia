@@ -1,7 +1,8 @@
-import { Box, useDisclosure } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { Button, HStack, useDisclosure } from "@chakra-ui/react";
+import { Dispatch, useRef, useState } from "react";
 import { LatLng } from "../../constant/interfaces";
 import { responsiveSpacing } from "../../constant/sizes";
+import getLocation from "../../lib/getLocation";
 import SearchComponent from "./input/SearchComponent";
 import SetLokasiPresensiLeafletMap from "./SetLokasiPresensiLeafletMap";
 
@@ -11,6 +12,7 @@ interface Props {
   officeCenter: LatLng | undefined;
   presence_radius: number | undefined;
   setOfficeLoc: (input: any) => void;
+  setCenter: Dispatch<LatLng>;
 }
 
 export default function SetLokasiPresensi({
@@ -18,14 +20,31 @@ export default function SetLokasiPresensi({
   officeCenter,
   presence_radius,
   setOfficeLoc,
+  setCenter,
 }: Props) {
   const [searchAddress, setSearchAddress] = useState<string>("");
   const searchComponentRef = useRef<HTMLDivElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [loading, setLoading] = useState<boolean>(false);
+  function setLokasiSaatIni() {
+    setLoading(true);
+    getLocation()
+      .then(({ lat, long }) => {
+        setOfficeLoc({ lat: lat, lng: long });
+        setCenter({ lat: lat, lng: long });
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
   return (
     <>
-      <Box mb={responsiveSpacing}>
+      <HStack mb={responsiveSpacing}>
         <SearchComponent
           inputRef={searchComponentRef}
           name="Search"
@@ -37,7 +56,15 @@ export default function SetLokasiPresensi({
           onFocus={onOpen}
           onBlur={onClose}
         />
-      </Box>
+        <Button
+          flexShrink={0}
+          className="btn-solid clicky"
+          onClick={setLokasiSaatIni}
+          isLoading={loading}
+        >
+          Gunakan Lokasi Saat Ini
+        </Button>
+      </HStack>
 
       <SetLokasiPresensiLeafletMap
         center={center}
