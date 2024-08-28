@@ -2,8 +2,10 @@ import {
   Box,
   BoxProps,
   Button,
+  Checkbox,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   InputGroup,
   InputRightElement,
@@ -20,11 +22,10 @@ import {
 import { useFormik } from "formik";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
-import SelectBoolean from "../dependent/_Select/SelectBoolean";
+import req from "../../lib/req";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
 import StringInput from "../dependent/input/StringInput";
@@ -66,20 +67,24 @@ export default function EditTipeCutiModalDisclosure({
     validationSchema: yup.object().shape({
       nama: yup.string().required("Harus diisi"),
       kuota: yup.number().required("Harus diisi"),
-      cuti_administratif: yup.object().required("Harus diisi"),
-      is_need_requirement: yup.object().required("Harus diisi"),
+      cuti_administratif: yup.number(),
+      is_need_requirement: yup.number(),
       keterangan: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama: values.nama,
         kuota: values.kuota,
-        cuti_administratif: values.cuti_administratif.value,
-        is_need_requirement: values.is_need_requirement.value,
+        cuti_administratif: values.cuti_administratif,
+        is_need_requirement: values.is_need_requirement,
         keterangan: values.keterangan,
         _method: "patch",
       };
+
+      // console.log(payload);
+
       setLoading(true);
+
       req
         .post(`/api/rski/dashboard/pengaturan/cuti/${rowData.id}`, payload)
         .then((r) => {
@@ -115,16 +120,18 @@ export default function EditTipeCutiModalDisclosure({
   const formikRef = useRef(formik);
 
   useEffect(() => {
+    // console.log(rowData.columnsFormat[4].value);
+
     formikRef.current.setFieldValue("nama", rowData.columnsFormat[0].value);
     formikRef.current.setFieldValue("kuota", rowData.columnsFormat[2].value);
-    formikRef.current.setFieldValue("cuti_administratif", {
-      value: rowData.columnsFormat[3].value,
-      label: rowData.columnsFormat[3].value ? "Ya" : "Tidak",
-    });
-    formikRef.current.setFieldValue("is_need_requirement", {
-      value: rowData.columnsFormat[4].value,
-      label: rowData.columnsFormat[4].value ? "Ya" : "Tidak",
-    });
+    formikRef.current.setFieldValue(
+      "cuti_administratif",
+      rowData.columnsFormat[3].value
+    );
+    formikRef.current.setFieldValue(
+      "is_need_requirement",
+      rowData.columnsFormat[4].value
+    );
     formikRef.current.setFieldValue(
       "keterangan",
       rowData.columnsFormat[5].value
@@ -203,59 +210,7 @@ export default function EditTipeCutiModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mb={4}
-                isInvalid={!!formik.errors.cuti_administratif}
-              >
-                <FormLabel>
-                  Dihitung Sebagai Hadir
-                  <RequiredForm />
-                </FormLabel>
-
-                <SelectBoolean
-                  name="cuti_administratif"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("cuti_administratif", input);
-                  }}
-                  inputValue={formik.values.cuti_administratif}
-                  isError={!!formik.errors.cuti_administratif}
-                  placeholder={"Dihitung Sebagai Hadir?"}
-                />
-                <Text fontSize={"sm"} opacity={0.4} mt={2}>
-                  Cuti ini dihitung hadir, sehingga bonus presensi tetap
-                  diterima.
-                </Text>
-
-                <FormErrorMessage>
-                  {formik.errors.cuti_administratif as string}
-                </FormErrorMessage>
-              </FormControl>
-
-              <FormControl
-                mb={4}
-                isInvalid={!!formik.errors.is_need_requirement}
-              >
-                <FormLabel>
-                  Perlu Syarat
-                  <RequiredForm />
-                </FormLabel>
-
-                <SelectBoolean
-                  name="is_need_requirement"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("is_need_requirement", input);
-                  }}
-                  inputValue={formik.values.is_need_requirement}
-                  isError={!!formik.errors.is_need_requirement}
-                  placeholder={"Perlu Syarat?"}
-                />
-
-                <FormErrorMessage>
-                  {formik.errors.is_need_requirement as string}
-                </FormErrorMessage>
-              </FormControl>
-
-              <FormControl isInvalid={!!formik.errors.keterangan}>
+              <FormControl mb={4} isInvalid={!!formik.errors.keterangan}>
                 <FormLabel>
                   Keterangan
                   <RequiredForm />
@@ -272,6 +227,60 @@ export default function EditTipeCutiModalDisclosure({
 
                 <FormErrorMessage>
                   {formik.errors.keterangan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={!!formik.errors.cuti_administratif}
+              >
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      formik.setFieldValue("cuti_administratif", 1);
+                    } else {
+                      formik.setFieldValue("cuti_administratif", 0);
+                    }
+                  }}
+                  isChecked={formik.values.cuti_administratif}
+                >
+                  <Text mt={"-2.5px"}>Dihitung sebagai hadir</Text>
+                </Checkbox>
+                <FormHelperText mt={2}>
+                  Cuti ini dihitung hadir, jadi bonus presensi tidak dibatalkan.
+                </FormHelperText>
+
+                <FormErrorMessage>
+                  {formik.errors.cuti_administratif as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={!!formik.errors.is_need_requirement}
+              >
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      console.log("kontol");
+                      formik.setFieldValue("is_need_requirement", 1);
+                    } else {
+                      formik.setFieldValue("is_need_requirement", 0);
+                    }
+                  }}
+                  isChecked={formik.values.is_need_requirement}
+                >
+                  <Text mt={"-2.5px"}>Perlu Syarat</Text>
+                </Checkbox>
+                <FormHelperText mt={2}>
+                  Untuk menandai bahwa cuti ini memerlukan syarat. Syarat dapat
+                  ditulis pada form keterangan di atas.
+                </FormHelperText>
+
+                <FormErrorMessage>
+                  {formik.errors.is_need_requirement as string}
                 </FormErrorMessage>
               </FormControl>
             </form>

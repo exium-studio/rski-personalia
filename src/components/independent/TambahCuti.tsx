@@ -204,20 +204,6 @@ export default function TambahCuti({ ...props }: Props) {
                 mb={4}
                 isInvalid={!!formik.errors.cuti_administratif}
               >
-                {/* <FormLabel>
-                  Dihitung Sebagai Hadir
-                  <RequiredForm />
-                </FormLabel>
-
-                <SelectBoolean
-                  name="cuti_administratif"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("cuti_administratif", input);
-                  }}
-                  inputValue={formik.values.cuti_administratif}
-                  isError={!!formik.errors.cuti_administratif}
-                  placeholder={"Dihitung Sebagai Hadir?"}
-                /> */}
                 <Checkbox
                   colorScheme="ap"
                   onChange={(e) => {
@@ -227,6 +213,7 @@ export default function TambahCuti({ ...props }: Props) {
                       formik.setFieldValue("cuti_administratif", 0);
                     }
                   }}
+                  isChecked={!!formik.values.cuti_administratif}
                 >
                   <Text mt={"-2.5px"}>Dihitung sebagai hadir</Text>
                 </Checkbox>
@@ -243,20 +230,6 @@ export default function TambahCuti({ ...props }: Props) {
                 mb={4}
                 isInvalid={!!formik.errors.is_need_requirement}
               >
-                {/* <FormLabel>
-                  Dihitung Sebagai Hadir
-                  <RequiredForm />
-                </FormLabel>
-
-                <SelectBoolean
-                  name="is_need_requirement"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("is_need_requirement", input);
-                  }}
-                  inputValue={formik.values.is_need_requirement}
-                  isError={!!formik.errors.is_need_requirement}
-                  placeholder={"Dihitung Sebagai Hadir?"}
-                /> */}
                 <Checkbox
                   colorScheme="ap"
                   onChange={(e) => {
@@ -267,6 +240,7 @@ export default function TambahCuti({ ...props }: Props) {
                       formik.setFieldValue("is_need_requirement", 0);
                     }
                   }}
+                  isChecked={!!formik.values.is_need_requirement}
                 >
                   <Text mt={"-2.5px"}>Perlu Syarat</Text>
                 </Checkbox>
