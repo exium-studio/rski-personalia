@@ -37,7 +37,6 @@ const pengaturanNavs = [
     ],
   },
   {
-    //TODO belum lengkap
     allowed: [99, 87, 81, 91],
     groupName: "Kepegawaian",
     navs: [
@@ -66,23 +65,20 @@ const pengaturanNavs = [
         link: "/pengaturan/karyawan/kompetensi",
       },
       {
-        //TODO belum lengkap
-        allowed: 52,
+        allowed: 147,
         icon: RiQuestionLine,
         label: "Jenis Penilaian",
         link: "/pengaturan/karyawan/jenis-penilaian",
       },
       {
-        //TODO belum lengkap
-        allowed: 52,
+        allowed: 105,
         icon: RiQuestionMark,
-        label: "Kuisioner Penilaian",
+        label: "Kuesioner Penilaian",
         link: "/pengaturan/karyawan/kuisioner",
       },
     ],
   },
   {
-    //TODO belum lengkap
     allowed: [111, null, 117, null, 121],
     groupName: "Keuangan",
     navs: [
@@ -93,8 +89,7 @@ const pengaturanNavs = [
         link: "/pengaturan/keuangan/premi",
       },
       {
-        //TODO belum lengkap
-        allowed: 52,
+        allowed: 117,
         icon: RiListIndefinite,
         label: "Kategori TER",
         link: "/pengaturan/keuangan/kategori-ter-pph21",
@@ -106,8 +101,7 @@ const pengaturanNavs = [
         link: "/pengaturan/keuangan/ter-pph21",
       },
       {
-        //TODO belum lengkap
-        allowed: 52,
+        allowed: 117,
         icon: RiArticleLine,
         label: "PTKP",
         link: "/pengaturan/keuangan/ptkp",
@@ -126,7 +120,6 @@ const pengaturanNavs = [
     ],
   },
   {
-    //TODO belum lengkap
     allowed: [145, 129, null, 52, 135, 141],
     groupName: "Manajemen Waktu",
     navs: [
@@ -143,8 +136,7 @@ const pengaturanNavs = [
         link: "/pengaturan/manajemen-waktu/shift",
       },
       {
-        //TODO belum lengkap
-        allowed: 52,
+        allowed: 129,
         icon: RiCalendarCheckLine,
         label: "Jam Kerja Non-Shift",
         link: "/pengaturan/manajemen-waktu/non-shift",

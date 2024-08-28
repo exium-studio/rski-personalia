@@ -24,7 +24,6 @@ const navs = [
     ],
   },
   {
-    //TODO belum lengkap
     allowed: [58],
     label: "Karyawan",
     link: "/karyawan",
@@ -36,13 +35,11 @@ const navs = [
         link: "/karyawan",
       },
       {
-        //TODO belum lengkap
         allowed: [58],
         label: "Transfer Karyawan",
         link: "/karyawan/transfer-karyawan",
       },
       {
-        //TODO belum lengkap
         allowed: [58],
         label: "Permintaan Perubahan Data",
         link: "/karyawan/perubahan-data-karyawan",
