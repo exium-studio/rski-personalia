@@ -138,6 +138,7 @@ export default function DetailCutiKaryawanModalDisclosure({
                     {(data || (data && data.length > 0)) && (
                       <CContainer
                         overflowY={"auto"}
+                        overflowX={"clip"}
                         className="scrollY"
                         borderRadius={12}
                         flex={1}
