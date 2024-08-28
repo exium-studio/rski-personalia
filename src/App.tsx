@@ -71,7 +71,7 @@ export const App = () => {
                 title="Dashboard"
                 topNavsData={navs[0].subNavs}
                 topNavActive={0}
-                allowed={[1]}
+                // allowed={[1]}
               >
                 <Dashboard />
               </NavContainer>
@@ -85,6 +85,7 @@ export const App = () => {
                 title="Karyawan"
                 topNavsData={navs[1].subNavs}
                 topNavActive={0}
+                // allowed={[58]}
               >
                 <Karyawan />
               </NavContainer>
