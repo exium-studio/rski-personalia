@@ -1,4 +1,4 @@
-import { HStack } from "@chakra-ui/react";
+import { HStack, Tooltip } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ExportPresensiModal from "../../components/dependent/ExportPresensiModal";
 import ImportModal from "../../components/dependent/ImportModal";
@@ -90,15 +90,19 @@ export default function Presensi() {
 
             <FilterKaryawan />
 
-            <ExportPresensiModal isDisabled={!exportPermission} />
+            <Tooltip label={!exportPermission && "Tidak ada akses"}>
+              <ExportPresensiModal isDisabled={!exportPermission} />
+            </Tooltip>
 
-            <ImportModal
-              url="/api/rski/dashboard/presensi/import"
-              title="Import Presensi"
-              reqBodyKey="presensi_file"
-              templateDownloadUrl="api/rski/dashboard/download-template-presensi"
-              isDisabled={!importPermission}
-            />
+            <Tooltip label={!importPermission && "Tidak ada akses"}>
+              <ImportModal
+                url="/api/rski/dashboard/presensi/import"
+                title="Import Presensi"
+                reqBodyKey="presensi_file"
+                templateDownloadUrl="api/rski/dashboard/download-template-presensi"
+                isDisabled={!importPermission}
+              />
+            </Tooltip>
           </HStack>
 
           <TabelPresensi filterConfig={filterConfig} />

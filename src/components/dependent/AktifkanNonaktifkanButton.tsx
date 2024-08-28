@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonProps,
   Icon,
   Modal,
   ModalBody,
@@ -20,13 +21,14 @@ import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "./DisclosureHeader";
 import useBackOnClose from "../../hooks/useBackOnClose";
 
-interface Props {
+interface Props extends ButtonProps {
   karyawan_id: number;
   data?: number | boolean;
 }
 export default function AktifkanNonaktifkanButton({
   karyawan_id,
   data,
+  ...props
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
@@ -89,6 +91,7 @@ export default function AktifkanNonaktifkanButton({
         pl={5}
         onClick={onOpen}
         isLoading={loading}
+        {...props}
       >
         {data === 2 ? "Non-aktifkan" : "Aktifkan"}
       </Button>
