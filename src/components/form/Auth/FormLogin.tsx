@@ -1,20 +1,26 @@
 import {
+  Avatar,
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
+  Text,
   useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { setCookie } from "typescript-cookie";
 import * as yup from "yup";
+import { responsiveSpacing } from "../../../constant/sizes";
 import useGetUserData from "../../../hooks/useGetUserData";
 import req from "../../../lib/req";
 import PasswordInput from "../../dependent/input/PasswordInput";
 import StringInput from "../../dependent/input/StringInput";
+import CContainer from "../../wrapper/CContainer";
 import RequiredForm from "../RequiredForm";
+import LogoutButton from "../../independent/LogoutButton";
 
 export default function FormLogin() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -24,11 +30,11 @@ export default function FormLogin() {
 
   // const { setStatusAktif, setUserPermissions } = useAuth();
 
-  useEffect(() => {
-    if (userData) {
-      navigate("/profil");
-    }
-  }, [userData, navigate]);
+  // useEffect(() => {
+  //   if (userData) {
+  //     navigate("/profil");
+  //   }
+  // }, [userData, navigate]);
 
   const formik = useFormik({
     validateOnChange: false,
@@ -89,56 +95,84 @@ export default function FormLogin() {
         .finally(() => {
           setLoading(false);
         });
-
-      //TODO api login tod
-
-      // navigate("/dashboard");
     },
   });
 
   return (
     <form id="FormLogin" onSubmit={formik.handleSubmit}>
-      <FormControl isInvalid={formik.errors.email ? true : false} mb={4}>
-        <FormLabel>
-          Email
-          <RequiredForm />
-        </FormLabel>
-        <StringInput
-          name="email"
-          placeholder={"Email"}
-          onChangeSetter={(input) => {
-            formik.setFieldValue("email", input);
-          }}
-          inputValue={formik.values.email}
-        />
-        <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-      </FormControl>
+      {userData && (
+        <CContainer gap={responsiveSpacing}>
+          <HStack p={4} gap={4} borderRadius={8} bg={"var(--divider)"}>
+            <Avatar />
 
-      <FormControl isInvalid={formik.errors.password ? true : false} mb={8}>
-        <FormLabel>
-          Password
-          <RequiredForm />
-        </FormLabel>
-        <PasswordInput
-          name="password"
-          onChangeSetter={(input) => {
-            formik.setFieldValue("password", input);
-          }}
-          inputValue={formik.values.password}
-        />
-        <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
-      </FormControl>
+            <CContainer>
+              <Text>{userData.nama}</Text>
+              <Text>{userData.email}</Text>
+            </CContainer>
+          </HStack>
 
-      <Button
-        type="submit"
-        form="FormLogin"
-        colorScheme="ap"
-        className="btn-ap clicky"
-        w={"100%"}
-        isLoading={loading}
-      >
-        Login
-      </Button>
+          <CContainer gap={2}>
+            <Button
+              colorScheme="ap"
+              className="btn-ap clicky"
+              w={"100%"}
+              as={Link}
+              to={"/profil"}
+              size={"lg"}
+            >
+              Klik untuk masuk
+            </Button>
+
+            <LogoutButton />
+          </CContainer>
+        </CContainer>
+      )}
+
+      {!userData && (
+        <>
+          <FormControl isInvalid={formik.errors.email ? true : false} mb={4}>
+            <FormLabel>
+              Email
+              <RequiredForm />
+            </FormLabel>
+            <StringInput
+              name="email"
+              placeholder={"Email"}
+              onChangeSetter={(input) => {
+                formik.setFieldValue("email", input);
+              }}
+              inputValue={formik.values.email}
+            />
+            <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={formik.errors.password ? true : false} mb={8}>
+            <FormLabel>
+              Password
+              <RequiredForm />
+            </FormLabel>
+            <PasswordInput
+              name="password"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("password", input);
+              }}
+              inputValue={formik.values.password}
+            />
+            <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+          </FormControl>
+
+          <Button
+            type="submit"
+            form="FormLogin"
+            colorScheme="ap"
+            className="btn-ap clicky"
+            w={"100%"}
+            isLoading={loading}
+          >
+            Login
+          </Button>
+        </>
+      )}
     </form>
   );
 }

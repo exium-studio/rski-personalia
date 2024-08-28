@@ -34,7 +34,7 @@ export default function Login() {
                 Selamat Datang!
               </Text>
               <Text opacity={0.6} mb={8}>
-                Masuk untuk mendapatkan akses tak terbatas ke data & informasi
+                Masuk untuk mendapatkan akses ke data & informasi
               </Text>
 
               <FormLogin />

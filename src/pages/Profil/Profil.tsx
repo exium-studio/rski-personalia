@@ -1,112 +1,29 @@
 import {
   Box,
-  Button,
-  ButtonProps,
   HStack,
-  Icon,
   Image,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Stack,
   Text,
   Tooltip,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { RiLogoutBoxLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import Highlighter from "react-highlight-words";
-import DisclosureHeader from "../../components/dependent/DisclosureHeader";
 import Header from "../../components/dependent/Header";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import JenisKaryawanBadge from "../../components/dependent/JenisKaryawanBadge";
 import SmallLink from "../../components/dependent/SmallLink";
 import FlexLine from "../../components/independent/FlexLine";
+import LogoutButton from "../../components/independent/LogoutButton";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
-import useBackOnClose from "../../hooks/useBackOnClose";
+import { responsiveSpacing } from "../../constant/sizes";
 import useGetUserData from "../../hooks/useGetUserData";
-import useLogout from "../../hooks/useLogout";
-import backOnClose from "../../lib/backOnClose";
+import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 import formatDate from "../../lib/formatDate";
 import formatMasaKerja from "../../lib/formatMasaKerja";
 import formatNumber from "../../lib/formatNumber";
-import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
-
-interface LogoutProps extends ButtonProps {}
-
-const LogoutConfirmation = ({ ...props }: LogoutProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("profile-logout-confirmation-modal", isOpen, onOpen, onClose);
-
-  const { logout, logoutLoading } = useLogout();
-
-  // SX
-
-  return (
-    <>
-      <Button
-        leftIcon={
-          <Icon
-            as={RiLogoutBoxLine}
-            fontSize={iconSize}
-            transform={"rotate(180deg)"}
-          />
-        }
-        colorScheme="red"
-        variant={"ghost"}
-        size={"lg"}
-        onClick={onOpen}
-        className="clicky"
-        {...props}
-      >
-        Keluar
-      </Button>
-
-      <Modal
-        isOpen={isOpen}
-        onClose={backOnClose}
-        isCentered
-        blockScrollOnMount={false}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <DisclosureHeader title={"Keluar"} />
-          </ModalHeader>
-          <ModalBody>
-            <Text opacity={0.4}>Apakah anda yakin akan keluar akun?</Text>
-          </ModalBody>
-          <ModalFooter gap={2}>
-            <Button
-              w={"100%"}
-              className="btn-solid clicky"
-              onClick={backOnClose}
-              isDisabled={logoutLoading}
-            >
-              Tidak
-            </Button>
-            <Button
-              w={"100%"}
-              className="clicky"
-              colorScheme="red"
-              onClick={logout}
-              isLoading={logoutLoading}
-            >
-              Ya
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-};
 
 export default function Profil() {
   // SX
@@ -278,7 +195,7 @@ export default function Profil() {
           </Box>
 
           <VStack flex={2}>
-            <LogoutConfirmation w={"300px"} mb={"auto"} mx={"auto"} />
+            <LogoutButton w={"300px"} mb={"auto"} mx={"auto"} />
           </VStack>
         </VStack>
 
