@@ -180,10 +180,11 @@ export default function NavContainer({
 
   const { userPermissions, setUserPermissions } = useAuth();
   const userPermissionsRef = useRef(userPermissions);
+  const logoutRef = useRef(logout);
   useEffect(() => {
     const authToken = getCookie("__auth_token");
     if (!authToken) {
-      logout();
+      logoutRef.current();
     } else {
       if (!userPermissionsRef.current) {
         setLoading(true);
@@ -195,7 +196,7 @@ export default function NavContainer({
               if (userData.status_aktif === 2) {
                 setUserPermissions(userData.permission);
               } else {
-                logout();
+                logoutRef.current();
                 console.log("logging out...");
               }
             }
@@ -217,7 +218,7 @@ export default function NavContainer({
           });
       }
     }
-  }, [logout, setUserPermissions, toast]);
+  }, [setUserPermissions, toast]);
 
   const navsRef = useRef(null);
 
