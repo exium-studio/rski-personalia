@@ -171,6 +171,7 @@ export default function NavContainer({
 
   // SX
   const lightDarkColor = useLightDarkColor();
+  const contentBgColor = useContentBgColor();
 
   const { logout } = useLogout();
 
@@ -316,7 +317,7 @@ export default function NavContainer({
           )}
 
           <CContainer
-            bg={useContentBgColor()}
+            bg={contentBgColor}
             pb={["86px", null, 0]}
             align={"stretch"}
             h={"100vh"}
