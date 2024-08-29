@@ -97,11 +97,15 @@ export default function TransferKaryawan() {
                 url="/api/rski/dashboard/karyawan/transfer/export"
                 title="Export Transfer Karyawan"
                 downloadFileName={"Transfer Karyawan"}
+                isDisabled={!exportPermission}
               />
             </PermissionTooltip>
 
             <PermissionTooltip permission={createPermission}>
-              <AjukanTransferKaryawanModal minW={"fit-content"} />
+              <AjukanTransferKaryawanModal
+                minW={"fit-content"}
+                isDisabled={!createPermission}
+              />
             </PermissionTooltip>
           </HStack>
 

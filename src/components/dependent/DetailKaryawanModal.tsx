@@ -40,6 +40,7 @@ import {
 } from "../../constant/colors";
 import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
@@ -47,10 +48,12 @@ import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFrom
 import formatDate from "../../lib/formatDate";
 import formatMasaKerja from "../../lib/formatMasaKerja";
 import formatNumber from "../../lib/formatNumber";
+import isHasPermissions from "../../lib/isHasPermissions";
 import FlexLine from "../independent/FlexLine";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AktifkanNonaktifkanButton from "./AktifkanNonaktifkanButton";
 import DetailAktivitasKaryawanModalDisclosure from "./DetailAktivitasKaryawanModalDisclosure";
 import DetailCutiKaryawanModalDisclosure from "./DetailCutiKaryawanModalDisclosure";
@@ -68,8 +71,6 @@ import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
-import isHasPermissions from "../../lib/isHasPermissions";
-import useGetUserData from "../../hooks/useGetUserData";
 interface Props {
   id?: string;
   user_id?: number;
@@ -158,8 +159,8 @@ export default function DetailKaryawanModal({
     }
   }, [data]);
 
-  const userData = useGetUserData();
-  const editPermission = isHasPermissions(userData.permission, [56]);
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [56]);
 
   return (
     <Modal
@@ -589,7 +590,8 @@ export default function DetailKaryawanModal({
                             />
 
                             {/* Edit */}
-                            <Tooltip
+                            <PermissionTooltip
+                              permission={editPermission}
                               label={!editPermission && "Tidak ada akses"}
                             >
                               <AktifkanNonaktifkanButton
@@ -597,9 +599,10 @@ export default function DetailKaryawanModal({
                                 data={data?.user?.status_aktif}
                                 isDisabled={!editPermission}
                               />
-                            </Tooltip>
+                            </PermissionTooltip>
 
-                            <Tooltip
+                            <PermissionTooltip
+                              permission={editPermission}
                               label={!editPermission && "Tidak ada akses"}
                             >
                               <Box>
@@ -608,7 +611,7 @@ export default function DetailKaryawanModal({
                                   isDisabled={!editPermission}
                                 />
                               </Box>
-                            </Tooltip>
+                            </PermissionTooltip>
                           </HStack>
 
                           <CContainer
