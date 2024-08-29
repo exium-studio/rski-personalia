@@ -159,7 +159,7 @@ export default function DetailKaryawanModal({
   }, [data]);
 
   const userData = useGetUserData();
-  const editPermission = isHasPermissions(userData.permission, [58]);
+  const editPermission = isHasPermissions(userData.permission, [56]);
 
   return (
     <Modal
@@ -602,10 +602,12 @@ export default function DetailKaryawanModal({
                             <Tooltip
                               label={!editPermission && "Tidak ada akses"}
                             >
-                              <EditKaryawanModal
-                                initialData={data}
-                                isDisabled={!editPermission}
-                              />
+                              <Box>
+                                <EditKaryawanModal
+                                  initialData={data}
+                                  isDisabled={!editPermission}
+                                />
+                              </Box>
                             </Tooltip>
                           </HStack>
 
