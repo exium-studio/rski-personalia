@@ -3,15 +3,19 @@ export default function isHasPermissions(
   permissionsNeeded: number[] | undefined
 ): boolean {
   if (
-    userPermissions &&
-    userPermissions.length > 0 &&
-    permissionsNeeded &&
-    permissionsNeeded?.length > 0
+    !permissionsNeeded ||
+    permissionsNeeded.length === 0 // Jika permissionsNeeded null, undefined, atau kosong
   ) {
-    return permissionsNeeded.every((permission) =>
-      userPermissions.includes(permission)
+    return true;
+  }
+
+  if (userPermissions && userPermissions.length > 0) {
+    return (
+      permissionsNeeded.every((permission) =>
+        userPermissions.includes(permission)
+      ) && permissionsNeeded.length === userPermissions.length
     );
   } else {
-    return true;
+    return false; // Mengembalikan false jika userPermissions kosong atau undefined
   }
 }

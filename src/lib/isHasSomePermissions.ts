@@ -2,20 +2,20 @@ export default function isHasSomePermissions(
   userPermissions: number[] | undefined,
   permissionsNeeded: (number | null)[] | undefined
 ): boolean {
-  if (
-    userPermissions &&
-    userPermissions.length > 0 &&
-    permissionsNeeded &&
-    permissionsNeeded?.length > 0
-  ) {
-    return permissionsNeeded.some((permission) => {
-      if (permission !== null) {
-        return userPermissions.includes(permission);
-      } else {
-        return true;
-      }
-    });
+  if (!permissionsNeeded) {
+    return true; // Mengembalikan true jika permissionsNeeded undefined
+  }
+
+  if (permissionsNeeded.includes(null)) {
+    return true; // Mengembalikan true jika permissionsNeeded mengandung null
+  }
+
+  if (userPermissions && userPermissions.length > 0) {
+    // Mengecek apakah setidaknya satu permission ada di userPermissions
+    return permissionsNeeded.some((permission) =>
+      userPermissions.includes(permission as number)
+    );
   } else {
-    return true;
+    return false; // Mengembalikan false jika userPermissions kosong atau undefined
   }
 }

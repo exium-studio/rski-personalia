@@ -160,7 +160,7 @@ export default function Profil() {
                     {userData?.nama}
                   </Text>
 
-                  <Text opacity={0.4}>{userData.role?.name}</Text>
+                  <Text opacity={0.4}>{userData?.role?.name}</Text>
 
                   <HStack align={"end"} mt={12}>
                     <Text fontSize={14}>
@@ -260,7 +260,7 @@ export default function Profil() {
                       <FlexLine />
                       <JenisKaryawanBadge
                         data={
-                          userData.data_karyawan?.unit_kerja?.jenis_karyawan
+                          userData?.data_karyawan?.unit_kerja?.jenis_karyawan
                         }
                       />
                     </HStack>
@@ -278,7 +278,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.email}
+                        {userData?.data_karyawan?.email}
                       </Text>
                     </HStack>
 
@@ -295,7 +295,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.nik}
+                        {userData?.data_karyawan?.nik}
                       </Text>
                     </HStack>
 
@@ -366,7 +366,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.no_hp}
+                        {userData?.data_karyawan?.no_hp}
                       </Text>
                     </HStack>
 
@@ -383,7 +383,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.tempat_lahir}
+                        {userData?.data_karyawan?.tempat_lahir}
                       </Text>
                     </HStack>
 
@@ -400,7 +400,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(userData.data_karyawan?.tgl_lahir)}
+                        {formatDate(userData?.data_karyawan?.tgl_lahir)}
                       </Text>
                     </HStack>
 
@@ -417,9 +417,9 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.jenis_kelamin === 1
+                        {userData?.data_karyawan?.jenis_kelamin === 1
                           ? "Laki - laki"
-                          : userData.data_karyawan?.jenis_kelamin === 0
+                          : userData?.data_karyawan?.jenis_kelamin === 0
                           ? "Perempuan"
                           : ""}
                       </Text>
@@ -438,7 +438,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.agama?.label}
+                        {userData?.data_karyawan?.agama?.label}
                       </Text>
                     </HStack>
 
@@ -455,7 +455,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.gelar_depan}
+                        {userData?.data_karyawan?.gelar_depan}
                       </Text>
                     </HStack>
 
@@ -471,7 +471,7 @@ export default function Profil() {
                         />
                       </Box>
                       <FlexLine />
-                      <Tooltip label={userData.data_karyawan?.alamat}>
+                      <Tooltip label={userData?.data_karyawan?.alamat}>
                         <Text
                           fontWeight={500}
                           whiteSpace={"nowrap"}
@@ -480,7 +480,7 @@ export default function Profil() {
                           maxW={"243px"}
                           cursor={"pointer"}
                         >
-                          {userData.data_karyawan?.alamat}
+                          {userData?.data_karyawan?.alamat}
                         </Text>
                       </Tooltip>
                     </HStack>
@@ -506,7 +506,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.no_rm}
+                        {userData?.data_karyawan?.no_rm}
                       </Text>
                     </HStack>
 
@@ -523,7 +523,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.no_manulife}
+                        {userData?.data_karyawan?.no_manulife}
                       </Text>
                     </HStack>
 
@@ -596,7 +596,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.tinggi_badan} cm
+                        {userData?.data_karyawan?.tinggi_badan} cm
                       </Text>
                     </HStack>
 
@@ -613,7 +613,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.berat_badan} kg
+                        {userData?.data_karyawan?.berat_badan} kg
                       </Text>
                     </HStack>
 
@@ -630,7 +630,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.golongan_darah?.label}
+                        {userData?.data_karyawan?.golongan_darah?.label}
                       </Text>
                     </HStack>
                   </VStack>
@@ -655,7 +655,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(userData.data_karyawan?.tgl_masuk)}
+                        {formatDate(userData?.data_karyawan?.tgl_masuk)}
                       </Text>
                     </HStack>
 
@@ -672,7 +672,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(userData.data_karyawan?.tgl_keluar)}
+                        {formatDate(userData?.data_karyawan?.tgl_keluar)}
                       </Text>
                     </HStack>
 
@@ -689,7 +689,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(userData.data_karyawan?.tgl_diangkat)}
+                        {formatDate(userData?.data_karyawan?.tgl_diangkat)}
                       </Text>
                     </HStack>
 
@@ -707,7 +707,7 @@ export default function Profil() {
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
                         {calculateMasaKerjaFromTanggalMasuk(
-                          userData.data_karyawan?.tgl_masuk
+                          userData?.data_karyawan?.tgl_masuk
                         )}
                       </Text>
                     </HStack>
@@ -725,7 +725,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.unit_kerja?.nama_unit}
+                        {userData?.data_karyawan?.unit_kerja?.nama_unit}
                       </Text>
                     </HStack>
 
@@ -742,7 +742,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.jabatan?.nama_jabatan}
+                        {userData?.data_karyawan?.jabatan?.nama_jabatan}
                       </Text>
                     </HStack>
 
@@ -776,7 +776,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.kompetensi?.nama_kompetensi}
+                        {userData?.data_karyawan?.kompetensi?.nama_kompetensi}
                       </Text>
                     </HStack>
 
@@ -793,7 +793,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.status_karyawan?.label}
+                        {userData?.data_karyawan?.status_karyawan?.label}
                       </Text>
                     </HStack>
 
@@ -810,7 +810,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatDate(userData.data_karyawan?.tgl_berakhir_pks)}
+                        {formatDate(userData?.data_karyawan?.tgl_berakhir_pks)}
                       </Text>
                     </HStack>
 
@@ -827,7 +827,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {formatMasaKerja(userData.data_karyawan?.masa_diklat)}
+                        {formatMasaKerja(userData?.data_karyawan?.masa_diklat)}
                       </Text>
                     </HStack>
                   </VStack>
@@ -881,7 +881,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.tahun_lulus}
+                        {userData?.data_karyawan?.tahun_lulus}
                       </Text>
                     </HStack>
 
@@ -923,8 +923,10 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.masa_berlaku_str
-                          ? formatDate(userData.data_karyawan?.masa_berlaku_str)
+                        {userData?.data_karyawan?.masa_berlaku_str
+                          ? formatDate(
+                              userData?.data_karyawan?.masa_berlaku_str
+                            )
                           : "Seumur Hidup"}
                       </Text>
                     </HStack>
@@ -969,8 +971,10 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.masa_berlaku_sip
-                          ? formatDate(userData.data_karyawan?.masa_berlaku_sip)
+                        {userData?.data_karyawan?.masa_berlaku_sip
+                          ? formatDate(
+                              userData?.data_karyawan?.masa_berlaku_sip
+                            )
                           : "Seumur Hidup"}
                       </Text>
                     </HStack>
@@ -996,7 +1000,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.kelompok_gaji?.nama_kelompok}
+                        {userData?.data_karyawan?.kelompok_gaji?.nama_kelompok}
                       </Text>
                     </HStack>
 
@@ -1015,7 +1019,7 @@ export default function Profil() {
                       <Text fontWeight={500} textAlign={"right"}>
                         Rp{" "}
                         {formatNumber(
-                          userData.data_karyawan?.kelompok_gaji?.besaran_gaji
+                          userData?.data_karyawan?.kelompok_gaji?.besaran_gaji
                         )}
                       </Text>
                     </HStack>
@@ -1033,7 +1037,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.npwp}
+                        {userData?.data_karyawan?.npwp}
                       </Text>
                     </HStack>
 
@@ -1050,7 +1054,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.no_rekening}
+                        {userData?.data_karyawan?.no_rekening}
                       </Text>
                     </HStack>
 
@@ -1067,7 +1071,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        {userData.data_karyawan?.ptkp?.kode_ptkp}
+                        {userData?.data_karyawan?.ptkp?.kode_ptkp}
                       </Text>
                     </HStack>
 
@@ -1084,7 +1088,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        Rp {formatNumber(userData.data_karyawan?.uang_makan)}
+                        Rp {formatNumber(userData?.data_karyawan?.uang_makan)}
                       </Text>
                     </HStack>
 
@@ -1101,7 +1105,7 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        Rp {formatNumber(userData.data_karyawan?.uang_lembur)}
+                        Rp {formatNumber(userData?.data_karyawan?.uang_lembur)}
                       </Text>
                     </HStack>
                   </VStack>
@@ -1128,7 +1132,7 @@ export default function Profil() {
                       <Text fontWeight={500} textAlign={"right"}>
                         Rp{" "}
                         {formatNumber(
-                          userData.data_karyawan?.tunjangan_jabatan
+                          userData?.data_karyawan?.tunjangan_jabatan
                         )}
                       </Text>
                     </HStack>
@@ -1148,7 +1152,7 @@ export default function Profil() {
                       <Text fontWeight={500} textAlign={"right"}>
                         Rp{" "}
                         {formatNumber(
-                          userData.data_karyawan?.tunjangan_fungsional
+                          userData?.data_karyawan?.tunjangan_fungsional
                         )}
                       </Text>
                     </HStack>
@@ -1167,7 +1171,9 @@ export default function Profil() {
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
                         Rp{" "}
-                        {formatNumber(userData.data_karyawan?.tunjangan_khusus)}
+                        {formatNumber(
+                          userData?.data_karyawan?.tunjangan_khusus
+                        )}
                       </Text>
                     </HStack>
 
@@ -1186,7 +1192,7 @@ export default function Profil() {
                       <Text fontWeight={500} textAlign={"right"}>
                         Rp{" "}
                         {formatNumber(
-                          userData.data_karyawan?.tunjangan_lainnya
+                          userData?.data_karyawan?.tunjangan_lainnya
                         )}
                       </Text>
                     </HStack>
@@ -1199,11 +1205,11 @@ export default function Profil() {
                   </Text>
 
                   <VStack align={"stretch"} gap={4}>
-                    {userData.data_keryawan?.potongan_gaji?.length === 0 && (
+                    {!userData?.data_karyawan?.potongan_gaji && (
                       <Text opacity={0.4}>Tidak ada potongan gaji</Text>
                     )}
 
-                    {userData.data_keryawan?.potongan_gaji?.map(
+                    {userData?.data_karyawan?.potongan_gaji?.map(
                       (potongan: any, i: number) => (
                         <HStack justify={"space-between"} key={i}>
                           <Box opacity={0.6}>
