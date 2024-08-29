@@ -12,7 +12,7 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import useGetUserData from "../../hooks/useGetUserData";
+import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Presensi() {
@@ -40,9 +40,9 @@ export default function Presensi() {
   // SX
   const lightDarkColor = useLightDarkColor();
 
-  const userData = useGetUserData();
-  const exportPermission = isHasPermissions(userData.permission, [54]);
-  const importPermission = isHasPermissions(userData.permission, [53]);
+  const { userPermissions } = useAuth();
+  const exportPermission = isHasPermissions(userPermissions, [54]);
+  const importPermission = isHasPermissions(userPermissions, [53]);
 
   return (
     <>
