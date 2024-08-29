@@ -22,9 +22,9 @@ import { useContentBgColor, useLightDarkColor } from "../../constant/colors";
 import navs from "../../constant/navs";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
-import useGetUserData from "../../hooks/useGetUserData";
 import useLogout from "../../hooks/useLogout";
 import isHasPermissions from "../../lib/isHasPermissions";
+import isHasSomePermissions from "../../lib/isHasSomePermissions";
 import req from "../../lib/req";
 import useScreenWidth from "../../lib/useScreenWidth";
 import Header from "../dependent/Header";
@@ -36,9 +36,6 @@ import PermissionTooltip from "./PermissionTooltip";
 
 const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const userData = useGetUserData();
-  const hasPermissions = isHasPermissions(userData?.permission, nav.allowed);
 
   const timeoutRef = useRef<any>(null);
   useEffect(() => {
@@ -59,6 +56,9 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
       setIsOpen(false);
     }, 50);
   };
+
+  const { userPermissions } = useAuth();
+  const hasPermissions = isHasSomePermissions(userPermissions, nav.allowed);
 
   // console.log(nav.label, hasPermissions);
 
@@ -108,15 +108,18 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
           }}
         >
           {nav.subNavs.map((subNav: any, ii: number) => {
-            const hasPermission = isHasPermissions(
-              userData.permission,
+            const permission = isHasPermissions(
+              userPermissions,
               subNav.allowed
             );
 
             return (
-              hasPermission && (
+              <PermissionTooltip
+                key={ii}
+                permission={permission}
+                placement="right"
+              >
                 <MenuItem
-                  key={ii}
                   as={Link}
                   to={subNav.link}
                   fontWeight={(active === i && ii) === topNavActive ? 600 : 500}
@@ -125,10 +128,11 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
                     (active === i && ii) === topNavActive ? "var(--p500a5)" : ""
                   }
                   whiteSpace={"nowrap"}
+                  isDisabled={!permission}
                 >
                   {subNav.label}
                 </MenuItem>
-              )
+              </PermissionTooltip>
             );
           })}
         </MenuList>

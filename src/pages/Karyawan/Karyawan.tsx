@@ -1,4 +1,4 @@
-import { HStack, Tooltip } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ExportKaryawanModal from "../../components/dependent/ExportKaryawanModal";
 import ImportModal from "../../components/dependent/ImportModal";
@@ -9,6 +9,7 @@ import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import KaryawanTableColumnsConfig from "../../components/independent/KaryawanTableColumnsConfig";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
@@ -74,11 +75,11 @@ export default function Karyawan() {
 
             <KaryawanTableColumnsConfig title="Config Kolom Tabel Karyawan" />
 
-            <Tooltip label={!exportPermission && "Tidak ada akses"}>
+            <PermissionTooltip permission={exportPermission}>
               <ExportKaryawanModal isDisabled={!exportPermission} />
-            </Tooltip>
+            </PermissionTooltip>
 
-            <Tooltip label={!importPermission && "Tidak ada akses"}>
+            <PermissionTooltip permission={exportPermission}>
               <ImportModal
                 url={"/api/rski/dashboard/karyawan/import"}
                 title={"Import Karyawan"}
@@ -86,14 +87,14 @@ export default function Karyawan() {
                 templateDownloadUrl="api/rski/dashboard/download-template-karyawan"
                 isDisabled={!importPermission}
               />
-            </Tooltip>
+            </PermissionTooltip>
 
-            <Tooltip label={!createPermission && "Tidak ada akses"}>
+            <PermissionTooltip permission={exportPermission}>
               <TambahKaryawanModal
                 minW={"fit-content"}
                 isDisabled={!createPermission}
               />
-            </Tooltip>
+            </PermissionTooltip>
           </HStack>
 
           <TabelKaryawan />

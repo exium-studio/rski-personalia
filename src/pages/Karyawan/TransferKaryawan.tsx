@@ -1,4 +1,4 @@
-import { HStack, Tooltip } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import MultiSelectKategoriTransfer from "../../components/dependent/_Select/MultiSelectKategoriTransfer";
 import ExportModal from "../../components/dependent/ExportModal";
@@ -9,10 +9,11 @@ import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import TransferKaryawanTableColumnsConfig from "../../components/independent/TransferKaryawanTableColumnsConfig";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
-import useGetUserData from "../../hooks/useGetUserData";
 import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function TransferKaryawan() {
@@ -36,9 +37,9 @@ export default function TransferKaryawan() {
   // SX
   const lightDarkColor = useLightDarkColor();
 
-  const userData = useGetUserData();
-  const exportPermission = isHasPermissions(userData.permission, [59]);
-  const createPermission = isHasPermissions(userData.permission, [55]);
+  const { userPermissions } = useAuth();
+  const exportPermission = isHasPermissions(userPermissions, [60]);
+  const createPermission = isHasPermissions(userPermissions, [55]);
 
   return (
     <>
@@ -91,17 +92,17 @@ export default function TransferKaryawan() {
 
             <TransferKaryawanTableColumnsConfig />
 
-            <Tooltip label={!exportPermission && "Tidak ada akses"}>
+            <PermissionTooltip permission={exportPermission}>
               <ExportModal
                 url="/api/rski/dashboard/karyawan/transfer/export"
                 title="Export Transfer Karyawan"
                 downloadFileName={"Transfer Karyawan"}
               />
-            </Tooltip>
+            </PermissionTooltip>
 
-            <Tooltip label={!createPermission && "Tidak ada akses"}>
+            <PermissionTooltip permission={createPermission}>
               <AjukanTransferKaryawanModal minW={"fit-content"} />
-            </Tooltip>
+            </PermissionTooltip>
           </HStack>
 
           <TabelTransferKarywan filterConfig={filterConfig} />
