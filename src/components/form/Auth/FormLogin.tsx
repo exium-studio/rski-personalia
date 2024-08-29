@@ -20,6 +20,7 @@ import PasswordInput from "../../dependent/input/PasswordInput";
 import StringInput from "../../dependent/input/StringInput";
 import CContainer from "../../wrapper/CContainer";
 import RequiredForm from "../RequiredForm";
+import useAuth from "../../../global/useAuth";
 
 export default function FormLogin() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -27,13 +28,7 @@ export default function FormLogin() {
   const toast = useToast();
   const userData = useGetUserData();
 
-  // const { setStatusAktif, setUserPermissions } = useAuth();
-
-  // useEffect(() => {
-  //   if (userData) {
-  //     navigate("/profil");
-  //   }
-  // }, [userData, navigate]);
+  const { setUserPermissions } = useAuth();
 
   const formik = useFormik({
     validateOnChange: false,
@@ -68,7 +63,7 @@ export default function FormLogin() {
               JSON.stringify(r.data.user.data)
             );
             // setStatusAktif(r.data.user.data.status_aktif);
-            // setUserPermissions(r.data.user.data.permission);
+            setUserPermissions(r.data.user.data.permission);
 
             navigate("/profil");
             toast({
