@@ -11,36 +11,34 @@ import {
 
 const navs = [
   {
-    allowed: [1],
     label: "Dashboard",
     link: "/dashboard",
     icon: RiHome6Fill,
     subNavs: [
       {
-        allowed: [1],
         label: "Dashboard",
         link: "/dashboard",
       },
     ],
   },
   {
-    allowed: [58],
+    allowed: [50],
     label: "Karyawan",
     link: "/karyawan",
     icon: RiGroupFill,
     subNavs: [
       {
-        allowed: [58],
+        allowed: [50],
         label: "Karyawan",
         link: "/karyawan",
       },
       {
-        allowed: [58],
+        allowed: [50],
         label: "Transfer Karyawan",
         link: "/karyawan/transfer-karyawan",
       },
       {
-        allowed: [58],
+        allowed: [50],
         label: "Permintaan Perubahan Data",
         link: "/karyawan/perubahan-data-karyawan",
       },
@@ -51,72 +49,72 @@ const navs = [
     ],
   },
   {
-    allowed: [52],
+    allowed: [45],
     label: "Presensi",
     link: "/presensi",
     icon: RiTimerFill,
     subNavs: [
       {
-        allowed: [52],
+        allowed: [45],
         label: "Presensi",
         link: "/presensi",
       },
     ],
   },
   {
-    allowed: [52, 32, 40, 141],
+    allowed: [22, 29, 36, 41],
     label: "Jadwal",
     link: "/jadwal",
     icon: RiTimeFill,
     subNavs: [
       {
-        allowed: [52],
+        allowed: [22],
         label: "Jadwal",
         link: "/jadwal",
       },
       {
-        allowed: [32],
+        allowed: [29],
         label: "Tukar Jadwal",
         link: "/jadwal/penukaran-jadwal",
       },
       {
-        allowed: [40],
+        allowed: [36],
         label: "Lembur",
         link: "/jadwal/lembur",
       },
       {
-        allowed: [141],
+        allowed: [41],
         label: "Cuti",
         link: "/jadwal/cuti",
       },
     ],
   },
   {
-    allowed: [18, 14],
+    allowed: [17, 13],
     label: "Keuangan",
     link: "/keuangan/penggajian",
     icon: RiMoneyDollarCircleFill,
     subNavs: [
       {
-        allowed: [18],
+        allowed: [17],
         label: "Penggajian",
         link: "/keuangan/penggajian",
       },
       {
-        allowed: [14],
+        allowed: [13],
         label: "THR",
         link: "/keuangan/thr",
       },
     ],
   },
   {
-    allowed: [7, 147],
+    allowed: [8, 114],
     label: "Perusahaan",
     link: "/perusahaan/diklat",
     icon: RiBuilding2Fill,
     subNavs: [
       {
-        allowed: [7],
+        allowed: [8],
         label: "Diklat",
         link: "/perusahaan/diklat",
       },
@@ -125,7 +123,7 @@ const navs = [
       //   link: "/perusahaan/pelaporan-karyawan",
       // },
       {
-        allowed: [147],
+        allowed: [114],
         label: "Penilaian Karyawan",
         link: "/perusahaan/penilaian-karyawan",
       },
