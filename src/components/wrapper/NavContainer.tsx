@@ -180,8 +180,8 @@ export default function NavContainer({
     if (!authToken) {
       logout();
     } else {
-      setLoading(true);
       if (!userPermissions) {
+        setLoading(true);
         req
           .get(`/api/rski/dashboard/user-info`)
           .then((r) => {
@@ -191,6 +191,7 @@ export default function NavContainer({
                 setUserPermissions(userData.permission);
               } else {
                 logout();
+                console.log("logging out...");
               }
             }
           })
