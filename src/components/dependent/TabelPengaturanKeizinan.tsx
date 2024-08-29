@@ -1,10 +1,8 @@
-import { Checkbox, HStack } from "@chakra-ui/react";
+import { Checkbox } from "@chakra-ui/react";
 import { Dispatch, useState } from "react";
-import { responsiveSpacing } from "../../constant/sizes";
 import NotFound from "../independent/NotFound";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
-import SearchComponent from "./input/SearchComponent";
 
 interface Props {
   role_id: number;
@@ -28,7 +26,7 @@ export default function TabelPengaturanKeizinan({
   formik,
 }: Props) {
   // Filter Config
-  const [filterConfig, setFilterConfig] = useState({
+  const [filterConfig] = useState({
     search: "",
   });
 
@@ -202,7 +200,7 @@ export default function TabelPengaturanKeizinan({
 
   return (
     <>
-      <HStack mb={responsiveSpacing}>
+      {/* <HStack mb={responsiveSpacing}>
         <SearchComponent
           name="search"
           onChangeSetter={(input) => {
@@ -213,7 +211,7 @@ export default function TabelPengaturanKeizinan({
           }}
           inputValue={filterConfig.search}
         />
-      </HStack>
+      </HStack> */}
 
       {fd?.length === 0 && <NotFound />}
 
