@@ -622,7 +622,7 @@ export default function DetailKaryawanModal({
                             gap={responsiveSpacing}
                             px={responsiveSpacing}
                           >
-                            <Box>
+                            <>
                               {!emptyDataLabel && <Skeleton h={"50px"} />}
 
                               {emptyDataLabel && emptyDataLabel.length > 0 && (
@@ -676,7 +676,7 @@ export default function DetailKaryawanModal({
                                   </AccordionItem>
                                 </Accordion>
                               )}
-                            </Box>
+                            </>
 
                             <VStack align={"stretch"} gap={0}>
                               <Text fontSize={20} fontWeight={600} mb={4}>
