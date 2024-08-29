@@ -21,7 +21,7 @@ function formatDuration(detik: number | undefined | null) {
       return `${detik} detik`;
     }
   } else {
-    return "-";
+    return "";
   }
 }
 

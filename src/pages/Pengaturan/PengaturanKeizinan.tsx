@@ -216,7 +216,7 @@ export default function PengaturanKeizinan({ role_id }: Props) {
                         <Text fontWeight={600}>{data?.name}</Text>
                       </HStack>
 
-                      <Box onClick={toggleAllPermissions}>
+                      <Box mt={"5px"} onClick={toggleAllPermissions}>
                         <Checkbox
                           colorScheme="ap"
                           onChange={(e) => {
