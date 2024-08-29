@@ -1468,7 +1468,7 @@ export default function DetailKaryawanModal({
                                   <Text fontWeight={500} textAlign={"right"}>
                                     Rp{" "}
                                     {formatNumber(
-                                      data.kelompok_gaji?.besaran_gaji
+                                      data.kelompok_gaji?.besaran_gaji || 0
                                     )}
                                   </Text>
                                 </HStack>
@@ -1537,7 +1537,7 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    Rp {formatNumber(data.uang_makan)}
+                                    Rp {formatNumber(data.uang_makan || 0)}
                                   </Text>
                                 </HStack>
 
@@ -1554,7 +1554,7 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    Rp {formatNumber(data.uang_lembur)}
+                                    Rp {formatNumber(data.uang_lembur || 0)}
                                   </Text>
                                 </HStack>
                               </VStack>
@@ -1581,7 +1581,7 @@ export default function DetailKaryawanModal({
                                   <Text fontWeight={500} textAlign={"right"}>
                                     Rp{" "}
                                     {formatNumber(
-                                      data.jabatan?.tunjangan_jabatan
+                                      data.jabatan?.tunjangan_jabatan || 0
                                     )}
                                   </Text>
                                 </HStack>
@@ -1601,7 +1601,7 @@ export default function DetailKaryawanModal({
                                   <Text fontWeight={500} textAlign={"right"}>
                                     Rp{" "}
                                     {formatNumber(
-                                      data.kompetensi?.tunjangan_kompetensi
+                                      data.kompetensi?.tunjangan_kompetensi || 0
                                     )}
                                   </Text>
                                 </HStack>
@@ -1619,7 +1619,10 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    Rp {formatNumber(data.tunjangan_fungsional)}
+                                    Rp{" "}
+                                    {formatNumber(
+                                      data.tunjangan_fungsional || 0
+                                    )}
                                   </Text>
                                 </HStack>
 
@@ -1636,7 +1639,8 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    Rp {formatNumber(data.tunjangan_khusus)}
+                                    Rp{" "}
+                                    {formatNumber(data.tunjangan_khusus || 0)}
                                   </Text>
                                 </HStack>
 
@@ -1653,7 +1657,8 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    Rp {formatNumber(data.tunjangan_lainnya)}
+                                    Rp{" "}
+                                    {formatNumber(data.tunjangan_lainnya || 0)}
                                   </Text>
                                 </HStack>
                               </VStack>
@@ -1690,10 +1695,10 @@ export default function DetailKaryawanModal({
                                       >
                                         {potongan.kategori_potongan_id === 1
                                           ? `${formatNumber(
-                                              potongan.besaran_premi
+                                              potongan.besaran_premi || 0
                                             )}%`
                                           : `Rp ${formatNumber(
-                                              potongan.besaran_premi
+                                              potongan.besaran_premi || 0
                                             )}`}
                                         {/* Rp{" "}
                                         {formatNumber(potongan.besaran_premi)} */}

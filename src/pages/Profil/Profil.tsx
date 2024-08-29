@@ -1019,7 +1019,8 @@ export default function Profil() {
                       <Text fontWeight={500} textAlign={"right"}>
                         Rp{" "}
                         {formatNumber(
-                          userData?.data_karyawan?.kelompok_gaji?.besaran_gaji
+                          userData?.data_karyawan?.kelompok_gaji
+                            ?.besaran_gaji || 0
                         )}
                       </Text>
                     </HStack>
@@ -1088,7 +1089,8 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        Rp {formatNumber(userData?.data_karyawan?.uang_makan)}
+                        Rp{" "}
+                        {formatNumber(userData?.data_karyawan?.uang_makan || 0)}
                       </Text>
                     </HStack>
 
@@ -1105,7 +1107,10 @@ export default function Profil() {
                       </Box>
                       <FlexLine />
                       <Text fontWeight={500} textAlign={"right"}>
-                        Rp {formatNumber(userData?.data_karyawan?.uang_lembur)}
+                        Rp{" "}
+                        {formatNumber(
+                          userData?.data_karyawan?.uang_lembur || 0
+                        )}
                       </Text>
                     </HStack>
                   </VStack>
@@ -1132,7 +1137,7 @@ export default function Profil() {
                       <Text fontWeight={500} textAlign={"right"}>
                         Rp{" "}
                         {formatNumber(
-                          userData?.data_karyawan?.tunjangan_jabatan
+                          userData?.data_karyawan?.tunjangan_jabatan || 0
                         )}
                       </Text>
                     </HStack>
@@ -1152,7 +1157,7 @@ export default function Profil() {
                       <Text fontWeight={500} textAlign={"right"}>
                         Rp{" "}
                         {formatNumber(
-                          userData?.data_karyawan?.tunjangan_fungsional
+                          userData?.data_karyawan?.tunjangan_fungsional || 0
                         )}
                       </Text>
                     </HStack>
@@ -1172,7 +1177,7 @@ export default function Profil() {
                       <Text fontWeight={500} textAlign={"right"}>
                         Rp{" "}
                         {formatNumber(
-                          userData?.data_karyawan?.tunjangan_khusus
+                          userData?.data_karyawan?.tunjangan_khusus || 0
                         )}
                       </Text>
                     </HStack>
@@ -1192,7 +1197,7 @@ export default function Profil() {
                       <Text fontWeight={500} textAlign={"right"}>
                         Rp{" "}
                         {formatNumber(
-                          userData?.data_karyawan?.tunjangan_lainnya
+                          userData?.data_karyawan?.tunjangan_lainnya || 0
                         )}
                       </Text>
                     </HStack>
@@ -1223,7 +1228,7 @@ export default function Profil() {
                           </Box>
                           <FlexLine />
                           <Text fontWeight={500} textAlign={"right"}>
-                            Rp {formatNumber(potongan.besaran_premi)}
+                            Rp {formatNumber(potongan.besaran_premi || 0)}
                           </Text>
                         </HStack>
                       )
