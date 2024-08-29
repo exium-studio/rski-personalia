@@ -301,7 +301,7 @@ export default function DetailPresensiKaryawanModal({
                                     objectFit={"cover"}
                                   />
                                   <Text opacity={0.6} mt={2}>
-                                    Foto Presensi Masuk
+                                    Foto Presensi Keluar
                                   </Text>
                                 </Box>
                               </SimpleGrid>
