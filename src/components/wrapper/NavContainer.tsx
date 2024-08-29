@@ -213,31 +213,6 @@ export default function NavContainer({
     }
   }, []);
 
-  // Middleware
-  // useEffect(() => {
-  //   setLoading(true);
-  //   if (allowed && allowed.length > 0) {
-  //     let hasPermission = false;
-
-  //     if (userData?.permission) {
-  //       hasPermission = userData?.permission.some((permission: any) =>
-  //         allowed.includes(permission)
-  //       );
-  //     }
-
-  //     if (!hasPermission) {
-  //       navigate("/");
-  //       logout();
-  //       removeCookie("__auth_token");
-  //       removeCookie("__user_data");
-  //     } else {
-  //       setLoading(false);
-  //     }
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [allowed, userData?.permission, navigate, logout]);
-
   const navsRef = useRef(null);
 
   return (
