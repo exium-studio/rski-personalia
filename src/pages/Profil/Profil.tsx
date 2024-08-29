@@ -194,7 +194,7 @@ export default function Profil() {
             </Box>
           </Box>
 
-          <VStack flex={2}>
+          <VStack flex={1.4}>
             <LogoutButton w={"300px"} mb={"auto"} mx={"auto"} />
           </VStack>
         </VStack>
