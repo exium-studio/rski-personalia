@@ -1,4 +1,4 @@
-import { HStack, Tooltip } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ExportPresensiModal from "../../components/dependent/ExportPresensiModal";
 import ImportModal from "../../components/dependent/ImportModal";
@@ -9,6 +9,7 @@ import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import PresensiTotal from "../../components/independent/PresensiTotal";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useGetUserData from "../../hooks/useGetUserData";
@@ -90,11 +91,11 @@ export default function Presensi() {
 
             <FilterKaryawan />
 
-            <Tooltip label={!exportPermission && "Tidak ada akses"}>
+            <PermissionTooltip permission={exportPermission}>
               <ExportPresensiModal isDisabled={!exportPermission} />
-            </Tooltip>
+            </PermissionTooltip>
 
-            <Tooltip label={!importPermission && "Tidak ada akses"}>
+            <PermissionTooltip permission={importPermission}>
               <ImportModal
                 url="/api/rski/dashboard/presensi/import"
                 title="Import Presensi"
@@ -102,7 +103,7 @@ export default function Presensi() {
                 templateDownloadUrl="api/rski/dashboard/download-template-presensi"
                 isDisabled={!importPermission}
               />
-            </Tooltip>
+            </PermissionTooltip>
           </HStack>
 
           <TabelPresensi filterConfig={filterConfig} />
