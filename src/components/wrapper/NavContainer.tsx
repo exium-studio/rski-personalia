@@ -179,13 +179,13 @@ export default function NavContainer({
   const toast = useToast();
 
   const { userPermissions, setUserPermissions } = useAuth();
-
+  const userPermissionsRef = useRef(userPermissions);
   useEffect(() => {
     const authToken = getCookie("__auth_token");
     if (!authToken) {
       logout();
     } else {
-      if (!userPermissions) {
+      if (!userPermissionsRef.current) {
         setLoading(true);
         req
           .get(`/api/rski/dashboard/user-info`)
@@ -217,7 +217,7 @@ export default function NavContainer({
           });
       }
     }
-  }, []);
+  }, [logout, setUserPermissions, toast]);
 
   const navsRef = useRef(null);
 
