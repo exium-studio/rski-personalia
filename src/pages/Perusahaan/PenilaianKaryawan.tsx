@@ -10,6 +10,9 @@ import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import RunPenilaian from "../../components/independent/RunPenilaian";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function PenilaianKaryawan() {
   // Filter Config
@@ -28,6 +31,10 @@ export default function PenilaianKaryawan() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermissions = isHasPermissions(userPermissions, [113]);
+  const exportPermissions = isHasPermissions(userPermissions, [117]);
 
   return (
     <>
@@ -61,9 +68,26 @@ export default function PenilaianKaryawan() {
 
             <FilterKaryawan title="Filter Karyawan Pelapor" />
 
-            <ExportModal url="" title="Export Penggajian" />
+            <PermissionTooltip
+              permission={exportPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <ExportModal
+                url=""
+                title="Export Penggajian"
+                isDisabled={!exportPermissions}
+              />
+            </PermissionTooltip>
 
-            <RunPenilaian minW={"fit-content"} />
+            <PermissionTooltip
+              permission={createPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <RunPenilaian
+                minW={"fit-content"}
+                isDisabled={!createPermissions}
+              />
+            </PermissionTooltip>
           </HStack>
 
           <TabelPenilaianKaryawan filterConfig={filterKaryawan} />

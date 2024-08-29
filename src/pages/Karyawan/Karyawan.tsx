@@ -75,11 +75,17 @@ export default function Karyawan() {
 
             <KaryawanTableColumnsConfig title="Config Kolom Tabel Karyawan" />
 
-            <PermissionTooltip permission={exportPermission}>
+            <PermissionTooltip
+              permission={exportPermission}
+              boxProps={{ w: "fit-content" }}
+            >
               <ExportKaryawanModal isDisabled={!exportPermission} />
             </PermissionTooltip>
 
-            <PermissionTooltip permission={exportPermission}>
+            <PermissionTooltip
+              permission={importPermission}
+              boxProps={{ w: "fit-content" }}
+            >
               <ImportModal
                 url={"/api/rski/dashboard/karyawan/import"}
                 title={"Import Karyawan"}
@@ -89,7 +95,10 @@ export default function Karyawan() {
               />
             </PermissionTooltip>
 
-            <PermissionTooltip permission={exportPermission}>
+            <PermissionTooltip
+              permission={createPermission}
+              boxProps={{ w: "fit-content" }}
+            >
               <TambahKaryawanModal
                 minW={"fit-content"}
                 isDisabled={!createPermission}

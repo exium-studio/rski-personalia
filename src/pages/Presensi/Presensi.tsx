@@ -91,11 +91,17 @@ export default function Presensi() {
 
             <FilterKaryawan />
 
-            <PermissionTooltip permission={exportPermission}>
+            <PermissionTooltip
+              permission={exportPermission}
+              boxProps={{ w: "fit-content" }}
+            >
               <ExportPresensiModal isDisabled={!exportPermission} />
             </PermissionTooltip>
 
-            <PermissionTooltip permission={importPermission}>
+            <PermissionTooltip
+              permission={importPermission}
+              boxProps={{ w: "fit-content" }}
+            >
               <ImportModal
                 url="/api/rski/dashboard/presensi/import"
                 title="Import Presensi"

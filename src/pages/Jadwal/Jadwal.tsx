@@ -1,4 +1,4 @@
-import { HStack, Tooltip } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import { endOfWeek, startOfWeek } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import ExportJadwalModal from "../../components/dependent/ExportJadwalModal";
@@ -170,11 +170,17 @@ export default function Jadwal() {
 
             <FilterKaryawan />
 
-            <Tooltip label={!exportPermissions && "Tidak ada akses"}>
+            <PermissionTooltip
+              permission={exportPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
               <ExportJadwalModal isDisabled={!exportPermissions} />
-            </Tooltip>
+            </PermissionTooltip>
 
-            <Tooltip label={!importPermissions && "Tidak ada akses"}>
+            <PermissionTooltip
+              permission={importPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
               <ImportModal
                 url="/api/rski/dashboard/jadwal-karyawan/import"
                 title="Import Jadwal"
@@ -182,7 +188,7 @@ export default function Jadwal() {
                 templateDownloadUrl="api/rski/dashboard/download-template-jadwal"
                 isDisabled={!importPermissions}
               />
-            </Tooltip>
+            </PermissionTooltip>
 
             <PermissionTooltip
               permission={createPermissions}

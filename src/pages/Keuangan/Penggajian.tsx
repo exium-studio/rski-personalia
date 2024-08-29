@@ -8,6 +8,9 @@ import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function Penggajian() {
   // Filter Config
@@ -31,6 +34,9 @@ export default function Penggajian() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermissions = isHasPermissions(userPermissions, [15]);
 
   return (
     <>
@@ -75,7 +81,15 @@ export default function Penggajian() {
 
             {/* <ExportModal url="" title="Export Penggajian" /> */}
 
-            <BuatPenggajianModal minW={"fit-content"} />
+            <PermissionTooltip
+              permission={createPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <BuatPenggajianModal
+                minW={"fit-content"}
+                isDisabled={!createPermissions}
+              />
+            </PermissionTooltip>
           </HStack>
 
           <TabelRiwayatPenggajian filterConfig={filterConfig} />

@@ -9,6 +9,9 @@ import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Thr() {
   // Filter Config
@@ -32,6 +35,10 @@ export default function Thr() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermissions = isHasPermissions(userPermissions, [12]);
+  const exportPermissions = isHasPermissions(userPermissions, [14]);
 
   return (
     <>
@@ -74,13 +81,24 @@ export default function Thr() {
               boxProps={{ w: "fit-content" }}
             />
 
-            <ExportModal
-              url="/api/rski/dashboard/keuangan/run-thr/export"
-              title="Export Penggajian"
-              downloadFileName="Data THR"
-            />
+            <PermissionTooltip
+              permission={exportPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <ExportModal
+                url="/api/rski/dashboard/keuangan/run-thr/export"
+                title="Export Penggajian"
+                downloadFileName="Data THR"
+                isDisabled={!exportPermissions}
+              />
+            </PermissionTooltip>
 
-            <RunThr minW={"fit-content"} />
+            <PermissionTooltip
+              permission={createPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <RunThr minW={"fit-content"} isDisabled={!createPermissions} />
+            </PermissionTooltip>
           </HStack>
 
           <TabelRiwayatThr filterConfig={filterConfig} />

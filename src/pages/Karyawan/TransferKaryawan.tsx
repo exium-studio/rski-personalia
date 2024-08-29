@@ -92,7 +92,10 @@ export default function TransferKaryawan() {
 
             <TransferKaryawanTableColumnsConfig />
 
-            <PermissionTooltip permission={exportPermission}>
+            <PermissionTooltip
+              permission={exportPermission}
+              boxProps={{ w: "fit-content" }}
+            >
               <ExportModal
                 url="/api/rski/dashboard/karyawan/transfer/export"
                 title="Export Transfer Karyawan"
@@ -101,7 +104,10 @@ export default function TransferKaryawan() {
               />
             </PermissionTooltip>
 
-            <PermissionTooltip permission={createPermission}>
+            <PermissionTooltip
+              permission={createPermission}
+              boxProps={{ w: "fit-content" }}
+            >
               <AjukanTransferKaryawanModal
                 minW={"fit-content"}
                 isDisabled={!createPermission}

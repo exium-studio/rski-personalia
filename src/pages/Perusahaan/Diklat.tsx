@@ -9,6 +9,9 @@ import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function Diklat() {
   // Filter Config
@@ -32,6 +35,10 @@ export default function Diklat() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermissions = isHasPermissions(userPermissions, [7]);
+  const exportPermissions = isHasPermissions(userPermissions, [9]);
 
   return (
     <>
@@ -74,13 +81,27 @@ export default function Diklat() {
               boxProps={{ w: "fit-content" }}
             />
 
-            <ExportModal
-              url="/api/rski/dashboard/perusahaan/diklat/export"
-              title="Export Penggajian"
-              downloadFileName="data diklat"
-            />
+            <PermissionTooltip
+              permission={exportPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <ExportModal
+                url="/api/rski/dashboard/perusahaan/diklat/export"
+                title="Export Penggajian"
+                downloadFileName="data diklat"
+                isDisabled={!exportPermissions}
+              />
+            </PermissionTooltip>
 
-            <TambahAcaraDiklat minW={"fit-content"} />
+            <PermissionTooltip
+              permission={createPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <TambahAcaraDiklat
+                minW={"fit-content"}
+                isDisabled={!createPermissions}
+              />
+            </PermissionTooltip>
           </HStack>
 
           <TabelDiklat filterConfig={filterConfig} />
