@@ -11,6 +11,9 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function TukarJadwal() {
   // Filter Config
@@ -42,6 +45,10 @@ export default function TukarJadwal() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermissions = isHasPermissions(userPermissions, [26]);
+  const exportPermissions = isHasPermissions(userPermissions, [30]);
 
   return (
     <>
@@ -91,13 +98,27 @@ export default function TukarJadwal() {
 
             <FilterKaryawan />
 
-            <ExportModal
-              url="/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/export"
-              title="Export Penukaran Jadwal"
-              downloadFileName="Data Tukar Jadwal"
-            />
+            <PermissionTooltip
+              permission={exportPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <ExportModal
+                url="/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/export"
+                title="Export Penukaran Jadwal"
+                downloadFileName="Data Tukar Jadwal"
+                isDisabled={!exportPermissions}
+              />
+            </PermissionTooltip>
 
-            <AjukanTukarJadwalModal minW={"fit-content"} />
+            <PermissionTooltip
+              permission={createPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <AjukanTukarJadwalModal
+                minW={"fit-content"}
+                isDisabled={!createPermissions}
+              />
+            </PermissionTooltip>
           </HStack>
 
           <TabelTukarJadwal filterConfig={filterConfig} />

@@ -10,6 +10,9 @@ import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import FilterKaryawan from "../../components/independent/FilterKaryawan";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function Lembur() {
   // Filter Config
@@ -29,6 +32,10 @@ export default function Lembur() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermissions = isHasPermissions(userPermissions, [33]);
+  const exportPermissions = isHasPermissions(userPermissions, [37]);
 
   return (
     <>
@@ -62,12 +69,28 @@ export default function Lembur() {
               placeholder="nama/no. induk karyawan"
             />
             <FilterKaryawan />
-            <ExportModal
-              url="/api/rski/dashboard/jadwal-karyawan/lembur/export"
-              title="Export Lembur"
-              downloadFileName="Data Lembur"
-            />
-            <AjukanLemburModal minW={"fit-content"} />
+
+            <PermissionTooltip
+              permission={exportPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <ExportModal
+                url="/api/rski/dashboard/jadwal-karyawan/lembur/export"
+                title="Export Lembur"
+                downloadFileName="Data Lembur"
+                isDisabled={!exportPermissions}
+              />
+            </PermissionTooltip>
+
+            <PermissionTooltip
+              permission={createPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <AjukanLemburModal
+                minW={"fit-content"}
+                isDisabled={!createPermissions}
+              />
+            </PermissionTooltip>
           </HStack>
 
           <TabelLembur />

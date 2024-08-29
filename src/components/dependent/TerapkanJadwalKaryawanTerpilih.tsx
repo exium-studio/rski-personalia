@@ -15,7 +15,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  Tooltip,
   useDisclosure,
   useToast,
   VStack,
@@ -24,19 +23,20 @@ import { RiEditBoxLine } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
 import { responsiveSpacing } from "../../constant/sizes";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
+import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import isDatePassed from "../../lib/isDatePassed";
+import isHasPermissions from "../../lib/isHasPermissions";
+import req from "../../lib/req";
 import RequiredForm from "../form/RequiredForm";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import SelectShift from "./_Select/SelectShift";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
-import isHasPermissions from "../../lib/isHasPermissions";
-import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props {
   data: any;
@@ -124,12 +124,12 @@ export default function TerapkanJadwalKaryawanTerpilih({
 
   // SX
 
-  const userData = useGetUserData();
-  const createPermissions = isHasPermissions(userData.permission, [22]);
+  const { userPermissions } = useAuth();
+  const createPermissions = isHasPermissions(userPermissions, [19]);
 
   return (
     <>
-      <Tooltip label={!createPermissions && "Tidak ada akses"}>
+      <PermissionTooltip permission={createPermissions}>
         <VStack
           as={Button}
           p={3}
@@ -149,7 +149,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
           <Icon as={RiEditBoxLine} fontSize={20} />
           <Text fontWeight={500}>Terapkan</Text>
         </VStack>
-      </Tooltip>
+      </PermissionTooltip>
 
       <Modal
         isOpen={isOpen}

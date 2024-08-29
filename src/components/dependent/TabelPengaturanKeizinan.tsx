@@ -106,7 +106,7 @@ export default function TabelPengaturanKeizinan({
       },
     },
     {
-      th: "Export",
+      th: "Import",
       props: {
         minW: "136px",
       },
@@ -115,7 +115,7 @@ export default function TabelPengaturanKeizinan({
       },
     },
     {
-      th: "Import",
+      th: "Export",
       props: {
         minW: "136px",
       },

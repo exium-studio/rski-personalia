@@ -12,8 +12,8 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
-import useGetUserData from "../../hooks/useGetUserData";
 import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Karyawan() {
@@ -34,10 +34,10 @@ export default function Karyawan() {
   // SX
   const lightDarkColor = useLightDarkColor();
 
-  const userData = useGetUserData();
-  const exportPermission = isHasPermissions(userData.permission, [60]);
-  const importPermission = isHasPermissions(userData.permission, [59]);
-  const createPermission = isHasPermissions(userData.permission, [55]);
+  const { userPermissions } = useAuth();
+  const exportPermission = isHasPermissions(userPermissions, [52]);
+  const importPermission = isHasPermissions(userPermissions, [51]);
+  const createPermission = isHasPermissions(userPermissions, [48]);
 
   return (
     <>

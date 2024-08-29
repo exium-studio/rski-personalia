@@ -41,8 +41,8 @@ export default function Presensi() {
   const lightDarkColor = useLightDarkColor();
 
   const { userPermissions } = useAuth();
-  const exportPermission = isHasPermissions(userPermissions, [54]);
-  const importPermission = isHasPermissions(userPermissions, [53]);
+  const exportPermission = isHasPermissions(userPermissions, [47]);
+  const importPermission = isHasPermissions(userPermissions, [46]);
 
   return (
     <>

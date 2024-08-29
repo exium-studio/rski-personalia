@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useLightDarkColor } from "../../constant/colors";
 import pengaturanNavs from "../../constant/pengaturanNavs";
 import { iconSize } from "../../constant/sizes";
-import useGetUserData from "../../hooks/useGetUserData";
+import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 import isHasSomePermissions from "../../lib/isHasSomePermissions";
 import CContainer from "../wrapper/CContainer";
@@ -16,7 +16,7 @@ interface Props {
 export default function PengaturanNavs({ activeGroup, active }: Props) {
   // SX
   const lightDarkColor = useLightDarkColor();
-  const userData = useGetUserData();
+  const { userPermissions } = useAuth();
 
   return (
     <CContainer
@@ -42,7 +42,7 @@ export default function PengaturanNavs({ activeGroup, active }: Props) {
       >
         {pengaturanNavs.map((nav, i) => {
           const hasPermissions = isHasSomePermissions(
-            userData.permission,
+            userPermissions,
             nav.allowed
           );
 
@@ -54,7 +54,7 @@ export default function PengaturanNavs({ activeGroup, active }: Props) {
                 </Text>
                 {nav.navs.map((subNav, ii) => {
                   const hasPermissiong = isHasPermissions(
-                    userData.permission,
+                    userPermissions,
                     subNav.allowed
                   );
 

@@ -1,7 +1,10 @@
 import { Box, Center, Text, Tooltip } from "@chakra-ui/react";
 import { useState } from "react";
+import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
+import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
+import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -14,9 +17,6 @@ import Retry from "./Retry";
 import StatusApprovalBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
-import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
-import useGetUserData from "../../hooks/useGetUserData";
-import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props {
   filterConfig: any;
@@ -51,8 +51,8 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
       ],
     });
 
-  const userData = useGetUserData();
-  const verif1Permission = isHasPermissions(userData.permission, [2]);
+  const { userPermissions } = useAuth();
+  const verif1Permission = isHasPermissions(userPermissions, [3]);
 
   const formattedHeader = [
     {

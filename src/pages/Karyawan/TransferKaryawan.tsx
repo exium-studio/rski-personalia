@@ -38,8 +38,8 @@ export default function TransferKaryawan() {
   const lightDarkColor = useLightDarkColor();
 
   const { userPermissions } = useAuth();
-  const exportPermission = isHasPermissions(userPermissions, [60]);
-  const createPermission = isHasPermissions(userPermissions, [55]);
+  const exportPermission = isHasPermissions(userPermissions, [52]);
+  const createPermission = isHasPermissions(userPermissions, [48]);
 
   return (
     <>

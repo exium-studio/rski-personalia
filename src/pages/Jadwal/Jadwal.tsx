@@ -10,8 +10,10 @@ import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import TerapkanJadwalModal from "../../components/independent/TerapkanJadwalModal";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useGetUserData from "../../hooks/useGetUserData";
 import isHasPermissions from "../../lib/isHasPermissions";
@@ -114,10 +116,10 @@ export default function Jadwal() {
   // SX
   const lightDarkColor = useLightDarkColor();
 
-  const userData = useGetUserData();
-  const exportPermissions = isHasPermissions(userData.permission, [27]);
-  const importPermissions = isHasPermissions(userData.permission, [26]);
-  const createPermissions = isHasPermissions(userData.permission, [22]);
+  const { userPermissions } = useAuth();
+  const exportPermissions = isHasPermissions(userPermissions, [23]);
+  const importPermissions = isHasPermissions(userPermissions, [24]);
+  const createPermissions = isHasPermissions(userPermissions, [19]);
 
   return (
     <>
@@ -182,12 +184,15 @@ export default function Jadwal() {
               />
             </Tooltip>
 
-            <Tooltip label={!createPermissions && "Tidak ada akses"}>
+            <PermissionTooltip
+              permission={createPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
               <TerapkanJadwalModal
                 minW={"fit-content"}
                 isDisabled={!createPermissions}
               />
-            </Tooltip>
+            </PermissionTooltip>
           </HStack>
 
           <TabelJadwal filterConfig={filterConfig} />

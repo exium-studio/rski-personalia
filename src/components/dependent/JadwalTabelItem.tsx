@@ -16,7 +16,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  Tooltip,
   useDisclosure,
   useToast,
   VStack,
@@ -25,20 +24,21 @@ import { RiEditBoxLine } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
 import { responsiveSpacing } from "../../constant/sizes";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
+import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
+import formatTime from "../../lib/formatTime";
 import isDatePassed from "../../lib/isDatePassed";
+import isHasPermissions from "../../lib/isHasPermissions";
+import req from "../../lib/req";
 import RequiredForm from "../form/RequiredForm";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import SelectShift from "./_Select/SelectShift";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
-import formatTime from "../../lib/formatTime";
-import isHasPermissions from "../../lib/isHasPermissions";
-import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props {
   data: any;
@@ -145,12 +145,12 @@ export default function TabelJadwalItem({
     }
   }, [libur, formikRef]);
 
-  const userData = useGetUserData();
-  const editPermissions = isHasPermissions(userData.permission, [23]);
+  const { userPermissions } = useAuth();
+  const editPermissions = isHasPermissions(userPermissions, [20]);
 
   return (
     <>
-      <Tooltip label={!editPermissions && "Tidak ada akses"}>
+      <PermissionTooltip permission={editPermissions}>
         <VStack
           as={Button}
           p={3}
@@ -169,10 +169,11 @@ export default function TabelJadwalItem({
         >
           <HStack gap={3} justify={"space-between"} flex={1}>
             <Box>
-              <Text noOfLines={1} mb={1} fontSize={14}>
+              <Text textAlign={"left"} noOfLines={1} mb={1} fontSize={14}>
                 {jadwal?.shift?.nama || "Libur"}
               </Text>
               <Text
+                textAlign={"left"}
                 fontSize={14}
                 whiteSpace={"nowrap"}
                 // opacity={jadwal?.shift ? 1 : 0}
@@ -196,7 +197,7 @@ export default function TabelJadwalItem({
               )}
           </HStack>
         </VStack>
-      </Tooltip>
+      </PermissionTooltip>
 
       <Modal
         isOpen={isOpen}

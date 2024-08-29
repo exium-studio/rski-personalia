@@ -1,6 +1,6 @@
 import { Box, Button, HStack, StackProps, Text } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 import CWrapper from "../wrapper/CWrapper";
@@ -13,6 +13,7 @@ interface Props extends StackProps {
 
 export default function TopNavs({ data, active, ...props }: Props) {
   const activeNavRef = useRef<any>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (activeNavRef.current) {
@@ -40,14 +41,15 @@ export default function TopNavs({ data, active, ...props }: Props) {
               <PermissionTooltip key={i} permission={viewPermission}>
                 <Button
                   size={"sm"}
-                  as={Link}
                   fontWeight={400}
-                  to={nav.link}
                   className={active === i ? "btn-apa" : "btn"}
                   scrollSnapAlign={"center"}
                   // color={"p.500"}
                   ref={active === i ? activeNavRef : null}
                   isDisabled={!viewPermission}
+                  onClick={() => {
+                    navigate(nav.link);
+                  }}
                 >
                   <Text
                     opacity={active === i ? 1 : 0.6}

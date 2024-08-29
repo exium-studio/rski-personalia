@@ -9,9 +9,12 @@ import AjukanCutiModal from "../../components/independent/AjukanCutiModal";
 import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Cuti() {
   // Filter Config
@@ -35,6 +38,10 @@ export default function Cuti() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermissions = isHasPermissions(userPermissions, [38]);
+  const exportPermissions = isHasPermissions(userPermissions, [42]);
 
   return (
     <>
@@ -106,13 +113,26 @@ export default function Cuti() {
 
             <FilterKaryawan />
 
-            <ExportModal
-              url="/api/rski/dashboard/jadwal-karyawan/cuti/export"
-              title="Export Cuti"
-              downloadFileName="Data Cuti"
-            />
-
-            <AjukanCutiModal minW={"fit-content"} />
+            <PermissionTooltip
+              permission={exportPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <ExportModal
+                url="/api/rski/dashboard/jadwal-karyawan/cuti/export"
+                title="Export Cuti"
+                downloadFileName="Data Cuti"
+                isDisabled={!exportPermissions}
+              />
+            </PermissionTooltip>
+            <PermissionTooltip
+              permission={createPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <AjukanCutiModal
+                minW={"fit-content"}
+                isDisabled={!createPermissions}
+              />
+            </PermissionTooltip>
           </HStack>
 
           <TabelCuti filterConfig={filterConfig} />

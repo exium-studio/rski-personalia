@@ -160,7 +160,7 @@ export default function DetailKaryawanModal({
   }, [data]);
 
   const { userPermissions } = useAuth();
-  const editPermission = isHasPermissions(userPermissions, [56]);
+  const editPermission = isHasPermissions(userPermissions, [49]);
 
   return (
     <Modal
