@@ -17,6 +17,9 @@ import DashboardPengumumanItemDetail from "./DashboardPengumumanItemDetail";
 import NoData from "./NoData";
 import NotFound from "./NotFound";
 import Skeleton from "./Skeleton";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props extends StackProps {}
 
@@ -39,6 +42,9 @@ export default function DashboardPengumuman({ ...props }: Props) {
 
   // SX
   const bodyColor = useBodyColor();
+
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [53]);
 
   return (
     <VStack
@@ -89,7 +95,11 @@ export default function DashboardPengumuman({ ...props }: Props) {
                     </Text>
                   </Box>
 
-                  <DashboardBuatPengumumanModal />
+                  <PermissionTooltip permission={createPermission}>
+                    <DashboardBuatPengumumanModal
+                      isDisabled={!createPermission}
+                    />
+                  </PermissionTooltip>
                 </HStack>
 
                 <SearchComponent

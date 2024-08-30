@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonProps,
   Icon,
   Modal,
   ModalBody,
@@ -17,7 +18,9 @@ import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardBuatPengumuman from "../form/Dashboard/FormDashboardBuatPengumuman";
 
-export default function DashboardBuatPengumumanModal() {
+interface Props extends ButtonProps {}
+
+export default function DashboardBuatPengumumanModal({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   useBackOnClose("buat-pengumuman-modal", isOpen, onOpen, onClose);
@@ -32,6 +35,7 @@ export default function DashboardBuatPengumumanModal() {
         className="btn-ap clicky"
         colorScheme="ap"
         onClick={onOpen}
+        {...props}
       >
         Buat Pengumuman
       </Button>

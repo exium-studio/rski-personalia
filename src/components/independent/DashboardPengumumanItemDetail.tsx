@@ -29,6 +29,9 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardUpdatePengumuman from "../form/Dashboard/FormDashboardUpdatePengumuman";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import req from "../../lib/req";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface DeletePengumumanProps extends ButtonProps {
   data: any;
@@ -144,6 +147,10 @@ export default function DashboardPengumumanItemDetail({
   // SX
   const errorAlphaColor = useErrorAlphaColor();
 
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [54]);
+  const deletePermission = isHasPermissions(userPermissions, [55]);
+
   return (
     <>
       <VStack
@@ -208,21 +215,27 @@ export default function DashboardPengumumanItemDetail({
 
           <ModalFooter>
             <ButtonGroup w={"100%"}>
-              <DeletePengumuman
-                data={data}
-                isDisabled={loading}
-                bg={errorAlphaColor}
-              />
-              <Button
-                type="submit"
-                form="updatePengumumanForm"
-                w={"50%"}
-                className="btn-ap clicky"
-                colorScheme="ap"
-                isLoading={loading}
-              >
-                Simpan
-              </Button>
+              <PermissionTooltip permission={deletePermission}>
+                <DeletePengumuman
+                  data={data}
+                  bg={errorAlphaColor}
+                  isDisabled={loading || !deletePermission}
+                />
+              </PermissionTooltip>
+
+              <PermissionTooltip permission={editPermission}>
+                <Button
+                  type="submit"
+                  form="updatePengumumanForm"
+                  w={"50%"}
+                  className="btn-ap clicky"
+                  colorScheme="ap"
+                  isLoading={loading}
+                  isDisabled={!editPermission}
+                >
+                  Simpan
+                </Button>
+              </PermissionTooltip>
             </ButtonGroup>
           </ModalFooter>
         </ModalContent>
