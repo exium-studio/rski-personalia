@@ -1,22 +1,22 @@
 import { Center } from "@chakra-ui/react";
 import { useState } from "react";
+import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
+import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
-import StatusVerifikasiBadge from "./StatusVerifikasiBadge";
+import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
-import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface Props {
   filterConfig: any;
@@ -154,7 +154,7 @@ export default function TabelCuti({ filterConfig }: Props) {
       {
         value: item.status_cuti,
         td: (
-          <StatusVerifikasiBadge
+          <StatusVerifikasiBadge2
             data={item.status_cuti}
             alasan={item?.alasan}
             w={"180px"}
