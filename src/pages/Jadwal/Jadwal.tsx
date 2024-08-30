@@ -63,25 +63,31 @@ export default function Jadwal() {
 
   const user = useGetUserData();
   const userRef = useRef(user);
-  const filterKaryawanRef = useRef(filterKaryawan);
+  // const filterKaryawanRef = useRef(filterKaryawan);
   const formattedFilterKaryawanRef = useRef(formattedFilterKaryawan);
 
   useEffect(() => {
+    // console.log(userRef.current);
+
     if (userRef.current) {
       const unitKerjaUser = userRef.current?.data_karyawan?.unit_kerja;
 
       // console.log("uk user", unitKerjaUser);
+      // console.log(unitKerjaUser);
 
       if (unitKerjaUser) {
-        const unitKerjaExists = filterKaryawanRef.current.unit_kerja.some(
+        const unitKerjaExists = filterKaryawan.unit_kerja.some(
           (uk: any) => uk.id === unitKerjaUser.id
         );
 
+        // console.log(filterKaryawan);
+        // console.log(unitKerjaExists);
+
         if (!unitKerjaExists) {
           const presetUnitKerjaFilterKaryawan = {
-            ...filterKaryawanRef.current,
+            ...filterKaryawan,
             unit_kerja: [
-              ...filterKaryawanRef.current.unit_kerja,
+              ...filterKaryawan.unit_kerja,
               {
                 id: unitKerjaUser?.id,
                 label: unitKerjaUser?.nama_unit,
@@ -108,7 +114,7 @@ export default function Jadwal() {
         }
       }
     }
-  }, [setFilterKaryawan, setFormattedFilterKaryawan]);
+  }, [filterKaryawan, setFilterKaryawan, setFormattedFilterKaryawan]);
 
   // console.log(filterKaryawan);
   // console.log(formattedFilterKaryawan);
