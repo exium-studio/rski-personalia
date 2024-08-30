@@ -2,6 +2,7 @@ import { Box, Checkbox, HStack, Text } from "@chakra-ui/react";
 import { Dispatch, useState } from "react";
 import NotFound from "../independent/NotFound";
 import CContainer from "../wrapper/CContainer";
+import { useLightDarkColor } from "../../constant/colors";
 
 interface Props {
   role_id: number;
@@ -24,6 +25,9 @@ export default function TabelPengaturanKeizinan({
   setAllPermissions,
   formik,
 }: Props) {
+  // SX
+  const lightDarkColor = useLightDarkColor();
+
   // Filter Config
   const [filterConfig] = useState({
     search: "",
@@ -211,7 +215,7 @@ export default function TabelPengaturanKeizinan({
     verifikasi2: "Verif. 2",
   };
 
-  console.log("permission", fd);
+  // console.log("permission", fd);
 
   return (
     <>
@@ -231,10 +235,18 @@ export default function TabelPengaturanKeizinan({
       {fd?.length === 0 && <NotFound />}
 
       {fd?.length > 0 && (
-        <CContainer>
+        <CContainer
+          overflowY={"auto"}
+          border={"1px solid var(--divider3)"}
+          borderRadius={12}
+          className="scrollY"
+        >
           <HStack
-            borderTop={"1px solid var(--divider3)"}
             borderBottom={"1px solid var(--divider3)"}
+            position={"sticky"}
+            top={0}
+            bg={lightDarkColor}
+            zIndex={3}
           >
             <Box
               w={"100%"}
@@ -262,7 +274,9 @@ export default function TabelPengaturanKeizinan({
               <HStack
                 key={i}
                 w={"100%"}
-                borderBottom={"1px solid var(--divider3)"}
+                borderBottom={
+                  i !== fd.length - 1 ? "1px solid var(--divider3)" : ""
+                }
                 align={"stretch"}
                 gap={0}
               >
@@ -313,6 +327,7 @@ export default function TabelPengaturanKeizinan({
             );
           })}
         </CContainer>
+
         // <CustomTableContainer>
         //   <CustomTable
         //     formattedHeader={formattedHeader}
