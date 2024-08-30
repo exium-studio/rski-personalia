@@ -17,12 +17,15 @@ import Retry from "../../components/dependent/Retry";
 import RequiredForm from "../../components/form/RequiredForm";
 import Skeleton from "../../components/independent/Skeleton";
 import CContainer from "../../components/wrapper/CContainer";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useBodyColor } from "../../constant/colors";
-import req from "../../lib/req";
 import { responsiveSpacing } from "../../constant/sizes";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
+import useAuth from "../../global/useAuth";
 import useDataState from "../../hooks/useDataState";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import formatDate from "../../lib/formatDate";
+import isHasPermissions from "../../lib/isHasPermissions";
+import req from "../../lib/req";
 
 export default function PengaturanJadwalPenggajian() {
   const { error, notFound, loading, data, retry } = useDataState<any>({
@@ -84,6 +87,9 @@ export default function PengaturanJadwalPenggajian() {
       formikRef.current.setFieldValue("tgl_mulai", data?.tgl_mulai);
     }
   }, [data]);
+
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [93]);
 
   return (
     <CContainer
@@ -189,17 +195,20 @@ export default function PengaturanJadwalPenggajian() {
                 Terakhir diperbarui : {formatDate(data?.updated_at)}
               </Text>
 
-              <Button
-                w={"120px"}
-                className="btn-ap clicky"
-                flexShrink={0}
-                colorScheme="ap"
-                type="submit"
-                form="pengaturanJadwalPenggajianForm"
-                isLoading={loadingSimpan}
-              >
-                Simpan
-              </Button>
+              <PermissionTooltip permission={editPermission}>
+                <Button
+                  w={"120px"}
+                  className="btn-ap clicky"
+                  flexShrink={0}
+                  colorScheme="ap"
+                  type="submit"
+                  form="pengaturanJadwalPenggajianForm"
+                  isLoading={loadingSimpan}
+                  isDisabled={!editPermission}
+                >
+                  Simpan
+                </Button>
+              </PermissionTooltip>
             </HStack>
           </>
         )}

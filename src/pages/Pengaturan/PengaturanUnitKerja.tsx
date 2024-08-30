@@ -7,6 +7,9 @@ import TambahUnitKerja from "../../components/independent/TambahUnitKerja";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function PengaturanUnitKerja() {
   // Filter Config
@@ -18,6 +21,9 @@ export default function PengaturanUnitKerja() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [65]);
 
   return (
     <CContainer
@@ -68,7 +74,13 @@ export default function PengaturanUnitKerja() {
           maxW={"165px"}
           _focus={{ border: "1px solid var(--divider3)" }}
         />
-        <TambahUnitKerja minW={"fit-content"} />
+
+        <PermissionTooltip permission={createPermission}>
+          <TambahUnitKerja
+            minW={"fit-content"}
+            isDisabled={!createPermission}
+          />
+        </PermissionTooltip>
       </HStack>
 
       <TabelPengaturanUnitKerja filterConfig={filterConfig} />

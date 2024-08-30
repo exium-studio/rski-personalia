@@ -29,6 +29,9 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import formatDate from "../../lib/formatDate";
 import getLocation from "../../lib/getLocation";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function PengaturanLokasiPresensi() {
   // SX
@@ -142,6 +145,9 @@ export default function PengaturanLokasiPresensi() {
   useEffect(() => {
     getDataRef.current();
   }, [rt, getDataRef]);
+
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [111]);
 
   return (
     <>
@@ -300,17 +306,20 @@ export default function PengaturanLokasiPresensi() {
                           Terakhir diperbarui : {formatDate(data?.updated_at)}
                         </Text>
 
-                        <Button
-                          type="submit"
-                          form="lokasiPresensiForm"
-                          ml={"auto"}
-                          w={"fit-content"}
-                          colorScheme="ap"
-                          className="btn-ap clicky"
-                          isLoading={loadingSimpan}
-                        >
-                          Simpan
-                        </Button>
+                        <PermissionTooltip permission={editPermission}>
+                          <Button
+                            type="submit"
+                            form="lokasiPresensiForm"
+                            ml={"auto"}
+                            w={"fit-content"}
+                            colorScheme="ap"
+                            className="btn-ap clicky"
+                            isLoading={loadingSimpan}
+                            isDisabled={!editPermission}
+                          >
+                            Simpan
+                          </Button>
+                        </PermissionTooltip>
                       </HStack>
                     </CContainer>
                   </>

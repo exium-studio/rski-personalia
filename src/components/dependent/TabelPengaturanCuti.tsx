@@ -17,6 +17,9 @@ import TabelElipsisText from "./TabelElipsisText";
 import EditTipeCutiModalDisclosure from "../independent/EditTipeCutiModalDisclosure";
 import BooleanBadge from "./BooleanBadge";
 import isObjectEmpty from "../../lib/isObjectEmpty";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface Props {
   filterConfig?: any;
@@ -25,15 +28,21 @@ interface Props {
 export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
   // SX
 
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [108]);
+  const deletePermission = isHasPermissions(userPermissions, [109]);
+
   // Row Options Config
   const rowOptions = [
     (rowData: any) => {
       return (
         <EditTipeCutiModalDisclosure rowData={rowData}>
-          <MenuItem>
-            <Text>Edit</Text>
-            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
+          <PermissionTooltip permission={editPermission} placement="left">
+            <MenuItem isDisabled={!editPermission}>
+              <Text>Edit</Text>
+              <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
         </EditTipeCutiModalDisclosure>
       );
     },
@@ -43,10 +52,14 @@ export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
           id={rowData.id}
           url="/api/rski/dashboard/pengaturan/cuti/restore"
         >
-          <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
-            <Text>Restore</Text>
-            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
+          <PermissionTooltip permission={editPermission} placement="left">
+            <MenuItem
+              isDisabled={!rowData.columnsFormat[1].value || !editPermission}
+            >
+              <Text>Restore</Text>
+              <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
         </RestoreDataPengaturanModalDisclosure>
       );
     },
@@ -57,13 +70,19 @@ export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
           id={rowData.id}
           url="/api/rski/dashboard/pengaturan/cuti"
         >
-          <MenuItem
-            fontWeight={500}
-            isDisabled={rowData.columnsFormat[1].value}
-          >
-            <Text color={"red.400"}>Delete</Text>
-            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-          </MenuItem>
+          <PermissionTooltip permission={deletePermission} placement="left">
+            <MenuItem
+              fontWeight={500}
+              isDisabled={rowData.columnsFormat[1].value || !deletePermission}
+            >
+              <Text color={"red.400"}>Delete</Text>
+              <Icon
+                color={"red.400"}
+                as={RiDeleteBinLine}
+                fontSize={iconSize}
+              />
+            </MenuItem>
+          </PermissionTooltip>
         </DeleteDataPengaturanModalDisclosure>
       );
     },

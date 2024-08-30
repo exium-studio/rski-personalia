@@ -18,10 +18,12 @@ import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
 import { iconSize } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnCloseOld";
+import isHasPermissions from "../../lib/isHasPermissions";
+import req from "../../lib/req";
 import useBackOnClose from "../../lib/useBackOnCloseOld";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
@@ -84,18 +86,24 @@ export default function TambahRole({ ...props }: Props) {
     },
   });
 
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [59]);
+
   return (
     <>
+      {/* <PermissionTooltip permission={createPermission}> */}
       <Button
         className="btn-ap clicky"
         colorScheme="ap"
         onClick={onOpen}
         leftIcon={<Icon as={RiAddCircleFill} fontSize={iconSize} />}
         pl={5}
+        isDisabled={!createPermission}
         {...props}
       >
         Tambah Role
       </Button>
+      {/* </PermissionTooltip> */}
 
       <Modal
         isOpen={isOpen}

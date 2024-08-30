@@ -2,14 +2,17 @@ import { Center, Icon, MenuItem, Text, Tooltip } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
 import { Interface__SelectOption } from "../../constant/interfaces";
 import { iconSize } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useDataState from "../../hooks/useDataState";
 import formatNumber from "../../lib/formatNumber";
+import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import EditJabatanModalDisclosure from "../independent/EditJabatanModalDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import BooleanBadge from "./BooleanBadge";
 import CustomTable from "./CustomTable";
 import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
@@ -24,15 +27,21 @@ interface Props {
 export default function TabelPengaturanJabatan({ filterConfig }: Props) {
   // SX
 
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [70]);
+  const deletePermission = isHasPermissions(userPermissions, [71]);
+
   // Row Options Config
   const rowOptions = [
     (rowData: any) => {
       return (
         <EditJabatanModalDisclosure rowData={rowData}>
-          <MenuItem>
-            <Text>Edit</Text>
-            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
+          <PermissionTooltip permission={editPermission} placement="left">
+            <MenuItem isDisabled={!editPermission}>
+              <Text>Edit</Text>
+              <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
         </EditJabatanModalDisclosure>
       );
     },
@@ -42,10 +51,14 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
           id={rowData.id}
           url={`/api/rski/dashboard/pengaturan/jabatan/restore`}
         >
-          <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
-            <Text>Restore</Text>
-            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
+          <PermissionTooltip permission={editPermission} placement="left">
+            <MenuItem
+              isDisabled={!rowData.columnsFormat[1].value || !editPermission}
+            >
+              <Text>Restore</Text>
+              <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
         </RestoreDataPengaturanModalDisclosure>
       );
     },
@@ -56,13 +69,19 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
           id={rowData.id}
           url={`/api/rski/dashboard/pengaturan/jabatan`}
         >
-          <MenuItem
-            fontWeight={500}
-            isDisabled={rowData.columnsFormat[1].value}
-          >
-            <Text color={"red.400"}>Delete</Text>
-            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-          </MenuItem>
+          <PermissionTooltip permission={deletePermission} placement="left">
+            <MenuItem
+              fontWeight={500}
+              isDisabled={rowData.columnsFormat[1].value || !deletePermission}
+            >
+              <Text color={"red.400"}>Delete</Text>
+              <Icon
+                color={"red.400"}
+                as={RiDeleteBinLine}
+                fontSize={iconSize}
+              />
+            </MenuItem>
+          </PermissionTooltip>
         </DeleteDataPengaturanModalDisclosure>
       );
     },

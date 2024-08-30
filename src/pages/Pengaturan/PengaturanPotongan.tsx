@@ -8,6 +8,9 @@ import TambahPotongan from "../../components/independent/TambahPotongan";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function PengaturanPremi() {
   // Filter Config
@@ -20,6 +23,9 @@ export default function PengaturanPremi() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [85]);
 
   return (
     <CContainer
@@ -83,7 +89,9 @@ export default function PengaturanPremi() {
           flex={"0 1 fit-content"}
         />
 
-        <TambahPotongan minW={"fit-content"} />
+        <PermissionTooltip permission={createPermission}>
+          <TambahPotongan minW={"fit-content"} isDisabled={!createPermission} />
+        </PermissionTooltip>
       </HStack>
 
       <TabelPengaturanPotongan filterConfig={filterConfig} />

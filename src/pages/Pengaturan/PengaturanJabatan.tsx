@@ -7,6 +7,9 @@ import TambahJabatan from "../../components/independent/TambahJabatan";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function PengaturanJabatan() {
   // Filter Config
@@ -18,6 +21,9 @@ export default function PengaturanJabatan() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [69]);
 
   return (
     <CContainer
@@ -68,7 +74,10 @@ export default function PengaturanJabatan() {
           maxW={"165px"}
           _focus={{ border: "1px solid var(--divider3)" }}
         />
-        <TambahJabatan minW={"fit-content"} />
+
+        <PermissionTooltip permission={createPermission}>
+          <TambahJabatan minW={"fit-content"} isDisabled={!createPermission} />
+        </PermissionTooltip>
       </HStack>
 
       <TabelPengaturanJabatan filterConfig={filterConfig} />

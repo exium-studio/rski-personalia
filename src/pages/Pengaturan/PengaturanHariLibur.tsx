@@ -7,6 +7,9 @@ import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function PengaturanHariLibur() {
   // SX
@@ -18,6 +21,9 @@ export default function PengaturanHariLibur() {
     is_deleted: [],
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
+
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [103]);
 
   return (
     <CContainer
@@ -66,7 +72,12 @@ export default function PengaturanHariLibur() {
           _focus={{ border: "1px solid var(--divider3)" }}
         />
 
-        <TambahHariLibur minW={"fit-content"} />
+        <PermissionTooltip permission={createPermission}>
+          <TambahHariLibur
+            minW={"fit-content"}
+            isDisabled={!createPermission}
+          />
+        </PermissionTooltip>
       </HStack>
 
       <TabelHariLibur filterConfig={filterConfig} />

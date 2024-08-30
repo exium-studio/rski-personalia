@@ -7,6 +7,9 @@ import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function PengaturanTipeCuti() {
   // SX
@@ -18,6 +21,9 @@ export default function PengaturanTipeCuti() {
     is_deleted: [],
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
+
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [107]);
 
   return (
     <CContainer
@@ -66,7 +72,9 @@ export default function PengaturanTipeCuti() {
           _focus={{ border: "1px solid var(--divider3)" }}
         />
 
-        <TambahCuti minW={"fit-content"} />
+        <PermissionTooltip permission={createPermission}>
+          <TambahCuti minW={"fit-content"} isDisabled={!createPermission} />
+        </PermissionTooltip>
       </HStack>
 
       <TabelPengaturanCuti filterConfig={filterConfig} />

@@ -24,6 +24,9 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function PengaturanJamKerjaNonShift() {
   // SX
@@ -98,6 +101,9 @@ export default function PengaturanJamKerjaNonShift() {
       formikRef.current.setFieldValue("jam_to", data?.jam_to);
     }
   }, [data, formikRef]);
+
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [100]);
 
   return (
     <CContainer
@@ -207,17 +213,21 @@ export default function PengaturanJamKerjaNonShift() {
                 <Text opacity={0.4}>
                   Terakhir diperbarui : {formatDate(data.updated_at)}
                 </Text>
-                <Button
-                  className="btn-ap clicky"
-                  colorScheme="ap"
-                  ml={"auto"}
-                  mt={"auto"}
-                  type="submit"
-                  form="jamKerjaNonShiftForm"
-                  isLoading={updateLoading}
-                >
-                  Simpan
-                </Button>
+
+                <PermissionTooltip permission={editPermission}>
+                  <Button
+                    className="btn-ap clicky"
+                    colorScheme="ap"
+                    ml={"auto"}
+                    mt={"auto"}
+                    type="submit"
+                    form="jamKerjaNonShiftForm"
+                    isLoading={updateLoading}
+                    isDisabled={!editPermission}
+                  >
+                    Simpan
+                  </Button>
+                </PermissionTooltip>
               </HStack>
             </>
           )}

@@ -7,6 +7,9 @@ import TambahKelompokGaji from "../../components/independent/TambahKelompokGaji"
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function PengaturanKelompokGaji() {
   // Filter Config
@@ -18,6 +21,9 @@ export default function PengaturanKelompokGaji() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [77]);
 
   return (
     <CContainer
@@ -68,7 +74,13 @@ export default function PengaturanKelompokGaji() {
           maxW={"165px"}
           _focus={{ border: "1px solid var(--divider3)" }}
         />
-        <TambahKelompokGaji minW={"fit-content"} />
+
+        <PermissionTooltip permission={createPermission}>
+          <TambahKelompokGaji
+            minW={"fit-content"}
+            isDisabled={!createPermission}
+          />
+        </PermissionTooltip>
       </HStack>
 
       <TabelKelompokGaji filterConfig={filterConfig} />

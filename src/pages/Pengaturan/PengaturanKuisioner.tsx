@@ -6,8 +6,11 @@ import MultiSelectJabatan from "../../components/dependent/_Select/MultiSelectJa
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TambahKuisioner from "../../components/independent/TambahKuisioner";
 import CContainer from "../../components/wrapper/CContainer";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function PengaturanKuisioner() {
   // Filter Config
@@ -20,6 +23,9 @@ export default function PengaturanKuisioner() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [81]);
 
   return (
     <CContainer
@@ -84,7 +90,12 @@ export default function PengaturanKuisioner() {
           flex={"0 1 fit-content"}
         />
 
-        <TambahKuisioner minW={"fit-content"} />
+        <PermissionTooltip permission={createPermission}>
+          <TambahKuisioner
+            minW={"fit-content"}
+            isDisabled={!createPermission}
+          />
+        </PermissionTooltip>
       </HStack>
 
       <TabelPengaturanKuisioner filterConfig={filterConfig} />

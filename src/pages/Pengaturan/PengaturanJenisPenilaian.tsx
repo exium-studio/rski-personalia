@@ -5,8 +5,11 @@ import TabelPengaturanJenisPenilaian from "../../components/dependent/TabelPenga
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TambahJenisPenilaian from "../../components/independent/TambahJenisPenilaian";
 import CContainer from "../../components/wrapper/CContainer";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function PengaturanJenisPenilaian() {
   // Filter Config
@@ -18,6 +21,9 @@ export default function PengaturanJenisPenilaian() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [113]);
 
   return (
     <CContainer
@@ -68,7 +74,13 @@ export default function PengaturanJenisPenilaian() {
           maxW={"165px"}
           _focus={{ border: "1px solid var(--divider3)" }}
         />
-        <TambahJenisPenilaian minW={"fit-content"} />
+
+        <PermissionTooltip permission={createPermission}>
+          <TambahJenisPenilaian
+            minW={"fit-content"}
+            isDisabled={!createPermission}
+          />
+        </PermissionTooltip>
       </HStack>
 
       <TabelPengaturanJenisPenilaian filterConfig={filterConfig} />

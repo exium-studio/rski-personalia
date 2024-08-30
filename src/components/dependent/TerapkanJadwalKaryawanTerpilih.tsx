@@ -129,7 +129,10 @@ export default function TerapkanJadwalKaryawanTerpilih({
 
   return (
     <>
-      <PermissionTooltip permission={createPermissions}>
+      <PermissionTooltip
+        permission={createPermissions}
+        boxProps={{ w: "100%" }}
+      >
         <VStack
           as={Button}
           p={3}

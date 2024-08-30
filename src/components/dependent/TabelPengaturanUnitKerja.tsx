@@ -16,6 +16,9 @@ import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDi
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
 import TabelElipsisText from "./TabelElipsisText";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface Props {
   filterConfig?: any;
@@ -23,16 +26,21 @@ interface Props {
 
 export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
   // SX
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [66]);
+  const deletePermission = isHasPermissions(userPermissions, [67]);
 
   // Row Options Config
   const rowOptions = [
     (rowData: any) => {
       return (
         <EditUnitKerjaModalDisclosure rowData={rowData}>
-          <MenuItem>
-            <Text>Edit</Text>
-            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
+          <PermissionTooltip permission={editPermission} placement="left">
+            <MenuItem isDisabled={!editPermission}>
+              <Text>Edit</Text>
+              <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
         </EditUnitKerjaModalDisclosure>
       );
     },
@@ -42,10 +50,14 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
           id={rowData.id}
           url={`/api/rski/dashboard/pengaturan/unit-kerja/restore`}
         >
-          <MenuItem isDisabled={!rowData.columnsFormat[1].value}>
-            <Text>Restore</Text>
-            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
+          <PermissionTooltip permission={editPermission} placement="left">
+            <MenuItem
+              isDisabled={!rowData.columnsFormat[1].value || !editPermission}
+            >
+              <Text>Restore</Text>
+              <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
         </RestoreDataPengaturanModalDisclosure>
       );
     },
@@ -56,13 +68,19 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
           id={rowData.id}
           url={`/api/rski/dashboard/pengaturan/unit-kerja`}
         >
-          <MenuItem
-            fontWeight={500}
-            isDisabled={rowData.columnsFormat[1].value}
-          >
-            <Text color={"red.400"}>Delete</Text>
-            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-          </MenuItem>
+          <PermissionTooltip permission={deletePermission} placement="left">
+            <MenuItem
+              fontWeight={500}
+              isDisabled={rowData.columnsFormat[1].value || !deletePermission}
+            >
+              <Text color={"red.400"}>Delete</Text>
+              <Icon
+                color={"red.400"}
+                as={RiDeleteBinLine}
+                fontSize={iconSize}
+              />
+            </MenuItem>
+          </PermissionTooltip>
         </DeleteDataPengaturanModalDisclosure>
       );
     },

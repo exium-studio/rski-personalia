@@ -7,6 +7,9 @@ import TambahKompetensi from "../../components/independent/TambahKompetensi";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function PengaturanKompetensi() {
   // Filter Config
@@ -18,6 +21,9 @@ export default function PengaturanKompetensi() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
+
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [73]);
 
   return (
     <CContainer
@@ -68,7 +74,13 @@ export default function PengaturanKompetensi() {
           maxW={"165px"}
           _focus={{ border: "1px solid var(--divider3)" }}
         />
-        <TambahKompetensi minW={"fit-content"} />
+
+        <PermissionTooltip permission={createPermission}>
+          <TambahKompetensi
+            minW={"fit-content"}
+            isDisabled={!createPermission}
+          />
+        </PermissionTooltip>
       </HStack>
 
       <TabelPengaturanKompetensi filterConfig={filterConfig} />

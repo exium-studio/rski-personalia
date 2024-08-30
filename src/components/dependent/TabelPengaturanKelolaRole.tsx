@@ -12,21 +12,30 @@ import DetailKelolaRoleModal from "./DetailKelolaRoleModal";
 import Retry from "./Retry";
 import TabelElipsisText from "./TabelElipsisText";
 import EditRoleModalDisclosure from "../independent/EditRoleModalDisclosure";
+import isHasPermissions from "../../lib/isHasPermissions";
+import useAuth from "../../global/useAuth";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface Props {
   filterConfig?: any;
 }
 
 export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [60]);
+  const edit2Permission = isHasPermissions(userPermissions, [62]);
+
   // Row Options Config
   const rowOptions = [
     (rowData: any) => {
       return (
         <EditRoleModalDisclosure rowData={rowData}>
-          <MenuItem>
-            <Text>Edit</Text>
-            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
+          <PermissionTooltip permission={editPermission}>
+            <MenuItem isDisabled={!editPermission}>
+              <Text>Edit</Text>
+              <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
         </EditRoleModalDisclosure>
       );
     },
@@ -172,11 +181,13 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
                         <CustomTable
                           formattedHeader={formattedHeader}
                           formattedData={formattedData}
-                          onRowClick={(rowData) => {
-                            localStorage.setItem("role_id", rowData.id);
-                            onOpen();
-                          }}
                           rowOptions={rowOptions}
+                          {...(edit2Permission && {
+                            onRowClick: (rowData) => {
+                              localStorage.setItem("role_id", rowData.id);
+                              onOpen();
+                            },
+                          })}
                         />
                       </CustomTableContainer>
 

@@ -38,7 +38,7 @@ const pengaturanNavs = [
     ],
   },
   {
-    allowed: [80, 72, 69, 91, 114, 84],
+    allowed: [80, 72, 69, 76, 114, 84],
     groupName: "Kepegawaian",
     navs: [
       {
@@ -54,13 +54,13 @@ const pengaturanNavs = [
         link: "/pengaturan/karyawan/jabatan",
       },
       {
-        allowed: [69],
+        allowed: [64],
         icon: RiGroup3Line,
         label: "Unit Kerja",
         link: "/pengaturan/karyawan/unit-kerja",
       },
       {
-        allowed: [91],
+        allowed: [76],
         icon: RiVerifiedBadgeLine,
         label: "Kompetensi",
         link: "/pengaturan/karyawan/kompetensi",

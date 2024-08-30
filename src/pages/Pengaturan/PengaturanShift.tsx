@@ -7,6 +7,9 @@ import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function PengaturanShift() {
   // SX
@@ -18,6 +21,9 @@ export default function PengaturanShift() {
     is_deleted: [],
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
+
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [99]);
 
   return (
     <CContainer
@@ -66,7 +72,9 @@ export default function PengaturanShift() {
           _focus={{ border: "1px solid var(--divider3)" }}
         />
 
-        <TambahShift minW={"fit-content"} />
+        <PermissionTooltip permission={createPermission}>
+          <TambahShift minW={"fit-content"} isDisabled={!createPermission} />
+        </PermissionTooltip>
       </HStack>
 
       <TabelShift filterConfig={filterConfig} />
