@@ -81,8 +81,8 @@ const DeletePengumuman = ({ data, ...props }: DeletePengumumanProps) => {
     <>
       <Button
         w={"100%"}
-        className="clicky"
-        colorScheme="red"
+        className="btn-solid clicky"
+        color="red.400"
         variant={"ghost"}
         onClick={onOpen}
         {...props}
@@ -221,7 +221,6 @@ export default function DashboardPengumumanItemDetail({
               >
                 <DeletePengumuman
                   data={data}
-                  bg={`${errorAlphaColor} !important`}
                   isDisabled={loading || !deletePermission}
                 />
               </PermissionTooltip>
