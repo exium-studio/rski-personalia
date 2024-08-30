@@ -15,28 +15,28 @@ import {
 import { RiArrowRightUpLine } from "@remixicon/react";
 import { useState } from "react";
 import { iconSize } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
+import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import DetailKaryawanModalDisclosure from "./DetailKaryawanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
-import StatusVerifikasiBadge from "./StatusVerifikasiBadge";
+import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
-import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 const PesertaModal = ({ data }: { data: any }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -199,7 +199,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
         right: 0,
         zIndex: 4,
       },
-      cProps: { 
+      cProps: {
         justify: "center",
         borderLeft: "1px solid var(--divider3)",
         w: "122px",
@@ -237,7 +237,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
       {
         value: item.status_diklat.label,
-        td: <StatusVerifikasiBadge data={item.status_diklat} w={"180px"} />,
+        td: <StatusVerifikasiBadge2 data={item.status_diklat} w={"180px"} />,
       },
       {
         value: item.deskripsi,
