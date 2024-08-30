@@ -1,4 +1,5 @@
-import { Box, BoxProps, Tooltip, TooltipProps } from "@chakra-ui/react";
+import { BoxProps, Tooltip, TooltipProps } from "@chakra-ui/react";
+import CContainer from "./CContainer";
 
 interface Props extends TooltipProps {
   children: any;
@@ -14,9 +15,7 @@ export default function PermissionTooltip({
 }: Props) {
   return (
     <Tooltip label={!permission && "Tidak ada akses"} {...props}>
-      <Box w={"100%"} {...boxProps}>
-        {children}
-      </Box>
+      <CContainer {...boxProps}>{children}</CContainer>
     </Tooltip>
   );
 }
