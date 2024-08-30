@@ -16,7 +16,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiArrowUpDownLine, RiCalendarCheckFill } from "@remixicon/react";
+import { RiArrowUpDownFill, RiArrowUpDownLine } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
@@ -105,7 +105,7 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
         colorScheme="ap"
         className="btn-ap clicky"
         onClick={onOpen}
-        leftIcon={<Icon as={RiCalendarCheckFill} fontSize={iconSize} />}
+        leftIcon={<Icon as={RiArrowUpDownFill} fontSize={iconSize} />}
         {...props}
       >
         Ajukan Tukar Jadwal
