@@ -199,7 +199,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
         right: 0,
         zIndex: 4,
       },
-      cProps: {
+      cProps: { 
         justify: "center",
         borderLeft: "1px solid var(--divider3)",
         w: "122px",

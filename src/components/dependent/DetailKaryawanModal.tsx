@@ -590,10 +590,7 @@ export default function DetailKaryawanModal({
                             />
 
                             {/* Edit */}
-                            <PermissionTooltip
-                              permission={editPermission}
-                              label={!editPermission && "Tidak ada akses"}
-                            >
+                            <PermissionTooltip permission={editPermission}>
                               <AktifkanNonaktifkanButton
                                 karyawan_id={data.id}
                                 data={data?.user?.status_aktif}

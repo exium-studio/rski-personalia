@@ -15,7 +15,9 @@ export default function PermissionTooltip({
 }: Props) {
   return (
     <Tooltip label={!permission && "Tidak ada akses"} {...props}>
-      <CContainer {...boxProps}>{children}</CContainer>
+      <CContainer flex={0} {...boxProps}>
+        {children}
+      </CContainer>
     </Tooltip>
   );
 }
