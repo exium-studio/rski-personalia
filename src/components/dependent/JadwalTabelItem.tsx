@@ -150,7 +150,10 @@ export default function TabelJadwalItem({
 
   return (
     <>
-      <PermissionTooltip permission={editPermissions} boxProps={{ w: "100%" }}>
+      <PermissionTooltip
+        permission={editPermissions}
+        boxProps={{ w: "100%", h: "100%" }}
+      >
         <VStack
           as={Button}
           p={3}
@@ -160,6 +163,7 @@ export default function TabelJadwalItem({
           borderRadius={8}
           w={"100%"}
           minH={"74px"}
+          h={"100%"}
           align={"stretch"}
           justify={"center"}
           className="btn-solid clicky"
@@ -275,7 +279,7 @@ export default function TabelJadwalItem({
                 id="terapkanJadwalKaryawanTerpilihForm"
                 onSubmit={formik.handleSubmit}
               >
-                <FormControl mt={3} isInvalid={!!formik.errors.shift}>
+                <FormControl mt={4} isInvalid={!!formik.errors.shift}>
                   <FormLabel>
                     Jam Kerja (Shift)
                     <RequiredForm />
@@ -298,7 +302,7 @@ export default function TabelJadwalItem({
                     isChecked={libur}
                     isDisabled={isDatePassed(tgl as string)}
                   >
-                    <Text mt={"-2.5px"}>Jadwalkan Libur</Text>
+                    <Text mt={"-3px"}>Jadwalkan Libur</Text>
                   </Checkbox>
                   <FormErrorMessage>
                     {formik.errors.shift as string}
