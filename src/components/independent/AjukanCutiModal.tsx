@@ -172,7 +172,7 @@ export default function AjukanCutiModal({ ...props }: Props) {
                     formik.setFieldValue("range_tgl", input);
                   }}
                   inputValue={formik.values.range_tgl}
-                  maxRange={31}
+                  // maxRange={31}
                   isError={!!formik.errors.range_tgl}
                 />
                 <FormErrorMessage>
