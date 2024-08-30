@@ -18,7 +18,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiCalendarFill } from "@remixicon/react";
+import { RiCalendarScheduleFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
@@ -116,7 +116,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
         colorScheme="ap"
         className="btn-ap clicky"
         onClick={onOpen}
-        leftIcon={<Icon as={RiCalendarFill} fontSize={iconSize} />}
+        leftIcon={<Icon as={RiCalendarScheduleFill} fontSize={iconSize} />}
         {...props}
       >
         Terapkan Shift

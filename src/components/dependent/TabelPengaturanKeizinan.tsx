@@ -232,6 +232,31 @@ export default function TabelPengaturanKeizinan({
 
       {fd?.length > 0 && (
         <CContainer>
+          <HStack
+            borderTop={"1px solid var(--divider3)"}
+            borderBottom={"1px solid var(--divider3)"}
+          >
+            <Box
+              w={"100%"}
+              maxW={"240px"}
+              borderRight={"1px solid var(--divider3)"}
+              p={4}
+            >
+              <Text
+                fontWeight={500}
+                opacity={0.4}
+                // border={"1px solid red"}
+              >
+                Nama Modul
+              </Text>
+            </Box>
+            <HStack px={6}>
+              <Text fontWeight={500} opacity={0.4}>
+                Permissions
+              </Text>
+            </HStack>
+          </HStack>
+
           {fd.map((item: any, i: number) => {
             return (
               <HStack
