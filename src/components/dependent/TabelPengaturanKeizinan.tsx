@@ -213,6 +213,7 @@ export default function TabelPengaturanKeizinan({
     import: "Import",
     verifikasi1: "Verif. 1",
     verifikasi2: "Verif. 2",
+    bypass: "Bypass Unit Kerja",
   };
 
   // console.log("permission", fd);
