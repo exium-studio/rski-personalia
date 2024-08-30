@@ -186,7 +186,7 @@ export default function TabelJadwalItem({
             </Box>
 
             {data.unit_kerja?.jenis_karyawan === 1 &&
-              !isDatePassed(tgl as string, true) && (
+              !isDatePassed(tgl as string) && (
                 <Icon
                   as={RiEditBoxLine}
                   fontSize={20}
