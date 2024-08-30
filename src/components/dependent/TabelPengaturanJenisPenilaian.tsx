@@ -26,8 +26,8 @@ interface Props {
 export default function TabelPengaturanJenisPenilaian({ filterConfig }: Props) {
   // SX
   const { userPermissions } = useAuth();
-  const editPermission = isHasPermissions(userPermissions, [113]);
-  const deletePermission = isHasPermissions(userPermissions, [113]);
+  const editPermission = isHasPermissions(userPermissions, [118]);
+  const deletePermission = isHasPermissions(userPermissions, [119]);
 
   // Row Options Config
   const rowOptions = [
