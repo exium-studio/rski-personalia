@@ -80,9 +80,9 @@ const DeletePengumuman = ({ data, ...props }: DeletePengumumanProps) => {
   return (
     <>
       <Button
-        w={"50%"}
+        w={"100%"}
         className="clicky"
-        colorScheme="error"
+        colorScheme="red"
         variant={"ghost"}
         onClick={onOpen}
         {...props}
@@ -215,19 +215,25 @@ export default function DashboardPengumumanItemDetail({
 
           <ModalFooter>
             <ButtonGroup w={"100%"}>
-              <PermissionTooltip permission={deletePermission}>
+              <PermissionTooltip
+                permission={deletePermission}
+                boxProps={{ w: "100%" }}
+              >
                 <DeletePengumuman
                   data={data}
-                  bg={errorAlphaColor}
+                  bg={`${errorAlphaColor} !important`}
                   isDisabled={loading || !deletePermission}
                 />
               </PermissionTooltip>
 
-              <PermissionTooltip permission={editPermission}>
+              <PermissionTooltip
+                permission={editPermission}
+                boxProps={{ w: "100%" }}
+              >
                 <Button
                   type="submit"
                   form="updatePengumumanForm"
-                  w={"50%"}
+                  w={"100%"}
                   className="btn-ap clicky"
                   colorScheme="ap"
                   isLoading={loading}
