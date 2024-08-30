@@ -14,6 +14,10 @@ import PertukaranJadwalModal from "./PertukaranJadwalModal";
 import Retry from "./Retry";
 import StatusVerifikasiBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
+import VerifikasiModal from "./VerifikasiModal";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface Props {
   filterConfig?: any;
@@ -51,6 +55,11 @@ export default function TabelKaryawan({ filterConfig }: Props) {
       ],
     });
 
+  const { userPermissions } = useAuth();
+  //TODO belum lengkap
+  const verif1Permission = isHasPermissions(userPermissions, [31]);
+  const verif2Permission = isHasPermissions(userPermissions, [32]);
+
   const formattedHeader = [
     {
       th: "Tanggal Pengajuan",
@@ -85,6 +94,32 @@ export default function TabelKaryawan({ filterConfig }: Props) {
         justify: "center",
       },
     },
+    {
+      th: "Verif. 1",
+      props: {
+        position: "sticky",
+        right: 0,
+        zIndex: 4,
+      },
+      cProps: {
+        justify: "center",
+        borderLeft: "1px solid var(--divider3)",
+        w: "122px",
+      },
+    },
+    {
+      th: "Verif. 2",
+      props: {
+        position: "sticky",
+        right: 0,
+        zIndex: 3,
+      },
+      cProps: {
+        justify: "center",
+        borderLeft: "1px solid var(--divider3)",
+        w: "122px",
+      },
+    },
   ];
   const formattedData = data?.map((item: any) => ({
     id: item.id,
@@ -99,7 +134,7 @@ export default function TabelKaryawan({ filterConfig }: Props) {
       },
       {
         value: item.status_penukaran.label,
-        td: <StatusVerifikasiBadge data={item.status_penukaran} w={"120px"} />,
+        td: <StatusVerifikasiBadge data={item.status_penukaran} w={"180px"} />,
         cProps: {
           justify: "center",
         },
@@ -139,6 +174,54 @@ export default function TabelKaryawan({ filterConfig }: Props) {
         ),
         cProps: {
           justify: "center",
+        },
+      },
+      {
+        value: "",
+        td: item?.status_penukaran?.id === 1 && (
+          <PermissionTooltip permission={verif1Permission}>
+            <VerifikasiModal
+              aria-label={`perubahan-data-verif-1-button-${item.id}"`}
+              id={`verifikasi-perubahan-data-modal-${item.id}`}
+              submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1`}
+              approvePayloadKey="verifikasi_pertama_disetujui"
+              disapprovePayloadKey="verifikasi_pertama_ditolak"
+              isDisabled={!verif1Permission}
+            />
+          </PermissionTooltip>
+        ),
+        props: {
+          position: "sticky",
+          right: 0,
+          zIndex: 2,
+        },
+        cProps: {
+          justify: "center",
+          borderLeft: "1px solid var(--divider3)",
+        },
+      },
+      {
+        value: "",
+        td: item?.status_penukaran?.id === 2 && (
+          <PermissionTooltip permission={verif2Permission}>
+            <VerifikasiModal
+              aria-label={`perubahan-data-verif-2-button-${item.id}"`}
+              id={`verifikasi-perubahan-data-modal-${item.id}`}
+              submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
+              approvePayloadKey="verifikasi_kedua_disetujui"
+              disapprovePayloadKey="verifikasi_kedua_ditolak"
+              isDisabled={!verif2Permission}
+            />
+          </PermissionTooltip>
+        ),
+        props: {
+          position: "sticky",
+          right: 0,
+          zIndex: 1,
+        },
+        cProps: {
+          justify: "center",
+          borderLeft: "1px solid var(--divider3)",
         },
       },
     ],

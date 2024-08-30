@@ -14,6 +14,9 @@ import Retry from "./Retry";
 import StatusVerifikasiBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface Props {
   filterConfig: any;
@@ -48,6 +51,10 @@ export default function TabelCuti({ filterConfig }: Props) {
         formattedFilterKaryawan,
       ],
     });
+
+  const { userPermissions } = useAuth();
+  const verif1Permission = isHasPermissions(userPermissions, []);
+  const verif2Permission = isHasPermissions(userPermissions, []);
 
   const formattedHeader = [
     {
@@ -103,6 +110,7 @@ export default function TabelCuti({ filterConfig }: Props) {
       cProps: {
         justify: "center",
         borderLeft: "1px solid var(--divider3)",
+        w: "122px",
       },
     },
     {
@@ -115,6 +123,7 @@ export default function TabelCuti({ filterConfig }: Props) {
       cProps: {
         justify: "center",
         borderLeft: "1px solid var(--divider3)",
+        w: "122px",
       },
     },
   ];
@@ -187,15 +196,17 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
       {
         value: "",
-        td: (
-          <VerifikasiModal
-            aria-label={`perubahan-data-verif-1-button-${item.id}"`}
-            id={`verifikasi-perubahan-data-modal-${item.id}`}
-            submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1`}
-            approvePayloadKey="verifikasi_pertama_disetujui"
-            disapprovePayloadKey="verifikasi_pertama_ditolak"
-            isDisabled={item?.status_cuti?.id !== 1}
-          />
+        td: item?.status_cuti?.id === 1 && (
+          <PermissionTooltip permission={verif1Permission}>
+            <VerifikasiModal
+              aria-label={`perubahan-data-verif-1-button-${item.id}"`}
+              id={`verifikasi-perubahan-data-modal-${item.id}`}
+              submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1`}
+              approvePayloadKey="verifikasi_pertama_disetujui"
+              disapprovePayloadKey="verifikasi_pertama_ditolak"
+              isDisabled={!verif1Permission}
+            />
+          </PermissionTooltip>
         ),
         props: {
           position: "sticky",
@@ -209,15 +220,17 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
       {
         value: "",
-        td: (
-          <VerifikasiModal
-            aria-label={`perubahan-data-verif-2-button-${item.id}"`}
-            id={`verifikasi-perubahan-data-modal-${item.id}`}
-            submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
-            approvePayloadKey="verifikasi_kedua_disetujui"
-            disapprovePayloadKey="verifikasi_kedua_ditolak"
-            isDisabled={item?.status_cuti?.id !== 2}
-          />
+        td: item?.status_cuti?.id === 2 && (
+          <PermissionTooltip permission={verif2Permission}>
+            <VerifikasiModal
+              aria-label={`perubahan-data-verif-2-button-${item.id}"`}
+              id={`verifikasi-perubahan-data-modal-${item.id}`}
+              submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
+              approvePayloadKey="verifikasi_kedua_disetujui"
+              disapprovePayloadKey="verifikasi_kedua_ditolak"
+              isDisabled={!verif2Permission}
+            />
+          </PermissionTooltip>
         ),
         props: {
           position: "sticky",

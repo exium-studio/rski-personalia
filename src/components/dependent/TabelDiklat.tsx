@@ -34,6 +34,9 @@ import Retry from "./Retry";
 import StatusVerifikasiBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 const PesertaModal = ({ data }: { data: any }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -128,6 +131,10 @@ export default function TabelDiklat({ filterConfig }: Props) {
       dependencies: [limitConfig, pageConfig, filterConfig],
     });
 
+  const { userPermissions } = useAuth();
+  const verif1Permission = isHasPermissions(userPermissions, []);
+  const verif2Permission = isHasPermissions(userPermissions, []);
+
   const formattedHeader = [
     {
       th: "Nama Acara",
@@ -195,6 +202,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       cProps: {
         justify: "center",
         borderLeft: "1px solid var(--divider3)",
+        w: "122px",
       },
     },
     {
@@ -207,6 +215,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       cProps: {
         justify: "center",
         borderLeft: "1px solid var(--divider3)",
+        w: "122px",
       },
     },
   ];
@@ -278,19 +287,18 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
       {
         value: "",
-        td:
-          item?.status_diklat?.id === 1 ? (
+        td: item?.status_diklat?.id === 1 && (
+          <PermissionTooltip permission={verif1Permission}>
             <VerifikasiModal
               aria-label={`perubahan-data-verif-1-button-${item.id}"`}
               id={`verifikasi-diklat-modal-${item.id}`}
               submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
               approvePayloadKey="verifikasi_pertama_disetujui"
               disapprovePayloadKey="verifikasi_pertama_ditolak"
+              isDisabled={!verif1Permission}
             />
-          ) : (
-            ""
-            // <Text opacity={0.4}>Diverifikasi</Text>
-          ),
+          </PermissionTooltip>
+        ),
         props: {
           position: "sticky",
           right: 0,
@@ -303,19 +311,18 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
       {
         value: "",
-        td:
-          item?.status_diklat?.id === 4 ? (
+        td: item?.status_diklat?.id === 2 && (
+          <PermissionTooltip permission={verif2Permission}>
             <VerifikasiModal
               aria-label={`perubahan-data-verif-2-button-${item.id}"`}
               id={`verifikasi-diklat-modal-2-${item.id}`}
               submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
               approvePayloadKey="verifikasi_kedua_disetujui"
               disapprovePayloadKey="verifikasi_kedua_ditolak"
+              isDisabled={!verif2Permission}
             />
-          ) : (
-            ""
-            // <Text opacity={0.2}>Diverifikasi</Text>
-          ),
+          </PermissionTooltip>
+        ),
         props: {
           position: "sticky",
           right: 0,

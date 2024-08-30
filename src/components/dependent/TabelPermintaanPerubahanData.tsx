@@ -17,6 +17,7 @@ import Retry from "./Retry";
 import StatusApprovalBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface Props {
   filterConfig: any;
@@ -92,15 +93,16 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
       },
     },
     {
-      th: "Verif.",
+      th: "Verif. 1",
       props: {
         position: "sticky",
         right: 0,
-        zIndex: 2,
+        zIndex: 4,
       },
       cProps: {
         justify: "center",
         borderLeft: "1px solid var(--divider3)",
+        w: "122px",
       },
     },
   ];
@@ -187,12 +189,14 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
       {
         value: "",
         td: item?.status_perubahan?.id === 1 && (
-          <VerifikasiModal
-            aria-label={`perubahan-data-verif-button-${item.id}"`}
-            id={`verifikasi-perubahan-data-3-modal-${item.id}`}
-            submitUrl={`/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${item.id}`}
-            isDisabled={!verif1Permission}
-          />
+          <PermissionTooltip permission={verif1Permission}>
+            <VerifikasiModal
+              aria-label={`perubahan-data-verif-button-${item.id}"`}
+              id={`verifikasi-perubahan-data-3-modal-${item.id}`}
+              submitUrl={`/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${item.id}`}
+              isDisabled={!verif1Permission}
+            />
+          </PermissionTooltip>
         ),
         props: {
           position: "sticky",
