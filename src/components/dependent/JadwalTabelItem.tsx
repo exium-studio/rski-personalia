@@ -150,7 +150,7 @@ export default function TabelJadwalItem({
 
   return (
     <>
-      <PermissionTooltip permission={editPermissions}>
+      <PermissionTooltip permission={editPermissions} boxProps={{ w: "100%" }}>
         <VStack
           as={Button}
           p={3}
