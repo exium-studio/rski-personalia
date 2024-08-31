@@ -21,7 +21,8 @@ export default function PengaturanKelolaRole() {
   const lightDarkColor = useLightDarkColor();
 
   const { userPermissions } = useAuth();
-  const createPermission = isHasPermissions(userPermissions, [59]);
+  const viewPermission = isHasPermissions(userPermissions, [64]);
+  // const createPermission = isHasPermissions(userPermissions, [59]);
 
   return (
     <CContainer
@@ -57,8 +58,8 @@ export default function PengaturanKelolaRole() {
           tooltipLabel="Cari dengan nama role"
         />
 
-        <PermissionTooltip permission={createPermission}>
-          <TambahRole minW={"fit-content"} isDisabled={!createPermission} />
+        <PermissionTooltip permission={viewPermission}>
+          <TambahRole minW={"fit-content"} isDisabled={!viewPermission} />
         </PermissionTooltip>
       </HStack>
 

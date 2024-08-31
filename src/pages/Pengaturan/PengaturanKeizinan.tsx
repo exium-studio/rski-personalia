@@ -20,6 +20,9 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useDataState from "../../hooks/useDataState";
 import req from "../../lib/req";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 interface Props {
   role_id: number;
@@ -171,6 +174,9 @@ export default function PengaturanKeizinan({ role_id }: Props) {
   // SX
   const lightDarkColor = useLightDarkColor();
 
+  const { userPermissions } = useAuth();
+  const viewPermission = isHasPermissions(userPermissions, [64]);
+
   return (
     <CContainer
       flex={1}
@@ -234,18 +240,20 @@ export default function PengaturanKeizinan({ role_id }: Props) {
                       </Box>
                     </HStack>
 
-                    <Button
-                      colorScheme="ap"
-                      className="btn-ap clicky"
-                      minW={"120px"}
-                      isLoading={simpanLoading}
-                      onClick={() => {
-                        formik.submitForm();
-                      }}
-                      isDisabled={role_id === 1}
-                    >
-                      Simpan
-                    </Button>
+                    <PermissionTooltip permission={viewPermission}>
+                      <Button
+                        colorScheme="ap"
+                        className="btn-ap clicky"
+                        minW={"120px"}
+                        isLoading={simpanLoading}
+                        onClick={() => {
+                          formik.submitForm();
+                        }}
+                        isDisabled={role_id === 1 || !viewPermission}
+                      >
+                        Simpan
+                      </Button>
+                    </PermissionTooltip>
                   </Wrap>
 
                   <TabelPengaturanKeizinan
