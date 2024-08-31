@@ -12,7 +12,13 @@ export default function Login() {
   return (
     <Container>
       <CContainer>
-        <Stack flexDir={["column", null, "row"]} minH={"100vh"} w={"100%"}>
+        <Stack
+          flexDir={["column", null, "row"]}
+          minH={"100vh"}
+          w={"100%"}
+          h={"100%"}
+          align={"stretch"}
+        >
           <VStack
             align={"stretch"}
             justify={"space-between"}
@@ -24,7 +30,7 @@ export default function Login() {
             <VStack h={"200px"} align={"flex-start"} mb={6}>
               <Image
                 src={"/logo512.png"}
-                h={"200px"}
+                h={"140px"}
                 mx={["auto", null, "0"]}
               />
             </VStack>
@@ -47,7 +53,7 @@ export default function Login() {
             </CContainer>
           </VStack>
 
-          <VStack p={6} minH={"300px"} h={"100vh"} flex={1}>
+          <VStack p={6} minH={"300px"} flex={1}>
             <VStack
               borderRadius={20}
               justify={"space-between"}
