@@ -17,20 +17,19 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import { useErrorAlphaColor } from "../../constant/colors";
 import { Pengumuman__Interface } from "../../constant/interfaces";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import isDatePassed from "../../lib/isDatePassed";
+import isHasPermissions from "../../lib/isHasPermissions";
+import req from "../../lib/req";
 import timeSince from "../../lib/timeSince";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardUpdatePengumuman from "../form/Dashboard/FormDashboardUpdatePengumuman";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
-import req from "../../lib/req";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface DeletePengumumanProps extends ButtonProps {
@@ -145,8 +144,6 @@ export default function DashboardPengumumanItemDetail({
   const [loading, setLoading] = useState<boolean>(false);
 
   // SX
-  const errorAlphaColor = useErrorAlphaColor();
-
   const { userPermissions } = useAuth();
   const editPermission = isHasPermissions(userPermissions, [54]);
   const deletePermission = isHasPermissions(userPermissions, [55]);
