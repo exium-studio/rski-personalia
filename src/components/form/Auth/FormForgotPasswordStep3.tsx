@@ -36,7 +36,8 @@ export default function FormForgotPasswordStep3() {
     },
 
     validationSchema: yup.object().shape({
-      otp: yup.string().required("Harus diisi"),
+      password: yup.string().required("Harus diisi"),
+      password_confirmation: yup.string().required("Harus diisi"),
     }),
 
     onSubmit: (values) => {
@@ -55,7 +56,7 @@ export default function FormForgotPasswordStep3() {
           // console.log(r.data.user.data);
 
           if (r.status === 200) {
-            navigate("/profil");
+            navigate("/");
             toast({
               status: "success",
               title: r.data.user.message,
@@ -91,7 +92,7 @@ export default function FormForgotPasswordStep3() {
         Masukan kode OTP 6 digit yang kami kirimkan ke email <b>{email}</b>.
       </Text>
 
-      <form id="verifOTPform" onSubmit={formik.handleSubmit}>
+      <form id="resetPass" onSubmit={formik.handleSubmit}>
         {userData && (
           <CContainer gap={responsiveSpacing}>
             <HStack p={4} gap={4} borderRadius={8} bg={"var(--divider)"}>
@@ -161,7 +162,7 @@ export default function FormForgotPasswordStep3() {
             <Button
               mt={4}
               type="submit"
-              form="verifOTPform"
+              form="resetPass"
               colorScheme="ap"
               className="btn-ap clicky"
               w={"100%"}
