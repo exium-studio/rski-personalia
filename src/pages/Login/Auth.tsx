@@ -1,7 +1,8 @@
 import { Box, Image, Stack, Text, VStack } from "@chakra-ui/react";
 import { Outlet, Route, Routes } from "react-router-dom";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher";
-import FormForgotPassword from "../../components/form/Auth/FormForgotPassword";
+import FormForgotPasswordStep1 from "../../components/form/Auth/FormForgotPasswordStep1";
+import FormForgotPasswordStep2 from "../../components/form/Auth/FormForgotPasswordStep2";
 import FormLogin from "../../components/form/Auth/FormLogin";
 import CContainer from "../../components/wrapper/CContainer";
 import Container from "../../components/wrapper/Container";
@@ -28,6 +29,7 @@ const PagesLayout = () => {
             py={6}
             px={[6, null, 12]}
             maxW={"450px"}
+            w={"100%"}
           >
             <VStack h={"200px"} align={"flex-start"} mb={6}>
               <Image
@@ -95,7 +97,14 @@ export default function Auth() {
     <Routes>
       <Route path="/*" element={<PagesLayout />}>
         <Route index element={<FormLogin />} />
-        <Route path={"forgot-password"} element={<FormForgotPassword />} />
+        <Route
+          path={"forgot-password-1"}
+          element={<FormForgotPasswordStep1 />}
+        />
+        <Route
+          path={"forgot-password-2/:email"}
+          element={<FormForgotPasswordStep2 />}
+        />
       </Route>
     </Routes>
   );

@@ -3,25 +3,25 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
-  FormLabel,
   HStack,
+  PinInput,
+  PinInputField,
   Text,
   useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { setCookie } from "typescript-cookie";
 import * as yup from "yup";
 import { responsiveSpacing } from "../../../constant/sizes";
 import useAuth from "../../../global/useAuth";
 import useGetUserData from "../../../hooks/useGetUserData";
 import req from "../../../lib/req";
-import StringInput from "../../dependent/input/StringInput";
+import CountDownDurationShort from "../../dependent/CountDownDurationShort";
 import CContainer from "../../wrapper/CContainer";
-import RequiredForm from "../RequiredForm";
 
-export default function FormForgotPassword() {
+export default function FormForgotPasswordStep2() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const toast = useToast();
@@ -33,18 +33,18 @@ export default function FormForgotPassword() {
     validateOnChange: false,
 
     initialValues: {
-      email: "",
+      otp: "",
     },
 
     validationSchema: yup.object().shape({
-      email: yup.string().required("Harus diisi"),
+      otp: yup.string().required("Harus diisi"),
     }),
 
     onSubmit: (values, { resetForm }) => {
       setLoading(true);
 
       const payload = {
-        email: formik.values.email,
+        otp: formik.values.otp,
       };
 
       req
@@ -88,13 +88,18 @@ export default function FormForgotPassword() {
     },
   });
 
+  const { email } = useParams();
+  const [kirimUlangOTP, setKirimUlangOTP] = useState<boolean>(false);
+
+  function requestKirimUlangOTP() {}
+
   return (
     <>
       <Text fontSize={24} fontWeight={600} mb={2}>
-        Lupa Password? Tenang
+        Verifikasi Email
       </Text>
-      <Text opacity={0.6} mb={8}>
-        Masukkan email anda dan kami akan mengirimkan OTP ke email anda.
+      <Text opacity={0.6} mb={6}>
+        Masukan kode OTP 6 digit yang kami kirimkan ke email {email}.
       </Text>
 
       <form id="FormLogin" onSubmit={formik.handleSubmit}>
@@ -126,20 +131,28 @@ export default function FormForgotPassword() {
 
         {!userData && (
           <>
-            <FormControl isInvalid={formik.errors.email ? true : false} mb={4}>
-              <FormLabel>
-                Email
-                <RequiredForm />
-              </FormLabel>
-              <StringInput
-                name="email"
-                placeholder={"Email"}
+            <FormControl isInvalid={formik.errors.otp ? true : false} mb={4}>
+              {/* <StringInput
+                name="otp"
+                placeholder={"otp"}
                 onChangeSetter={(input) => {
-                  formik.setFieldValue("email", input);
+                  formik.setFieldValue("otp", input);
                 }}
-                inputValue={formik.values.email}
-              />
-              <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                inputValue={formik.values.otp}
+              /> */}
+
+              <HStack>
+                <PinInput size={"lg"}>
+                  <PinInputField flex={1} h={"60px"} />
+                  <PinInputField flex={1} h={"60px"} />
+                  <PinInputField flex={1} h={"60px"} />
+                  <PinInputField flex={1} h={"60px"} />
+                  <PinInputField flex={1} h={"60px"} />
+                  <PinInputField flex={1} h={"60px"} />
+                </PinInput>
+              </HStack>
+
+              <FormErrorMessage>{formik.errors.otp}</FormErrorMessage>
             </FormControl>
 
             <Button
@@ -151,8 +164,31 @@ export default function FormForgotPassword() {
               w={"100%"}
               isLoading={loading}
             >
-              Kirim OTP
+              Verifikasi OTP
             </Button>
+
+            <CContainer>
+              <Text mt={6} opacity={0.4}>
+                Bermasalah dengan kode OTP?
+              </Text>
+              {!kirimUlangOTP && (
+                <HStack opacity={0.4}>
+                  <Text>Kirim ulang OTP dalam</Text>
+                  <CountDownDurationShort
+                    initialSeconds={120}
+                    onCountFinished={() => {
+                      setKirimUlangOTP(true);
+                    }}
+                  />
+                </HStack>
+              )}
+
+              {kirimUlangOTP && (
+                <Text color={"p.500"} onClick={requestKirimUlangOTP}>
+                  Kirim Ulang
+                </Text>
+              )}
+            </CContainer>
           </>
         )}
       </form>
