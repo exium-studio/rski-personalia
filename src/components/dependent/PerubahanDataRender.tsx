@@ -145,7 +145,7 @@ export default function PerubahanDataRender({ column, data, index }: any) {
     case "no_ijazah":
     case "tahun_lulus":
     case "gelar_depan":
-      return <Text>{typeof data === "string" ? data : ""}</Text>;
+      return <Text>{typeof data === "string" ? data : "Invalid"}</Text>;
     case "ktp":
     case "bpjsksh":
     case "bpjsktk":
