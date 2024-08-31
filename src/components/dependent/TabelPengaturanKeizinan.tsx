@@ -248,6 +248,7 @@ export default function TabelPengaturanKeizinan({
             top={0}
             bg={lightDarkColor}
             zIndex={3}
+            gap={0}
           >
             <Box
               w={"100%"}

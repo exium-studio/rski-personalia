@@ -53,8 +53,8 @@ export default function TabelCuti({ filterConfig }: Props) {
     });
 
   const { userPermissions } = useAuth();
-  const verif1Permission = isHasPermissions(userPermissions, []);
-  const verif2Permission = isHasPermissions(userPermissions, []);
+  const verif1Permission = isHasPermissions(userPermissions, [43]);
+  const verif2Permission = isHasPermissions(userPermissions, [44]);
 
   const formattedHeader = [
     {
