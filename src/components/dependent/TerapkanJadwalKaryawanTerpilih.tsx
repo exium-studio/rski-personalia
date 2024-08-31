@@ -216,7 +216,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
             >
               <FormControl mt={6} isInvalid={!!formik.errors.shift}>
                 <FormLabel>
-                  Jam kerja
+                  Jam Kerja (Shift)
                   <RequiredForm />
                 </FormLabel>
                 <SelectShift

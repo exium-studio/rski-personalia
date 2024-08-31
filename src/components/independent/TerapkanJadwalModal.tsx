@@ -191,7 +191,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
 
               <FormControl isInvalid={!!formik.errors.shift}>
                 <FormLabel>
-                  Jam Kerja
+                  Jam Kerja (Shift)
                   <RequiredForm />
                 </FormLabel>
                 <SelectShift
