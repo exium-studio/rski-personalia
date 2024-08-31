@@ -1,11 +1,13 @@
 import { Box, Image, Stack, Text, VStack } from "@chakra-ui/react";
+import { Outlet, Route, Routes } from "react-router-dom";
+import { ColorModeSwitcher } from "../../ColorModeSwitcher";
+import FormForgotPassword from "../../components/form/Auth/FormForgotPassword";
 import FormLogin from "../../components/form/Auth/FormLogin";
 import CContainer from "../../components/wrapper/CContainer";
 import Container from "../../components/wrapper/Container";
-import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 import { useLightDarkColor } from "../../constant/colors";
 
-export default function Login() {
+const PagesLayout = () => {
   // SX
   const lightDarkColor = useLightDarkColor();
 
@@ -36,14 +38,7 @@ export default function Login() {
             </VStack>
 
             <Box>
-              <Text fontSize={24} fontWeight={600}>
-                Selamat Datang!
-              </Text>
-              <Text opacity={0.6} mb={8}>
-                Masuk untuk mendapatkan akses ke data & informasi
-              </Text>
-
-              <FormLogin />
+              <Outlet />
             </Box>
 
             <CContainer h={"200px"} justify={"end"}>
@@ -55,7 +50,7 @@ export default function Login() {
 
           <VStack p={6} minH={"300px"} flex={1}>
             <VStack
-              borderRadius={20}
+              borderRadius={12}
               justify={"space-between"}
               align={"flex-start"}
               p={4}
@@ -92,5 +87,16 @@ export default function Login() {
         </Stack>
       </CContainer>
     </Container>
+  );
+};
+
+export default function Auth() {
+  return (
+    <Routes>
+      <Route path="/*" element={<PagesLayout />}>
+        <Route index element={<FormLogin />} />
+        <Route path={"forgot-password"} element={<FormForgotPassword />} />
+      </Route>
+    </Routes>
   );
 }

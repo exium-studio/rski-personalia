@@ -14,15 +14,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { setCookie } from "typescript-cookie";
 import * as yup from "yup";
 import { responsiveSpacing } from "../../../constant/sizes";
+import useAuth from "../../../global/useAuth";
 import useGetUserData from "../../../hooks/useGetUserData";
 import req from "../../../lib/req";
-import PasswordInput from "../../dependent/input/PasswordInput";
 import StringInput from "../../dependent/input/StringInput";
 import CContainer from "../../wrapper/CContainer";
 import RequiredForm from "../RequiredForm";
-import useAuth from "../../../global/useAuth";
 
-export default function FormLogin() {
+export default function FormForgotPassword() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const toast = useToast();
@@ -35,12 +34,10 @@ export default function FormLogin() {
 
     initialValues: {
       email: "",
-      password: "",
     },
 
     validationSchema: yup.object().shape({
       email: yup.string().required("Harus diisi"),
-      password: yup.string().required("Harus diisi"),
     }),
 
     onSubmit: (values, { resetForm }) => {
@@ -48,7 +45,6 @@ export default function FormLogin() {
 
       const payload = {
         email: formik.values.email,
-        password: formik.values.password,
       };
 
       req
@@ -95,11 +91,12 @@ export default function FormLogin() {
   return (
     <>
       <Text fontSize={24} fontWeight={600} mb={2}>
-        Selamat Datang!
+        Lupa Password? Tenang
       </Text>
       <Text opacity={0.6} mb={8}>
-        Masuk untuk mendapatkan akses ke data & informasi.
+        Masukkan email anda dan kami akan mengirimkan OTP ke email anda.
       </Text>
+
       <form id="FormLogin" onSubmit={formik.handleSubmit}>
         {userData && (
           <CContainer gap={responsiveSpacing}>
@@ -145,29 +142,6 @@ export default function FormLogin() {
               <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
             </FormControl>
 
-            <FormControl
-              isInvalid={formik.errors.password ? true : false}
-              mb={2}
-            >
-              <FormLabel>
-                Password
-                <RequiredForm />
-              </FormLabel>
-
-              <PasswordInput
-                name="password"
-                onChangeSetter={(input) => {
-                  formik.setFieldValue("password", input);
-                }}
-                inputValue={formik.values.password}
-              />
-              <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
-            </FormControl>
-
-            <Text color={"p.500"} as={Link} to={"/forgot-password"}>
-              Lupa password?
-            </Text>
-
             <Button
               mt={4}
               type="submit"
@@ -177,7 +151,7 @@ export default function FormLogin() {
               w={"100%"}
               isLoading={loading}
             >
-              Login
+              Kirim OTP
             </Button>
           </>
         )}

@@ -20,7 +20,7 @@ import PerubahanDataKaryawan from "./pages/Karyawan/PermintaanPerubahanDataKarya
 import TransferKaryawan from "./pages/Karyawan/TransferKaryawan";
 import Penggajian from "./pages/Keuangan/Penggajian";
 import Thr from "./pages/Keuangan/Thr";
-import Login from "./pages/Login/Login";
+import Auth from "./pages/Login/Auth";
 import PengaturanHariLibur from "./pages/Pengaturan/PengaturanHariLibur";
 import PengaturanJabatan from "./pages/Pengaturan/PengaturanJabatan";
 import PengaturanJadwalPenggajian from "./pages/Pengaturan/PengaturanJadwalPenggajian";
@@ -61,7 +61,7 @@ export const App = () => {
     <ChakraProvider theme={globalTheme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/*" element={<Auth />} />
 
           <Route
             path="/dashboard"
