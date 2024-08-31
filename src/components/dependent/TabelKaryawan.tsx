@@ -214,12 +214,12 @@ export default function TabelKaryawan() {
         td: item.email,
       }, // 10
       {
-        value: item.ayah?.nama,
-        td: item.ayah?.nama,
+        value: item.ayah,
+        td: item.ayah,
       }, // 11
       {
-        value: item.ibu?.nama,
-        td: item.ibu?.nama,
+        value: item.ibu,
+        td: item.ibu,
       }, // 12
       {
         value: item?.jumlah_keluarga,
