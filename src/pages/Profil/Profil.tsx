@@ -939,7 +939,7 @@ export default function Profil() {
                           />
                         </Box>
                         <FlexLine />
-                        {userData.role.id !== 1 && (
+                        {userData?.role?.id !== 1 && (
                           <Text fontWeight={500} textAlign={"right"}>
                             {userData?.data_karyawan?.masa_berlaku_str
                               ? formatDate(
