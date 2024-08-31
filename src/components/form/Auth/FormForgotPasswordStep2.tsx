@@ -102,7 +102,7 @@ export default function FormForgotPasswordStep2() {
         Masukan kode OTP 6 digit yang kami kirimkan ke email {email}.
       </Text>
 
-      <form id="FormLogin" onSubmit={formik.handleSubmit}>
+      <form id="verifOTPform" onSubmit={formik.handleSubmit}>
         {userData && (
           <CContainer gap={responsiveSpacing}>
             <HStack p={4} gap={4} borderRadius={8} bg={"var(--divider)"}>
@@ -133,7 +133,11 @@ export default function FormForgotPasswordStep2() {
           <>
             <FormControl isInvalid={formik.errors.otp ? true : false} mb={4}>
               <HStack>
-                <PinInput size={"lg"} isInvalid={!!formik.errors.otp}>
+                <PinInput
+                  size={"lg"}
+                  isInvalid={!!formik.errors.otp}
+                  onChange={(e) => {}}
+                >
                   <PinInputField flex={1} h={"60px"} />
                   <PinInputField flex={1} h={"60px"} />
                   <PinInputField flex={1} h={"60px"} />
@@ -149,7 +153,7 @@ export default function FormForgotPasswordStep2() {
             <Button
               mt={4}
               type="submit"
-              form="FormLogin"
+              form="verifOTPform"
               colorScheme="ap"
               className="btn-ap clicky"
               w={"100%"}

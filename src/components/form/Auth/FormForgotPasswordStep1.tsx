@@ -97,7 +97,7 @@ export default function FormForgotPasswordStep1() {
         Masukkan email anda dan kami akan mengirimkan OTP ke email anda.
       </Text>
 
-      <form id="FormLogin" onSubmit={formik.handleSubmit}>
+      <form id="verifEmailForm" onSubmit={formik.handleSubmit}>
         {userData && (
           <CContainer gap={responsiveSpacing}>
             <HStack p={4} gap={4} borderRadius={8} bg={"var(--divider)"}>
@@ -145,7 +145,7 @@ export default function FormForgotPasswordStep1() {
             <Button
               mt={4}
               type="submit"
-              form="FormLogin"
+              form="verifEmailForm"
               colorScheme="ap"
               className="btn-ap clicky"
               w={"100%"}
