@@ -21,6 +21,8 @@ import ViewPhotoModalDisclosure from "./ViewPhotoModalDisclosure";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "./DisclosureHeader";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import CContainer from "../wrapper/CContainer";
+import FlexLine from "../independent/FlexLine";
 
 interface Props {
   data: any;
@@ -33,7 +35,12 @@ const ListKeluargaModal = ({ data, index }: Props) => {
 
   return (
     <>
-      <Button colorScheme="ap" variant={"ghost"} className="clicky">
+      <Button
+        colorScheme="ap"
+        variant={"ghost"}
+        className="clicky"
+        onClick={onOpen}
+      >
         Lihat
       </Button>
 
@@ -42,15 +49,57 @@ const ListKeluargaModal = ({ data, index }: Props) => {
         onClose={backOnClose}
         isCentered
         blockScrollOnMount={false}
+        scrollBehavior={"inside"}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
             <DisclosureHeader title={"Anggota Keluarga"} />
           </ModalHeader>
-          <ModalBody></ModalBody>
+          <ModalBody>
+            {data?.map((anggota: any, i: number) => (
+              <CContainer
+                key={i}
+                borderBottom={
+                  i !== data?.length - 1 ? "1px solid var(--divider)" : ""
+                }
+                pt={i !== 0 ? 4 : 0}
+                pb={i !== data?.length - 1 ? 4 : 0}
+                gap={2}
+              >
+                <Text fontWeight={600}>{anggota?.nama_keluarga}</Text>
+                <HStack>
+                  <Text opacity={0.4}>Hubungan Keluarga</Text>
+                  <FlexLine />
+                  <Text>{anggota.hubungan}</Text>
+                </HStack>
+                <HStack>
+                  <Text opacity={0.4}>Status Hidup</Text>
+                  <FlexLine />
+                  <Text>{anggota.status_hidup ? "Hidup" : "Meniggal"}</Text>
+                </HStack>
+                <HStack>
+                  <Text opacity={0.4}>Pekerjaan</Text>
+                  <FlexLine />
+                  <Text>{anggota.pekerjaan}</Text>
+                </HStack>
+                <HStack>
+                  <Text opacity={0.4}>Nomor Telepon</Text>
+                  <FlexLine />
+                  <Text>{anggota.no_hp}</Text>
+                </HStack>
+                <HStack>
+                  <Text opacity={0.4}>Email</Text>
+                  <FlexLine />
+                  <Text>{anggota.email}</Text>
+                </HStack>
+              </CContainer>
+            ))}
+          </ModalBody>
           <ModalFooter>
-            <Button className="btn-solid clicky">Mengerti</Button>
+            <Button className="btn-solid clicky" w={"100%"}>
+              Mengerti
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

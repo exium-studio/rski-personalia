@@ -53,6 +53,7 @@ const dataKaryawanLabel = {
   file_bpjs_ketenagakerjaan: "File BPJS Ketenagakerjaan",
   file_ijazah: "File Ijazah",
   file_sertifikat: "File STR",
+  keluarga: "Keluarga",
 };
 
 export default dataKaryawanLabel;
