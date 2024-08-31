@@ -53,13 +53,11 @@ export default function FormForgotPasswordStep3() {
       req
         .post(`/api/reset-password`, payload)
         .then((r) => {
-          // console.log(r.data.user.data);
-
           if (r.status === 200) {
             navigate("/");
             toast({
               status: "success",
-              title: r.data.user.message,
+              title: r.data.message,
               isClosable: true,
               position: "bottom-right",
             });

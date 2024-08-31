@@ -49,13 +49,11 @@ export default function FormForgotPasswordStep2() {
       req
         .post(`/api/forgot-password-verifyOtp`, payload)
         .then((r) => {
-          // console.log(r.data.user.data);
-
           if (r.status === 200) {
             navigate(`/forgot-password-3/${email}/${values.otp}`);
             toast({
               status: "success",
-              title: r.data.user.message,
+              title: r.data.message,
               isClosable: true,
               position: "bottom-right",
             });
