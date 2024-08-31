@@ -47,7 +47,7 @@ export default function FormForgotPasswordStep2() {
       };
 
       req
-        .post(`/forgot-password-verifyOtp`, payload)
+        .post(`/api/forgot-password-verifyOtp`, payload)
         .then((r) => {
           // console.log(r.data.user.data);
 

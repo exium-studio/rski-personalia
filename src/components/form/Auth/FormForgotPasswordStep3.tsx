@@ -50,7 +50,7 @@ export default function FormForgotPasswordStep3() {
       };
 
       req
-        .post(`/reset-password`, payload)
+        .post(`/api/reset-password`, payload)
         .then((r) => {
           // console.log(r.data.user.data);
 
