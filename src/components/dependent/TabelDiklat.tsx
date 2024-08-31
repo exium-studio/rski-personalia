@@ -132,8 +132,8 @@ export default function TabelDiklat({ filterConfig }: Props) {
     });
 
   const { userPermissions } = useAuth();
-  const verif1Permission = isHasPermissions(userPermissions, []);
-  const verif2Permission = isHasPermissions(userPermissions, []);
+  const verif1Permission = isHasPermissions(userPermissions, [10]);
+  const verif2Permission = isHasPermissions(userPermissions, [11]);
 
   const formattedHeader = [
     {

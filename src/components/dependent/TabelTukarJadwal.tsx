@@ -56,7 +56,6 @@ export default function TabelKaryawan({ filterConfig }: Props) {
     });
 
   const { userPermissions } = useAuth();
-  //TODO belum lengkap
   const verif1Permission = isHasPermissions(userPermissions, [31]);
   const verif2Permission = isHasPermissions(userPermissions, [32]);
 

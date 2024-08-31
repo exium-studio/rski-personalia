@@ -147,7 +147,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
             <form id="terapkanJadwalForm" onSubmit={formik.handleSubmit}>
               <FormControl mb={4} isInvalid={!!formik.errors.list_karyawan}>
                 <FormLabel>
-                  Karyawan
+                  Karyawan Shift
                   <RequiredForm />
                 </FormLabel>
                 <MultiSelectKaryawanShift
