@@ -21,7 +21,7 @@ export default function Login() {
             px={[6, null, 12]}
             maxW={"450px"}
           >
-            <VStack align={"flex-start"} mb={6}>
+            <VStack h={"200px"} align={"flex-start"} mb={6}>
               <Image
                 src={"/logo512.png"}
                 h={"200px"}
@@ -40,9 +40,11 @@ export default function Login() {
               <FormLogin />
             </Box>
 
-            <Text opacity={0.6} mt={6}>
-              Copyright 2024 RSKI All right Reserved
-            </Text>
+            <CContainer h={"200px"} justify={"end"}>
+              <Text opacity={0.6} mt={6}>
+                Copyright 2024 RSKI All right Reserved
+              </Text>
+            </CContainer>
           </VStack>
 
           <VStack p={6} minH={"300px"} h={"100vh"} flex={1}>

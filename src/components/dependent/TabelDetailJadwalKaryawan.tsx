@@ -47,6 +47,9 @@ export default function TabelDetailJadwalKaryawan({ data }: Props) {
     {
       th: "Jam Kerja",
       isSortable: true,
+      cProps: {
+        justify: "center",
+      },
     },
   ];
   const formattedData = fd.map((item) => ({
@@ -72,6 +75,9 @@ export default function TabelDetailJadwalKaryawan({ data }: Props) {
           item.shift.jam_to as string
         )}`,
         isTime: true,
+        cProps: {
+          justify: "center",
+        },
       },
     ],
   }));
