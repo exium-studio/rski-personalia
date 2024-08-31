@@ -132,17 +132,8 @@ export default function FormForgotPasswordStep2() {
         {!userData && (
           <>
             <FormControl isInvalid={formik.errors.otp ? true : false} mb={4}>
-              {/* <StringInput
-                name="otp"
-                placeholder={"otp"}
-                onChangeSetter={(input) => {
-                  formik.setFieldValue("otp", input);
-                }}
-                inputValue={formik.values.otp}
-              /> */}
-
               <HStack>
-                <PinInput size={"lg"}>
+                <PinInput size={"lg"} isInvalid={!!formik.errors.otp}>
                   <PinInputField flex={1} h={"60px"} />
                   <PinInputField flex={1} h={"60px"} />
                   <PinInputField flex={1} h={"60px"} />
