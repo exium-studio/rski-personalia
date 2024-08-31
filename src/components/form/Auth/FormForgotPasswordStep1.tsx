@@ -36,7 +36,7 @@ export default function FormForgotPasswordStep1() {
       email: yup.string().required("Harus diisi"),
     }),
 
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values) => {
       setLoading(true);
 
       const payload = {

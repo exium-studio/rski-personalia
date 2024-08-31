@@ -3,9 +3,8 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
+  FormLabel,
   HStack,
-  PinInput,
-  PinInputField,
   Text,
   useToast,
 } from "@chakra-ui/react";
@@ -15,23 +14,25 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { responsiveSpacing } from "../../../constant/sizes";
 import useGetUserData from "../../../hooks/useGetUserData";
-import backOnClose from "../../../lib/backOnClose";
 import req from "../../../lib/req";
+import PasswordInput from "../../dependent/input/PasswordInput";
 import CContainer from "../../wrapper/CContainer";
+import RequiredForm from "../RequiredForm";
 
-export default function FormForgotPasswordStep2() {
+export default function FormForgotPasswordStep3() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const toast = useToast();
   const userData = useGetUserData();
 
-  const { email } = useParams();
+  const { email, otp } = useParams();
 
   const formik = useFormik({
     validateOnChange: false,
 
     initialValues: {
-      otp: "",
+      password: "",
+      password_confirmation: "",
     },
 
     validationSchema: yup.object().shape({
@@ -43,16 +44,18 @@ export default function FormForgotPasswordStep2() {
 
       const payload = {
         email: email,
-        kode_otp: values.otp,
+        kode_otp: otp,
+        password: values.password,
+        password_confirmation: values.password_confirmation,
       };
 
       req
-        .post(`/forgot-password-verifyOtp`, payload)
+        .post(`/reset-password`, payload)
         .then((r) => {
           // console.log(r.data.user.data);
 
           if (r.status === 200) {
-            navigate(`/forgot-password-3/${email}/${values.otp}`);
+            navigate("/profil");
             toast({
               status: "success",
               title: r.data.user.message,
@@ -117,25 +120,42 @@ export default function FormForgotPasswordStep2() {
 
         {!userData && (
           <>
-            <FormControl isInvalid={formik.errors.otp ? true : false} mb={4}>
-              <HStack>
-                <PinInput
-                  size={"lg"}
-                  isInvalid={!!formik.errors.otp}
-                  onChange={(input) => {
-                    formik.setFieldValue("otp", input);
-                  }}
-                >
-                  <PinInputField flex={1} h={"60px"} />
-                  <PinInputField flex={1} h={"60px"} />
-                  <PinInputField flex={1} h={"60px"} />
-                  <PinInputField flex={1} h={"60px"} />
-                  <PinInputField flex={1} h={"60px"} />
-                  <PinInputField flex={1} h={"60px"} />
-                </PinInput>
-              </HStack>
+            <FormControl
+              isInvalid={formik.errors.password ? true : false}
+              mb={4}
+            >
+              <FormLabel>
+                Password
+                <RequiredForm />
+              </FormLabel>
+              <PasswordInput
+                name="password"
+                onChangeSetter={(input) => {
+                  formik.setFieldValue("password", input);
+                }}
+                inputValue={formik.values.password}
+              />
+              <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+            </FormControl>
 
-              <FormErrorMessage>{formik.errors.otp}</FormErrorMessage>
+            <FormControl
+              isInvalid={formik.errors.password_confirmation ? true : false}
+              mb={4}
+            >
+              <FormLabel>
+                Konfirmasi Password
+                <RequiredForm />
+              </FormLabel>
+              <PasswordInput
+                name="password_confirmation"
+                onChangeSetter={(input) => {
+                  formik.setFieldValue("password_confirmation", input);
+                }}
+                inputValue={formik.values.password_confirmation}
+              />
+              <FormErrorMessage>
+                {formik.errors.password_confirmation}
+              </FormErrorMessage>
             </FormControl>
 
             <Button
@@ -147,22 +167,8 @@ export default function FormForgotPasswordStep2() {
               w={"100%"}
               isLoading={loading}
             >
-              Verifikasi OTP
+              Reset & Update Password
             </Button>
-
-            <CContainer>
-              <Text mt={6} opacity={0.4}>
-                Bermasalah dengan kode OTP?
-              </Text>
-              <Text
-                color={"p.500"}
-                w={"fit-content"}
-                cursor={"pointer"}
-                onClick={backOnClose}
-              >
-                Kirim Ulang
-              </Text>
-            </CContainer>
           </>
         )}
       </form>

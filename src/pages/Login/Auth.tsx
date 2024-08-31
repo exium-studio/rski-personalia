@@ -7,6 +7,7 @@ import FormLogin from "../../components/form/Auth/FormLogin";
 import CContainer from "../../components/wrapper/CContainer";
 import Container from "../../components/wrapper/Container";
 import { useLightDarkColor } from "../../constant/colors";
+import FormForgotPasswordStep3 from "../../components/form/Auth/FormForgotPasswordStep3";
 
 const PagesLayout = () => {
   // SX
@@ -104,6 +105,10 @@ export default function Auth() {
         <Route
           path={"forgot-password-2/:email"}
           element={<FormForgotPasswordStep2 />}
+        />{" "}
+        <Route
+          path={"forgot-password-3/:email/:otp"}
+          element={<FormForgotPasswordStep3 />}
         />
       </Route>
     </Routes>
