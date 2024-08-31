@@ -1,6 +1,5 @@
 import { Image, Kbd, StackProps, Text, VStack } from "@chakra-ui/react";
 import useScreenWidth from "../../lib/useScreenWidth";
-import DebugTools from "../DebugTools";
 
 interface Props extends StackProps {
   children: any;
@@ -12,7 +11,7 @@ export default function Container({ children, ...props }: Props) {
   return (
     <>
       {/* quick debug tools */}
-      <DebugTools />
+      {/* <DebugTools /> */}
       {/* quick debug tools */}
 
       <VStack
