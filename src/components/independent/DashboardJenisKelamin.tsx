@@ -84,7 +84,7 @@ export default function DashboardJenisKelamin({ ...props }: Props) {
                 Karyawan saat ini
               </Text>
 
-              <Wrap m={"auto"} spacing={responsiveSpacing}>
+              <Wrap m={"auto"} spacing={10}>
                 <VStack
                   flex={"1 1 0"}
                   my={responsiveSpacing}
