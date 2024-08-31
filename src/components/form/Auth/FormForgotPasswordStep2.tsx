@@ -99,7 +99,7 @@ export default function FormForgotPasswordStep2() {
         Verifikasi Email
       </Text>
       <Text opacity={0.6} mb={6}>
-        Masukan kode OTP 6 digit yang kami kirimkan ke email {email}.
+        Masukan kode OTP 6 digit yang kami kirimkan ke email <b>{email}</b>.
       </Text>
 
       <form id="verifOTPform" onSubmit={formik.handleSubmit}>
