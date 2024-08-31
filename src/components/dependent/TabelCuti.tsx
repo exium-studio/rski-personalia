@@ -106,6 +106,7 @@ export default function TabelCuti({ filterConfig }: Props) {
         position: "sticky",
         right: 0,
         zIndex: 4,
+        w: "122px",
       },
       cProps: {
         justify: "center",
@@ -119,6 +120,7 @@ export default function TabelCuti({ filterConfig }: Props) {
         position: "sticky",
         right: 0,
         zIndex: 3,
+        w: "122px",
       },
       cProps: {
         justify: "center",

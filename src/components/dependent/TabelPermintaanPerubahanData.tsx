@@ -98,6 +98,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
         position: "sticky",
         right: 0,
         zIndex: 4,
+        w: "122px",
       },
       cProps: {
         justify: "center",
