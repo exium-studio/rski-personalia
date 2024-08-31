@@ -127,11 +127,25 @@ export default function PerubahanDataRender({ column, data, index }: any) {
       );
     case "tgl_lahir":
       return <Text whiteSpace={"nowrap"}>{formatDate(data)}</Text>;
+    case "jenis_kelamin":
+      return (
+        <Text whiteSpace={"nowrap"}>{data ? "Laki - laki" : "Perempuan"}</Text>
+      );
     case "golongan_darah":
     case "agama":
       return <Text whiteSpace={"nowrap"}>{data.label}</Text>;
     case "tinggi_badan":
+    case "berat_badan":
       return <Text whiteSpace={"nowrap"}>{formatNumber(data)} cm</Text>;
+    case "tempat_lahir":
+    case "no_hp":
+    case "nik_ktp":
+    case "no_kk":
+    case "alamat":
+    case "no_ijazah":
+    case "tahun_lulus":
+    case "gelar_depan":
+      return <Text>{typeof data === "string" ? data : ""}</Text>;
     case "ktp":
     case "bpjsksh":
     case "bpjsktk":
