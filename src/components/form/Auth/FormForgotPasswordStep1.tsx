@@ -11,10 +11,8 @@ import {
 import { useFormik } from "formik";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { setCookie } from "typescript-cookie";
 import * as yup from "yup";
 import { responsiveSpacing } from "../../../constant/sizes";
-import useAuth from "../../../global/useAuth";
 import useGetUserData from "../../../hooks/useGetUserData";
 import req from "../../../lib/req";
 import StringInput from "../../dependent/input/StringInput";
@@ -26,8 +24,6 @@ export default function FormForgotPasswordStep1() {
   const navigate = useNavigate();
   const toast = useToast();
   const userData = useGetUserData();
-
-  const { setUserPermissions } = useAuth();
 
   const formik = useFormik({
     validateOnChange: false,
@@ -44,27 +40,17 @@ export default function FormForgotPasswordStep1() {
       setLoading(true);
 
       const payload = {
-        email: formik.values.email,
+        email: values.email,
       };
 
       req
         .post(`/api/login`, payload)
         .then((r) => {
-          // console.log(r.data.user.data);
-
           if (r.status === 200) {
-            setCookie("__auth_token", r.data.token);
-            localStorage.setItem(
-              "__user_data",
-              JSON.stringify(r.data.user.data)
-            );
-            // setStatusAktif(r.data.user.data.status_aktif);
-            setUserPermissions(r.data.user.data.permission);
-
-            navigate("/profil");
+            navigate(`/forgot-password-2/${values.email}`);
             toast({
               status: "success",
-              title: r.data.user.message,
+              title: r.data.message,
               isClosable: true,
               position: "bottom-right",
             });
