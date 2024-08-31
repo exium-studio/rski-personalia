@@ -39,6 +39,7 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
         </EditRoleModalDisclosure>
       );
     },
+
     // (rowData: any) => {
     //   return (
     //     <RestoreDataPengaturanModalDisclosure
