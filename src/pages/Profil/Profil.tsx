@@ -203,6 +203,7 @@ export default function Profil() {
         <CContainer
           flexShrink={0}
           p={responsiveSpacing}
+          pl={"0 !important"}
           flex={1}
           gap={responsiveSpacing}
           overflowY={[null, null, null, "auto"]}
