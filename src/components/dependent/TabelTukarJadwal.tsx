@@ -58,6 +58,7 @@ export default function TabelKaryawan({ filterConfig }: Props) {
   const { userPermissions } = useAuth();
   const verif1Permission = isHasPermissions(userPermissions, [31]);
   const verif2Permission = isHasPermissions(userPermissions, [32]);
+  // console.log(userPermissions);
 
   const formattedHeader = [
     {
@@ -184,7 +185,7 @@ export default function TabelKaryawan({ filterConfig }: Props) {
             <VerifikasiModal
               aria-label={`perubahan-data-verif-1-button-${item.id}"`}
               id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1`}
+              submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-1`}
               approvePayloadKey="verifikasi_pertama_disetujui"
               disapprovePayloadKey="verifikasi_pertama_ditolak"
               isDisabled={!verif1Permission}
@@ -208,7 +209,7 @@ export default function TabelKaryawan({ filterConfig }: Props) {
             <VerifikasiModal
               aria-label={`perubahan-data-verif-2-button-${item.id}"`}
               id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
+              submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-2`}
               approvePayloadKey="verifikasi_kedua_disetujui"
               disapprovePayloadKey="verifikasi_kedua_ditolak"
               isDisabled={!verif2Permission}

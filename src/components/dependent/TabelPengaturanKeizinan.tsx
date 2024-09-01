@@ -317,7 +317,7 @@ export default function TabelPengaturanKeizinan({
                           isDisabled={role_id === 1}
                           isChecked={item.permissions[key]?.has_permission}
                         >
-                          <Text mt={"-1px"} opacity={0.6}>
+                          <Text mt={"-1px"} opacity={0.6} whiteSpace={"nowrap"}>
                             {permissionsLabel[key]}
                           </Text>
                         </Checkbox>
