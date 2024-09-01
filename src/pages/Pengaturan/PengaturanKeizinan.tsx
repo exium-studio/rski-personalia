@@ -175,7 +175,7 @@ export default function PengaturanKeizinan({ role_id }: Props) {
   const lightDarkColor = useLightDarkColor();
 
   const { userPermissions } = useAuth();
-  const viewPermission = isHasPermissions(userPermissions, [64]);
+  const editPermission = isHasPermissions(userPermissions, [62]);
 
   return (
     <CContainer
@@ -240,7 +240,7 @@ export default function PengaturanKeizinan({ role_id }: Props) {
                       </Box>
                     </HStack>
 
-                    <PermissionTooltip permission={viewPermission}>
+                    <PermissionTooltip permission={editPermission}>
                       <Button
                         colorScheme="ap"
                         className="btn-ap clicky"
@@ -249,7 +249,7 @@ export default function PengaturanKeizinan({ role_id }: Props) {
                         onClick={() => {
                           formik.submitForm();
                         }}
-                        isDisabled={role_id === 1 || !viewPermission}
+                        isDisabled={role_id === 1 || !editPermission}
                       >
                         Simpan
                       </Button>

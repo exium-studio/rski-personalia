@@ -270,7 +270,6 @@ export default function DateRangePickerModal({
             : ""
         }`}
         openDelay={500}
-        placement="left"
       >
         <Button
           className="btn-clear"
