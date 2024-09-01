@@ -14,7 +14,7 @@ import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import StatusLemburBadge from "./StatusLemburBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
-import formatTime from "../../lib/formatTimeOld";
+import formatTime from "../../lib/formatTime";
 
 interface Props {
   filterConfig?: any;
