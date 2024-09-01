@@ -157,7 +157,7 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
       // },
       {
         value: item.from_ter,
-        td: `Rp ${formatNumber(item.from_ter)}`,
+        td: `Rp ${formatNumber(item.from_ter || 0)}`,
         isNumeric: true,
         cProps: {
           justify: "right",
@@ -165,7 +165,7 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
       },
       {
         value: item.to_ter,
-        td: `Rp ${formatNumber(item.to_ter)}`,
+        td: `Rp ${formatNumber(item.to_ter || 0)}`,
         isNumeric: true,
         cProps: {
           justify: "right",
@@ -173,7 +173,7 @@ export default function TabelPengaturanTerPph21({ filterConfig }: Props) {
       },
       {
         value: item.percentage,
-        td: item.percentage && `${item.percentage}%`,
+        td: item.percentage && `${item.percentage || 0}%`,
         isNumeric: true,
         cProps: {
           justify: "center",

@@ -23,7 +23,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import req from "../../lib/req";
-import SelectJadwalKaryawan from "../dependent/_Select/SelectJadwalKaryawan";
+import SelectJadwalKaryawanLembur from "../dependent/_Select/SelectJadwalKaryawanLembur";
 import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import Textarea from "../dependent/input/Textarea";
@@ -181,7 +181,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
                   Jadwal
                   <RequiredForm />
                 </FormLabel>
-                <SelectJadwalKaryawan
+                <SelectJadwalKaryawanLembur
                   user_id={formik.values?.karyawan?.value}
                   isDisabled={!!!formik.values?.karyawan}
                   name="jadwal"
