@@ -87,6 +87,7 @@ const navs = [
         label: "Cuti",
         link: "/jadwal/cuti",
       },
+      //TODO belum lengkap
       {
         allowed: [],
         label: "Izin",
