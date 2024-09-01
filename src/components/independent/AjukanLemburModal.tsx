@@ -18,19 +18,17 @@ import { RiCalendarScheduleFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
 import { iconSize } from "../../constant/sizes";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import req from "../../lib/req";
 import SelectJadwalKaryawan from "../dependent/_Select/SelectJadwalKaryawan";
 import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import DatePickerModal from "../dependent/input/DatePickerModal";
 import Textarea from "../dependent/input/Textarea";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
-import formatDate from "../../lib/formatDate";
 
 interface Props extends ButtonProps {}
 
@@ -47,7 +45,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
     validateOnChange: false,
     initialValues: {
       karyawan: undefined as any,
-      tgl_pengajuan: undefined as any,
+      // tgl_pengajuan: undefined as any,
       jadwal: undefined as any,
       // kompensasi: undefined as any,
       durasi: undefined as any,
@@ -55,7 +53,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
     },
     validationSchema: yup.object().shape({
       karyawan: yup.object().required("Harus diisi"),
-      tgl_pengajuan: yup.string().required("Harus diisi"),
+      // tgl_pengajuan: yup.string().required("Harus diisi"),
       jadwal: yup.object().required("Harus diisi"),
       // kompensasi: yup.object().required("Harus diisi"),
       durasi: yup.string().required("Harus diisi"),
@@ -63,7 +61,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        tgl_pengajuan: formatDate(values.tgl_pengajuan, "short"),
+        // tgl_pengajuan: formatDate(values.tgl_pengajuan, "short"),
         user_id: values.karyawan.value,
         jadwal_id: values.jadwal.value,
         // kompensasi_lembur_id: values.kompensasi.value,
@@ -137,7 +135,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
           </ModalHeader>
           <ModalBody>
             <form id="ajukanLemburForm" onSubmit={formik.handleSubmit}>
-              <FormControl mb={4} isInvalid={!!formik.errors.tgl_pengajuan}>
+              {/* <FormControl mb={4} isInvalid={!!formik.errors.tgl_pengajuan}>
                 <FormLabel>
                   Tanggal Pengajuan
                   <RequiredForm />
@@ -158,7 +156,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
                 <FormErrorMessage>
                   {formik.errors.tgl_pengajuan as string}
                 </FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
 
               <FormControl mb={4} isInvalid={!!formik.errors.karyawan}>
                 <FormLabel>
