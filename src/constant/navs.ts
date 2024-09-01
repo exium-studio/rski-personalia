@@ -87,6 +87,11 @@ const navs = [
         label: "Cuti",
         link: "/jadwal/cuti",
       },
+      {
+        allowed: [],
+        label: "Izin",
+        link: "/jadwal/izin",
+      },
     ],
   },
   {
