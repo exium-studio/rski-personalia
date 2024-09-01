@@ -71,6 +71,7 @@ import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
+
 interface Props {
   id?: string;
   user_id?: number;
@@ -1282,6 +1283,30 @@ export default function DetailKaryawanModal({
                               </Text>
 
                               <VStack align={"stretch"} gap={4}>
+                                <HStack justify={"space-between"}>
+                                  {/* <Text opacity={0.6}>No. Ijazah</Text> */}
+                                  <Box opacity={0.6}>
+                                    <Highlighter
+                                      highlightClassName="hw"
+                                      unhighlightClassName="uw"
+                                      searchWords={searchQuery}
+                                      autoEscape={true}
+                                      textToHighlight="Pendidikan Terakhir"
+                                    />
+                                  </Box>
+                                  <FlexLine />
+                                  <HStack>
+                                    {data.pendidikan_terakhir && (
+                                      <Text
+                                        fontWeight={500}
+                                        textAlign={"right"}
+                                      >
+                                        {data.pendidikan_terakhir?.label}
+                                      </Text>
+                                    )}
+                                  </HStack>
+                                </HStack>
+
                                 <HStack justify={"space-between"}>
                                   {/* <Text opacity={0.6}>No. Ijazah</Text> */}
                                   <Box opacity={0.6}>
