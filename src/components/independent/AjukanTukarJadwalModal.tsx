@@ -106,6 +106,7 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
         className="btn-ap clicky"
         onClick={onOpen}
         leftIcon={<Icon as={RiArrowUpDownFill} fontSize={iconSize} />}
+        pl={5}
         {...props}
       >
         Ajukan Tukar Jadwal
