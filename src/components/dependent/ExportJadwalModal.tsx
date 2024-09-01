@@ -130,7 +130,7 @@ export default function ExportJadwalModal({ ...props }: Props) {
             />
           </ModalHeader>
           <ModalBody>
-            <CContainer gap={3}>
+            <CContainer gap={2}>
               <Alert status="warning">
                 <AlertIcon />
                 <AlertDescription>Pilih tipe export dahulu</AlertDescription>
