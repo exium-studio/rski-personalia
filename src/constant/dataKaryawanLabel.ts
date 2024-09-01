@@ -54,6 +54,7 @@ const dataKaryawanLabel = {
   file_ijazah: "File Ijazah",
   file_sertifikat: "File STR",
   keluarga: "Keluarga",
+  "Data Keluarga": "Keluarga",
 };
 
 export default dataKaryawanLabel;

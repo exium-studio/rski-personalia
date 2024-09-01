@@ -56,7 +56,7 @@ const ListKeluargaModal = ({ data, index }: Props) => {
           <ModalHeader>
             <DisclosureHeader title={"Anggota Keluarga"} />
           </ModalHeader>
-          <ModalBody>
+          <ModalBody className="scrollY">
             {data?.map((anggota: any, i: number) => (
               <CContainer
                 key={i}
@@ -111,7 +111,7 @@ export default function PerubahanDataRender({ column, data, index }: any) {
   switch (column) {
     default:
       return <Text>Invalid</Text>;
-    case "keluarga":
+    case "data keluarga":
       return <ListKeluargaModal data={data} index={index} />;
     case "foto_profil":
       return (
