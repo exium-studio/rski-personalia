@@ -23,7 +23,7 @@ interface Props {
 export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
   const { userPermissions } = useAuth();
   const editPermission = isHasPermissions(userPermissions, [60]);
-  const edit2Permission = isHasPermissions(userPermissions, [62]);
+  const viewPermission = isHasPermissions(userPermissions, [64]);
 
   // Row Options Config
   const rowOptions = [
@@ -183,7 +183,7 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
                           formattedHeader={formattedHeader}
                           formattedData={formattedData}
                           rowOptions={rowOptions}
-                          {...(edit2Permission && {
+                          {...(viewPermission && {
                             onRowClick: (rowData) => {
                               localStorage.setItem("role_id", rowData.id);
                               onOpen();
