@@ -77,7 +77,7 @@ export default function ColumnsConfigModal({
         initialFocusRef={initialRef}
         // scrollBehavior="inside"
         allowPinchZoom
-        size={"xxl"}
+        size={"xl"}
         blockScrollOnMount={false}
         isCentered
       >
@@ -92,7 +92,7 @@ export default function ColumnsConfigModal({
               <Text fontWeight={500} mb={2} opacity={0.6}>
                 Preset Kolom
               </Text>
-              <SimpleGrid columns={[1, 2, null, 3, 4]} gap={2} flex={1}>
+              <SimpleGrid columns={[1, 2, null, 3]} gap={2} flex={1}>
                 {presetColumns.map((preset, i) => (
                   <Button
                     key={i}
