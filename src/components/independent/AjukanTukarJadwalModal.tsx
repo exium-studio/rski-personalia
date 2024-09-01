@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button,
   ButtonProps,
@@ -13,14 +16,15 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Stack,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiArrowUpDownFill, RiArrowUpDownLine } from "@remixicon/react";
+import { RiArrowLeftRightLine, RiArrowUpDownFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
-import { iconSize } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
@@ -31,6 +35,7 @@ import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
 import SelectKaryawanDitukar from "../dependent/_Select/SelectKaryawanDitukar";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import RequiredForm from "../form/RequiredForm";
+import CContainer from "../wrapper/CContainer";
 
 interface Props extends ButtonProps {}
 
@@ -119,10 +124,11 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
           formik.resetForm();
         }}
         initialFocusRef={initialRef}
+        size={"xl"}
         isCentered
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent w={"100% !important"} maxW={"max-content !important"}>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
               title="Ajukan Tukar Jadwal"
@@ -132,101 +138,120 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
             />
           </ModalHeader>
           <ModalBody>
+            <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
+              <AlertIcon />
+              <AlertDescription>
+                Data lembur pada tanggal yang sama dengan jadwal yang ditukar
+                akan dihapus. Pastikan Anda sudah memeriksa kembali jadwal
+                sebelum melanjutkan proses tukar jadwal. Tindakan ini tidak
+                dapat dibatalkan.
+              </AlertDescription>
+            </Alert>
             <form id="ajukanPenukaranJadwalForm" onSubmit={formik.handleSubmit}>
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.user_pengajuan ? true : false}
-              >
-                <FormLabel>
-                  Karyawan Pengajuan
-                  <RequiredForm />
-                </FormLabel>
-                <SelectKaryawan
-                  name="user_pengajuan"
-                  onConfirm={(input) => {
-                    formik.resetForm();
-                    formik.setFieldValue("user_pengajuan", input);
-                  }}
-                  inputValue={formik.values.user_pengajuan}
-                  isError={!!formik.errors.user_pengajuan}
-                />
-                <FormErrorMessage>
-                  {formik.errors.user_pengajuan as string}
-                </FormErrorMessage>
-              </FormControl>
+              <Stack flexDir={["column", null, "row"]} gap={4}>
+                <CContainer>
+                  <FormControl
+                    mb={4}
+                    isInvalid={formik.errors.user_pengajuan ? true : false}
+                  >
+                    <FormLabel>
+                      Karyawan Pengajuan
+                      <RequiredForm />
+                    </FormLabel>
+                    <SelectKaryawan
+                      name="user_pengajuan"
+                      onConfirm={(input) => {
+                        formik.resetForm();
+                        formik.setFieldValue("user_pengajuan", input);
+                      }}
+                      inputValue={formik.values.user_pengajuan}
+                      isError={!!formik.errors.user_pengajuan}
+                    />
+                    <FormErrorMessage>
+                      {formik.errors.user_pengajuan as string}
+                    </FormErrorMessage>
+                  </FormControl>
 
-              <FormControl
-                isInvalid={formik.errors.jadwal_pengajuan ? true : false}
-              >
-                <FormLabel>
-                  Jadwal Pengajuan
-                  <RequiredForm />
-                </FormLabel>
-                <SelectJadwalKaryawan
-                  user_id={formik.values.user_pengajuan?.value}
-                  isDisabled={!formik.values.user_pengajuan}
-                  name="jadwal_pengajuan"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("jadwal_pengajuan", input);
-                  }}
-                  inputValue={formik.values.jadwal_pengajuan}
-                  isError={!!formik.errors.jadwal_pengajuan}
-                />
-                <FormErrorMessage>
-                  {formik.errors.jadwal_pengajuan as string}
-                </FormErrorMessage>
-              </FormControl>
+                  <FormControl
+                    isInvalid={formik.errors.jadwal_pengajuan ? true : false}
+                  >
+                    <FormLabel>
+                      Jadwal Pengajuan
+                      <RequiredForm />
+                    </FormLabel>
+                    <SelectJadwalKaryawan
+                      user_id={formik.values.user_pengajuan?.value}
+                      isDisabled={!formik.values.user_pengajuan}
+                      name="jadwal_pengajuan"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("jadwal_pengajuan", input);
+                      }}
+                      inputValue={formik.values.jadwal_pengajuan}
+                      isError={!!formik.errors.jadwal_pengajuan}
+                    />
+                    <FormErrorMessage>
+                      {formik.errors.jadwal_pengajuan as string}
+                    </FormErrorMessage>
+                  </FormControl>
+                </CContainer>
 
-              <HStack my={8}>
-                <Box w={"100%"} h={"2px"} bg={"var(--divider2)"} />
-                <Icon as={RiArrowUpDownLine} fontSize={20} color={"p.500"} />
-                <Box w={"100%"} h={"2px"} bg={"var(--divider2)"} />
-              </HStack>
+                <HStack my={8}>
+                  <Box w={"100%"} h={"2px"} bg={"var(--divider2)"} />
+                  <Icon
+                    as={RiArrowLeftRightLine}
+                    fontSize={20}
+                    color={"p.500"}
+                  />
+                  <Box w={"100%"} h={"2px"} bg={"var(--divider2)"} />
+                </HStack>
 
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.user_ditukar ? true : false}
-              >
-                <FormLabel>
-                  Karyawan Ditukar
-                  <RequiredForm />
-                </FormLabel>
-                <SelectKaryawanDitukar
-                  jadwal_id={formik.values.jadwal_pengajuan?.value}
-                  isDisabled={!formik.values.jadwal_pengajuan}
-                  name="user_ditukar"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("user_ditukar", input);
-                  }}
-                  inputValue={formik.values.user_ditukar}
-                  isError={!!formik.errors.user_ditukar}
-                />
-                <FormErrorMessage>
-                  {formik.errors.user_ditukar as string}
-                </FormErrorMessage>
-              </FormControl>
+                <CContainer>
+                  <FormControl
+                    mb={4}
+                    isInvalid={formik.errors.user_ditukar ? true : false}
+                  >
+                    <FormLabel>
+                      Karyawan Ditukar
+                      <RequiredForm />
+                    </FormLabel>
+                    <SelectKaryawanDitukar
+                      jadwal_id={formik.values.jadwal_pengajuan?.value}
+                      isDisabled={!formik.values.jadwal_pengajuan}
+                      name="user_ditukar"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("user_ditukar", input);
+                      }}
+                      inputValue={formik.values.user_ditukar}
+                      isError={!!formik.errors.user_ditukar}
+                    />
+                    <FormErrorMessage>
+                      {formik.errors.user_ditukar as string}
+                    </FormErrorMessage>
+                  </FormControl>
 
-              <FormControl
-                isInvalid={formik.errors.jadwal_ditukar ? true : false}
-              >
-                <FormLabel>
-                  Jadwal Ditukar
-                  <RequiredForm />
-                </FormLabel>
-                <SelectJadwalKaryawanDitukar
-                  user_id={formik.values.user_ditukar?.value}
-                  isDisabled={!formik.values.user_ditukar}
-                  name="jadwal_ditukar"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("jadwal_ditukar", input);
-                  }}
-                  inputValue={formik.values.jadwal_ditukar}
-                  isError={!!formik.errors.jadwal_ditukar}
-                />
-                <FormErrorMessage>
-                  {formik.errors.jadwal_ditukar as string}
-                </FormErrorMessage>
-              </FormControl>
+                  <FormControl
+                    isInvalid={formik.errors.jadwal_ditukar ? true : false}
+                  >
+                    <FormLabel>
+                      Jadwal Ditukar
+                      <RequiredForm />
+                    </FormLabel>
+                    <SelectJadwalKaryawanDitukar
+                      user_id={formik.values.user_ditukar?.value}
+                      isDisabled={!formik.values.user_ditukar}
+                      name="jadwal_ditukar"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("jadwal_ditukar", input);
+                      }}
+                      inputValue={formik.values.jadwal_ditukar}
+                      isError={!!formik.errors.jadwal_ditukar}
+                    />
+                    <FormErrorMessage>
+                      {formik.errors.jadwal_ditukar as string}
+                    </FormErrorMessage>
+                  </FormControl>
+                </CContainer>
+              </Stack>
             </form>
           </ModalBody>
           <ModalFooter>

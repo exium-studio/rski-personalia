@@ -135,7 +135,7 @@ export default function SingleSelectModal({
           {...props}
         >
           <HStack
-            maxW={"100%"}
+            w={"100%"}
             flexShrink={1}
             overflow={"hidden"}
             whiteSpace={"nowrap"}
