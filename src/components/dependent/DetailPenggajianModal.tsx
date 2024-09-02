@@ -220,6 +220,16 @@ export default function DetailPenggajianModal({
                       <Skeleton w={"100px"} h={"16px"} />
                     </VStack>
 
+                    <VStack align={"stretch"}>
+                      <Skeleton w={"100px"} h={"16px"} />
+                      <Skeleton w={"100px"} h={"16px"} />
+                    </VStack>
+
+                    <VStack align={"stretch"}>
+                      <Skeleton w={"100px"} h={"16px"} />
+                      <Skeleton w={"100px"} h={"16px"} />
+                    </VStack>
+
                     <Skeleton w={"120px"} ml={"auto"} />
                   </Wrap>
 
@@ -291,6 +301,25 @@ export default function DetailPenggajianModal({
                           <StatusPublikasiPenggajian
                             data={data.data_riwayat?.status_riwayat_gaji}
                           />
+                        </VStack>
+
+                        <VStack align={"stretch"}>
+                          <Text fontSize={14} opacity={0.6}>
+                            Dibuat Oleh
+                          </Text>
+                          <Text>{data?.data_riwayat?.created_by?.nama}</Text>
+                        </VStack>
+
+                        <VStack align={"stretch"}>
+                          <Text fontSize={14} opacity={0.6}>
+                            Dipublikasi Oleh
+                          </Text>
+                          <Text>
+                            {data?.data_riwayat?.status_riwayat_gaji?.id ===
+                              1 && !data?.data_riwayat?.submitted_by
+                              ? "-"
+                              : data?.data_riwayat?.submitted_by?.nama}
+                          </Text>
                         </VStack>
 
                         <PublikasiButtonModal

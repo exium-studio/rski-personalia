@@ -515,7 +515,7 @@ export default function DetailPenggajianKaryawanModal({
                             Kelompok Gaji
                           </Text>
                           <Text fontWeight={500}>
-                            {data.kelompok_gaji.nama_kelompok}
+                            {data?.kelompok_gaji?.nama_kelompok}
                           </Text>
                         </VStack>
 
