@@ -33,7 +33,7 @@ export default function StatusLemburBadge({
     >
       {!isToday && (
         <>
-          {isPassed && "Usai"}
+          {isPassed && "Selesai"}
 
           {!isPassed && "Menunggu"}
         </>
