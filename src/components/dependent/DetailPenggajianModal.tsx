@@ -103,7 +103,7 @@ function PublikasiButtonModal({
         <ModalContent>
           <ModalHeader>
             <DisclosureHeader
-              title={`Publikasi Penggajian ${formatDate(periode, "periode")}`}
+              title={`Publikasi ${formatDate(periode, "periode")}`}
             />
           </ModalHeader>
           <ModalBody>
