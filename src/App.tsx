@@ -27,6 +27,7 @@ import InternalServerErrorPage from "./pages/Error/InternalServerErrorPage";
 import MaintenancePage from "./pages/Error/MaintenancePage";
 import MissingPage from "./pages/Error/MissingPage";
 import Cuti from "./pages/Jadwal/Cuti";
+import Izin from "./pages/Jadwal/Izin";
 import Jadwal from "./pages/Jadwal/Jadwal";
 import Lembur from "./pages/Jadwal/Lembur";
 import TukarJadwal from "./pages/Jadwal/TukarJadwal";
@@ -301,7 +302,7 @@ export const App = () => {
                 topNavsData={navs[3].subNavs}
                 topNavActive={4}
               >
-                <Cuti />
+                <Izin />
               </NavContainer>
             }
           />
