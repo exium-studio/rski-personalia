@@ -1,9 +1,24 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import {
+  Box,
+  ChakraProvider,
+  Image,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { ColorModeSwitcher } from "./ColorModeSwitcher";
+import FormForgotPasswordStep1 from "./components/form/Auth/FormForgotPasswordStep1";
+import FormForgotPasswordStep2 from "./components/form/Auth/FormForgotPasswordStep2";
+import FormForgotPasswordStep3 from "./components/form/Auth/FormForgotPasswordStep3";
+import FormLogin from "./components/form/Auth/FormLogin";
+import CContainer from "./components/wrapper/CContainer";
+import Container from "./components/wrapper/Container";
 import NavContainer from "./components/wrapper/NavContainer";
 import PengaturanContainer from "./components/wrapper/PengaturanContainer";
+import { useLightDarkColor } from "./constant/colors";
 import navs from "./constant/navs";
 import useBodyRef from "./global/useBodyRef";
 import "./globalStyle.css";
@@ -20,7 +35,6 @@ import PerubahanDataKaryawan from "./pages/Karyawan/PermintaanPerubahanDataKarya
 import TransferKaryawan from "./pages/Karyawan/TransferKaryawan";
 import Penggajian from "./pages/Keuangan/Penggajian";
 import Thr from "./pages/Keuangan/Thr";
-import Auth from "./pages/Login/Auth";
 import PengaturanHariLibur from "./pages/Pengaturan/PengaturanHariLibur";
 import PengaturanJabatan from "./pages/Pengaturan/PengaturanJabatan";
 import PengaturanJadwalPenggajian from "./pages/Pengaturan/PengaturanJadwalPenggajian";
@@ -46,7 +60,89 @@ import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
 
-// github pekok
+const AuthPageLayout = () => {
+  // SX
+  const lightDarkColor = useLightDarkColor();
+
+  return (
+    <Container>
+      <CContainer>
+        <Stack
+          flexDir={["column", null, "row"]}
+          minH={"100vh"}
+          w={"100%"}
+          h={"100%"}
+          align={"stretch"}
+        >
+          <VStack
+            align={"stretch"}
+            justify={"space-between"}
+            minH={"100vh"}
+            py={6}
+            px={[6, null, 12]}
+            maxW={"450px"}
+            w={"100%"}
+          >
+            <VStack h={"200px"} align={"flex-start"} mb={6}>
+              <Image
+                src={"/logo512.png"}
+                h={"140px"}
+                mx={["auto", null, "0"]}
+              />
+            </VStack>
+
+            <Box>
+              <Outlet />
+            </Box>
+
+            <CContainer h={"200px"} justify={"end"}>
+              <Text opacity={0.6} mt={6}>
+                Copyright 2024 RSKI All right Reserved
+              </Text>
+            </CContainer>
+          </VStack>
+
+          <VStack p={6} minH={"300px"} flex={1}>
+            <VStack
+              borderRadius={12}
+              justify={"space-between"}
+              align={"flex-start"}
+              p={4}
+              overflow={"clip"}
+              w={"100%"}
+              bgImage={"/images/login.png"}
+              bgSize={"cover"}
+              bgPos={"center"}
+              flex={1}
+            >
+              <ColorModeSwitcher
+                ml={"auto"}
+                bg={`${lightDarkColor} !important`}
+                _hover={{ bg: `${lightDarkColor} !important` }}
+                _active={{ bg: `${lightDarkColor} !important` }}
+              />
+
+              <VStack
+                // maxW={"700px"}
+                bg={"blackAlpha.600"}
+                color={"white"}
+                p={4}
+                borderRadius={12}
+                backdropFilter={"blur(5px)"}
+              >
+                <Text>
+                  “Di rumah sakit kami, kami memberikan perawatan yang tak
+                  tertandingi, di mana keahlian berpadu dengan kasih sayang,
+                  untuk memastikan hasil terbaik bagi setiap pasien”
+                </Text>
+              </VStack>
+            </VStack>
+          </VStack>
+        </Stack>
+      </CContainer>
+    </Container>
+  );
+};
 
 export const App = () => {
   const bodyRef = useRef(null);
@@ -61,7 +157,21 @@ export const App = () => {
     <ChakraProvider theme={globalTheme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/*" element={<Auth />} />
+          <Route path="/" element={<AuthPageLayout />}>
+            <Route index element={<FormLogin />} />
+            <Route
+              path={"forgot-password-1"}
+              element={<FormForgotPasswordStep1 />}
+            />
+            <Route
+              path={"forgot-password-2/:email"}
+              element={<FormForgotPasswordStep2 />}
+            />
+            <Route
+              path={"forgot-password-3/:email/:otp"}
+              element={<FormForgotPasswordStep3 />}
+            />
+          </Route>
 
           <Route
             path="/dashboard"
