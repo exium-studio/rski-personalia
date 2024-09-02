@@ -16,16 +16,18 @@ import {
 } from "@chakra-ui/react";
 import { RiCalendarScheduleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
 import SelectJadwalKaryawanLembur from "../dependent/_Select/SelectJadwalKaryawanLembur";
-import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
+import SelectKaryawanLembur from "../dependent/_Select/SelectKaryawanLembur";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import DatePickerModal from "../dependent/input/DatePickerModal";
 import Textarea from "../dependent/input/Textarea";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
@@ -41,33 +43,35 @@ export default function AjukanLemburModal({ ...props }: Props) {
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
+  const [isShift, setIsShift] = useState<boolean>(false);
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
       karyawan: undefined as any,
-      // tgl_pengajuan: undefined as any,
       jadwal: undefined as any,
-      // kompensasi: undefined as any,
+      tgl_pengajuan: undefined as any,
       durasi: undefined as any,
       catatan: "",
     },
     validationSchema: yup.object().shape({
       karyawan: yup.object().required("Harus diisi"),
-      // tgl_pengajuan: yup.string().required("Harus diisi"),
-      jadwal: yup.object().required("Harus diisi"),
-      // kompensasi: yup.object().required("Harus diisi"),
+      jadwal: isShift ? yup.object().required("Harus diisi") : yup.mixed(),
+      tgl_pengajuan: !isShift
+        ? yup.string().required("Harus diisi")
+        : yup.mixed(),
       durasi: yup.string().required("Harus diisi"),
       catatan: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        // tgl_pengajuan: formatDate(values.tgl_pengajuan, "short"),
         user_id: values.karyawan.value,
-        jadwal_id: values.jadwal.value,
-        // kompensasi_lembur_id: values.kompensasi.value,
+        jadwal_id: values?.jadwal?.value,
+        tgl_pengajuan: values.tgl_pengajuan
+          ? formatDate(values.tgl_pengajuan, "short")
+          : null,
         durasi: values.durasi,
         catatan: values.catatan,
-        // status_lembur_id: 1,
       };
       setLoading(true);
       req
@@ -102,6 +106,14 @@ export default function AjukanLemburModal({ ...props }: Props) {
     },
   });
 
+  useEffect(() => {
+    if (formik.values?.karyawan?.label2 === "Shift") {
+      setIsShift(true);
+    } else {
+      setIsShift(false);
+    }
+  }, [formik.values?.karyawan?.label2]);
+
   return (
     <>
       <Button
@@ -135,35 +147,12 @@ export default function AjukanLemburModal({ ...props }: Props) {
           </ModalHeader>
           <ModalBody>
             <form id="ajukanLemburForm" onSubmit={formik.handleSubmit}>
-              {/* <FormControl mb={4} isInvalid={!!formik.errors.tgl_pengajuan}>
-                <FormLabel>
-                  Tanggal Pengajuan
-                  <RequiredForm />
-                </FormLabel>
-                <DatePickerModal
-                  id="ajukan-lembur-tgl-pengajuan"
-                  name="tgl_pengajuan"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("tgl_pengajuan", input);
-                  }}
-                  inputValue={
-                    formik.values.tgl_pengajuan
-                      ? new Date(formik.values.tgl_pengajuan)
-                      : undefined
-                  }
-                  isError={!!formik.errors.tgl_pengajuan}
-                />
-                <FormErrorMessage>
-                  {formik.errors.tgl_pengajuan as string}
-                </FormErrorMessage>
-              </FormControl> */}
-
               <FormControl mb={4} isInvalid={!!formik.errors.karyawan}>
                 <FormLabel>
                   Karyawan
                   <RequiredForm />
                 </FormLabel>
-                <SelectKaryawan
+                <SelectKaryawanLembur
                   name="karyawan"
                   onConfirm={(input) => {
                     formik.setFieldValue("karyawan", input);
@@ -176,43 +165,53 @@ export default function AjukanLemburModal({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl mb={4} isInvalid={!!formik.errors.jadwal}>
-                <FormLabel>
-                  Jadwal
-                  <RequiredForm />
-                </FormLabel>
-                <SelectJadwalKaryawanLembur
-                  user_id={formik.values?.karyawan?.value}
-                  isDisabled={!!!formik.values?.karyawan}
-                  name="jadwal"
-                  placeholder="Pilih Jadwal"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("jadwal", input);
-                  }}
-                  inputValue={formik.values.jadwal}
-                  isError={!!formik.errors.jadwal}
-                />
-                <FormErrorMessage>
-                  {formik.errors.jadwal as string}
-                </FormErrorMessage>
-              </FormControl>
+              {formik.values?.karyawan?.label2 === "Non-Shift" && (
+                <FormControl mb={4} isInvalid={!!formik.errors.tgl_pengajuan}>
+                  <FormLabel>
+                    Tanggal Pengajuan
+                    <RequiredForm />
+                  </FormLabel>
+                  <DatePickerModal
+                    id="ajukan-lembur-tgl-pengajuan"
+                    name="tgl_pengajuan"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("tgl_pengajuan", input);
+                    }}
+                    inputValue={
+                      formik.values.tgl_pengajuan
+                        ? new Date(formik.values.tgl_pengajuan)
+                        : undefined
+                    }
+                    isError={!!formik.errors.tgl_pengajuan}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.tgl_pengajuan as string}
+                  </FormErrorMessage>
+                </FormControl>
+              )}
 
-              {/* <FormControl mb={4} isInvalid={!!formik.errors.kompensasi}>
-                <FormLabel>
-                  Kompensasi
-                  <RequiredForm />
-                </FormLabel>
-                <SelectKompensasi
-                  name="kompensasi"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("kompensasi", input);
-                  }}
-                  inputValue={formik.values.kompensasi}
-                />
-                <FormErrorMessage>
-                  {formik.errors.kompensasi as string}
-                </FormErrorMessage>
-              </FormControl> */}
+              {formik.values?.karyawan?.label2 === "Shift" && (
+                <FormControl mb={4} isInvalid={!!formik.errors.jadwal}>
+                  <FormLabel>
+                    Jadwal
+                    <RequiredForm />
+                  </FormLabel>
+                  <SelectJadwalKaryawanLembur
+                    user_id={formik.values?.karyawan?.value}
+                    isDisabled={!!!formik.values?.karyawan}
+                    name="jadwal"
+                    placeholder="Pilih Jadwal"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("jadwal", input);
+                    }}
+                    inputValue={formik.values.jadwal}
+                    isError={!!formik.errors.jadwal}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.jadwal as string}
+                  </FormErrorMessage>
+                </FormControl>
+              )}
 
               <FormControl mb={4} isInvalid={!!formik.errors.durasi}>
                 <FormLabel>
