@@ -3,11 +3,12 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 import FormForgotPasswordStep1 from "../../components/form/Auth/FormForgotPasswordStep1";
 import FormForgotPasswordStep2 from "../../components/form/Auth/FormForgotPasswordStep2";
+import FormForgotPasswordStep3 from "../../components/form/Auth/FormForgotPasswordStep3";
 import FormLogin from "../../components/form/Auth/FormLogin";
 import CContainer from "../../components/wrapper/CContainer";
 import Container from "../../components/wrapper/Container";
 import { useLightDarkColor } from "../../constant/colors";
-import FormForgotPasswordStep3 from "../../components/form/Auth/FormForgotPasswordStep3";
+import MissingPage from "../Error/MissingPage";
 
 const PagesLayout = () => {
   // SX
@@ -105,11 +106,13 @@ export default function Auth() {
         <Route
           path={"forgot-password-2/:email"}
           element={<FormForgotPasswordStep2 />}
-        />{" "}
+        />
         <Route
           path={"forgot-password-3/:email/:otp"}
           element={<FormForgotPasswordStep3 />}
         />
+
+        <Route path={"*"} element={<MissingPage />} />
       </Route>
     </Routes>
   );
