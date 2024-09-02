@@ -87,9 +87,8 @@ const navs = [
         label: "Cuti",
         link: "/jadwal/cuti",
       },
-      //TODO belum lengkap
       {
-        allowed: [],
+        allowed: [4],
         label: "Izin",
         link: "/jadwal/izin",
       },

@@ -8,9 +8,7 @@ import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
-import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Izin() {
   // Filter Config
@@ -33,10 +31,6 @@ export default function Izin() {
 
   // SX
   const lightDarkColor = useLightDarkColor();
-
-  const { userPermissions } = useAuth();
-  const createPermissions = isHasPermissions(userPermissions, [38]);
-  const exportPermissions = isHasPermissions(userPermissions, [42]);
 
   return (
     <>

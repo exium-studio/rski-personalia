@@ -4,6 +4,8 @@ import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
+import formatDurationShort from "../../lib/formatDurationShort";
+import formatTime from "../../lib/formatTime";
 import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
@@ -30,10 +32,10 @@ export default function TabelCuti({ filterConfig }: Props) {
   // Filter Config
   const { formattedFilterKaryawan } = useFilterKaryawan();
 
-  const { error, notFound, loading, data, paginationData, retry } =
+  const { error, loading, notFound, data, paginationData, retry } =
     useDataState<any[]>({
       initialData: undefined,
-      url: `/api/rski/dashboard/jadwal-karyawan/get-cuti?page=${pageConfig}`,
+      url: `/api/rski/dashboard/jadwal-karyawan/get-perizinan?page=${pageConfig}`,
       payload: {
         ...formattedFilterKaryawan,
         ...(filterConfig?.status_cuti?.length > 0 && {
@@ -53,8 +55,7 @@ export default function TabelCuti({ filterConfig }: Props) {
     });
 
   const { userPermissions } = useAuth();
-  const verif1Permission = isHasPermissions(userPermissions, [43]);
-  const verif2Permission = isHasPermissions(userPermissions, [44]);
+  const verif1Permission = isHasPermissions(userPermissions, [6]);
 
   const formattedHeader = [
     {
@@ -71,33 +72,29 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
     },
     {
-      th: "Status Cuti",
+      th: "Status Izin",
       isSortable: true,
       cProps: {
         justify: "center",
       },
     },
     {
-      th: "Tipe Cuti",
+      th: "Tanggal Izin",
       isSortable: true,
     },
     {
-      th: "Tanggal Mulai",
-      isSortable: true,
-    },
-    {
-      th: "Tanggal Selesai",
+      th: "Waktu Izin",
       isSortable: true,
     },
     {
       th: "Durasi",
       isSortable: true,
       cProps: {
-        justify: "end",
+        justify: "center",
       },
     },
     {
-      th: "Unit Kerja",
+      th: "Keterangan",
       isSortable: true,
     },
     {
@@ -111,20 +108,7 @@ export default function TabelCuti({ filterConfig }: Props) {
       cProps: {
         justify: "center",
         borderLeft: "1px solid var(--divider3)",
-        w: "122px",
-      },
-    },
-    {
-      th: "Verif. 2",
-      props: {
-        position: "sticky",
-        right: 0,
-        zIndex: 3,
-        w: "122px",
-      },
-      cProps: {
-        justify: "center",
-        borderLeft: "1px solid var(--divider3)",
+        borderRight: "1px solid var(--divider3)",
         w: "122px",
       },
     },
@@ -154,12 +138,12 @@ export default function TabelCuti({ filterConfig }: Props) {
         },
       },
       {
-        value: item.status_cuti,
+        value: item.status_izin,
         td: (
           <StatusVerifikasiBadge2
-            data={item.status_cuti}
+            data={item.status_izin}
             alasan={item?.alasan}
-            w={"180px"}
+            w={"120px"}
           />
         ),
         cProps: {
@@ -167,43 +151,35 @@ export default function TabelCuti({ filterConfig }: Props) {
         },
       },
       {
-        value: item.tipe_cuti.nama,
-        td: item.tipe_cuti.nama,
+        value: item.tgl_izin,
+        td: formatDate(item.tgl_izin),
+        isData: true,
+      },
+      {
+        value: item.waktu_izin,
+        td: formatTime(item?.waktu_izin),
+        isTime: true,
       },
       {
         value: item.durasi,
-        td: formatDate(item?.tgl_from),
-        isDate: true,
-      },
-      {
-        value: item.durasi,
-        td: formatDate(item?.tgl_to),
+        td: formatDurationShort(item?.durasi),
         isDate: true,
         cProps: {
-          justify: "end",
+          justify: "center",
         },
       },
       {
-        value: item.durasi,
-        td: `${item.durasi} hari`,
-        isNumeric: true,
-        cProps: {
-          justify: "end",
-        },
-      },
-      {
-        value: item.unit_kerja.nama_unit,
-        td: item.unit_kerja.nama_unit,
-        isNumeric: true,
+        value: item.keterangan,
+        td: item.keterangan,
       },
       {
         value: "",
-        td: item?.status_cuti?.id === 1 && (
+        td: item?.status_izin?.id === 1 && (
           <PermissionTooltip permission={verif1Permission}>
             <VerifikasiModal
               aria-label={`perubahan-data-verif-1-button-${item.id}"`}
               id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1`}
+              submitUrl={`api/rski/dashboard/jadwal-karyawan/izin/${item.id}/verifikasi-perizinan `}
               approvePayloadKey="verifikasi_pertama_disetujui"
               disapprovePayloadKey="verifikasi_pertama_ditolak"
               isDisabled={!verif1Permission}
@@ -214,30 +190,6 @@ export default function TabelCuti({ filterConfig }: Props) {
           position: "sticky",
           right: 0,
           zIndex: 2,
-        },
-        cProps: {
-          justify: "center",
-          borderLeft: "1px solid var(--divider3)",
-        },
-      },
-      {
-        value: "",
-        td: item?.status_cuti?.id === 2 && (
-          <PermissionTooltip permission={verif2Permission}>
-            <VerifikasiModal
-              aria-label={`perubahan-data-verif-2-button-${item.id}"`}
-              id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`/api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
-              approvePayloadKey="verifikasi_kedua_disetujui"
-              disapprovePayloadKey="verifikasi_kedua_ditolak"
-              isDisabled={!verif2Permission}
-            />
-          </PermissionTooltip>
-        ),
-        props: {
-          position: "sticky",
-          right: 0,
-          zIndex: 1,
         },
         cProps: {
           justify: "center",

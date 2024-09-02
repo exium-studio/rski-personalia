@@ -37,9 +37,9 @@ req.interceptors.response.use(
           window.location.href = "/maintenance";
           break;
         case 401:
-          // removeCookie("__auth_token");
-          // localStorage.removeItem("__user_data");
-          // window.location.href = "/";
+          removeCookie("__auth_token");
+          localStorage.removeItem("__user_data");
+          window.location.href = "/";
           break;
         default:
           return Promise.reject(error);
