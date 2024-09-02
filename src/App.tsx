@@ -293,6 +293,20 @@ export const App = () => {
             }
           />
           <Route
+            path="/jadwal/izin"
+            element={
+              <NavContainer
+                active={3}
+                title="Izin"
+                topNavsData={navs[3].subNavs}
+                topNavActive={4}
+              >
+                <Cuti />
+              </NavContainer>
+            }
+          />
+
+          <Route
             path="/keuangan/penggajian"
             element={
               <NavContainer
