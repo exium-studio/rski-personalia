@@ -104,16 +104,16 @@ export default function TabelDetailPenggajian({
         },
       },
       {
-        value: item.unit_kerja.nama_unit,
-        td: item.unit_kerja.nama_unit,
+        value: item?.unit_kerja?.nama_unit,
+        td: item?.unit_kerja?.nama_unit,
       },
       {
-        value: item.kelompok_gaji.nama_kelompok,
-        td: item.kelompok_gaji.nama_kelompok,
+        value: item?.kelompok_gaji?.nama_kelompok,
+        td: item?.kelompok_gaji?.nama_kelompok,
       },
       {
-        value: item.kelompok_gaji.besaran_gaji,
-        td: `Rp ${formatNumber(item.kelompok_gaji.besaran_gaji)}`,
+        value: item?.kelompok_gaji?.besaran_gaji,
+        td: `Rp ${formatNumber(item?.kelompok_gaji?.besaran_gaji)}`,
         isNumeric: true,
         cProps: {
           justify: "end",
