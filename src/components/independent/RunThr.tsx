@@ -58,7 +58,7 @@ export default function RunThr({ ...props }: Props) {
 
       return () => clearInterval(interval);
     } else {
-      setCountDown(10);
+      setCountDown(5);
     }
   }, [isOpen]);
 

@@ -55,7 +55,7 @@ export default function BuatPenggajianModal({ ...props }: Props) {
 
       return () => clearInterval(interval);
     } else {
-      setCountDown(10);
+      setCountDown(5);
     }
   }, [isOpen]);
 
