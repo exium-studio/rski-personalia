@@ -84,15 +84,21 @@ const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
       });
   }
 
+  const { userPermissions } = useAuth();
+  const vearif2Permission = isHasPermissions(userPermissions, [11]);
+
   return (
     <>
-      <IconButton
-        aria-label="delete"
-        icon={<Icon as={RiDeleteBinLine} fontSize={iconSize} />}
-        variant={"ghost"}
-        colorScheme="red"
-        onClick={onOpen}
-      />
+      <PermissionTooltip permission={vearif2Permission}>
+        <IconButton
+          aria-label="delete"
+          icon={<Icon as={RiDeleteBinLine} fontSize={iconSize} />}
+          variant={"ghost"}
+          colorScheme="red"
+          onClick={onOpen}
+          isDisabled={!vearif2Permission}
+        />
+      </PermissionTooltip>
 
       <Modal
         isOpen={isOpen}
