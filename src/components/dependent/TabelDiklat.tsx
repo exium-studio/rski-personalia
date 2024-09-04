@@ -193,10 +193,12 @@ const PesertaModal = ({ data }: { data: any }) => {
                         maxW={"fit-content"}
                       />
 
-                      <KonfirmasiDeleteUser
-                        dataDiklat={data}
-                        peserta={peserta}
-                      />
+                      {data?.status_diklat?.id !== 4 && (
+                        <KonfirmasiDeleteUser
+                          dataDiklat={data}
+                          peserta={peserta}
+                        />
+                      )}
                     </HStack>
                   ))}
                 </>
@@ -426,7 +428,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
             <VerifikasiModal
               aria-label={`perubahan-data-verif-2-button-${item.id}"`}
               id={`verifikasi-diklat-modal-2-${item.id}`}
-              submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
+              submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-2`}
               approvePayloadKey="verifikasi_kedua_disetujui"
               disapprovePayloadKey="verifikasi_kedua_ditolak"
               isDisabled={!verif2Permission}
