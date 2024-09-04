@@ -3,6 +3,7 @@ import {
   Center,
   HStack,
   Icon,
+  IconButton,
   Modal,
   ModalBody,
   ModalContent,
@@ -11,8 +12,9 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import { RiArrowRightUpLine } from "@remixicon/react";
+import { RiDeleteBinLine } from "@remixicon/react";
 import { useState } from "react";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
@@ -31,12 +33,108 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
-import DetailKaryawanModalDisclosure from "./DetailKaryawanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
+import req from "../../lib/req";
+
+const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
+  // api/rski/dashboard/perusahaan/diklat/{diklatId}/delete-peserta-diklat/{userId}
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    `konfirmasi-delete-${peserta.user.id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
+  function deleteUser() {
+    setLoading(true);
+    req
+      .delete(
+        `/api/rski/dashboard/perusahaan/diklat/${dataDiklat.id}/delete-peserta-diklat/${peserta.user.id}`
+      )
+      .then((r) => {
+        if (r.status === 200) {
+          setRt(!rt);
+          backOnClose();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  return (
+    <>
+      <IconButton
+        aria-label="delete"
+        icon={<Icon as={RiDeleteBinLine} fontSize={iconSize} />}
+        variant={"ghost"}
+        colorScheme="red"
+        onClick={onOpen}
+      />
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Hapus Karyawan Dari Peserta Diklat"} />
+          </ModalHeader>
+          <ModalBody>
+            <Text>
+              Apakah anda yakin akan menghapus <b>{peserta.user.nama}</b> dari
+              peserta Diklat?
+            </Text>
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button
+              w={"100%"}
+              className="btn-solid clicky"
+              onClick={backOnClose}
+              isDisabled={loading}
+            >
+              Tidak
+            </Button>
+            <Button
+              w={"100%"}
+              className="clicky"
+              colorScheme="red"
+              onClick={deleteUser}
+              isLoading={loading}
+            >
+              Ya
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 const PesertaModal = ({ data }: { data: any }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -66,33 +164,37 @@ const PesertaModal = ({ data }: { data: any }) => {
           </ModalHeader>
           <ModalBody className="scrollY">
             <CContainer gap={2}>
-              {data.list_peserta?.map((peserta: any, i: number) => (
-                <DetailKaryawanModalDisclosure key={i} user_id={peserta.id}>
-                  <HStack
-                    justifyContent={"space-between"}
-                    p={4}
-                    className="btn-solid clicky"
-                    borderRadius={12}
-                  >
-                    <AvatarAndNameTableData
-                      data={{
-                        id: peserta.id,
-                        nama: peserta.nama,
-                        foto_profil: peserta.foto_profil,
-                      }}
-                      noDetail
-                      w={"fit-content"}
-                      maxW={"fit-content"}
-                    />
+              {data?.list_peserta?.length === 0 && <NoData minH={"300px"} />}
 
-                    <Icon
-                      as={RiArrowRightUpLine}
-                      fontSize={iconSize}
-                      opacity={0.4}
-                    />
-                  </HStack>
-                </DetailKaryawanModalDisclosure>
-              ))}
+              {data?.list_peserta?.length > 0 && (
+                <>
+                  {data.list_peserta?.map((peserta: any, i: number) => (
+                    <HStack
+                      key={i}
+                      justifyContent={"space-between"}
+                      p={4}
+                      bg={"var(--divider)"}
+                      borderRadius={12}
+                    >
+                      <AvatarAndNameTableData
+                        data={{
+                          id: peserta?.user?.id,
+                          nama: peserta?.user?.nama,
+                          foto_profil: peserta?.user?.foto_profil,
+                        }}
+                        // noDetail
+                        w={"fit-content"}
+                        maxW={"fit-content"}
+                      />
+
+                      <KonfirmasiDeleteUser
+                        dataDiklat={data}
+                        peserta={peserta}
+                      />
+                    </HStack>
+                  ))}
+                </>
+              )}
             </CContainer>
           </ModalBody>
           <ModalFooter>
