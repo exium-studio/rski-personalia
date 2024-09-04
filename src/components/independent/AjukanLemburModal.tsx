@@ -25,7 +25,7 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
 import SelectJadwalKaryawanLembur from "../dependent/_Select/SelectJadwalKaryawanLembur";
-import SelectKaryawanLembur from "../dependent/_Select/SelectKaryawanLembur";
+import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanAllJenisKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import Textarea from "../dependent/input/Textarea";
@@ -152,7 +152,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
                   Karyawan
                   <RequiredForm />
                 </FormLabel>
-                <SelectKaryawanLembur
+                <SelectKaryawanAllJenisKaryawan
                   name="karyawan"
                   onConfirm={(input) => {
                     formik.setFieldValue("karyawan", input);

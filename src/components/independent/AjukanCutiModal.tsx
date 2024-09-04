@@ -16,19 +16,19 @@ import {
 } from "@chakra-ui/react";
 import { RiCalendarCloseFill } from "@remixicon/react";
 import { useFormik } from "formik";
+import { useState } from "react";
 import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
-import SelectKaryawan from "../dependent/_Select/SelectKaryawan";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
+import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
+import req from "../../lib/req";
+import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanAllJenisKaryawan";
 import SelectTipeCuti from "../dependent/_Select/SelectTipeCuti";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DateRangePickerModal from "../dependent/input/DateRangePickerModal";
 import RequiredForm from "../form/RequiredForm";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import backOnClose from "../../lib/backOnClose";
-import req from "../../lib/req";
-import { useState } from "react";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
-import formatDate from "../../lib/formatDate";
 interface Props extends ButtonProps {}
 
 export default function AjukanCutiModal({ ...props }: Props) {
@@ -126,7 +126,7 @@ export default function AjukanCutiModal({ ...props }: Props) {
                   Karyawan
                   <RequiredForm />
                 </FormLabel>
-                <SelectKaryawan
+                <SelectKaryawanAllJenisKaryawan
                   name="karyawan"
                   onConfirm={(input) => {
                     formik.setFieldValue("karyawan", input);
