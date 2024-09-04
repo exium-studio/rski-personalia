@@ -200,6 +200,7 @@ export default function TabelKaryawan({ filterConfig }: Props) {
         cProps: {
           justify: "center",
           borderLeft: "1px solid var(--divider3)",
+          borderRight: "1px solid var(--divider3)",
         },
       },
       {
@@ -223,7 +224,7 @@ export default function TabelKaryawan({ filterConfig }: Props) {
         },
         cProps: {
           justify: "center",
-          borderLeft: "1px solid var(--divider3)",
+          // borderLeft: "1px solid var(--divider3)",
         },
       },
     ],
