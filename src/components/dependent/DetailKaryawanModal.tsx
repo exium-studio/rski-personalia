@@ -46,7 +46,7 @@ import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 import formatDate from "../../lib/formatDate";
-import formatMasaKerja from "../../lib/formatMasaKerja";
+import formatDuration from "../../lib/formatDuration";
 import formatNumber from "../../lib/formatNumber";
 import isHasPermissions from "../../lib/isHasPermissions";
 import FlexLine from "../independent/FlexLine";
@@ -1271,7 +1271,7 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
-                                    {formatMasaKerja(data.masa_diklat)}
+                                    {formatDuration(data.masa_diklat)}
                                   </Text>
                                 </HStack>
                               </VStack>

@@ -15,6 +15,7 @@ import JenisKaryawanBadge from "../../components/dependent/JenisKaryawanBadge";
 import SmallLink from "../../components/dependent/SmallLink";
 import FlexLine from "../../components/independent/FlexLine";
 import LogoutButton from "../../components/independent/LogoutButton";
+import NoData from "../../components/independent/NoData";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
@@ -22,9 +23,8 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useGetUserData from "../../hooks/useGetUserData";
 import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 import formatDate from "../../lib/formatDate";
-import formatMasaKerja from "../../lib/formatMasaKerja";
+import formatDuration from "../../lib/formatDuration";
 import formatNumber from "../../lib/formatNumber";
-import NoData from "../../components/independent/NoData";
 
 export default function Profil() {
   // SX
@@ -843,9 +843,7 @@ export default function Profil() {
                         </Box>
                         <FlexLine />
                         <Text fontWeight={500} textAlign={"right"}>
-                          {formatMasaKerja(
-                            userData?.data_karyawan?.masa_diklat
-                          )}
+                          {formatDuration(userData?.data_karyawan?.masa_diklat)}
                         </Text>
                       </HStack>
                     </VStack>
