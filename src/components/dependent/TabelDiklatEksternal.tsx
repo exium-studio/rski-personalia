@@ -260,6 +260,10 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
       },
     },
     {
+      th: "Karyawan Pengajuan",
+      isSortable: true,
+    },
+    {
       th: "Status Verifikasi",
       isSortable: true,
       cProps: {
@@ -269,13 +273,13 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
     {
       th: "Deskripsi",
     },
-    {
-      th: "Kuota",
-      isSortable: true,
-      cProps: {
-        justify: "center",
-      },
-    },
+    // {
+    //   th: "Kuota",
+    //   isSortable: true,
+    //   cProps: {
+    //     justify: "center",
+    //   },
+    // },
     {
       th: "Tanggal Mulai",
       isSortable: true,
@@ -283,12 +287,6 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
     {
       th: "Tanggal Selesai",
       isSortable: true,
-    },
-    {
-      th: "Peserta",
-      cProps: {
-        justify: "center",
-      },
     },
     {
       th: "Kategori Acara",
@@ -349,6 +347,18 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
         },
       },
       {
+        value: item?.list_peserta?.[0].user.nama,
+        td: (
+          <AvatarAndNameTableData
+            data={{
+              id: item?.list_peserta?.[0].user.id,
+              nama: item?.list_peserta?.[0].user.nama,
+              foto_profil: item?.list_peserta?.[0].user.foto_profil,
+            }}
+          />
+        ),
+      },
+      {
         value: item.status_diklat.label,
         td: <StatusVerifikasiBadge2 data={item.status_diklat} w={"180px"} />,
       },
@@ -366,11 +376,11 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
           </Text>
         ),
       },
-      {
-        value: item.kuota,
-        td: item.kuota,
-        cProps: { justify: "center" },
-      },
+      // {
+      //   value: item.kuota,
+      //   td: item.kuota,
+      //   cProps: { justify: "center" },
+      // },
       {
         value: item.tgl_mulai,
         td: formatDate(item.tgl_mulai),
@@ -380,10 +390,6 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
         value: item.tgl_selesai,
         td: formatDate(item.tgl_selesai),
         isDate: true,
-      },
-      {
-        value: item.peserta,
-        td: <PesertaModal data={item} />,
       },
       {
         value: item.kategori_diklat?.label,

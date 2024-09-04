@@ -384,6 +384,9 @@ export default function TabelDiklat({ filterConfig }: Props) {
       {
         value: item.peserta,
         td: <PesertaModal data={item} />,
+        cProps: {
+          justify: "center",
+        },
       },
       {
         value: item.kategori_diklat?.label,
