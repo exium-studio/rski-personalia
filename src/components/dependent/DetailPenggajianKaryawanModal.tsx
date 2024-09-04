@@ -23,7 +23,7 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { RiArrowUpDownLine } from "@remixicon/react";
+import { RiExpandUpDownFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
@@ -32,8 +32,11 @@ import { useErrorColor, useLightDarkColor } from "../../constant/colors";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
+import req from "../../lib/req";
 import RequiredForm from "../form/RequiredForm";
 import FlexLine from "../independent/FlexLine";
 import NoData from "../independent/NoData";
@@ -46,9 +49,6 @@ import DateRangePickerModal from "./input/DateRangePickerModal";
 import NumberInput from "./input/NumberInput";
 import SearchComponent from "./input/SearchComponent";
 import StringInput from "./input/StringInput";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
-import req from "../../lib/req";
-import formatDate from "../../lib/formatDate";
 
 interface PenyesuaianProps extends ButtonProps {
   riwayat_id?: number;
@@ -138,7 +138,7 @@ function PenyesuaianGajiButtonModal({
   return (
     <>
       <Button
-        leftIcon={<Icon as={RiArrowUpDownLine} fontSize={iconSize} />}
+        leftIcon={<Icon as={RiExpandUpDownFill} fontSize={iconSize} />}
         className="btn-ap clicky"
         colorScheme="ap"
         minW={"fit-content"}
