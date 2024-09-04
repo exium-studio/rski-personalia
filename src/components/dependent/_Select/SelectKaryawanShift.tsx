@@ -2,11 +2,9 @@ import { ButtonProps, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import req from "../../../lib/req";
-import backOnClose from "../../../lib/backOnClose";
 import SingleSelectModal from "../input/SingleSelectModal";
 
 interface Props extends ButtonProps {
-  jadwal_id?: number;
   name: string;
   onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
   inputValue: Interface__SelectOption | undefined;
@@ -17,8 +15,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function SelectKaryawanDitukar({
-  jadwal_id,
+export default function SelectKaryawanShift({
   name,
   onConfirm,
   inputValue,
@@ -39,14 +36,13 @@ export default function SelectKaryawanDitukar({
   useEffect(() => {
     if (isOpen && !options) {
       req
-        .get(
-          `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal/user-ditukar/${jadwal_id}`
-        )
+        .get("/api/get-list-user-shift")
         .then((r) => {
           if (r.status === 200) {
             const options = r.data.data.map((item: any) => ({
-              value: item.id,
-              label: item.nama,
+              value: item?.user?.id,
+              label: item?.user?.nama,
+              label2: item?.unit_kerja?.jenis_karyawan ? "Shift" : "Non-Shift",
             }));
             setOptions(options);
           }
@@ -62,14 +58,13 @@ export default function SelectKaryawanDitukar({
             isClosable: true,
             position: "bottom-right",
           });
-          backOnClose();
         });
     }
-  }, [isOpen, options, toast, jadwal_id]);
+  }, [isOpen, options, toast]);
 
   return (
     <SingleSelectModal
-      id="select-karyawan-ditukar-modal"
+      id="select-karyawan-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
@@ -82,7 +77,7 @@ export default function SelectKaryawanDitukar({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Karyawan Ditukar"}
+      placeholder={placeholder || "Pilih Karyawan"}
       nonNullable={nonNullable}
       {...props}
     />

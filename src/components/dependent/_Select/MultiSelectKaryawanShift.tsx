@@ -40,8 +40,9 @@ export default function MultiSelectKaryawanShift({
         .then((r) => {
           if (r.status === 200) {
             const options = r.data.data.map((item: any) => ({
-              value: item.id,
-              label: item.nama,
+              value: item?.user?.id,
+              label: item?.user?.nama,
+              label2: item?.unit_kerja?.jenis_karyawan ? "Shift" : "Non-Shift",
             }));
             setOptions(options);
           }
