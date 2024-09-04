@@ -24,7 +24,7 @@ const PerubahanDataItem = ({ data }: { data: any }) => {
   return (
     <CContainer gap={4}>
       <HStack>
-        <Text minW={"160px"} opacity={0.6}>
+        <Text minW={"180px"} opacity={0.6}>
           Kolom
         </Text>
         {/* @ts-ignore */}
@@ -32,14 +32,14 @@ const PerubahanDataItem = ({ data }: { data: any }) => {
       </HStack>
 
       <HStack>
-        <Text minW={"160px"} opacity={0.6}>
+        <Text minW={"180px"} opacity={0.6}>
           Tanggal Diproses
         </Text>
         <Text fontWeight={500}>{formatDate(data?.updated_at)}</Text>
       </HStack>
 
       <HStack>
-        <Text minW={"160px"} opacity={0.6}>
+        <Text minW={"180px"} opacity={0.6}>
           Data Pengajuan
         </Text>
 
@@ -63,7 +63,7 @@ const PerubahanDataItem = ({ data }: { data: any }) => {
       </HStack>
 
       <HStack>
-        <Text minW={"160px"} opacity={0.6}>
+        <Text minW={"180px"} opacity={0.6}>
           Status
         </Text>
         <BooleanBadge
@@ -80,21 +80,21 @@ const TransferKaryanItem = ({ data }: { data: any }) => {
   return (
     <CContainer gap={4}>
       <HStack>
-        <Text minW={"160px"} opacity={0.6}>
+        <Text minW={"180px"} opacity={0.6}>
           Tanggal Mulai
         </Text>
         <Text fontWeight={500}>{formatDate(data?.tgl_mulai)}</Text>
       </HStack>
 
       <HStack>
-        <Text minW={"160px"} opacity={0.6}>
+        <Text minW={"180px"} opacity={0.6}>
           Unit Kerja Asal
         </Text>
         <Text fontWeight={500}>{data?.unit_kerja_asal?.nama_unit}</Text>
       </HStack>
 
       <HStack>
-        <Text minW={"160px"} opacity={0.6}>
+        <Text minW={"180px"} opacity={0.6}>
           Unit Kerja Tujuan
         </Text>
         <Text fontWeight={500}>
@@ -103,14 +103,14 @@ const TransferKaryanItem = ({ data }: { data: any }) => {
       </HStack>
 
       <HStack>
-        <Text minW={"160px"} opacity={0.6}>
+        <Text minW={"180px"} opacity={0.6}>
           Jabatan Asal
         </Text>
         <Text fontWeight={500}>{data?.jabatan_asal?.nama_jabatan}</Text>
       </HStack>
 
       <HStack>
-        <Text minW={"160px"} opacity={0.6}>
+        <Text minW={"180px"} opacity={0.6}>
           Jabatan Tujuan
         </Text>
         <Text fontWeight={500}>
@@ -118,15 +118,31 @@ const TransferKaryanItem = ({ data }: { data: any }) => {
         </Text>
       </HStack>
 
+      <HStack>
+        <Text minW={"180px"} opacity={0.6}>
+          Kelompok Gaji Asal
+        </Text>
+        <Text fontWeight={500}>{data?.kelompok_gaji_asal?.nama_kelompok}</Text>
+      </HStack>
+
+      <HStack>
+        <Text minW={"180px"} opacity={0.6}>
+          Kelompok Gaji Tujuan
+        </Text>
+        <Text fontWeight={500}>
+          {data?.kelompok_gaji_tujuan?.nama_kelompok || "-"}
+        </Text>
+      </HStack>
+
       <HStack align={"start"}>
-        <Text minW={"160px"} opacity={0.6}>
+        <Text minW={"180px"} opacity={0.6}>
           Alasan
         </Text>
         <Text fontWeight={500}>{data?.alasan}</Text>
       </HStack>
 
       <HStack align={"start"}>
-        <Text minW={"160px"} opacity={0.6}>
+        <Text minW={"180px"} opacity={0.6}>
           Dokumen
         </Text>
         <SmallLink to={data?.dokumen} className="btn-apa">

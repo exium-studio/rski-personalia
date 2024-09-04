@@ -7,7 +7,7 @@ export default function calculateMasaKerjaFromTanggalMasuk(dateString: string) {
       return "-";
     } else {
       // Parse the input date string (format: d-m-y)
-      const dateObject = new Date(dateString);
+      const dateObject = formatDate(dateString, "iso");
       const formattedDate = formatDate(dateObject, "short");
       const [day, month, year] = formattedDate?.split("-")?.map(Number);
       const startDate = new Date(year, month - 1, day);

@@ -20,8 +20,8 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
+import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 import formatDate from "../../lib/formatDate";
-import formatMasaKerja from "../../lib/formatMasaKerja";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
@@ -267,7 +267,9 @@ export default function DetailRekamJejakKaryawanModalDisclosure({
                                     Masa Kerja
                                   </Text>
                                   <Text fontWeight={500}>
-                                    {formatMasaKerja(data.masa_kerja_karyawan)}
+                                    {calculateMasaKerjaFromTanggalMasuk(
+                                      data.tgl_masuk_karyawan
+                                    )}
                                   </Text>
                                 </VStack>
                               </Wrap>

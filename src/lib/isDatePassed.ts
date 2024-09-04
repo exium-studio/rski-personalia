@@ -1,8 +1,11 @@
+import formatDate from "./formatDate";
+
 export default function isDatePassed(
   date: string | Date,
   isTodayCounted?: boolean
 ): boolean {
-  const inputDate = new Date(date);
+  const inputDateIso = formatDate(date, "iso");
+  const inputDate = new Date(inputDateIso);
   const today = new Date();
 
   // Mengatur waktu (hours, minutes, seconds, ms) ke 0 untuk memastikan perbandingan hanya berdasarkan tanggal
