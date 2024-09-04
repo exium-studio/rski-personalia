@@ -140,11 +140,11 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
           <ModalBody>
             <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
               <AlertIcon />
-              <AlertDescription>
+              <AlertDescription maxW={"640px !important"}>
                 Data lembur pada tanggal yang sama dengan jadwal yang ditukar
                 akan dihapus. Pastikan Anda sudah memeriksa kembali jadwal
-                sebelum melanjutkan proses tukar jadwal. Tindakan ini tidak
-                dapat dibatalkan.
+                lembur sebelum melanjutkan proses tukar jadwal. Tindakan ini
+                tidak dapat dibatalkan.
               </AlertDescription>
             </Alert>
             <form id="ajukanPenukaranJadwalForm" onSubmit={formik.handleSubmit}>
