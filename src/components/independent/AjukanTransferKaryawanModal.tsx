@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   ButtonProps,
   Checkbox,
@@ -21,7 +24,7 @@ import { RiUserSharedFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
-import { iconSize } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnCloseOld";
@@ -173,6 +176,17 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
             />
           </ModalHeader>
           <ModalBody className="scrollY" pb={6}>
+            <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
+              <AlertIcon />
+              <AlertDescription maxW={"100% !important"}>
+                Data karyawan yang ditransfer akan diperbarui secara otomatis
+                oleh sistem pada tanggal mulai yang telah ditentukan. Jika ada
+                perubahan data karyawan (Unit Kerja, Jabatan, Kelompok Gaji)
+                sebelum tanggal tersebut, data yang baru akan digantikan oleh
+                data transfer ini.
+              </AlertDescription>
+            </Alert>
+
             <form id="transferKaryawanForm" onSubmit={formik.handleSubmit}>
               <SimpleGrid columns={[1, 2]} spacingX={4}>
                 <FormControl mb={4} isInvalid={!!formik.errors.karyawan}>
