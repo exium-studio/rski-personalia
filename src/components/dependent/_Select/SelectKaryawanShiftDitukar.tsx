@@ -44,10 +44,12 @@ export default function SelectKaryawanDitukar({
         )
         .then((r) => {
           if (r.status === 200) {
-            const options = r.data.data.map((item: any) => ({
-              value: item?.user?.id,
-              label: item?.user?.nama,
-              label2: item?.unit_kerja?.jenis_karyawan ? "Shift" : "Non-Shift",
+            const options = r.data.data.user.map((item: any) => ({
+              value: item?.id,
+              label: item?.nama,
+              label2: r.data.data?.unit_kerja?.jenis_karyawan
+                ? "Shift"
+                : "Non-Shift",
             }));
             setOptions(options);
           }
