@@ -224,7 +224,7 @@ interface Props {
   filterConfig: any;
 }
 
-export default function TabelDiklat({ filterConfig }: Props) {
+export default function TabelDiklatEksternal({ filterConfig }: Props) {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
@@ -233,7 +233,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any[]>({
       initialData: undefined,
-      url: `/api/rski/dashboard/perusahaan/get-diklat-internal?page=${pageConfig}`,
+      url: `/api/rski/dashboard/perusahaan/get-diklat-eksternal?page=${pageConfig}`,
       payload: {
         ...filterConfig,
       },

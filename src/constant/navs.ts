@@ -120,8 +120,13 @@ const navs = [
     subNavs: [
       {
         allowed: [8],
-        label: "Diklat",
+        label: "Diklat Internal",
         link: "/perusahaan/diklat",
+      },
+      {
+        allowed: [8],
+        label: "Diklat Eksternal",
+        link: "/perusahaan/diklat-eksternal",
       },
       // {
       //   label: "Pelaporan Karyawan",

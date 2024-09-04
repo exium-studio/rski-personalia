@@ -55,7 +55,8 @@ import PengaturanTerPph21 from "./pages/Pengaturan/PengaturanTerPph21";
 import PengaturanCuti from "./pages/Pengaturan/PengaturanTipeCuti";
 import PengaturanUbahKataSandi from "./pages/Pengaturan/PengaturanUbahKataSandi";
 import PengaturanUnitKerja from "./pages/Pengaturan/PengaturanUnitKerja";
-import Perusahaan from "./pages/Perusahaan/Diklat";
+import Diklat from "./pages/Perusahaan/Diklat";
+import DiklatEksternal from "./pages/Perusahaan/DiklatEksternal";
 import PenilaianKaryawan from "./pages/Perusahaan/PenilaianKaryawan";
 import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
@@ -339,11 +340,24 @@ export const App = () => {
             element={
               <NavContainer
                 active={5}
-                title="Diklat"
+                title="Diklat Internal"
                 topNavsData={navs[5].subNavs}
                 topNavActive={0}
               >
-                <Perusahaan />
+                <Diklat />
+              </NavContainer>
+            }
+          />
+          <Route
+            path="/perusahaan/diklat-eksternal"
+            element={
+              <NavContainer
+                active={5}
+                title="Diklat Eksternal"
+                topNavsData={navs[5].subNavs}
+                topNavActive={1}
+              >
+                <DiklatEksternal />
               </NavContainer>
             }
           />
@@ -354,7 +368,7 @@ export const App = () => {
                 active={5}
                 title="Penilaian Karyawan"
                 topNavsData={navs[5].subNavs}
-                topNavActive={1}
+                topNavActive={2}
               >
                 <PenilaianKaryawan />
               </NavContainer>
