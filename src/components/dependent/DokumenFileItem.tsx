@@ -1,25 +1,18 @@
-import {
-  HStack,
-  StackProps,
-  Text,
-  Tooltip,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { HStack, StackProps, Text, Tooltip } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { useLightDarkColor } from "../../constant/colors";
-import useBackOnClose from "../../hooks/useBackOnClose";
 import formatBytes from "../../lib/formatBytes";
 import formatDate from "../../lib/formatDate";
 import CContainer from "../independent/wrapper/CContainer";
 import FileTypeIcon from "./FileTypeIcon";
-import { Link } from "react-router-dom";
 
 interface Props extends StackProps {
   data: any;
 }
 
 export default function DokumenFileItem({ data, ...props }: Props) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`file-viewer-${data.path}`, isOpen, onOpen, onClose);
+  // const { isOpen, onOpen, onClose } = useDisclosure();
+  // useBackOnClose(`file-viewer-${data.path}`, isOpen, onOpen, onClose);
 
   const dataType = data.path.split(".").pop().toLowerCase();
 
@@ -32,7 +25,7 @@ export default function DokumenFileItem({ data, ...props }: Props) {
         flex={0}
         bg={lightDarkColor}
         borderRadius={12}
-        onClick={onOpen}
+        // onClick={onOpen}
         cursor={"pointer"}
         position={"relative"}
         overflow={"clip"}
