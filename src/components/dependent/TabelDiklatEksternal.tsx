@@ -1,26 +1,7 @@
-import {
-  Button,
-  Center,
-  HStack,
-  Icon,
-  IconButton,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-  useDisclosure,
-  useToast,
-} from "@chakra-ui/react";
-import { RiDeleteBinLine } from "@remixicon/react";
+import { Center, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
-import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
-import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
 import isHasPermissions from "../../lib/isHasPermissions";
@@ -28,197 +9,193 @@ import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
-import CContainer from "../wrapper/CContainer";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
-import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
-import req from "../../lib/req";
 
-const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
-  // api/rski/dashboard/perusahaan/diklat/{diklatId}/delete-peserta-diklat/{userId}
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(
-    `konfirmasi-delete-${peserta.user.id}`,
-    isOpen,
-    onOpen,
-    onClose
-  );
+// const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
+//   // api/rski/dashboard/perusahaan/diklat/{diklatId}/delete-peserta-diklat/{userId}
+//   const { isOpen, onOpen, onClose } = useDisclosure();
+//   useBackOnClose(
+//     `konfirmasi-delete-${peserta.user.id}`,
+//     isOpen,
+//     onOpen,
+//     onClose
+//   );
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const toast = useToast();
-  const { rt, setRt } = useRenderTrigger();
+//   const [loading, setLoading] = useState<boolean>(false);
+//   const toast = useToast();
+//   const { rt, setRt } = useRenderTrigger();
 
-  function deleteUser() {
-    setLoading(true);
-    req
-      .delete(
-        `/api/rski/dashboard/perusahaan/diklat/${dataDiklat.id}/delete-peserta-diklat/${peserta.user.id}`
-      )
-      .then((r) => {
-        if (r.status === 200) {
-          setRt(!rt);
-          backOnClose();
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        toast({
-          status: "error",
-          title:
-            (typeof e?.response?.data?.message === "string" &&
-              (e?.response?.data?.message as string)) ||
-            "Maaf terjadi kesalahan pada sistem",
-          position: "bottom-right",
-          isClosable: true,
-        });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }
+//   function deleteUser() {
+//     setLoading(true);
+//     req
+//       .delete(
+//         `/api/rski/dashboard/perusahaan/diklat/${dataDiklat.id}/delete-peserta-diklat/${peserta.user.id}`
+//       )
+//       .then((r) => {
+//         if (r.status === 200) {
+//           setRt(!rt);
+//           backOnClose();
+//         }
+//       })
+//       .catch((e) => {
+//         console.log(e);
+//         toast({
+//           status: "error",
+//           title:
+//             (typeof e?.response?.data?.message === "string" &&
+//               (e?.response?.data?.message as string)) ||
+//             "Maaf terjadi kesalahan pada sistem",
+//           position: "bottom-right",
+//           isClosable: true,
+//         });
+//       })
+//       .finally(() => {
+//         setLoading(false);
+//       });
+//   }
 
-  const { userPermissions } = useAuth();
-  const vearif2Permission = isHasPermissions(userPermissions, [11]);
+//   const { userPermissions } = useAuth();
+//   const vearif2Permission = isHasPermissions(userPermissions, [11]);
 
-  return (
-    <>
-      <PermissionTooltip permission={vearif2Permission}>
-        <IconButton
-          aria-label="delete"
-          icon={<Icon as={RiDeleteBinLine} fontSize={iconSize} />}
-          variant={"ghost"}
-          colorScheme="red"
-          onClick={onOpen}
-          isDisabled={!vearif2Permission}
-        />
-      </PermissionTooltip>
+//   return (
+//     <>
+//       <PermissionTooltip permission={vearif2Permission}>
+//         <IconButton
+//           aria-label="delete"
+//           icon={<Icon as={RiDeleteBinLine} fontSize={iconSize} />}
+//           variant={"ghost"}
+//           colorScheme="red"
+//           onClick={onOpen}
+//           isDisabled={!vearif2Permission}
+//         />
+//       </PermissionTooltip>
 
-      <Modal
-        isOpen={isOpen}
-        onClose={backOnClose}
-        isCentered
-        blockScrollOnMount={false}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <DisclosureHeader title={"Hapus Karyawan Dari Peserta Diklat"} />
-          </ModalHeader>
-          <ModalBody>
-            <Text>
-              Apakah anda yakin akan menghapus <b>{peserta.user.nama}</b> dari
-              peserta Diklat?
-            </Text>
-          </ModalBody>
-          <ModalFooter gap={2}>
-            <Button
-              w={"100%"}
-              className="btn-solid clicky"
-              onClick={backOnClose}
-              isDisabled={loading}
-            >
-              Tidak
-            </Button>
-            <Button
-              w={"100%"}
-              className="clicky"
-              colorScheme="red"
-              onClick={deleteUser}
-              isLoading={loading}
-            >
-              Ya
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-};
+//       <Modal
+//         isOpen={isOpen}
+//         onClose={backOnClose}
+//         isCentered
+//         blockScrollOnMount={false}
+//       >
+//         <ModalOverlay />
+//         <ModalContent>
+//           <ModalHeader>
+//             <DisclosureHeader title={"Hapus Karyawan Dari Peserta Diklat"} />
+//           </ModalHeader>
+//           <ModalBody>
+//             <Text>
+//               Apakah anda yakin akan menghapus <b>{peserta.user.nama}</b> dari
+//               peserta Diklat?
+//             </Text>
+//           </ModalBody>
+//           <ModalFooter gap={2}>
+//             <Button
+//               w={"100%"}
+//               className="btn-solid clicky"
+//               onClick={backOnClose}
+//               isDisabled={loading}
+//             >
+//               Tidak
+//             </Button>
+//             <Button
+//               w={"100%"}
+//               className="clicky"
+//               colorScheme="red"
+//               onClick={deleteUser}
+//               isLoading={loading}
+//             >
+//               Ya
+//             </Button>
+//           </ModalFooter>
+//         </ModalContent>
+//       </Modal>
+//     </>
+//   );
+// };
 
-const PesertaModal = ({ data }: { data: any }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`peserta-diklat-modal-${data.id}`, isOpen, onOpen, onClose);
+// const PesertaModal = ({ data }: { data: any }) => {
+//   const { isOpen, onOpen, onClose } = useDisclosure();
+//   useBackOnClose(`peserta-diklat-modal-${data.id}`, isOpen, onOpen, onClose);
 
-  return (
-    <>
-      <Button
-        colorScheme="ap"
-        variant={"ghost"}
-        className="clicky"
-        onClick={onOpen}
-      >
-        Lihat
-      </Button>
+//   return (
+//     <>
+//       <Button
+//         colorScheme="ap"
+//         variant={"ghost"}
+//         className="clicky"
+//         onClick={onOpen}
+//       >
+//         Lihat
+//       </Button>
 
-      <Modal
-        isOpen={isOpen}
-        onClose={backOnClose}
-        scrollBehavior="inside"
-        isCentered
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <DisclosureHeader title={"Peserta Diklat"} />
-          </ModalHeader>
-          <ModalBody className="scrollY">
-            <CContainer gap={2}>
-              {data?.list_peserta?.length === 0 && <NoData minH={"300px"} />}
+//       <Modal
+//         isOpen={isOpen}
+//         onClose={backOnClose}
+//         scrollBehavior="inside"
+//         isCentered
+//       >
+//         <ModalOverlay />
+//         <ModalContent>
+//           <ModalHeader>
+//             <DisclosureHeader title={"Peserta Diklat"} />
+//           </ModalHeader>
+//           <ModalBody className="scrollY">
+//             <CContainer gap={2}>
+//               {data?.list_peserta?.length === 0 && <NoData minH={"300px"} />}
 
-              {data?.list_peserta?.length > 0 && (
-                <>
-                  {data.list_peserta?.map((peserta: any, i: number) => (
-                    <HStack
-                      key={i}
-                      justifyContent={"space-between"}
-                      p={4}
-                      bg={"var(--divider)"}
-                      borderRadius={12}
-                    >
-                      <AvatarAndNameTableData
-                        data={{
-                          id: peserta?.user?.id,
-                          nama: peserta?.user?.nama,
-                          foto_profil: peserta?.user?.foto_profil,
-                        }}
-                        // noDetail
-                        w={"fit-content"}
-                        maxW={"fit-content"}
-                      />
+//               {data?.list_peserta?.length > 0 && (
+//                 <>
+//                   {data.list_peserta?.map((peserta: any, i: number) => (
+//                     <HStack
+//                       key={i}
+//                       justifyContent={"space-between"}
+//                       p={4}
+//                       bg={"var(--divider)"}
+//                       borderRadius={12}
+//                     >
+//                       <AvatarAndNameTableData
+//                         data={{
+//                           id: peserta?.user?.id,
+//                           nama: peserta?.user?.nama,
+//                           foto_profil: peserta?.user?.foto_profil,
+//                         }}
+//                         // noDetail
+//                         w={"fit-content"}
+//                         maxW={"fit-content"}
+//                       />
 
-                      {data?.status_diklat?.id !== 4 && (
-                        <KonfirmasiDeleteUser
-                          dataDiklat={data}
-                          peserta={peserta}
-                        />
-                      )}
-                    </HStack>
-                  ))}
-                </>
-              )}
-            </CContainer>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              onClick={backOnClose}
-              w={"100%"}
-              className="btn-solid clicky"
-            >
-              Mengerti
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-};
+//                       {data?.status_diklat?.id !== 4 && (
+//                         <KonfirmasiDeleteUser
+//                           dataDiklat={data}
+//                           peserta={peserta}
+//                         />
+//                       )}
+//                     </HStack>
+//                   ))}
+//                 </>
+//               )}
+//             </CContainer>
+//           </ModalBody>
+//           <ModalFooter>
+//             <Button
+//               onClick={backOnClose}
+//               w={"100%"}
+//               className="btn-solid clicky"
+//             >
+//               Mengerti
+//             </Button>
+//           </ModalFooter>
+//         </ModalContent>
+//       </Modal>
+//     </>
+//   );
+// };
 
 interface Props {
   filterConfig: any;
@@ -460,9 +437,11 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && isObjectEmpty(filterConfig) && <NoData minH={"300px"} />}
+          {notFound && isObjectEmpty(filterConfig, ["tahun"]) && (
+            <NoData minH={"300px"} />
+          )}
 
-          {notFound && !isObjectEmpty(filterConfig) && (
+          {notFound && !isObjectEmpty(filterConfig, ["tahun"]) && (
             <NotFound minH={"300px"} />
           )}
 
