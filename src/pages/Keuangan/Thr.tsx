@@ -68,6 +68,8 @@ export default function Thr() {
                 setSearch(input);
               }}
               inputValue={search}
+              tooltipLabel="Cari dengan periode"
+              placeholder="periode"
             />
 
             <NumberInput

@@ -66,6 +66,8 @@ export default function Penggajian() {
                 setSearch(input);
               }}
               inputValue={search}
+              tooltipLabel="Cari dengan periode"
+              placeholder="periode"
             />
 
             <NumberInput

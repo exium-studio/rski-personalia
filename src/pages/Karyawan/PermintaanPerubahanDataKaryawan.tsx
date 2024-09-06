@@ -59,6 +59,8 @@ export default function PermintaanPerubahanDataKaryawan() {
                 setSearch(input);
               }}
               inputValue={search}
+              tooltipLabel="Cari dengan nama/no. induk karyawan"
+              placeholder="nama/no. induk karyawan"
             />
 
             <SelectMultiStatusVerifikasi
