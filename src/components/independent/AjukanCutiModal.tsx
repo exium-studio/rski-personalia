@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   ButtonProps,
   FormControl,
@@ -18,7 +21,7 @@ import { RiCalendarCloseFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from "yup";
-import { iconSize } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
@@ -117,6 +120,16 @@ export default function AjukanCutiModal({ ...props }: Props) {
             <DisclosureHeader title="Ajukan Cuti" />
           </ModalHeader>
           <ModalBody>
+            <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
+              <AlertIcon />
+              <AlertDescription maxW={"640px !important"}>
+                Jika tanggal cuti yang diverifikasi tumpang tindih dengan jadwal
+                kerja, jadwal tersebut akan dihapus. Jadwal tukar dan lembur
+                dalam rentang tanggal cuti juga akan disesuaikan. Jika jadwal
+                tukar terhapus, jadwal yang ditukar akan dikembalikan ke kondisi
+                semula.
+              </AlertDescription>
+            </Alert>
             <form id="ajukanCutiForm" onSubmit={formik.handleSubmit}>
               <FormControl
                 mb={4}
