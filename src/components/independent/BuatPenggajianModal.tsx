@@ -5,6 +5,8 @@ import {
   Button,
   ButtonProps,
   Checkbox,
+  FormControl,
+  FormHelperText,
   Icon,
   Modal,
   ModalBody,
@@ -128,25 +130,30 @@ export default function BuatPenggajianModal({ ...props }: Props) {
           </ModalHeader>
 
           <ModalBody>
-            <Text mb={4} opacity={0.4}>
-              Apakah penggajian ini menyertakan BOR?
-            </Text>
-            <Checkbox
-              colorScheme="ap"
-              onChange={(e) => {
-                formik.setFieldValue("sertakan_bor", e.target.checked);
-              }}
-            >
-              <Text mt={"-2.5px"}>Sertakan BOR</Text>
-            </Checkbox>
-
-            <Alert mt={4} status="warning" alignItems={"start"}>
+            <Alert mb={4} status="warning" alignItems={"start"}>
               <AlertIcon />
               <AlertDescription>
                 Jika penggajian bulan ini ada THR, maka seharusnya Run THR
                 terlebih dahulu.
               </AlertDescription>
             </Alert>
+            {/* 
+            <Text mb={4} opacity={0.4}>
+              Apakah penggajian ini menyertakan BOR?
+            </Text> */}
+            <FormControl mt={2}>
+              <Checkbox
+                colorScheme="ap"
+                onChange={(e) => {
+                  formik.setFieldValue("sertakan_bor", e.target.checked);
+                }}
+              >
+                <Text mt={"-2.5px"}>Sertakan BOR</Text>
+              </Checkbox>
+              <FormHelperText>
+                Centang Sertakan BOR jika penggajian ini menyertakan BOR
+              </FormHelperText>
+            </FormControl>
           </ModalBody>
 
           <ModalFooter>

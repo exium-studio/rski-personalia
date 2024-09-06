@@ -142,6 +142,14 @@ export default function RunThr({ ...props }: Props) {
             />
           </ModalHeader>
           <ModalBody>
+            <Alert mb={4} status="warning" alignItems={"start"}>
+              <AlertIcon />
+              <AlertDescription>
+                Jika tanggal Run THR melebihi tanggal penggajian, maka THR akan
+                diaplikasikan pada penggajian berikutnya.
+              </AlertDescription>
+            </Alert>
+
             <form id="runThrForm" onSubmit={formik.handleSubmit}>
               <FormControl isInvalid={!!formik.errors.tgl_run_thr}>
                 <FormLabel>
@@ -166,14 +174,6 @@ export default function RunThr({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
             </form>
-
-            <Alert mt={4} status="warning" alignItems={"start"}>
-              <AlertIcon />
-              <AlertDescription>
-                Jika tanggal Run THR melebihi tanggal penggajian, maka THR akan
-                diaplikasikan pada penggajian berikutnya.
-              </AlertDescription>
-            </Alert>
           </ModalBody>
           <ModalFooter>
             <Button
