@@ -176,7 +176,12 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
             />
           </ModalHeader>
           <ModalBody className="scrollY" pb={6}>
-            <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
+            <Alert
+              flexShrink={0}
+              status="warning"
+              mb={responsiveSpacing}
+              alignItems={"start"}
+            >
               <AlertIcon />
               <AlertDescription maxW={"100% !important"}>
                 Data karyawan yang ditransfer akan diperbarui secara otomatis

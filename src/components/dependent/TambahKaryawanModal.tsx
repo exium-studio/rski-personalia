@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button,
   ButtonGroup,
@@ -929,6 +932,20 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               flex={1}
               className="scrollY"
             >
+              <Alert
+                flexShrink={0}
+                status="warning"
+                mb={responsiveSpacing}
+                alignItems={"start"}
+              >
+                <AlertIcon />
+                <AlertDescription maxW={"100% !important"}>
+                  Setelah karyawan berhasil dibuat, pastikan semua data personal
+                  telah diisi dengan benar. Jika data personal sudah lengkap,
+                  aktifkan karyawan melalui halaman detail karyawan.
+                </AlertDescription>
+              </Alert>
+
               <Text fontSize={22} fontWeight={600}>
                 {steps[activeStep].title}
               </Text>
