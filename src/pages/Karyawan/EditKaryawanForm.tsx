@@ -163,10 +163,12 @@ export default function EditKaryawanForm({
         value: data?.jabatan?.id,
         label: data?.jabatan?.nama_jabatan,
       },
-      kompetensi: {
-        value: data?.kompetensi?.id,
-        label: data?.kompetensi?.nama_kompetensi,
-      },
+      kompetensi: data?.kompetensi
+        ? {
+            value: data?.kompetensi?.id,
+            label: data?.kompetensi?.nama_kompetensi,
+          }
+        : undefined,
       role: {
         value: data?.role?.id,
         label: data?.role?.name,
@@ -177,8 +179,8 @@ export default function EditKaryawanForm({
         label2: `Rp ${formatNumber(data?.kelompok_gaji?.besaran_gaji)}`,
       },
       no_rekening: data?.no_rekening,
-      tunjangan_jabatan: data?.jabatan.tunjangan_jabatan,
-      tunjangan_kompetensi: data?.kompetensi.tunjangan_kompetensi,
+      tunjangan_jabatan: data?.jabatan?.tunjangan_jabatan,
+      tunjangan_kompetensi: data?.kompetensi?.tunjangan_kompetensi,
       tunjangan_fungsional: data?.tunjangan_fungsional,
       tunjangan_khusus: data?.tunjangan_khusus,
       tunjangan_lainnya: data?.tunjangan_lainnya,
@@ -201,14 +203,18 @@ export default function EditKaryawanForm({
       },
       nik_ktp: data?.nik_ktp,
       no_kk: data?.no_kk,
-      agama: {
-        value: data?.agama?.id,
-        label: data?.agama?.label,
-      },
-      golongan_darah: {
-        value: data?.golongan_darah?.id,
-        label: data?.golongan_darah?.label,
-      },
+      agama: data?.agama
+        ? {
+            value: data?.agama?.id,
+            label: data?.agama?.label,
+          }
+        : undefined,
+      golongan_darah: data?.golongan_darah
+        ? {
+            value: data?.golongan_darah?.id,
+            label: data?.golongan_darah?.label,
+          }
+        : undefined,
       tinggi_badan: data?.tinggi_badan,
       berat_badan: data?.berat_badan,
       alamat: data?.alamat,
@@ -253,7 +259,7 @@ export default function EditKaryawanForm({
         status_karyawan_id: values.status_karyawan.value,
         unit_kerja_id: values.unit_kerja.value,
         jabatan_id: values.jabatan.value,
-        kompetensi_id: values.kompetensi.value,
+        kompetensi_id: values?.kompetensi?.value,
         role_id: values.role.value,
         kelompok_gaji_id: values.kelompok_gaji.value,
         no_rekening: values.no_rekening,
@@ -272,8 +278,8 @@ export default function EditKaryawanForm({
         jenis_kelamin: values?.jenis_kelamin.value,
         nik_ktp: values?.nik_ktp,
         no_kk: values?.no_kk,
-        kategori_agama_id: values?.agama.value,
-        kategori_darah_id: values?.golongan_darah.value,
+        kategori_agama_id: values?.agama?.value,
+        kategori_darah_id: values?.golongan_darah?.value,
         tinggi_badan: values?.tinggi_badan,
         berat_badan: values?.berat_badan,
         alamat: values.alamat,

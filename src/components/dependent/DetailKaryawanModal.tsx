@@ -1643,7 +1643,7 @@ export default function DetailKaryawanModal({
                                   <Text fontWeight={500} textAlign={"right"}>
                                     Rp{" "}
                                     {formatNumber(
-                                      data.tunjangan_fungsional || 0
+                                      data?.tunjangan_fungsional || 0
                                     )}
                                   </Text>
                                 </HStack>
@@ -1662,7 +1662,7 @@ export default function DetailKaryawanModal({
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
                                     Rp{" "}
-                                    {formatNumber(data.tunjangan_khusus || 0)}
+                                    {formatNumber(data?.tunjangan_khusus || 0)}
                                   </Text>
                                 </HStack>
 
@@ -1680,7 +1680,7 @@ export default function DetailKaryawanModal({
                                   <FlexLine />
                                   <Text fontWeight={500} textAlign={"right"}>
                                     Rp{" "}
-                                    {formatNumber(data.tunjangan_lainnya || 0)}
+                                    {formatNumber(data?.tunjangan_lainnya || 0)}
                                   </Text>
                                 </HStack>
                               </VStack>
