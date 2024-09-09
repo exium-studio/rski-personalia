@@ -20,7 +20,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiArrowLeftRightLine, RiArrowUpDownFill } from "@remixicon/react";
+import { RiArrowLeftRightLine } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
@@ -110,7 +110,7 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
         colorScheme="ap"
         className="btn-ap clicky"
         onClick={onOpen}
-        leftIcon={<Icon as={RiArrowUpDownFill} fontSize={iconSize} />}
+        leftIcon={<Icon as={RiArrowLeftRightLine} fontSize={iconSize} />}
         pl={5}
         {...props}
       >
