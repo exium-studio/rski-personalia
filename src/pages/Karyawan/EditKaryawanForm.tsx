@@ -289,8 +289,10 @@ export default function EditKaryawanForm({
         alamat: values.alamat,
         no_ijazah: values.no_ijazah,
         tahun_lulus: values.tahun_lulus,
-        pendidikan_terakhir: values.pendidikan_terakhir?.value,
+        pendidikan_terakhir: values.pendidikan_terakhir || "",
+        asal_sekolah: values.asal_sekolah || "",
         gelar_depan: values.gelar_depan || "",
+        gelar_belakang: values.gelar_belakang || "",
 
         no_str: values?.str,
         masa_berlaku_str: values?.masa_berlaku_str || "",
