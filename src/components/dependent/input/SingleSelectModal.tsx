@@ -232,45 +232,51 @@ export default function SingleSelectModal({
                     {optionsDisplay === "list" && (
                       <VStack align={"stretch"}>
                         {fo.map((option, i) => (
-                          <Button
+                          <Tooltip
                             key={i}
-                            px={4}
-                            justifyContent={"space-between"}
-                            className="btn-outline"
-                            onClick={() => {
-                              setSelected(option);
-                            }}
-                            borderColor={
-                              selected && selected.value === option.value
-                                ? "var(--p500)"
-                                : "transparent !important"
-                            }
-                            bg={
-                              selected && selected.value === option.value
-                                ? "var(--p500a4) !important"
-                                : ""
-                            }
+                            label={`${option?.label} ${option?.label2}`}
+                            placement="bottom-start"
+                            openDelay={500}
                           >
-                            <Text
-                              overflow={"hidden"}
-                              whiteSpace={"nowrap"}
-                              textOverflow={"ellipsis"}
+                            <Button
+                              px={4}
+                              justifyContent={"space-between"}
+                              className="btn-outline"
+                              onClick={() => {
+                                setSelected(option);
+                              }}
+                              borderColor={
+                                selected && selected.value === option.value
+                                  ? "var(--p500)"
+                                  : "transparent !important"
+                              }
+                              bg={
+                                selected && selected.value === option.value
+                                  ? "var(--p500a4) !important"
+                                  : ""
+                              }
                             >
-                              {option?.label}
-                            </Text>
+                              <Text
+                                overflow={"hidden"}
+                                whiteSpace={"nowrap"}
+                                textOverflow={"ellipsis"}
+                              >
+                                {option?.label}
+                              </Text>
 
-                            <Text
-                              ml={4}
-                              opacity={0.4}
-                              maxW={"120px"}
-                              whiteSpace={"nowrap"}
-                              overflow={"hidden"}
-                              textOverflow={"ellipsis"}
-                              fontWeight={400}
-                            >
-                              {option?.label2}
-                            </Text>
-                          </Button>
+                              <Text
+                                ml={4}
+                                opacity={0.4}
+                                maxW={"120px"}
+                                whiteSpace={"nowrap"}
+                                overflow={"hidden"}
+                                textOverflow={"ellipsis"}
+                                fontWeight={400}
+                              >
+                                {option?.label2}
+                              </Text>
+                            </Button>
+                          </Tooltip>
                         ))}
                       </VStack>
                     )}
