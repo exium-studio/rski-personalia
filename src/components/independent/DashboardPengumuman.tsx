@@ -57,93 +57,89 @@ export default function DashboardPengumuman({ ...props }: Props) {
       h={dashboardItemHeight}
       {...props}
     >
-      {error && (
-        <>
-          {notFound && <NoData minH={"300px"} />}
-
-          {!notFound && (
-            <Center my={"auto"} minH={"300px"}>
-              <Retry loading={loading} retry={retry} />
-            </Center>
-          )}
-        </>
+      {loading && (
+        <Skeleton
+          flex={"1 1 0"}
+          borderRadius={12}
+          h={dashboardItemHeight}
+          minW={"450px"}
+        />
       )}
 
-      {!error && (
+      {!loading && (
         <>
-          {loading && (
-            <Skeleton
-              flex={"1 1 0"}
-              borderRadius={12}
-              h={dashboardItemHeight}
-              minW={"450px"}
-            />
-          )}
-
-          {!loading && (
-            <>
-              <Box p={responsiveSpacing}>
-                <HStack
-                  justify={"space-between"}
-                  mb={responsiveSpacing}
-                  align={"start"}
-                >
-                  <Box>
-                    <Text fontWeight={600}>Pengumuman</Text>
-                    <Text fontSize={14} opacity={0.6}>
-                      Pengumuman saat ini
-                    </Text>
-                  </Box>
-
-                  <PermissionTooltip permission={createPermission}>
-                    <DashboardBuatPengumumanModal
-                      isDisabled={!createPermission}
-                    />
-                  </PermissionTooltip>
-                </HStack>
-
-                <SearchComponent
-                  name="search"
-                  onChangeSetter={(input) => {
-                    setSearch(input);
-                  }}
-                  inputValue={search}
-                />
+          <Box p={responsiveSpacing}>
+            <HStack
+              justify={"space-between"}
+              mb={responsiveSpacing}
+              align={"start"}
+            >
+              <Box>
+                <Text fontWeight={600}>Pengumuman</Text>
+                <Text fontSize={14} opacity={0.6}>
+                  Pengumuman saat ini
+                </Text>
               </Box>
 
-              <VStack
-                align={"stretch"}
-                overflowY={"auto"}
-                className="scrollY"
-                flex={1}
-                gap={0}
-                pb={responsiveSpacing}
-              >
-                {!data && (
-                  <Text m={"auto"} opacity={0.6}>
-                    Tidak ada pengumuman
-                  </Text>
-                )}
+              <PermissionTooltip permission={createPermission}>
+                <DashboardBuatPengumumanModal isDisabled={!createPermission} />
+              </PermissionTooltip>
+            </HStack>
 
-                {data && (
-                  <>
-                    {fd?.length === 0 && (
-                      <NotFound label="Pengumuman tidak ditemukan" />
-                    )}
+            <SearchComponent
+              name="search"
+              onChangeSetter={(input) => {
+                setSearch(input);
+              }}
+              inputValue={search}
+            />
+          </Box>
 
-                    {fd?.map((pengumuman: any, i: number) => (
-                      <DashboardPengumumanItemDetail
-                        key={i}
-                        data={pengumuman}
-                        borderBottom={
-                          i < data.length - 1 ? "1px solid var(--divider2)" : ""
-                        }
-                      />
-                    ))}
-                  </>
-                )}
-              </VStack>
+          {error && (
+            <>
+              {notFound && <NoData minH={"300px"} />}
+
+              {!notFound && (
+                <Center my={"auto"} minH={"300px"}>
+                  <Retry loading={loading} retry={retry} />
+                </Center>
+              )}
             </>
+          )}
+
+          {!error && (
+            <VStack
+              align={"stretch"}
+              overflowY={"auto"}
+              className="scrollY"
+              flex={1}
+              gap={0}
+              pb={responsiveSpacing}
+            >
+              {!data && (
+                <Text m={"auto"} opacity={0.6}>
+                  Tidak ada pengumuman
+                </Text>
+              )}
+
+              {data && (
+                <>
+                  {fd?.length === 0 && (
+                    <NotFound label="Pengumuman tidak ditemukan" />
+                  )}
+
+                  {fd?.map((pengumuman: any, i: number) => (
+                    <DashboardPengumumanItemDetail
+                      key={i}
+                      data={pengumuman}
+                      borderBottom={
+                        i < data.length - 1 ? "1px solid var(--divider2)" : ""
+                      }
+                    />
+                  ))}
+                </>
+              )}
+            </VStack>
           )}
         </>
       )}

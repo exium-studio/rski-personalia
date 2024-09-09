@@ -34,80 +34,86 @@ export default function DashboardJabatan({ ...props }: Props) {
 
   return (
     <>
-      {error && (
-        <>
-          {notFound && <NoData minH={"300px"} />}
-
-          {!notFound && (
-            <Center my={"auto"} minH={"300px"}>
-              <Retry loading={loading} retry={retry} />
-            </Center>
-          )}
-        </>
+      {loading && (
+        <Skeleton
+          flex={"1 1 0"}
+          borderRadius={12}
+          h={dashboardItemHeight}
+          minW={dashboardItemMinWidth}
+        />
       )}
 
-      {!error && (
+      {!loading && (
         <>
-          {loading && (
-            <Skeleton
-              flex={"1 1 0"}
-              borderRadius={12}
-              h={dashboardItemHeight}
-              minW={dashboardItemMinWidth}
-            />
-          )}
+          <VStack
+            flex={"1 1 0"}
+            align={"stretch"}
+            bg={bodyColor}
+            borderRadius={12}
+            minW={dashboardItemMinWidth}
+            gap={0}
+            h={dashboardItemHeight}
+            pb={responsiveSpacing}
+            {...props}
+          >
+            <Box p={responsiveSpacing}>
+              <Text fontWeight={600}>Jabatan</Text>
+              <Text fontSize={14} opacity={0.6}>
+                Karyawan saat ini
+              </Text>
+            </Box>
 
-          {!loading && data && (
-            <VStack
-              flex={"1 1 0"}
-              align={"stretch"}
-              bg={bodyColor}
-              borderRadius={12}
-              minW={dashboardItemMinWidth}
-              gap={0}
-              h={dashboardItemHeight}
-              pb={responsiveSpacing}
-              {...props}
-            >
-              <Box p={responsiveSpacing}>
-                <Text fontWeight={600}>Jabatan</Text>
-                <Text fontSize={14} opacity={0.6}>
-                  Karyawan saat ini
-                </Text>
-              </Box>
+            {error && (
+              <>
+                {notFound && <NoData minH={"300px"} />}
 
-              <VStack
-                align={"stretch"}
-                gap={4}
-                overflowY={"auto"}
-                px={responsiveSpacing}
-                className="scrollY"
-              >
-                {data.map((jabatan: any, i: number) => (
-                  <HStack key={i} justify={"space-between"}>
-                    <Tooltip
-                      label={jabatan.nama_jabatan}
-                      openDelay={500}
-                      // placement="right"
+                {!notFound && (
+                  <Center my={"auto"} minH={"300px"}>
+                    <Retry loading={loading} retry={retry} />
+                  </Center>
+                )}
+              </>
+            )}
+
+            {!error && (
+              <>
+                {data && (
+                  <>
+                    <VStack
+                      align={"stretch"}
+                      gap={4}
+                      overflowY={"auto"}
+                      px={responsiveSpacing}
+                      className="scrollY"
                     >
-                      <Text
-                        fontSize={14}
-                        whiteSpace={"nowrap"}
-                        overflow={"hidden"}
-                        textOverflow={"ellipsis"}
-                      >
-                        {jabatan.nama_jabatan}
-                      </Text>
-                    </Tooltip>
+                      {data.map((jabatan: any, i: number) => (
+                        <HStack key={i} justify={"space-between"}>
+                          <Tooltip
+                            label={jabatan.nama_jabatan}
+                            openDelay={500}
+                            // placement="right"
+                          >
+                            <Text
+                              fontSize={14}
+                              whiteSpace={"nowrap"}
+                              overflow={"hidden"}
+                              textOverflow={"ellipsis"}
+                            >
+                              {jabatan.nama_jabatan}
+                            </Text>
+                          </Tooltip>
 
-                    <FlexLine />
+                          <FlexLine />
 
-                    <Text fontSize={14}>{jabatan.jumlah_karyawan}</Text>
-                  </HStack>
-                ))}
-              </VStack>
-            </VStack>
-          )}
+                          <Text fontSize={14}>{jabatan.jumlah_karyawan}</Text>
+                        </HStack>
+                      ))}
+                    </VStack>
+                  </>
+                )}
+              </>
+            )}
+          </VStack>
         </>
       )}
     </>
