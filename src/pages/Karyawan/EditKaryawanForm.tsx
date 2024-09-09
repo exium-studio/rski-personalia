@@ -19,6 +19,9 @@ import { useFormik } from "formik";
 import { Dispatch, useEffect, useState } from "react";
 import * as yup from "yup";
 import MultiselectPotongan from "../../components/dependent/_Select/MultiselectPotongan";
+import SelectAgama from "../../components/dependent/_Select/SelectAgama";
+import SelectGender from "../../components/dependent/_Select/SelectGender";
+import SelectGoldar from "../../components/dependent/_Select/SelectGoldar";
 import SelectJabatan from "../../components/dependent/_Select/SelectJabatan";
 import SelectKelompokGaji from "../../components/dependent/_Select/SelectKelompokGaji";
 import SelectKompetensi from "../../components/dependent/_Select/SelectKompetensi";
@@ -28,19 +31,15 @@ import SelectStatusKaryawan from "../../components/dependent/_Select/SelectStatu
 import SelectUnitKerja from "../../components/dependent/_Select/SelectUnitKerja";
 import DatePickerModal from "../../components/dependent/input/DatePickerModal";
 import NumberInput from "../../components/dependent/input/NumberInput";
+import StringInput from "../../components/dependent/input/StringInput";
+import Textarea from "../../components/dependent/input/Textarea";
 import RequiredForm from "../../components/form/RequiredForm";
-import req from "../../lib/req";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
-import StringInput from "../../components/dependent/input/StringInput";
 import formatDate from "../../lib/formatDate";
-import SelectGender from "../../components/dependent/_Select/SelectGender";
-import SelectAgama from "../../components/dependent/_Select/SelectAgama";
-import SelectGoldar from "../../components/dependent/_Select/SelectGoldar";
-import parseNumber from "../../lib/parseNumber";
 import formatNumber from "../../lib/formatNumber";
-import Textarea from "../../components/dependent/input/Textarea";
-import SelectPendidikan from "../../components/dependent/_Select/SelectPendidikan";
+import parseNumber from "../../lib/parseNumber";
+import req from "../../lib/req";
 
 interface Props {
   activeStep: number;
