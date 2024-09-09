@@ -117,7 +117,8 @@ export default function EditKaryawanForm({
     alamat: yup.string().required("Harus diisi"),
     no_ijazah: yup.string().required("Harus diisi"),
     tahun_lulus: yup.string().required("Harus diisi"),
-    pendidikan_terakhir: yup.object().required("Harus diisi"),
+    pendidikan_terakhir: yup.string().required("Harus diisi"),
+    asal_sekolah: yup.string().required("Harus diisi"),
     gelar_depan: yup.mixed(),
     gelar_belakang: yup.mixed(),
     str: yup.string().required("Harus diisi"),
@@ -222,6 +223,7 @@ export default function EditKaryawanForm({
       no_ijazah: data?.no_ijazah,
       tahun_lulus: data?.tahun_lulus,
       pendidikan_terakhir: data?.pendidikan_terakhir || "",
+      asal_sekolah: data?.asal_sekolah || "",
       // pendidikan_terakhir: data?.pendidikan_terakhir
       //   ? {
       //       value: data?.pendidikan_terakhir?.id,
@@ -1239,6 +1241,24 @@ export default function EditKaryawanForm({
             /> */}
             <FormErrorMessage>
               {formik.errors.pendidikan_terakhir as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.asal_sekolah}>
+            <FormLabel>
+              Asal Sekolah
+              <RequiredForm />
+            </FormLabel>
+            <StringInput
+              name="asal_sekolah"
+              placeholder="S1 Kedokteran"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("asal_sekolah", input);
+              }}
+              inputValue={formik.values.asal_sekolah}
+            />
+            <FormErrorMessage>
+              {formik.errors.asal_sekolah as string}
             </FormErrorMessage>
           </FormControl>
 
