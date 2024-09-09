@@ -62,12 +62,15 @@ export default function EditUnitKerjaModalDisclosure({
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_unit: values.nama_unit,
-        jenis_karyawan: values.jenis_karyawan,
+        jenis_karyawan: values.jenis_karyawan.value,
         _method: "patch",
       };
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/role/${rowData.id}`, payload)
+        .post(
+          `/api/rski/dashboard/pengaturan/unit-kerja/${rowData.id}`,
+          payload
+        )
         .then((r) => {
           if (r.status === 200) {
             toast({
