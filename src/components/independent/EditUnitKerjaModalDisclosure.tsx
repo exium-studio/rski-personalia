@@ -57,7 +57,7 @@ export default function EditUnitKerjaModalDisclosure({
     },
     validationSchema: yup.object().shape({
       nama_unit: yup.string().required("Harus diisi"),
-      jenis_karyawan: yup.string().required("Harus diisi"),
+      jenis_karyawan: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
