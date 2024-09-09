@@ -119,6 +119,7 @@ export default function EditKaryawanForm({
     tahun_lulus: yup.string().required("Harus diisi"),
     pendidikan_terakhir: yup.object().required("Harus diisi"),
     gelar_depan: yup.mixed(),
+    gelar_belakang: yup.mixed(),
     str: yup.string().required("Harus diisi"),
     masa_berlaku_str: noLimitStr
       ? yup.mixed()
@@ -220,14 +221,15 @@ export default function EditKaryawanForm({
       alamat: data?.alamat,
       no_ijazah: data?.no_ijazah,
       tahun_lulus: data?.tahun_lulus,
-      pendidikan_terakhir: data?.pendidikan_terakhir
-        ? {
-            value: data?.pendidikan_terakhir?.id,
-            label: data?.pendidikan_terakhir?.label,
-          }
-        : undefined,
+      pendidikan_terakhir: data?.pendidikan_terakhir || "",
+      // pendidikan_terakhir: data?.pendidikan_terakhir
+      //   ? {
+      //       value: data?.pendidikan_terakhir?.id,
+      //       label: data?.pendidikan_terakhir?.label,
+      //     }
+      //   : undefined,
       gelar_depan: data?.gelar_depan || "",
-
+      gelar_belakang: data?.gelar_belakang || "",
       str: data?.no_str,
       masa_berlaku_str: data?.masa_berlaku_str
         ? new Date(data?.masa_berlaku_str)
@@ -1218,7 +1220,15 @@ export default function EditKaryawanForm({
               Pendidikan Terakhir
               <RequiredForm />
             </FormLabel>
-            <SelectPendidikan
+            <StringInput
+              name="pendidikan_terakhir"
+              placeholder="S1 Kedokteran"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("pendidikan_terakhir", input);
+              }}
+              inputValue={formik.values.pendidikan_terakhir}
+            />
+            {/* <SelectPendidikan
               name="pendidikan_terakhir"
               placeholder="Diploma 1 (D1)"
               onConfirm={(input) => {
@@ -1226,7 +1236,7 @@ export default function EditKaryawanForm({
               }}
               inputValue={formik.values.pendidikan_terakhir}
               isError={!!formik.errors.pendidikan_terakhir}
-            />
+            /> */}
             <FormErrorMessage>
               {formik.errors.pendidikan_terakhir as string}
             </FormErrorMessage>
@@ -1244,6 +1254,21 @@ export default function EditKaryawanForm({
             />
             <FormErrorMessage>
               {formik.errors.gelar_depan as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.gelar_belakang}>
+            <FormLabel>Gelar Belakang</FormLabel>
+            <StringInput
+              name="gelar_belakang"
+              placeholder="S.Kom"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("gelar_belakang", input);
+              }}
+              inputValue={formik.values.gelar_belakang || ""}
+            />
+            <FormErrorMessage>
+              {formik.errors.gelar_belakang as string}
             </FormErrorMessage>
           </FormControl>
 
