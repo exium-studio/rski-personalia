@@ -104,6 +104,7 @@ export default function RunPenilaian({ ...props }: Props) {
                 placeholder="Filter Status Karyawan"
               />
             </HStack>
+
             <TabelKaryawanDinilai filterConfig={filterConfig} />
           </ModalBody>
         </ModalContent>

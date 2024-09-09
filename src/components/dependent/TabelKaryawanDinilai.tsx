@@ -122,7 +122,7 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && <NotFound minH={"300px"} />}
+          {notFound && <NoData minH={"300px"} />}
 
           {!notFound && (
             <Center my={"auto"} minH={"300px"}>
