@@ -255,6 +255,8 @@ export default function TabelKaryawan() {
 
   const user_id = parseInt(localStorage.getItem("user_id") as string);
 
+  console.log(notFound && isObjectEmpty(formattedFilterKaryawan));
+
   const render = {
     error: (
       <>
@@ -318,9 +320,9 @@ export default function TabelKaryawan() {
 
       {!loading && (
         <>
-          {error && !notFound && render.error}
+          {error && render.error}
 
-          {error && notFound && render.notFound}
+          {/* {error && notFound && render.notFound} */}
 
           {!error && render.loaded}
         </>
