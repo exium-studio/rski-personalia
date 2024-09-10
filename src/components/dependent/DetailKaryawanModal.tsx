@@ -1079,9 +1079,11 @@ export default function DetailKaryawanModal({
                                     />
                                   </Box>
                                   <FlexLine />
-                                  <Text fontWeight={500} textAlign={"right"}>
-                                    {data.tinggi_badan} cm
-                                  </Text>
+                                  {data.tinggi_badan && (
+                                    <Text fontWeight={500} textAlign={"right"}>
+                                      {data.tinggi_badan} cm
+                                    </Text>
+                                  )}
                                 </HStack>
 
                                 <HStack justify={"space-between"}>
@@ -1096,9 +1098,11 @@ export default function DetailKaryawanModal({
                                     />
                                   </Box>
                                   <FlexLine />
-                                  <Text fontWeight={500} textAlign={"right"}>
-                                    {data.berat_badan} kg
-                                  </Text>
+                                  {data?.berat_badan && (
+                                    <Text fontWeight={500} textAlign={"right"}>
+                                      {data.berat_badan} kg
+                                    </Text>
+                                  )}
                                 </HStack>
 
                                 <HStack justify={"space-between"}>

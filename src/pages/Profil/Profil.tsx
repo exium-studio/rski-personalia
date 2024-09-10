@@ -939,13 +939,18 @@ export default function Profil() {
                         </Box>
                         <FlexLine />
                         {userData?.role?.id !== 1 && (
-                          <Text fontWeight={500} textAlign={"right"}>
-                            {userData?.data_karyawan?.masa_berlaku_str
-                              ? formatDate(
-                                  userData?.data_karyawan?.masa_berlaku_str
-                                )
-                              : "Seumur Hidup"}
-                          </Text>
+                          <>
+                            {(userData?.data_completion_step === 4 ||
+                              userData?.data_completion_step === 0) && (
+                              <Text fontWeight={500} textAlign={"right"}>
+                                {userData?.data_karyawan?.masa_berlaku_str
+                                  ? formatDate(
+                                      userData?.data_karyawan?.masa_berlaku_str
+                                    )
+                                  : "Seumur Hidup"}
+                              </Text>
+                            )}
+                          </>
                         )}
                       </HStack>
 
@@ -990,13 +995,16 @@ export default function Profil() {
                           />
                         </Box>
                         <FlexLine />
-                        <Text fontWeight={500} textAlign={"right"}>
-                          {userData?.data_karyawan?.masa_berlaku_sip
-                            ? formatDate(
-                                userData?.data_karyawan?.masa_berlaku_sip
-                              )
-                            : "Seumur Hidup"}
-                        </Text>
+                        {userData?.data_completion_step === 4 ||
+                          (userData?.data_completion_step === 0 && (
+                            <Text fontWeight={500} textAlign={"right"}>
+                              {userData?.data_karyawan?.masa_berlaku_sip
+                                ? formatDate(
+                                    userData?.data_karyawan?.masa_berlaku_sip
+                                  )
+                                : "Seumur Hidup"}
+                            </Text>
+                          ))}
                       </HStack>
                     </VStack>
                   </VStack>
