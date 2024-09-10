@@ -310,7 +310,7 @@ export default function DetailKaryawanModal({
                               </Text>
 
                               <HStack mb={2}>
-                                <Text fontSize={20}>{data.email}</Text>
+                                <Text fontSize={20}>{data.nik}</Text>
                                 <Icon
                                   as={RiCircleFill}
                                   fontSize={8}
