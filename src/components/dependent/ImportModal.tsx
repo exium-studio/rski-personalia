@@ -58,12 +58,12 @@ export default function ImportModal({
         .nullable()
         .test(
           "fileType",
-          "Hanya file dengan ekstensi .csv, .xls, atau .xlsx yang diperbolehkan",
+          "Hanya file dengan ekstensi .csv, .xls yang diperbolehkan",
           (value: any) => {
             if (value === null || value === undefined) return false; // Tidak boleh kosong
             if (typeof value === "string") return true; // String dianggap valid
             if (value instanceof File) {
-              const validExtensions = [".csv", ".xls", ".xlsx"];
+              const validExtensions = [".csv", ".xls"];
               const extension = value.name.split(".").pop();
               return extension
                 ? validExtensions.includes(`.${extension}`)
@@ -201,12 +201,12 @@ export default function ImportModal({
               <FormControl isInvalid={!!formik.errors.file}>
                 <FileInputLarge
                   name="file"
-                  accept=".csv, .xls, .xlsx"
+                  accept=".csv, .xls"
                   onChangeSetter={(input) => {
                     formik.setFieldValue("file", input);
                   }}
                   inputValue={formik.values.file}
-                  placeholder="Mendukung CSV, XLS, XLSX"
+                  placeholder="Mendukung CSV, XLS"
                 />
                 <FormErrorMessage>
                   {formik.errors.file as string}
