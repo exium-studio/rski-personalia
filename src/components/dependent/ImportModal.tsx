@@ -85,6 +85,13 @@ export default function ImportModal({
         .then((r) => {
           if (r.status === 200) {
             backOnClose();
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
           }
         })
         .catch((e) => {
