@@ -74,7 +74,7 @@ export default function EditKaryawanForm({
   const validationSchemaStep1 = yup.object({
     nama_karyawan: yup.string().required("Harus diisi"),
     nik: yup.string().required("Harus diisi"),
-    email: yup.string().email("Email tidak valid").required("Harus diisi"),
+    email: yup.string().email("Email tidak valid"),
     tgl_berakhir_pks: yup.string().required("Harus diisi"),
     no_rm: yup.string().required("Harus diisi"),
     no_manulife: yup.string().required("Harus diisi"),
@@ -407,7 +407,7 @@ export default function EditKaryawanForm({
         >
           <FormLabel>
             Email
-            <RequiredForm />
+            {/* <RequiredForm /> */}
           </FormLabel>
           <StringInput
             name="email"
