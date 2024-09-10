@@ -179,6 +179,17 @@ export default function ImportModal({
             <DisclosureHeader title={title || "Import"} />
           </ModalHeader>
           <ModalBody>
+            <Button
+              mb={4}
+              leftIcon={<Icon as={RiDownload2Line} fontSize={iconSize} />}
+              w={"100%"}
+              className="btn-outline clicky"
+              onClick={downloadTemplate}
+              isLoading={dloading}
+            >
+              Unduh Template
+            </Button>
+
             <form id="importForm" onSubmit={formik.handleSubmit}>
               <FormControl isInvalid={!!formik.errors.file}>
                 <FileInputLarge
@@ -194,17 +205,6 @@ export default function ImportModal({
                   {formik.errors.file as string}
                 </FormErrorMessage>
               </FormControl>
-
-              <Button
-                mt={2}
-                leftIcon={<Icon as={RiDownload2Line} fontSize={iconSize} />}
-                w={"100%"}
-                className="btn-outline clicky"
-                onClick={downloadTemplate}
-                isLoading={dloading}
-              >
-                Unduh Template
-              </Button>
             </form>
           </ModalBody>
           <ModalFooter gap={2}>

@@ -7,6 +7,7 @@ import {
   Input,
   StackProps,
   Text,
+  Tooltip,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
@@ -194,7 +195,17 @@ export default function FileInputLarge({
           )}
           {inputValue && fileName && (
             <>
-              <Text fontSize={18}>{fileName}</Text>
+              <Tooltip label={fileName}>
+                <Text
+                  fontSize={18}
+                  overflow={"hidden"}
+                  textOverflow={"ellipsis"}
+                  whiteSpace={"nowrap"}
+                  w={"100%"}
+                >
+                  {fileName}
+                </Text>
+              </Tooltip>
               {typeof inputValue !== "string" && (
                 <Text opacity={0.4} fontSize={14}>
                   {formatBytes(inputValue.size)}
