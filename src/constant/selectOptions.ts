@@ -194,7 +194,7 @@ const optionsStatusKepegawaian = [
   },
   {
     value: 3,
-    label: "Training",
+    label: "Magang",
   },
 ];
 
