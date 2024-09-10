@@ -144,7 +144,7 @@ export default function EditKaryawanForm({
     initialValues: {
       nama_karyawan: data?.user.nama,
       nik: data?.nik,
-      email: data?.email,
+      email: data?.email || "",
       tgl_berakhir_pks:
         (new Date(
           formatDate(data?.tgl_berakhir_pks as string, "iso")
