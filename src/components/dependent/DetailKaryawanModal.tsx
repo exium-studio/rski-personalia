@@ -28,6 +28,7 @@ import {
   RiCircleFill,
   RiFeedbackFill,
   RiFileChartFill,
+  RiGraduationCapFill,
   RiHeartFill,
   RiLoginBoxFill,
 } from "@remixicon/react";
@@ -562,6 +563,28 @@ export default function DetailKaryawanModal({
                                 lineHeight={1.4}
                               >
                                 Penilaian
+                              </Text>
+                            </VStack>
+
+                            {/* Diklat */}
+                            <VStack
+                              cursor={"pointer"}
+                              borderRadius={12}
+                              justify={"center"}
+                              p={4}
+                              className="btn-solid clicky"
+                            >
+                              <Icon
+                                opacity={0.4}
+                                as={RiGraduationCapFill}
+                                fontSize={32}
+                              />
+                              <Text
+                                fontWeight={500}
+                                textAlign={"center"}
+                                lineHeight={1.4}
+                              >
+                                Diklat
                               </Text>
                             </VStack>
                           </SimpleGrid>
