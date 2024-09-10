@@ -47,7 +47,7 @@ export default function AvatarAndNameTableData({
       <CContainer gap={2} overflow={"hidden"}>
         <Tooltip label={data.nama} placement="right" openDelay={500}>
           <Text
-            w={"fit-content"}
+            w={"100%"}
             whiteSpace={"nowrap"}
             overflow={"hidden"}
             textOverflow={"ellipsis"}
