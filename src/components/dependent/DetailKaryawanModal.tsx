@@ -75,6 +75,7 @@ import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
+import formatDurationShort from "../../lib/formatDurationShort";
 
 interface Props {
   id?: string;
@@ -377,7 +378,7 @@ export default function DetailKaryawanModal({
                                     fontSize={24}
                                     fontWeight={500}
                                   >
-                                    {formatDuration(
+                                    {formatDurationShort(
                                       data?.total_durasi_internal +
                                         data?.total_durasi_internal
                                     ) || 0}
@@ -399,7 +400,7 @@ export default function DetailKaryawanModal({
                                     fontSize={24}
                                     fontWeight={500}
                                   >
-                                    {formatDuration(
+                                    {formatDurationShort(
                                       data?.total_durasi_internal
                                     ) || 0}
                                   </Text>
@@ -414,7 +415,7 @@ export default function DetailKaryawanModal({
                                     fontSize={24}
                                     fontWeight={500}
                                   >
-                                    {formatDuration(
+                                    {formatDurationShort(
                                       data?.total_durasi_eksternal
                                     ) || 0}
                                   </Text>
