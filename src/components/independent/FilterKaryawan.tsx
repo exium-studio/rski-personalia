@@ -21,21 +21,20 @@ import { useLightDarkColor } from "../../constant/colors";
 import { iconSize } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useCallBackOnNavigate from "../../hooks/useCallBackOnNavigate";
 import backOnClose from "../../lib/backOnClose";
 import formatNumber from "../../lib/formatNumber";
+import formattedFilterKaryawanReducer from "../../lib/formattedFilterKaryawanReducer";
 import FilterAgama from "../dependent/_FilterOptions/FilterAgama";
 import FilterJebatan from "../dependent/_FilterOptions/FilterJabatan";
 import FilterJenisKelamin from "../dependent/_FilterOptions/FilterJenisKelamin";
 import FilterJenisPegawai from "../dependent/_FilterOptions/FilterJenisPegawai";
 import FilterMasaKerja from "../dependent/_FilterOptions/FilterMasaKerja";
-import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 import FilterStatusAktif from "../dependent/_FilterOptions/FilterStatusAktif";
 import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryawan";
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import formattedFilterKaryawanReducer from "../../lib/formattedFilterKaryawanReducer";
-import useCallBackOnNavigate from "../../hooks/useCallBackOnNavigate";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -91,9 +90,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     if (values.jenis_kelamin && values.jenis_kelamin.length > 0) {
       count += values.jenis_kelamin.length;
     }
-    if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
-      count += values.pendidikan_terakhir.length;
-    }
+    // if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
+    //   count += values.pendidikan_terakhir.length;
+    // }
     return count;
   }
 
@@ -117,9 +116,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       jenis_kelamin: localFilterConfig.jenis_kelamin.map(
         (item: any) => item.value
       ),
-      pendidikan_terakhir: localFilterConfig.pendidikan_terakhir.map(
-        (item: any) => item.value
-      ),
+      // pendidikan_terakhir: localFilterConfig.pendidikan_terakhir.map(
+      //   (item: any) => item.value
+      // ),
     };
 
     // console.log(formattedFilterKaryawanReducer(formattedFilters));
@@ -244,10 +243,10 @@ export default function FilterKaryawan({ title, ...props }: Props) {
                 setFilterConfig={setLocalFilterConfig}
               />
 
-              <FilterPendidikanTerakhir
+              {/* <FilterPendidikanTerakhir
                 filterConfig={localFilterConfig}
                 setFilterConfig={setLocalFilterConfig}
-              />
+              /> */}
             </Accordion>
           </ModalBody>
 

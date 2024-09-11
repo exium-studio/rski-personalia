@@ -28,7 +28,6 @@ import FilterJebatan from "../dependent/_FilterOptions/FilterJabatan";
 import FilterJenisKelamin from "../dependent/_FilterOptions/FilterJenisKelamin";
 import FilterJenisPegawai from "../dependent/_FilterOptions/FilterJenisPegawai";
 import FilterMasaKerja from "../dependent/_FilterOptions/FilterMasaKerja";
-import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 import FilterStatusAktif from "../dependent/_FilterOptions/FilterStatusAktif";
 import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryawan";
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
@@ -85,9 +84,9 @@ export default function FilterExportKaryawan({ title, ...props }: Props) {
     if (values.jenis_kelamin && values.jenis_kelamin.length > 0) {
       count += values.jenis_kelamin.length;
     }
-    if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
-      count += values.pendidikan_terakhir.length;
-    }
+    // if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
+    //   count += values.pendidikan_terakhir.length;
+    // }
     return count;
   }
 
@@ -112,9 +111,9 @@ export default function FilterExportKaryawan({ title, ...props }: Props) {
       jenis_kelamin: localFilterConfig.jenis_kelamin.map(
         (item: any) => item.value
       ),
-      pendidikan_terakhir: localFilterConfig.pendidikan_terakhir.map(
-        (item: any) => item.value
-      ),
+      // pendidikan_terakhir: localFilterConfig.pendidikan_terakhir.map(
+      //   (item: any) => item.value
+      // ),
     };
 
     // Menghapus properti dengan array kosong kecuali 'search'
@@ -235,10 +234,10 @@ export default function FilterExportKaryawan({ title, ...props }: Props) {
                 setFilterConfig={setLocalFilterConfig}
               />
 
-              <FilterPendidikanTerakhir
+              {/* <FilterPendidikanTerakhir
                 filterConfig={localFilterConfig}
                 setFilterConfig={setLocalFilterConfig}
-              />
+              /> */}
             </Accordion>
           </ModalBody>
 
