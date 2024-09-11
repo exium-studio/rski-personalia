@@ -245,6 +245,9 @@ export default function DetailKaryawanModal({
                         <Skeleton h={"95px"} />
                         <Skeleton h={"95px"} />
                         <Skeleton h={"95px"} />
+                        <Skeleton h={"95px"} />
+                        <Skeleton h={"95px"} />
+                        <Skeleton h={"95px"} />
                       </SimpleGrid>
                     </CContainer>
 

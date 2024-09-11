@@ -129,12 +129,12 @@ export default function TabelKaryawan() {
       th: "Masa Kerja",
       isSortable: true,
     },
-    {
-      th: "Promosi",
-    },
-    {
-      th: "Mutasi",
-    },
+    // {
+    //   th: "Promosi",
+    // },
+    // {
+    //   th: "Mutasi",
+    // },
   ];
   const formattedData = data?.map((item: Interface__DetailKaryawan) => ({
     id: item.user.id,
@@ -245,14 +245,14 @@ export default function TabelKaryawan() {
         value: item.masa_kerja,
         td: formatMasaKerja(item.masa_kerja),
       }, // 16
-      {
-        value: "-",
-        td: "-",
-      }, // 17
-      {
-        value: "-",
-        td: "-",
-      }, // 18
+      // {
+      //   value: "-",
+      //   td: "-",
+      // }, // 17
+      // {
+      //   value: "-",
+      //   td: "-",
+      // }, // 18
     ],
   }));
 

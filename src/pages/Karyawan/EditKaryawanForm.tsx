@@ -278,7 +278,7 @@ export default function EditKaryawanForm({
         premi_id: values.potongan?.map((pot: any) => pot.value),
 
         tempat_lahir: values?.tempat_lahir,
-        tanggal_lahir: formatDate(values?.tgl_lahir, "short"),
+        tgl_lahir: formatDate(values?.tgl_lahir, "short"),
         no_hp: values?.no_hp,
         jenis_kelamin: values?.jenis_kelamin?.value,
         nik_ktp: values?.nik_ktp,
@@ -1256,7 +1256,7 @@ export default function EditKaryawanForm({
             </FormLabel>
             <StringInput
               name="asal_sekolah"
-              placeholder="S1 Kedokteran"
+              placeholder="Universitas"
               onChangeSetter={(input) => {
                 formik.setFieldValue("asal_sekolah", input);
               }}

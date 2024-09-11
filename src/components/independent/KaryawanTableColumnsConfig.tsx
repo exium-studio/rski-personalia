@@ -32,8 +32,8 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
     { column: "tgl_masuk", label: "Tanggal Masuk" }, // 14
     { column: "tgl_keluar", label: "Tanggal Keluar" }, // 15
     { column: "masa_kerja", label: "Masa Kerja" }, // 16
-    { column: "promosi", label: "Promosi" }, // 17
-    { column: "mutasi", label: "Mutasi" }, // 18
+    // { column: "promosi", label: "Promosi" }, // 17
+    // { column: "mutasi", label: "Mutasi" }, // 18
   ];
 
   const presetColumns = [
@@ -59,7 +59,7 @@ export default function KaryawanTableColumnsConfig({ title, ...props }: Props) {
     },
     {
       label: "Rekam Jejak",
-      columns: [0, 2, 3, 4, 5, 17, 18],
+      columns: [0, 2, 3, 4, 5],
     },
   ];
 
