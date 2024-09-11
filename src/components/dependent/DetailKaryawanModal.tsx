@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionPanel,
   Avatar,
+  Badge,
   Box,
   HStack,
   Icon,
@@ -21,11 +22,11 @@ import {
 } from "@chakra-ui/react";
 import {
   RiArchiveStackFill,
+  RiAwardFill,
   RiCalendarCheckFill,
   RiCalendarCloseFill,
   RiCalendarFill,
   RiCalendarScheduleFill,
-  RiCheckboxCircleFill,
   RiCircleFill,
   RiCloseCircleFill,
   RiFeedbackFill,
@@ -42,7 +43,7 @@ import {
   useWarningColor,
 } from "../../constant/colors";
 import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -102,6 +103,7 @@ export default function DetailKaryawanModal({
   );
 
   const initialRef = useRef(null);
+
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-user/${user_id}`,
@@ -215,7 +217,7 @@ export default function DetailKaryawanModal({
                       px={responsiveSpacing}
                       justify={"space-between"}
                     >
-                      <VStack gap={3} borderRadius={12} align={"center"} mb={8}>
+                      <VStack gap={3} borderRadius={12} align={"center"} mb={4}>
                         <Skeleton
                           borderRadius={"full"}
                           w={"200px"}
@@ -228,6 +230,8 @@ export default function DetailKaryawanModal({
                           <Skeleton w={"100%"} maxW={"100px"} h={"30px"} />
                         </HStack>
                       </VStack>
+
+                      <Skeleton h={"95px"} mb={3} />
 
                       <SimpleGrid gap={3} columns={[1, 2, null, 3]}>
                         <Skeleton h={"95px"} />
@@ -292,7 +296,7 @@ export default function DetailKaryawanModal({
                             gap={responsiveSpacing}
                             borderRadius={12}
                             align={"center"}
-                            mb={8}
+                            mb={3}
                           >
                             <Avatar
                               w={"200px"}
@@ -314,7 +318,8 @@ export default function DetailKaryawanModal({
                                 {data.user?.nama}
                               </Text>
 
-                              <HStack mb={4}>
+                              {/* Stats Basic */}
+                              <HStack mb={6}>
                                 <Text fontSize={20}>{data.nik}</Text>
                                 <Icon
                                   as={RiCircleFill}
@@ -324,35 +329,44 @@ export default function DetailKaryawanModal({
                                 <StatusAktifBadge
                                   data={data.user?.status_aktif}
                                 />
-                              </HStack>
-
-                              <HStack mb={4}>
-                                <HStack
-                                  bg={"var(--divider)"}
-                                  p={4}
-                                  borderRadius={8}
+                                <Icon
+                                  as={RiCircleFill}
+                                  fontSize={8}
+                                  opacity={0.2}
+                                />
+                                <Badge
+                                  borderRadius={"full"}
+                                  paddingRight={2}
+                                  colorScheme={
+                                    data?.status_reward_presensi
+                                      ? "green"
+                                      : "red"
+                                  }
                                 >
-                                  <Text>Reward presensi</Text>
-                                  <Icon
-                                    as={
-                                      data?.status_reward_presensi
-                                        ? RiCheckboxCircleFill
-                                        : RiCloseCircleFill
-                                    }
-                                    color={
-                                      data?.status_reward_presensi
-                                        ? "green.400"
-                                        : "red.400"
-                                    }
-                                    fontSize={iconSize}
-                                  />
-                                </HStack>
+                                  <HStack>
+                                    <Text fontSize={12}>Reward presensi</Text>
+                                    <Icon
+                                      as={
+                                        data?.status_reward_presensi
+                                          ? RiAwardFill
+                                          : RiCloseCircleFill
+                                      }
+                                      color={
+                                        data?.status_reward_presensi
+                                          ? "green.400"
+                                          : "red.400"
+                                      }
+                                      fontSize={14}
+                                    />
+                                  </HStack>
+                                </Badge>
                               </HStack>
 
+                              {/* Stats Diklat */}
                               <HStack
                                 bg={"var(--divider)"}
                                 p={4}
-                                borderRadius={8}
+                                borderRadius={12}
                                 w={"100%"}
                                 gap={4}
                                 align={"stretch"}
@@ -363,7 +377,10 @@ export default function DetailKaryawanModal({
                                     fontSize={24}
                                     fontWeight={500}
                                   >
-                                    12 jam
+                                    {formatDuration(
+                                      data?.total_durasi_internal +
+                                        data?.total_durasi_internal
+                                    ) || 0}
                                   </Text>
                                   <Text textAlign={"center"} opacity={0.4}>
                                     Total Diklat
@@ -382,7 +399,9 @@ export default function DetailKaryawanModal({
                                     fontSize={24}
                                     fontWeight={500}
                                   >
-                                    4 jam
+                                    {formatDuration(
+                                      data?.total_durasi_internal
+                                    ) || 0}
                                   </Text>
                                   <Text textAlign={"center"} opacity={0.4}>
                                     Diklat Internal
@@ -395,7 +414,9 @@ export default function DetailKaryawanModal({
                                     fontSize={24}
                                     fontWeight={500}
                                   >
-                                    6 jam
+                                    {formatDuration(
+                                      data?.total_durasi_eksternal
+                                    ) || 0}
                                   </Text>
                                   <Text textAlign={"center"} opacity={0.4}>
                                     Diklat Eksternal
@@ -411,6 +432,7 @@ export default function DetailKaryawanModal({
                             <DetailAktivitasKaryawanModalDisclosure
                               karyawan_id={data.id}
                               flex={0}
+                              role="group"
                             >
                               <VStack
                                 cursor={"pointer"}
@@ -421,6 +443,8 @@ export default function DetailKaryawanModal({
                               >
                                 <Icon
                                   opacity={0.4}
+                                  transition={"200ms"}
+                                  _groupHover={{ opacity: 1 }}
                                   as={RiLoginBoxFill}
                                   fontSize={32}
                                 />
@@ -438,6 +462,7 @@ export default function DetailKaryawanModal({
                             <DetailJadwalKaryawanModalDisclosure
                               karyawan_id={data.id}
                               flexShrink={0}
+                              role="group"
                             >
                               <VStack
                                 cursor={"pointer"}
@@ -450,6 +475,8 @@ export default function DetailKaryawanModal({
                                   opacity={0.4}
                                   as={RiCalendarFill}
                                   fontSize={32}
+                                  transition={"200ms"}
+                                  _groupHover={{ opacity: 1 }}
                                 />
                                 <Text
                                   fontWeight={500}
@@ -465,6 +492,7 @@ export default function DetailKaryawanModal({
                             <DetailRekamJejakKaryawanModalDisclosure
                               karyawan_id={data.id}
                               flexShrink={0}
+                              role="group"
                             >
                               <VStack
                                 cursor={"pointer"}
@@ -478,6 +506,8 @@ export default function DetailKaryawanModal({
                                   opacity={0.4}
                                   as={RiFileChartFill}
                                   fontSize={32}
+                                  transition={"200ms"}
+                                  _groupHover={{ opacity: 1 }}
                                 />
                                 <Text
                                   fontWeight={500}
@@ -493,6 +523,7 @@ export default function DetailKaryawanModal({
                             <DetailKeluargaKaryawanModalDisclosure
                               karyawan_id={data?.user?.data_karyawan_id}
                               flexShrink={0}
+                              role="group"
                             >
                               <VStack
                                 cursor={"pointer"}
@@ -506,6 +537,8 @@ export default function DetailKaryawanModal({
                                   opacity={0.4}
                                   as={RiHeartFill}
                                   fontSize={32}
+                                  transition={"200ms"}
+                                  _groupHover={{ opacity: 1 }}
                                 />
                                 <Text
                                   fontWeight={500}
@@ -521,6 +554,7 @@ export default function DetailKaryawanModal({
                             <DokumenKaryawanModalDisclosure
                               karyawan_id={data.id}
                               flexShrink={0}
+                              role="group"
                             >
                               <VStack
                                 cursor={"pointer"}
@@ -533,6 +567,8 @@ export default function DetailKaryawanModal({
                                   opacity={0.4}
                                   as={RiArchiveStackFill}
                                   fontSize={32}
+                                  transition={"200ms"}
+                                  _groupHover={{ opacity: 1 }}
                                 />
                                 <Text
                                   fontWeight={500}
@@ -548,6 +584,7 @@ export default function DetailKaryawanModal({
                             <DetailCutiKaryawanModalDisclosure
                               karyawan_id={data.id}
                               flexShrink={0}
+                              role="group"
                             >
                               <VStack
                                 cursor={"pointer"}
@@ -560,6 +597,8 @@ export default function DetailKaryawanModal({
                                   opacity={0.4}
                                   as={RiCalendarCloseFill}
                                   fontSize={32}
+                                  transition={"200ms"}
+                                  _groupHover={{ opacity: 1 }}
                                 />
                                 <Text
                                   fontWeight={500}
@@ -575,6 +614,7 @@ export default function DetailKaryawanModal({
                             <DetailTukarJadwalKaryawanModalDisclosure
                               karyawan_id={data.id}
                               flexShrink={0}
+                              role="group"
                             >
                               <VStack
                                 cursor={"pointer"}
@@ -587,6 +627,8 @@ export default function DetailKaryawanModal({
                                   opacity={0.4}
                                   as={RiCalendarCheckFill}
                                   fontSize={32}
+                                  transition={"200ms"}
+                                  _groupHover={{ opacity: 1 }}
                                 />
                                 <Text
                                   fontWeight={500}
@@ -602,6 +644,7 @@ export default function DetailKaryawanModal({
                             <DetailLemburKaryawanModalDisclosure
                               karyawan_id={data.id}
                               flexShrink={0}
+                              role="group"
                             >
                               <VStack
                                 cursor={"pointer"}
@@ -614,6 +657,8 @@ export default function DetailKaryawanModal({
                                   opacity={0.4}
                                   as={RiCalendarScheduleFill}
                                   fontSize={32}
+                                  transition={"200ms"}
+                                  _groupHover={{ opacity: 1 }}
                                 />
                                 <Text
                                   fontWeight={500}
@@ -632,6 +677,8 @@ export default function DetailKaryawanModal({
                               justify={"center"}
                               p={4}
                               className="btn-solid clicky"
+                              transition={"200ms"}
+                              _groupHover={{ opacity: 1 }}
                             >
                               <Icon
                                 opacity={0.4}
@@ -654,6 +701,8 @@ export default function DetailKaryawanModal({
                               justify={"center"}
                               p={4}
                               className="btn-solid clicky"
+                              transition={"200ms"}
+                              _groupHover={{ opacity: 1 }}
                             >
                               <Icon
                                 opacity={0.4}
