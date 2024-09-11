@@ -9,6 +9,7 @@ interface Props extends StackProps {
   data: {
     id: number;
     nama: string;
+    fullName?: string;
     foto_profil: string | null;
     unit_kerja?: Interface__UnitKerja;
   };
@@ -53,7 +54,7 @@ export default function AvatarAndNameTableData({
             overflow={"hidden"}
             textOverflow={"ellipsis"}
           >
-            {data.nama}
+            {data.fullName || data.nama}
           </Text>
         </Tooltip>
 

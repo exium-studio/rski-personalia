@@ -92,6 +92,9 @@ export default function TabelPresensi({ filterConfig }: Props) {
             data={{
               id: item.user.id,
               nama: item.user.nama,
+              fullName: `${item?.gelar_depan || ""} ${item.user?.nama} ${
+                item?.gelar_belakang || ""
+              }`,
               foto_profil: item.user.foto_profil,
             }}
           />
