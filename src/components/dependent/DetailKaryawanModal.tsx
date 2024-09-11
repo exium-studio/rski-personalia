@@ -76,6 +76,7 @@ import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
 import formatDurationShort from "../../lib/formatDurationShort";
+import DetailDiklatKaryawanModalDisclosure from "./DetailDiklatKaryawanModalDisclosure";
 
 interface Props {
   id?: string;
@@ -696,28 +697,34 @@ export default function DetailKaryawanModal({
                             </VStack>
 
                             {/* Diklat */}
-                            <VStack
-                              cursor={"pointer"}
-                              borderRadius={12}
-                              justify={"center"}
-                              p={4}
-                              className="btn-solid clicky"
-                              transition={"200ms"}
-                              _groupHover={{ opacity: 1 }}
+                            <DetailDiklatKaryawanModalDisclosure
+                              karyawan_id={data.id}
+                              flexShrink={0}
+                              role="group"
                             >
-                              <Icon
-                                opacity={0.4}
-                                as={RiGraduationCapFill}
-                                fontSize={32}
-                              />
-                              <Text
-                                fontWeight={500}
-                                textAlign={"center"}
-                                lineHeight={1.4}
+                              <VStack
+                                cursor={"pointer"}
+                                borderRadius={12}
+                                justify={"center"}
+                                p={4}
+                                className="btn-solid clicky"
+                                transition={"200ms"}
+                                _groupHover={{ opacity: 1 }}
                               >
-                                Diklat
-                              </Text>
-                            </VStack>
+                                <Icon
+                                  opacity={0.4}
+                                  as={RiGraduationCapFill}
+                                  fontSize={32}
+                                />
+                                <Text
+                                  fontWeight={500}
+                                  textAlign={"center"}
+                                  lineHeight={1.4}
+                                >
+                                  Diklat
+                                </Text>
+                              </VStack>
+                            </DetailDiklatKaryawanModalDisclosure>
                           </SimpleGrid>
                         </CContainer>
 

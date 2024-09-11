@@ -1,12 +1,12 @@
 import { ButtonProps, useDisclosure } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import { optionsKategoriDiklat } from "../../../constant/selectOptions";
-import SingleSelectModal from "../input/SingleSelectModal";
+import MultipleSelectModal from "../input/MultipleSelectModal";
 
 interface Props extends ButtonProps {
   name: string;
-  onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
-  inputValue: Interface__SelectOption | undefined;
+  onConfirm: (inputValue: Interface__SelectOption[] | undefined) => void;
+  inputValue: Interface__SelectOption[] | undefined;
   withSearch?: boolean;
   optionsDisplay?: "list" | "chip";
   isError?: boolean;
@@ -14,7 +14,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function SelectKategoriDiklat({
+export default function MultiSelectKategoriDiklat({
   name,
   onConfirm,
   inputValue,
@@ -28,8 +28,8 @@ export default function SelectKategoriDiklat({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <SingleSelectModal
-      id="select-kategori-diklat-modal"
+    <MultipleSelectModal
+      id="multi-select-kategori-diklat-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
