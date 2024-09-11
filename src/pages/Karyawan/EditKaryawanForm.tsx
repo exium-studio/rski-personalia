@@ -196,7 +196,7 @@ export default function EditKaryawanForm({
         label: potongan?.nama_premi,
       })),
       tempat_lahir: data?.tempat_lahir,
-      tgl_lahir: new Date(data?.tgl_lahir),
+      tgl_lahir: data?.tgl_lahir && new Date(data?.tgl_lahir),
       no_hp: data?.no_hp,
       jenis_kelamin: data?.jenis_kelamin
         ? {
@@ -338,6 +338,8 @@ export default function EditKaryawanForm({
         });
     },
   });
+
+  console.log(formik.values);
 
   const handleNext = () => {
     formik.validateForm().then((errors) => {
