@@ -317,7 +317,9 @@ export default function DetailKaryawanModal({
                                 textAlign={"center"}
                                 mb={4}
                               >
-                                {data.user?.nama}
+                                {`${data?.gelar_depan || ""} ${
+                                  data.user?.nama
+                                } ${data?.gelar_belakang || ""}`}
                               </Text>
 
                               {/* Stats Basic */}
@@ -867,23 +869,6 @@ export default function DetailKaryawanModal({
                                 </HStack>
 
                                 <HStack justify={"space-between"}>
-                                  {/* <Text opacity={0.6}>Email</Text> */}
-                                  <Box opacity={0.6}>
-                                    <Highlighter
-                                      highlightClassName="hw"
-                                      unhighlightClassName="uw"
-                                      searchWords={searchQuery}
-                                      autoEscape={true}
-                                      textToHighlight="Email"
-                                    />
-                                  </Box>
-                                  <FlexLine />
-                                  <Text fontWeight={500} textAlign={"right"}>
-                                    {data?.email}
-                                  </Text>
-                                </HStack>
-
-                                <HStack justify={"space-between"}>
                                   {/* <Text opacity={0.6}>No. Induk Karyawan</Text> */}
                                   <Box opacity={0.6}>
                                     <Highlighter
@@ -961,23 +946,6 @@ export default function DetailKaryawanModal({
                                 </HStack>
 
                                 <HStack justify={"space-between"}>
-                                  {/* <Text opacity={0.6}>No. HP</Text> */}
-                                  <Box opacity={0.6}>
-                                    <Highlighter
-                                      highlightClassName="hw"
-                                      unhighlightClassName="uw"
-                                      searchWords={searchQuery}
-                                      autoEscape={true}
-                                      textToHighlight="No. HP"
-                                    />
-                                  </Box>
-                                  <FlexLine />
-                                  <Text fontWeight={500} textAlign={"right"}>
-                                    {data.no_hp}
-                                  </Text>
-                                </HStack>
-
-                                <HStack justify={"space-between"}>
                                   {/* <Text opacity={0.6}>Tempat Lahir</Text> */}
                                   <Box opacity={0.6}>
                                     <Highlighter
@@ -1050,6 +1018,65 @@ export default function DetailKaryawanModal({
                                 </HStack>
 
                                 <HStack justify={"space-between"}>
+                                  {/* <Text opacity={0.6}>Alamat</Text> */}
+                                  <Box opacity={0.6}>
+                                    <Highlighter
+                                      highlightClassName="hw"
+                                      unhighlightClassName="uw"
+                                      searchWords={searchQuery}
+                                      autoEscape={true}
+                                      textToHighlight="Alamat"
+                                    />
+                                  </Box>
+                                  <FlexLine />
+                                  <Tooltip label={data.alamat}>
+                                    <Text
+                                      fontWeight={500}
+                                      whiteSpace={"nowrap"}
+                                      overflow={"hidden"}
+                                      textOverflow={"ellipsis"}
+                                      maxW={"243px"}
+                                    >
+                                      {data.alamat}
+                                    </Text>
+                                  </Tooltip>
+                                </HStack>
+
+                                <HStack justify={"space-between"}>
+                                  {/* <Text opacity={0.6}>No. HP</Text> */}
+                                  <Box opacity={0.6}>
+                                    <Highlighter
+                                      highlightClassName="hw"
+                                      unhighlightClassName="uw"
+                                      searchWords={searchQuery}
+                                      autoEscape={true}
+                                      textToHighlight="No. HP"
+                                    />
+                                  </Box>
+                                  <FlexLine />
+                                  <Text fontWeight={500} textAlign={"right"}>
+                                    {data.no_hp}
+                                  </Text>
+                                </HStack>
+
+                                <HStack justify={"space-between"}>
+                                  {/* <Text opacity={0.6}>Email</Text> */}
+                                  <Box opacity={0.6}>
+                                    <Highlighter
+                                      highlightClassName="hw"
+                                      unhighlightClassName="uw"
+                                      searchWords={searchQuery}
+                                      autoEscape={true}
+                                      textToHighlight="Email"
+                                    />
+                                  </Box>
+                                  <FlexLine />
+                                  <Text fontWeight={500} textAlign={"right"}>
+                                    {data?.email}
+                                  </Text>
+                                </HStack>
+
+                                <HStack justify={"space-between"}>
                                   {/* <Text opacity={0.6}>Gelar Depan</Text> */}
                                   <Box opacity={0.6}>
                                     <Highlighter
@@ -1081,31 +1108,6 @@ export default function DetailKaryawanModal({
                                   <Text fontWeight={500} textAlign={"right"}>
                                     {data?.gelar_belakang}
                                   </Text>
-                                </HStack>
-
-                                <HStack justify={"space-between"}>
-                                  {/* <Text opacity={0.6}>Alamat</Text> */}
-                                  <Box opacity={0.6}>
-                                    <Highlighter
-                                      highlightClassName="hw"
-                                      unhighlightClassName="uw"
-                                      searchWords={searchQuery}
-                                      autoEscape={true}
-                                      textToHighlight="Alamat"
-                                    />
-                                  </Box>
-                                  <FlexLine />
-                                  <Tooltip label={data.alamat}>
-                                    <Text
-                                      fontWeight={500}
-                                      whiteSpace={"nowrap"}
-                                      overflow={"hidden"}
-                                      textOverflow={"ellipsis"}
-                                      maxW={"243px"}
-                                    >
-                                      {data.alamat}
-                                    </Text>
-                                  </Tooltip>
                                 </HStack>
                               </VStack>
                             </VStack>

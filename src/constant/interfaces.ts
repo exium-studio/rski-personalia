@@ -570,6 +570,7 @@ export interface Interface__DetailKaryawan {
   no_kk: string;
   alamat: string;
   gelar_depan: string;
+  gelar_belakang: string;
   no_hp: string;
   no_bpjsksh: string;
   no_bpjsktk: string;
