@@ -54,7 +54,7 @@ export default function EditKelompokGajiModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama_kelompok: undefined as any,
+      nama_kelompok: "" as any,
       besaran_gaji: undefined as any,
     },
     validationSchema: yup.object().shape({
