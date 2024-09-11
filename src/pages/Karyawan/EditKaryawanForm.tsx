@@ -152,6 +152,9 @@ export default function EditKaryawanForm({
       no_rm: data?.no_rm as string,
       no_manulife: data?.no_manulife as string,
       tgl_masuk: new Date(formatDate(data?.tgl_masuk as string, "iso")) as any,
+      tgl_diangkat: new Date(
+        formatDate(data?.tgl_diangkat as string, "iso")
+      ) as any,
       status_karyawan: {
         value: data?.status_karyawan?.id,
         label: data?.status_karyawan?.label,
@@ -261,6 +264,7 @@ export default function EditKaryawanForm({
         no_rm: values.no_rm.toString(),
         no_manulife: values.no_manulife.toString(),
         tgl_masuk: formatDate(values.tgl_masuk as string, "short"),
+        tgl_diangkat: formatDate(values.tgl_diangkat as string, "short"),
         status_karyawan_id: values.status_karyawan.value,
         unit_kerja_id: values.unit_kerja.value,
         jabatan_id: values.jabatan.value,
@@ -522,6 +526,34 @@ export default function EditKaryawanForm({
           />
           <FormErrorMessage>
             {formik.errors.tgl_masuk as string}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          mb={4}
+          flex={"1 1 300px"}
+          isInvalid={!!formik.errors.tgl_diangkat}
+        >
+          <FormLabel>
+            Tanggal Diangkat
+            <RequiredForm />
+          </FormLabel>
+          <DatePickerModal
+            id="tambah-karyawan-date-picker"
+            name="tgl_diangkat"
+            placeholder="Pilih Tanggal Diangkat"
+            onConfirm={(input) => {
+              formik.setFieldValue("tgl_diangkat", input);
+            }}
+            inputValue={
+              formik.values.tgl_diangkat
+                ? new Date(formik.values.tgl_diangkat)
+                : undefined
+            }
+            isError={!!formik.errors.tgl_diangkat}
+          />
+          <FormErrorMessage>
+            {formik.errors.tgl_diangkat as string}
           </FormErrorMessage>
         </FormControl>
 

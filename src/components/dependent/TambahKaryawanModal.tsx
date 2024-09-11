@@ -70,6 +70,7 @@ const validationSchemaStep1 = yup.object({
   no_rm: yup.string().required("Harus diisi"),
   no_manulife: yup.string().required("Harus diisi"),
   tgl_masuk: yup.string().required("Harus diisi"),
+  tgl_diangkat: yup.string().required("Harus diisi"),
   status_karyawan: yup.object().required("Harus diisi"),
   unit_kerja: yup.object().required("Harus diisi"),
   jabatan: yup.object().required("Harus diisi"),
@@ -123,6 +124,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
       no_rm: "",
       no_manulife: "",
       tgl_masuk: "",
+      tgl_diangkat: "",
       status_karyawan: undefined as any,
       unit_kerja: undefined as any,
       jabatan: undefined as any,
@@ -155,6 +157,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         no_rm: values.no_rm,
         no_manulife: values.no_manulife,
         tgl_masuk: formatDate(values.tgl_masuk, "short"),
+        tgl_diangkat: formatDate(values.tgl_diangkat, "short"),
         status_karyawan_id: values.status_karyawan?.value,
         unit_kerja_id: values.unit_kerja?.value,
         jabatan_id: values.jabatan?.value,
@@ -387,6 +390,32 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             isError={!!formik.errors.tgl_masuk}
           />
           <FormErrorMessage>{formik.errors.tgl_masuk}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          mb={4}
+          flex={"1 1 300px"}
+          isInvalid={!!formik.errors.tgl_diangkat}
+        >
+          <FormLabel>
+            Tanggal Diangkat
+            <RequiredForm />
+          </FormLabel>
+          <DatePickerModal
+            id="tambah-karyawan-date-picker"
+            name="tgl_diangkat"
+            placeholder="Pilih Tanggal Diangkat"
+            onConfirm={(input) => {
+              formik.setFieldValue("tgl_diangkat", input);
+            }}
+            inputValue={
+              formik.values.tgl_diangkat
+                ? new Date(formik.values.tgl_diangkat)
+                : undefined
+            }
+            isError={!!formik.errors.tgl_diangkat}
+          />
+          <FormErrorMessage>{formik.errors.tgl_diangkat}</FormErrorMessage>
         </FormControl>
 
         <FormControl
