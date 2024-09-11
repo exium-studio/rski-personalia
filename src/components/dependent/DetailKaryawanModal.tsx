@@ -25,7 +25,9 @@ import {
   RiCalendarCloseFill,
   RiCalendarFill,
   RiCalendarScheduleFill,
+  RiCheckboxCircleFill,
   RiCircleFill,
+  RiCloseCircleFill,
   RiFeedbackFill,
   RiFileChartFill,
   RiGraduationCapFill,
@@ -40,7 +42,7 @@ import {
   useWarningColor,
 } from "../../constant/colors";
 import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
-import { responsiveSpacing } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -301,16 +303,18 @@ export default function DetailKaryawanModal({
                               name={data.user?.nama}
                             />
 
-                            <VStack gap={1}>
+                            <VStack gap={1} w={"100%"}>
                               <Text
                                 fontWeight={700}
                                 fontSize={32}
                                 lineHeight={1.3}
+                                textAlign={"center"}
+                                mb={4}
                               >
                                 {data.user?.nama}
                               </Text>
 
-                              <HStack mb={2}>
+                              <HStack mb={4}>
                                 <Text fontSize={20}>{data.nik}</Text>
                                 <Icon
                                   as={RiCircleFill}
@@ -320,6 +324,83 @@ export default function DetailKaryawanModal({
                                 <StatusAktifBadge
                                   data={data.user?.status_aktif}
                                 />
+                              </HStack>
+
+                              <HStack mb={4}>
+                                <HStack
+                                  bg={"var(--divider)"}
+                                  p={4}
+                                  borderRadius={8}
+                                >
+                                  <Text>Reward presensi</Text>
+                                  <Icon
+                                    as={
+                                      data?.status_reward_presensi
+                                        ? RiCheckboxCircleFill
+                                        : RiCloseCircleFill
+                                    }
+                                    color={
+                                      data?.status_reward_presensi
+                                        ? "green.400"
+                                        : "red.400"
+                                    }
+                                    fontSize={iconSize}
+                                  />
+                                </HStack>
+                              </HStack>
+
+                              <HStack
+                                bg={"var(--divider)"}
+                                p={4}
+                                borderRadius={8}
+                                w={"100%"}
+                                gap={4}
+                                align={"stretch"}
+                              >
+                                <VStack flex={1}>
+                                  <Text
+                                    textAlign={"center"}
+                                    fontSize={24}
+                                    fontWeight={500}
+                                  >
+                                    12 jam
+                                  </Text>
+                                  <Text textAlign={"center"} opacity={0.4}>
+                                    Total Diklat
+                                  </Text>
+                                </VStack>
+
+                                <Box
+                                  w={"1px"}
+                                  flexShrink={0}
+                                  bg={"var(--divider3)"}
+                                />
+
+                                <VStack flex={1}>
+                                  <Text
+                                    textAlign={"center"}
+                                    fontSize={24}
+                                    fontWeight={500}
+                                  >
+                                    4 jam
+                                  </Text>
+                                  <Text textAlign={"center"} opacity={0.4}>
+                                    Diklat Internal
+                                  </Text>
+                                </VStack>
+
+                                <VStack flex={1}>
+                                  <Text
+                                    textAlign={"center"}
+                                    fontSize={24}
+                                    fontWeight={500}
+                                  >
+                                    6 jam
+                                  </Text>
+                                  <Text textAlign={"center"} opacity={0.4}>
+                                    Diklat Eksternal
+                                  </Text>
+                                </VStack>
                               </HStack>
                             </VStack>
                           </VStack>

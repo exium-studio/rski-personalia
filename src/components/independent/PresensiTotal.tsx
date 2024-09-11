@@ -97,7 +97,7 @@ export default function PresensiTotal({ ...props }: Props) {
                         </Text>
                       </VStack>
 
-                      <Box w={"1px"} bg={"var(--p500a4)"} />
+                      <Box w={"1px"} bg={"var(--divider3)"} />
 
                       <VStack gap={0} flex={"1 1"}>
                         <Text
