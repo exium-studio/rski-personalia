@@ -276,23 +276,6 @@ export default function Profil() {
                       </HStack>
 
                       <HStack justify={"space-between"}>
-                        {/* <Text opacity={0.6}>Email</Text> */}
-                        <Box opacity={0.6}>
-                          <Highlighter
-                            highlightClassName="hw"
-                            unhighlightClassName="uw"
-                            searchWords={searchQuery}
-                            autoEscape={true}
-                            textToHighlight="Email"
-                          />
-                        </Box>
-                        <FlexLine />
-                        <Text fontWeight={500} textAlign={"right"}>
-                          {userData?.data_karyawan?.email}
-                        </Text>
-                      </HStack>
-
-                      <HStack justify={"space-between"}>
                         {/* <Text opacity={0.6}>No. Induk Karyawan</Text> */}
                         <Box opacity={0.6}>
                           <Highlighter
@@ -363,23 +346,6 @@ export default function Profil() {
                             </Text>
                           )}
                         </HStack>
-                      </HStack>
-
-                      <HStack justify={"space-between"}>
-                        {/* <Text opacity={0.6}>No. HP</Text> */}
-                        <Box opacity={0.6}>
-                          <Highlighter
-                            highlightClassName="hw"
-                            unhighlightClassName="uw"
-                            searchWords={searchQuery}
-                            autoEscape={true}
-                            textToHighlight="No. HP"
-                          />
-                        </Box>
-                        <FlexLine />
-                        <Text fontWeight={500} textAlign={"right"}>
-                          {userData?.data_karyawan?.no_hp}
-                        </Text>
                       </HStack>
 
                       <HStack justify={"space-between"}>
@@ -455,23 +421,6 @@ export default function Profil() {
                       </HStack>
 
                       <HStack justify={"space-between"}>
-                        {/* <Text opacity={0.6}>Gelar Depan</Text> */}
-                        <Box opacity={0.6}>
-                          <Highlighter
-                            highlightClassName="hw"
-                            unhighlightClassName="uw"
-                            searchWords={searchQuery}
-                            autoEscape={true}
-                            textToHighlight="Gelar Depan"
-                          />
-                        </Box>
-                        <FlexLine />
-                        <Text fontWeight={500} textAlign={"right"}>
-                          {userData?.data_karyawan?.gelar_depan}
-                        </Text>
-                      </HStack>
-
-                      <HStack justify={"space-between"}>
                         {/* <Text opacity={0.6}>Alamat</Text> */}
                         <Box opacity={0.6}>
                           <Highlighter
@@ -495,6 +444,57 @@ export default function Profil() {
                             {userData?.data_karyawan?.alamat}
                           </Text>
                         </Tooltip>
+                      </HStack>
+
+                      <HStack justify={"space-between"}>
+                        {/* <Text opacity={0.6}>No. Telepon</Text> */}
+                        <Box opacity={0.6}>
+                          <Highlighter
+                            highlightClassName="hw"
+                            unhighlightClassName="uw"
+                            searchWords={searchQuery}
+                            autoEscape={true}
+                            textToHighlight="No. Telepon"
+                          />
+                        </Box>
+                        <FlexLine />
+                        <Text fontWeight={500} textAlign={"right"}>
+                          {userData?.data_karyawan?.no_hp}
+                        </Text>
+                      </HStack>
+
+                      <HStack justify={"space-between"}>
+                        {/* <Text opacity={0.6}>Email</Text> */}
+                        <Box opacity={0.6}>
+                          <Highlighter
+                            highlightClassName="hw"
+                            unhighlightClassName="uw"
+                            searchWords={searchQuery}
+                            autoEscape={true}
+                            textToHighlight="Email"
+                          />
+                        </Box>
+                        <FlexLine />
+                        <Text fontWeight={500} textAlign={"right"}>
+                          {userData?.data_karyawan?.email}
+                        </Text>
+                      </HStack>
+
+                      <HStack justify={"space-between"}>
+                        {/* <Text opacity={0.6}>Gelar Depan</Text> */}
+                        <Box opacity={0.6}>
+                          <Highlighter
+                            highlightClassName="hw"
+                            unhighlightClassName="uw"
+                            searchWords={searchQuery}
+                            autoEscape={true}
+                            textToHighlight="Gelar Depan"
+                          />
+                        </Box>
+                        <FlexLine />
+                        <Text fontWeight={500} textAlign={"right"}>
+                          {userData?.data_karyawan?.gelar_depan}
+                        </Text>
                       </HStack>
                     </VStack>
                   </VStack>
