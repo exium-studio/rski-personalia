@@ -304,7 +304,7 @@ export default function EditKaryawanForm({
         npwp: values?.npwp,
       };
 
-      console.log(payload);
+      // console.log(payload);
 
       setLoading(true);
       req

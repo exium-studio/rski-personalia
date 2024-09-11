@@ -1605,14 +1605,11 @@ export default function DetailKaryawanModal({
                                     />
                                   </Box>
                                   <FlexLine />
-                                  {(data?.user?.data_completion_step === 4 ||
-                                    data?.user?.data_completion_step === 0) && (
-                                    <Text fontWeight={500} textAlign={"right"}>
-                                      {data.masa_berlaku_str
-                                        ? formatDate(data.masa_berlaku_str)
-                                        : "Seumur Hidup"}
-                                    </Text>
-                                  )}
+                                  <Text fontWeight={500} textAlign={"right"}>
+                                    {data.masa_berlaku_str
+                                      ? formatDate(data.masa_berlaku_str)
+                                      : "Seumur Hidup"}
+                                  </Text>
                                 </HStack>
 
                                 <HStack justify={"space-between"}>
@@ -1657,14 +1654,11 @@ export default function DetailKaryawanModal({
                                     />
                                   </Box>
                                   <FlexLine />
-                                  {(data?.user?.data_completion_step === 4 ||
-                                    data?.user?.data_completion_step === 0) && (
-                                    <Text fontWeight={500} textAlign={"right"}>
-                                      {data.masa_berlaku_sip
-                                        ? formatDate(data.masa_berlaku_sip)
-                                        : "Seumur Hidup"}
-                                    </Text>
-                                  )}
+                                  <Text fontWeight={500} textAlign={"right"}>
+                                    {data.masa_berlaku_sip
+                                      ? formatDate(data.masa_berlaku_sip)
+                                      : "Seumur Hidup"}
+                                  </Text>
                                 </HStack>
                               </VStack>
                             </VStack>
