@@ -42,30 +42,29 @@ import SelectKelompokGaji from "../../components/dependent/_Select/SelectKelompo
 import SelectKompetensi from "../../components/dependent/_Select/SelectKompetensi";
 import SelectPtkp from "../../components/dependent/_Select/SelectPtkp";
 import SelectRole from "../../components/dependent/_Select/SelectRole";
-import SelectStatusKaryawan from "./_Select/SelectStatusKaryawan";
 import SelectUnitKerja from "../../components/dependent/_Select/SelectUnitKerja";
 import DatePickerModal from "../../components/dependent/input/DatePickerModal";
 import RequiredForm from "../../components/form/RequiredForm";
 import { useLightDarkColor } from "../../constant/colors";
-import req from "../../lib/req";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
+import req from "../../lib/req";
 import useScreenHeight from "../../lib/useScreenHeight";
 import useScreenWidth from "../../lib/useScreenWidth";
 import CContainer from "../wrapper/CContainer";
 import MultiselectPotongan from "./_Select/MultiselectPotongan";
+import SelectStatusKaryawan from "./_Select/SelectStatusKaryawan";
 import DisclosureHeader from "./DisclosureHeader";
 import NumberInput from "./input/NumberInput";
-import PleaseWaitModal from "./PleaseWaitModal";
 import StringInput from "./input/StringInput";
-import formatDate from "../../lib/formatDate";
 
 const validationSchemaStep1 = yup.object({
   nama_karyawan: yup.string().required("Harus diisi"),
   nik: yup.string().required("Harus diisi"),
-  email: yup.string().email("Email tidak valid").required("Harus diisi"),
+  email: yup.string().email("Email tidak valid"),
   tgl_berakhir_pks: yup.string().required("Harus diisi"),
   no_rm: yup.string().required("Harus diisi"),
   no_manulife: yup.string().required("Harus diisi"),
@@ -284,7 +283,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         >
           <FormLabel>
             Email
-            <RequiredForm />
+            {/* <RequiredForm /> */}
           </FormLabel>
           <StringInput
             name="email"
@@ -872,6 +871,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           className="btn-ap clicky"
           h={"50px"}
           onClick={handleNext}
+          isLoading={loading}
         >
           Tambah Karyawan
         </Button>
@@ -994,7 +994,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         </ModalContent>
       </Modal>
 
-      <PleaseWaitModal isOpen={loading} />
+      {/* <PleaseWaitModal isOpen={loading} /> */}
     </>
   );
 }

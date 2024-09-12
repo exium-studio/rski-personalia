@@ -22,13 +22,12 @@ import { RiFileList3Fill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
 import { iconSize } from "../../constant/sizes";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import req from "../../lib/req";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import PleaseWaitModal from "../dependent/PleaseWaitModal";
 import CContainer from "../wrapper/CContainer";
 
 interface Props extends ButtonProps {}
@@ -174,6 +173,7 @@ export default function BuatPenggajianModal({ ...props }: Props) {
                 className="btn-ap clicky"
                 colorScheme="ap"
                 isDisabled={countDown !== 0}
+                isLoading={loading}
               >
                 {countDown !== 0
                   ? `Tunggu ${countDown} detik`
@@ -184,7 +184,7 @@ export default function BuatPenggajianModal({ ...props }: Props) {
         </ModalContent>
       </Modal>
 
-      <PleaseWaitModal isOpen={loading} />
+      {/* <PleaseWaitModal isOpen={loading} /> */}
     </>
   );
 }

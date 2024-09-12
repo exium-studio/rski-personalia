@@ -40,7 +40,6 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import FileInput from "../dependent/input/FileInput";
 import Textarea from "../dependent/input/Textarea";
-import PleaseWaitModal from "../dependent/PleaseWaitModal";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
 
@@ -410,6 +409,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                 w={"100%"}
                 colorScheme="ap"
                 className="btn-ap clicky"
+                isLoading={loading}
               >
                 Transfer Karyawan
               </Button>
@@ -418,7 +418,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
         </ModalContent>
       </Modal>
 
-      <PleaseWaitModal isOpen={loading} />
+      {/* <PleaseWaitModal isOpen={loading} /> */}
     </>
   );
 }
