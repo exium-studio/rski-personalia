@@ -18,6 +18,7 @@ import Retry from "./Retry";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
+import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 
 export default function TabelKaryawan() {
   // Limit Config
@@ -242,8 +243,8 @@ export default function TabelKaryawan() {
         isDate: true,
       }, // 15
       {
-        value: item.masa_kerja,
-        td: formatMasaKerja(item.masa_kerja),
+        value: item.tgl_masuk,
+        td: calculateMasaKerjaFromTanggalMasuk(item.tgl_masuk as string),
       }, // 16
       // {
       //   value: "-",
