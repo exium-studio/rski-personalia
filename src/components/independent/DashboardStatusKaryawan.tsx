@@ -28,7 +28,7 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
     dependencies: [],
     noRt: true,
   });
-  const labels = ["Tetap", "Kontrak", "Training"];
+  const labels = ["Tetap", "Kontrak", "Magang"];
   const datasets = [
     {
       label: "Jumlah Karyawan",
@@ -152,7 +152,7 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
                           h={"10px"}
                           bg={"green.400"}
                         />
-                        <Text>Training</Text>
+                        <Text>Magang</Text>
 
                         <Text pl={2} ml={"auto"}>
                           {data[2].jumlah_karyawan}
