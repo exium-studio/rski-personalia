@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   HStack,
+  Icon,
   Modal,
   ModalBody,
   ModalContent,
@@ -12,6 +13,7 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
+import { RiMapPin2Fill, RiUserFill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useLightDarkColor } from "../../constant/colors";
@@ -22,6 +24,7 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
 import formatTime from "../../lib/formatTime";
+import formatTimeOld from "../../lib/formatTimeOld";
 import FlexLine from "../independent/FlexLine";
 import Img from "../independent/Img";
 import NoData from "../independent/NoData";
@@ -32,7 +35,6 @@ import SearchComponent from "./input/SearchComponent";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import LokasiPresensi from "./LokasiPresensi";
 import Retry from "./Retry";
-import formatTimeOld from "../../lib/formatTimeOld";
 
 interface Props {
   presensi_id: number;
@@ -240,24 +242,43 @@ export default function DetailPresensiKaryawanModal({
                                 </Box>
 
                                 <Box position={"relative"}>
-                                  <LokasiPresensi
-                                    center={{
-                                      lat: data?.data_presensi?.lat_keluar || 0,
-                                      lng:
-                                        data?.data_presensi?.long_keluar || 0,
-                                    }}
-                                    officeCenter={{
-                                      lat:
+                                  {data?.data_presensi?.lat_keluar &&
+                                  data?.data_presensi?.long_keluar ? (
+                                    <LokasiPresensi
+                                      center={{
+                                        lat:
+                                          data?.data_presensi?.lat_keluar || 0,
+                                        lng:
+                                          data?.data_presensi?.long_keluar || 0,
+                                      }}
+                                      officeCenter={{
+                                        lat:
+                                          data?.data_presensi?.lokasi_kantor
+                                            ?.lat || 0,
+                                        lng:
+                                          data?.data_presensi?.lokasi_kantor
+                                            ?.long || 0,
+                                      }}
+                                      presence_radius={
                                         data?.data_presensi?.lokasi_kantor
-                                          ?.lat || 0,
-                                      lng:
-                                        data?.data_presensi?.lokasi_kantor
-                                          ?.long || 0,
-                                    }}
-                                    presence_radius={
-                                      data?.data_presensi?.lokasi_kantor?.radius
-                                    }
-                                  />
+                                          ?.radius
+                                      }
+                                    />
+                                  ) : (
+                                    <VStack
+                                      justify={"center"}
+                                      aspectRatio={1}
+                                      bg={"var(--divider)"}
+                                      opacity={0.4}
+                                      borderRadius={12}
+                                    >
+                                      <Icon as={RiMapPin2Fill} fontSize={48} />
+                                      <Text w={"200px"} textAlign={"center"}>
+                                        Belum ada data presensi keluar
+                                      </Text>
+                                    </VStack>
+                                  )}
+
                                   <Text opacity={0.6} mt={2}>
                                     Lokasi Presensi Keluar
                                   </Text>
@@ -291,15 +312,31 @@ export default function DetailPresensiKaryawanModal({
                                 </Box>
 
                                 <Box position={"relative"} flex={"1 1 200px"}>
-                                  <Img
-                                    initialSrc={
-                                      data?.data_presensi?.foto_keluar?.path
-                                    }
-                                    fallbackSrc="/images/defaultProfilePhoto.webp"
-                                    borderRadius={12}
-                                    aspectRatio={1}
-                                    objectFit={"cover"}
-                                  />
+                                  {data?.data_presensi?.foto_keluar?.path ? (
+                                    <Img
+                                      initialSrc={
+                                        data?.data_presensi?.foto_keluar?.path
+                                      }
+                                      fallbackSrc="/images/defaultProfilePhoto.webp"
+                                      borderRadius={12}
+                                      aspectRatio={1}
+                                      objectFit={"cover"}
+                                    />
+                                  ) : (
+                                    <VStack
+                                      justify={"center"}
+                                      aspectRatio={1}
+                                      bg={"var(--divider)"}
+                                      opacity={0.4}
+                                      borderRadius={12}
+                                    >
+                                      <Icon as={RiUserFill} fontSize={48} />
+                                      <Text w={"200px"} textAlign={"center"}>
+                                        Belum ada data presensi keluar
+                                      </Text>
+                                    </VStack>
+                                  )}
+
                                   <Text opacity={0.6} mt={2}>
                                     Foto Presensi Keluar
                                   </Text>
