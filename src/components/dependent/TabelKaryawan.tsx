@@ -4,8 +4,8 @@ import { Interface__DetailKaryawan } from "../../constant/interfaces";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useKaryawanTableColumnsConfig from "../../global/useKaryawanTableColumnsConfig";
 import useDataState from "../../hooks/useDataState";
+import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 import formatDate from "../../lib/formatDate";
-import formatMasaKerja from "../../lib/formatMasaKerja";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -18,7 +18,6 @@ import Retry from "./Retry";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
-import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 
 export default function TabelKaryawan() {
   // Limit Config

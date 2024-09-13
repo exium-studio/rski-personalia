@@ -82,6 +82,7 @@ export default function TabelFooterConfig({
               </MenuItem>
               <MenuItem
                 color={limitConfig === 50 ? "p.500" : ""}
+                bg={limitConfig === 50 ? "var(--p500a5)" : ""}
                 onClick={() => {
                   setLimitConfig(50);
                   setPageConfig(1);
@@ -91,6 +92,7 @@ export default function TabelFooterConfig({
               </MenuItem>
               <MenuItem
                 color={limitConfig === 100 ? "p.500" : ""}
+                bg={limitConfig === 100 ? "var(--p500a5)" : ""}
                 onClick={() => {
                   setLimitConfig(100);
                   setPageConfig(1);
@@ -101,6 +103,7 @@ export default function TabelFooterConfig({
 
               <MenuItem
                 color={limitConfig === 0 ? "p.500" : ""}
+                bg={limitConfig === 0 ? "var(--p500a5)" : ""}
                 onClick={() => {
                   setLimitConfig(0);
                   setPageConfig(1);
