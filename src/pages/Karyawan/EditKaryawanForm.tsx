@@ -120,14 +120,10 @@ export default function EditKaryawanForm({
     asal_sekolah: yup.string().required("Harus diisi"),
     gelar_depan: yup.mixed(),
     gelar_belakang: yup.mixed(),
-    str: yup.string().required("Harus diisi"),
-    masa_berlaku_str: noLimitStr
-      ? yup.mixed()
-      : yup.string().required("Harus diisi"),
-    sip: yup.string().required("Harus diisi"),
-    masa_berlaku_sip: noLimitSip
-      ? yup.mixed()
-      : yup.string().required("Harus diisi"),
+    str: yup.string(),
+    masa_berlaku_str: noLimitStr ? yup.mixed() : yup.mixed(),
+    sip: yup.string(),
+    masa_berlaku_sip: noLimitSip ? yup.mixed() : yup.mixed(),
     no_bpjsksh: yup.string().required("Harus diisi"),
     no_bpjsktk: yup.string(),
     npwp: yup.string().required("Harus diisi"),
@@ -1332,7 +1328,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.str}>
             <FormLabel>
               No. STR
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <StringInput
               name="str"
@@ -1351,7 +1347,7 @@ export default function EditKaryawanForm({
           >
             <FormLabel>
               Masa Berlaku STR
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <DatePickerModal
               id="lengkapi-data-user-3-select-masa-berlaku-str"
@@ -1386,7 +1382,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.sip}>
             <FormLabel>
               No. SIP
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <StringInput
               name="sip"
@@ -1405,7 +1401,7 @@ export default function EditKaryawanForm({
           >
             <FormLabel>
               Masa Berlaku SIP
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <DatePickerModal
               id="lengkapi-data-user-3-select-masa-berlaku-sip"
