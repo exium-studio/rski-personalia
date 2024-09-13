@@ -2,7 +2,7 @@ import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import SelectMultiStatusVerifikasi from "../../components/dependent/_Select/MultiSelectStatusVerifikasi";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import TabelCuti from "../../components/dependent/TabelCuti";
+import TabelIzin from "../../components/dependent/TabelIzin";
 import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
@@ -85,7 +85,7 @@ export default function Izin() {
             <FilterKaryawan />
           </HStack>
 
-          <TabelCuti filterConfig={filterConfig} />
+          <TabelIzin filterConfig={filterConfig} />
         </CContainer>
       </CWrapper>
     </>

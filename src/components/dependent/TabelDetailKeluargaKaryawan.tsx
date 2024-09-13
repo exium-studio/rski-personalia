@@ -76,6 +76,21 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
       th: "Email",
       isSortable: true,
     },
+    {
+      th: "Verif. 1",
+      props: {
+        position: "sticky",
+        right: 0,
+        zIndex: 4,
+        w: "122px",
+      },
+      cProps: {
+        justify: "center",
+        borderLeft: "1px solid var(--divider3)",
+        borderRight: "1px solid var(--divider3)",
+        w: "122px",
+      },
+    },
   ];
   const formattedData = fd.map((item) => ({
     id: item.id,

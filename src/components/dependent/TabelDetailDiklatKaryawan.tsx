@@ -84,7 +84,7 @@ export default function TabelDetailDiklatKaryawan({ data }: Props) {
     columnsFormat: [
       {
         value: item.status_diklat_id.label,
-        td: <StatusVerifikasiBadge2 data={item.status_diklat_id} w={"120px"} />,
+        td: <StatusVerifikasiBadge2 data={item.status_diklat_id} w={"180px"} />,
       },
       {
         value: item.nama,

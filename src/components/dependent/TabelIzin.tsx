@@ -3,8 +3,9 @@ import { useState } from "react";
 import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
-import countDateRange from "../../lib/countDateRange";
 import formatDate from "../../lib/formatDate";
+import formatDurationShort from "../../lib/formatDurationShort";
+import formatTime from "../../lib/formatTime";
 import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
@@ -23,7 +24,7 @@ interface Props {
   filterConfig: any;
 }
 
-export default function TabelCuti({ filterConfig }: Props) {
+export default function TabelIzin({ filterConfig }: Props) {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
@@ -34,7 +35,7 @@ export default function TabelCuti({ filterConfig }: Props) {
   const { error, loading, notFound, data, paginationData, retry } =
     useDataState<any[]>({
       initialData: undefined,
-      url: `/api/rski/dashboard/jadwal-karyawan/get-cuti?page=${pageConfig}`,
+      url: `/api/rski/dashboard/jadwal-karyawan/get-perizinan?page=${pageConfig}`,
       payload: {
         ...formattedFilterKaryawan,
         ...(filterConfig?.status_cuti?.length > 0 && {
@@ -71,18 +72,18 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
     },
     {
-      th: "Status Cuti",
+      th: "Status Izin",
       isSortable: true,
       cProps: {
         justify: "center",
       },
     },
     {
-      th: "Tanggal Mulai",
+      th: "Tanggal Izin",
       isSortable: true,
     },
     {
-      th: "Tanggal Selesai",
+      th: "Waktu Izin",
       isSortable: true,
     },
     {
@@ -93,7 +94,7 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
     },
     {
-      th: "Unit Kerja",
+      th: "Keterangan",
       isSortable: true,
     },
     {
@@ -108,21 +109,6 @@ export default function TabelCuti({ filterConfig }: Props) {
         justify: "center",
         borderLeft: "1px solid var(--divider3)",
         borderRight: "1px solid var(--divider3)",
-        w: "122px",
-      },
-    },
-    {
-      th: "Verif. 2",
-      props: {
-        position: "sticky",
-        right: 0,
-        zIndex: 3,
-        w: "122px",
-      },
-      cProps: {
-        justify: "center",
-        // borderLeft: "1px solid var(--divider3)",
-        // borderRight: "1px solid var(--divider3)",
         w: "122px",
       },
     },
@@ -155,7 +141,7 @@ export default function TabelCuti({ filterConfig }: Props) {
         value: item.status_izin,
         td: (
           <StatusVerifikasiBadge2
-            data={item.status_cuti}
+            data={item.status_izin}
             alasan={item?.alasan}
             w={"180px"}
           />
@@ -165,25 +151,19 @@ export default function TabelCuti({ filterConfig }: Props) {
         },
       },
       {
-        value: item.tgl_from,
-        td: formatDate(item.tgl_from),
-        isDate: true,
+        value: item.tgl_izin,
+        td: formatDate(item.tgl_izin),
+        isData: true,
       },
       {
-        value: item.tgl_to,
-        td: formatDate(item?.tgl_to),
-        isDate: true,
+        value: item.waktu_izin,
+        td: formatTime(item?.waktu_izin),
+        isTime: true,
       },
       {
-        value: countDateRange(
-          new Date(formatDate(item?.tgl_from, "iso")),
-          new Date(formatDate(item?.tgl_to, "iso"))
-        ),
-        td: `${countDateRange(
-          new Date(formatDate(item?.tgl_from, "iso")),
-          new Date(formatDate(item?.tgl_to, "iso"))
-        )} Hari`,
-        isNumeric: true,
+        value: item.durasi,
+        td: formatDurationShort(item?.durasi),
+        isDate: true,
         cProps: {
           justify: "center",
         },
@@ -194,12 +174,12 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
       {
         value: "",
-        td: item?.status_cuti?.id === 1 && (
+        td: item?.status_izin?.id === 1 && (
           <PermissionTooltip permission={verif1Permission}>
             <VerifikasiModal
               aria-label={`perubahan-data-verif-1-button-${item.id}"`}
               id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1 `}
+              submitUrl={`api/rski/dashboard/jadwal-karyawan/izin/${item.id}/verifikasi-perizinan `}
               approvePayloadKey="verifikasi_pertama_disetujui"
               disapprovePayloadKey="verifikasi_pertama_ditolak"
               isDisabled={!verif1Permission}
@@ -214,34 +194,6 @@ export default function TabelCuti({ filterConfig }: Props) {
         cProps: {
           justify: "center",
           borderLeft: "1px solid var(--divider3)",
-          borderRight: "1px solid var(--divider3)",
-          w: "122px",
-        },
-      },
-      {
-        value: "",
-        td: item?.status_cuti?.id === 2 && (
-          <PermissionTooltip permission={verif1Permission}>
-            <VerifikasiModal
-              aria-label={`perubahan-data-verif-2-button-${item.id}"`}
-              id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
-              approvePayloadKey="verifikasi_kedua_disetujui"
-              disapprovePayloadKey="verifikasi_kedua_ditolak"
-              isDisabled={!verif1Permission}
-            />
-          </PermissionTooltip>
-        ),
-        props: {
-          position: "sticky",
-          right: 0,
-          zIndex: 1,
-        },
-        cProps: {
-          justify: "center",
-          borderLeft: "1px solid var(--divider3)",
-          borderRight: "1px solid var(--divider3)",
-          w: "122px",
         },
       },
     ],
