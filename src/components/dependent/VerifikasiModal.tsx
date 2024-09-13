@@ -207,6 +207,7 @@ export default function VerifikasiModal({
                     }}
                     inputValue={formik.values.alasan}
                     isDisabled={verifikasi}
+                    placeholder="Alasan verifikasi ditolak"
                   />
                   <FormErrorMessage>
                     {formik.errors.alasan as string}

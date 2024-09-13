@@ -23,13 +23,14 @@ import DisclosureHeader from "./DisclosureHeader";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import CContainer from "../wrapper/CContainer";
 import FlexLine from "../independent/FlexLine";
+import TabelElipsisText from "./TabelElipsisText";
 
-interface Props {
+interface DatakeluargaProps {
   data: any;
   index: number;
 }
 
-const ListKeluargaModal = ({ data, index }: Props) => {
+const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`anggota-keluarga-modal-${index}`, isOpen, onOpen, onClose);
 
@@ -113,6 +114,7 @@ const ListKeluargaModal = ({ data, index }: Props) => {
 };
 
 export default function PerubahanDataRender({ column, data, index }: any) {
+  console.log(column, data);
   switch (column) {
     default:
       return <Text>Invalid</Text>;
@@ -136,6 +138,8 @@ export default function PerubahanDataRender({ column, data, index }: any) {
       return (
         <Text whiteSpace={"nowrap"}>{data ? "Laki - laki" : "Perempuan"}</Text>
       );
+    case "alamat":
+      return <TabelElipsisText data={data} />;
     case "golongan_darah":
     case "agama":
       return <Text whiteSpace={"nowrap"}>{data.label}</Text>;
@@ -146,11 +150,12 @@ export default function PerubahanDataRender({ column, data, index }: any) {
     case "no_hp":
     case "nik_ktp":
     case "no_kk":
-    case "alamat":
     case "no_ijazah":
     case "tahun_lulus":
     case "gelar_depan":
-      return <Text>{typeof data === "string" ? data : "Invalid"}</Text>;
+    case "gelar_belakang":
+    case "pendidikan_terakhir":
+      return <Text>{typeof data === "string" ? data : "Invalid String"}</Text>;
     case "ktp":
     case "bpjsksh":
     case "bpjsktk":

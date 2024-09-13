@@ -82,15 +82,15 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
     },
     {
       th: "Data Original",
-      cProps: {
-        justify: "center",
-      },
+      // cProps: {
+      //   justify: "center",
+      // },
     },
     {
       th: "Data Pengajuan",
-      cProps: {
-        justify: "center",
-      },
+      // cProps: {
+      //   justify: "center",
+      // },
     },
     {
       th: "Verif. 1",
@@ -114,6 +114,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
         value: item.user.nama,
         td: (
           <AvatarAndNameTableData
+            detailKaryawanId={item.id}
             data={{
               id: item.user.id,
               nama: item.user.nama,
@@ -169,26 +170,26 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
         value: item.data,
         td: (
           <PerubahanDataRender
-            column={item.kolom?.toLowerCase()}
+            column={item?.kolom?.toLowerCase()}
             data={item.original_data}
           />
         ),
-        cProps: {
-          justify: "center",
-        },
+        // cProps: {
+        //   justify: "center",
+        // },
       },
       {
         value: item.data,
         td: (
           <PerubahanDataRender
-            column={item.kolom?.toLowerCase()}
+            column={item?.kolom?.toLowerCase()}
             data={item.updated_data}
             index={i}
           />
         ),
-        cProps: {
-          justify: "center",
-        },
+        // cProps: {
+        //   justify: "center",
+        // },
       },
       {
         value: "",

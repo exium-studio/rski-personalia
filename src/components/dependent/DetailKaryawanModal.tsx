@@ -51,6 +51,7 @@ import backOnClose from "../../lib/backOnClose";
 import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
+import formatDurationShort from "../../lib/formatDurationShort";
 import formatNumber from "../../lib/formatNumber";
 import isHasPermissions from "../../lib/isHasPermissions";
 import FlexLine from "../independent/FlexLine";
@@ -61,6 +62,7 @@ import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AktifkanNonaktifkanButton from "./AktifkanNonaktifkanButton";
 import DetailAktivitasKaryawanModalDisclosure from "./DetailAktivitasKaryawanModalDisclosure";
 import DetailCutiKaryawanModalDisclosure from "./DetailCutiKaryawanModalDisclosure";
+import DetailDiklatKaryawanModalDisclosure from "./DetailDiklatKaryawanModalDisclosure";
 import DokumenKaryawanModalDisclosure from "./DetailDokumenKaryawanModalDisclosure";
 import DetailJadwalKaryawanModalDisclosure from "./DetailJadwalKaryawanModalDisclosure";
 import DetailKeluargaKaryawanModalDisclosure from "./DetailKeluargaKaryawanModalDisclosure";
@@ -70,13 +72,10 @@ import DetailTukarJadwalKaryawanModalDisclosure from "./DetailTukarJadwalKaryawa
 import DisclosureHeader from "./DisclosureHeader";
 import EditKaryawanModal from "./EditKaryawanModal";
 import SearchComponent from "./input/SearchComponent";
-import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
-import formatDurationShort from "../../lib/formatDurationShort";
-import DetailDiklatKaryawanModalDisclosure from "./DetailDiklatKaryawanModalDisclosure";
 
 interface Props {
   id?: string;
@@ -854,8 +853,7 @@ export default function DetailKaryawanModal({
                                 minH={"150px"}
                                 // bg={"red"}
                               >
-                                <HStack justify={"space-between"}>
-                                  {/* <Text opacity={0.6}>Email</Text> */}
+                                {/* <HStack justify={"space-between"}>
                                   <Box opacity={0.6}>
                                     <Highlighter
                                       highlightClassName="hw"
@@ -867,9 +865,11 @@ export default function DetailKaryawanModal({
                                   </Box>
                                   <FlexLine />
                                   <JenisKaryawanBadge
-                                    data={data.unit_kerja?.jenis_karyawan}
+                                    data={d
+                                    ata.unit_kerja?.jenis_karyawan}
+                                    
                                   />
-                                </HStack>
+                                </HStack> */}
 
                                 <HStack justify={"space-between"}>
                                   {/* <Text opacity={0.6}>No. Induk Karyawan</Text> */}
