@@ -189,8 +189,8 @@ export default function TabelCuti({ filterConfig }: Props) {
         },
       },
       {
-        value: item.keterangan,
-        td: item.keterangan,
+        value: item?.unit_kerja?.nama_unit,
+        td: item?.unit_kerja?.nama_unit,
       },
       {
         value: "",
