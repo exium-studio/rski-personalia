@@ -77,7 +77,7 @@ export default function SelectKompetensi({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Kompetensi"}
+      placeholder={placeholder || "Pilih Kompetensi Profesi"}
       nonNullable={nonNullable}
       {...props}
     />

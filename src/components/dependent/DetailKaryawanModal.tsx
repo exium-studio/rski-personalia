@@ -105,6 +105,8 @@ export default function DetailKaryawanModal({
 
   const initialRef = useRef(null);
 
+  // const loading = true;
+
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-user/${user_id}`,
@@ -229,10 +231,11 @@ export default function DetailKaryawanModal({
                         <HStack w={"100%"} maxW={"400px"}>
                           <Skeleton w={"100%"} maxW={"400px"} h={"30px"} />
                           <Skeleton w={"100%"} maxW={"100px"} h={"30px"} />
+                          <Skeleton w={"100%"} maxW={"100px"} h={"30px"} />
                         </HStack>
                       </VStack>
 
-                      <Skeleton h={"95px"} mb={3} />
+                      <Skeleton h={"95px"} mb={3} mt={"auto"} />
 
                       <SimpleGrid gap={3} columns={[1, 2, null, 3]}>
                         <Skeleton h={"95px"} />
@@ -367,70 +370,72 @@ export default function DetailKaryawanModal({
                                   </HStack>
                                 </Badge>
                               </HStack>
-
-                              {/* Stats Diklat */}
-                              <HStack
-                                bg={"var(--divider)"}
-                                p={4}
-                                borderRadius={12}
-                                w={"100%"}
-                                gap={4}
-                                align={"stretch"}
-                              >
-                                <VStack flex={1}>
-                                  <Text
-                                    textAlign={"center"}
-                                    fontSize={24}
-                                    fontWeight={500}
-                                  >
-                                    {formatDurationShort(
-                                      data?.total_durasi_internal +
-                                        data?.total_durasi_internal
-                                    ) || 0}
-                                  </Text>
-                                  <Text textAlign={"center"} opacity={0.4}>
-                                    Total Diklat
-                                  </Text>
-                                </VStack>
-
-                                <Box
-                                  w={"1px"}
-                                  flexShrink={0}
-                                  bg={"var(--divider3)"}
-                                />
-
-                                <VStack flex={1}>
-                                  <Text
-                                    textAlign={"center"}
-                                    fontSize={24}
-                                    fontWeight={500}
-                                  >
-                                    {formatDurationShort(
-                                      data?.total_durasi_internal
-                                    ) || 0}
-                                  </Text>
-                                  <Text textAlign={"center"} opacity={0.4}>
-                                    Diklat Internal
-                                  </Text>
-                                </VStack>
-
-                                <VStack flex={1}>
-                                  <Text
-                                    textAlign={"center"}
-                                    fontSize={24}
-                                    fontWeight={500}
-                                  >
-                                    {formatDurationShort(
-                                      data?.total_durasi_eksternal
-                                    ) || 0}
-                                  </Text>
-                                  <Text textAlign={"center"} opacity={0.4}>
-                                    Diklat Eksternal
-                                  </Text>
-                                </VStack>
-                              </HStack>
                             </VStack>
                           </VStack>
+
+                          {/* Stats Diklat */}
+                          <HStack
+                            mt={"auto"}
+                            bg={"var(--divider)"}
+                            p={4}
+                            borderRadius={12}
+                            w={"100%"}
+                            gap={4}
+                            align={"stretch"}
+                            mb={3}
+                          >
+                            <VStack flex={1}>
+                              <Text
+                                textAlign={"center"}
+                                fontSize={24}
+                                fontWeight={500}
+                              >
+                                {formatDurationShort(
+                                  data?.total_durasi_internal +
+                                    data?.total_durasi_internal
+                                ) || 0}
+                              </Text>
+                              <Text textAlign={"center"} opacity={0.4}>
+                                Total Diklat
+                              </Text>
+                            </VStack>
+
+                            <Box
+                              w={"1px"}
+                              flexShrink={0}
+                              bg={"var(--divider3)"}
+                            />
+
+                            <VStack flex={1}>
+                              <Text
+                                textAlign={"center"}
+                                fontSize={24}
+                                fontWeight={500}
+                              >
+                                {formatDurationShort(
+                                  data?.total_durasi_internal
+                                ) || 0}
+                              </Text>
+                              <Text textAlign={"center"} opacity={0.4}>
+                                Diklat Internal
+                              </Text>
+                            </VStack>
+
+                            <VStack flex={1}>
+                              <Text
+                                textAlign={"center"}
+                                fontSize={24}
+                                fontWeight={500}
+                              >
+                                {formatDurationShort(
+                                  data?.total_durasi_eksternal
+                                ) || 0}
+                              </Text>
+                              <Text textAlign={"center"} opacity={0.4}>
+                                Diklat Eksternal
+                              </Text>
+                            </VStack>
+                          </HStack>
 
                           {/* Profil Menu */}
                           <SimpleGrid gap={3} columns={[1, 2, null, 3]}>
@@ -712,13 +717,13 @@ export default function DetailKaryawanModal({
                                 justify={"center"}
                                 p={4}
                                 className="btn-solid clicky"
-                                transition={"200ms"}
-                                _groupHover={{ opacity: 1 }}
                               >
                                 <Icon
                                   opacity={0.4}
                                   as={RiGraduationCapFill}
                                   fontSize={32}
+                                  transition={"200ms"}
+                                  _groupHover={{ opacity: 1 }}
                                 />
                                 <Text
                                   fontWeight={500}
