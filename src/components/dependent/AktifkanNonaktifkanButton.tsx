@@ -87,7 +87,7 @@ export default function AktifkanNonaktifkanButton({
             color={data === 2 ? "red.400" : "green.500"}
           />
         }
-        className="btn-outline clicky"
+        className="btn-solid clicky"
         pl={5}
         onClick={onOpen}
         isLoading={loading}

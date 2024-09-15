@@ -59,6 +59,7 @@ export default function EditKaryawanModal({ initialData, ...props }: Props) {
     <>
       <Button
         flex={"1 0 100px"}
+        w={"100%"}
         colorScheme="ap"
         className="btn-ap clicky"
         leftIcon={<Icon as={RiEditFill} fontSize={iconSize} />}

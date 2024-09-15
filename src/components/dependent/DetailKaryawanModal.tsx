@@ -265,10 +265,11 @@ export default function DetailKaryawanModal({
                     >
                       <HStack>
                         <Skeleton h={"40px"} />
-                        <Skeleton h={"40px"} maxW={"100px"} />
-                        <Skeleton h={"40px"} maxW={"140px"} />
-                        <Skeleton h={"40px"} maxW={"100px"} />
+                        <Skeleton h={"40px"} />
+                        <Skeleton h={"40px"} />
                       </HStack>
+
+                      <Skeleton h={"40px"} />
 
                       <Skeleton flexShrink={0} h={"50px"} />
 
@@ -753,12 +754,56 @@ export default function DetailKaryawanModal({
                           className="scrollY"
                         >
                           <HStack
-                            px={[0, null, 5]}
+                            px={5}
                             position={"sticky"}
                             top={"0"}
                             bg={lightDarkColor}
                             zIndex={2}
                           >
+                            <Button
+                              flexShrink={0}
+                              leftIcon={
+                                <Icon as={RiStarFill} color={"orange.400"} />
+                              }
+                              pl={5}
+                              className="btn-solid clicky"
+                              flex={1}
+                            >
+                              Run Penilaian
+                            </Button>
+
+                            {/* Edit */}
+                            <PermissionTooltip
+                              permission={editPermission}
+                              flex={1}
+                              boxProps={{ flex: 1 }}
+                            >
+                              <AktifkanNonaktifkanButton
+                                karyawan_id={data.id}
+                                data={data?.user?.status_aktif}
+                                isDisabled={!editPermission}
+                                flex={1}
+                                w={"100%"}
+                              />
+                            </PermissionTooltip>
+
+                            <PermissionTooltip
+                              permission={editPermission}
+                              label={!editPermission && "Tidak ada akses"}
+                              flex={1}
+                              boxProps={{ flex: 1 }}
+                            >
+                              <Box flex={1}>
+                                <EditKaryawanModal
+                                  initialData={data}
+                                  isDisabled={!editPermission}
+                                  flex={1}
+                                />
+                              </Box>
+                            </PermissionTooltip>
+                          </HStack>
+
+                          <CContainer px={5}>
                             <SearchComponent
                               name="search"
                               onChangeSetter={(input) => {
@@ -768,39 +813,7 @@ export default function DetailKaryawanModal({
                               placeholder="data karyawan"
                               tooltipLabel="Cari data karyawan"
                             />
-
-                            <Button
-                              flexShrink={0}
-                              leftIcon={
-                                <Icon as={RiStarFill} color={"orange.400"} />
-                              }
-                              pl={5}
-                              className="btn-outline clicky"
-                            >
-                              Nilai
-                            </Button>
-
-                            {/* Edit */}
-                            <PermissionTooltip permission={editPermission}>
-                              <AktifkanNonaktifkanButton
-                                karyawan_id={data.id}
-                                data={data?.user?.status_aktif}
-                                isDisabled={!editPermission}
-                              />
-                            </PermissionTooltip>
-
-                            <PermissionTooltip
-                              permission={editPermission}
-                              label={!editPermission && "Tidak ada akses"}
-                            >
-                              <Box>
-                                <EditKaryawanModal
-                                  initialData={data}
-                                  isDisabled={!editPermission}
-                                />
-                              </Box>
-                            </PermissionTooltip>
-                          </HStack>
+                          </CContainer>
 
                           <CContainer
                             flex={1}

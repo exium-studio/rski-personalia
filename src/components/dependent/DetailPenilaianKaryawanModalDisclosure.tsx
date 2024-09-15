@@ -268,7 +268,7 @@ export default function DetailPenilaianKaryawanModalDisclosure({
   // const loading = true;
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
-    url: `/api/rski/dashboard/karyawan/detail-karyawan-dokumen/${karyawan_id}`,
+    url: `/api/rski/dashboard/karyawan/detail-karyawan-feedback-penilaian/${karyawan_id}`,
     dependencies: [],
     conditions: !!(isOpen && karyawan_id),
   });
