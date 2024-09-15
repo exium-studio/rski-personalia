@@ -488,13 +488,23 @@ export default function TabelDiklat({ filterConfig }: Props) {
           zIndex: 1,
         },
         cProps: {
+          borderRight: "1px solid var(--divider3)",
           justify: "center",
           // borderLeft: "1px solid var(--divider3)",
         },
       },
       {
         value: "",
-        td: <Button>Publikasi</Button>,
+        td: item.status_diklat.id === 4 && (
+          <Button
+            w={"100%"}
+            colorScheme="ap"
+            variant={"outline"}
+            className="clicky"
+          >
+            Publikasi
+          </Button>
+        ),
         props: {
           // position: "sticky",
           right: 0,

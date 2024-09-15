@@ -24,6 +24,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import CContainer from "../wrapper/CContainer";
 import FlexLine from "../independent/FlexLine";
 import TabelElipsisText from "./TabelElipsisText";
+import NoData from "../independent/NoData";
 
 interface DatakeluargaProps {
   data: any;
@@ -33,6 +34,8 @@ interface DatakeluargaProps {
 const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`anggota-keluarga-modal-${index}`, isOpen, onOpen, onClose);
+
+  console.log(data);
 
   return (
     <>
@@ -58,52 +61,62 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
             <DisclosureHeader title={"Anggota Keluarga"} />
           </ModalHeader>
           <ModalBody className="scrollY">
-            {data?.map((anggota: any, i: number) => (
-              <CContainer
-                key={i}
-                borderBottom={
-                  i !== data?.length - 1 ? "1px solid var(--divider)" : ""
-                }
-                pt={i !== 0 ? 4 : 0}
-                pb={i !== data?.length - 1 ? 4 : 0}
-                gap={2}
-              >
-                <Text fontWeight={600}>{anggota?.nama_keluarga}</Text>
-                <HStack>
-                  <Text opacity={0.4}>Hubungan Keluarga</Text>
-                  <FlexLine />
-                  <Text>{anggota.hubungan}</Text>
-                </HStack>
-                <HStack>
-                  <Text opacity={0.4}>Status Hidup</Text>
-                  <FlexLine />
-                  <Text>{anggota.status_hidup ? "Hidup" : "Meniggal"}</Text>
-                </HStack>
-                <HStack>
-                  <Text opacity={0.4}>Pekerjaan</Text>
-                  <FlexLine />
-                  <Text>{anggota.oendidikan_terakhir?.label}</Text>
-                </HStack>
-                <HStack>
-                  <Text opacity={0.4}>Pekerjaan</Text>
-                  <FlexLine />
-                  <Text>{anggota.pekerjaan}</Text>
-                </HStack>
-                <HStack>
-                  <Text opacity={0.4}>Nomor Telepon</Text>
-                  <FlexLine />
-                  <Text>{anggota.no_hp}</Text>
-                </HStack>
-                <HStack>
-                  <Text opacity={0.4}>Email</Text>
-                  <FlexLine />
-                  <Text>{anggota.email}</Text>
-                </HStack>
-              </CContainer>
-            ))}
+            {data?.length > 0 && (
+              <>
+                {data?.map((anggota: any, i: number) => (
+                  <CContainer
+                    key={i}
+                    borderBottom={
+                      i !== data?.length - 1 ? "1px solid var(--divider)" : ""
+                    }
+                    pt={i !== 0 ? 4 : 0}
+                    pb={i !== data?.length - 1 ? 4 : 0}
+                    gap={2}
+                  >
+                    <Text fontWeight={600}>{anggota?.nama_keluarga}</Text>
+                    <HStack>
+                      <Text opacity={0.4}>Hubungan Keluarga</Text>
+                      <FlexLine />
+                      <Text>{anggota.hubungan}</Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Status Hidup</Text>
+                      <FlexLine />
+                      <Text>{anggota.status_hidup ? "Hidup" : "Meniggal"}</Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Pekerjaan</Text>
+                      <FlexLine />
+                      <Text>{anggota.oendidikan_terakhir?.label}</Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Pekerjaan</Text>
+                      <FlexLine />
+                      <Text>{anggota.pekerjaan}</Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Nomor Telepon</Text>
+                      <FlexLine />
+                      <Text>{anggota.no_hp}</Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Email</Text>
+                      <FlexLine />
+                      <Text>{anggota.email}</Text>
+                    </HStack>
+                  </CContainer>
+                ))}
+              </>
+            )}
+
+            {!data && <NoData minH={"300px"} />}
           </ModalBody>
           <ModalFooter>
-            <Button className="btn-solid clicky" w={"100%"}>
+            <Button
+              className="btn-solid clicky"
+              w={"100%"}
+              onClick={backOnClose}
+            >
               Mengerti
             </Button>
           </ModalFooter>
