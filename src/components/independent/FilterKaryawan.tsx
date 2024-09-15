@@ -35,6 +35,7 @@ import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryaw
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -243,10 +244,10 @@ export default function FilterKaryawan({ title, ...props }: Props) {
                 setFilterConfig={setLocalFilterConfig}
               />
 
-              {/* <FilterPendidikanTerakhir
+              <FilterPendidikanTerakhir
                 filterConfig={localFilterConfig}
                 setFilterConfig={setLocalFilterConfig}
-              /> */}
+              />
             </Accordion>
           </ModalBody>
 
