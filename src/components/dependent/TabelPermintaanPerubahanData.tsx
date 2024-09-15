@@ -82,15 +82,15 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
     },
     {
       th: "Data Original",
-      // cProps: {
-      //   justify: "center",
-      // },
+      cProps: {
+        justify: "center",
+      },
     },
     {
       th: "Data Pengajuan",
-      // cProps: {
-      //   justify: "center",
-      // },
+      cProps: {
+        justify: "center",
+      },
     },
     {
       th: "Verif. 1",
@@ -174,9 +174,9 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
             data={item.original_data}
           />
         ),
-        // cProps: {
-        //   justify: "center",
-        // },
+        cProps: {
+          justify: "center",
+        },
       },
       {
         value: item.data,
@@ -187,9 +187,9 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
             index={i}
           />
         ),
-        // cProps: {
-        //   justify: "center",
-        // },
+        cProps: {
+          justify: "center",
+        },
       },
       {
         value: "",

@@ -35,7 +35,7 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`anggota-keluarga-modal-${index}`, isOpen, onOpen, onClose);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <>
