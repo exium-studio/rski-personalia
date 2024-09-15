@@ -57,7 +57,7 @@ const dataKaryawanLabel = {
   "Data Keluarga": "Keluarga",
   bmi_value: "BMI",
   bmi_ket: "Keterangan BMI",
-  riwayat_penyakit: "Keterangan Penyakit",
+  riwayat_penyakit: "Riwayat Penyakit",
 };
 
 export default dataKaryawanLabel;
