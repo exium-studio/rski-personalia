@@ -183,7 +183,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                 <CContainer flex={"1 1"} gap={4}>
                   <FormControl mb={4} isInvalid={!!formik.errors.nama}>
                     <FormLabel>
-                      Nama Acara
+                      Nama Diklat
                       <RequiredForm />
                     </FormLabel>
                     <Input

@@ -100,33 +100,33 @@ export default function EditKaryawanForm({
   });
 
   const validationSchemaStep3 = yup.object({
-    tempat_lahir: yup.string().required("Harus diisi"),
-    tgl_lahir: yup.date().required("Harus diisi"),
-    no_hp: yup.string().required("Harus diisi"),
-    jenis_kelamin: yup.object().required("Harus diisi"),
-    nik_ktp: yup
-      .string()
-      .required("Harus diisi")
-      .length(16, "Harus 16 karakter"),
-    no_kk: yup.string().required("Harus diisi").length(16, "Harus 16 karakter"),
-    agama: yup.object().required("Harus diisi"),
-    golongan_darah: yup.object().required("Harus diisi"),
-    tinggi_badan: yup.string().required("Harus diisi"),
-    berat_badan: yup.string().required("Harus diisi"),
-    alamat: yup.string().required("Harus diisi"),
-    no_ijazah: yup.string().required("Harus diisi"),
-    tahun_lulus: yup.string().required("Harus diisi"),
-    pendidikan_terakhir: yup.string().required("Harus diisi"),
-    asal_sekolah: yup.string().required("Harus diisi"),
-    gelar_depan: yup.mixed(),
-    gelar_belakang: yup.mixed(),
-    str: yup.string(),
-    masa_berlaku_str: noLimitStr ? yup.mixed() : yup.mixed(),
-    sip: yup.string(),
-    masa_berlaku_sip: noLimitSip ? yup.mixed() : yup.mixed(),
-    no_bpjsksh: yup.string().required("Harus diisi"),
-    no_bpjsktk: yup.string(),
-    npwp: yup.string().required("Harus diisi"),
+    // tempat_lahir: yup.string().required("Harus diisi"),
+    // tgl_lahir: yup.date().required("Harus diisi"),
+    // no_hp: yup.string().required("Harus diisi"),
+    // jenis_kelamin: yup.object().required("Harus diisi"),
+    // nik_ktp: yup
+    //   .string()
+    //   .required("Harus diisi")
+    //   .length(16, "Harus 16 karakter"),
+    // no_kk: yup.string().required("Harus diisi").length(16, "Harus 16 karakter"),
+    // agama: yup.object().required("Harus diisi"),
+    // golongan_darah: yup.object().required("Harus diisi"),
+    // tinggi_badan: yup.string().required("Harus diisi"),
+    // berat_badan: yup.string().required("Harus diisi"),
+    // alamat: yup.string().required("Harus diisi"),
+    // no_ijazah: yup.string().required("Harus diisi"),
+    // tahun_lulus: yup.string().required("Harus diisi"),
+    // pendidikan_terakhir: yup.string().required("Harus diisi"),
+    // asal_sekolah: yup.string().required("Harus diisi"),
+    // gelar_depan: yup.mixed(),
+    // gelar_belakang: yup.mixed(),
+    // str: yup.string(),
+    // masa_berlaku_str: noLimitStr ? yup.mixed() : yup.mixed(),
+    // sip: yup.string(),
+    // masa_berlaku_sip: noLimitSip ? yup.mixed() : yup.mixed(),
+    // no_bpjsksh: yup.string().required("Harus diisi"),
+    // no_bpjsktk: yup.string(),
+    // npwp: yup.string().required("Harus diisi"),
   });
 
   const validationSchema = [
@@ -994,7 +994,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.tempat_lahir}>
             <FormLabel>
               Tempat Lahir
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <StringInput
               name="tempat_lahir"
@@ -1012,7 +1012,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.tgl_lahir}>
             <FormLabel>
               Tanggal Lahir
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <DatePickerModal
               id="lengkapi-data-user-1-select-tgl_lahir"
@@ -1031,7 +1031,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.no_hp}>
             <FormLabel>
               Nomor Telepon
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
 
             <InputGroup>
@@ -1054,7 +1054,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.jenis_kelamin}>
             <FormLabel>
               Jenis Kelamin
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <SelectGender
               id="lengkapi-data-user-1-select-gender"
@@ -1074,7 +1074,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.nik_ktp}>
             <FormLabel>
               Nomor Induk Kependudukan
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <StringInput
               name="nik_ktp"
@@ -1092,7 +1092,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.no_kk}>
             <FormLabel>
               Nomor Kartu Keluarga
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <StringInput
               name="no_kk"
@@ -1108,7 +1108,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.agama}>
             <FormLabel>
               Agama
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <SelectAgama
               id="lengkapi-data-user-1-select-agama"
@@ -1126,7 +1126,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.golongan_darah}>
             <FormLabel>
               Golongan Darah
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <SelectGoldar
               id="lengkapi-data-user-1-select"
@@ -1146,7 +1146,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.tinggi_badan}>
             <FormLabel>
               Tinggi Badan
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <InputGroup>
               <InputRightElement mr={1}>
@@ -1168,7 +1168,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.berat_badan}>
             <FormLabel>
               Berat Badan
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <InputGroup>
               <InputRightElement mr={1}>
@@ -1199,7 +1199,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.alamat}>
             <FormLabel>
               Alamat
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <Textarea
               name="alamat"
@@ -1217,7 +1217,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.no_ijazah}>
             <FormLabel>
               Nomor Ijazah Terakhir
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <StringInput
               name="no_ijazah"
@@ -1235,7 +1235,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.tahun_lulus}>
             <FormLabel>
               Tahun Lulus Ijazah Terakhir
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <StringInput
               name="tahun_lulus"
@@ -1253,7 +1253,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.pendidikan_terakhir}>
             <FormLabel>
               Pendidikan Terakhir
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <StringInput
               name="pendidikan_terakhir"
@@ -1280,7 +1280,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.asal_sekolah}>
             <FormLabel>
               Asal Sekolah
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <StringInput
               name="asal_sekolah"
