@@ -262,16 +262,25 @@ export default function TabelDiklat({ filterConfig }: Props) {
     {
       th: "Status Verifikasi",
       isSortable: true,
+      props: {
+        zIndex: 2,
+      },
       cProps: {
         justify: "center",
       },
     },
     {
       th: "Deskripsi",
+      props: {
+        zIndex: 2,
+      },
     },
     {
       th: "Kuota",
       isSortable: true,
+      props: {
+        zIndex: 2,
+      },
       cProps: {
         justify: "center",
       },
@@ -279,13 +288,22 @@ export default function TabelDiklat({ filterConfig }: Props) {
     {
       th: "Tanggal Mulai",
       isSortable: true,
+      props: {
+        zIndex: 2,
+      },
     },
     {
       th: "Tanggal Selesai",
       isSortable: true,
+      props: {
+        zIndex: 2,
+      },
     },
     {
       th: "Peserta",
+      props: {
+        zIndex: 2,
+      },
       cProps: {
         justify: "center",
       },
@@ -293,14 +311,23 @@ export default function TabelDiklat({ filterConfig }: Props) {
     {
       th: "Kategori Acara",
       isSortable: true,
+      props: {
+        zIndex: 2,
+      },
     },
     {
       th: "Tempat",
       isSortable: true,
+      props: {
+        zIndex: 2,
+      },
     },
     {
       th: "Durasi",
       isSortable: true,
+      props: {
+        zIndex: 2,
+      },
     },
     {
       th: "Verif. 1",
@@ -320,7 +347,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
     {
       th: "Verif. 2",
       props: {
-        position: "sticky",
+        // position: "sticky",
         right: 0,
         zIndex: 3,
         w: "122px",
@@ -328,7 +355,22 @@ export default function TabelDiklat({ filterConfig }: Props) {
       cProps: {
         justify: "center",
         // borderLeft: "1px solid var(--divider3)",
+        borderRight: "1px solid var(--divider3)",
         w: "122px",
+      },
+    },
+    {
+      th: "Publikasi Sertifikat",
+      props: {
+        // position: "sticky",
+        right: 0,
+        zIndex: 1,
+        w: "122px",
+      },
+      cProps: {
+        justify: "center",
+        // borderLeft: "1px solid var(--divider3)",
+        // w: "122px",
       },
     },
   ];
@@ -441,7 +483,20 @@ export default function TabelDiklat({ filterConfig }: Props) {
           </PermissionTooltip>
         ),
         props: {
-          position: "sticky",
+          // position: "sticky",
+          right: 0,
+          zIndex: 1,
+        },
+        cProps: {
+          justify: "center",
+          // borderLeft: "1px solid var(--divider3)",
+        },
+      },
+      {
+        value: "",
+        td: <Button>Publikasi</Button>,
+        props: {
+          // position: "sticky",
           right: 0,
           zIndex: 1,
         },
