@@ -64,7 +64,7 @@ export default function SelectPendidikan({
 
   return (
     <SingleSelectModal
-      id="select-gender-modal"
+      id="select-pendidikan-terakhir-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
@@ -77,7 +77,7 @@ export default function SelectPendidikan({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Jenis Kelamin"}
+      placeholder={placeholder || "Pilih Pendidikan Terakhir"}
       nonNullable={nonNullable}
       {...props}
     />
