@@ -549,7 +549,7 @@ export default function DetailKaryawanModal({
                                 className="btn-solid clicky"
                                 position={"relative"}
                               >
-                                {!data?.status_keluarga && (
+                                {data?.status_keluarga && (
                                   <Icon
                                     as={RiCircleFill}
                                     color={"red.400"}

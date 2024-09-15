@@ -1,7 +1,9 @@
-import { ButtonProps, useDisclosure } from "@chakra-ui/react";
+import { ButtonProps, useDisclosure, useToast } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import { optionsPendidikan } from "../../../constant/selectOptions";
 import SingleSelectModal from "../input/SingleSelectModal";
+import { useEffect, useState } from "react";
+import req from "../../../lib/req";
 
 interface Props extends ButtonProps {
   name: string;
@@ -26,6 +28,39 @@ export default function SelectPendidikan({
   ...props
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const toast = useToast();
+  const [options, setOptions] = useState<Interface__SelectOption[] | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    if (isOpen && !options) {
+      req
+        .get("/api/get-list-pendidikan")
+        .then((r) => {
+          if (r.status === 200) {
+            const options = r.data.data.map((item: any) => ({
+              value: item.id,
+              label: item.nama_unit,
+            }));
+            setOptions(options);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        });
+    }
+  }, [isOpen, options, toast]);
 
   return (
     <SingleSelectModal
