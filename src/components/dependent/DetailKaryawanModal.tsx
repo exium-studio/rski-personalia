@@ -29,11 +29,11 @@ import {
   RiCalendarScheduleFill,
   RiCircleFill,
   RiCloseCircleFill,
-  RiFeedbackFill,
   RiFileChartFill,
   RiGraduationCapFill,
   RiHeartFill,
   RiLoginBoxFill,
+  RiUserStarFill,
 } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
@@ -75,6 +75,7 @@ import Retry from "./Retry";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
+import DetailPenilaianKaryawanModalDisclosure from "./DetailPenilaianKaryawanModalDisclosure";
 
 interface Props {
   id?: string;
@@ -681,28 +682,34 @@ export default function DetailKaryawanModal({
                             </DetailLemburKaryawanModalDisclosure>
 
                             {/* Penilaian */}
-                            <VStack
-                              cursor={"pointer"}
-                              borderRadius={12}
-                              justify={"center"}
-                              p={4}
-                              className="btn-solid clicky"
-                              transition={"200ms"}
-                              _groupHover={{ opacity: 1 }}
+                            <DetailPenilaianKaryawanModalDisclosure
+                              karyawan_id={data.id}
+                              flexShrink={0}
+                              role="group"
                             >
-                              <Icon
-                                opacity={0.4}
-                                as={RiFeedbackFill}
-                                fontSize={32}
-                              />
-                              <Text
-                                fontWeight={500}
-                                textAlign={"center"}
-                                lineHeight={1.4}
+                              <VStack
+                                cursor={"pointer"}
+                                borderRadius={12}
+                                justify={"center"}
+                                p={4}
+                                className="btn-solid clicky"
                               >
-                                Penilaian
-                              </Text>
-                            </VStack>
+                                <Icon
+                                  opacity={0.4}
+                                  as={RiUserStarFill}
+                                  fontSize={32}
+                                  transition={"200ms"}
+                                  _groupHover={{ opacity: 1 }}
+                                />
+                                <Text
+                                  fontWeight={500}
+                                  textAlign={"center"}
+                                  lineHeight={1.4}
+                                >
+                                  Penilaian
+                                </Text>
+                              </VStack>
+                            </DetailPenilaianKaryawanModalDisclosure>
 
                             {/* Diklat */}
                             <DetailDiklatKaryawanModalDisclosure

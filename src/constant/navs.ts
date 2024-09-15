@@ -132,11 +132,11 @@ const navs = [
       //   label: "Pelaporan Karyawan",
       //   link: "/perusahaan/pelaporan-karyawan",
       // },
-      {
-        allowed: [114],
-        label: "Penilaian Karyawan",
-        link: "/perusahaan/penilaian-karyawan",
-      },
+      // {
+      //   allowed: [114],
+      //   label: "Penilaian Karyawan",
+      //   link: "/perusahaan/penilaian-karyawan",
+      // },
     ],
   },
   {
