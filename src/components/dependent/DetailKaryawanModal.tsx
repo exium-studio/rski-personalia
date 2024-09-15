@@ -7,6 +7,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Button,
   HStack,
   Icon,
   Modal,
@@ -33,6 +34,7 @@ import {
   RiGraduationCapFill,
   RiHeartFill,
   RiLoginBoxFill,
+  RiStarFill,
   RiUserStarFill,
 } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
@@ -263,6 +265,7 @@ export default function DetailKaryawanModal({
                     >
                       <HStack>
                         <Skeleton h={"40px"} />
+                        <Skeleton h={"40px"} maxW={"100px"} />
                         <Skeleton h={"40px"} maxW={"140px"} />
                         <Skeleton h={"40px"} maxW={"100px"} />
                       </HStack>
@@ -765,6 +768,17 @@ export default function DetailKaryawanModal({
                               placeholder="data karyawan"
                               tooltipLabel="Cari data karyawan"
                             />
+
+                            <Button
+                              flexShrink={0}
+                              leftIcon={
+                                <Icon as={RiStarFill} color={"orange.400"} />
+                              }
+                              pl={5}
+                              className="btn-outline clicky"
+                            >
+                              Nilai
+                            </Button>
 
                             {/* Edit */}
                             <PermissionTooltip permission={editPermission}>

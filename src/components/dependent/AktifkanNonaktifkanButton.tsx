@@ -12,14 +12,14 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiShutDownLine } from "@remixicon/react";
-import { iconSize } from "../../constant/sizes";
-import req from "../../lib/req";
+import { RiShutDownFill } from "@remixicon/react";
 import { useState } from "react";
+import { iconSize } from "../../constant/sizes";
+import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import req from "../../lib/req";
 import DisclosureHeader from "./DisclosureHeader";
-import useBackOnClose from "../../hooks/useBackOnClose";
 
 interface Props extends ButtonProps {
   karyawan_id: number;
@@ -82,9 +82,9 @@ export default function AktifkanNonaktifkanButton({
         flexShrink={0}
         leftIcon={
           <Icon
-            as={RiShutDownLine}
+            as={RiShutDownFill}
             fontSize={iconSize}
-            color={data === 2 ? "red.400" : "p.500"}
+            color={data === 2 ? "red.400" : "green.500"}
           />
         }
         className="btn-outline clicky"
