@@ -91,7 +91,7 @@ export default function FilterPendidikanTerakhir({
           </VStack>
         )}
 
-        {!options && <ComponentSpinner />}
+        {!options && <ComponentSpinner my="auto" />}
 
         {options && (
           <Wrap py={4} w={"100%"}>
