@@ -1,6 +1,5 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
-import { Interface__AnggotaKeluarga } from "../../constant/interfaces";
 import { responsiveSpacing } from "../../constant/sizes";
 import NotFound from "../independent/NotFound";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
@@ -11,7 +10,7 @@ import CustomTable from "./CustomTable";
 import SearchComponent from "./input/SearchComponent";
 
 interface Props {
-  data: Interface__AnggotaKeluarga[];
+  data: any[];
 }
 
 export default function TabelDetailKeluargaKaryawan({ data }: Props) {
@@ -49,8 +48,15 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
       th: "Nama",
       isSortable: true,
     },
+    // {
+    //   th: "Status Keluarga",
+    //   isSortable: true,
+    //   cProps: {
+    //     justify: "center",
+    //   },
+    // },
     {
-      th: "Status Hubungan",
+      th: "Hubungan",
       isSortable: true,
     },
     {
@@ -76,21 +82,21 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
       th: "Email",
       isSortable: true,
     },
-    {
-      th: "Verif. 1",
-      props: {
-        position: "sticky",
-        right: 0,
-        zIndex: 4,
-        w: "122px",
-      },
-      cProps: {
-        justify: "center",
-        borderLeft: "1px solid var(--divider3)",
-        borderRight: "1px solid var(--divider3)",
-        w: "122px",
-      },
-    },
+    // {
+    //   th: "Verif. 1",
+    //   props: {
+    //     position: "sticky",
+    //     right: 0,
+    //     zIndex: 4,
+    //     w: "122px",
+    //   },
+    //   cProps: {
+    //     justify: "center",
+    //     borderLeft: "1px solid var(--divider3)",
+    //     borderRight: "1px solid var(--divider3)",
+    //     w: "122px",
+    //   },
+    // },
   ];
   const formattedData = fd.map((item) => ({
     id: item.id,
@@ -99,6 +105,13 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
         value: item.nama,
         td: item.nama,
       },
+      // {
+      //   value: item.status_keluarga,
+      //   td: <StatusVerifikasiBadge data={item.status_keluarga} w={"180px"} />,
+      //   cProps: {
+      //     justify: "center",
+      //   },
+      // },
       {
         value: item.hubungan,
         td: item.hubungan,
@@ -133,6 +146,32 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
         value: item.email,
         td: item.email,
       },
+      // {
+      //   value: "",
+      //   td: item?.status_keluarga?.id === 1 && (
+      //     <PermissionTooltip permission={editPermission}>
+      //       <VerifikasiModal
+      //         aria-label={`perubahan-data-verif-1-button-${item.id}"`}
+      //         id={`verifikasi-perubahan-data-modal-${item.id}`}
+      //         submitUrl={`api/rski/dashboard/karyawan/detail-karyawan-keluarga/${item.id}/verifikasi`}
+      //         approvePayloadKey="verifikasi_pertama_disetujui"
+      //         disapprovePayloadKey="verifikasi_pertama_ditolak"
+      //         isDisabled={!editPermission}
+      //       />
+      //     </PermissionTooltip>
+      //   ),
+      //   props: {
+      //     position: "sticky",
+      //     right: 0,
+      //     zIndex: 2,
+      //   },
+      //   cProps: {
+      //     justify: "center",
+      //     borderLeft: "1px solid var(--divider3)",
+      //     borderRight: "1px solid var(--divider3)",
+      //     w: "122px",
+      //   },
+      // },
     ],
   }));
 

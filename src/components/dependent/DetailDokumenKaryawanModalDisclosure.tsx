@@ -44,6 +44,9 @@ import Textarea from "./input/Textarea";
 import Retry from "./Retry";
 import formatDate from "../../lib/formatDate";
 import SearchComponent from "./input/SearchComponent";
+import useAuth from "../../global/useAuth";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 interface VerifikasiProps {
   data: any;
@@ -126,20 +129,28 @@ const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
     },
   });
 
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [49]);
+
   return (
     <>
-      <Button
-        ml={"auto"}
-        size={"lg"}
-        colorScheme="ap"
-        className="btn-ap clicky"
-        leftIcon={<Icon as={RiVerifiedBadgeFill} fontSize={iconSize} />}
-        pl={5}
-        // isDisabled={data.status_berkas !== "Menunggu"}
-        onClick={onOpen}
-      >
-        Verifikasi
-      </Button>
+      <Box ml={"auto"}>
+        <PermissionTooltip permission={editPermission}>
+          <Button
+            size={"lg"}
+            colorScheme="ap"
+            className="btn-ap clicky"
+            leftIcon={<Icon as={RiVerifiedBadgeFill} fontSize={iconSize} />}
+            pl={5}
+            isDisabled={
+              !editPermission || data?.status_berkas?.status === "Diverifikasi"
+            }
+            onClick={onOpen}
+          >
+            Verifikasi
+          </Button>
+        </PermissionTooltip>
+      </Box>
 
       <Modal
         isOpen={isOpen}
@@ -433,6 +444,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
                                       ? "orange"
                                       : "red"
                                   }
+                                  borderRadius={"full"}
                                 >
                                   {data?.status_berkas?.status}
                                 </Badge>
