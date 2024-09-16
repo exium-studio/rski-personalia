@@ -131,8 +131,8 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
         },
       },
       {
-        value: item.pendidikan_terakhir,
-        td: item.pendidikan_terakhir,
+        value: item.pendidikan_terakhir?.label,
+        td: item.pendidikan_terakhir?.label,
       },
       {
         value: item.pekerjaan,

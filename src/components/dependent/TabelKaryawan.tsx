@@ -209,8 +209,8 @@ export default function TabelKaryawan() {
         td: item.jabatan.nama_jabatan,
       }, // 8
       {
-        value: item.pendidikan_terakhir,
-        td: item.pendidikan_terakhir,
+        value: item.pendidikan_terakhir?.label,
+        td: item.pendidikan_terakhir?.label,
       }, // 9
       {
         value: item.email,

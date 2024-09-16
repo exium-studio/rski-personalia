@@ -40,6 +40,7 @@ import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
 import parseNumber from "../../lib/parseNumber";
 import req from "../../lib/req";
+import SelectPendidikan from "../../components/dependent/_Select/SelectPendidikan";
 
 interface Props {
   activeStep: number;
@@ -222,14 +223,14 @@ export default function EditKaryawanForm({
       alamat: data?.alamat,
       no_ijazah: data?.no_ijazah,
       tahun_lulus: data?.tahun_lulus,
-      pendidikan_terakhir: data?.pendidikan_terakhir || "",
+      // pendidikan_terakhir: data?.pendidikan_terakhir || "",
+      pendidikan_terakhir: data?.pendidikan_terakhir
+        ? {
+            value: data?.pendidikan_terakhir?.id,
+            label: data?.pendidikan_terakhir?.label,
+          }
+        : undefined,
       asal_sekolah: data?.asal_sekolah || "",
-      // pendidikan_terakhir: data?.pendidikan_terakhir
-      //   ? {
-      //       value: data?.pendidikan_terakhir?.id,
-      //       label: data?.pendidikan_terakhir?.label,
-      //     }
-      //   : undefined,
       gelar_depan: data?.gelar_depan || "",
       gelar_belakang: data?.gelar_belakang || "",
       str: data?.no_str,
@@ -290,7 +291,7 @@ export default function EditKaryawanForm({
         alamat: values.alamat,
         no_ijazah: values.no_ijazah,
         tahun_lulus: values.tahun_lulus,
-        pendidikan_terakhir: values.pendidikan_terakhir || "",
+        pendidikan_terakhir: values.pendidikan_terakhir?.value || "",
         asal_sekolah: values.asal_sekolah || "",
         gelar_depan: values.gelar_depan || "",
         gelar_belakang: values.gelar_belakang || "",
@@ -1255,15 +1256,15 @@ export default function EditKaryawanForm({
               Pendidikan Terakhir
               {/* <RequiredForm /> */}
             </FormLabel>
-            <StringInput
+            {/* <StringInput
               name="pendidikan_terakhir"
               placeholder="S1 Kedokteran"
               onChangeSetter={(input) => {
                 formik.setFieldValue("pendidikan_terakhir", input);
               }}
               inputValue={formik.values.pendidikan_terakhir}
-            />
-            {/* <SelectPendidikan
+            /> */}
+            <SelectPendidikan
               name="pendidikan_terakhir"
               placeholder="Diploma 1 (D1)"
               onConfirm={(input) => {
@@ -1271,7 +1272,7 @@ export default function EditKaryawanForm({
               }}
               inputValue={formik.values.pendidikan_terakhir}
               isError={!!formik.errors.pendidikan_terakhir}
-            /> */}
+            />
             <FormErrorMessage>
               {formik.errors.pendidikan_terakhir as string}
             </FormErrorMessage>

@@ -1287,7 +1287,7 @@ export default function DetailKaryawanModal({
                                         fontWeight={500}
                                         textAlign={"right"}
                                       >
-                                        {data?.pendidikan_terakhir}
+                                        {data?.pendidikan_terakhir?.label}
                                       </Text>
                                     )}
                                   </HStack>
