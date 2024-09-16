@@ -1462,6 +1462,25 @@ export default function DetailKaryawanModal({
                                 </HStack>
 
                                 <HStack justify={"space-between"}>
+                                  {/* <Text opacity={0.6}>No. Rekam Medis</Text> */}
+                                  <Box opacity={0.6}>
+                                    <Highlighter
+                                      highlightClassName="hw"
+                                      unhighlightClassName="uw"
+                                      searchWords={searchQuery}
+                                      autoEscape={true}
+                                      textToHighlight="BMI"
+                                    />
+                                  </Box>
+                                  <FlexLine />
+                                  <Text fontWeight={500} textAlign={"right"}>
+                                    {data?.bmi_value &&
+                                      data?.bmi_ket &&
+                                      `${data?.bmi_value} (${data?.bmi_ket})`}
+                                  </Text>
+                                </HStack>
+
+                                <HStack justify={"space-between"}>
                                   {/* <Text opacity={0.6}>No. Manulife</Text> */}
                                   <Box opacity={0.6}>
                                     <Highlighter
