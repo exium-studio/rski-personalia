@@ -10,20 +10,21 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { RiChatCheckFill } from "@remixicon/react";
+import { RiStarFill } from "@remixicon/react";
 import { useRef, useState } from "react";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import TabelKaryawanDinilai from "../dependent/TabelKaryawanDinilai";
 import MultiSelectJabatan from "../dependent/_Select/MultiSelectJabatan";
 import MultiSelectStatusKaryawan from "../dependent/_Select/MultiSelectStatusKaryawan";
 import SearchComponent from "../dependent/input/SearchComponent";
 
-interface Props extends ButtonProps {}
+interface Props extends ButtonProps {
+  user_id: number;
+}
 
-export default function RunPenilaian({ ...props }: Props) {
+export default function RunPenilaian({ user_id, ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("run-penilaian-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
@@ -37,11 +38,12 @@ export default function RunPenilaian({ ...props }: Props) {
   return (
     <>
       <Button
-        className="btn-ap clicky"
-        colorScheme="ap"
-        onClick={onOpen}
-        leftIcon={<Icon as={RiChatCheckFill} fontSize={iconSize} />}
+        flexShrink={0}
+        leftIcon={<Icon as={RiStarFill} color={"orange.400"} />}
         pl={5}
+        className="btn-solid clicky"
+        flex={1}
+        onClick={onOpen}
         {...props}
       >
         Run Penilaian
@@ -105,7 +107,7 @@ export default function RunPenilaian({ ...props }: Props) {
               />
             </HStack>
 
-            <TabelKaryawanDinilai filterConfig={filterConfig} />
+            {/* <TabelKaryawanDinilai filterConfig={filterConfig} /> */}
           </ModalBody>
         </ModalContent>
       </Modal>

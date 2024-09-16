@@ -84,6 +84,8 @@ export default function PenilaianKaryawan() {
               boxProps={{ w: "fit-content" }}
             >
               <RunPenilaian
+                // salah ini
+                user_id={1}
                 minW={"fit-content"}
                 isDisabled={!createPermissions}
               />

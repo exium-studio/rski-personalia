@@ -7,7 +7,7 @@ import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
-import PenilaianKaryawanModal from "./PenilaianKaryawanModal";
+import PenilaianKaryawanModal from "./RunPenilaianModal";
 import Retry from "./Retry";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
 
@@ -170,12 +170,7 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
                         Klik row untuk menilai karyawan yang dipilih
                       </Text>
 
-                      <PenilaianKaryawanModal
-                        user_id_penilaian={user_id_penilaian}
-                        isOpen={isOpen}
-                        onOpen={onOpen}
-                        onClose={onClose}
-                      />
+                      <PenilaianKaryawanModal user_id={user_id_penilaian} />
                     </>
                   )}
                 </>

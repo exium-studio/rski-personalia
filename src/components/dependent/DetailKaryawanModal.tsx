@@ -7,7 +7,6 @@ import {
   Avatar,
   Badge,
   Box,
-  Button,
   HStack,
   Icon,
   Modal,
@@ -34,7 +33,6 @@ import {
   RiGraduationCapFill,
   RiHeartFill,
   RiLoginBoxFill,
-  RiStarFill,
   RiUserStarFill,
 } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
@@ -75,6 +73,7 @@ import DisclosureHeader from "./DisclosureHeader";
 import EditKaryawanModal from "./EditKaryawanModal";
 import SearchComponent from "./input/SearchComponent";
 import Retry from "./Retry";
+import RunPenilaianModal from "./RunPenilaianModal";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
@@ -772,7 +771,7 @@ export default function DetailKaryawanModal({
                             bg={lightDarkColor}
                             zIndex={2}
                           >
-                            <Button
+                            {/* <Button
                               flexShrink={0}
                               leftIcon={
                                 <Icon as={RiStarFill} color={"orange.400"} />
@@ -782,7 +781,8 @@ export default function DetailKaryawanModal({
                               flex={1}
                             >
                               Run Penilaian
-                            </Button>
+                            </Button> */}
+                            <RunPenilaianModal user_id={data.user.id} />
 
                             {/* Edit */}
                             <PermissionTooltip
