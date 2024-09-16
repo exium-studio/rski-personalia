@@ -1,203 +1,203 @@
 import {
-  Avatar,
+  Button,
   HStack,
-  Icon,
-  Table,
-  Tbody,
-  Td,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Text,
-  Th,
-  Thead,
-  Tr,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { RiArrowDownLine, RiArrowUpLine } from "@remixicon/react";
 import { useState } from "react";
-import { useBodyColor, useContentBgColor } from "../../constant/colors";
-import { Tabel__Column__Interface } from "../../constant/interfaces";
-import ComponentSpinner from "../independent/ComponentSpinner";
-import TabelContainer from "../wrapper/CustomTableContainer";
-import TabelFooterConfig from "./TabelFooterConfig";
+import { responsiveSpacing } from "../../constant/sizes";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
+import formatNumber from "../../lib/formatNumber";
+import NotFound from "../independent/NotFound";
+import CustomTableContainer from "../wrapper/CustomTableContainer";
+import CustomTable from "./CustomTable";
+import DisclosureHeader from "./DisclosureHeader";
+import SearchComponent from "./input/SearchComponent";
 
-interface Props {
-  data: any;
-}
-
-export default function TabelDetailPenilaianKaryawan({ data }: Props) {
-  const columns: Tabel__Column__Interface[] = [
-    {
-      key: "nama",
-      label: "Nama Penilai",
-      dataType: "avatarAndName",
-    },
-    {
-      key: "unit_kerja",
-      label: "Unit Kerja",
-      dataType: "string",
-    },
-    {
-      key: "jabatan",
-      label: "Jabatan",
-      dataType: "string",
-    },
-    {
-      key: "rata_rata",
-      label: "Rata-rata",
-      dataType: "number",
-    },
-  ];
-
-  const [loading] = useState<boolean>(false);
-
-  // Limit Config
-  const [limitConfig, setLimitConfig] = useState<number>(10);
-
-  // Pagination Config
-  const [pageConfig, setPageConfig] = useState<number>(1);
-
-  // Sort Config
-  const [sortConfig, setSortConfig] = useState<{
-    key: string;
-    direction: "asc" | "desc";
-  } | null>({ key: columns[0].key, direction: "asc" });
-  const sortedData = [...data];
-  if (sortConfig !== null) {
-    sortedData.sort((a, b) => {
-      //@ts-ignore
-      let aValue = a[sortConfig.key];
-      //@ts-ignore
-      let bValue = b[sortConfig.key];
-
-      if (aValue === null && bValue === null) return 0;
-      if (aValue === null) return 1; // Nilai null di bawah
-      if (bValue === null) return -1; // Nilai null di bawah
-
-      //@ts-ignore
-      if (aValue < bValue) {
-        return sortConfig.direction === "asc" ? -1 : 1;
-      }
-      //@ts-ignore
-      if (aValue > bValue) {
-        return sortConfig.direction === "asc" ? 1 : -1;
-      }
-      return 0;
-    });
-  }
-  const sort = (key: string) => {
-    let direction: "asc" | "desc" = "asc";
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === "asc"
-    ) {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
-
-  // SX
-  const contentBgColor = useContentBgColor();
-  const bodyColor = useBodyColor();
+const PertanyaanJawabanModal = ({ data }: any) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    `pertanyaan-jawaban-modal-${data.id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
 
   return (
     <>
-      {loading && <ComponentSpinner mt={4} />}
+      <Button
+        onClick={onOpen}
+        colorScheme="ap"
+        variant={"ghost"}
+        className="clicky"
+      >
+        Lihat
+      </Button>
 
-      {!loading && data && (
-        <TabelContainer noTopNavs customReducer={24}>
-          <Table>
-            <Thead>
-              <Tr>
-                {columns.map((column, i) => (
-                  <Th
-                    key={i}
-                    whiteSpace={"nowrap"}
-                    onClick={() => {
-                      sort(column.key);
-                    }}
-                    cursor={"pointer"}
-                    borderBottom={"none !important"}
-                    bg={bodyColor}
-                    zIndex={2}
-                    p={0}
-                    {...column.thProps}
-                  >
-                    <HStack
-                      justify={
-                        column.preferredTextAlign === "center"
-                          ? "center"
-                          : column.dataType === "numeric"
-                          ? "flex-end"
-                          : "space-between"
-                      }
-                      borderBottom={"1px solid var(--divider3)"}
-                      px={4}
-                      py={3}
-                      h={"52px"}
-                      pl={i === 0 ? 4 : ""}
-                      pr={i === columns.length - 1 ? 4 : ""}
-                      {...column.thContentProps}
-                    >
-                      <Text fontWeight={600} flexShrink={0} lineHeight={1.2}>
-                        {column.label}
-                      </Text>
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+        scrollBehavior="inside"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Pertanyaan & Jawaban"} />
+          </ModalHeader>
+          <ModalBody>
+            {data?.pertanyaan_jawaban?.map((item: any, i: number) => (
+              <HStack
+                key={i}
+                justify={"space-between"}
+                borderBottom={
+                  i === data?.pertanyaan_jawaban?.length - 1
+                    ? ""
+                    : "1px solid var(--divider3)"
+                }
+                pb={i === data?.pertanyaan_jawaban?.length - 1 ? 0 : 4}
+                mb={i === data?.pertanyaan_jawaban?.length - 1 ? 0 : 4}
+                align={"start"}
+              >
+                <Text>{item?.pertanyaan}</Text>
+                <Text>{item?.jawaban}</Text>
+              </HStack>
+            ))}
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="btn-solid clicky"
+              w={"100%"}
+              onClick={backOnClose}
+            >
+              Mengerti
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
-                      {sortConfig && sortConfig.key === column.key && (
-                        <>
-                          {sortConfig.direction === "asc" ? (
-                            <Icon
-                              as={RiArrowUpLine}
-                              color={"p.500"}
-                              fontSize={16}
-                            />
-                          ) : (
-                            <Icon
-                              as={RiArrowDownLine}
-                              color={"p.500"}
-                              fontSize={16}
-                            />
-                          )}
-                        </>
-                      )}
-                    </HStack>
-                  </Th>
-                ))}
-              </Tr>
-            </Thead>
+interface Props {
+  data: any[];
+}
 
-            <Tbody>
-              {sortedData.map((row, rowIndex) => (
-                <Tr
-                  h={"72px"}
-                  key={row.id}
-                  bg={rowIndex % 2 === 0 ? contentBgColor : bodyColor}
-                >
-                  <Td pl={4} whiteSpace={"nowrap"}>
-                    <HStack>
-                      <Avatar size={"sm"} name={"dummy"} src={"dummy"} />
-                      <Text>{"dummy"}</Text>
-                    </HStack>
-                  </Td>
-                  <Td whiteSpace={"nowrap"}>{row.hubungan}</Td>
-                  <Td whiteSpace={"nowrap"}>{row.pendidikan_terakhir}</Td>
-                  <Td whiteSpace={"nowrap"}>{row.pekerjaan}</Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TabelContainer>
+export default function TabelDetailPenilaianKaryawan({ data }: Props) {
+  // Filter Config
+  const [filterConfig, setFilterConfig] = useState({
+    search: "",
+    hubungan_keluarga: undefined as any,
+    status_hidup: undefined as any,
+  });
+
+  const fd = data?.filter((item: any) => {
+    const searchTerm = filterConfig?.search.toLowerCase();
+
+    const matchesSearchTerm = item?.presensi
+      ?.toLowerCase()
+      .includes(searchTerm);
+    const matchesSearchTerm2 = formatDate(item?.tanggal)
+      ?.toLowerCase()
+      .includes(searchTerm);
+
+    return matchesSearchTerm || matchesSearchTerm2;
+  });
+
+  const formattedHeader = [
+    {
+      th: "Jenis Penilaian",
+      isSortable: true,
+    },
+    {
+      th: "Total Pertanyaan",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
+      th: "Pertanyaan Jawaban",
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
+      th: "Rata - rata",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+  ];
+  const formattedData = fd?.map((item) => ({
+    id: item.id,
+    columnsFormat: [
+      {
+        value: item?.jenis_penilaian?.nama,
+        td: item?.jenis_penilaian?.nama,
+      },
+      {
+        value: item?.total_pertanyaan,
+        td: formatNumber(item?.total_pertanyaan),
+        isNumeric: true,
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: "",
+        td: <PertanyaanJawabanModal data={item} />,
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item?.rata_rata,
+        td: formatNumber(item?.rata_rata),
+        isNumeric: true,
+        cProps: {
+          justify: "center",
+        },
+      },
+    ],
+  }));
+
+  return (
+    <>
+      <HStack mb={responsiveSpacing}>
+        <SearchComponent
+          name="search"
+          onChangeSetter={(input) => {
+            setFilterConfig((ps) => ({
+              ...ps,
+              search: input,
+            }));
+          }}
+          inputValue={filterConfig.search}
+        />
+      </HStack>
+
+      {fd?.length === 0 && <NotFound />}
+
+      {fd?.length > 0 && (
+        <CustomTableContainer>
+          <CustomTable
+            formattedHeader={formattedHeader}
+            formattedData={formattedData}
+            // rowOptions={rowOptions}
+          />
+        </CustomTableContainer>
       )}
-
-      <TabelFooterConfig
-        limitConfig={limitConfig}
-        setLimitConfig={setLimitConfig}
-        pageConfig={pageConfig}
-        setPageConfig={setPageConfig}
-        paginationData={{
-          prev_page_url: "",
-          next_page_url: "",
-          last_page: 1,
-        }}
-      />
     </>
   );
 }
