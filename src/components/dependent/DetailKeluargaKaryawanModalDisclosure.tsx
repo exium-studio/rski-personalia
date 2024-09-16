@@ -271,8 +271,6 @@ export default function DetailKeluargaKaryawanModalDisclosure({
     conditions: !!(isOpen && karyawan_id),
   });
 
-  const { userPermissions } = useAuth();
-
   // SX
 
   return (
