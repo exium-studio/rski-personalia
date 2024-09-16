@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   Center,
   HStack,
@@ -15,7 +18,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { RiDeleteBinLine } from "@remixicon/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
@@ -42,6 +45,7 @@ import useRenderTrigger from "../../hooks/useRenderTrigger";
 import req from "../../lib/req";
 import formatTime from "../../lib/formatTime";
 import TabelElipsisText from "./TabelElipsisText";
+import SearchComponent from "./input/SearchComponent";
 
 const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
   // api/rski/dashboard/perusahaan/diklat/{diklatId}/delete-peserta-diklat/{userId}
@@ -144,7 +148,7 @@ const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
   );
 };
 
-const PesertaModal = ({ data }: { data: any }) => {
+const PesertaModal = ({ data }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`peserta-diklat-modal-${data.id}`, isOpen, onOpen, onClose);
 
@@ -182,7 +186,7 @@ const PesertaModal = ({ data }: { data: any }) => {
                       justifyContent={"space-between"}
                       p={4}
                       bg={"var(--divider)"}
-                      borderRadius={12}
+                      borderRadius={8}
                     >
                       <AvatarAndNameTableData
                         data={{
@@ -195,12 +199,12 @@ const PesertaModal = ({ data }: { data: any }) => {
                         maxW={"fit-content"}
                       />
 
-                      {data?.status_diklat?.id !== 4 && (
+                      {/* {data?.status_diklat?.id !== 4 && (
                         <KonfirmasiDeleteUser
                           dataDiklat={data}
                           peserta={peserta}
                         />
-                      )}
+                      )} */}
                     </HStack>
                   ))}
                 </>
@@ -214,6 +218,193 @@ const PesertaModal = ({ data }: { data: any }) => {
               className="btn-solid clicky"
             >
               Mengerti
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+const KonfirmasiPublikasiSertifikat = ({ data }: any) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    `konfirmasi-publikasi-modal-${data.id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
+
+  const [countDown, setCountDown] = useState(10);
+  useEffect(() => {
+    if (isOpen) {
+      const interval = setInterval(() => {
+        setCountDown((prevCount) => {
+          if (prevCount > 0) {
+            return prevCount - 1;
+          } else {
+            clearInterval(interval);
+            return prevCount;
+          }
+        });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    } else {
+      setCountDown(5);
+    }
+  }, [isOpen]);
+
+  const [search, setSearch] = useState("");
+  const fd = data.list_peserta.filter((item: any) => {
+    const searchTerm = search.toLowerCase();
+
+    const matches1 = item.user.nama.toLowerCase().includes(searchTerm);
+
+    return matches1;
+  });
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+  function handlePublish() {
+    setLoading(true);
+    req
+      .post(`/api/rski/dashboard/perusahaan/diklat/${data.id}/certificates`)
+      .then((r) => {
+        if (r.status === 200) {
+          setRt(!rt);
+          backOnClose();
+          toast({
+            status: "success",
+            title: r?.data?.message,
+            position: "bottom-right",
+            isClosable: true,
+          });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  const { userPermissions } = useAuth();
+  const publikasiPermission = isHasPermissions(userPermissions, [121]);
+
+  return (
+    <>
+      <PermissionTooltip
+        permission={publikasiPermission}
+        boxProps={{ flex: 1 }}
+      >
+        <Button
+          w={"100%"}
+          colorScheme="ap"
+          variant={"outline"}
+          className="clicky"
+          onClick={onOpen}
+          isDisabled={publikasiPermission}
+        >
+          Publikasi
+        </Button>
+      </PermissionTooltip>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        scrollBehavior="inside"
+        isCentered
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Konfirmasi Publikasi Sertifikat"} />
+          </ModalHeader>
+          <ModalBody className="scrollY" px={0}>
+            <CContainer px={6}>
+              <Alert alignItems={"start"} status="warning" mb={4}>
+                <AlertIcon />
+                <AlertDescription>
+                  Sebelum publikasi sertifikat, pastikan peserta yang tidak
+                  hadir telah dihapus untuk memastikan sertifikat hanya
+                  diberikan kepada yang hadir.
+                </AlertDescription>
+              </Alert>
+
+              <SearchComponent
+                name="search_peserta_diklat"
+                onChangeSetter={(input) => {
+                  setSearch(input);
+                }}
+                inputValue={search}
+                mb={4}
+              />
+            </CContainer>
+
+            <CContainer
+              gap={2}
+              px={6}
+              flex={1}
+              overflowY={"auto"}
+              className="scrollY"
+            >
+              {fd?.length === 0 && <NotFound minH={"300px"} />}
+
+              {fd?.length > 0 && (
+                <>
+                  {fd?.map((peserta: any, i: number) => (
+                    <HStack
+                      key={i}
+                      justifyContent={"space-between"}
+                      p={4}
+                      bg={"var(--divider)"}
+                      borderRadius={8}
+                    >
+                      <AvatarAndNameTableData
+                        data={{
+                          id: peserta?.user?.id,
+                          nama: peserta?.user?.nama,
+                          foto_profil: peserta?.user?.foto_profil,
+                        }}
+                        // noDetail
+                        w={"fit-content"}
+                        maxW={"fit-content"}
+                      />
+
+                      {data?.status_diklat?.id === 4 && (
+                        <KonfirmasiDeleteUser
+                          dataDiklat={data}
+                          peserta={peserta}
+                        />
+                      )}
+                    </HStack>
+                  ))}
+                </>
+              )}
+            </CContainer>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              onClick={handlePublish}
+              w={"100%"}
+              colorScheme="ap"
+              className="btn-ap clicky"
+              isLoading={loading}
+              isDisabled={countDown !== 0}
+            >
+              {countDown !== 0 ? `Tunggu ${countDown} detik` : "Publikasi"}
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -524,14 +715,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       {
         value: "",
         td: item.status_diklat.id === 4 && (
-          <Button
-            w={"100%"}
-            colorScheme="ap"
-            variant={"outline"}
-            className="clicky"
-          >
-            Publikasi
-          </Button>
+          <KonfirmasiPublikasiSertifikat data={item} />
         ),
         props: {
           // position: "sticky",
