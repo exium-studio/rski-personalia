@@ -1,9 +1,11 @@
-import { Button, Center, Text } from "@chakra-ui/react";
+import { Button, Center } from "@chakra-ui/react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import useAuth from "../../global/useAuth";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
+import formatTime from "../../lib/formatTime";
 import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
@@ -15,11 +17,9 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
+import TabelElipsisText from "./TabelElipsisText";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
-import formatTime from "../../lib/formatTime";
-import { Link } from "react-router-dom";
-import TabelElipsisText from "./TabelElipsisText";
 
 interface Props {
   filterConfig: any;
@@ -210,20 +210,6 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
       {
         value: item.deskripsi,
         td: <TabelElipsisText data={item.deskripsi} />,
-      },
-      {
-        value: item.deskripsi,
-        td: (
-          <Text
-            w={"100%"}
-            maxW={"300px"}
-            overflow={"hidden"}
-            whiteSpace={"nowrap"}
-            textOverflow={"ellipsis"}
-          >
-            {item.deskripsi}
-          </Text>
-        ),
       },
       // {
       //   value: item.kuota,
