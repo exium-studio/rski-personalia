@@ -1,4 +1,4 @@
-import { Center, Text } from "@chakra-ui/react";
+import { Center, Text, Tooltip } from "@chakra-ui/react";
 import { eachDayOfInterval } from "date-fns";
 import { useState } from "react";
 import useDataState from "../../hooks/useDataState";
@@ -150,9 +150,18 @@ export default function TabelJadwal({ filterConfig }: Props) {
                     gap={1}
                   >
                     <Text fontSize={14}>Libur</Text>
-                    <Text fontSize={14} whiteSpace={"nowrap"}>
-                      {jadwal?.nama}
-                    </Text>
+                    <Tooltip label={jadwal?.nama}>
+                      <Text
+                        fontSize={14}
+                        w={"100%"}
+                        maxW={"130px"}
+                        whiteSpace={"nowrap"}
+                        overflow={"hidden"}
+                        textOverflow={"ellipsis"}
+                      >
+                        {jadwal?.nama}
+                      </Text>
+                    </Tooltip>
                   </CContainer>
                 )}
               </>
