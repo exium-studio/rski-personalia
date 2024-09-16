@@ -41,6 +41,7 @@ import VerifikasiModal from "./VerifikasiModal";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import req from "../../lib/req";
 import formatTime from "../../lib/formatTime";
+import TabelElipsisText from "./TabelElipsisText";
 
 const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
   // api/rski/dashboard/perusahaan/diklat/{diklatId}/delete-peserta-diklat/{userId}
@@ -417,17 +418,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
       {
         value: item.deskripsi,
-        td: (
-          <Text
-            w={"100%"}
-            maxW={"300px"}
-            overflow={"hidden"}
-            whiteSpace={"nowrap"}
-            textOverflow={"ellipsis"}
-          >
-            {item.deskripsi}
-          </Text>
-        ),
+        td: <TabelElipsisText data={item.deskripsi} />,
       },
       {
         value: item.kuota,
