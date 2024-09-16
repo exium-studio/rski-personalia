@@ -40,6 +40,7 @@ import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import req from "../../lib/req";
+import formatTime from "../../lib/formatTime";
 
 const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
   // api/rski/dashboard/perusahaan/diklat/{diklatId}/delete-peserta-diklat/{userId}
@@ -300,6 +301,33 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
     },
     {
+      th: "Jam Mulai",
+      isSortable: true,
+      props: {
+        zIndex: 2,
+      },
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
+      th: "Jam Selesai",
+      isSortable: true,
+      props: {
+        zIndex: 2,
+      },
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
+      th: "Durasi",
+      isSortable: true,
+      props: {
+        zIndex: 2,
+      },
+    },
+    {
       th: "Peserta",
       props: {
         zIndex: 2,
@@ -317,13 +345,6 @@ export default function TabelDiklat({ filterConfig }: Props) {
     },
     {
       th: "Tempat",
-      isSortable: true,
-      props: {
-        zIndex: 2,
-      },
-    },
-    {
-      th: "Durasi",
       isSortable: true,
       props: {
         zIndex: 2,
@@ -424,6 +445,27 @@ export default function TabelDiklat({ filterConfig }: Props) {
         isDate: true,
       },
       {
+        value: item.jam_mulai,
+        td: formatTime(item.jam_mulai),
+        isTime: true,
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item.jam_selesai,
+        td: formatTime(item.jam_selesai),
+        isTime: true,
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item.durasi,
+        td: formatDuration(item.durasi),
+        isTime: true,
+      },
+      {
         value: item.peserta,
         td: <PesertaModal data={item} />,
         cProps: {
@@ -437,11 +479,6 @@ export default function TabelDiklat({ filterConfig }: Props) {
       {
         value: item.lokasi,
         td: item.lokasi,
-      },
-      {
-        value: item.durasi,
-        td: formatDuration(item.durasi),
-        isTime: true,
       },
       {
         value: "",
