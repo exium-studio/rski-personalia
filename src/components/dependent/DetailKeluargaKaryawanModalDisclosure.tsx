@@ -24,28 +24,28 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
+import { RiVerifiedBadgeFill } from "@remixicon/react";
+import { useFormik } from "formik";
 import { useRef, useState } from "react";
+import * as yup from "yup";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
+import isHasPermissions from "../../lib/isHasPermissions";
+import req from "../../lib/req";
+import RequiredForm from "../form/RequiredForm";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import DisclosureHeader from "./DisclosureHeader";
+import Textarea from "./input/Textarea";
 import Retry from "./Retry";
 import TabelDetailKeluargaKaryawan from "./TabelDetailKeluargaKaryawan";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
-import { RiVerifiedBadgeFill } from "@remixicon/react";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import req from "../../lib/req";
-import RequiredForm from "../form/RequiredForm";
-import Textarea from "./input/Textarea";
-import PermissionTooltip from "../wrapper/PermissionTooltip";
-import formatDate from "../../lib/formatDate";
 
 interface VerifikasiProps {
   data: any;
@@ -272,7 +272,6 @@ export default function DetailKeluargaKaryawanModalDisclosure({
   });
 
   const { userPermissions } = useAuth();
-  const editPermission = isHasPermissions(userPermissions, [49]);
 
   // SX
 
