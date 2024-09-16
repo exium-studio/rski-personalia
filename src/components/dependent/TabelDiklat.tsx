@@ -305,21 +305,23 @@ const KonfirmasiPublikasiSertifikat = ({ data }: any) => {
 
   return (
     <>
-      <PermissionTooltip
-        permission={publikasiPermission}
-        boxProps={{ flex: 1 }}
-      >
-        <Button
-          w={"100%"}
-          colorScheme="ap"
-          variant={"outline"}
-          className="clicky"
-          onClick={onOpen}
-          isDisabled={publikasiPermission}
+      {!data.certificate_published && (
+        <PermissionTooltip
+          permission={publikasiPermission}
+          boxProps={{ flex: 1 }}
         >
-          Publikasi
-        </Button>
-      </PermissionTooltip>
+          <Button
+            w={"100%"}
+            colorScheme="ap"
+            variant={"outline"}
+            className="clicky"
+            onClick={onOpen}
+            isDisabled={!publikasiPermission}
+          >
+            Publikasi
+          </Button>
+        </PermissionTooltip>
+      )}
 
       <Modal
         isOpen={isOpen}

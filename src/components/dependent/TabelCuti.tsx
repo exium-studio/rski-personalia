@@ -114,7 +114,7 @@ export default function TabelCuti({ filterConfig }: Props) {
     {
       th: "Verif. 2",
       props: {
-        position: "sticky",
+        // position: "sticky",
         right: 0,
         zIndex: 3,
         w: "122px",
@@ -233,7 +233,7 @@ export default function TabelCuti({ filterConfig }: Props) {
           </PermissionTooltip>
         ),
         props: {
-          position: "sticky",
+          // position: "sticky",
           right: 0,
           zIndex: 1,
         },

@@ -396,7 +396,7 @@ export default function DetailKaryawanModal({
                               >
                                 {formatDurationShort(
                                   data?.total_durasi_internal +
-                                    data?.total_durasi_internal
+                                    data?.total_durasi_eksternal
                                 ) || 0}
                               </Text>
                               <Text textAlign={"center"} opacity={0.4}>
