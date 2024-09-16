@@ -25,6 +25,7 @@ import CContainer from "../wrapper/CContainer";
 import FlexLine from "../independent/FlexLine";
 import TabelElipsisText from "./TabelElipsisText";
 import NoData from "../independent/NoData";
+import BooleanBadge from "./BooleanBadge";
 
 interface DatakeluargaProps {
   data: any;
@@ -77,17 +78,17 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
                     <HStack>
                       <Text opacity={0.4}>Hubungan Keluarga</Text>
                       <FlexLine />
-                      <Text>{anggota.hubungan}</Text>
+                      <Text>{anggota?.hubungan?.label}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Status Hidup</Text>
                       <FlexLine />
-                      <Text>{anggota.status_hidup ? "Hidup" : "Meniggal"}</Text>
+                      <Text>{anggota?.status_hidup?.label}</Text>
                     </HStack>
                     <HStack>
-                      <Text opacity={0.4}>Pekerjaan</Text>
+                      <Text opacity={0.4}>Pendidikan Terakhir</Text>
                       <FlexLine />
-                      <Text>{anggota.pendidikan_terakhir?.label}</Text>
+                      <Text>{anggota?.pendidikan_terakhir?.label}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Pekerjaan</Text>
@@ -103,6 +104,15 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
                       <Text opacity={0.4}>Email</Text>
                       <FlexLine />
                       <Text>{anggota.email}</Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Tanggungan BPJS</Text>
+                      <FlexLine />
+                      <BooleanBadge
+                        data={anggota.is_bpjs}
+                        trueValue="Ya"
+                        falseValue="Tidak"
+                      />
                     </HStack>
                   </CContainer>
                 ))}
@@ -127,11 +137,12 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
 };
 
 export default function PerubahanDataRender({ column, data, index }: any) {
-  console.log(column, data);
+  // console.log(column, data);
   switch (column) {
     default:
       return <Text>Invalid</Text>;
     case "data keluarga":
+    case "Data Keluarga":
       return <ListKeluargaModal data={data} index={index} />;
     case "foto_profil":
       return (
