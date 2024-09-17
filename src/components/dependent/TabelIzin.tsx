@@ -16,7 +16,7 @@ import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
-import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
+import StatusVerifikasiBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 
@@ -140,10 +140,10 @@ export default function TabelIzin({ filterConfig }: Props) {
       {
         value: item.status_izin,
         td: (
-          <StatusVerifikasiBadge2
+          <StatusVerifikasiBadge
             data={item.status_izin}
             alasan={item?.alasan}
-            w={"180px"}
+            w={"120px"}
           />
         ),
         cProps: {
