@@ -374,9 +374,7 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
         blockScrollOnMount={false}
         size={"lg"}
       >
-        <ModalOverlay />j                                                             
-                                            
-                                            
+        <ModalOverlay />
         <ModalContent
           my={sh < 650 ? 0 : ""}
           h={
