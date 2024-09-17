@@ -241,36 +241,38 @@ export default function DashboardPengumumanItemDetail({
             )}
           </ModalBody>
 
-          <ModalFooter>
-            <ButtonGroup w={"100%"}>
-              <PermissionTooltip
-                permission={deletePermission}
-                boxProps={{ w: "100%" }}
-              >
-                <DeletePengumuman
-                  data={initialData}
-                  isDisabled={loadingSubmit || !deletePermission}
-                />
-              </PermissionTooltip>
-
-              <PermissionTooltip
-                permission={editPermission}
-                boxProps={{ w: "100%" }}
-              >
-                <Button
-                  type="submit"
-                  form="updatePengumumanForm"
-                  w={"100%"}
-                  className="btn-ap clicky"
-                  colorScheme="ap"
-                  isLoading={loadingSubmit}
-                  isDisabled={!editPermission}
+          {!loading && (
+            <ModalFooter>
+              <ButtonGroup w={"100%"}>
+                <PermissionTooltip
+                  permission={deletePermission}
+                  boxProps={{ w: "100%" }}
                 >
-                  Simpan
-                </Button>
-              </PermissionTooltip>
-            </ButtonGroup>
-          </ModalFooter>
+                  <DeletePengumuman
+                    data={initialData}
+                    isDisabled={loadingSubmit || !deletePermission}
+                  />
+                </PermissionTooltip>
+
+                <PermissionTooltip
+                  permission={editPermission}
+                  boxProps={{ w: "100%" }}
+                >
+                  <Button
+                    type="submit"
+                    form="updatePengumumanForm"
+                    w={"100%"}
+                    className="btn-ap clicky"
+                    colorScheme="ap"
+                    isLoading={loadingSubmit}
+                    isDisabled={!editPermission}
+                  >
+                    Simpan
+                  </Button>
+                </PermissionTooltip>
+              </ButtonGroup>
+            </ModalFooter>
+          )}
         </ModalContent>
       </Modal>
     </>
