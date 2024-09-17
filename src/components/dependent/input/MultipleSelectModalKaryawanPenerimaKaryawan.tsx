@@ -393,7 +393,7 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
             </Box>
           </ModalHeader>
 
-          <ModalBody className="scrollY">
+          <ModalBody className="scrollY" overflowY={"auto"}>
             <Alert
               flexShrink={0}
               // status="warning"
