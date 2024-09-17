@@ -158,56 +158,53 @@ export default function MultipleSelectModal({
           }
           {...props}
         >
-          <Box
-            w={"100%"}
-            overflowX={inputValue && inputValue.length > 0 ? "auto" : "hidden"}
-            className="noScroll"
-          >
-            <HStack w={"100%"}>
-              {inputValue && inputValue.length > 0 ? (
-                inputValue.map((value, i) => {
-                  return (
-                    i < maxSelectedDisplay && (
-                      <Badge
-                        key={i}
-                        borderRadius={6}
-                        bg={"var(--divider)"}
-                        textTransform={"none"}
-                        flex={"1 1 100px"}
-                        h={"24px"}
-                        pt={"5.5px"}
-                      >
-                        {value.label}
-                      </Badge>
-                    )
-                  );
-                })
-              ) : placeholder ? (
-                <Text
-                  //@ts-ignore
-                  color={props?._placeholder?.color || "#96969691"}
-                  fontWeight={400}
-                  whiteSpace={"nowrap"}
-                  overflow={"hidden"}
-                  textOverflow={"ellipsis"}
-                >
-                  {placeholder}
-                </Text>
-              ) : (
-                <Text opacity={0.3} fontWeight={400}>
-                  Multi Pilih
-                </Text>
-              )}
+          <HStack w={"calc(100% - 30px)"}>
+            {inputValue && inputValue.length > 0 ? (
+              inputValue.map((value, i) => {
+                return (
+                  i < maxSelectedDisplay && (
+                    <Badge
+                      key={i}
+                      borderRadius={6}
+                      bg={"var(--divider)"}
+                      textTransform={"none"}
+                      flex={"1 1 100px"}
+                      h={"24px"}
+                      pt={"5.5px"}
+                      whiteSpace={"nowrap"}
+                      overflow={"hidden"}
+                      textOverflow={"ellipsis"}
+                    >
+                      {value.label}
+                    </Badge>
+                  )
+                );
+              })
+            ) : placeholder ? (
+              <Text
+                //@ts-ignore
+                color={props?._placeholder?.color || "#96969691"}
+                fontWeight={400}
+                whiteSpace={"nowrap"}
+                overflow={"hidden"}
+                textOverflow={"ellipsis"}
+              >
+                {placeholder}
+              </Text>
+            ) : (
+              <Text opacity={0.3} fontWeight={400}>
+                Multi Pilih
+              </Text>
+            )}
 
-              {inputValue && inputValue.length - maxSelectedDisplay > 0 && (
-                <Badge bg={"var(--divider)"} h={"24px"} pt={"5.5px"}>
-                  +
-                  {inputValue.length - maxSelectedDisplay > 0 &&
-                    inputValue.length - maxSelectedDisplay}
-                </Badge>
-              )}
-            </HStack>
-          </Box>
+            {inputValue && inputValue.length - maxSelectedDisplay > 0 && (
+              <Badge bg={"var(--divider)"} h={"24px"} pt={"5.5px"}>
+                +
+                {inputValue.length - maxSelectedDisplay > 0 &&
+                  inputValue.length - maxSelectedDisplay}
+              </Badge>
+            )}
+          </HStack>
 
           <Icon as={RiArrowDownSLine} fontSize={18} />
         </Button>

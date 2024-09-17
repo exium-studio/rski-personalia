@@ -285,7 +285,7 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
           border={"1px solid var(--divider3)"}
           borderColor={isError ? errorColor : ""}
           borderRadius={8}
-          gap={3}
+          gap={0}
           _focus={{
             border: "1px solid var(--p500)",
             boxShadow: "none !important",
@@ -308,58 +308,56 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
               ? "8px !important"
               : "16px !important"
           }
+          // border={"1px solid green"}
           {...props}
         >
-          <Box
-            w={"100%"}
-            overflowX={inputValue && inputValue.length > 0 ? "auto" : "hidden"}
-            className="noScroll"
-          >
-            <HStack w={"100%"}>
-              {inputValue && inputValue.length > 0 ? (
-                inputValue.map((value, i) => {
-                  return (
-                    i < maxSelectedDisplay && (
-                      <Badge
-                        key={i}
-                        borderRadius={6}
-                        bg={"var(--divider)"}
-                        textTransform={"none"}
-                        flex={"1 1 100px"}
-                        h={"24px"}
-                        pt={"5.5px"}
-                      >
-                        {value.label}
-                      </Badge>
-                    )
-                  );
-                })
-              ) : placeholder ? (
-                <Text
-                  //@ts-ignore
-                  color={props?._placeholder?.color || "#96969691"}
-                  fontWeight={400}
-                  whiteSpace={"nowrap"}
-                  overflow={"hidden"}
-                  textOverflow={"ellipsis"}
-                >
-                  {placeholder}
-                </Text>
-              ) : (
-                <Text opacity={0.3} fontWeight={400}>
-                  Multi Pilih
-                </Text>
-              )}
+          <HStack w={"calc(100% - 30px)"}>
+            {inputValue && inputValue.length > 0 ? (
+              inputValue.map((value, i) => {
+                return (
+                  i < maxSelectedDisplay && (
+                    <Badge
+                      key={i}
+                      borderRadius={6}
+                      bg={"var(--divider)"}
+                      textTransform={"none"}
+                      flex={"1 1 100px"}
+                      h={"24px"}
+                      pt={"5.5px"}
+                      whiteSpace={"nowrap"}
+                      overflow={"hidden"}
+                      textOverflow={"ellipsis"}
+                    >
+                      {value.label}
+                    </Badge>
+                  )
+                );
+              })
+            ) : placeholder ? (
+              <Text
+                //@ts-ignore
+                color={props?._placeholder?.color || "#96969691"}
+                fontWeight={400}
+                whiteSpace={"nowrap"}
+                overflow={"hidden"}
+                textOverflow={"ellipsis"}
+              >
+                {placeholder}
+              </Text>
+            ) : (
+              <Text opacity={0.3} fontWeight={400}>
+                Multi Pilih
+              </Text>
+            )}
 
-              {inputValue && inputValue.length - maxSelectedDisplay > 0 && (
-                <Badge bg={"var(--divider)"} h={"24px"} pt={"5.5px"}>
-                  +
-                  {inputValue.length - maxSelectedDisplay > 0 &&
-                    inputValue.length - maxSelectedDisplay}
-                </Badge>
-              )}
-            </HStack>
-          </Box>
+            {inputValue && inputValue.length - maxSelectedDisplay > 0 && (
+              <Badge bg={"var(--divider)"} h={"24px"} pt={"5.5px"}>
+                +
+                {inputValue.length - maxSelectedDisplay > 0 &&
+                  inputValue.length - maxSelectedDisplay}
+              </Badge>
+            )}
+          </HStack>
 
           <Icon as={RiArrowDownSLine} fontSize={18} />
         </Button>
@@ -605,28 +603,30 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
             {!fo && <ComponentSpinner my={"auto"} />}
           </ModalBody>
 
-          <ModalFooter gap={2}>
-            <Button
-              className="btn-solid clicky"
-              w={"100%"}
-              onClick={() => {
-                setSelected([]);
-                setSelectAll(false);
-              }}
-            >
-              Clear
-            </Button>
+          {options && (
+            <ModalFooter gap={2}>
+              <Button
+                className="btn-solid clicky"
+                w={"100%"}
+                onClick={() => {
+                  setSelected([]);
+                  setSelectAll(false);
+                }}
+              >
+                Clear
+              </Button>
 
-            <Button
-              colorScheme="ap"
-              className="btn-ap clicky"
-              w={"100%"}
-              isDisabled={nonNullable ? (selected ? false : true) : false}
-              onClick={confirmSelected}
-            >
-              Konfirmasi
-            </Button>
-          </ModalFooter>
+              <Button
+                colorScheme="ap"
+                className="btn-ap clicky"
+                w={"100%"}
+                isDisabled={nonNullable ? (selected ? false : true) : false}
+                onClick={confirmSelected}
+              >
+                Konfirmasi
+              </Button>
+            </ModalFooter>
+          )}
         </ModalContent>
       </Modal>
     </>
