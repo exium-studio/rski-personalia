@@ -17,10 +17,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import { Pengumuman__Interface } from "../../constant/interfaces";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useDataState from "../../hooks/useDataState";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
@@ -31,6 +31,7 @@ import timeSince from "../../lib/timeSince";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardUpdatePengumuman from "../form/Dashboard/FormDashboardUpdatePengumuman";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
+import ComponentSpinner from "./ComponentSpinner";
 
 interface DeletePengumumanProps extends ButtonProps {
   data: any;
@@ -130,18 +131,32 @@ const DeletePengumuman = ({ data, ...props }: DeletePengumumanProps) => {
 };
 
 interface Props extends StackProps {
-  data: Pengumuman__Interface;
+  pengumumanId: number;
+  initialData: any;
 }
 
 export default function DashboardPengumumanItemDetail({
-  data,
+  pengumumanId,
+  initialData,
   ...props
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`detail-pengumuman-modal-${data.id}`, isOpen, onOpen, onClose);
+  useBackOnClose(
+    `detail-pengumuman-modal-${pengumumanId}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
   const initialRef = useRef(null);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
+
+  const { error, loading, data, retry } = useDataState<any>({
+    initialData: undefined,
+    url: `/api/rski/dashboard/pengumuman/${pengumumanId}`,
+    conditions: isOpen,
+    dependencies: [isOpen],
+  });
 
   // SX
   const { userPermissions } = useAuth();
@@ -162,9 +177,9 @@ export default function DashboardPengumumanItemDetail({
         {...props}
       >
         <HStack justify={"space-between"} align={"start"}>
-          <Text fontWeight={500}>{data.judul}</Text>
+          <Text fontWeight={500}>{initialData.judul}</Text>
 
-          {isDatePassed(data.tgl_berakhir, true) && (
+          {isDatePassed(initialData.tgl_berakhir, true) && (
             <Badge
               color={"red.400"}
               bg={"var(--divider)"}
@@ -177,14 +192,14 @@ export default function DashboardPengumumanItemDetail({
           )}
         </HStack>
 
-        <Text fontSize={14}>{data.konten}</Text>
+        <Text fontSize={14}>{initialData.konten}</Text>
 
         <HStack mt={"auto"} pt={2} justify={"space-between"}>
           <Text fontSize={14} opacity={0.4}>
-            diperbarui : {timeSince(data.updated_at as string)}
+            diperbarui : {timeSince(initialData.updated_at as string)}
           </Text>
           <Text fontSize={14} opacity={0.4}>
-            berakhir {formatDate(data.tgl_berakhir)}
+            berakhir {formatDate(initialData.tgl_berakhir)}
           </Text>
         </HStack>
       </VStack>
@@ -204,10 +219,14 @@ export default function DashboardPengumumanItemDetail({
           </ModalHeader>
 
           <ModalBody>
-            <FormDashboardUpdatePengumuman
-              data={data}
-              setLoading={setLoading}
-            />
+            {loading && <ComponentSpinner minH={"300px"} />}
+
+            {!loading && data && (
+              <FormDashboardUpdatePengumuman
+                data={data}
+                setLoading={setLoadingSubmit}
+              />
+            )}
           </ModalBody>
 
           <ModalFooter>
@@ -217,8 +236,8 @@ export default function DashboardPengumumanItemDetail({
                 boxProps={{ w: "100%" }}
               >
                 <DeletePengumuman
-                  data={data}
-                  isDisabled={loading || !deletePermission}
+                  data={initialData}
+                  isDisabled={loadingSubmit || !deletePermission}
                 />
               </PermissionTooltip>
 
@@ -232,7 +251,7 @@ export default function DashboardPengumumanItemDetail({
                   w={"100%"}
                   className="btn-ap clicky"
                   colorScheme="ap"
-                  isLoading={loading}
+                  isLoading={loadingSubmit}
                   isDisabled={!editPermission}
                 >
                   Simpan

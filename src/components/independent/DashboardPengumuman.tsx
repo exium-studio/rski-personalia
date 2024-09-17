@@ -131,10 +131,11 @@ export default function DashboardPengumuman({ ...props }: Props) {
                   {fd?.map((pengumuman: any, i: number) => (
                     <DashboardPengumumanItemDetail
                       key={i}
-                      data={pengumuman}
+                      pengumumanId={pengumuman.id}
                       borderBottom={
                         i < data.length - 1 ? "1px solid var(--divider2)" : ""
                       }
+                      initialData={pengumuman}
                     />
                   ))}
                 </>
