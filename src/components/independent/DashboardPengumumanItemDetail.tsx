@@ -3,6 +3,7 @@ import {
   Button,
   ButtonGroup,
   ButtonProps,
+  Center,
   HStack,
   Modal,
   ModalBody,
@@ -32,6 +33,7 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardUpdatePengumuman from "../form/Dashboard/FormDashboardUpdatePengumuman";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import ComponentSpinner from "./ComponentSpinner";
+import Retry from "../dependent/Retry";
 
 interface DeletePengumumanProps extends ButtonProps {
   data: any;
@@ -221,11 +223,21 @@ export default function DashboardPengumumanItemDetail({
           <ModalBody>
             {loading && <ComponentSpinner minH={"300px"} />}
 
-            {!loading && data && (
-              <FormDashboardUpdatePengumuman
-                data={data}
-                setLoading={setLoadingSubmit}
-              />
+            {!loading && (
+              <>
+                {error && (
+                  <Center>
+                    <Retry loading={loading} retry={retry} />
+                  </Center>
+                )}
+
+                {!error && data && (
+                  <FormDashboardUpdatePengumuman
+                    data={data}
+                    setLoading={setLoadingSubmit}
+                  />
+                )}
+              </>
             )}
           </ModalBody>
 
