@@ -24,6 +24,7 @@ import {
   ModalOverlay,
   Text,
   Tooltip,
+  useToast,
   Wrap,
 } from "@chakra-ui/react";
 import { RiArrowDownSLine, RiSearch2Line } from "@remixicon/react";
@@ -34,15 +35,17 @@ import { iconSize, responsiveSpacing } from "../../../constant/sizes";
 import useBackOnClose from "../../../hooks/useBackOnClose";
 import useScreenHeight from "../../../hooks/useScreenHeight";
 import backOnClose from "../../../lib/backOnClose";
+import req from "../../../lib/req";
 import ComponentSpinner from "../../independent/ComponentSpinner";
 import NotFound from "../../independent/NotFound";
 import CContainer from "../../independent/wrapper/CContainer";
 import DisclosureHeader from "../DisclosureHeader";
 import SearchComponent from "./SearchComponent";
-import req from "../../../lib/req";
 
-const ListUnitKerja = ({ listKaryawan, setSelected }: any) => {
+const ListUnitKerja = ({ listKaryawan, selected, setSelected }: any) => {
   const [options, setOptions] = useState<any>(undefined);
+
+  const toast = useToast();
 
   useEffect(() => {
     if (!options) {
@@ -68,22 +71,50 @@ const ListUnitKerja = ({ listKaryawan, setSelected }: any) => {
     data?.label?.toLowerCase().includes(search.toLowerCase())
   );
 
-  function handleSelectKaryawanByUnitKerja(uniKerjaId: number) {
-    // console.log(listKaryawan);
+  function handleSelectKaryawanByUnitKerja(unitKerja: any) {
     const selectedKaryawan = listKaryawan
-      .filter((karyawan: any) => karyawan?.unit_kerja?.id === uniKerjaId)
+      .filter((karyawan: any) => karyawan?.unit_kerja?.id === unitKerja.id)
       .map((karyawan: any) => ({
         value: karyawan.id,
         label: karyawan.user.nama,
       }));
-    // console.log(selectedKaryawan);
-    setSelected(selectedKaryawan);
+
+    // Update selected state with new karyawan if they are not already selected
+    setSelected((prevSelected: any[]) => {
+      const updatedSelected = [...prevSelected];
+
+      selectedKaryawan.forEach((newKaryawan: any) => {
+        // Check if the new karyawan is already in the selected array
+        const isAlreadySelected = updatedSelected.some(
+          (selected) => selected.value === newKaryawan.value
+        );
+
+        // Append only if not already selected
+        if (!isAlreadySelected) {
+          updatedSelected.push(newKaryawan);
+        }
+      });
+
+      return updatedSelected;
+    });
+
+    toast({
+      status: "success",
+      title: `Semua karyawan di Unit Kerja ${unitKerja.label} terpilih`,
+      isClosable: true,
+      position: "bottom-right",
+    });
   }
 
   return (
-    <Accordion allowToggle mb={4}>
-      <AccordionItem bg={"var(--divider)"} borderRadius={8} border={"none"}>
-        <AccordionButton>
+    <Accordion allowToggle mb={2}>
+      <AccordionItem
+        bg={"var(--divider)"}
+        borderRadius={8}
+        border={"none"}
+        overflow={"clip"}
+      >
+        <AccordionButton as={Button} size={"lg"} className="btn">
           <HStack w={"100%"} justify={"space-between"}>
             <Text>Pilih Karyawan Berdasarkan Unit Kerja</Text>
             <AccordionIcon />
@@ -132,7 +163,7 @@ const ListUnitKerja = ({ listKaryawan, setSelected }: any) => {
                       className="btn-outline"
                       borderRadius={"full"}
                       onClick={() => {
-                        handleSelectKaryawanByUnitKerja(item.id);
+                        handleSelectKaryawanByUnitKerja(item);
                       }}
                     >
                       {item?.label}
@@ -366,17 +397,19 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
             <Alert
               flexShrink={0}
               // status="warning"
-              mb={responsiveSpacing}
+              mb={2}
               alignItems={"start"}
             >
               <AlertIcon />
               <AlertDescription maxW={"640px !important"}>
-                Klik Unit Kerja untuk memilih karyawan di unit kerja tersebut
+                Klik Unit Kerja untuk memilih semua karyawan di unit kerja
+                tersebut
               </AlertDescription>
             </Alert>
 
             <ListUnitKerja
               listKaryawan={listKaryawan}
+              selected={selected}
               setSelected={setSelected}
             />
 
