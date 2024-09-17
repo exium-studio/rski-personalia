@@ -7,18 +7,18 @@ import {
 import { useFormik } from "formik";
 import { Dispatch } from "react";
 import * as yup from "yup";
-import { Pengumuman__Interface } from "../../../constant/interfaces";
-import req from "../../../lib/req";
 import useRenderTrigger from "../../../hooks/useRenderTrigger";
 import backOnClose from "../../../lib/backOnClose";
 import formatDate from "../../../lib/formatDate";
+import req from "../../../lib/req";
 import DatePickerModal from "../../dependent/input/DatePickerModal";
 import StringInput from "../../dependent/input/StringInput";
 import Textarea from "../../dependent/input/Textarea";
 import RequiredForm from "../RequiredForm";
+import MultiSelectKaryawanPenerimaPengumuman from "../../dependent/_Select/MultiSelectKaryawanPenerimaPengumuman";
 
 interface Props {
-  data: Pengumuman__Interface;
+  data: any;
   setLoading: Dispatch<boolean>;
 }
 
@@ -35,17 +35,23 @@ export default function FormDashboardUpdatePengumuman({
       judul: data.judul,
       konten: data.konten,
       tgl_berakhir: new Date(formatDate(data.tgl_berakhir, "iso")),
+      user_id: data.user_id?.map((item: any) => ({
+        value: item.id,
+        label: item.nama,
+      })),
     },
     validationSchema: yup.object().shape({
       judul: yup.string().required("Judul harus diisi"),
       konten: yup.string().required("Pengumuman harus diisi"),
       tgl_berakhir: yup.string().required("Pengumuman harus diisi"),
+      user_id: yup.array().required("Pengumuman harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         judul: values.judul,
         konten: values.konten,
         tgl_berakhir: formatDate(values.tgl_berakhir, "short"),
+        user_id: values?.user_id?.map((user: any) => user.value),
         _method: "patch",
       };
       setLoading(true);
@@ -83,6 +89,24 @@ export default function FormDashboardUpdatePengumuman({
 
   return (
     <form id="updatePengumumanForm" onSubmit={formik.handleSubmit}>
+      <FormControl mb={4} isInvalid={!!formik.errors.user_id}>
+        <FormLabel>
+          Karyawan Penerima
+          <RequiredForm />
+        </FormLabel>
+        <MultiSelectKaryawanPenerimaPengumuman
+          name="user_id"
+          placeholder="Karyawan Penerima"
+          onConfirm={(input) => {
+            formik.setFieldValue("user_id", input);
+          }}
+          inputValue={formik.values.user_id}
+          optionsDisplay="chip"
+          isError={!!formik.errors.user_id}
+        />
+        <FormErrorMessage>{formik.errors.user_id as string}</FormErrorMessage>
+      </FormControl>
+
       <FormControl mb={4} isInvalid={formik.errors.judul ? true : false}>
         <FormLabel>
           Judul
@@ -96,7 +120,7 @@ export default function FormDashboardUpdatePengumuman({
           }}
           inputValue={formik.values.judul}
         />
-        <FormErrorMessage>{formik.errors.judul}</FormErrorMessage>
+        <FormErrorMessage>{formik.errors.judul as string}</FormErrorMessage>
       </FormControl>
 
       <FormControl mb={4} isInvalid={formik.errors.tgl_berakhir ? true : false}>
@@ -130,7 +154,7 @@ export default function FormDashboardUpdatePengumuman({
           }}
           inputValue={formik.values.konten}
         />
-        <FormErrorMessage>{formik.errors.konten}</FormErrorMessage>
+        <FormErrorMessage>{formik.errors.konten as string}</FormErrorMessage>
       </FormControl>
     </form>
   );
