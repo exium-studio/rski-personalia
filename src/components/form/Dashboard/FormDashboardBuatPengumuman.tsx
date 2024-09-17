@@ -15,6 +15,7 @@ import Textarea from "../../dependent/input/Textarea";
 import RequiredForm from "../RequiredForm";
 import formatDate from "../../../lib/formatDate";
 import backOnClose from "../../../lib/backOnClose";
+import MultiSelectKaryawanPenerimaPengumuman from "../../dependent/_Select/MultiSelectKaryawanPenerimaPengumuman";
 
 interface Props {
   forwardRef: MutableRefObject<null>;
@@ -34,23 +35,26 @@ export default function FormDashboardBuatPengumuman({
       judul: "",
       konten: "",
       tgl_berakhir: undefined as any,
+      user_id: [] as any[],
     },
     validationSchema: yup.object().shape({
       judul: yup.string().required("Judul harus diisi"),
-      konten: yup.string().required("Pengumuman harus diisi"),
-      tgl_berakhir: yup.string().required("Pengumuman harus diisi"),
+      konten: yup.string().required("Harus diisi"),
+      tgl_berakhir: yup.string().required("Harus diisi"),
+      user_id: yup.array().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         judul: values.judul,
         konten: values.konten,
         tgl_berakhir: formatDate(values.tgl_berakhir, "short"),
+        user_id: values?.user_id?.map((user: any) => user.value),
       };
       setLoading(true);
       req
         .post(`/api/rski/dashboard/pengumuman`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r.status === 201) {
             toast({
               status: "success",
               title: r.data.message,
@@ -80,9 +84,29 @@ export default function FormDashboardBuatPengumuman({
     },
   });
 
+  console.log("formik", formik.values.user_id);
+
   return (
     <form id="buatPengumumanForm" onSubmit={formik.handleSubmit}>
-      <FormControl mb={4} isInvalid={formik.errors.judul ? true : false}>
+      <FormControl mb={4} isInvalid={!!formik.errors.user_id}>
+        <FormLabel>
+          Karyawan Penerima
+          <RequiredForm />
+        </FormLabel>
+        <MultiSelectKaryawanPenerimaPengumuman
+          name="user_id"
+          placeholder="Karyawan Penerima"
+          onConfirm={(input) => {
+            formik.setFieldValue("user_id", input);
+          }}
+          inputValue={formik.values.user_id}
+          optionsDisplay="chip"
+          isError={!!formik.errors.user_id}
+        />
+        <FormErrorMessage>{formik.errors.user_id as string}</FormErrorMessage>
+      </FormControl>
+
+      <FormControl mb={4} isInvalid={!!formik.errors.judul}>
         <FormLabel>
           Judul
           <RequiredForm />
@@ -98,7 +122,7 @@ export default function FormDashboardBuatPengumuman({
         <FormErrorMessage>{formik.errors.judul}</FormErrorMessage>
       </FormControl>
 
-      <FormControl mb={4} isInvalid={formik.errors.tgl_berakhir ? true : false}>
+      <FormControl mb={4} isInvalid={!!formik.errors.tgl_berakhir}>
         <FormLabel>
           Tanggal Berakhir
           <RequiredForm />
@@ -116,7 +140,7 @@ export default function FormDashboardBuatPengumuman({
         </FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={formik.errors.konten ? true : false}>
+      <FormControl isInvalid={!!formik.errors.konten}>
         <FormLabel>
           Pengumuman
           <RequiredForm />
