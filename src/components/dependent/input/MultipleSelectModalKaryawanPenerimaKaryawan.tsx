@@ -107,7 +107,7 @@ const ListUnitKerja = ({ listKaryawan, selected, setSelected }: any) => {
   }
 
   return (
-    <Accordion allowToggle mb={2}>
+    <Accordion allowToggle mb={4}>
       <AccordionItem
         bg={"var(--divider)"}
         borderRadius={8}
@@ -395,7 +395,7 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
             <Alert
               flexShrink={0}
               // status="warning"
-              mb={2}
+              mb={4}
               alignItems={"start"}
             >
               <AlertIcon />
