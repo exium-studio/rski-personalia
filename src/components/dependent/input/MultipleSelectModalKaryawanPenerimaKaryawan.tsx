@@ -4,12 +4,18 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Badge,
   Box,
   Button,
   Checkbox,
   HStack,
   Icon,
+  Input,
+  InputGroup,
+  InputLeftElement,
   Modal,
   ModalBody,
   ModalContent,
@@ -20,11 +26,11 @@ import {
   Tooltip,
   Wrap,
 } from "@chakra-ui/react";
-import { RiArrowDownSLine } from "@remixicon/react";
+import { RiArrowDownSLine, RiSearch2Line } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { useErrorColor } from "../../../constant/colors";
 import { Interface__SelectOption } from "../../../constant/interfaces";
-import { responsiveSpacing } from "../../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../../constant/sizes";
 import useBackOnClose from "../../../hooks/useBackOnClose";
 import useScreenHeight from "../../../hooks/useScreenHeight";
 import backOnClose from "../../../lib/backOnClose";
@@ -57,6 +63,11 @@ const ListUnitKerja = ({ listKaryawan, setSelected }: any) => {
     }
   }, [options]);
 
+  const [search, setSearch] = useState<string>("");
+  const fd = options?.filter((data: any) =>
+    data?.label?.toLowerCase().includes(search.toLowerCase())
+  );
+
   function handleSelectKaryawanByUnitKerja(uniKerjaId: number) {
     // console.log(listKaryawan);
     const selectedKaryawan = listKaryawan
@@ -71,7 +82,7 @@ const ListUnitKerja = ({ listKaryawan, setSelected }: any) => {
 
   return (
     <Accordion allowToggle mb={4}>
-      <AccordionItem bg={"var(--divider)"} borderRadius={8}>
+      <AccordionItem bg={"var(--divider)"} borderRadius={8} border={"none"}>
         <AccordionButton>
           <HStack w={"100%"} justify={"space-between"}>
             <Text>Pilih Karyawan Berdasarkan Unit Kerja</Text>
@@ -81,20 +92,54 @@ const ListUnitKerja = ({ listKaryawan, setSelected }: any) => {
         <AccordionPanel px={4}>
           {!options && <ComponentSpinner minH={"300px"} />}
 
+          <InputGroup
+            position={"sticky"}
+            top={0}
+            mb={4}
+            // bg={useBodyColor()}
+            zIndex={2}
+          >
+            <InputLeftElement>
+              <Icon as={RiSearch2Line} fontSize={iconSize} opacity={0.4} />
+            </InputLeftElement>
+
+            <Input
+              name="search"
+              placeholder="Pencarian"
+              border={"0 !important"}
+              borderBottom={"1px solid var(--divider) !important"}
+              borderRadius={"0 !important"}
+              _focus={{
+                border: "0 !important",
+                borderBottom: "1px solid var(--p500) !important",
+              }}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+              value={search}
+            />
+          </InputGroup>
+
           <Wrap spacing={2}>
-            {options &&
-              options?.map((item: any, i: number) => (
-                <Button
-                  key={i}
-                  className="btn-outline"
-                  borderRadius={"full"}
-                  onClick={() => {
-                    handleSelectKaryawanByUnitKerja(item.id);
-                  }}
-                >
-                  {item?.label}
-                </Button>
-              ))}
+            {options && (
+              <>
+                {fd.length === 0 && <NotFound minH={"300px"} />}
+
+                {fd.length > 0 &&
+                  fd?.map((item: any, i: number) => (
+                    <Button
+                      key={i}
+                      className="btn-outline"
+                      borderRadius={"full"}
+                      onClick={() => {
+                        handleSelectKaryawanByUnitKerja(item.id);
+                      }}
+                    >
+                      {item?.label}
+                    </Button>
+                  ))}
+              </>
+            )}
           </Wrap>
         </AccordionPanel>
       </AccordionItem>
@@ -318,6 +363,18 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
           </ModalHeader>
 
           <ModalBody className="scrollY">
+            <Alert
+              flexShrink={0}
+              // status="warning"
+              mb={responsiveSpacing}
+              alignItems={"start"}
+            >
+              <AlertIcon />
+              <AlertDescription maxW={"640px !important"}>
+                Klik Unit Kerja untuk memilih karyawan di unit kerja tersebut
+              </AlertDescription>
+            </Alert>
+
             <ListUnitKerja
               listKaryawan={listKaryawan}
               setSelected={setSelected}
