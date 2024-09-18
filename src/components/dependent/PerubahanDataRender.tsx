@@ -119,7 +119,7 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
               </>
             )}
 
-            {!data && <NoData minH={"300px"} />}
+            {(!data || data?.length === 0) && <NoData minH={"300px"} />}
           </ModalBody>
           <ModalFooter>
             <Button
