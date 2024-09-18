@@ -19,17 +19,25 @@ import formatDate from "../../lib/formatDate";
 import formatTime from "../../lib/formatTime";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
+import AvatarAndNameTableData from "./AvatarAndNameTableData";
 
 interface PertukaranJadwalProps {
   id: number;
   data: any;
+  userPengajuan: any;
+  userDitukar: any;
 }
 export default function PertukaranJadwalModal({
   id,
   data,
+  userPengajuan,
+  userDitukar,
 }: PertukaranJadwalProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`pertukaran-jadwal-modal-${id}`, isOpen, onOpen, onClose);
+
+  // console.log(data);
+  console.log(userPengajuan, userDitukar);
 
   return (
     <>
@@ -55,6 +63,29 @@ export default function PertukaranJadwalModal({
             <DisclosureHeader title={"Pertukaran Jadwal"} />
           </ModalHeader>
           <ModalBody>
+            <HStack mb={4} gap={16}>
+              <CContainer>
+                <AvatarAndNameTableData
+                  w={"180px"}
+                  data={{
+                    id: userPengajuan.id,
+                    nama: userPengajuan.nama,
+                    foto_profil: userPengajuan.foto_profil,
+                  }}
+                />
+              </CContainer>
+              <CContainer>
+                <AvatarAndNameTableData
+                  w={"180px"}
+                  data={{
+                    id: userDitukar.id,
+                    nama: userDitukar.nama,
+                    foto_profil: userDitukar.foto_profil,
+                  }}
+                />
+              </CContainer>
+            </HStack>
+
             {data?.map((pertukaran: any, i: number) => (
               <HStack key={i}>
                 <CContainer gap={2} flex={1}>

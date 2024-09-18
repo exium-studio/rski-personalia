@@ -173,7 +173,12 @@ export default function TabelKaryawan({ filterConfig }: Props) {
       {
         value: item.pertukaran_jadwal,
         td: (
-          <PertukaranJadwalModal id={item.id} data={item.pertukaran_jadwal} />
+          <PertukaranJadwalModal
+            id={item.id}
+            userPengajuan={item.karyawan_pengajuan}
+            userDitukar={item.karyawan_ditukar}
+            data={item.pertukaran_jadwal}
+          />
         ),
         cProps: {
           justify: "center",
