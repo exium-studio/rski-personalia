@@ -49,7 +49,7 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
         Lihat
       </Button>
 
-      <Modal
+      <Modal 
         isOpen={isOpen}
         onClose={backOnClose}
         isCentered
