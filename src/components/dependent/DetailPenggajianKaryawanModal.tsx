@@ -356,6 +356,93 @@ export default function DetailPenggajianKaryawanModal({
     onOpen,
     onClose
   );
+
+  // const dummy = {
+  //   pendapatan: {
+  //     pendapatan_tetap: [
+  //       {
+  //         nama_detail: "Gaji Pokok",
+  //         besaran: 100000,
+  //       },
+  //       {
+  //         nama_detail: "Tunjangan Jabatan",
+  //         besaran: 100000,
+  //       },
+  //       {
+  //         nama_detail: "Tunjangan Fungsional",
+  //         besaran: 100000,
+  //       },
+  //       {
+  //         nama_detail: "Tunjangan Khusus",
+  //         besaran: 100000,
+  //       },
+  //       {
+  //         nama_detail: "Tunjangan Lainnya",
+  //         besaran: 100000,
+  //       },
+  //     ],
+  //     pendapatan_tambahan: [
+  //       {
+  //         nama_detail: "Uang Lembur",
+  //         besaran: 100000,
+  //       },
+  //       {
+  //         nama_detail: "Uang Makan",
+  //         besaran: 100000,
+  //       },
+
+  //       // dinamis jika ada
+  //       {
+  //         nama_detail: "Reward BOR",
+  //         besaran: 100000,
+  //       },
+  //       {
+  //         nama_detail: "Reward Absensi",
+  //         besaran: 100000,
+  //       },
+  //       {
+  //         nama_detail: "THR",
+  //         besaran: 100000,
+  //       },
+
+  //       // dinamis ambil dari tabel penyesuaian gaji yang potongan
+  //       {
+  //         nama_detail: "Penyesuaian Gaji (ambil kolom nama_detail)",
+  //         besaran: 100000,
+  //       },
+  //     ],
+  //   },
+  //   potongan: {
+  //     potongan_tetap: [
+  //       {
+  //         nama_detail: "PPH21",
+  //         besaran: 100000,
+  //       },
+
+  //       // dinamis sesuai master data potongan (contaoh nya ada 3 ini)
+  //       {
+  //         nama_detail: "BPJS Kesehatan",
+  //         besaran: 100000,
+  //       },
+  //       {
+  //         nama_detail: "BPJS Ketenagakerjaan",
+  //         besaran: 100000,
+  //       },
+  //       {
+  //         nama_detail: "DPLK",
+  //         besaran: 100000,
+  //       },
+  //     ],
+  //     potongan_tambahan: [
+  //       // dinamis ambil dari tabel penyesuaian gaji yang potongan
+  //       {
+  //         nama_detail: "Penyesuaian Gaji (ambil kolom nama_detail)",
+  //         besaran: 100000,
+  //       },
+  //     ],
+  //   },
+  // };
+
   const initialRef = useRef(null);
   const { error, loading, data, retry } = useDataState<any>({
     initialData: undefined,
