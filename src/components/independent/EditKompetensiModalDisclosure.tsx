@@ -56,22 +56,22 @@ export default function EditKompetensiModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      nama_kompetensi: undefined as any,
+      nama_kompetensi: "" as any,
       jenis_kompetensi: undefined as any,
-      total_tunjangan: undefined as any,
+      // total_tunjangan: undefined as any,
       nilai_bor: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_kompetensi: yup.string().required("Harus diisi"),
       jenis_kompetensi: yup.object().required("Harus diisi"),
-      total_tunjangan: yup.number().required("Harus diisi"),
+      // total_tunjangan: yup.number().required("Harus diisi"),
       nilai_bor: yup.number().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_kompetensi: values.nama_kompetensi,
         jenis_kompetensi: values.jenis_kompetensi.value,
-        tunjangan_kompetensi: values.total_tunjangan,
+        // tunjangan_kompetensi: values.total_tunjangan,
         nilai_bor: values.nilai_bor,
         _method: "patch",
       };
@@ -123,13 +123,13 @@ export default function EditKompetensiModalDisclosure({
       value: rowData.columnsFormat[2].value,
       label: rowData.columnsFormat[2].value ? "Medis" : "Non-Medis",
     });
-    formikRef.current.setFieldValue(
-      "total_tunjangan",
-      rowData.columnsFormat[3].value
-    );
+    // formikRef.current.setFieldValue(
+    //   "total_tunjangan",
+    //   rowData.columnsFormat[3].value
+    // );
     formikRef.current.setFieldValue(
       "nilai_bor",
-      rowData.columnsFormat[4].value
+      rowData.columnsFormat[3].value
     );
   }, [isOpen, rowData, formikRef]);
 
@@ -203,7 +203,7 @@ export default function EditKompetensiModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
+              {/* <FormControl
                 mb={4}
                 isInvalid={formik.errors.total_tunjangan ? true : false}
               >
@@ -228,7 +228,7 @@ export default function EditKompetensiModalDisclosure({
                 <FormErrorMessage>
                   {formik.errors.total_tunjangan as string}
                 </FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
 
               <FormControl isInvalid={formik.errors.nilai_bor ? true : false}>
                 <FormLabel>

@@ -48,20 +48,20 @@ export default function TambahKompetensi({ ...props }: Props) {
     initialValues: {
       nama_kompetensi: "" as any,
       jenis_kompetensi: "" as any,
-      total_tunjangan: undefined,
+      // total_tunjangan: undefined,
       nilai_bor: undefined,
     },
     validationSchema: yup.object().shape({
       nama_kompetensi: yup.string().required("Harus diisi"),
       jenis_kompetensi: yup.object().required("Harus diisi"),
-      total_tunjangan: yup.number().required("Harus diisi"),
+      // total_tunjangan: yup.number().required("Harus diisi"),
       nilai_bor: yup.number().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_kompetensi: values.nama_kompetensi,
         jenis_kompetensi: values.jenis_kompetensi.value,
-        tunjangan_kompetensi: values.total_tunjangan,
+        // tunjangan_kompetensi: values.total_tunjangan,
         nilai_bor: values.nilai_bor,
       };
       setLoading(true);
@@ -170,7 +170,7 @@ export default function TambahKompetensi({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
+              {/* <FormControl
                 mb={4}
                 isInvalid={formik.errors.total_tunjangan ? true : false}
               >
@@ -195,7 +195,7 @@ export default function TambahKompetensi({ ...props }: Props) {
                 <FormErrorMessage>
                   {formik.errors.total_tunjangan as string}
                 </FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
 
               <FormControl isInvalid={formik.errors.nilai_bor ? true : false}>
                 <FormLabel>

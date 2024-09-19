@@ -142,13 +142,13 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
         justify: "center",
       },
     },
-    {
-      th: "Tunjangan Kompetensi",
-      isSortable: true,
-      cProps: {
-        justify: "end",
-      },
-    },
+    // {
+    //   th: "Tunjangan Kompetensi",
+    //   isSortable: true,
+    //   cProps: {
+    //     justify: "end",
+    //   },
+    // },
     {
       th: "Nilai BOR",
       isSortable: true,
@@ -212,14 +212,14 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
           justify: "center",
         },
       },
-      {
-        value: item.tunjangan_kompetensi,
-        td: `Rp ${formatNumber(item.tunjangan_kompetensi)}`,
-        isNumeric: true,
-        cProps: {
-          justify: "end",
-        },
-      },
+      // {
+      //   value: item.tunjangan_kompetensi,
+      //   td: `Rp ${formatNumber(item.tunjangan_kompetensi)}`,
+      //   isNumeric: true,
+      //   cProps: {
+      //     justify: "end",
+      //   },
+      // },
       {
         value: item.nilai_bor,
         td: `Rp ${formatNumber(item.nilai_bor)}`,
