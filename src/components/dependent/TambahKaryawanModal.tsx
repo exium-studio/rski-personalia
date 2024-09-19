@@ -641,7 +641,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl
+        {/* <FormControl
           mb={4}
           flex={"1 1 300px"}
           isInvalid={!!formik.errors.tunjangan_kompetensi}
@@ -671,7 +671,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           <FormErrorMessage>
             {formik.errors.tunjangan_kompetensi as string}
           </FormErrorMessage>
-        </FormControl>
+        </FormControl> */}
 
         <FormControl
           mb={4}

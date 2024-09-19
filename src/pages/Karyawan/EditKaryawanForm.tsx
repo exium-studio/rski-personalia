@@ -340,7 +340,7 @@ export default function EditKaryawanForm({
     },
   });
 
-  console.log(formik.values);
+  // console.log(formik.values);
 
   const handleNext = () => {
     formik.validateForm().then((errors) => {
@@ -755,7 +755,7 @@ export default function EditKaryawanForm({
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl
+        {/*<FormControl
           mb={4}
           flex={"1 1 300px"}
           isInvalid={!!formik.errors.tunjangan_kompetensi}
@@ -785,7 +785,7 @@ export default function EditKaryawanForm({
           <FormErrorMessage>
             {formik.errors.tunjangan_kompetensi as string}
           </FormErrorMessage>
-        </FormControl>
+        </FormControl> */}
 
         <FormControl
           mb={4}
