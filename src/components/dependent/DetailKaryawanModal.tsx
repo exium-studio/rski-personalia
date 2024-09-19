@@ -1638,7 +1638,7 @@ export default function DetailKaryawanModal({
                                       unhighlightClassName="uw"
                                       searchWords={searchQuery}
                                       autoEscape={true}
-                                      textToHighlight="Masa Diklat"
+                                      textToHighlight="Total Masa Diklat"
                                     />
                                   </Box>
                                   <FlexLine />
