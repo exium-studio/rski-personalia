@@ -110,8 +110,9 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
                       <FlexLine />
                       <BooleanBadge
                         data={anggota.is_bpjs}
-                        trueValue="Ya"
-                        falseValue="Tidak"
+                        trueValue="Ditanggung"
+                        falseValue="Tidak Ditanggung"
+                        w={"150px"}
                       />
                     </HStack>
                   </CContainer>

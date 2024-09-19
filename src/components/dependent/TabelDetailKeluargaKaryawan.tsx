@@ -82,6 +82,13 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
       th: "Email",
       isSortable: true,
     },
+    {
+      th: "Tanggungan BPJS",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
     // {
     //   th: "Verif. 1",
     //   props: {
@@ -145,6 +152,20 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
       {
         value: item.email,
         td: item.email,
+      },
+      {
+        value: item.is_bpjs,
+        td: (
+          <BooleanBadge
+            data={item.is_bpjs}
+            trueValue="Ditanggung"
+            falseValue="Tidak Ditanggung"
+            w={"150px"}
+          />
+        ),
+        cProps: {
+          justify: "center",
+        },
       },
       // {
       //   value: "",
