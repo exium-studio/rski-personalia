@@ -123,11 +123,10 @@ export default function AjukanCutiModal({ ...props }: Props) {
             <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
               <AlertIcon />
               <AlertDescription maxW={"640px !important"}>
-                Jika tanggal cuti yang diverifikasi tumpang tindih dengan jadwal
-                kerja, jadwal tersebut akan dihapus. Jadwal tukar dan lembur
-                dalam rentang tanggal cuti juga akan disesuaikan. Jika jadwal
-                tukar terhapus, jadwal yang ditukar akan dikembalikan ke kondisi
-                semula.
+                Jika tanggal cuti yang terverifikasi bentrok dengan jadwal
+                kerja, lembur, atau tukar jadwal dalam rentang tanggal cuti,
+                semua jadwal tersebut akan dihapus/disesuaikan. Jika data tukar
+                jadwal dihapus, jadwal awal akan dikembalikan ke kondisi semula.
               </AlertDescription>
             </Alert>
             <form id="ajukanCutiForm" onSubmit={formik.handleSubmit}>

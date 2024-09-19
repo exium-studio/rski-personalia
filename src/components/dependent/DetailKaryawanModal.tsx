@@ -1906,7 +1906,25 @@ export default function DetailKaryawanModal({
                                 </HStack>
 
                                 <HStack justify={"space-between"}>
-                                  {/* <Text opacity={0.6}>Jabatan</Text> */}
+                                  <Box opacity={0.6}>
+                                    <Highlighter
+                                      highlightClassName="hw"
+                                      unhighlightClassName="uw"
+                                      searchWords={searchQuery}
+                                      autoEscape={true}
+                                      textToHighlight="Besaran BOR"
+                                    />
+                                  </Box>
+                                  <FlexLine />
+                                  <Text fontWeight={500} textAlign={"right"}>
+                                    Rp{" "}
+                                    {formatNumber(
+                                      data.kompetensi?.nilai_bor || 0
+                                    )}
+                                  </Text>
+                                </HStack>
+
+                                {/* <HStack justify={"space-between"}>
                                   <Box opacity={0.6}>
                                     <Highlighter
                                       highlightClassName="hw"
@@ -1923,7 +1941,7 @@ export default function DetailKaryawanModal({
                                       data.kompetensi?.tunjangan_kompetensi || 0
                                     )}
                                   </Text>
-                                </HStack>
+                                </HStack> */}
 
                                 <HStack justify={"space-between"}>
                                   {/* <Text opacity={0.6}>Fungsional</Text> */}
@@ -2012,7 +2030,7 @@ export default function DetailKaryawanModal({
                                         fontWeight={500}
                                         textAlign={"right"}
                                       >
-                                        {potongan.kategori_potongan_id === 1
+                                        {potongan.jenis_premi === "0"
                                           ? `${formatNumber(
                                               potongan.besaran_premi || 0
                                             )}%`
