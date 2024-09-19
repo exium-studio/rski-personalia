@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Avatar,
   Box,
   Button,
@@ -171,6 +174,14 @@ function PenyesuaianGajiButtonModal({
             />
           </ModalHeader>
           <ModalBody>
+            <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
+              <AlertIcon />
+              <AlertDescription maxW={"640px !important"}>
+                Tambah Pendapatan menambah gaji bruto, memengaruhi PPh 21.
+                Tambah Potongan langsung mengurangi Take Home Pay tanpa
+                mempengaruhi pajak.
+              </AlertDescription>
+            </Alert>
             <form
               id="penyesuaianTakeHomePayForm"
               onSubmit={formik.handleSubmit}
@@ -411,15 +422,16 @@ export default function DetailPenggajianKaryawanModal({
   //         besaran: 100000,
   //       },
   //     ],
+  //     total_pendapatan: 1000000,
   //   },
   //   potongan: {
   //     potongan_tetap: [
   //       {
-  //         nama_detail: "PPH21",
+  //         nama_detail: "PPh21",
   //         besaran: 100000,
   //       },
 
-  //       // dinamis sesuai master data potongan (contaoh nya ada 3 ini)
+  //       // dinamis sesuai master data potongan (contoh nya ada 3 ini)
   //       {
   //         nama_detail: "BPJS Kesehatan",
   //         besaran: 100000,
@@ -439,7 +451,14 @@ export default function DetailPenggajianKaryawanModal({
   //         nama_detail: "Penyesuaian Gaji (ambil kolom nama_detail)",
   //         besaran: 100000,
   //       },
+
+  //       // dinamis ambil dari tabel tagihan potongan
+  //       {
+  //         nama_detail: "Tagihan Potongan (ambil kolom nama_detail)",
+  //         besaran: 100000,
+  //       },
   //     ],
+  //     total_potongan: 1000000,
   //   },
   // };
 
