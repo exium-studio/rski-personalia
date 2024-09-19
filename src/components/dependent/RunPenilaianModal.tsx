@@ -302,6 +302,7 @@ export default function RunPenilaianModal({ user_id, ...props }: Props) {
           backOnClose();
         }}
         isCentered
+        scrollBehavior="inside"
         blockScrollOnMount={false}
       >
         <ModalOverlay />
@@ -309,8 +310,13 @@ export default function RunPenilaianModal({ user_id, ...props }: Props) {
           <ModalHeader>
             <DisclosureHeader title={"Pilih Jenis Penilaian"} />
           </ModalHeader>
-          <ModalBody>
-            <Alert status="warning" alignItems={"start"} mb={responsiveSpacing}>
+          <ModalBody className="scrollY">
+            <Alert
+              flexShrink={0}
+              status="warning"
+              alignItems={"start"}
+              mb={responsiveSpacing}
+            >
               <AlertIcon />
               <AlertDescription>
                 Pilih jenis penilaian karyawan kemudian klik Konfirmasi &
