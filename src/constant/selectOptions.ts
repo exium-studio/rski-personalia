@@ -181,6 +181,10 @@ const optionsSumberPotongan = [
     value: 2,
     label: "Gaji Pokok",
   },
+  {
+    value: 3,
+    label: "Gaji Total",
+  },
 ];
 
 const optionsStatusKepegawaian = [

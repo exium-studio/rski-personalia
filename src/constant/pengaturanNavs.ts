@@ -5,6 +5,7 @@ import {
   RiCalendarLine,
   RiCalendarScheduleLine,
   RiFilePaper2Line,
+  RiGraduationCapLine,
   RiGroup3Line,
   RiHandCoinLine,
   RiIdCardLine,
@@ -38,9 +39,15 @@ const pengaturanNavs = [
     ],
   },
   {
-    allowed: [80, 72, 69, 76, 114, 84],
-    groupName: "Kepegawaian",
+    allowed: [80, 72, 69, 76, 114, 84, 125],
+    groupName: "Karyawan",
     navs: [
+      {
+        allowed: [125],
+        icon: RiGraduationCapLine,
+        label: "Pendidikan Terakhir",
+        link: "/pengaturan/karyawan/pendidikan",
+      },
       {
         allowed: [80],
         icon: RiWalletLine,
