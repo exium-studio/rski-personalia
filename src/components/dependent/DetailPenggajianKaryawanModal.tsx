@@ -486,30 +486,6 @@ export default function DetailPenggajianKaryawanModal({
     setSearchQuery(modifiedWords);
   }, [search]);
 
-  const totalPendapatan = (detailGaji: any[]): number => {
-    let total: number = 0;
-
-    detailGaji.forEach((item) => {
-      if (item.kategori_gaji?.id === 1 || item.kategori_gaji?.id === 2) {
-        total += item?.besaran;
-      }
-    });
-
-    return total;
-  };
-
-  const totalPotongan = (detailGaji: any[]): number => {
-    let total: number = 0;
-
-    detailGaji.forEach((item) => {
-      if (item.kategori_gaji?.id === 3) {
-        total += item?.besaran;
-      }
-    });
-
-    return total;
-  };
-
   // SX
   const lightDarkColor = useLightDarkColor();
   const errorColor = useErrorColor();
