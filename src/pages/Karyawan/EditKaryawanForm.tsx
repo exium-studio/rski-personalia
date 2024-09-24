@@ -220,6 +220,7 @@ export default function EditKaryawanForm({
         : undefined,
       tinggi_badan: data?.tinggi_badan,
       berat_badan: data?.berat_badan,
+      riwayat_penyakit: data?.riwayat_penyakit,
       alamat: data?.alamat,
       no_ijazah: data?.no_ijazah,
       tahun_lulus: data?.tahun_lulus,
@@ -288,6 +289,7 @@ export default function EditKaryawanForm({
         kategori_darah_id: values?.golongan_darah?.value,
         tinggi_badan: values?.tinggi_badan,
         berat_badan: values?.berat_badan,
+        riwayat_penyakit: values?.riwayat_penyakit,
         alamat: values.alamat,
         no_ijazah: values.no_ijazah,
         tahun_lulus: values.tahun_lulus,
@@ -1194,6 +1196,24 @@ export default function EditKaryawanForm({
             </InputGroup>
             <FormErrorMessage>
               {formik.errors.berat_badan as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={4} isInvalid={!!formik.errors.riwayat_penyakit}>
+            <FormLabel>
+              Riwayat Penyakit
+              <RequiredForm />
+            </FormLabel>
+            <Textarea
+              name="riwayat_penyakit"
+              onChangeSetter={(input) => {
+                formik.setFieldValue("riwayat_penyakit", input);
+              }}
+              inputValue={formik.values.riwayat_penyakit}
+              placeholder="Masukkan riwayat penyakit"
+            />
+            <FormErrorMessage>
+              {formik.errors.riwayat_penyakit as string}
             </FormErrorMessage>
           </FormControl>
 

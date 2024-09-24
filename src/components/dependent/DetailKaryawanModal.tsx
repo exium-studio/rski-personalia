@@ -142,6 +142,8 @@ export default function DetailKaryawanModal({
       "tunjangan_jabatan",
       "tgl_keluar",
       "tgl_diangkat",
+      "str",
+      "sip",
     ];
     let emptyDataLabels: any[] = [];
 
