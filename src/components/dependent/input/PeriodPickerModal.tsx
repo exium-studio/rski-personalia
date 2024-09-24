@@ -160,13 +160,10 @@ export default function PeriodPickerModal({
         {...props}
       >
         {inputValue ? (
-          <Text fontSize={17} fontWeight={600}>
+          <Text fontWeight={500}>
             {`${formatDate(
               new Date(inputValue?.getFullYear(), inputValue?.getMonth()),
-              {
-                month: "long",
-                year: "numeric",
-              }
+              "periode"
             )}`}
           </Text>
         ) : (

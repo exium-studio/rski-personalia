@@ -38,7 +38,7 @@ export default function CustomTableContainer({
       className={"tabelContainer scrollX scrollY"}
       overflow={"auto"}
       w={"100%"}
-      flex={1}
+      // flex={1}
       minH={minH || sh < 625 ? "400px" : ""}
       // maxH={[
       //   `calc(100vh - 318px - ${tabelConfigH}px)`,
