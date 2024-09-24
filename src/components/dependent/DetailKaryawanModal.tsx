@@ -137,6 +137,7 @@ export default function DetailKaryawanModal({
       "masa_berlaku_str",
       "masa_berlaku_sip",
       "gelar_depan",
+      "gelar_belakang",
       "masa_kerja",
       "tunjangan_jabatan",
       "tgl_keluar",
@@ -849,12 +850,13 @@ export default function DetailKaryawanModal({
                                     <AccordionButton
                                       w={"100%"}
                                       h={"50px"}
+                                      borderRadius={8}
                                       gap={2}
                                       justifyContent={"space-between"}
                                       fontWeight={600}
                                       color={warningColor}
                                       _hover={{ bg: warningAlphaColor }}
-                                      _expanded={{ bg: warningAlphaColor }}
+                                      // _expanded={{ bg: warningAlphaColor }}
                                     >
                                       <Text mt={"2px"}>
                                         {emptyDataLabel?.length === 0
@@ -880,6 +882,7 @@ export default function DetailKaryawanModal({
                                               <Text opacity={0.6}>
                                                 {/* @ts-ignore */}
                                                 {dataKaryawanLabel[key]}
+                                                {/* {key} */}
                                               </Text>
                                             </HStack>
                                           )
