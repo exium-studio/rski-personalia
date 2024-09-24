@@ -2,6 +2,9 @@ import {
   Box,
   Button,
   ButtonProps,
+  Checkbox,
+  FormControl,
+  FormHelperText,
   HStack,
   Icon,
   Modal,
@@ -17,13 +20,17 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { RiSendPlaneFill } from "@remixicon/react";
+import { useFormik } from "formik";
 import { useRef, useState } from "react";
+import * as yup from "yup";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
+import req from "../../lib/req";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
@@ -31,19 +38,17 @@ import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusPublikasiPenggajian from "./StatusPublikasiPenggajian";
 import TabelDetailPenggajian from "./TabelDetailPenggajian";
-import req from "../../lib/req";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 
 interface PublikasiButtonProps extends ButtonProps {
   penggajian_id: number;
   periode: string;
 }
 
-function PublikasiButtonModal({
+const PublikasiButtonModal = ({
   penggajian_id,
   periode,
   ...props
-}: PublikasiButtonProps) {
+}: PublikasiButtonProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
@@ -135,7 +140,110 @@ function PublikasiButtonModal({
       </Modal>
     </>
   );
-}
+};
+
+const UpdateBor = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose("update-bor-modal", isOpen, onOpen, onClose);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: { bor: false },
+    validationSchema: yup.object().shape({ bor: yup.boolean() }),
+    onSubmit: (values, { resetForm }) => {
+      // console.log(values);
+
+      setLoading(true);
+
+      const payload = {
+        bor: values.bor,
+        riwayat_penggajian_id: 1,
+      };
+
+      req
+        .post("/api/rski/dashboard/keuangan/penyesuaian-bor", payload)
+        .then((r) => {
+          if (r.status === 200) {
+            setRt(!rt);
+            backOnClose();
+            toast({
+              status: "success",
+              title: r?.data?.message,
+              position: "bottom-right",
+              isClosable: true,
+            });
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            position: "bottom-right",
+            isClosable: true,
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+  });
+
+  return (
+    <>
+      <Button
+        colorScheme="ap"
+        variant={"outline"}
+        ml={"auto"}
+        size={"lg"}
+        onClick={onOpen}
+        className="clicky"
+        isLoading={loading}
+      >
+        Penyesuaian BOR
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Penyesuaian BOR"} />
+          </ModalHeader>
+          <ModalBody>
+            <FormControl mt={2}>
+              <Checkbox
+                colorScheme="ap"
+                onChange={(e) => {
+                  formik.setFieldValue("sertakan_bor", e.target.checked);
+                }}
+              >
+                <Text mt={"-2.5px"}>Sertakan BOR</Text>
+              </Checkbox>
+              <FormHelperText>
+                Centang Sertakan BOR jika penggajian ini menyertakan BOR
+              </FormHelperText>
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button>Simpan</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 interface Props {
   id?: string;
@@ -231,6 +339,8 @@ export default function DetailPenggajianModal({
                     </VStack>
 
                     <Skeleton w={"120px"} ml={"auto"} />
+
+                    <Skeleton w={"120px"} />
                   </Wrap>
 
                   <CContainer
@@ -322,10 +432,11 @@ export default function DetailPenggajianModal({
                           </Text>
                         </VStack>
 
+                        <UpdateBor />
+
                         <PublikasiButtonModal
                           penggajian_id={penggajian_id}
                           periode={data.data_riwayat?.periode}
-                          ml={"auto"}
                           size={"lg"}
                           colorScheme="ap"
                           className="btn-ap clicky"
