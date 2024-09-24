@@ -65,7 +65,7 @@ export default function TambahTagihan({ ...props }: Props) {
               className="btn-ap clicky"
               isLoading={loading}
             >
-              Buat Pengumuman
+              Buat Tagihan
             </Button>
           </ModalFooter>
         </ModalContent>

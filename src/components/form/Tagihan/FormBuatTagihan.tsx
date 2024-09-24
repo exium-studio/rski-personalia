@@ -15,6 +15,7 @@ import RequiredForm from "../RequiredForm";
 import SelectKategoriTagihan from "../../dependent/_Select/SelectKategoriTagihan";
 import NumberInput from "../../dependent/input/NumberInput";
 import PeriodPickerModal from "../../dependent/input/PeriodPickerModal";
+import formatDate from "../../../lib/formatDate";
 
 interface Props {
   forwardRef: MutableRefObject<null>;
@@ -36,18 +37,18 @@ export default function FormBuatTagihan({ forwardRef, setLoading }: Props) {
     },
     validationSchema: yup.object().shape({
       user_id: yup.array().required("Harus diisi"),
-      kategori: yup.array().required("Harus diisi"),
-      besaran: yup.array().required("Harus diisi"),
-      bulan_mulai: yup.array().required("Harus diisi"),
-      bulan_selesai: yup.array().required("Harus diisi"),
+      kategori: yup.object().required("Harus diisi"),
+      besaran: yup.number().required("Harus diisi"),
+      bulan_mulai: yup.string().required("Harus diisi"),
+      bulan_selesai: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         user_id: values?.user_id?.map((user: any) => user.value),
-        kategori_tagihan_id: 2,
-        besaran: 2000000,
-        bulan_mulai: "01-10-2024",
-        bulan_selesai: "01-11-2024",
+        kategori_tagihan_id: values?.kategori?.value,
+        besaran: values?.besaran,
+        bulan_mulai: formatDate(values?.bulan_mulai, "short"),
+        bulan_selesai: formatDate(values?.bulan_selesai, "short"),
       };
 
       setLoading(true);
