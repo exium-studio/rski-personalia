@@ -1,17 +1,19 @@
 import { Center, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import useDataState from "../../hooks/useDataState";
-import formatDate from "../../lib/formatDate";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
-import BooleanBadge from "./BooleanBadge";
+import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import DetailThrModal from "./DetailThrModal";
 import Retry from "./Retry";
+import StatusTagihanBadge from "./StatusTagihanBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
+import formatDate from "../../lib/formatDate";
+import formatNumber from "../../lib/formatNumber";
 
 interface Props {
   filterConfig: any;
@@ -38,7 +40,7 @@ export default function TabelTagihan({ filterConfig }: Props) {
 
   const formattedHeader = [
     {
-      th: "Periode",
+      th: "Nama",
       isSortable: true,
       props: {
         position: "sticky",
@@ -51,32 +53,34 @@ export default function TabelTagihan({ filterConfig }: Props) {
       },
     },
     {
-      th: "Status THR",
+      th: "Status Tagihan",
       isSortable: true,
       cProps: {
         justify: "center",
       },
     },
     {
-      th: "Status THR",
-      isSortable: true,
-      cProps: {
-        justify: "center",
-      },
-    },
-    {
-      th: "Pembaruan Terakhir",
+      th: "Kategori Tagihan",
       isSortable: true,
     },
     {
-      th: "Karyawan Dapat THR",
+      th: "Periode Mulai",
       isSortable: true,
-      cProps: {
-        justify: "center",
-      },
     },
     {
-      th: "Dibuat",
+      th: "Periode Selesai",
+      isSortable: true,
+    },
+    {
+      th: "Tagihan per Bulan",
+      isSortable: true,
+    },
+    {
+      th: "Tenor",
+      isSortable: true,
+    },
+    {
+      th: "Sisa Tagihan",
       isSortable: true,
     },
   ];
@@ -84,51 +88,58 @@ export default function TabelTagihan({ filterConfig }: Props) {
     id: item.id,
     columnsFormat: [
       {
-        value: item.periode,
-        td: formatDate(item.periode, "periode"),
-        isDate: true,
+        value: item.user.nama,
+        td: (
+          <AvatarAndNameTableData
+            data={{
+              id: item.user.id,
+              nama: item.user.nama,
+              fullName: `${item?.gelar_depan || ""} ${item.user?.nama} ${
+                item?.gelar_belakang || ""
+              }`,
+              foto_profil: item.user.foto_profil,
+            }}
+          />
+        ),
         props: {
           position: "sticky",
-          left: 0,
+          left: "2px",
           zIndex: 2,
-          w: "243px",
         },
         cProps: {
           borderRight: "1px solid var(--divider3)",
         },
-      },
+      }, // 0
       {
-        value: item.status_riwayat_gaji,
-        td: (
-          <BooleanBadge
-            w={"150px"}
-            data={item.status_riwayat_gaji}
-            trueValue="Dipublikasi"
-            falseValue="Belum Dipublikasi"
-          />
-        ),
-        isNumeric: true,
+        value: item.status_tagihan?.label,
+        td: <StatusTagihanBadge data={item.status_tagihan} w={"120px"} />,
         cProps: {
           justify: "center",
         },
       },
       {
-        value: item.updated_at,
-        td: formatDate(item.updated_at),
-        isDate: true,
+        value: item.kategori_tagihan?.label,
+        td: item.kategori_tagihan?.label,
       },
       {
-        value: item.karyawan_verifikasi,
-        td: item.karyawan_verifikasi,
-        isNumeric: true,
-        cProps: {
-          justify: "center",
-        },
+        value: item.bulan_mulai,
+        td: formatDate(item.bulan_mulai, "periode"),
       },
       {
-        value: item.created_at,
-        td: formatDate(item.created_at),
-        isDate: true,
+        value: item.bulan_selesai,
+        td: formatDate(item.bulan_selesai, "periode"),
+      },
+      {
+        value: item.besaran,
+        td: `Rp ${formatNumber(item.besaran || 0)}`,
+      },
+      {
+        value: item.tenor,
+        td: `${formatNumber(item.ten || 0)} bulan`,
+      },
+      {
+        value: item.sisa_tagihan,
+        td: `Rp ${formatNumber(item.sisa_tagihan || 0)}`,
       },
     ],
   }));

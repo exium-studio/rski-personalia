@@ -28,13 +28,14 @@ import {
   RiListCheck,
   RiMore2Fill,
 } from "@remixicon/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
 import {
-  Interface__FormattedTableData,
+  Interface__FormattedTableBody,
   Interface__FormattedTableHeader,
 } from "../../constant/interfaces";
 import { iconSize } from "../../constant/sizes";
+import formatDate from "../../lib/formatDate";
 
 interface BatchActionsProps {
   selectedRows: number[];
@@ -110,7 +111,7 @@ const RowOptions = ({ rowData, rowOptions, tableRef }: RowOptionsProps) => {
     <Menu>
       <MenuButton
         as={IconButton}
-        h={"60px"}
+        h={"48px"}
         w={"52px"}
         borderRadius={0}
         className="btn"
@@ -136,7 +137,7 @@ const RowOptions = ({ rowData, rowOptions, tableRef }: RowOptionsProps) => {
 
 interface Props extends TableProps {
   formattedHeader: Interface__FormattedTableHeader[];
-  formattedData: Interface__FormattedTableData[];
+  formattedData: Interface__FormattedTableBody[];
   onRowClick?: (rowData: any) => void;
   originalData?: any;
   columnsConfig?: number[];
@@ -160,6 +161,9 @@ export default function CustomTable({
   trBodyProps,
   ...props
 }: Props) {
+  // SX
+  const lightDarkColor = useLightDarkColor();
+
   const tableHeader = columnsConfig
     ? columnsConfig.map((columnIndex) => formattedHeader[columnIndex])
     : formattedHeader;
@@ -171,8 +175,9 @@ export default function CustomTable({
         );
         return { ...data, columnsFormat: filteredColumns };
       })
-    : formattedData;
+    : [...formattedData];
 
+  const [originalDataState, setOriginalDataState] = useState(formattedData); // Simpan data asli
   const [selectAllRows, setSelectAllRows] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [sortConfig, setSortConfig] = useState<{
@@ -182,6 +187,10 @@ export default function CustomTable({
     sortColumnIndex: initialSortColumnIndex || undefined,
     direction: initialSortOrder || "asc",
   });
+
+  useEffect(() => {
+    setOriginalDataState([...formattedData]); // Simpan data asli saat pertama kali dirender
+  }, [formattedData]);
 
   // Row Click
   const handleRowClick = (rowData: any) => {
@@ -218,14 +227,22 @@ export default function CustomTable({
 
   // Sort
   const requestSort = (columnIndex: number) => {
-    setSortConfig((prevConfig) => ({
-      sortColumnIndex: columnIndex,
-      direction:
-        prevConfig.sortColumnIndex === columnIndex &&
-        prevConfig.direction === "asc"
-          ? "desc"
-          : "asc",
-    }));
+    setSortConfig((prevConfig) => {
+      if (prevConfig.sortColumnIndex === columnIndex) {
+        // Jika sudah diurutkan berdasarkan kolom ini, ubah arah sorting
+        if (prevConfig.direction === "asc") {
+          return { sortColumnIndex: columnIndex, direction: "desc" };
+        } else if (prevConfig.direction === "desc") {
+          // Jika sudah desc, hilangkan sorting (reset ke initial state)
+          return { sortColumnIndex: undefined, direction: "asc" };
+        }
+      } else {
+        // Jika kolom belum diurutkan, mulai dari ascending
+        return { sortColumnIndex: columnIndex, direction: "asc" };
+      }
+      // Pastikan selalu return objek yang valid
+      return prevConfig;
+    });
   };
   const sortedData = () => {
     if (
@@ -253,8 +270,8 @@ export default function CustomTable({
           //@ts-ignore
           b.columnsFormat[sortConfig.sortColumnIndex].isDate
         ) {
-          const dateA = new Date(aValue as string);
-          const dateB = new Date(bValue as string);
+          const dateA = new Date(formatDate(aValue, "iso") as string);
+          const dateB = new Date(formatDate(bValue, "iso") as string);
           return sortConfig.direction === "asc"
             ? dateA.getTime() - dateB.getTime()
             : dateB.getTime() - dateA.getTime();
@@ -282,7 +299,6 @@ export default function CustomTable({
     }
     return formattedData;
   };
-
   const renderSortIcon = (columnIndex: number) => {
     if (sortConfig.sortColumnIndex === columnIndex) {
       return (
@@ -304,10 +320,7 @@ export default function CustomTable({
     sortConfig.sortColumnIndex !== null &&
     sortConfig.sortColumnIndex !== undefined
       ? sortedData()
-      : tableBody;
-
-  // SX
-  const lightDarkColor = useLightDarkColor();
+      : originalDataState;
 
   return (
     <>
@@ -322,24 +335,32 @@ export default function CustomTable({
         <Thead>
           <Tr position={"sticky"} top={0} zIndex={3}>
             {onRowClick && (
-              <Td minW={"2px"} maxW={"2px"} p={0} position={"sticky"} left={0}>
-                <Box w={"2px"} h={"52px"} bg={lightDarkColor} />
-              </Td>
+              <Th
+                bg={lightDarkColor}
+                whiteSpace={"nowrap"}
+                borderBottom={"none !important"}
+                p={0}
+                zIndex={15}
+                position={"sticky"}
+                left={0}
+              >
+                <Box w={"2px"} h={"42px"} bg={lightDarkColor} />
+              </Th>
             )}
 
             {batchActions && (
               <Td
-                h={"52px"}
-                w={"52px !important"}
+                h={"42px"}
+                w={"42px !important"}
                 minW={"0% !important"}
-                maxW={"52px !important"}
+                maxW={"42px !important"}
                 p={0}
                 position={"sticky"}
                 left={0}
               >
                 <Center
-                  h={"52px"}
-                  w={"52px"}
+                  h={"42px"}
+                  w={"42px"}
                   borderRight={"1px solid var(--divider3)"}
                   borderBottom={"1px solid var(--divider3)"}
                   bg={lightDarkColor}
@@ -374,7 +395,7 @@ export default function CustomTable({
                   px={4}
                   py={3}
                   gap={4}
-                  h={"52px"}
+                  h={"42px"}
                   pl={i === 0 ? 4 : ""}
                   pr={i === formattedHeader.length - 1 ? 4 : ""}
                   {...header?.cProps}
@@ -429,13 +450,15 @@ export default function CustomTable({
                   <Td
                     minW={"2px"}
                     maxW={"2px"}
+                    w={"2px"}
                     p={0}
                     position={"sticky"}
                     left={0}
+                    zIndex={1}
                   >
                     <Box
                       w={"2px"}
-                      h={"60px"}
+                      h={"48px"}
                       bg={lightDarkColor}
                       _groupHover={{ bg: "p.500" }}
                     />
@@ -444,7 +467,7 @@ export default function CustomTable({
 
                 {batchActions && (
                   <Td
-                    h={"60px"}
+                    h={"48px"}
                     w={"52px !important"}
                     minW={"0% !important"}
                     maxW={"52px !important"}
@@ -457,7 +480,7 @@ export default function CustomTable({
                   >
                     <Center
                       w={"52px"}
-                      h={"60px"}
+                      h={"48px"}
                       borderRight={"1px solid var(--divider3)"}
                       _groupHover={{
                         bg: "var(--divider)",
@@ -501,7 +524,7 @@ export default function CustomTable({
                       }
                       py={3}
                       px={4}
-                      h={"60px"}
+                      h={"48px"}
                       transition={"200ms"}
                       {...col?.cProps}
                     >
@@ -528,7 +551,7 @@ export default function CustomTable({
                     zIndex={2}
                   >
                     <Center
-                      h={"60px"}
+                      h={"48px"}
                       w={"52px"}
                       borderLeft={"1px solid var(--divider3)"}
                       _groupHover={{

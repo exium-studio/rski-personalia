@@ -105,7 +105,7 @@ export default function EditRoleModalDisclosure({
     formikRef.current.setFieldValue("name", rowData.columnsFormat[0].value);
     formikRef.current.setFieldValue(
       "deskripsi",
-      rowData.columnsFormat[1].value
+      rowData.columnsFormat[1].value || ""
     );
   }, [isOpen, formikRef]);
 

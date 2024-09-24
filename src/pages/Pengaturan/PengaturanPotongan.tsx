@@ -86,7 +86,7 @@ export default function PengaturanPremi() {
           inputValue={filterConfig.jenis_premi}
           optionsDisplay="chip"
           placeholder="Filter Jenis Potongan"
-          flex={"0 1 fit-content"}
+          maxW={"165px"}
         />
 
         <PermissionTooltip permission={createPermission}>

@@ -386,7 +386,7 @@ export interface Interface__FormattedTableHeader {
   cProps?: StackProps;
 }
 
-export interface Interface__FormattedTableData {
+export interface Interface__FormattedTableBody {
   id: number;
   columnsFormat: {
     column?: string;
