@@ -1,6 +1,8 @@
-import { Center, Text, useDisclosure } from "@chakra-ui/react";
+import { Center, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import useDataState from "../../hooks/useDataState";
+import formatDate from "../../lib/formatDate";
+import formatNumber from "../../lib/formatNumber";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -8,12 +10,9 @@ import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
-import DetailThrModal from "./DetailThrModal";
 import Retry from "./Retry";
 import StatusTagihanBadge from "./StatusTagihanBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
-import formatDate from "../../lib/formatDate";
-import formatNumber from "../../lib/formatNumber";
 
 interface Props {
   filterConfig: any;
@@ -24,8 +23,6 @@ export default function TabelTagihan({ filterConfig }: Props) {
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
-  // Karyawan Detail Disclosure
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any[]>({
@@ -181,16 +178,8 @@ export default function TabelTagihan({ filterConfig }: Props) {
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}
                       initialSortOrder="desc"
-                      onRowClick={onOpen}
                     />
                   </CustomTableContainer>
-
-                  <DetailThrModal
-                    thr_id={1}
-                    isOpen={isOpen}
-                    onOpen={onOpen}
-                    onClose={onClose}
-                  />
                 </>
               )}
             </>

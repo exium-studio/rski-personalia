@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button,
   ButtonProps,
@@ -222,6 +225,13 @@ const UpdateBor = () => {
             <DisclosureHeader title={"Penyesuaian BOR"} />
           </ModalHeader>
           <ModalBody>
+            <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
+              <AlertIcon />
+              <AlertDescription maxW={"640px !important"}>
+                Jika terjadi penyesuaian BOR, maka data penggajian akan dihapus
+                dan dihitung ulang.
+              </AlertDescription>
+            </Alert>
             <FormControl mt={2}>
               <Checkbox
                 colorScheme="ap"
@@ -237,7 +247,9 @@ const UpdateBor = () => {
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button>Simpan</Button>
+            <Button w={"100%"} colorScheme="ap" className="btn-ap clicky">
+              Simpan
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

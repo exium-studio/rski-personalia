@@ -1,4 +1,4 @@
-import { Center, Text, useDisclosure } from "@chakra-ui/react";
+import { Center, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
@@ -8,7 +8,6 @@ import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
-import DetailThrModal from "./DetailThrModal";
 import Retry from "./Retry";
 import StatusPublikasiPenggajian from "./StatusPublikasiPenggajian";
 import TabelFooterConfig from "./TabelFooterConfig";
@@ -22,8 +21,6 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
-  // Karyawan Detail Disclosure
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any[]>({
@@ -161,16 +158,15 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}
                       initialSortOrder="desc"
-                      onRowClick={onOpen}
                     />
                   </CustomTableContainer>
 
-                  <DetailThrModal
+                  {/* <DetailThrModal
                     thr_id={1}
                     isOpen={isOpen}
                     onOpen={onOpen}
                     onClose={onClose}
-                  />
+                  /> */}
                 </>
               )}
             </>
