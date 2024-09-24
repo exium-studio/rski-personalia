@@ -48,6 +48,7 @@ import PengaturanKompetensi from "./pages/Pengaturan/PengaturanKompetensi";
 import PengaturanKuisioner from "./pages/Pengaturan/PengaturanKuisioner";
 import PengaturanLanding from "./pages/Pengaturan/PengaturanLanding";
 import PengaturanLokasiPresensi from "./pages/Pengaturan/PengaturanLokasiPresensi";
+import PengaturanPendidikan from "./pages/Pengaturan/PengaturanPendidikan";
 import PengaturanPremi from "./pages/Pengaturan/PengaturanPotongan";
 import PengaturanPtkp from "./pages/Pengaturan/PengaturanPtkp";
 import PengaturanShift from "./pages/Pengaturan/PengaturanShift";
@@ -441,10 +442,10 @@ export const App = () => {
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pendidikan"
+                title="Pendidikan Terakhir"
               >
                 <PengaturanContainer activeGroup={1} active={0}>
-                  <PengaturanKelompokGaji />
+                  <PengaturanPendidikan />
                 </PengaturanContainer>
               </NavContainer>
             }

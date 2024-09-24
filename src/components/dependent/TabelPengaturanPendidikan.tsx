@@ -1,13 +1,13 @@
 import { Center, Icon, MenuItem, Text, Tooltip } from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
+import { dummyKelompokGaji } from "../../const/dummy";
 import { Interface__SelectOption } from "../../constant/interfaces";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useDataState from "../../hooks/useDataState";
-import formatNumber from "../../lib/formatNumber";
 import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
-import EditKelompokGajiModalDisclosure from "../independent/EditKelompokGajiModalDisclosure";
+import EditPendidikanModalDisclosure from "../independent/EditPendidikanModalDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
@@ -23,7 +23,7 @@ interface Props {
   filterConfig?: any;
 }
 
-export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
+export default function TabelPengaturanPendidikan({ filterConfig }: Props) {
   // SX
 
   const { userPermissions } = useAuth();
@@ -34,21 +34,21 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <EditKelompokGajiModalDisclosure rowData={rowData}>
+        <EditPendidikanModalDisclosure rowData={rowData}>
           <PermissionTooltip permission={editPermission} placement="left">
             <MenuItem isDisabled={!editPermission}>
               <Text>Edit</Text>
               <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
             </MenuItem>
           </PermissionTooltip>
-        </EditKelompokGajiModalDisclosure>
+        </EditPendidikanModalDisclosure>
       );
     },
     (rowData: any) => {
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/kelompok-gaji/restore`}
+          url={`/api/rski/dashboard/pengaturan/pendidikan/restore`}
         >
           <PermissionTooltip permission={editPermission} placement="left">
             <MenuItem
@@ -66,7 +66,7 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/kelompok-gaji`}
+          url={`/api/rski/dashboard/pengaturan/pendidikan`}
         >
           <PermissionTooltip permission={deletePermission} placement="left">
             <MenuItem
@@ -87,8 +87,8 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
   ];
 
   const { error, notFound, loading, data, retry } = useDataState<any[]>({
-    initialData: undefined,
-    url: "/api/rski/dashboard/pengaturan/kelompok-gaji",
+    initialData: dummyKelompokGaji,
+    url: "/api/rski/dashboard/pengaturan/pendidikan",
     dependencies: [],
   });
 
@@ -98,9 +98,7 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
       (term: Interface__SelectOption) => term.value
     );
 
-    const matchesSearchTerm = item.nama_kelompok
-      .toLowerCase()
-      .includes(searchTerm);
+    const matchesSearchTerm = item?.label?.toLowerCase().includes(searchTerm);
     const matchesIsDeletedTerm =
       isDeletedTerm?.includes(1) && isDeletedTerm?.includes(0)
         ? true
@@ -115,7 +113,7 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
 
   const formattedHeader = [
     {
-      th: "Nama Kelompok",
+      th: "Pendidikan",
       isSortable: true,
       props: {
         position: "sticky",
@@ -134,21 +132,14 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
         justify: "center",
       },
     },
-    {
-      th: "Besaran Gaji",
-      isSortable: true,
-      cProps: {
-        justify: "end",
-      },
-    },
   ];
   const formattedData = fd?.map((item: any) => ({
     id: item.id,
     columnsFormat: [
       {
-        value: item.nama_kelompok,
+        value: item.label,
         td: (
-          <Tooltip openDelay={500} label={item.nama_kelompok} placement="right">
+          <Tooltip openDelay={500} label={item.label} placement="right">
             <Text
               w={"100%"}
               maxW={"243px"}
@@ -156,7 +147,7 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}
             >
-              {item.nama_kelompok}
+              {item?.label}
             </Text>
           </Tooltip>
         ),
@@ -175,14 +166,6 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
         isDate: true,
         cProps: {
           justify: "center",
-        },
-      },
-      {
-        value: item.besaran_gaji,
-        td: `Rp ${formatNumber(item.besaran_gaji)}`,
-        isNumeric: true,
-        cProps: {
-          justify: "end",
         },
       },
     ],

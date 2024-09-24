@@ -1,5 +1,6 @@
-import { Box, BoxProps } from "@chakra-ui/react";
+import { BoxProps } from "@chakra-ui/react";
 import useScreenHeight from "../../lib/useScreenHeight";
+import CContainer from "./CContainer";
 
 interface Props extends BoxProps {
   children?: any;
@@ -34,22 +35,24 @@ export default function CustomTableContainer({
   // const customReducerValue = customReducer ? customReducer : 0;
 
   return (
-    <Box
+    <CContainer
       className={"tabelContainer scrollX scrollY"}
       overflow={"auto"}
       w={"100%"}
       minH={minH || sh < 625 ? "400px" : "max-content !important"}
+      maxH={"100%"}
       // maxH={[
       //   `calc(100vh - 318px - ${tabelConfigH}px)`,
       //   null,
       //   `calc(100vh - 304px - ${tabelConfigH}px)`,
       // ]}
       // maxH={`calc(100vh - 40px - ${customReducerValue}px - ${baseReducer}px - ${noFooterConfigReducer}px - ${noTopNavsReducer}px)`}
-      border={"1px solid var(--divider3)"}
+      // border={"1px solid var(--divider3)"}
+      border={"1px solid red"}
       borderRadius={8}
       {...props}
     >
       {children}
-    </Box>
+    </CContainer>
   );
 }
