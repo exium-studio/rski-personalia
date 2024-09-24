@@ -10,6 +10,9 @@ import CustomTable from "./CustomTable";
 import DetailPenggajianKaryawanModal from "./DetailPenggajianKaryawanModal";
 import ExportRiwayatPenggajianModal from "./ExportRiwayatPenggajianModal";
 import SearchComponent from "./input/SearchComponent";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface Props {
   data: any;
@@ -135,6 +138,9 @@ export default function TabelDetailPenggajian({
 
   const riwayatId = parseInt(localStorage.getItem("riwayat_id") as string);
 
+  const { userPermissions } = useAuth();
+  const exportPermission = isHasPermissions(userPermissions, [18]);
+
   return (
     <>
       <HStack mb={responsiveSpacing}>
@@ -164,7 +170,12 @@ export default function TabelDetailPenggajian({
           w={"fit-content"}
         />
 
-        <ExportRiwayatPenggajianModal periode={data.data_riwayat?.periode} />
+        <PermissionTooltip permission={exportPermission}>
+          <ExportRiwayatPenggajianModal
+            periode={data.data_riwayat?.periode}
+            isDisabled={!exportPermission}
+          />
+        </PermissionTooltip>
       </HStack>
 
       {fd.length === 0 && <NotFound />}

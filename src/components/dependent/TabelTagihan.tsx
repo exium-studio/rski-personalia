@@ -7,17 +7,17 @@ import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
+import BooleanBadge from "./BooleanBadge";
 import CustomTable from "./CustomTable";
 import DetailThrModal from "./DetailThrModal";
 import Retry from "./Retry";
-import StatusPublikasiPenggajian from "./StatusPublikasiPenggajian";
 import TabelFooterConfig from "./TabelFooterConfig";
 
 interface Props {
   filterConfig: any;
 }
 
-export default function TabelRiwayatThr({ filterConfig }: Props) {
+export default function TabelTagihan({ filterConfig }: Props) {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
@@ -28,7 +28,7 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any[]>({
       initialData: undefined,
-      url: "/api/rski/dashboard/keuangan/get-thr",
+      url: "/api/rski/dashboard/keuangan/get-tagihan-potongan",
       payload: {
         ...filterConfig,
       },
@@ -48,6 +48,13 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
       },
       cProps: {
         borderRight: "1px solid var(--divider3)",
+      },
+    },
+    {
+      th: "Status THR",
+      isSortable: true,
+      cProps: {
+        justify: "center",
       },
     },
     {
@@ -93,9 +100,11 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
       {
         value: item.status_riwayat_gaji,
         td: (
-          <StatusPublikasiPenggajian
+          <BooleanBadge
             w={"150px"}
             data={item.status_riwayat_gaji}
+            trueValue="Dipublikasi"
+            falseValue="Belum Dipublikasi"
           />
         ),
         isNumeric: true,

@@ -791,7 +791,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           isInvalid={!!formik.errors.uang_makan}
         >
           <FormLabel>
-            Uang Makan
+            Uang Makan per Hari
             <RequiredForm />
           </FormLabel>
           <InputGroup>

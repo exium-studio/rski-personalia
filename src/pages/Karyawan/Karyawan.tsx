@@ -90,7 +90,7 @@ export default function Karyawan() {
                 url={"/api/rski/dashboard/karyawan/import"}
                 title={"Import Karyawan"}
                 reqBodyKey="karyawan_file"
-                templateDownloadUrl="api/rski/dashboard/download-template-karyawan"
+                templateDownloadUrl="/api/rski/dashboard/download-template-karyawan"
                 isDisabled={!importPermission}
               />
             </PermissionTooltip>

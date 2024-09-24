@@ -90,7 +90,7 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
         },
       },
       {
-        value: item.status_riwayat_gaji,
+        value: item.status_riwayat_gaji.label,
         td: (
           <StatusPublikasiPenggajian
             w={"150px"}

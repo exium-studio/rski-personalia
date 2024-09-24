@@ -1,15 +1,15 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ExportModal from "../../components/dependent/ExportModal";
-import NumberInput from "../../components/dependent/input/NumberInput";
+import ImportModal from "../../components/dependent/ImportModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import TabelRiwayatThr from "../../components/dependent/TabelRiwayatThr";
+import TabelTagihan from "../../components/dependent/TabelTagihan";
 import RunThr from "../../components/independent/RunThr";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 
@@ -17,21 +17,19 @@ export default function Tagihan() {
   // Filter Config
   const defaultFilterConfig = {
     search: "",
-    tahun: new Date().getFullYear(),
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
   const [search, setSearch] = useState("");
-  const [tahun, setTahun] = useState<any>(new Date().getFullYear());
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setFilterConfig({ search: search, tahun: tahun });
+      setFilterConfig({ search: search });
     }, 300);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [search, tahun, setFilterConfig]);
+  }, [search, setFilterConfig]);
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -39,6 +37,7 @@ export default function Tagihan() {
   const { userPermissions } = useAuth();
   const createPermissions = isHasPermissions(userPermissions, [12]);
   const exportPermissions = isHasPermissions(userPermissions, [14]);
+  const importPermission = isHasPermissions(userPermissions, [126]);
 
   return (
     <>
@@ -68,10 +67,11 @@ export default function Tagihan() {
                 setSearch(input);
               }}
               inputValue={search}
-              tooltipLabel="Cari dengan periode"
-              placeholder="periode"
+              tooltipLabel="Cari dengan nama/no. induk karyawan"
+              placeholder="nama/no. induk karyawan"
             />
 
+            {/* 
             <NumberInput
               name="tahun"
               onChangeSetter={(input) => {
@@ -81,17 +81,30 @@ export default function Tagihan() {
               placeholder={"Periode Tahun"}
               noFormat
               boxProps={{ w: "fit-content" }}
-            />
+            /> */}
 
             <PermissionTooltip
               permission={exportPermissions}
               boxProps={{ w: "fit-content" }}
             >
               <ExportModal
-                url="/api/rski/dashboard/keuangan/run-thr/export"
-                title="Export Penggajian"
-                downloadFileName="Data THR"
+                url="/api/rski/dashboard/keuangan/tagihan-potongan/export"
+                title="Export Tagihan"
+                downloadFileName="Data Tagihan"
                 isDisabled={!exportPermissions}
+              />
+            </PermissionTooltip>
+
+            <PermissionTooltip
+              permission={importPermission}
+              boxProps={{ w: "fit-content" }}
+            >
+              <ImportModal
+                url={"/api/rski/dashboard/keuangan/tagihan-potongan/import"}
+                title={"Import Tagihan"}
+                reqBodyKey="tagihan"
+                templateDownloadUrl="/api/rski/dashboard/download-template-tagihan-potongan"
+                isDisabled={!importPermission}
               />
             </PermissionTooltip>
 
@@ -103,7 +116,7 @@ export default function Tagihan() {
             </PermissionTooltip>
           </HStack>
 
-          <TabelRiwayatThr filterConfig={filterConfig} />
+          <TabelTagihan filterConfig={filterConfig} />
         </CContainer>
       </CWrapper>
     </>
