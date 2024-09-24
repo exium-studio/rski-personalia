@@ -16,7 +16,6 @@ import {
   ModalOverlay,
   SimpleGrid,
   Text,
-  Tooltip,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
@@ -74,10 +73,10 @@ import EditKaryawanModal from "./EditKaryawanModal";
 import SearchComponent from "./input/SearchComponent";
 import Retry from "./Retry";
 import RunPenilaianModal from "./RunPenilaianModal";
+import SimplePopover from "./SimplePopover";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
-import SimplePopover from "./SimplePopover";
 
 interface Props {
   id?: string;
@@ -1041,7 +1040,10 @@ export default function DetailKaryawanModal({
                                     />
                                   </Box>
                                   <FlexLine />
-                                  <SimplePopover body={data?.alamat}>
+                                  <SimplePopover
+                                    body={data?.alamat}
+                                    contentProps={{ mr: "38px" }}
+                                  >
                                     <Text
                                       fontWeight={500}
                                       whiteSpace={"nowrap"}
@@ -1570,7 +1572,10 @@ export default function DetailKaryawanModal({
                                     />
                                   </Box>
                                   <FlexLine />
-                                  <Tooltip label={data.riwayat_penyakit}>
+                                  <SimplePopover
+                                    body={data?.riwayat_penyakit}
+                                    contentProps={{ mr: "38px" }}
+                                  >
                                     <Text
                                       fontWeight={500}
                                       whiteSpace={"nowrap"}
@@ -1580,7 +1585,7 @@ export default function DetailKaryawanModal({
                                     >
                                       {data?.riwayat_penyakit}
                                     </Text>
-                                  </Tooltip>
+                                  </SimplePopover>
                                 </HStack>
                               </VStack>
                             </VStack>
