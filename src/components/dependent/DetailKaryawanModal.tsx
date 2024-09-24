@@ -77,6 +77,7 @@ import RunPenilaianModal from "./RunPenilaianModal";
 import SmallLink from "./SmallLink";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
+import SimplePopover from "./SimplePopover";
 
 interface Props {
   id?: string;
@@ -1040,17 +1041,17 @@ export default function DetailKaryawanModal({
                                     />
                                   </Box>
                                   <FlexLine />
-                                  <Tooltip label={data.alamat}>
+                                  <SimplePopover body={data?.alamat}>
                                     <Text
                                       fontWeight={500}
                                       whiteSpace={"nowrap"}
                                       overflow={"hidden"}
                                       textOverflow={"ellipsis"}
-                                      maxW={"303px"}
+                                      maxW={"243px"}
                                     >
-                                      {data.alamat}
+                                      {data?.alamat}
                                     </Text>
-                                  </Tooltip>
+                                  </SimplePopover>
                                 </HStack>
 
                                 <HStack justify={"space-between"}>
@@ -1555,6 +1556,31 @@ export default function DetailKaryawanModal({
                                       {data?.no_bpjsktk}
                                     </Text>
                                   )}
+                                </HStack>
+
+                                <HStack justify={"space-between"}>
+                                  {/* <Text opacity={0.6}>No. Rekam Medis</Text> */}
+                                  <Box opacity={0.6}>
+                                    <Highlighter
+                                      highlightClassName="hw"
+                                      unhighlightClassName="uw"
+                                      searchWords={searchQuery}
+                                      autoEscape={true}
+                                      textToHighlight="Riwayat Penyakit"
+                                    />
+                                  </Box>
+                                  <FlexLine />
+                                  <Tooltip label={data.riwayat_penyakit}>
+                                    <Text
+                                      fontWeight={500}
+                                      whiteSpace={"nowrap"}
+                                      overflow={"hidden"}
+                                      textOverflow={"ellipsis"}
+                                      maxW={"243px"}
+                                    >
+                                      {data?.riwayat_penyakit}
+                                    </Text>
+                                  </Tooltip>
                                 </HStack>
                               </VStack>
                             </VStack>
