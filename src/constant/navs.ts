@@ -94,6 +94,8 @@ const navs = [
       },
     ],
   },
+
+  // Keuangan
   {
     allowed: [17, 13],
     label: "Keuangan",
@@ -110,8 +112,15 @@ const navs = [
         label: "THR",
         link: "/keuangan/thr",
       },
+      {
+        allowed: [17],
+        label: "Tagihan",
+        link: "/keuangan/tagihan",
+      },
     ],
   },
+
+  // Perusahaan
   {
     allowed: [8, 114],
     label: "Perusahaan",

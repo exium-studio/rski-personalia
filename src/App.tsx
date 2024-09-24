@@ -35,6 +35,7 @@ import Karyawan from "./pages/Karyawan/Karyawan";
 import PerubahanDataKaryawan from "./pages/Karyawan/PermintaanPerubahanDataKaryawan";
 import TransferKaryawan from "./pages/Karyawan/TransferKaryawan";
 import Penggajian from "./pages/Keuangan/Penggajian";
+import Tagihan from "./pages/Keuangan/Tagihan";
 import Thr from "./pages/Keuangan/Thr";
 import PengaturanHariLibur from "./pages/Pengaturan/PengaturanHariLibur";
 import PengaturanJabatan from "./pages/Pengaturan/PengaturanJabatan";
@@ -332,6 +333,19 @@ export const App = () => {
                 topNavActive={1}
               >
                 <Thr />
+              </NavContainer>
+            }
+          />
+          <Route
+            path="/keuangan/tagihan"
+            element={
+              <NavContainer
+                active={4}
+                title="Tagihan"
+                topNavsData={navs[4].subNavs}
+                topNavActive={2}
+              >
+                <Tagihan />
               </NavContainer>
             }
           />
