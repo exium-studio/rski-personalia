@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { RiCloseLine, RiSearchLine } from "@remixicon/react";
-import { Dispatch } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import { iconSize } from "../../../constant/sizes";
 import StringInput from "./StringInput";
 
@@ -30,6 +30,18 @@ export default function SearchComponent({
   placeholder = "Pencarian",
   ...props
 }: Props) {
+  const [searchLocal, setSearchLocal] = useState("");
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      onChangeSetter(searchLocal);
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchLocal, onChangeSetter]);
+
   return (
     <Tooltip
       label={tooltipLabel || placeholder}
@@ -48,13 +60,13 @@ export default function SearchComponent({
           placeholder={placeholder}
           pr={"36px"}
           onChangeSetter={(input) => {
-            onChangeSetter(input as string);
+            setSearchLocal(input as string);
           }}
-          inputValue={inputValue}
+          inputValue={searchLocal}
           boxShadow={"none !important"}
         />
 
-        {inputValue && (
+        {searchLocal && (
           <Center
             flexShrink={0}
             zIndex={3}
@@ -68,7 +80,7 @@ export default function SearchComponent({
                 <Icon as={RiCloseLine} fontSize={props.fontSize || iconSize} />
               }
               onClick={() => {
-                onChangeSetter("");
+                setSearchLocal("");
               }}
               colorScheme="error"
               variant={"ghost"}

@@ -685,54 +685,98 @@ export default function DetailPenggajianKaryawanModal({
                                     <Text
                                       fontSize={18}
                                       fontWeight={600}
+                                      mb={2}
                                       // color={"green.400"}
                                     >
                                       Pendapatan
                                     </Text>
                                   </HStack>
 
+                                  {/* Pendapatan Tetap */}
                                   <CContainer py={2}>
-                                    {data.detail_gaji?.map(
+                                    <Box px={4}>
+                                      <Text fontWeight={500}>
+                                        Pendapatan Tetap
+                                      </Text>
+                                    </Box>
+                                    {data.pendapatan?.pendapatan_tetap?.map(
                                       (item: any, i: number) => {
-                                        const ok =
-                                          item?.kategori_gaji?.id === 1 ||
-                                          item?.kategori_gaji?.id === 2;
-
                                         return (
-                                          ok && (
-                                            <HStack
-                                              key={i}
-                                              justify={"space-between"}
-                                              py={2}
-                                              px={4}
+                                          <HStack
+                                            key={i}
+                                            justify={"space-between"}
+                                            py={2}
+                                            pr={4}
+                                            pl={8}
+                                          >
+                                            <Box>
+                                              <Highlighter
+                                                highlightClassName="hw"
+                                                unhighlightClassName="uw"
+                                                searchWords={searchQuery}
+                                                autoEscape={true}
+                                                textToHighlight={
+                                                  item.nama_detail
+                                                }
+                                              />
+                                            </Box>
+                                            <FlexLine />
+                                            <Text
+                                              fontWeight={500}
+                                              textAlign={"right"}
                                             >
-                                              <Box>
-                                                <Highlighter
-                                                  highlightClassName="hw"
-                                                  unhighlightClassName="uw"
-                                                  searchWords={searchQuery}
-                                                  autoEscape={true}
-                                                  textToHighlight={
-                                                    item.nama_detail
-                                                  }
-                                                />
-                                              </Box>
-                                              <FlexLine />
-                                              <Text
-                                                fontWeight={500}
-                                                textAlign={"right"}
-                                              >
-                                                Rp{" "}
-                                                {formatNumber(item.besaran) ||
-                                                  0}
-                                              </Text>
-                                            </HStack>
-                                          )
+                                              Rp{" "}
+                                              {formatNumber(item.besaran) || 0}
+                                            </Text>
+                                          </HStack>
                                         );
                                       }
                                     )}
                                   </CContainer>
 
+                                  {/* Pendapatan Tambahan */}
+                                  <CContainer py={2}>
+                                    <Box px={4}>
+                                      <Text fontWeight={500}>
+                                        Pendapatan Tambahan
+                                      </Text>
+                                    </Box>
+                                    {data.pendapatan?.pendapatan_tambahan?.map(
+                                      (item: any, i: number) => {
+                                        return (
+                                          <HStack
+                                            key={i}
+                                            justify={"space-between"}
+                                            py={2}
+                                            pr={4}
+                                            pl={8}
+                                          >
+                                            <Box>
+                                              <Highlighter
+                                                highlightClassName="hw"
+                                                unhighlightClassName="uw"
+                                                searchWords={searchQuery}
+                                                autoEscape={true}
+                                                textToHighlight={
+                                                  item.nama_detail
+                                                }
+                                              />
+                                            </Box>
+                                            <FlexLine />
+                                            <Text
+                                              fontWeight={500}
+                                              textAlign={"right"}
+                                            >
+                                              Rp{" "}
+                                              {formatNumber(item.besaran) || 0}
+                                            </Text>
+                                          </HStack>
+                                        );
+                                      }
+                                    )}
+                                  </CContainer>
+
+                                  {/* Total Pendapatan */}
                                   <HStack
                                     mt={"auto"}
                                     justify={"space-between"}
@@ -753,7 +797,7 @@ export default function DetailPenggajianKaryawanModal({
                                     <Text fontWeight={600} textAlign={"right"}>
                                       Rp{" "}
                                       {formatNumber(
-                                        totalPendapatan(data.detail_gaji)
+                                        data.pendapatan?.total_pendapatan
                                       ) || 0}
                                     </Text>
                                   </HStack>
@@ -768,53 +812,98 @@ export default function DetailPenggajianKaryawanModal({
                                     <Text
                                       fontSize={18}
                                       fontWeight={600}
+                                      mb={2}
                                       // color={errorColor}
                                     >
                                       Potongan
                                     </Text>
                                   </HStack>
 
+                                  {/* Potongan Tetap */}
                                   <CContainer py={2}>
-                                    {data.detail_gaji?.map(
+                                    <Box px={4}>
+                                      <Text fontWeight={500}>
+                                        Potongan Tetap
+                                      </Text>
+                                    </Box>
+                                    {data.potongan?.potongan_tetap?.map(
                                       (item: any, i: number) => {
-                                        const ok =
-                                          item?.kategori_gaji?.id === 3;
-
                                         return (
-                                          ok && (
-                                            <HStack
-                                              key={i}
-                                              justify={"space-between"}
-                                              py={2}
-                                              px={4}
+                                          <HStack
+                                            key={i}
+                                            justify={"space-between"}
+                                            py={2}
+                                            pr={4}
+                                            pl={8}
+                                          >
+                                            <Box>
+                                              <Highlighter
+                                                highlightClassName="hw"
+                                                unhighlightClassName="uw"
+                                                searchWords={searchQuery}
+                                                autoEscape={true}
+                                                textToHighlight={
+                                                  item.nama_detail
+                                                }
+                                              />
+                                            </Box>
+                                            <FlexLine />
+                                            <Text
+                                              fontWeight={500}
+                                              textAlign={"right"}
                                             >
-                                              <Box>
-                                                <Highlighter
-                                                  highlightClassName="hw"
-                                                  unhighlightClassName="uw"
-                                                  searchWords={searchQuery}
-                                                  autoEscape={true}
-                                                  textToHighlight={
-                                                    item.nama_detail
-                                                  }
-                                                />
-                                              </Box>
-                                              <FlexLine />
-                                              <Text
-                                                fontWeight={500}
-                                                textAlign={"right"}
-                                              >
-                                                Rp{" "}
-                                                {formatNumber(item.besaran) ||
-                                                  0}
-                                              </Text>
-                                            </HStack>
-                                          )
+                                              Rp{" "}
+                                              {formatNumber(item.besaran) || 0}
+                                            </Text>
+                                          </HStack>
                                         );
                                       }
                                     )}
                                   </CContainer>
 
+                                  {/* Potongan Tambahan */}
+                                  <CContainer py={2}>
+                                    <Box px={4}>
+                                      <Text fontWeight={500}>
+                                        Potongan Tambahan
+                                      </Text>
+                                    </Box>
+                                    {data.potongan?.potongan_tambahan?.map(
+                                      (item: any, i: number) => {
+                                        return (
+                                          <HStack
+                                            key={i}
+                                            justify={"space-between"}
+                                            py={2}
+                                            pr={4}
+                                            pl={8}
+                                          >
+                                            <Box>
+                                              <Highlighter
+                                                highlightClassName="hw"
+                                                unhighlightClassName="uw"
+                                                searchWords={searchQuery}
+                                                autoEscape={true}
+                                                textToHighlight={
+                                                  item.nama_detail
+                                                }
+                                              />
+                                            </Box>
+                                            <FlexLine />
+                                            <Text
+                                              fontWeight={500}
+                                              textAlign={"right"}
+                                            >
+                                              Rp{" "}
+                                              {formatNumber(item.besaran) || 0}
+                                            </Text>
+                                          </HStack>
+                                        );
+                                      }
+                                    )}
+                                  </CContainer>
+
+                                  {/* Total Potongan */}
                                   <HStack
                                     mt={"auto"}
                                     justify={"space-between"}
@@ -835,7 +924,7 @@ export default function DetailPenggajianKaryawanModal({
                                     <Text fontWeight={600} textAlign={"right"}>
                                       Rp{" "}
                                       {formatNumber(
-                                        totalPotongan(data.detail_gaji)
+                                        data.potongan?.total_potongan
                                       ) || 0}
                                     </Text>
                                   </HStack>
