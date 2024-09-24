@@ -131,7 +131,7 @@ export default function EditKompetensiModalDisclosure({
       "nilai_bor",
       rowData.columnsFormat[3].value
     );
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

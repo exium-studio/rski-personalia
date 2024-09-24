@@ -105,7 +105,7 @@ export default function EditKategoriTerModalDisclosure({
       "nama_kategori_ter",
       rowData.columnsFormat[0].value
     );
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

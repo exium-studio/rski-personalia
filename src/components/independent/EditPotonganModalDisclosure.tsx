@@ -137,7 +137,7 @@ export default function EditPotonganModalDisclosure({
       "maksimal_rate",
       rowData.columnsFormat[6]?.value
     );
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

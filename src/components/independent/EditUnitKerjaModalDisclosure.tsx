@@ -114,7 +114,7 @@ export default function EditUnitKerjaModalDisclosure({
         label: rowData.columnsFormat[2].value === 1 ? "Shift" : "Non-Shift",
       });
     }
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

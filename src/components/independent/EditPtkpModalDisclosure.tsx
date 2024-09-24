@@ -110,7 +110,7 @@ export default function EditPtkpModalDisclosure({
       label: rowData.columnsFormat[2]?.original_data?.nama_kategori_ter,
     });
     formikRef.current.setFieldValue("nilai", rowData.columnsFormat[3].value);
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

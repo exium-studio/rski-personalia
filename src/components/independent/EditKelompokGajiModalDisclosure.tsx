@@ -114,7 +114,7 @@ export default function EditKelompokGajiModalDisclosure({
       "besaran_gaji",
       rowData.columnsFormat[2].value
     );
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

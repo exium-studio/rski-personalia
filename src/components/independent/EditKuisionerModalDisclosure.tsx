@@ -107,7 +107,7 @@ export default function EditKuisionerModalDisclosure({
       value: rowData.columnsFormat[2].original_data?.id,
       label: rowData.columnsFormat[2].original_data?.nama,
     });
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

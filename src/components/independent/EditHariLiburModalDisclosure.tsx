@@ -108,7 +108,7 @@ export default function EditHariLiburModalDisclosure({
   useEffect(() => {
     formikRef.current.setFieldValue("nama", rowData.columnsFormat[0].value);
     formikRef.current.setFieldValue("tanggal", rowData.columnsFormat[2].value);
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

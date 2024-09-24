@@ -107,7 +107,7 @@ export default function EditRoleModalDisclosure({
       "deskripsi",
       rowData.columnsFormat[1].value
     );
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

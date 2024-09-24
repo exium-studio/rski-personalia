@@ -126,7 +126,7 @@ export default function EditJenisPenilaianModalDisclosure({
         label: rowData.columnsFormat[4]?.original_data?.nama_jabatan,
       });
     }
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen,  formikRef]);
 
   return (
     <>

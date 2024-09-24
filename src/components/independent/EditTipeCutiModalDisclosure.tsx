@@ -136,7 +136,7 @@ export default function EditTipeCutiModalDisclosure({
       "keterangan",
       rowData.columnsFormat[5].value
     );
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

@@ -116,7 +116,7 @@ export default function EditJabatanModalDisclosure({
       "tunjangan",
       rowData.columnsFormat[3].value
     );
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

@@ -121,7 +121,7 @@ export default function EditTerPph21ModalDisclosure({
       "percentage",
       rowData.columnsFormat[4].value
     );
-  }, [isOpen, rowData, formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>
