@@ -21,9 +21,9 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
-import PeriodPickerModal from "./input/PeriodPickerModal";
 import download from "../../lib/download";
 import months from "../../constant/months";
+import PeriodPickerForDatePickerModal from "./input/PeriodPickerForDatePickerModal";
 
 interface Props extends ButtonProps {}
 
@@ -123,7 +123,7 @@ export default function ExportPresensiModal({ ...props }: Props) {
           </ModalBody>
           <ModalFooter>
             <CContainer gap={2}>
-              <PeriodPickerModal
+              <PeriodPickerForDatePickerModal
                 id="periode-picker-for-export-presensi"
                 name="periode export presensi"
                 bulan={bulan}

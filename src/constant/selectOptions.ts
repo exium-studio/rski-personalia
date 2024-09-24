@@ -275,7 +275,13 @@ const optionsGoldar = [
   { value: 4, label: "O" },
 ];
 
+const optionsKategoriTagihan = [
+  { value: 1, label: "Obat/Perawatan" },
+  { value: 2, label: "Koperasi" },
+];
+
 export {
+  optionsKategoriTagihan,
   optionsGoldar,
   optionsStatusAktif,
   optionsPendidikan,

@@ -4,7 +4,7 @@ import ExportModal from "../../components/dependent/ExportModal";
 import ImportModal from "../../components/dependent/ImportModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelTagihan from "../../components/dependent/TabelTagihan";
-import RunThr from "../../components/independent/RunThr";
+import TambahTagihan from "../../components/independent/TambahTagihan";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
@@ -112,7 +112,10 @@ export default function Tagihan() {
               permission={createPermissions}
               boxProps={{ w: "fit-content" }}
             >
-              <RunThr minW={"fit-content"} isDisabled={!createPermissions} />
+              <TambahTagihan
+                minW={"fit-content"}
+                isDisabled={!createPermissions}
+              />
             </PermissionTooltip>
           </HStack>
 

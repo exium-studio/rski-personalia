@@ -27,7 +27,8 @@ import useBackOnClose from "../../../hooks/useBackOnClose";
 import backOnClose from "../../../lib/backOnClose";
 import formatDate from "../../../lib/formatDate";
 import DisclosureHeader from "../DisclosureHeader";
-import PeriodPickerModal from "./PeriodPickerModal";
+import PeriodPickerForDatePickerModal from "./PeriodPickerForDatePickerModal";
+
 type PrefixOption = "basic" | "basicShort" | "long" | "longShort" | "short";
 
 interface Props extends ButtonProps {
@@ -196,7 +197,7 @@ export default function DatePickerModal({
                   maxW={"50px"}
                 ></Button>
 
-                <PeriodPickerModal
+                <PeriodPickerForDatePickerModal
                   id={`period-picker-modal-${id}`}
                   name="month-year"
                   bulan={bulan}

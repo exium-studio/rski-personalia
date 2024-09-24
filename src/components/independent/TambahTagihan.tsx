@@ -10,17 +10,17 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { RiAddLine } from "@remixicon/react";
+import { RiWalletFill } from "@remixicon/react";
 import { useRef, useState } from "react";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import FormDashboardBuatPengumuman from "../form/Dashboard/FormDashboardBuatPengumuman";
+import FormBuatTagihan from "../form/Tagihan/FormBuatTagihan";
 
 interface Props extends ButtonProps {}
 
-export default function DashboardBuatPengumumanModal({ ...props }: Props) {
+export default function TambahTagihan({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   useBackOnClose("buat-pengumuman-modal", isOpen, onOpen, onClose);
@@ -30,35 +30,30 @@ export default function DashboardBuatPengumumanModal({ ...props }: Props) {
   return (
     <>
       <Button
-        leftIcon={<Icon as={RiAddLine} fontSize={iconSize} />}
-        pl={4}
+        leftIcon={<Icon as={RiWalletFill} fontSize={iconSize} />}
+        pl={5}
         className="btn-ap clicky"
         colorScheme="ap"
         onClick={onOpen}
         {...props}
       >
-        Buat Pengumuman
+        Buat Tagihan
       </Button>
 
       <Modal
         isOpen={isOpen}
-        onClose={() => {
-          backOnClose();
-        }}
+        onClose={backOnClose}
         initialFocusRef={initialRef}
         isCentered
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <DisclosureHeader title="Buat Pengumuman" />
+            <DisclosureHeader title="Buat Tagihan" />
           </ModalHeader>
 
           <ModalBody>
-            <FormDashboardBuatPengumuman
-              forwardRef={initialRef}
-              setLoading={setLoading}
-            />
+            <FormBuatTagihan forwardRef={initialRef} setLoading={setLoading} />
           </ModalBody>
 
           <ModalFooter>

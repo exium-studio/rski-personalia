@@ -17,12 +17,8 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  RiArrowLeftSLine,
-  RiArrowRightSLine,
-  RiCalendarLine,
-} from "@remixicon/react";
-import { useRef, useState } from "react";
+import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
+import { Dispatch, useRef, useState } from "react";
 import months from "../../../constant/months";
 import { iconSize } from "../../../constant/sizes";
 import useBackOnClose from "../../../hooks/useBackOnClose";
@@ -31,44 +27,40 @@ import formatDate from "../../../lib/formatDate";
 import DisclosureHeader from "../DisclosureHeader";
 import StringInput from "./StringInput";
 
-type PrefixOption = "basic" | "basicShort" | "long" | "longShort" | "short";
-
 interface Props extends StackProps {
   id: string;
   name: string;
-  onConfirm: (inputValue: Date | undefined) => void;
-  inputValue: Date | undefined;
-  dateFormatOptions?: PrefixOption | object;
-  placeholder?: string;
-  nonNullable?: boolean;
-  isError?: boolean;
+  bulan: number;
+  setBulan: Dispatch<number>;
+  tahun: number;
+  setTahun: Dispatch<number>;
+  setDate?: Dispatch<Date>;
 }
 
-export default function PeriodPickerModal({
+export default function PeriodPickerForDatePickerModal({
   id,
   name,
-  onConfirm,
-  inputValue,
-  dateFormatOptions,
-  placeholder,
-  nonNullable,
-  isError,
+  bulan,
+  setBulan,
+  tahun,
+  setTahun,
+  setDate,
   ...props
 }: Props) {
-  const initialRef = useRef(null);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`${id}-${name}` || "period-picker", isOpen, onOpen, onClose);
-
-  const [bulanLocal, setBulanLocal] = useState<number | undefined>(
-    inputValue ? inputValue.getMonth() : new Date().getMonth()
+  const initialRef = useRef(null);
+  useBackOnClose(
+    `${id}-${name}` || "datepicker_month_year_input_modal",
+    isOpen,
+    onOpen,
+    onClose
   );
-  const [tahunLocal, setTahunLocal] = useState<number | undefined>(
-    inputValue ? inputValue.getFullYear() : new Date().getFullYear()
-  );
 
-  const isTahunValid = (tahun: number | undefined) => {
-    return tahun && tahun >= 100 && tahun <= 270000;
+  const [bulanLocal, setBulanLocal] = useState<number>(bulan);
+  const [tahunLocal, setTahunLocal] = useState<number>(tahun);
+
+  const isTahunValid = (tahun: number) => {
+    return tahun >= 100 && tahun <= 270000;
   };
 
   const intervalIncrementRef = useRef<ReturnType<typeof setInterval> | null>(
@@ -90,7 +82,7 @@ export default function PeriodPickerModal({
 
     timeoutIncrementRef.current = setTimeout(() => {
       intervalIncrementRef.current = setInterval(() => {
-        setTahunLocal((ps) => ps || 0 + 1);
+        setTahunLocal((ps) => ps + 1);
       }, 100);
     }, 300);
   }
@@ -109,8 +101,8 @@ export default function PeriodPickerModal({
 
     timeoutDecrementRef.current = setTimeout(() => {
       intervalDecrementRef.current = setInterval(() => {
-        if (tahunLocal && tahunLocal > 0) {
-          setTahunLocal((ps) => ps && ps - 1);
+        if (tahunLocal > 0) {
+          setTahunLocal((ps) => ps - 1);
         }
       }, 100);
     }, 300);
@@ -126,57 +118,38 @@ export default function PeriodPickerModal({
     }
   }
 
-  function confirm() {
-    if (bulanLocal && tahunLocal) {
-      const period = new Date(tahunLocal, bulanLocal);
-      onConfirm(period);
-      backOnClose();
+  function onConfirm() {
+    setBulan(bulanLocal);
+    setTahun(tahunLocal);
+    if (setDate) {
+      setDate(new Date(tahunLocal, bulanLocal));
     }
+    backOnClose();
   }
 
   return (
     <>
       <HStack
         as={Button}
-        className="btn-clear"
-        justify={"space-between"}
+        className="btn-outline clicky"
+        justify={"center"}
         flex={1}
         minH={"40px"}
-        px={"16px !important"}
         _hover={{ bg: "var(--divider)" }}
         flexShrink={0}
-        w={"100%"}
-        bg={"transparent"}
-        border={"1px solid var(--divider3)"}
         onClick={() => {
           onOpen();
-          setBulanLocal(
-            inputValue ? inputValue.getMonth() : new Date().getMonth()
-          );
-          setTahunLocal(
-            inputValue ? inputValue.getFullYear() : new Date().getFullYear()
-          );
+          setBulanLocal(bulan);
+          setTahunLocal(tahun);
         }}
         {...props}
       >
-        {inputValue ? (
-          <Text fontSize={17} fontWeight={600}>
-            {`${formatDate(
-              new Date(inputValue?.getFullYear(), inputValue?.getMonth()),
-              {
-                month: "long",
-                year: "numeric",
-              }
-            )}`}
-          </Text>
-        ) : (
-          //@ts-ignore
-          <Text color={props?._placeholder?.color || "#96969691"}>
-            {placeholder || "Periode"}
-          </Text>
-        )}
-
-        <Icon as={RiCalendarLine} />
+        <Text fontSize={17} fontWeight={600}>
+          {`${formatDate(new Date(tahun, bulan), {
+            month: "long",
+            year: "numeric",
+          })}`}
+        </Text>
       </HStack>
 
       <Modal
@@ -221,9 +194,9 @@ export default function PeriodPickerModal({
                   aria-label="year min button"
                   icon={<Icon as={RiArrowLeftSLine} fontSize={iconSize} />}
                   className="btn-outline clicky"
-                  isDisabled={!!(tahunLocal && tahunLocal <= 0)}
+                  isDisabled={tahunLocal <= 0}
                   onClick={() => {
-                    if (tahunLocal && tahunLocal > 0) {
+                    if (tahunLocal > 0) {
                       setTahunLocal(tahunLocal - 1);
                     }
                   }}
@@ -253,11 +226,9 @@ export default function PeriodPickerModal({
                   aria-label="year plus button"
                   icon={<Icon as={RiArrowRightSLine} fontSize={iconSize} />}
                   className="btn-outline clicky"
-                  isDisabled={!!(tahunLocal && tahunLocal <= 0)}
+                  isDisabled={tahunLocal <= 0}
                   onClick={() => {
-                    if (tahunLocal) {
-                      setTahunLocal(tahunLocal + 1);
-                    }
+                    setTahunLocal(tahunLocal + 1);
                   }}
                   onMouseDown={() => {
                     handleMouseDownIncrement();
@@ -280,13 +251,13 @@ export default function PeriodPickerModal({
 
           <ModalFooter>
             <Button
-              onClick={confirm}
+              onClick={onConfirm}
               w={"100%"}
               className="btn-ap clicky"
               isDisabled={!isTahunValid(tahunLocal)}
               colorScheme="ap"
             >
-              Konfirmasi
+              Terapkan
             </Button>
           </ModalFooter>
         </ModalContent>
