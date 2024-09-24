@@ -142,7 +142,7 @@ export default function TabelPengaturanPendidikan({ filterConfig }: Props) {
           <Tooltip openDelay={500} label={item.label} placement="right">
             <Text
               w={"100%"}
-              maxW={"243px"}
+              maxW={"303px"}
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}

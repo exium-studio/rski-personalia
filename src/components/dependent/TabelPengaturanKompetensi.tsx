@@ -170,7 +170,7 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
           >
             <Text
               w={"100%"}
-              maxW={"243px"}
+              maxW={"303px"}
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}

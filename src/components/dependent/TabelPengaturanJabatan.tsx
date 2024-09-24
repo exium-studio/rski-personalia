@@ -159,7 +159,7 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
           <Tooltip openDelay={500} label={item.nama_jabatan} placement="right">
             <Text
               w={"100%"}
-              maxW={"243px"}
+              maxW={"303px"}
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}

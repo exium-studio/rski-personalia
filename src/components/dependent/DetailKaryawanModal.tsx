@@ -1044,7 +1044,7 @@ export default function DetailKaryawanModal({
                                       whiteSpace={"nowrap"}
                                       overflow={"hidden"}
                                       textOverflow={"ellipsis"}
-                                      maxW={"243px"}
+                                      maxW={"303px"}
                                     >
                                       {data.alamat}
                                     </Text>
