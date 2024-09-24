@@ -124,7 +124,7 @@ export default function EditPendidikanModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit Kompetensi"
+              title="Edit Pendidikan"
               onClose={() => {
                 formik.resetForm();
               }}

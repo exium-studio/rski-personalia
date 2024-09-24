@@ -108,7 +108,7 @@ export default function TambahPendidikan({ ...props }: Props) {
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Tambah Kelompok Gaji"
+              title="Tambah Pendidikan"
               onClose={() => {
                 formik.resetForm();
               }}
