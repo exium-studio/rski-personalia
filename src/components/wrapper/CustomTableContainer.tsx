@@ -40,7 +40,7 @@ export default function CustomTableContainer({
       overflow={"auto"}
       w={"100%"}
       minH={minH || sh < 625 ? "400px" : "max-content !important"}
-      maxH={"100%"}
+      maxH={"500px"}
       // maxH={[
       //   `calc(100vh - 318px - ${tabelConfigH}px)`,
       //   null,

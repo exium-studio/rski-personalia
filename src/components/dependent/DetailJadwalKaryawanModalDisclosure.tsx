@@ -25,6 +25,7 @@ import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import TabelDetailJadwalKaryawan from "./TabelDetailJadwalKaryawan";
+import FlexLine from "../independent/FlexLine";
 
 interface Props extends BoxProps {
   karyawan_id: number;
@@ -159,6 +160,7 @@ export default function DetailJadwalKaryawanModalDisclosure({
                             <Text fontSize={14} opacity={0.6}>
                               Nama Karyawan
                             </Text>
+                            <FlexLine />
                             <Text fontWeight={500}>{data.user.nama}</Text>
                           </VStack>
 
@@ -166,6 +168,7 @@ export default function DetailJadwalKaryawanModalDisclosure({
                             <Text fontSize={14} opacity={0.6}>
                               Unit Kerja
                             </Text>
+                            <FlexLine />
                             <Text fontWeight={500}>
                               {data.unit_kerja.nama_unit}
                             </Text>
