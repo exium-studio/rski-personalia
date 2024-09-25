@@ -20,16 +20,17 @@ import {
 import { RiMailDownloadLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
-import req from "../../lib/req";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
-import timeSince from "../../lib/timeSince";
+import formatDate from "../../lib/formatDate";
+import req from "../../lib/req";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import Retry from "../dependent/Retry";
 import CContainer from "../wrapper/CContainer";
 import NoData from "./NoData";
 import Skeleton from "./Skeleton";
+import { Link } from "react-router-dom";
 
 interface Props extends IconButtonProps {}
 
@@ -54,7 +55,12 @@ export default function NotificationModal({ ...props }: Props) {
   useEffect(() => {
     if (data) {
       let count = 0;
-      data.forEach((notif: any) => {
+      data?.notifikasi_verifikasi?.forEach((notif: any) => {
+        if (notif.is_read === 0) {
+          count++;
+        }
+      });
+      data?.notifikasi_reguler?.forEach((notif: any) => {
         if (notif.is_read === 0) {
           count++;
         }
@@ -123,10 +129,25 @@ export default function NotificationModal({ ...props }: Props) {
   // SX
   const lightDarkColor = useLightDarkColor();
 
+  const verificationLinks = {
+    Cuti: "/jadwal/cuti",
+    "Tukar Jadwal": "/jadwal/penukaran-jadwal",
+    Lembur: "/jadwal/lembur",
+    "Event & Diklat": "/jadwal/diklat-eksternal",
+    Dokumen: "/karyawan",
+    Perizinan: "/jadwal/izin",
+    "Perubahan Data": "/karyawan/perubahan-data-karyawan",
+    "Data Keluarga Karyawan": "/karyawan",
+    // Koperasi: "",
+    // Laporan: "",
+    // "Slip Gajiku": "",
+    // Feedback: "",
+  };
+
   return (
     <>
       <Box position={"relative"}>
-        {notRedCount && (
+        {notRedCount ? (
           <Center
             position={"absolute"}
             w={"20px"}
@@ -141,6 +162,8 @@ export default function NotificationModal({ ...props }: Props) {
               {notRedCount}
             </Text>
           </Center>
+        ) : (
+          ""
         )}
 
         <IconButton
@@ -205,118 +228,155 @@ export default function NotificationModal({ ...props }: Props) {
                     {(data || (data && data.length > 0)) && (
                       <>
                         <CContainer>
-                          <Text fontWeight={500} mb={2}>
-                            Perlu Verifikasi
-                          </Text>
-                          {data?.notifikasi_verifikasi?.map(
-                            (inbox: any, i: number) => (
-                              <HStack
-                                onClick={() => {
-                                  tandaiBaca(inbox.id);
-                                }}
-                                align={"start"}
-                                key={i}
-                                px={6}
-                                py={4}
-                                cursor={"pointer"}
-                                _hover={{ bg: "var(--divider)" }}
-                                transition={"200ms"}
-                                borderBottom={
-                                  i !== data.length - 1
-                                    ? "1px solid var(--divider)"
-                                    : ""
+                          {data?.notifikasi_verifikasi?.length > 0 && (
+                            <>
+                              <CContainer px={6}>
+                                <Text fontWeight={500} mb={2}>
+                                  Perlu Verifikasi
+                                </Text>
+                              </CContainer>
+                              {data?.notifikasi_verifikasi?.map(
+                                (inbox: any, i: number) => {
+                                  // @ts-ignore
+
+                                  return (
+                                    <HStack
+                                      onClick={() => {
+                                        tandaiBaca(inbox.id);
+                                      }}
+                                      align={"start"}
+                                      key={i}
+                                      px={6}
+                                      py={4}
+                                      cursor={"pointer"}
+                                      _hover={{ bg: "var(--divider)" }}
+                                      transition={"200ms"}
+                                      borderBottom={
+                                        i !== data.length - 1
+                                          ? "1px solid var(--divider)"
+                                          : ""
+                                      }
+                                      as={Link}
+                                      to={
+                                        // @ts-ignore
+                                        verificationLinks[
+                                          inbox?.kategori_notifikasi?.label
+                                        ]
+                                      }
+                                    >
+                                      <CContainer gap={1}>
+                                        <Tooltip
+                                          label={
+                                            inbox?.kategori_notifikasi?.label
+                                          }
+                                          openDelay={500}
+                                        >
+                                          <Text
+                                            fontWeight={600}
+                                            w={"fit-content"}
+                                          >
+                                            {inbox?.kategori_notifikasi?.label}
+                                          </Text>
+                                        </Tooltip>
+
+                                        <Text
+                                          fontSize={14}
+                                          // noOfLines={1}
+                                          opacity={0.6}
+                                        >
+                                          {inbox?.message}
+                                        </Text>
+
+                                        <Text
+                                          fontSize={12}
+                                          opacity={0.4}
+                                          pt={2}
+                                        >
+                                          {formatDate(inbox?.created_at)}
+                                        </Text>
+                                      </CContainer>
+
+                                      {!inbox?.is_read && (
+                                        <Box
+                                          w={"6px"}
+                                          h={"6px"}
+                                          borderRadius={"full"}
+                                          bg={"red.400"}
+                                        />
+                                      )}
+                                    </HStack>
+                                  );
                                 }
-                              >
-                                <CContainer gap={1}>
-                                  <Tooltip
-                                    label={inbox?.kategori_notifikasi?.label}
-                                    openDelay={500}
-                                  >
-                                    <Text fontWeight={600} w={"fit-content"}>
-                                      {inbox?.kategori_notifikasi?.label}
-                                    </Text>
-                                  </Tooltip>
-
-                                  <Text
-                                    fontSize={14}
-                                    // noOfLines={1}
-                                    opacity={0.6}
-                                  >
-                                    {inbox?.message}
-                                  </Text>
-
-                                  <Text fontSize={12} opacity={0.4} pt={2}>
-                                    {timeSince(inbox?.created_at)}
-                                  </Text>
-                                </CContainer>
-
-                                {!inbox?.is_read && (
-                                  <Box
-                                    w={"6px"}
-                                    h={"6px"}
-                                    borderRadius={"full"}
-                                    bg={"red.400"}
-                                  />
-                                )}
-                              </HStack>
-                            )
+                              )}
+                            </>
                           )}
 
-                          <Text fontWeight={500} mt={4} mb={2}>
-                            Reguler
-                          </Text>
-                          {data?.notifikasi_verifikasi?.map(
-                            (inbox: any, i: number) => (
-                              <HStack
-                                onClick={() => {
-                                  tandaiBaca(inbox.id);
-                                }}
-                                align={"start"}
-                                key={i}
-                                px={6}
-                                py={4}
-                                cursor={"pointer"}
-                                _hover={{ bg: "var(--divider)" }}
-                                transition={"200ms"}
-                                borderBottom={
-                                  i !== data.length - 1
-                                    ? "1px solid var(--divider)"
-                                    : ""
-                                }
-                              >
-                                <CContainer gap={1}>
-                                  <Tooltip
-                                    label={inbox?.kategori_notifikasi?.label}
-                                    openDelay={500}
+                          {data?.notifikasi_reguler?.length > 0 && (
+                            <>
+                              <CContainer px={6}>
+                                <Text fontWeight={500} mt={4} mb={2}>
+                                  Reguler
+                                </Text>
+                              </CContainer>
+                              {data?.notifikasi_reguler?.map(
+                                (inbox: any, i: number) => (
+                                  <HStack
+                                    onClick={() => {
+                                      tandaiBaca(inbox.id);
+                                    }}
+                                    align={"start"}
+                                    key={i}
+                                    px={6}
+                                    py={4}
+                                    cursor={"pointer"}
+                                    _hover={{ bg: "var(--divider)" }}
+                                    transition={"200ms"}
+                                    borderBottom={
+                                      i !== data.length - 1
+                                        ? "1px solid var(--divider)"
+                                        : ""
+                                    }
                                   >
-                                    <Text fontWeight={600} w={"fit-content"}>
-                                      {inbox?.kategori_notifikasi?.label}
-                                    </Text>
-                                  </Tooltip>
+                                    <CContainer gap={1}>
+                                      <Tooltip
+                                        label={
+                                          inbox?.kategori_notifikasi?.label
+                                        }
+                                        openDelay={500}
+                                      >
+                                        <Text
+                                          fontWeight={600}
+                                          w={"fit-content"}
+                                        >
+                                          {inbox?.kategori_notifikasi?.label}
+                                        </Text>
+                                      </Tooltip>
 
-                                  <Text
-                                    fontSize={14}
-                                    // noOfLines={1}
-                                    opacity={0.6}
-                                  >
-                                    {inbox?.message}
-                                  </Text>
+                                      <Text
+                                        fontSize={14}
+                                        // noOfLines={1}
+                                        opacity={0.6}
+                                      >
+                                        {inbox?.message}
+                                      </Text>
 
-                                  <Text fontSize={12} opacity={0.4} pt={2}>
-                                    {timeSince(inbox?.created_at)}
-                                  </Text>
-                                </CContainer>
+                                      <Text fontSize={12} opacity={0.4} pt={2}>
+                                        {formatDate(inbox?.created_at)}
+                                      </Text>
+                                    </CContainer>
 
-                                {!inbox?.is_read && (
-                                  <Box
-                                    w={"6px"}
-                                    h={"6px"}
-                                    borderRadius={"full"}
-                                    bg={"red.400"}
-                                  />
-                                )}
-                              </HStack>
-                            )
+                                    {!inbox?.is_read && (
+                                      <Box
+                                        w={"6px"}
+                                        h={"6px"}
+                                        borderRadius={"full"}
+                                        bg={"red.400"}
+                                      />
+                                    )}
+                                  </HStack>
+                                )
+                              )}
+                            </>
                           )}
                         </CContainer>
                       </>
