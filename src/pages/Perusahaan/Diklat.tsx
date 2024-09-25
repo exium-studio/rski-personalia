@@ -17,7 +17,7 @@ export default function Diklat() {
   // Filter Config
   const defaultFilterConfig = {
     search: "",
-    tahun: new Date().getFullYear(),
+    periode_tahun: new Date().getFullYear(),
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
   const [search, setSearch] = useState("");
@@ -25,7 +25,7 @@ export default function Diklat() {
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setFilterConfig({ search: search, tahun: tahun });
+      setFilterConfig({ search: search, periode_tahun: tahun });
     }, 300);
 
     return () => {
