@@ -344,6 +344,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                   </FormLabel>
                   <FileInput
                     name="dokumen"
+                    accept=".pdf, .xls, .xlsx, .csv, .doc, .docx, .zip, .rar"
                     onChangeSetter={(input) => {
                       formik.setFieldValue("dokumen", input);
                     }}

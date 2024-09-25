@@ -1484,7 +1484,9 @@ export default function DetailKaryawanModal({
                                   <Text fontWeight={500} textAlign={"right"}>
                                     {data?.bmi_value &&
                                       data?.bmi_ket &&
-                                      `${data?.bmi_value} (${data?.bmi_ket})`}
+                                      `${parseFloat(data?.bmi_value)?.toFixed(
+                                        1
+                                      )} (${data?.bmi_ket})`}
                                   </Text>
                                 </HStack>
 
