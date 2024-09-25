@@ -61,7 +61,7 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
           <ModalHeader>
             <DisclosureHeader title={"Anggota Keluarga"} />
           </ModalHeader>
-          <ModalBody className="scrollY">
+          <ModalBody className="scrollY" gap={4}>
             {data?.length > 0 && (
               <>
                 {data?.map((anggota: any, i: number) => (
@@ -70,20 +70,25 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
                     borderBottom={
                       i !== data?.length - 1 ? "1px solid var(--divider)" : ""
                     }
-                    pt={i !== 0 ? 4 : 0}
-                    pb={i !== data?.length - 1 ? 4 : 0}
+                    // pt={i !== 0 ? 4 : 0}
+                    // pb={i !== data?.length - 1 ? 4 : 0}
+                    p={4}
+                    borderRadius={8}
                     gap={2}
+                    bg={"var(--divider)"}
                   >
                     <Text fontWeight={600}>{anggota?.nama_keluarga}</Text>
                     <HStack>
                       <Text opacity={0.4}>Hubungan Keluarga</Text>
                       <FlexLine />
-                      <Text>{anggota?.hubungan?.label}</Text>
+                      <Text>{anggota?.hubungan}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Status Hidup</Text>
                       <FlexLine />
-                      <Text>{anggota?.status_hidup?.label}</Text>
+                      <Text>
+                        {anggota?.status_hidup ? "Hidup" : "Meninggal"}
+                      </Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Pendidikan Terakhir</Text>
@@ -112,7 +117,6 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
                         data={anggota.is_bpjs}
                         trueValue="Ditanggung"
                         falseValue="Tidak Ditanggung"
-                        w={"150px"}
                       />
                     </HStack>
                   </CContainer>
