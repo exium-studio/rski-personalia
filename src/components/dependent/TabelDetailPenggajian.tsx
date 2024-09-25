@@ -83,58 +83,63 @@ export default function TabelDetailPenggajian({
       },
     },
   ];
-  const formattedData = fd.map((item: any) => ({
-    id: item.id,
-    columnsFormat: [
-      {
-        value: item.user.nama,
-        td: (
-          <AvatarAndNameTableData
-            data={{
-              id: item.user.id,
-              nama: item.user.nama,
-              fullName: `${item?.gelar_depan || ""} ${item.user?.nama} ${
-                item?.gelar_belakang || ""
-              }`,
-              foto_profil: item.user.foto_profil,
-            }}
-          />
-        ),
-        props: {
-          position: "sticky",
-          left: 0,
-          zIndex: 2,
-        },
-        cProps: {
-          borderRight: "1px solid var(--divider3)",
-        },
-      },
-      {
-        value: item?.unit_kerja?.nama_unit,
-        td: item?.unit_kerja?.nama_unit,
-      },
-      {
-        value: item?.kelompok_gaji?.nama_kelompok,
-        td: item?.kelompok_gaji?.nama_kelompok,
-      },
-      {
-        value: item?.kelompok_gaji?.besaran_gaji,
-        td: `Rp ${formatNumber(item?.kelompok_gaji?.besaran_gaji)}`,
-        isNumeric: true,
-        cProps: {
-          justify: "end",
-        },
-      },
-      {
-        value: item.take_home_pay,
-        td: `Rp ${formatNumber(item.take_home_pay)}`,
-        isNumeric: true,
-        cProps: {
-          justify: "end",
-        },
-      },
-    ],
-  }));
+  const formattedData = fd
+    .map((item: any, i: number) => {
+      if (i >= 10) return null; // Kembalikan null jika tidak memenuhi kondisi
+      return {
+        id: item.id,
+        columnsFormat: [
+          {
+            value: item.user.nama,
+            td: (
+              <AvatarAndNameTableData
+                data={{
+                  id: item.user.id,
+                  nama: item.user.nama,
+                  fullName: `${item?.gelar_depan || ""} ${item.user?.nama} ${
+                    item?.gelar_belakang || ""
+                  }`,
+                  foto_profil: item.user.foto_profil,
+                }}
+              />
+            ),
+            props: {
+              position: "sticky",
+              left: 0,
+              zIndex: 2,
+            },
+            cProps: {
+              borderRight: "1px solid var(--divider3)",
+            },
+          },
+          {
+            value: item?.unit_kerja?.nama_unit,
+            td: item?.unit_kerja?.nama_unit,
+          },
+          {
+            value: item?.kelompok_gaji?.nama_kelompok,
+            td: item?.kelompok_gaji?.nama_kelompok,
+          },
+          {
+            value: item?.kelompok_gaji?.besaran_gaji,
+            td: `Rp ${formatNumber(item?.kelompok_gaji?.besaran_gaji)}`,
+            isNumeric: true,
+            cProps: {
+              justify: "end",
+            },
+          },
+          {
+            value: item.take_home_pay,
+            td: `Rp ${formatNumber(item.take_home_pay)}`,
+            isNumeric: true,
+            cProps: {
+              justify: "end",
+            },
+          },
+        ],
+      };
+    })
+    .filter(Boolean); // Hapus elemen null atau false
 
   const riwayatId = parseInt(localStorage.getItem("riwayat_id") as string);
 

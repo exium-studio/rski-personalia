@@ -193,6 +193,7 @@ export default function TabelPengaturanPendidikan({ filterConfig }: Props) {
         <>
           {loading && (
             <>
+              W
               <Skeleton minH={"300px"} flex={1} mx={"auto"} />
             </>
           )}

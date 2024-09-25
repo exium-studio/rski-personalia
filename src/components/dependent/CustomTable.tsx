@@ -322,6 +322,8 @@ export default function CustomTable({
       ? sortedData()
       : originalDataState;
 
+  // console.log(dataToMap);
+
   return (
     <>
       {/* {onRowClick && <Box w={"4px"} h={"100%"} bg={"p.500"} />} */}
@@ -430,7 +432,7 @@ export default function CustomTable({
         </Thead>
 
         <Tbody>
-          {dataToMap.map((row, rowIndex) => {
+          {dataToMap?.map((row, rowIndex) => {
             return (
               <Tr
                 key={rowIndex}

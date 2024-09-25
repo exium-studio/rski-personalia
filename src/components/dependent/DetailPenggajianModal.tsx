@@ -145,7 +145,7 @@ const PublikasiButtonModal = ({
   );
 };
 
-const UpdateBor = () => {
+const UpdateBor = ({ penggajian_id }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("update-bor-modal", isOpen, onOpen, onClose);
 
@@ -164,7 +164,7 @@ const UpdateBor = () => {
 
       const payload = {
         bor: values.bor,
-        riwayat_penggajian_id: 1,
+        riwayat_penggajian_id: penggajian_id,
       };
 
       req
@@ -236,7 +236,7 @@ const UpdateBor = () => {
               <Checkbox
                 colorScheme="ap"
                 onChange={(e) => {
-                  formik.setFieldValue("sertakan_bor", e.target.checked);
+                  formik.setFieldValue("bor", e.target.checked);
                 }}
               >
                 <Text mt={"-2.5px"}>Sertakan BOR</Text>
@@ -247,7 +247,16 @@ const UpdateBor = () => {
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button w={"100%"} colorScheme="ap" className="btn-ap clicky">
+            <Button
+              type="submit"
+              onClick={() => {
+                formik.submitForm();
+              }}
+              w={"100%"}
+              colorScheme="ap"
+              className="btn-ap clicky"
+              isLoading={loading}
+            >
               Simpan
             </Button>
           </ModalFooter>
@@ -444,7 +453,7 @@ export default function DetailPenggajianModal({
                           </Text>
                         </VStack>
 
-                        <UpdateBor />
+                        <UpdateBor penggajian_id={penggajian_id} />
 
                         <PublikasiButtonModal
                           penggajian_id={penggajian_id}
