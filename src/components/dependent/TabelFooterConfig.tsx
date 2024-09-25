@@ -19,7 +19,7 @@ interface Props {
   setLimitConfig: (limit: number) => void;
   pageConfig: number;
   setPageConfig: (page: number) => void;
-  paginationData: any;
+  paginationData?: any;
   footer?: React.ReactNode;
 }
 

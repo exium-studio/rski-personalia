@@ -1,5 +1,5 @@
 import { HStack, Text, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
 import formatNumber from "../../lib/formatNumber";
 import NotFound from "../independent/NotFound";
@@ -13,6 +13,7 @@ import SearchComponent from "./input/SearchComponent";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
+import TabelFooterConfig from "./TabelFooterConfig";
 
 interface Props {
   data: any;
@@ -23,6 +24,10 @@ export default function TabelDetailPenggajian({
   data,
   status_riwayat_gaji,
 }: Props) {
+  // Limit Config
+  const [limitConfig, setLimitConfig] = useState<number>(10);
+  // Pagination Config
+  const [pageConfig, setPageConfig] = useState<number>(1);
   // Detail Penggajian Karyawan Disclosure
   const { isOpen, onOpen, onClose } = useDisclosure();
   // Filter Config
@@ -31,20 +36,44 @@ export default function TabelDetailPenggajian({
     unit_kerja: undefined as any,
   });
 
-  const fd = data.data_penggajian.filter((item: any) => {
-    const searchTerm = filterConfig.search.toLowerCase();
-    const unitKerjaTerm = filterConfig.unit_kerja;
+  // Function to handle search input
+  const handleSearchChange = useCallback(
+    (input: string) => {
+      setFilterConfig((ps) => ({
+        ...ps,
+        search: input,
+      }));
+      setPageConfig(1); // Reset to first page when search is applied
+    },
+    [setFilterConfig]
+  );
 
-    const matchesSearchTerm = item.user.nama.toLowerCase().includes(searchTerm);
-    const matchesUnitKerjaTerm =
-      unitKerjaTerm && unitKerjaTerm.length > 0
-        ? unitKerjaTerm.some(
-            (filterItem: any) => filterItem.value === item.unit_kerja.id
-          )
-        : true;
+  // Filter data based on search and unit_kerja
+  const fd = useMemo(() => {
+    return data.data_penggajian.filter((item: any) => {
+      const searchTerm = filterConfig.search.toLowerCase();
+      const unitKerjaTerm = filterConfig.unit_kerja;
 
-    return matchesSearchTerm && matchesUnitKerjaTerm;
-  });
+      const matchesSearchTerm = item.user.nama
+        .toLowerCase()
+        .includes(searchTerm);
+      const matchesUnitKerjaTerm =
+        unitKerjaTerm && unitKerjaTerm.length > 0
+          ? unitKerjaTerm.some(
+              (filterItem: any) => filterItem.value === item.unit_kerja.id
+            )
+          : true;
+
+      return matchesSearchTerm && matchesUnitKerjaTerm;
+    });
+  }, [filterConfig, data.data_penggajian]);
+
+  // Calculate the total number of pages
+  const totalPage = Math.ceil(fd.length / limitConfig);
+
+  // Calculate start and end index for the current page
+  const startIndex = (pageConfig - 1) * limitConfig;
+  const endIndex = startIndex + limitConfig;
 
   const formattedHeader = [
     {
@@ -83,9 +112,11 @@ export default function TabelDetailPenggajian({
       },
     },
   ];
+
+  // Format the data for the current page
   const formattedData = fd
-    .map((item: any, i: number) => {
-      if (i >= 10) return null; // Kembalikan null jika tidak memenuhi kondisi
+    .slice(startIndex, endIndex)
+    .map((item: any) => {
       return {
         id: item.id,
         columnsFormat: [
@@ -141,23 +172,38 @@ export default function TabelDetailPenggajian({
     })
     .filter(Boolean); // Hapus elemen null atau false
 
+  // Get riwayat_id from localStorage
   const riwayatId = parseInt(localStorage.getItem("riwayat_id") as string);
 
+  // Permission to export
   const { userPermissions } = useAuth();
   const exportPermission = isHasPermissions(userPermissions, [18]);
+
+  // Pagination data for the footer
+  const paginationData = {
+    links: {
+      first: "",
+      last: "",
+      prev: null,
+      next: null,
+    },
+    meta: {
+      current_page: pageConfig,
+      last_page: totalPage,
+      per_page: limitConfig,
+      total: fd.length,
+    },
+  };
 
   return (
     <>
       <HStack mb={responsiveSpacing}>
         <SearchComponent
           name="search"
-          onChangeSetter={(input) => {
-            setFilterConfig((ps) => ({
-              ...ps,
-              search: input,
-            }));
-          }}
+          onChangeSetter={handleSearchChange}
           inputValue={filterConfig.search}
+          tooltipLabel="Cari dengan nama/no. induk karyawan"
+          placeholder="nama/no. induk karyawan"
         />
 
         <MultiSelectUnitKerja
@@ -167,6 +213,7 @@ export default function TabelDetailPenggajian({
               ...ps,
               unit_kerja: input,
             }));
+            setPageConfig(1); // Reset to first page when filter is applied
           }}
           inputValue={filterConfig.unit_kerja}
           optionsDisplay="chip"
@@ -195,15 +242,23 @@ export default function TabelDetailPenggajian({
                 localStorage.setItem("riwayat_id", rowData.id);
                 onOpen();
               }}
-              // rowOptions={rowOptions}
             />
           </CustomTableContainer>
-
-          <Text opacity={0.4} textAlign={"center"} mt={responsiveSpacing}>
-            Klik row untuk melihat detail penggajian karyawan
-          </Text>
         </>
       )}
+
+      <TabelFooterConfig
+        limitConfig={limitConfig}
+        setLimitConfig={setLimitConfig}
+        pageConfig={pageConfig}
+        setPageConfig={setPageConfig}
+        paginationData={paginationData}
+        footer={
+          <Text opacity={0.4} textAlign={"center"}>
+            Klik row untuk melihat detail penggajian karyawan
+          </Text>
+        }
+      />
 
       <DetailPenggajianKaryawanModal
         id={"detail-penggajian-karyawan-by-row-click"}

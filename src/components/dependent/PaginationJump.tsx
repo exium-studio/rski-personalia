@@ -1,13 +1,12 @@
 import {
   Button,
-  FormControl,
-  FormErrorMessage,
   Menu,
   MenuButton,
   MenuGroup,
   MenuItem,
   MenuList,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -20,6 +19,7 @@ type Props = {
 };
 export default function PaginationJump({ page, setPage, pagination }: Props) {
   const [data, setData] = useState<number | undefined>(page);
+  const toast = useToast();
 
   useEffect(() => {
     if (page) {
@@ -27,31 +27,23 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
     }
   }, [page]);
 
-  const validation = () => {
-    if (
-      pagination?.meta?.last_page === undefined ||
-      pagination?.meta?.last_page === null
-    ) {
-      return true;
-    }
-
-    if (data && data > 0 && data <= pagination?.meta?.last_page) {
-      return true;
-    }
-
-    return false;
-  };
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (data && data > 0 && data <= pagination?.meta?.last_page) {
       setPage(data);
+    } else {
+      toast({
+        status: "error",
+        title:
+          "Input harus lebih dari 0 dan kurang dari/sama dengan halaman terakhir",
+        isClosable: true,
+        position: "bottom-right",
+      });
     }
   };
 
   return (
     <>
-      <Menu>
+      <Menu closeOnSelect={false}>
         <MenuButton
           as={VStack}
           justify={"center"}
@@ -74,38 +66,44 @@ export default function PaginationJump({ page, setPage, pagination }: Props) {
             title={`Terakhir : ${pagination?.meta?.last_page || "-"}`}
             fontWeight={400}
           ></MenuGroup>
-          <form id={"jumpToPageForm"} onSubmit={handleSubmit}>
+          <NumberInput
+            name="page"
+            onChangeSetter={(input) => {
+              setData(input);
+            }}
+            onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
+              if (e.key === "Enter") {
+                handleSubmit();
+              }
+            }}
+            inputValue={data}
+            borderRadius={"0 !important"}
+            borderLeft={"none !important"}
+            borderRight={"none !important"}
+            textAlign={"center"}
+          />
+          <MenuItem
+            as={Button}
+            onClick={handleSubmit}
+            justifyContent={"center"}
+            type="submit"
+            form="jumpToPageForm"
+            borderRadius={"0 0 8px 8px"}
+            w={"100%"}
+            color={"p.500"}
+          >
+            Lompat
+          </MenuItem>
+          {/* <form id={"jumpToPageForm"} onSubmit={handleSubmit}>
             <FormControl isInvalid={!validation()}>
-              <NumberInput
-                name="page"
-                onChangeSetter={(input) => {
-                  setData(input);
-                }}
-                inputValue={data}
-                borderRadius={"0 !important"}
-                borderLeft={"none !important"}
-                borderRight={"none !important"}
-                textAlign={"center"}
-              />
-              <MenuItem
-                as={Button}
-                justifyContent={"center"}
-                type="submit"
-                form="jumpToPageForm"
-                isDisabled={!validation()}
-                borderRadius={"0 0 8px 8px"}
-                w={"100%"}
-                color={"p.500"}
-              >
-                Lompat
-              </MenuItem>
+              
               <FormErrorMessage
                 px={3}
                 pb={2}
                 color={"red.400"}
               >{`Input harus lebih dari 0 dan kurang dari/sama dengan halaman terakhir`}</FormErrorMessage>
             </FormControl>
-          </form>
+          </form> */}
         </MenuList>
       </Menu>
     </>
