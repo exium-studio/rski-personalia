@@ -69,11 +69,11 @@ export default function TabelDetailPenggajian({
   }, [filterConfig, data.data_penggajian]);
 
   // Calculate the total number of pages
-  const totalPage = Math.ceil(fd.length / limitConfig);
+  const totalPage = limitConfig === 0 ? 1 : Math.ceil(fd.length / limitConfig);
 
   // Calculate start and end index for the current page
   const startIndex = (pageConfig - 1) * limitConfig;
-  const endIndex = startIndex + limitConfig;
+  const endIndex = limitConfig === 0 ? fd.length : startIndex + limitConfig;
 
   const formattedHeader = [
     {
