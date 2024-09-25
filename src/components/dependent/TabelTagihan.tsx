@@ -132,7 +132,7 @@ export default function TabelTagihan({ filterConfig }: Props) {
       },
       {
         value: item.tenor,
-        td: `${formatNumber(item.ten || 0)} bulan`,
+        td: `${formatNumber(item.tenor || 0)} bulan`,
       },
       {
         value: item.sisa_tagihan,
