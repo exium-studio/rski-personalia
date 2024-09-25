@@ -97,15 +97,16 @@ export default function EditKuisionerModalDisclosure({
   });
 
   const formikRef = useRef(formik);
+  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
     formikRef.current.setFieldValue(
       "pertanyaan",
-      rowData.columnsFormat[0].value
+      rowDataRef.current.columnsFormat[0].value
     );
     formikRef.current.setFieldValue("jenis_penilaian", {
-      value: rowData.columnsFormat[2].original_data?.id,
-      label: rowData.columnsFormat[2].original_data?.nama,
+      value: rowDataRef.current.columnsFormat[2].original_data?.id,
+      label: rowDataRef.current.columnsFormat[2].original_data?.nama,
     });
   }, [isOpen, formikRef]);
 

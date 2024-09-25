@@ -109,24 +109,28 @@ export default function EditJenisPenilaianModalDisclosure({
   });
 
   const formikRef = useRef(formik);
+  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
     if (isOpen) {
-      formikRef.current.setFieldValue("nama", rowData.columnsFormat[0]?.value);
+      formikRef.current.setFieldValue(
+        "nama",
+        rowDataRef.current.columnsFormat[0]?.value
+      );
       formikRef.current.setFieldValue("status_karyawan", {
-        value: rowData.columnsFormat[2]?.value,
-        label: rowData.columnsFormat[2]?.original_data?.label,
+        value: rowDataRef.current.columnsFormat[2]?.value,
+        label: rowDataRef.current.columnsFormat[2]?.original_data?.label,
       });
       formikRef.current.setFieldValue("jabatan_penilai", {
-        value: rowData.columnsFormat[3]?.original_data?.id,
-        label: rowData.columnsFormat[3]?.original_data?.nama_jabatan,
+        value: rowDataRef.current.columnsFormat[3]?.original_data?.id,
+        label: rowDataRef.current.columnsFormat[3]?.original_data?.nama_jabatan,
       });
       formikRef.current.setFieldValue("jabatan_dinilai", {
-        value: rowData.columnsFormat[4]?.original_data?.id,
-        label: rowData.columnsFormat[4]?.original_data?.nama_jabatan,
+        value: rowDataRef.current.columnsFormat[4]?.original_data?.id,
+        label: rowDataRef.current.columnsFormat[4]?.original_data?.nama_jabatan,
       });
     }
-  }, [isOpen,  formikRef]);
+  }, [isOpen, formikRef]);
 
   return (
     <>

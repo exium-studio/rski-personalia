@@ -111,31 +111,34 @@ export default function EditPotonganModalDisclosure({
   });
 
   const formikRef = useRef(formik);
+  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
     formikRef.current.setFieldValue(
       "nama_premi",
-      rowData.columnsFormat[0].value
+      rowDataRef.current.columnsFormat[0].value
     );
     formikRef.current.setFieldValue("jenis_premi", {
-      value: rowData.columnsFormat[2].value,
-      label: rowData.columnsFormat[2].value ? "Nominal" : "Persentase (%)",
+      value: rowDataRef.current.columnsFormat[2].value,
+      label: rowDataRef.current.columnsFormat[2].value
+        ? "Nominal"
+        : "Persentase (%)",
     });
     formikRef.current.setFieldValue("sumber_potongan", {
-      value: rowData.columnsFormat[3].original_data.id,
-      label: rowData.columnsFormat[3].original_data.label,
+      value: rowDataRef.current.columnsFormat[3].original_data.id,
+      label: rowDataRef.current.columnsFormat[3].original_data.label,
     });
     formikRef.current.setFieldValue(
       "besaran_premi",
-      rowData.columnsFormat[4].value
+      rowDataRef.current.columnsFormat[4].value
     );
     formikRef.current.setFieldValue(
       "minimal_rate",
-      rowData.columnsFormat[5]?.value
+      rowDataRef.current.columnsFormat[5]?.value
     );
     formikRef.current.setFieldValue(
       "maksimal_rate",
-      rowData.columnsFormat[6]?.value
+      rowDataRef.current.columnsFormat[6]?.value
     );
   }, [isOpen, formikRef]);
 

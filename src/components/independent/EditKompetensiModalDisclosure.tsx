@@ -113,23 +113,24 @@ export default function EditKompetensiModalDisclosure({
   });
 
   const formikRef = useRef(formik);
+  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
     formikRef.current.setFieldValue(
       "nama_kompetensi",
-      rowData.columnsFormat[0].value
+      rowDataRef.current.columnsFormat[0].value
     );
     formikRef.current.setFieldValue("jenis_kompetensi", {
-      value: rowData.columnsFormat[2].value,
-      label: rowData.columnsFormat[2].value ? "Medis" : "Non-Medis",
+      value: rowDataRef.current.columnsFormat[2].value,
+      label: rowDataRef.current.columnsFormat[2].value ? "Medis" : "Non-Medis",
     });
     // formikRef.current.setFieldValue(
     //   "total_tunjangan",
-    //   rowData.columnsFormat[3].value
+    //   rowDataRef.current.columnsFormat[3].value
     // );
     formikRef.current.setFieldValue(
       "nilai_bor",
-      rowData.columnsFormat[3].value
+      rowDataRef.current.columnsFormat[3].value
     );
   }, [isOpen, formikRef]);
 

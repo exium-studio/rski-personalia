@@ -104,16 +104,20 @@ export default function EditShiftModalDisclosure({
   });
 
   const formikRef = useRef(formik);
+  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
-    formikRef.current.setFieldValue("nama", rowData.columnsFormat[0].value);
+    formikRef.current.setFieldValue(
+      "nama",
+      rowDataRef.current.columnsFormat[0].value
+    );
     formikRef.current.setFieldValue(
       "jam_from",
-      rowData.columnsFormat[2].original_data.jam_from
+      rowDataRef.current.columnsFormat[2].original_data.jam_from
     );
     formikRef.current.setFieldValue(
       "jam_to",
-      rowData.columnsFormat[2].original_data.jam_to
+      rowDataRef.current.columnsFormat[2].original_data.jam_to
     );
   }, [isOpen, formikRef]);
 

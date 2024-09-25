@@ -118,23 +118,30 @@ export default function EditTipeCutiModalDisclosure({
   });
 
   const formikRef = useRef(formik);
+  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
     // console.log(rowData.columnsFormat[4].value);
 
-    formikRef.current.setFieldValue("nama", rowData.columnsFormat[0].value);
-    formikRef.current.setFieldValue("kuota", rowData.columnsFormat[2].value);
+    formikRef.current.setFieldValue(
+      "nama",
+      rowDataRef.current.columnsFormat[0].value
+    );
+    formikRef.current.setFieldValue(
+      "kuota",
+      rowDataRef.current.columnsFormat[2].value
+    );
     formikRef.current.setFieldValue(
       "cuti_administratif",
-      rowData.columnsFormat[3].value
+      rowDataRef.current.columnsFormat[3].value
     );
     formikRef.current.setFieldValue(
       "is_need_requirement",
-      rowData.columnsFormat[4].value
+      rowDataRef.current.columnsFormat[4].value
     );
     formikRef.current.setFieldValue(
       "keterangan",
-      rowData.columnsFormat[5].value
+      rowDataRef.current.columnsFormat[5].value
     );
   }, [isOpen, formikRef]);
 

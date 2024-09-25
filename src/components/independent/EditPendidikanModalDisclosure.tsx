@@ -99,9 +99,13 @@ export default function EditPendidikanModalDisclosure({
   });
 
   const formikRef = useRef(formik);
+  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
-    formikRef.current.setFieldValue("label", rowData.columnsFormat[0].value);
+    formikRef.current.setFieldValue(
+      "label",
+      rowDataRef.current.columnsFormat[0].value
+    );
   }, [isOpen, formikRef]);
 
   return (

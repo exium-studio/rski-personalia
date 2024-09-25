@@ -100,12 +100,16 @@ export default function EditRoleModalDisclosure({
   });
 
   const formikRef = useRef(formik);
+  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
-    formikRef.current.setFieldValue("name", rowData.columnsFormat[0].value);
+    formikRef.current.setFieldValue(
+      "name",
+      rowDataRef.current.columnsFormat[0].value
+    );
     formikRef.current.setFieldValue(
       "deskripsi",
-      rowData.columnsFormat[1].value || ""
+      rowDataRef.current.columnsFormat[1].value || ""
     );
   }, [isOpen, formikRef]);
 
