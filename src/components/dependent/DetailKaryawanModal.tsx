@@ -334,7 +334,7 @@ export default function DetailKaryawanModal({
                               </Text>
 
                               {/* Stats Basic */}
-                              <HStack mb={6}>
+                              <Wrap mb={6} justify={"center"} align={"center"}>
                                 <Text fontSize={20}>{data.nik}</Text>
                                 <Icon
                                   as={RiCircleFill}
@@ -375,7 +375,7 @@ export default function DetailKaryawanModal({
                                     />
                                   </HStack>
                                 </Badge>
-                              </HStack>
+                              </Wrap>
                             </VStack>
                           </VStack>
 
