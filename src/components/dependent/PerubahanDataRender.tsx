@@ -146,6 +146,8 @@ export default function PerubahanDataRender({ column, data, index }: any) {
   switch (column) {
     default:
       return <Text>Invalid</Text>;
+    case "pendidikan_terakhir":
+      return <Text>{data?.label || "Invalid Constant"}</Text>;
     case "data keluarga":
     case "Data Keluarga":
       return <ListKeluargaModal data={data} index={index} />;
@@ -183,8 +185,9 @@ export default function PerubahanDataRender({ column, data, index }: any) {
     case "tahun_lulus":
     case "gelar_depan":
     case "gelar_belakang":
-    case "pendidikan_terakhir":
-      return <Text>{typeof data === "string" ? data : "Invalid String"}</Text>;
+    case "riwayat_penyakit":
+    case "asal_sekolah":
+      return <Text>{typeof data === "string" ? data : "-"}</Text>;
     case "ktp":
     case "bpjsksh":
     case "bpjsktk":
