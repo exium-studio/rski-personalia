@@ -1764,7 +1764,9 @@ export default function DetailKaryawanModal({
                                   <Text fontWeight={500} textAlign={"right"}>
                                     {data?.masa_berlaku_str
                                       ? formatDate(data?.masa_berlaku_str)
-                                      : "Seumur Hidup"}
+                                      : data?.no_str
+                                      ? "Seumur Hidup"
+                                      : ""}
                                   </Text>
                                 </HStack>
 
@@ -1813,7 +1815,9 @@ export default function DetailKaryawanModal({
                                   <Text fontWeight={500} textAlign={"right"}>
                                     {data.masa_berlaku_sip
                                       ? formatDate(data.masa_berlaku_sip)
-                                      : "Seumur Hidup"}
+                                      : data?.no_sip
+                                      ? "Seumur Hidup"
+                                      : ""}
                                   </Text>
                                 </HStack>
                               </VStack>
