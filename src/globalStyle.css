@@ -64,6 +64,10 @@
   color: white;
 }
 
+.opacity-60 {
+  opacity: 0.6;
+}
+
 th {
   color: var(--divider-text) !important;
 }

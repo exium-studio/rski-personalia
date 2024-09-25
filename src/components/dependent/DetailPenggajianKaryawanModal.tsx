@@ -656,12 +656,13 @@ export default function DetailPenggajianKaryawanModal({
                                   border={"1px solid var(--divider3)"}
                                   borderRadius={12}
                                   overflow={"clip"}
+                                  px={2}
                                 >
                                   <HStack px={4} pt={4}>
                                     <Text
                                       fontSize={18}
                                       fontWeight={600}
-                                      mb={2}
+                                      mb={4}
                                       // color={"green.400"}
                                     >
                                       Pendapatan
@@ -670,7 +671,7 @@ export default function DetailPenggajianKaryawanModal({
 
                                   {/* Pendapatan Tetap */}
                                   <CContainer py={2}>
-                                    <Box px={4}>
+                                    <Box px={4} mb={2}>
                                       <Text fontWeight={500}>
                                         Pendapatan Tetap
                                       </Text>
@@ -688,7 +689,7 @@ export default function DetailPenggajianKaryawanModal({
                                             <Box>
                                               <Highlighter
                                                 highlightClassName="hw"
-                                                unhighlightClassName="uw"
+                                                unhighlightClassName="uw opacity-60"
                                                 searchWords={searchQuery}
                                                 autoEscape={true}
                                                 textToHighlight={
@@ -712,7 +713,7 @@ export default function DetailPenggajianKaryawanModal({
 
                                   {/* Pendapatan Tambahan */}
                                   <CContainer py={2}>
-                                    <Box px={4}>
+                                    <Box px={4} mb={2}>
                                       <Text fontWeight={500}>
                                         Pendapatan Tambahan
                                       </Text>
@@ -730,7 +731,7 @@ export default function DetailPenggajianKaryawanModal({
                                             <Box>
                                               <Highlighter
                                                 highlightClassName="hw"
-                                                unhighlightClassName="uw"
+                                                unhighlightClassName="uw opacity-60"
                                                 searchWords={searchQuery}
                                                 autoEscape={true}
                                                 textToHighlight={
@@ -783,12 +784,13 @@ export default function DetailPenggajianKaryawanModal({
                                   border={"1px solid var(--divider3)"}
                                   borderRadius={12}
                                   overflow={"clip"}
+                                  px={2}
                                 >
                                   <HStack px={4} pt={4}>
                                     <Text
                                       fontSize={18}
                                       fontWeight={600}
-                                      mb={2}
+                                      mb={4}
                                       // color={errorColor}
                                     >
                                       Potongan
@@ -797,41 +799,89 @@ export default function DetailPenggajianKaryawanModal({
 
                                   {/* Potongan Tetap */}
                                   <CContainer py={2}>
-                                    <Box px={4}>
+                                    <Box px={4} mb={2}>
                                       <Text fontWeight={500}>
                                         Potongan Tetap
                                       </Text>
                                     </Box>
                                     {data.potongan?.potongan_tetap?.map(
                                       (item: any, i: number) => {
+                                        const bpjs =
+                                          item?.nama_detail ===
+                                          "BPJS Kesehatan";
                                         return (
-                                          <HStack
-                                            key={i}
-                                            justify={"space-between"}
-                                            py={2}
-                                            pr={4}
-                                            pl={8}
-                                          >
-                                            <Box>
-                                              <Highlighter
-                                                highlightClassName="hw"
-                                                unhighlightClassName="uw"
-                                                searchWords={searchQuery}
-                                                autoEscape={true}
-                                                textToHighlight={
-                                                  item.nama_detail
-                                                }
-                                              />
-                                            </Box>
-                                            <FlexLine />
-                                            <Text
-                                              fontWeight={500}
-                                              textAlign={"right"}
+                                          <>
+                                            <HStack
+                                              key={i}
+                                              justify={"space-between"}
+                                              py={2}
+                                              pr={4}
+                                              pl={8}
                                             >
-                                              Rp{" "}
-                                              {formatNumber(item.besaran) || 0}
-                                            </Text>
-                                          </HStack>
+                                              <Box>
+                                                <Highlighter
+                                                  highlightClassName="hw"
+                                                  unhighlightClassName="uw opacity-60"
+                                                  searchWords={searchQuery}
+                                                  autoEscape={true}
+                                                  textToHighlight={
+                                                    item.nama_detail
+                                                  }
+                                                />
+                                              </Box>
+                                              {!bpjs && (
+                                                <>
+                                                  <FlexLine />
+                                                  <Text
+                                                    fontWeight={500}
+                                                    textAlign={"right"}
+                                                  >
+                                                    Rp{" "}
+                                                    {formatNumber(
+                                                      item.besaran
+                                                    ) || 0}
+                                                  </Text>
+                                                </>
+                                              )}
+                                            </HStack>
+
+                                            {bpjs &&
+                                              item?.keluarga_terkena_potongan?.map(
+                                                (anggota: any, i: number) => (
+                                                  <HStack
+                                                    key={i}
+                                                    justify={"space-between"}
+                                                    py={2}
+                                                    pr={4}
+                                                    pl={12}
+                                                  >
+                                                    <Box>
+                                                      <Highlighter
+                                                        highlightClassName="hw"
+                                                        unhighlightClassName="uw opacity-60"
+                                                        searchWords={
+                                                          searchQuery
+                                                        }
+                                                        autoEscape={true}
+                                                        textToHighlight={
+                                                          anggota?.hubungan
+                                                        }
+                                                      />
+                                                    </Box>
+                                                    <FlexLine />
+                                                    <Text
+                                                      fontWeight={500}
+                                                      textAlign={"right"}
+                                                    >
+                                                      Rp{" "}
+                                                      {formatNumber(
+                                                        anggota?.besaran
+                                                      ) || 0}
+                                                    </Text>
+                                                  </HStack>
+                                                )
+                                              )}
+                                          </>
                                         );
                                       }
                                     )}
@@ -839,7 +889,7 @@ export default function DetailPenggajianKaryawanModal({
 
                                   {/* Potongan Tambahan */}
                                   <CContainer py={2}>
-                                    <Box px={4}>
+                                    <Box px={4} mb={2}>
                                       <Text fontWeight={500}>
                                         Potongan Tambahan
                                       </Text>
@@ -857,7 +907,7 @@ export default function DetailPenggajianKaryawanModal({
                                             <Box>
                                               <Highlighter
                                                 highlightClassName="hw"
-                                                unhighlightClassName="uw"
+                                                unhighlightClassName="uw opacity-60"
                                                 searchWords={searchQuery}
                                                 autoEscape={true}
                                                 textToHighlight={
