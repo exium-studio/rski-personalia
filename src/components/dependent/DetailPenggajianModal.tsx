@@ -41,6 +41,7 @@ import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusPublikasiPenggajian from "./StatusPublikasiPenggajian";
 import TabelDetailPenggajian from "./TabelDetailPenggajian";
+import useCountdown from "../../hooks/useCountdown";
 
 interface PublikasiButtonProps extends ButtonProps {
   penggajian_id: number;
@@ -153,6 +154,8 @@ const UpdateBor = ({ penggajian_id }: any) => {
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
+  const { countDown } = useCountdown({ initialValue: 5, conditions: isOpen });
+
   const formik = useFormik({
     validateOnChange: false,
     initialValues: { bor: false },
@@ -256,8 +259,9 @@ const UpdateBor = ({ penggajian_id }: any) => {
               colorScheme="ap"
               className="btn-ap clicky"
               isLoading={loading}
+              isDisabled={countDown !== 0}
             >
-              Simpan
+              {countDown !== 0 ? `Tunggu ${countDown} detik` : "Simpan"}
             </Button>
           </ModalFooter>
         </ModalContent>

@@ -20,10 +20,11 @@ import {
 } from "@chakra-ui/react";
 import { RiFileList3Fill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useCountdown from "../../hooks/useCountdown";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import req from "../../lib/req";
@@ -40,25 +41,7 @@ export default function BuatPenggajianModal({ ...props }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
-  const [countDown, setCountDown] = useState(10);
-  useEffect(() => {
-    if (isOpen) {
-      const interval = setInterval(() => {
-        setCountDown((prevCount) => {
-          if (prevCount > 0) {
-            return prevCount - 1;
-          } else {
-            clearInterval(interval);
-            return prevCount;
-          }
-        });
-      }, 1000);
-
-      return () => clearInterval(interval);
-    } else {
-      setCountDown(5);
-    }
-  }, [isOpen]);
+  const { countDown } = useCountdown({ initialValue: 5 });
 
   const formik = useFormik({
     validateOnChange: false,
