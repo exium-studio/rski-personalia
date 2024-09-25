@@ -62,6 +62,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       tgl_selesai: undefined as any,
       jam_mulai: undefined as any,
       jam_selesai: undefined as any,
+      skp: "" as any,
     },
     validationSchema: yup.object().shape({
       gambar: yup.string().required("Harus diisi"),
@@ -74,6 +75,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       tgl_selesai: yup.string().required("Harus diisi"),
       jam_mulai: yup.string().required("Harus diisi"),
       jam_selesai: yup.string().required("Harus diisi"),
+      skp: yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = new FormData();
@@ -86,7 +88,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       payload.append("jam_mulai", values.jam_mulai);
       payload.append("jam_selesai", values.jam_selesai);
       payload.append("lokasi", values.lokasi);
-      payload.append("lokasi", values.lokasi);
+      payload.append("skp", values.skp);
 
       setLoading(true);
       req
@@ -346,6 +348,23 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                   />
                   <FormErrorMessage>
                     {formik.errors.jam_selesai as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.skp}>
+                  <FormLabel>
+                    SKP
+                    <RequiredForm />
+                  </FormLabel>
+                  <Textarea
+                    name="skp"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("skp", input);
+                    }}
+                    inputValue={formik.values.skp}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.skp as string}
                   </FormErrorMessage>
                 </FormControl>
               </SimpleGrid>
