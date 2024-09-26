@@ -7,6 +7,7 @@ import DashboardStatusKaryawan from "../../components/independent/DashboardStatu
 import DashboardTotal from "../../components/independent/DashboardTotal";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { responsiveSpacing } from "../../constant/sizes";
+import DashboardProfesi from "../../components/independent/DashboardProfesi";
 
 export default function Dashboard() {
   return (
@@ -18,6 +19,8 @@ export default function Dashboard() {
           <DashboardJenisKelamin flex={"1 1 0"} />
 
           <DashboardJabatan flex={"1 1 0"} />
+
+          <DashboardProfesi flex={"1 1 0"} />
 
           <DashboardStatusKaryawan flex={"1 1 0"} />
 
