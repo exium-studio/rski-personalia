@@ -15,7 +15,7 @@ import Textarea from "../../dependent/input/Textarea";
 import RequiredForm from "../RequiredForm";
 import formatDate from "../../../lib/formatDate";
 import backOnClose from "../../../lib/backOnClose";
-import MultiSelectKaryawanPenerimaPengumuman from "../../dependent/_Select/MultiSelectKaryawanPenerimaPengumuman";
+import MultiSelectKaryawanPenerimaWithUnitKerja from "../../dependent/_Select/MultiSelectKaryawanPenerimaWithUnitKerja";
 
 interface Props {
   forwardRef: MutableRefObject<null>;
@@ -34,12 +34,14 @@ export default function FormDashboardBuatPengumuman({
     initialValues: {
       judul: "",
       konten: "",
+      tgl_mulai: undefined as any,
       tgl_berakhir: undefined as any,
       user_id: [] as any[],
     },
     validationSchema: yup.object().shape({
       judul: yup.string().required("Judul harus diisi"),
       konten: yup.string().required("Harus diisi"),
+      tgl_mulai: yup.string().required("Harus diisi"),
       tgl_berakhir: yup.string().required("Harus diisi"),
       user_id: yup.array().required("Harus diisi"),
     }),
@@ -47,6 +49,7 @@ export default function FormDashboardBuatPengumuman({
       const payload = {
         judul: values.judul,
         konten: values.konten,
+        tgl_mulai: formatDate(values.tgl_mulai, "short"),
         tgl_berakhir: formatDate(values.tgl_berakhir, "short"),
         user_id: values?.user_id?.map((user: any) => user.value),
       };
@@ -93,7 +96,7 @@ export default function FormDashboardBuatPengumuman({
           Karyawan Penerima
           <RequiredForm />
         </FormLabel>
-        <MultiSelectKaryawanPenerimaPengumuman
+        <MultiSelectKaryawanPenerimaWithUnitKerja
           name="user_id"
           placeholder="Karyawan Penerima"
           onConfirm={(input) => {
@@ -120,6 +123,22 @@ export default function FormDashboardBuatPengumuman({
           inputValue={formik.values.judul}
         />
         <FormErrorMessage>{formik.errors.judul}</FormErrorMessage>
+      </FormControl>
+
+      <FormControl mb={4} isInvalid={!!formik.errors.tgl_mulai}>
+        <FormLabel>
+          Tanggal Mulai
+          <RequiredForm />
+        </FormLabel>
+        <DatePickerModal
+          id="tambah-pengumuman"
+          name="tgl_mulai"
+          onConfirm={(input) => {
+            formik.setFieldValue("tgl_mulai", input);
+          }}
+          inputValue={formik.values.tgl_mulai}
+        />
+        <FormErrorMessage>{formik.errors.tgl_mulai as string}</FormErrorMessage>
       </FormControl>
 
       <FormControl mb={4} isInvalid={!!formik.errors.tgl_berakhir}>
