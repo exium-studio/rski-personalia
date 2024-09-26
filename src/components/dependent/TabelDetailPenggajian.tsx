@@ -1,18 +1,18 @@
 import { HStack, Text, useDisclosure } from "@chakra-ui/react";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import formatNumber from "../../lib/formatNumber";
+import isHasPermissions from "../../lib/isHasPermissions";
 import NotFound from "../independent/NotFound";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import MultiSelectUnitKerja from "./_Select/MultiSelectUnitKerja";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import DetailPenggajianKaryawanModal from "./DetailPenggajianKaryawanModal";
 import ExportRiwayatPenggajianModal from "./ExportRiwayatPenggajianModal";
 import SearchComponent from "./input/SearchComponent";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
-import PermissionTooltip from "../wrapper/PermissionTooltip";
 import TabelFooterConfig from "./TabelFooterConfig";
 
 interface Props {
@@ -35,18 +35,6 @@ export default function TabelDetailPenggajian({
     search: "",
     unit_kerja: undefined as any,
   });
-
-  // Function to handle search input
-  const handleSearchChange = useCallback(
-    (input: string) => {
-      setFilterConfig((ps) => ({
-        ...ps,
-        search: input,
-      }));
-      setPageConfig(1); // Reset to first page when search is applied
-    },
-    [setFilterConfig]
-  );
 
   // Filter data based on search and unit_kerja
   const fd = useMemo(() => {
@@ -200,7 +188,13 @@ export default function TabelDetailPenggajian({
       <HStack mb={responsiveSpacing}>
         <SearchComponent
           name="search"
-          onChangeSetter={handleSearchChange}
+          onChangeSetter={(input: string) => {
+            setFilterConfig((ps) => ({
+              ...ps,
+              search: input,
+            }));
+            setPageConfig(1);
+          }}
           inputValue={filterConfig.search}
           tooltipLabel="Cari dengan nama/no. induk karyawan"
           placeholder="nama/no. induk karyawan"

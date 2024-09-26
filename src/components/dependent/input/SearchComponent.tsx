@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { RiCloseLine, RiSearchLine } from "@remixicon/react";
-import { Dispatch, useEffect, useState } from "react";
+import { Dispatch, useCallback, useEffect, useState } from "react";
 import { iconSize } from "../../../constant/sizes";
 import StringInput from "./StringInput";
 
@@ -30,17 +30,31 @@ export default function SearchComponent({
   placeholder = "Pencarian",
   ...props
 }: Props) {
-  const [searchLocal, setSearchLocal] = useState("");
+  const [searchLocal, setSearchLocal] = useState(inputValue);
+
+  const handleOnChange = useCallback(
+    (value: string) => {
+      if (value !== inputValue) {
+        onChangeSetter(value);
+      }
+    },
+    [onChangeSetter, inputValue]
+  );
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      onChangeSetter(searchLocal);
+      handleOnChange(searchLocal);
     }, 300);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [searchLocal, onChangeSetter]);
+  }, [searchLocal, handleOnChange]);
+
+  // Sync searchLocal with inputValue prop when it changes
+  useEffect(() => {
+    setSearchLocal(inputValue);
+  }, [inputValue]);
 
   return (
     <Tooltip
