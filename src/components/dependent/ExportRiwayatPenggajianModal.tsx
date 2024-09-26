@@ -53,12 +53,16 @@ export default function ExportRiwayatPenggajianModal({
     setLoading(true);
 
     let url = "";
+    let fileName = "";
     if (tipeExport === 1) {
       url = "/api/rski/dashboard/keuangan/penggajian/export-penerimaan";
+      fileName = "Penggajian Penerimaan";
     } else if (tipeExport === 2) {
       url = "/api/rski/dashboard/keuangan/penggajian/export-potongan";
+      fileName = "Penggajian Potongan";
     } else if (tipeExport === 3) {
       url = "/api/rski/dashboard/keuangan/penggajian/export-bank";
+      fileName = "Penggajian Bank";
     }
 
     const payload = {
@@ -72,7 +76,11 @@ export default function ExportRiwayatPenggajianModal({
       })
       .then((r) => {
         if (r.status === 200) {
-          download(r.data, `Laporan Penggajian ${formatDate(periode)}`, "xls");
+          download(
+            r.data,
+            `${fileName || "Laporan Penggajian"} ${formatDate(periode)}`,
+            "xls"
+          );
         } else {
           toast({
             status: "error",
