@@ -200,6 +200,14 @@ const optionsStatusKepegawaian = [
     value: 3,
     label: "Magang",
   },
+  {
+    value: 7,
+    label: "Outsourcing",
+  },
+  {
+    value: 8,
+    label: "Paruh Waktu",
+  },
 ];
 
 const optionsPendidikan = [
