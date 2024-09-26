@@ -89,7 +89,7 @@ export default function NotificationModal({ ...props }: Props) {
           title:
             (typeof e?.response?.data?.message === "string" &&
               (e?.response?.data?.message as string)) ||
-            "Maaf terjadi kesalahan pada sistem",
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
           position: "bottom-right",
           isClosable: true,
         });
@@ -116,7 +116,7 @@ export default function NotificationModal({ ...props }: Props) {
           title:
             (typeof e?.response?.data?.message === "string" &&
               (e?.response?.data?.message as string)) ||
-            "Maaf terjadi kesalahan pada sistem",
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
           position: "bottom-right",
           isClosable: true,
         });

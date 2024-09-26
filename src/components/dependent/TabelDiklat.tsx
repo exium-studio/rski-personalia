@@ -80,7 +80,7 @@ const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
           title:
             (typeof e?.response?.data?.message === "string" &&
               (e?.response?.data?.message as string)) ||
-            "Maaf terjadi kesalahan pada sistem",
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
           position: "bottom-right",
           isClosable: true,
         });
@@ -290,7 +290,7 @@ const KonfirmasiPublikasiSertifikat = ({ data }: any) => {
           title:
             (typeof e?.response?.data?.message === "string" &&
               (e?.response?.data?.message as string)) ||
-            "Maaf terjadi kesalahan pada sistem",
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
           position: "bottom-right",
           isClosable: true,
         });

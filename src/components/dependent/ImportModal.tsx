@@ -101,7 +101,7 @@ export default function ImportModal({
             title:
               (typeof e?.response?.data?.message === "string" &&
                 (e?.response?.data?.message as string)) ||
-              "Maaf terjadi kesalahan pada sistem",
+              "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
             isClosable: true,
             position: "bottom-right",
           });
@@ -126,7 +126,8 @@ export default function ImportModal({
         } else {
           toast({
             status: "error",
-            title: "Maaf terjadi kesalahan pada sistem",
+            title:
+              "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
             isClosable: true,
             position: "bottom-right",
           });
@@ -139,7 +140,7 @@ export default function ImportModal({
           title:
             (typeof e?.response?.data?.message === "string" &&
               (e?.response?.data?.message as string)) ||
-            "Maaf terjadi kesalahan pada sistem",
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
           isClosable: true,
           position: "bottom-right",
         });

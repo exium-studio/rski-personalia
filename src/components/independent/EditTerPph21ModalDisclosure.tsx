@@ -97,7 +97,7 @@ export default function EditTerPph21ModalDisclosure({
             title:
               (typeof e?.response?.data?.message === "string" &&
                 (e?.response?.data?.message as string)) ||
-              "Maaf terjadi kesalahan pada sistem",
+              "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
             isClosable: true,
             position: "bottom-right",
           });

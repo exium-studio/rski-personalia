@@ -69,7 +69,8 @@ const DeletePengumuman = ({ data, ...props }: DeletePengumumanProps) => {
         toast({
           status: "error",
           title:
-            e.response.data.message || "Maaf terjadi kesalahan pada sistem",
+            e.response.data.message ||
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
           position: "bottom-right",
           isClosable: true,
         });
