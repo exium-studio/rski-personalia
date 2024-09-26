@@ -339,12 +339,6 @@ export default function DetailKaryawanModal({
 
                               {/* Stats Basic */}
                               <Wrap mb={6} justify={"center"} align={"center"}>
-                                {/* <Text fontSize={20}>{data.nik}</Text>
-                                <Icon
-                                  as={RiCircleFill}
-                                  fontSize={8}
-                                  opacity={0.2}
-                                /> */}
                                 <StatusAktifBadge
                                   data={data.user?.status_aktif}
                                 />
@@ -451,7 +445,7 @@ export default function DetailKaryawanModal({
                           <SimpleGrid gap={3} columns={[1, 2, null, 3]}>
                             {/* Presensi */}
                             <DetailAktivitasKaryawanModalDisclosure
-                              karyawan_id={data.id}
+                              karyawan_id={data.user?.data_karyawan_id}
                               flex={0}
                               role="group"
                             >
@@ -481,7 +475,7 @@ export default function DetailKaryawanModal({
 
                             {/* Jadwal */}
                             <DetailJadwalKaryawanModalDisclosure
-                              karyawan_id={data.id}
+                              karyawan_id={data.user?.data_karyawan_id}
                               flexShrink={0}
                               role="group"
                             >
@@ -511,7 +505,7 @@ export default function DetailKaryawanModal({
 
                             {/* Rekam Jejak */}
                             <DetailRekamJejakKaryawanModalDisclosure
-                              karyawan_id={data.id}
+                              karyawan_id={data.user?.data_karyawan_id}
                               flexShrink={0}
                               role="group"
                             >
@@ -585,7 +579,7 @@ export default function DetailKaryawanModal({
 
                             {/* Dokumen */}
                             <DokumenKaryawanModalDisclosure
-                              karyawan_id={data.id}
+                              karyawan_id={data.user?.data_karyawan_id}
                               flexShrink={0}
                               role="group"
                             >
@@ -615,7 +609,7 @@ export default function DetailKaryawanModal({
 
                             {/* Cuti */}
                             <DetailCutiKaryawanModalDisclosure
-                              karyawan_id={data.id}
+                              karyawan_id={data.user?.data_karyawan_id}
                               flexShrink={0}
                               role="group"
                             >
@@ -645,7 +639,7 @@ export default function DetailKaryawanModal({
 
                             {/* Tukar Jadwal */}
                             <DetailTukarJadwalKaryawanModalDisclosure
-                              karyawan_id={data.id}
+                              karyawan_id={data.user?.data_karyawan_id}
                               flexShrink={0}
                               role="group"
                             >
@@ -675,7 +669,7 @@ export default function DetailKaryawanModal({
 
                             {/* Lembur */}
                             <DetailLemburKaryawanModalDisclosure
-                              karyawan_id={data.id}
+                              karyawan_id={data.user?.data_karyawan_id}
                               flexShrink={0}
                               role="group"
                             >
@@ -705,7 +699,7 @@ export default function DetailKaryawanModal({
 
                             {/* Penilaian */}
                             <DetailPenilaianKaryawanModalDisclosure
-                              karyawan_id={data.id}
+                              karyawan_id={data.user?.data_karyawan_id}
                               flexShrink={0}
                               role="group"
                             >
@@ -735,7 +729,7 @@ export default function DetailKaryawanModal({
 
                             {/* Diklat */}
                             <DetailDiklatKaryawanModalDisclosure
-                              karyawan_id={data.id}
+                              karyawan_id={data.user?.data_karyawan_id}
                               flexShrink={0}
                               role="group"
                             >
