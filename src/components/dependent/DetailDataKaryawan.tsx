@@ -560,7 +560,7 @@ export default function DetailDataKaryawan({ data, searchQuery }: Props) {
                 unhighlightClassName="uw"
                 searchWords={searchQuery}
                 autoEscape={true}
-                textToHighlight="Kompetensi"
+                textToHighlight="Profesi"
               />
             </Box>
             <FlexLine />

@@ -411,17 +411,17 @@ export default function CustomTable({
 
             {rowOptions && (
               <Td
-                h={"52px"}
-                w={"52px !important"}
+                h={"42px"}
+                w={"42px !important"}
                 minW={"0% !important"}
-                maxW={"52px !important"}
+                maxW={"42px !important"}
                 p={0}
                 position={"sticky"}
                 right={0}
               >
                 <Center
-                  h={"52px"}
-                  w={"52px"}
+                  h={"42px"}
+                  w={"42px"}
                   borderLeft={"1px solid var(--divider3)"}
                   borderBottom={"1px solid var(--divider3)"}
                   bg={lightDarkColor}
