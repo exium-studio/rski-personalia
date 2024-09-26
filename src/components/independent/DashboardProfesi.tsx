@@ -24,7 +24,7 @@ interface Props extends StackProps {}
 export default function DashboardProfesi({ ...props }: Props) {
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
-    url: `/api/rski/dashboard/calculated-jabatan`,
+    url: `/api/rski/dashboard/calculated-profesi`,
     dependencies: [],
     noRt: true,
   });
@@ -86,10 +86,10 @@ export default function DashboardProfesi({ ...props }: Props) {
                       px={responsiveSpacing}
                       className="scrollY"
                     >
-                      {data.map((jabatan: any, i: number) => (
+                      {data.map((profesi: any, i: number) => (
                         <HStack key={i} justify={"space-between"}>
                           <Tooltip
-                            label={jabatan.nama_jabatan}
+                            label={profesi.nama_kompetensi}
                             openDelay={500}
                             // placement="right"
                           >
@@ -99,13 +99,13 @@ export default function DashboardProfesi({ ...props }: Props) {
                               overflow={"hidden"}
                               textOverflow={"ellipsis"}
                             >
-                              {jabatan.nama_jabatan}
+                              {profesi.nama_kompetensi}
                             </Text>
                           </Tooltip>
 
                           <FlexLine />
 
-                          <Text fontSize={14}>{jabatan.jumlah_karyawan}</Text>
+                          <Text fontSize={14}>{profesi.jumlah_karyawan}</Text>
                         </HStack>
                       ))}
                     </VStack>
