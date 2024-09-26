@@ -207,7 +207,6 @@ const UpdateBor = ({ penggajian_id }: any) => {
       <Button
         colorScheme="ap"
         variant={"outline"}
-        ml={"auto"}
         size={"lg"}
         onClick={onOpen}
         className="clicky"
@@ -457,22 +456,24 @@ export default function DetailPenggajianModal({
                           </Text>
                         </VStack>
 
-                        <UpdateBor penggajian_id={penggajian_id} />
+                        <HStack ml={"auto"}>
+                          <UpdateBor penggajian_id={penggajian_id} />
 
-                        <PublikasiButtonModal
-                          penggajian_id={penggajian_id}
-                          periode={data.data_riwayat?.periode}
-                          size={"lg"}
-                          colorScheme="ap"
-                          className="btn-ap clicky"
-                          leftIcon={
-                            <Icon as={RiSendPlaneFill} fontSize={iconSize} />
-                          }
-                          pl={5}
-                          isDisabled={
-                            data.data_riwayat.status_riwayat_gaji.id === 2
-                          }
-                        />
+                          <PublikasiButtonModal
+                            penggajian_id={penggajian_id}
+                            periode={data.data_riwayat?.periode}
+                            size={"lg"}
+                            colorScheme="ap"
+                            className="btn-ap clicky"
+                            leftIcon={
+                              <Icon as={RiSendPlaneFill} fontSize={iconSize} />
+                            }
+                            pl={5}
+                            isDisabled={
+                              data.data_riwayat.status_riwayat_gaji.id === 2
+                            }
+                          />
+                        </HStack>
                       </Wrap>
 
                       <TabelDetailPenggajian
