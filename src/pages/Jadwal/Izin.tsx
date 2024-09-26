@@ -22,7 +22,7 @@ export default function Izin() {
     const handler = setTimeout(() => {
       setFilterKaryawan({ search });
       setFormattedFilterKaryawan({ search });
-    }, 300);
+    }, 1);
 
     return () => {
       clearTimeout(handler);

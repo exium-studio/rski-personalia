@@ -23,7 +23,7 @@ export default function Lembur() {
     const handler = setTimeout(() => {
       setFilterKaryawan({ search });
       setFormattedFilterKaryawan({ search });
-    }, 300);
+    }, 1);
 
     return () => {
       clearTimeout(handler);
