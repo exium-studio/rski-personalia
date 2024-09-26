@@ -114,7 +114,7 @@ export default function FormBuatTagihan({ forwardRef, setLoading }: Props) {
         </FormLabel>
         <SelectKategoriTagihan
           name="kategori"
-          placeholder="Obat/Perawatan"
+          placeholder="Kategori"
           onConfirm={(input) => {
             formik.setFieldValue("kategori", input);
           }}

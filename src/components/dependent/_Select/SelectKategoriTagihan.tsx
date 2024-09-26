@@ -42,7 +42,7 @@ export default function SelectKategoriTagihan({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Status Hidup"}
+      placeholder={placeholder || "Pilih Kategori Tagihan"}
       nonNullable={nonNullable}
       {...props}
     />
