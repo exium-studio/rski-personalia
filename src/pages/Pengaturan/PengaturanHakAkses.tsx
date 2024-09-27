@@ -22,7 +22,7 @@ import req from "../../lib/req";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
-import TabelPengaturanHakAkses from "../../components/dependent/PengaturanHakAkses";
+import TabelPengaturanHakAkses from "../../components/dependent/TabelPengaturanHakAkses";
 
 interface Props {
   role_id: number;
@@ -234,7 +234,7 @@ export default function PengaturanHakAkses({ role_id }: Props) {
                           // onClick={(e) => e.stopPropagation()}
                         >
                           <Text fontWeight={500} mt={"-1px"}>
-                            Semua izin
+                            Semua akses
                           </Text>
                         </Checkbox>
                       </Box>
