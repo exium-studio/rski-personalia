@@ -213,7 +213,7 @@ const UpdateBor = ({ penggajian_id }: any) => {
         className="clicky"
         isLoading={loading}
       >
-        Penyesuaian BOR
+        Penyesuaian Penggajian
       </Button>
 
       <Modal
@@ -225,14 +225,14 @@ const UpdateBor = ({ penggajian_id }: any) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <DisclosureHeader title={"Penyesuaian BOR"} />
+            <DisclosureHeader title={"Penyesuaian Penggajian"} />
           </ModalHeader>
           <ModalBody>
             <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
               <AlertIcon />
               <AlertDescription maxW={"640px !important"}>
-                Jika terjadi penyesuaian BOR, maka data penggajian akan dihapus
-                dan dihitung ulang.
+                Jika terjadi penyesuaian penggajian, maka data penggajian akan
+                dihapus dan dihitung ulang.
               </AlertDescription>
             </Alert>
             <FormControl mt={2}>
