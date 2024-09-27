@@ -78,6 +78,10 @@ export default function TabelDetailPenggajian({
       },
     },
     {
+      th: "No. Induk Karyawan",
+      isSortable: true,
+    },
+    {
       th: "Unit Kerja",
       isSortable: true,
     },
@@ -130,6 +134,10 @@ export default function TabelDetailPenggajian({
             cProps: {
               borderRight: "1px solid var(--divider3)",
             },
+          },
+          {
+            value: item?.nik,
+            td: item?.nik,
           },
           {
             value: item?.unit_kerja?.nama_unit,
