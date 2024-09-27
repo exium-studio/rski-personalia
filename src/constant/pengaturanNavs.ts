@@ -32,6 +32,12 @@ const pengaturanNavs = [
         link: "/pengaturan/akun/kelola-role",
       },
       {
+        allowed: [61],
+        icon: RiVerifiedBadgeLine,
+        label: "Hak Verifikasi",
+        link: "/pengaturan/akun/hak-verifikasi",
+      },
+      {
         icon: RiLockLine,
         label: "Ubah Kata Sandi",
         link: "/pengaturan/akun/ubah-kata-sandi",

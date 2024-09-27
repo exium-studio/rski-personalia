@@ -131,7 +131,7 @@ export default function FormLogin() {
           <>
             <FormControl isInvalid={formik.errors.email ? true : false} mb={4}>
               <FormLabel>
-                Email
+                Username/Email/NIK
                 <RequiredForm />
               </FormLabel>
               <StringInput

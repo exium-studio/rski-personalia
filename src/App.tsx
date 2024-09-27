@@ -443,7 +443,7 @@ export const App = () => {
                 topNavActive={0}
                 title="Pengaturan - Ubah Kata Sandi"
               >
-                <PengaturanContainer activeGroup={0} active={1}>
+                <PengaturanContainer activeGroup={0} active={2}>
                   <PengaturanUbahKataSandi />
                 </PengaturanContainer>
               </NavContainer>
