@@ -513,7 +513,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
 
         <FormControl mb={4} flex={"1 1 300px"} isInvalid={!!formik.errors.role}>
           <FormLabel>
-            Role (Hak Akses)
+            Hak Akses (Role)
             <RequiredForm />
           </FormLabel>
           <SelectRole
