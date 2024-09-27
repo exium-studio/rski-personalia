@@ -92,6 +92,8 @@ export default function FileInputLarge({
   //@ts-ignore@
   const isImage = fileURL && /image\/.*/.test(inputValue?.type || "");
 
+  console.log(fileName);
+
   return (
     <>
       <Input
@@ -158,7 +160,7 @@ export default function FileInputLarge({
             </Center>
           )}
 
-          {!fileName && (
+          {!inputValue && (
             <>
               <VStack gap={1}>
                 <Text
@@ -193,7 +195,7 @@ export default function FileInputLarge({
               </Text>
             </>
           )}
-          {inputValue && fileName && (
+          {inputValue && (
             <>
               <Tooltip label={fileName}>
                 <Text

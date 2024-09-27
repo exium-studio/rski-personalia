@@ -49,7 +49,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      gambar: "",
+      gambar: undefined as any,
       nama: "",
       kategori: {
         value: 1,
@@ -122,6 +122,8 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
         });
     },
   });
+
+  console.log(formik.values.gambar);
 
   return (
     <>
