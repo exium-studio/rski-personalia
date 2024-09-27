@@ -157,7 +157,7 @@ export default function FormBuatTagihan({ forwardRef, setLoading }: Props) {
         </FormErrorMessage>
       </FormControl>
 
-      <FormControl mb={4} isInvalid={!!formik.errors.bulan_selesai}>
+      <FormControl isInvalid={!!formik.errors.bulan_selesai}>
         <FormLabel>
           Periode Selesai
           <RequiredForm />

@@ -594,7 +594,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
     columnsFormat: [
       {
         value: item.nama_diklat,
-        td: item.nama_diklat,
+        td: <TabelElipsisText data={item.nama_diklat} />,
         props: {
           position: "sticky",
           left: 0,
@@ -602,7 +602,6 @@ export default function TabelDiklat({ filterConfig }: Props) {
         },
         cProps: {
           borderRight: "1px solid var(--divider3)",
-          w: "243px",
         },
       },
       {
