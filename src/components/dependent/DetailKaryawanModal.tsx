@@ -357,7 +357,11 @@ export default function DetailKaryawanModal({
                                   }
                                 >
                                   <HStack>
-                                    <Text fontSize={12}>Reward presensi</Text>
+                                    <Text fontSize={12}>
+                                      {data?.status_reward_presensi
+                                        ? "Reward presensi"
+                                        : "Reward presensi"}
+                                    </Text>
                                     <Icon
                                       as={
                                         data?.status_reward_presensi
