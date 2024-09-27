@@ -313,9 +313,12 @@ const KonfirmasiPublikasiSertifikat = ({ data }: any) => {
           <Button
             w={"100%"}
             colorScheme="ap"
-            variant={"outline"}
+            variant={"ghost"}
+            bg={"var(--p500a5)"}
+            border={"1px solid var(--p500a2)"}
             className="clicky"
             onClick={onOpen}
+            size={"sm"}
             isDisabled={!publikasiPermission}
           >
             Publikasi
