@@ -1,5 +1,5 @@
 import { Center, Icon, MenuItem, Text, useDisclosure } from "@chakra-ui/react";
-import { RiEditLine } from "@remixicon/react";
+import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
 import { dummyKelolaRole } from "../../const/dummy";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
@@ -15,6 +15,9 @@ import EditRoleModalDisclosure from "../independent/EditRoleModalDisclosure";
 import isHasPermissions from "../../lib/isHasPermissions";
 import useAuth from "../../global/useAuth";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
+import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
+import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
+import StatusDihapus from "./StatusDihapus";
 
 interface Props {
   filterConfig?: any;
@@ -40,36 +43,36 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
       );
     },
 
-    // (rowData: any) => {
-    //   return (
-    //     <RestoreDataPengaturanModalDisclosure
-    //       id={rowData.id}
-    //       url={`/api/rski/dashboard/pengaturan/role/restore`}
-    //     >
-    //       <MenuItem isDisabled={!rowData.columnsFormat[1]?.value}>
-    //         <Text>Restore</Text>
-    //         <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-    //       </MenuItem>
-    //     </RestoreDataPengaturanModalDisclosure>
-    //   );
-    // },
-    // "divider",
-    // (rowData: any) => {
-    //   return (
-    //     <DeleteDataPengaturanModalDisclosure
-    //       id={rowData.id}
-    //       url={`/api/rski/dashboard/pengaturan/role`}
-    //     >
-    //       <MenuItem
-    //         fontWeight={500}
-    //         isDisabled={rowData.columnsFormat[1]?.value}
-    //       >
-    //         <Text color={"red.400"}>Delete</Text>
-    //         <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-    //       </MenuItem>
-    //     </DeleteDataPengaturanModalDisclosure>
-    //   );
-    // },
+    (rowData: any) => {
+      return (
+        <RestoreDataPengaturanModalDisclosure
+          id={rowData.id}
+          url={`/api/rski/dashboard/pengaturan/role/restore`}
+        >
+          <MenuItem isDisabled={!rowData.columnsFormat[1]?.value}>
+            <Text>Restore</Text>
+            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </RestoreDataPengaturanModalDisclosure>
+      );
+    },
+    "divider",
+    (rowData: any) => {
+      return (
+        <DeleteDataPengaturanModalDisclosure
+          id={rowData.id}
+          url={`/api/rski/dashboard/pengaturan/role`}
+        >
+          <MenuItem
+            fontWeight={500}
+            isDisabled={rowData.columnsFormat[1]?.value}
+          >
+            <Text color={"red.400"}>Delete</Text>
+            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
+          </MenuItem>
+        </DeleteDataPengaturanModalDisclosure>
+      );
+    },
   ];
 
   // Disclosure Config
@@ -103,13 +106,13 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
         borderRight: "1px solid var(--divider3)",
       },
     },
-    // {
-    //   th: "Status Dihapus",
-    //   isSortable: true,
-    //   cProps: {
-    //     justify: "center",
-    //   },
-    // },
+    {
+      th: "Status Dihapus",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
     {
       th: "Deskripsi",
       isSortable: true,
@@ -130,14 +133,14 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
           borderRight: "1px solid var(--divider3)",
         },
       },
-      // {
-      //   value: item.deleted_at,
-      //   td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
-      //   isDate: true,
-      //   cProps: {
-      //     justify: "center",
-      //   },
-      // },
+      {
+        value: item.deleted_at,
+        td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
+        isDate: true,
+        cProps: {
+          justify: "center",
+        },
+      },
       {
         value: item.deskripsi,
         td: <TabelElipsisText data={item.deskripsi} />,

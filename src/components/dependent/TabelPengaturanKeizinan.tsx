@@ -1,8 +1,8 @@
-import { Box, Checkbox, HStack, Text } from "@chakra-ui/react";
+import { Checkbox, HStack, Text } from "@chakra-ui/react";
 import { Dispatch, useState } from "react";
+import { useLightDarkColor } from "../../constant/colors";
 import NotFound from "../independent/NotFound";
 import CContainer from "../wrapper/CContainer";
-import { useLightDarkColor } from "../../constant/colors";
 
 interface Props {
   role_id: number;
@@ -251,11 +251,13 @@ export default function TabelPengaturanKeizinan({
             zIndex={3}
             gap={0}
           >
-            <Box
+            <HStack
               w={"100%"}
               maxW={"240px"}
               borderRight={"1px solid var(--divider3)"}
-              p={4}
+              px={4}
+              h={"48px"}
+              py={2}
             >
               <Text
                 fontWeight={500}
@@ -264,8 +266,8 @@ export default function TabelPengaturanKeizinan({
               >
                 Nama Modul
               </Text>
-            </Box>
-            <HStack px={6}>
+            </HStack>
+            <HStack px={6} h={"48px"}>
               <Text fontWeight={500} opacity={0.4}>
                 Permissions
               </Text>
@@ -283,11 +285,13 @@ export default function TabelPengaturanKeizinan({
                 align={"stretch"}
                 gap={0}
               >
-                <Box
+                <HStack
                   w={"100%"}
                   maxW={"240px"}
                   borderRight={"1px solid var(--divider3)"}
-                  p={4}
+                  h={"48px"}
+                  px={4}
+                  py={2}
                 >
                   <Text
                     fontWeight={500}
@@ -295,7 +299,7 @@ export default function TabelPengaturanKeizinan({
                   >
                     {item.name}
                   </Text>
-                </Box>
+                </HStack>
 
                 <HStack
                   // border={"1px solid red"}
@@ -303,7 +307,9 @@ export default function TabelPengaturanKeizinan({
                   overflowX={"auto"}
                   className="scrollX"
                   gap={12}
+                  h={"48px"}
                   px={6}
+                  py={2}
                 >
                   {Object.keys(item.permissions).map((key: any, ii: number) => {
                     return (
