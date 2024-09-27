@@ -72,6 +72,9 @@ export const globalTheme = extendTheme({
         container: {
           borderColor: "var(--divider)",
         },
+        button: {
+          borderRadius: 8,
+        },
         panel: {
           pb: 2,
         },

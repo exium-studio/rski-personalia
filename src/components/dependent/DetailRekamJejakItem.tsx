@@ -209,7 +209,7 @@ export default function DetailRekamJejakItem({ dataList, data, index }: Props) {
               onClick={() => {
                 setIsOpen(!isOpen);
               }}
-              _expanded={{ bg: "var(--divider) !important" }}
+              // _expanded={{ bg: "var(--divider) !important" }}
             >
               <HStack>
                 <Text fontWeight={600} fontSize={18}>

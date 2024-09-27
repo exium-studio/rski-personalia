@@ -5,6 +5,7 @@ import formatDate from "../../lib/formatDate";
 import formatDurationShort from "../../lib/formatDurationShort";
 import formatNumber from "../../lib/formatNumber";
 import FlexLine from "../independent/FlexLine";
+import JenisProfesiBadge from "./JenisProfesiBadge";
 import SimplePopover from "./SimplePopover";
 import SmallLink from "./SmallLink";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
@@ -16,8 +17,6 @@ interface Props {
 }
 
 export default function DetailDataKaryawan({ data, searchQuery }: Props) {
-  const isMedic = data?.kompetensi?.jenis_kompetensi;
-
   return (
     <>
       <VStack align={"stretch"} gap={0}>
@@ -661,7 +660,7 @@ export default function DetailDataKaryawan({ data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.kompetensi?.jenis_kompetensi ? "Medis" : "Non-Medis"}
+              <JenisProfesiBadge data={data.kompetensi?.jenis_kompetensi} />
             </Text>
           </HStack>
 
@@ -733,107 +732,103 @@ export default function DetailDataKaryawan({ data, searchQuery }: Props) {
         </VStack>
       </VStack>
 
-      {isMedic ? (
-        <VStack align={"stretch"} gap={0}>
-          <Text fontSize={20} fontWeight={600} mb={4}>
-            Pendidikan dan Sertifikat
-          </Text>
+      <VStack align={"stretch"} gap={0}>
+        <Text fontSize={20} fontWeight={600} mb={4}>
+          Pendidikan dan Sertifikat
+        </Text>
 
-          <VStack align={"stretch"} gap={4}>
-            <HStack justify={"space-between"}>
-              {/* <Text opacity={0.6}>No. STR</Text> */}
-              <Box opacity={0.6}>
-                <Highlighter
-                  highlightClassName="hw"
-                  unhighlightClassName="uw"
-                  searchWords={searchQuery}
-                  autoEscape={true}
-                  textToHighlight="No. STR"
-                />
-              </Box>
-              <FlexLine />
-              <HStack>
-                {data?.path_no_str && <SmallLink to="#">Lihat</SmallLink>}
+        <VStack align={"stretch"} gap={4}>
+          <HStack justify={"space-between"}>
+            {/* <Text opacity={0.6}>No. STR</Text> */}
+            <Box opacity={0.6}>
+              <Highlighter
+                highlightClassName="hw"
+                unhighlightClassName="uw"
+                searchWords={searchQuery}
+                autoEscape={true}
+                textToHighlight="No. STR"
+              />
+            </Box>
+            <FlexLine />
+            <HStack>
+              {data?.path_no_str && <SmallLink to="#">Lihat</SmallLink>}
 
-                {data?.no_str && (
-                  <Text fontWeight={500} textAlign={"right"}>
-                    {data?.no_str}
-                  </Text>
-                )}
-              </HStack>
+              {data?.no_str && (
+                <Text fontWeight={500} textAlign={"right"}>
+                  {data?.no_str}
+                </Text>
+              )}
             </HStack>
+          </HStack>
 
-            <HStack justify={"space-between"}>
-              {/* <Text opacity={0.6}>Masa Berlaku STR</Text> */}
-              <Box opacity={0.6}>
-                <Highlighter
-                  highlightClassName="hw"
-                  unhighlightClassName="uw"
-                  searchWords={searchQuery}
-                  autoEscape={true}
-                  textToHighlight="Masa Berlaku STR"
-                />
-              </Box>
-              <FlexLine />
-              <Text fontWeight={500} textAlign={"right"}>
-                {data?.masa_berlaku_str
-                  ? formatDate(data?.masa_berlaku_str)
-                  : data?.no_str
-                  ? "Seumur Hidup"
-                  : ""}
-              </Text>
+          <HStack justify={"space-between"}>
+            {/* <Text opacity={0.6}>Masa Berlaku STR</Text> */}
+            <Box opacity={0.6}>
+              <Highlighter
+                highlightClassName="hw"
+                unhighlightClassName="uw"
+                searchWords={searchQuery}
+                autoEscape={true}
+                textToHighlight="Masa Berlaku STR"
+              />
+            </Box>
+            <FlexLine />
+            <Text fontWeight={500} textAlign={"right"}>
+              {data?.masa_berlaku_str
+                ? formatDate(data?.masa_berlaku_str)
+                : data?.no_str
+                ? "Seumur Hidup"
+                : ""}
+            </Text>
+          </HStack>
+
+          <HStack justify={"space-between"}>
+            {/* <Text opacity={0.6}>No. SIP</Text> */}
+            <Box opacity={0.6}>
+              <Highlighter
+                highlightClassName="hw"
+                unhighlightClassName="uw"
+                searchWords={searchQuery}
+                autoEscape={true}
+                textToHighlight="No. SIP"
+              />
+            </Box>
+            <FlexLine />
+            <HStack>
+              {data?.path_no_sip && (
+                <SmallLink to={data?.path_no_sip}>Lihat</SmallLink>
+              )}
+
+              {data?.no_sip && (
+                <Text fontWeight={500} textAlign={"right"}>
+                  {data?.no_sip}
+                </Text>
+              )}
             </HStack>
+          </HStack>
 
-            <HStack justify={"space-between"}>
-              {/* <Text opacity={0.6}>No. SIP</Text> */}
-              <Box opacity={0.6}>
-                <Highlighter
-                  highlightClassName="hw"
-                  unhighlightClassName="uw"
-                  searchWords={searchQuery}
-                  autoEscape={true}
-                  textToHighlight="No. SIP"
-                />
-              </Box>
-              <FlexLine />
-              <HStack>
-                {data?.path_no_sip && (
-                  <SmallLink to={data?.path_no_sip}>Lihat</SmallLink>
-                )}
-
-                {data?.no_sip && (
-                  <Text fontWeight={500} textAlign={"right"}>
-                    {data?.no_sip}
-                  </Text>
-                )}
-              </HStack>
-            </HStack>
-
-            <HStack justify={"space-between"}>
-              {/* <Text opacity={0.6}>Masa Berlaku SIP</Text> */}
-              <Box opacity={0.6}>
-                <Highlighter
-                  highlightClassName="hw"
-                  unhighlightClassName="uw"
-                  searchWords={searchQuery}
-                  autoEscape={true}
-                  textToHighlight="Masa Berlaku SIP"
-                />
-              </Box>
-              <FlexLine />
-              <Text fontWeight={500} textAlign={"right"}>
-                {data.masa_berlaku_sip
-                  ? formatDate(data.masa_berlaku_sip)
-                  : data?.no_sip
-                  ? "Seumur Hidup"
-                  : ""}
-              </Text>
-            </HStack>
-          </VStack>
+          <HStack justify={"space-between"}>
+            {/* <Text opacity={0.6}>Masa Berlaku SIP</Text> */}
+            <Box opacity={0.6}>
+              <Highlighter
+                highlightClassName="hw"
+                unhighlightClassName="uw"
+                searchWords={searchQuery}
+                autoEscape={true}
+                textToHighlight="Masa Berlaku SIP"
+              />
+            </Box>
+            <FlexLine />
+            <Text fontWeight={500} textAlign={"right"}>
+              {data.masa_berlaku_sip
+                ? formatDate(data.masa_berlaku_sip)
+                : data?.no_sip
+                ? "Seumur Hidup"
+                : ""}
+            </Text>
+          </HStack>
         </VStack>
-      ) : (
-        ""
-      )}
+      </VStack>
 
       <VStack align={"stretch"} gap={0}>
         <Text fontSize={20} fontWeight={600} mb={4}>
