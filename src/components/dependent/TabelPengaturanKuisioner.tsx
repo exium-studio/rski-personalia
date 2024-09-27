@@ -137,7 +137,7 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
       isSortable: true,
     },
     {
-      th: "Status Karyawan",
+      th: "Status Karyawan Dinilai",
       isSortable: true,
       cProps: {
         justify: "center",

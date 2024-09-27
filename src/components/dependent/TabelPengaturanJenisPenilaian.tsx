@@ -131,7 +131,7 @@ export default function TabelPengaturanJenisPenilaian({ filterConfig }: Props) {
       },
     },
     {
-      th: "Status Karyawan",
+      th: "Status Karyawan Dinilai",
       isSortable: true,
       cProps: {
         justify: "center",
