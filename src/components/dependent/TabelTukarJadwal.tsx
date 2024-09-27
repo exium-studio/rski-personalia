@@ -23,7 +23,7 @@ interface Props {
   filterConfig?: any;
 }
 
-export default function TabelKaryawan({ filterConfig }: Props) {
+export default function TabelTUkarJadwal({ filterConfig }: Props) {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
