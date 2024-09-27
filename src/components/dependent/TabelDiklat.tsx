@@ -578,7 +578,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
     },
     {
-      th: "Publikasi Sertifikat",
+      th: "Sertifikat",
       props: {
         // position: "sticky",
         right: 0,
@@ -728,6 +728,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
         },
         cProps: {
           justify: "center",
+          px: 2,
           // borderLeft: "1px solid var(--divider3)",
         },
       },
