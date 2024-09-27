@@ -314,11 +314,8 @@ const KonfirmasiPublikasiSertifikat = ({ data }: any) => {
             w={"100%"}
             colorScheme="ap"
             variant={"ghost"}
-            bg={"var(--p500a5)"}
-            border={"1px solid var(--p500a2)"}
             className="clicky"
             onClick={onOpen}
-            size={"sm"}
             isDisabled={!publikasiPermission}
           >
             Publikasi
@@ -728,7 +725,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
         },
         cProps: {
           justify: "center",
-          px: 2,
+          px: 1,
           // borderLeft: "1px solid var(--divider3)",
         },
       },
