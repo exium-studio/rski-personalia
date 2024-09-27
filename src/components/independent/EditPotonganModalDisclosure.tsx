@@ -22,10 +22,10 @@ import {
 import { useFormik } from "formik";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import req from "../../lib/req";
 import SelectJenisPotongan from "../dependent/_Select/SelectJenisPotongan";
 import SelectSumberPotongan from "../dependent/_Select/SelectSumberPotongan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
@@ -111,36 +111,33 @@ export default function EditPotonganModalDisclosure({
   });
 
   const formikRef = useRef(formik);
-  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
     formikRef.current.setFieldValue(
       "nama_premi",
-      rowDataRef.current.columnsFormat[0].value
+      rowData.columnsFormat[0].value
     );
     formikRef.current.setFieldValue("jenis_premi", {
-      value: rowDataRef.current.columnsFormat[2].value,
-      label: rowDataRef.current.columnsFormat[2].value
-        ? "Nominal"
-        : "Persentase (%)",
+      value: rowData.columnsFormat[2].value,
+      label: rowData.columnsFormat[2].value ? "Nominal" : "Persentase (%)",
     });
     formikRef.current.setFieldValue("sumber_potongan", {
-      value: rowDataRef.current.columnsFormat[3].original_data.id,
-      label: rowDataRef.current.columnsFormat[3].original_data.label,
+      value: rowData.columnsFormat[3].original_data.id,
+      label: rowData.columnsFormat[3].original_data.label,
     });
     formikRef.current.setFieldValue(
       "besaran_premi",
-      rowDataRef.current.columnsFormat[4].value
+      rowData.columnsFormat[4].value
     );
     formikRef.current.setFieldValue(
       "minimal_rate",
-      rowDataRef.current.columnsFormat[5]?.value
+      rowData.columnsFormat[5]?.value
     );
     formikRef.current.setFieldValue(
       "maksimal_rate",
-      rowDataRef.current.columnsFormat[6]?.value
+      rowData.columnsFormat[6]?.value
     );
-  }, [isOpen, formikRef]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

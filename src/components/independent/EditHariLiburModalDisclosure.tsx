@@ -104,18 +104,12 @@ export default function EditHariLiburModalDisclosure({
   });
 
   const formikRef = useRef(formik);
-  const rowDataRef = useRef(rowData);
+  // const rowDataRef = useRef(rowData);
 
   useEffect(() => {
-    formikRef.current.setFieldValue(
-      "nama",
-      rowDataRef.current.columnsFormat[0].value
-    );
-    formikRef.current.setFieldValue(
-      "tanggal",
-      rowDataRef.current.columnsFormat[2].value
-    );
-  }, [isOpen, formikRef]);
+    formikRef.current.setFieldValue("nama", rowData.columnsFormat[0].value);
+    formikRef.current.setFieldValue("tanggal", rowData.columnsFormat[2].value);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

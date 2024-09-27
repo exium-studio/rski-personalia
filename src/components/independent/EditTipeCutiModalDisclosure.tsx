@@ -118,32 +118,26 @@ export default function EditTipeCutiModalDisclosure({
   });
 
   const formikRef = useRef(formik);
-  const rowDataRef = useRef(rowData);
+  // const rowDataRef = useRef(rowData);
 
   useEffect(() => {
     // console.log(rowData.columnsFormat[4].value);
 
-    formikRef.current.setFieldValue(
-      "nama",
-      rowDataRef.current.columnsFormat[0].value
-    );
-    formikRef.current.setFieldValue(
-      "kuota",
-      rowDataRef.current.columnsFormat[2].value
-    );
+    formikRef.current.setFieldValue("nama", rowData.columnsFormat[0].value);
+    formikRef.current.setFieldValue("kuota", rowData.columnsFormat[2].value);
     formikRef.current.setFieldValue(
       "cuti_administratif",
-      rowDataRef.current.columnsFormat[3].value
+      rowData.columnsFormat[3].value
     );
     formikRef.current.setFieldValue(
       "is_need_requirement",
-      rowDataRef.current.columnsFormat[4].value
+      rowData.columnsFormat[4].value
     );
     formikRef.current.setFieldValue(
       "keterangan",
-      rowDataRef.current.columnsFormat[5].value
+      rowData.columnsFormat[5].value
     );
-  }, [isOpen, formikRef]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>
@@ -165,7 +159,7 @@ export default function EditTipeCutiModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit Unit Kerja"
+              title="Edit Tipe Cuti"
               onClose={() => {
                 formik.resetForm();
               }}
@@ -263,10 +257,7 @@ export default function EditTipeCutiModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mb={4}
-                isInvalid={!!formik.errors.is_need_requirement}
-              >
+              <FormControl isInvalid={!!formik.errors.is_need_requirement}>
                 <Checkbox
                   colorScheme="ap"
                   onChange={(e) => {

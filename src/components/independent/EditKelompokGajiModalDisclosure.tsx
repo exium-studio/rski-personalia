@@ -104,18 +104,17 @@ export default function EditKelompokGajiModalDisclosure({
   });
 
   const formikRef = useRef(formik);
-  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
     formikRef.current.setFieldValue(
       "nama_kelompok",
-      rowDataRef.current.columnsFormat[0].value
+      rowData.columnsFormat[0].value
     );
     formikRef.current.setFieldValue(
       "besaran_gaji",
-      rowDataRef.current.columnsFormat[2].value
+      rowData.columnsFormat[2].value
     );
-  }, [isOpen, formikRef]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

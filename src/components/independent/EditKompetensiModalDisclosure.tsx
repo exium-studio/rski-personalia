@@ -20,15 +20,15 @@ import {
 import { useFormik } from "formik";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import req from "../../lib/req";
 import SelectJenisKompetensi from "../dependent/_Select/SelectJenisKompetensi";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import NumberInput from "../dependent/input/NumberInput";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
-import NumberInput from "../dependent/input/NumberInput";
 
 interface Props extends BoxProps {
   rowData: any;
@@ -113,26 +113,25 @@ export default function EditKompetensiModalDisclosure({
   });
 
   const formikRef = useRef(formik);
-  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
     formikRef.current.setFieldValue(
       "nama_kompetensi",
-      rowDataRef.current.columnsFormat[0].value
+      rowData.columnsFormat[0].value
     );
     formikRef.current.setFieldValue("jenis_kompetensi", {
-      value: rowDataRef.current.columnsFormat[2].value,
-      label: rowDataRef.current.columnsFormat[2].value ? "Medis" : "Non-Medis",
+      value: rowData.columnsFormat[2].value,
+      label: rowData.columnsFormat[2].value ? "Medis" : "Non-Medis",
     });
     // formikRef.current.setFieldValue(
     //   "total_tunjangan",
-    //   rowDataRef.current.columnsFormat[3].value
+    //   rowData.columnsFormat[3].value
     // );
     formikRef.current.setFieldValue(
       "nilai_bor",
-      rowDataRef.current.columnsFormat[3].value
+      rowData.columnsFormat[3].value
     );
-  }, [isOpen, formikRef]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

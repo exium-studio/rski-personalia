@@ -22,10 +22,10 @@ import {
 import { useFormik } from "formik";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import req from "../../lib/req";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import req from "../../lib/req";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
 import StringInput from "../dependent/input/StringInput";
@@ -102,22 +102,21 @@ export default function EditJabatanModalDisclosure({
   });
 
   const formikRef = useRef(formik);
-  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
     formikRef.current.setFieldValue(
       "nama_jabatan",
-      rowDataRef.current.columnsFormat[0].value
+      rowData.columnsFormat[0].value
     );
     formikRef.current.setFieldValue(
       "is_struktural",
-      rowDataRef.current.columnsFormat[2].value
+      rowData.columnsFormat[2].value
     );
     formikRef.current.setFieldValue(
       "tunjangan",
-      rowDataRef.current.columnsFormat[3].value
+      rowData.columnsFormat[3].value
     );
-  }, [isOpen, formikRef]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

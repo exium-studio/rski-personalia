@@ -102,23 +102,19 @@ export default function EditUnitKerjaModalDisclosure({
   });
 
   const formikRef = useRef(formik);
-  const rowDataRef = useRef(rowData);
 
   useEffect(() => {
     if (isOpen) {
       formikRef.current.setFieldValue(
         "nama_unit",
-        rowDataRef.current.columnsFormat[0].value
+        rowData.columnsFormat[0].value
       );
       formikRef.current.setFieldValue("jenis_karyawan", {
-        value: rowDataRef.current.columnsFormat[2].value,
-        label:
-          rowDataRef.current.columnsFormat[2].value === 1
-            ? "Shift"
-            : "Non-Shift",
+        value: rowData.columnsFormat[2].value,
+        label: rowData.columnsFormat[2].value === 1 ? "Shift" : "Non-Shift",
       });
     }
-  }, [isOpen, formikRef]);
+  }, [isOpen, rowData, formikRef]);
 
   return (
     <>

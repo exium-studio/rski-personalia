@@ -226,10 +226,7 @@ export default function TambahCuti({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mb={4}
-                isInvalid={!!formik.errors.is_need_requirement}
-              >
+              <FormControl isInvalid={!!formik.errors.is_need_requirement}>
                 <Checkbox
                   colorScheme="ap"
                   onChange={(e) => {
