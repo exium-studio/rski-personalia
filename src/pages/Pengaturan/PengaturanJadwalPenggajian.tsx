@@ -100,11 +100,6 @@ export default function PengaturanJadwalPenggajian() {
       overflowX={"auto"}
       h={"100%"}
     >
-      {error && !notFound && (
-        <Box my={"auto"}>
-          <Retry loading={loading} retry={retry} />
-        </Box>
-      )}
       <>
         {loading && (
           <>
@@ -136,80 +131,90 @@ export default function PengaturanJadwalPenggajian() {
 
         {!loading && (
           <>
-            <form
-              id="pengaturanJadwalPenggajianForm"
-              onSubmit={formik.handleSubmit}
-            >
-              <FormControl
-                mb={responsiveSpacing}
-                isInvalid={formik.errors.tgl_mulai ? true : false}
-              >
-                <FormLabel>
-                  Tanggal Penggajian
-                  <RequiredForm />
-                </FormLabel>
+            {error && !notFound && (
+              <Box my={"auto"}>
+                <Retry loading={loading} retry={retry} />
+              </Box>
+            )}
 
-                <SimpleGrid w={"100%"} columns={[7]} gap={4}>
-                  {Array.from({ length: 28 }).map((_, i) => (
-                    <Center
-                      p={4}
-                      borderRadius={12}
-                      className={
-                        i === formik.values.tgl_mulai - 1
-                          ? "btn-apa clicky"
-                          : "btn-outline clicky"
-                      }
-                      border={
-                        i === formik.values.tgl_mulai - 1
-                          ? "1px solid var(--p500a2)"
-                          : "1px solid var(--divider3)"
-                      }
-                      key={i}
-                      aspectRatio={1}
-                      cursor={"pointer"}
-                      flex={"1 1 50px"}
-                      onClick={() => {
-                        formik.setFieldValue("tgl_mulai", i + 1);
-                      }}
-                    >
-                      <Text fontSize={22} fontWeight={600}>
-                        {i + 1}
-                      </Text>
-                    </Center>
-                  ))}
-                </SimpleGrid>
-
-                <FormErrorMessage>
-                  {formik.errors.tgl_mulai as string}
-                </FormErrorMessage>
-              </FormControl>
-            </form>
-
-            <HStack
-              mt={"auto"}
-              pt={responsiveSpacing}
-              justify={"space-between"}
-              align={"center"}
-            >
-              <Text opacity={0.4}>
-                Terakhir diperbarui : {formatDate(data?.updated_at)}
-              </Text>
-
-              <PermissionTooltip permission={editPermission}>
-                <Button
-                  w={"120px"}
-                  className="btn-ap clicky"
-                  flexShrink={0}
-                  colorScheme="ap"
-                  type="submit"
-                  form="pengaturanJadwalPenggajianForm"
-                  isLoading={loadingSimpan}
-                  isDisabled={!editPermission}
+            {!error && (
+              <>
+                <form
+                  id="pengaturanJadwalPenggajianForm"
+                  onSubmit={formik.handleSubmit}
                 >
-                  Simpan
-                </Button>
-              </PermissionTooltip>
-            </HStack>
+                  <FormControl
+                    mb={responsiveSpacing}
+                    isInvalid={formik.errors.tgl_mulai ? true : false}
+                  >
+                    <FormLabel>
+                      Tanggal Penggajian
+                      <RequiredForm />
+                    </FormLabel>
+
+                    <SimpleGrid w={"100%"} columns={[7]} gap={4}>
+                      {Array.from({ length: 28 }).map((_, i) => (
+                        <Center
+                          p={4}
+                          borderRadius={12}
+                          className={
+                            i === formik.values.tgl_mulai - 1
+                              ? "btn-apa clicky"
+                              : "btn-outline clicky"
+                          }
+                          border={
+                            i === formik.values.tgl_mulai - 1
+                              ? "1px solid var(--p500a2)"
+                              : "1px solid var(--divider3)"
+                          }
+                          key={i}
+                          aspectRatio={1}
+                          cursor={"pointer"}
+                          flex={"1 1 50px"}
+                          onClick={() => {
+                            formik.setFieldValue("tgl_mulai", i + 1);
+                          }}
+                        >
+                          <Text fontSize={22} fontWeight={600}>
+                            {i + 1}
+                          </Text>
+                        </Center>
+                      ))}
+                    </SimpleGrid>
+
+                    <FormErrorMessage>
+                      {formik.errors.tgl_mulai as string}
+                    </FormErrorMessage>
+                  </FormControl>
+                </form>
+
+                <HStack
+                  mt={"auto"}
+                  pt={responsiveSpacing}
+                  justify={"space-between"}
+                  align={"center"}
+                >
+                  <Text opacity={0.4}>
+                    Terakhir diperbarui : {formatDate(data?.updated_at)}
+                  </Text>
+
+                  <PermissionTooltip permission={editPermission}>
+                    <Button
+                      w={"120px"}
+                      className="btn-ap clicky"
+                      flexShrink={0}
+                      colorScheme="ap"
+                      type="submit"
+                      form="pengaturanJadwalPenggajianForm"
+                      isLoading={loadingSimpan}
+                      isDisabled={!editPermission}
+                    >
+                      Simpan
+                    </Button>
+                  </PermissionTooltip>
+                </HStack>
+              </>
+            )}
           </>
         )}
       </>

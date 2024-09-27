@@ -664,6 +664,11 @@ button[aria-label="Close"] > svg {
 
 /* Custom Start*/
 
+.leaflet-control-zoom {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
 img[src^="/vectors/icons/hospital.svg"] {
   transform: scale(0.5) translateY(80px);
 }
