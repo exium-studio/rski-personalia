@@ -25,6 +25,7 @@ const useDataState = <T>({
 }: Props<T>) => {
   const [error, setError] = useState<boolean>(false);
   const [notFound, setNotFound] = useState<boolean>(false);
+  const [forbidden, setForbidden] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingLoadMore, setLoadingLoadMore] = useState<boolean>(false);
   const [data, setData] = useState<T | undefined>(initialData);
@@ -89,6 +90,9 @@ const useDataState = <T>({
           if (error?.response?.status === 404) {
             setNotFound(true);
           }
+          if (error?.response?.status === 403) {
+            setForbidden(true);
+          }
           setError(true);
           console.log(error);
         }
@@ -117,6 +121,8 @@ const useDataState = <T>({
     setLoading,
     notFound,
     setNotFound,
+    forbidden,
+    setForbidden,
     error,
     setError,
     retry,

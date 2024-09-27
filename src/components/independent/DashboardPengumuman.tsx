@@ -25,11 +25,12 @@ interface Props extends StackProps {}
 
 export default function DashboardPengumuman({ ...props }: Props) {
   const [search, setSearch] = useState<string>("");
-  const { error, notFound, loading, data, retry } = useDataState<any>({
-    initialData: undefined,
-    url: `/api/rski/dashboard/pengumuman`,
-    dependencies: [],
-  });
+  const { error, notFound, forbidden, loading, data, retry } =
+    useDataState<any>({
+      initialData: undefined,
+      url: `/api/rski/dashboard/pengumuman`,
+      dependencies: [],
+    });
 
   const fd = data?.filter((pengumuman: any) => {
     const searchTerm = search?.toLocaleLowerCase();
@@ -97,9 +98,11 @@ export default function DashboardPengumuman({ ...props }: Props) {
 
           {error && (
             <>
-              {notFound && <NoData minH={"300px"} />}
+              {forbidden && <NoData minH={"300px"} label="Tidak ada akses" />}
 
-              {!notFound && (
+              {notFound && !forbidden && <NoData minH={"300px"} />}
+
+              {!notFound && !forbidden && (
                 <Center my={"auto"} minH={"300px"}>
                   <Retry loading={loading} retry={retry} />
                 </Center>
