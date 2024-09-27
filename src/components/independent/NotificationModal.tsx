@@ -314,7 +314,15 @@ export default function NotificationModal({ ...props }: Props) {
                           {data?.notifikasi_reguler?.length > 0 && (
                             <>
                               <CContainer px={6}>
-                                <Text fontWeight={500} mt={4} mb={2}>
+                                <Text
+                                  fontWeight={500}
+                                  mt={
+                                    data?.notifikasi_verifikasi?.length > 0
+                                      ? 4
+                                      : 0
+                                  }
+                                  mb={2}
+                                >
                                   Reguler
                                 </Text>
                               </CContainer>
