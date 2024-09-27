@@ -11,7 +11,6 @@ import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import Retry from "../../components/dependent/Retry";
-import TabelPengaturanKeizinan from "../../components/dependent/TabelPengaturanKeizinan";
 import NoData from "../../components/independent/NoData";
 import Skeleton from "../../components/independent/Skeleton";
 import CContainer from "../../components/wrapper/CContainer";
@@ -23,12 +22,13 @@ import req from "../../lib/req";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
+import TabelPengaturanHakAkses from "../../components/dependent/PengaturanHakAkses";
 
 interface Props {
   role_id: number;
 }
 
-export default function PengaturanKeizinan({ role_id }: Props) {
+export default function PengaturanHakAkses({ role_id }: Props) {
   const { error, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/pengaturan/role/${role_id}`,
@@ -256,7 +256,7 @@ export default function PengaturanKeizinan({ role_id }: Props) {
                     </PermissionTooltip>
                   </Wrap>
 
-                  <TabelPengaturanKeizinan
+                  <TabelPengaturanHakAkses
                     role_id={role_id}
                     data={formik.values?.permissions}
                     totalPermissions={totalPermissions}

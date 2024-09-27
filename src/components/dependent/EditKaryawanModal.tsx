@@ -30,6 +30,7 @@ import useScreenWidth from "../../lib/useScreenWidth";
 import EditKaryawanForm from "../../pages/Karyawan/EditKaryawanForm";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
+import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props extends ButtonProps {
   initialData: any;
@@ -39,6 +40,7 @@ export default function EditKaryawanModal({ initialData, ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`edit-karyawan-modal`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
+  const userData = useGetUserData();
 
   const steps = [
     { title: "Data Karyawan" },
@@ -94,29 +96,40 @@ export default function EditKaryawanModal({ initialData, ...props }: Props) {
               colorScheme="ap"
               mb={6}
             >
-              {steps.map((step, index) => (
-                <Step key={index}>
-                  <StepIndicator>
-                    <StepStatus
-                      complete={<StepIcon />}
-                      incomplete={<StepNumber />}
-                      active={<StepNumber />}
-                    />
-                  </StepIndicator>
-                  <Box flexShrink="0">
-                    <StepTitle>
-                      {sw >= 768 && <Text>{step.title}</Text>}
-                    </StepTitle>
-                  </Box>
-                  <StepSeparator />
-                </Step>
-              ))}
+              {steps.map((step, index) => {
+                const isSuperAdmin = userData?.id === 1;
+                let ok = 2;
+                if (isSuperAdmin) {
+                  ok = 3;
+                }
+                return (
+                  index < ok && (
+                    <Step key={index}>
+                      <StepIndicator>
+                        <StepStatus
+                          complete={<StepIcon />}
+                          incomplete={<StepNumber />}
+                          active={<StepNumber />}
+                        />
+                      </StepIndicator>
+                      <Box flexShrink="0">
+                        <StepTitle>
+                          {sw >= 768 && <Text>{step.title}</Text>}
+                        </StepTitle>
+                      </Box>
+                      <StepSeparator />
+                    </Step>
+                  )
+                );
+              })}
             </Stepper>
 
             {sw < 768 && (
-              <Text mb={6}>
-                Step {activeStep + 1} : <b>{activeStepText}</b>
-              </Text>
+              <CContainer px={5}>
+                <Text mb={6}>
+                  Step {activeStep + 1} : <b>{activeStepText}</b>
+                </Text>
+              </CContainer>
             )}
 
             <CContainer

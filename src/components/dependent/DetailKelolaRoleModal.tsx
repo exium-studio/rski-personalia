@@ -9,9 +9,9 @@ import {
 import { useRef } from "react";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import PengaturanKeizinan from "../../pages/Pengaturan/PengaturanKeizinan";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
+import PengaturanHakAkses from "../../pages/Pengaturan/PengaturanHakAkses";
 
 interface Props extends BoxProps {
   id?: string;
@@ -51,7 +51,7 @@ export default function DetailKelolaRoleModal({
       <ModalOverlay />
       <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
         <ModalHeader ref={initialRef}>
-          <DisclosureHeader title={"Detail Role - Atur Keizinan"} />
+          <DisclosureHeader title={"Detail Role - Atur Hak Akses"} />
         </ModalHeader>
 
         <ModalBody px={0}>
@@ -62,7 +62,7 @@ export default function DetailKelolaRoleModal({
             flex={1}
             pb={6}
           >
-            <PengaturanKeizinan role_id={role_id} />
+            <PengaturanHakAkses role_id={role_id} />
           </CContainer>
         </ModalBody>
       </ModalContent>

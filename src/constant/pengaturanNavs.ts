@@ -28,7 +28,7 @@ const pengaturanNavs = [
       {
         allowed: [61],
         icon: RiUserSettingsLine,
-        label: "Kelola Role",
+        label: "Role (Hak Akses)",
         link: "/pengaturan/akun/kelola-role",
       },
       {

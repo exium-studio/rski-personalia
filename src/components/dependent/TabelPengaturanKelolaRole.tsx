@@ -143,7 +143,7 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
       },
       {
         value: item.deskripsi,
-        td: <TabelElipsisText data={item.deskripsi} />,
+        td: <TabelElipsisText data={item.deskripsi} maxW={"max-content"} />,
       },
     ],
   }));

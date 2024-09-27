@@ -647,7 +647,7 @@ export default function EditKaryawanForm({
 
         <FormControl mb={4} flex={"1 1 300px"} isInvalid={!!formik.errors.role}>
           <FormLabel>
-            Role
+            Role (Hak Akses)
             <RequiredForm />
           </FormLabel>
           <SelectRole

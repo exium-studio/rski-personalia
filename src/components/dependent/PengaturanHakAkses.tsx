@@ -15,7 +15,7 @@ interface Props {
   formik: any;
 }
 
-export default function TabelPengaturanKeizinan({
+export default function TabelPengaturanHakAkses({
   role_id,
   data,
   totalPermissions,
@@ -213,6 +213,7 @@ export default function TabelPengaturanKeizinan({
     import: "Import",
     verifikasi1: "Verif. 1",
     verifikasi2: "Verif. 2",
+    publikasi: "Publikasi",
     publikasi_sertifikat: "Publikasi Sertifikat",
     bypass: "Bypass Unit Kerja",
   };
