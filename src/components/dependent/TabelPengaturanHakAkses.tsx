@@ -276,7 +276,7 @@ export default function TabelPengaturanHakAkses({
           </HStack>
 
           {fd.map((item: any, i: number) => {
-            const excludes = ["Verifikasi Data", "Verifikasi Master"];
+            const excludes = ["Verifikasi Data"];
 
             return (
               !excludes?.includes(item?.name) && (
