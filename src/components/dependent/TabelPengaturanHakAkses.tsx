@@ -276,64 +276,74 @@ export default function TabelPengaturanHakAkses({
           </HStack>
 
           {fd.map((item: any, i: number) => {
-            return (
-              <HStack
-                key={i}
-                w={"100%"}
-                borderBottom={
-                  i !== fd.length - 1 ? "1px solid var(--divider3)" : ""
-                }
-                align={"stretch"}
-                gap={0}
-              >
-                <HStack
-                  w={"100%"}
-                  maxW={"240px"}
-                  borderRight={"1px solid var(--divider3)"}
-                  h={"48px"}
-                  px={4}
-                  py={2}
-                >
-                  <Text
-                    fontWeight={500}
-                    // border={"1px solid red"}
-                  >
-                    {item.name}
-                  </Text>
-                </HStack>
+            const excludes = ["Verifikasi Data", "Verifikasi Master"];
 
+            return (
+              !excludes?.includes(item?.name) && (
                 <HStack
-                  // border={"1px solid red"}
-                  flex={1}
-                  overflowX={"auto"}
-                  className="scrollX"
-                  gap={12}
-                  h={"48px"}
-                  px={6}
-                  py={2}
+                  key={i}
+                  w={"100%"}
+                  borderBottom={
+                    i !== fd.length - 1 ? "1px solid var(--divider3)" : ""
+                  }
+                  align={"stretch"}
+                  gap={0}
                 >
-                  {Object.keys(item.permissions).map((key: any, ii: number) => {
-                    return (
-                      item.permissions[key].id !== null && (
-                        <Checkbox
-                          key={ii}
-                          size={"lg"}
-                          colorScheme="ap"
-                          onChange={() => {
-                            handleCheckboxChange(i, key);
-                          }}
-                          isDisabled={role_id === 1}
-                          isChecked={item.permissions[key]?.has_permission}
-                        >
-                          <Text mt={"-1px"} opacity={0.6} whiteSpace={"nowrap"}>
-                            {permissionsLabel[key]}
-                          </Text>
-                        </Checkbox>
-                      )
-                    );
-                  })}
+                  <HStack
+                    w={"100%"}
+                    maxW={"240px"}
+                    borderRight={"1px solid var(--divider3)"}
+                    h={"48px"}
+                    px={4}
+                    py={2}
+                  >
+                    <Text
+                      fontWeight={500}
+                      // border={"1px solid red"}
+                    >
+                      {item.name}
+                    </Text>
+                  </HStack>
+
+                  <HStack
+                    // border={"1px solid red"}
+                    flex={1}
+                    overflowX={"auto"}
+                    className="scrollX"
+                    gap={12}
+                    h={"48px"}
+                    px={6}
+                    py={2}
+                  >
+                    {Object.keys(item.permissions).map(
+                      (key: any, ii: number) => {
+                        return (
+                          item.permissions[key].id !== null && (
+                            <Checkbox
+                              key={ii}
+                              size={"lg"}
+                              colorScheme="ap"
+                              onChange={() => {
+                                handleCheckboxChange(i, key);
+                              }}
+                              isDisabled={role_id === 1}
+                              isChecked={item.permissions[key]?.has_permission}
+                            >
+                              <Text
+                                mt={"-1px"}
+                                opacity={0.6}
+                                whiteSpace={"nowrap"}
+                              >
+                                {permissionsLabel[key]}
+                              </Text>
+                            </Checkbox>
+                          )
+                        );
+                      }
+                    )}
+                  </HStack>
                 </HStack>
-              </HStack>
+              )
             );
           })}
         </CContainer>
