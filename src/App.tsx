@@ -37,6 +37,7 @@ import TransferKaryawan from "./pages/Karyawan/TransferKaryawan";
 import Penggajian from "./pages/Keuangan/Penggajian";
 import Tagihan from "./pages/Keuangan/Tagihan";
 import Thr from "./pages/Keuangan/Thr";
+import PengaturanHakVerifikasi from "./pages/Pengaturan/PengaturanHakVerifikasi";
 import PengaturanHariLibur from "./pages/Pengaturan/PengaturanHariLibur";
 import PengaturanJabatan from "./pages/Pengaturan/PengaturanJabatan";
 import PengaturanJadwalPenggajian from "./pages/Pengaturan/PengaturanJadwalPenggajian";
@@ -176,7 +177,6 @@ export const App = () => {
               element={<FormForgotPasswordStep3 />}
             />
           </Route>
-
           <Route
             path="/dashboard"
             element={
@@ -229,7 +229,6 @@ export const App = () => {
               </NavContainer>
             }
           />
-
           <Route
             path="/presensi"
             element={
@@ -243,7 +242,6 @@ export const App = () => {
               </NavContainer>
             }
           />
-
           <Route
             path="/jadwal"
             element={
@@ -309,7 +307,6 @@ export const App = () => {
               </NavContainer>
             }
           />
-
           <Route
             path="/keuangan/penggajian"
             element={
@@ -349,7 +346,6 @@ export const App = () => {
               </NavContainer>
             }
           />
-
           <Route
             path="/perusahaan/diklat"
             element={
@@ -389,7 +385,6 @@ export const App = () => {
               </NavContainer>
             }
           />
-
           <Route
             path="/profil"
             element={
@@ -403,7 +398,6 @@ export const App = () => {
               </NavContainer>
             }
           />
-
           <Route
             path="/pengaturan"
             element={
@@ -426,10 +420,25 @@ export const App = () => {
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pengaturan - Kelola Role"
+                title="Pengaturan - Hak Akses (Role)"
               >
                 <PengaturanContainer activeGroup={0} active={0}>
                   <PengaturanKelolaRole />
+                </PengaturanContainer>
+              </NavContainer>
+            }
+          />
+          <Route
+            path="/pengaturan/akun/hak-verifikasi"
+            element={
+              <NavContainer
+                active={7}
+                topNavsData={navs[7].subNavs}
+                topNavActive={0}
+                title="Pengaturan - Hak Verifikasi"
+              >
+                <PengaturanContainer activeGroup={0} active={1}>
+                  <PengaturanHakVerifikasi />
                 </PengaturanContainer>
               </NavContainer>
             }
@@ -704,7 +713,6 @@ export const App = () => {
               </NavContainer>
             }
           />
-
           <Route path="/servererror" element={<InternalServerErrorPage />} />
           <Route path="/maintenance" element={<MaintenancePage />} />
           <Route path="*" element={<MissingPage />} />

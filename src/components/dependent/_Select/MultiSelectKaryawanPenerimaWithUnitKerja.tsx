@@ -80,7 +80,7 @@ export default function MultiSelectKaryawanPenerimaWithUnitKerja({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Multi Pilih Karyawan Shift"}
+      placeholder={placeholder || "Multi Pilih Karyawan"}
       nonNullable={nonNullable}
       {...props}
     />

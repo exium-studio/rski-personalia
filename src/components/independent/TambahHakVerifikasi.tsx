@@ -3,6 +3,7 @@ import {
   ButtonProps,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Icon,
   Modal,
@@ -25,16 +26,18 @@ import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnCloseOld";
 import isHasPermissions from "../../lib/isHasPermissions";
 import req from "../../lib/req";
+import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanAllJenisKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
-import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
+import MultiSelectKaryawanPenerimaWithUnitKerja from "../dependent/_Select/MultiSelectKaryawanPenerimaWithUnitKerja";
+import NumberInput from "../dependent/input/NumberInput";
 
 interface Props extends ButtonProps {}
 
-export default function TambahRole({ ...props }: Props) {
+export default function TambahHakVerifikasi({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("tambah-role-modal", isOpen, onOpen, onClose);
+  useBackOnClose("tambah-hak-verifikasi-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -43,15 +46,25 @@ export default function TambahRole({ ...props }: Props) {
 
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { name: "", deskripsi: "" },
+    initialValues: {
+      modul: undefined as any,
+      order: undefined as any,
+      name: "",
+      verifikator: undefined as any,
+      user_diverifikasi: undefined as any,
+    },
     validationSchema: yup.object().shape({
+      modul: yup.object().required("Harus diisi"),
+      order: yup.number().required("Harus diisi"),
       name: yup.string().required("Harus diisi"),
-      deskripsi: yup.string().required("Harus diisi"),
+      verifikator: yup.object().required("Harus diisi"),
+      user_diverifikasi: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         name: values.name,
-        deskripsi: values.deskripsi,
+        verifikator: values?.verifikator?.value,
+        user_diverifikasi: values?.user_diverifikasi?.value,
       };
       setLoading(true);
       req
@@ -101,7 +114,7 @@ export default function TambahRole({ ...props }: Props) {
         isDisabled={!createPermission}
         {...props}
       >
-        Tambah Role
+        Tambah Hak Verifikasi
       </Button>
       {/* </PermissionTooltip> */}
 
@@ -118,7 +131,7 @@ export default function TambahRole({ ...props }: Props) {
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Tambah Role"
+              title="Tambah Hak Verifikasi"
               onClose={() => {
                 formik.resetForm();
               }}
@@ -126,14 +139,51 @@ export default function TambahRole({ ...props }: Props) {
           </ModalHeader>
           <ModalBody>
             <form id="tambahRoleForm" onSubmit={formik.handleSubmit}>
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.modul ? true : false}
+              >
+                <FormLabel>
+                  Hal yang Perlu Diverifikasi (Modul)
+                  <RequiredForm />
+                </FormLabel>
+
+                <FormErrorMessage>
+                  {formik.errors.modul as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.order ? true : false}
+              >
+                <FormLabel>
+                  Urutan Verifikasi
+                  <RequiredForm />
+                </FormLabel>
+                <NumberInput
+                  name="order"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("order", input);
+                  }}
+                  inputValue={formik.values.order}
+                />
+                <FormHelperText>
+                  Maksimal urutan verifikasi berdasarkan modul yang dipilih
+                </FormHelperText>
+                <FormErrorMessage>
+                  {formik.errors.order as string}
+                </FormErrorMessage>
+              </FormControl>
+
               <FormControl mb={4} isInvalid={formik.errors.name ? true : false}>
                 <FormLabel>
-                  Nama Role
+                  Nama Hak Verifikasi
                   <RequiredForm />
                 </FormLabel>
                 <StringInput
                   name="name"
-                  placeholder="Human Resource"
+                  placeholder="Verifikasi Pak Agung"
                   onChangeSetter={(input) => {
                     formik.setFieldValue("name", input);
                   }}
@@ -144,21 +194,42 @@ export default function TambahRole({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={formik.errors.deskripsi ? true : false}>
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.verifikator ? true : false}
+              >
                 <FormLabel>
-                  Deskripsi
+                  Verifikator
                   <RequiredForm />
                 </FormLabel>
-                <Textarea
-                  name="deskripsi"
-                  placeholder="Diperuntukan untuk jabatan HR"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("deskripsi", input);
+                <SelectKaryawanAllJenisKaryawan
+                  name="verifikator"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("verifikator", input);
                   }}
-                  inputValue={formik.values.deskripsi}
+                  inputValue={formik.values.verifikator}
                 />
                 <FormErrorMessage>
-                  {formik.errors.deskripsi as string}
+                  {formik.errors.verifikator as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                isInvalid={formik.errors.user_diverifikasi ? true : false}
+              >
+                <FormLabel>
+                  Karyawan Diverifikasi
+                  <RequiredForm />
+                </FormLabel>
+                <MultiSelectKaryawanPenerimaWithUnitKerja
+                  name="user_diverifikasi"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("user_diverifikasi", input);
+                  }}
+                  inputValue={formik.values.user_diverifikasi}
+                />
+                <FormErrorMessage>
+                  {formik.errors.user_diverifikasi as string}
                 </FormErrorMessage>
               </FormControl>
             </form>
