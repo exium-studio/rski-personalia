@@ -19,7 +19,9 @@ import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import backOnClose from "../../lib/backOnClose";
 import isHasPermissions from "../../lib/isHasPermissions";
+import isObjectEmpty from "../../lib/isObjectEmpty";
 import EditRoleModalDisclosure from "../independent/EditRoleModalDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -56,7 +58,10 @@ const ListKaryawanDiverifikasiModal = ({
 
       <Modal
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={() => {
+          backOnClose();
+          onClose();
+        }}
         isCentered
         blockScrollOnMount={false}
       >
@@ -240,7 +245,9 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && <NotFound />}
+          {notFound && isObjectEmpty(filterConfig) && <NoData />}
+
+          {notFound && !isObjectEmpty(filterConfig) && <NotFound />}
 
           {!notFound && (
             <Center my={"auto"} minH={"300px"}>

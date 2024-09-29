@@ -59,7 +59,7 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
       order: yup.number().required("Harus diisi"),
       name: yup.string().required("Harus diisi"),
       verifikator: yup.object().required("Harus diisi"),
-      user_diverifikasi: yup.object().required("Harus diisi"),
+      user_diverifikasi: yup.array().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
