@@ -65,11 +65,13 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
       const payload = {
         name: values.name,
         verifikator: values?.verifikator?.value,
-        user_diverifikasi: values?.user_diverifikasi?.value,
+        user_id: values?.user_diverifikasi?.map((user: any) => user?.value),
+        modul: values?.modul?.value,
+        order: values?.order?.value,
       };
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/role`, payload)
+        .post(`/api/rski/dashboard/pengaturan/master-verifikasi`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
