@@ -30,7 +30,7 @@ import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanA
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
-import MultiSelectKaryawanPenerimaWithUnitKerja from "../dependent/_Select/MultiSelectKaryawanPenerimaWithUnitKerja";
+import MultiSelectKaryawanWithUnitKerja from "../dependent/_Select/MultiSelectKaryawanWithUnitKerja";
 import NumberInput from "../dependent/input/NumberInput";
 import SelectModulVerifikasi from "../dependent/_Select/SelectModulVerifikasi";
 
@@ -230,7 +230,7 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
                   Karyawan Diverifikasi
                   <RequiredForm />
                 </FormLabel>
-                <MultiSelectKaryawanPenerimaWithUnitKerja
+                <MultiSelectKaryawanWithUnitKerja
                   name="user_diverifikasi"
                   onConfirm={(input) => {
                     formik.setFieldValue("user_diverifikasi", input);

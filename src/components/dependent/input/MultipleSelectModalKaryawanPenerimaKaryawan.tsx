@@ -392,25 +392,6 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
           </ModalHeader>
 
           <ModalBody className="scrollY" overflowY={"auto"}>
-            <Alert
-              flexShrink={0}
-              // status="warning"
-              mb={4}
-              alignItems={"start"}
-            >
-              <AlertIcon />
-              <AlertDescription maxW={"640px !important"}>
-                Klik Unit Kerja untuk memilih semua karyawan di unit kerja
-                tersebut
-              </AlertDescription>
-            </Alert>
-
-            <ListUnitKerja
-              listKaryawan={listKaryawan}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
             {(withSearch ||
               (optionsDisplay === "list" && options && options?.length > 10) ||
               (optionsDisplay === "chip" &&
@@ -429,6 +410,25 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
 
             {fo && (
               <>
+                <Alert
+                  flexShrink={0}
+                  // status="warning"
+                  mb={4}
+                  alignItems={"start"}
+                >
+                  <AlertIcon />
+                  <AlertDescription maxW={"640px !important"}>
+                    Klik Unit Kerja untuk memilih semua karyawan di unit kerja
+                    tersebut
+                  </AlertDescription>
+                </Alert>
+
+                <ListUnitKerja
+                  listKaryawan={listKaryawan}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+
                 <Box
                   onClick={() => {
                     if (!selectAll) {

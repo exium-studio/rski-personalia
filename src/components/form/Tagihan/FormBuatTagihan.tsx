@@ -10,7 +10,7 @@ import * as yup from "yup";
 import useRenderTrigger from "../../../hooks/useRenderTrigger";
 import backOnClose from "../../../lib/backOnClose";
 import req from "../../../lib/req";
-import MultiSelectKaryawanPenerimaWithUnitKerja from "../../dependent/_Select/MultiSelectKaryawanPenerimaWithUnitKerja";
+import MultiSelectKaryawanWithUnitKerja from "../../dependent/_Select/MultiSelectKaryawanWithUnitKerja";
 import RequiredForm from "../RequiredForm";
 import SelectKategoriTagihan from "../../dependent/_Select/SelectKategoriTagihan";
 import NumberInput from "../../dependent/input/NumberInput";
@@ -94,7 +94,7 @@ export default function FormBuatTagihan({ forwardRef, setLoading }: Props) {
           Karyawan Penerima
           <RequiredForm />
         </FormLabel>
-        <MultiSelectKaryawanPenerimaWithUnitKerja
+        <MultiSelectKaryawanWithUnitKerja
           name="user_id"
           placeholder="Karyawan Penerima"
           onConfirm={(input) => {
