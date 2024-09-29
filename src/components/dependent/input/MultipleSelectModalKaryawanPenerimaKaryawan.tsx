@@ -222,7 +222,7 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
   const [search, setSearch] = useState<string>("");
   const [selected, setSelected] = useState<
     Interface__SelectOption[] | undefined
-  >(inputValue);
+  >(inputValue || []);
 
   const fo = search
     ? options?.filter((option) => {

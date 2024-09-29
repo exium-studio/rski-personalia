@@ -34,6 +34,8 @@ import DisclosureHeader from "./DisclosureHeader";
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import AvatarAndNameTableData from "./AvatarAndNameTableData";
+import CContainer from "../wrapper/CContainer";
 
 interface ListKaryaanDiverifikasiProps {
   data: any;
@@ -73,8 +75,47 @@ const ListKaryawanDiverifikasiModal = ({
               onClose={onClose}
             />
           </ModalHeader>
-          <ModalBody></ModalBody>
-          <ModalFooter></ModalFooter>
+          <ModalBody>
+            <CContainer gap={2}>
+              {data?.user_diverifikasi?.length === 0 && (
+                <NoData minH={"300px"} />
+              )}
+
+              {data?.user_diverifikasi?.length > 0 && (
+                <>
+                  {data.user_diverifikasi?.map((user: any, i: number) => (
+                    <HStack
+                      key={i}
+                      justifyContent={"space-between"}
+                      p={4}
+                      bg={"var(--divider)"}
+                      borderRadius={8}
+                    >
+                      <AvatarAndNameTableData
+                        data={{
+                          id: user?.id,
+                          nama: user?.nama,
+                          foto_profil: user?.foto_profil,
+                        }}
+                        // noDetail
+                        w={"fit-content"}
+                        maxW={"fit-content"}
+                      />
+                    </HStack>
+                  ))}
+                </>
+              )}
+            </CContainer>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              w={"100%"}
+              className="btn-solid clicky"
+              onClick={backOnClose}
+            >
+              Mengerti
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
@@ -229,7 +270,18 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
       },
       {
         value: item?.verifikator?.nama,
-        td: item?.verifikator?.nama,
+        td: (
+          <AvatarAndNameTableData
+            data={{
+              id: item.verifikator?.id,
+              nama: item.verifikator?.nama,
+              fullName: `${item?.gelar_depan || ""} ${item.verifikator?.nama} ${
+                item?.gelar_belakang || ""
+              }`,
+              foto_profil: item.verifikator?.foto_profil,
+            }}
+          />
+        ),
       },
       {
         value: "",
