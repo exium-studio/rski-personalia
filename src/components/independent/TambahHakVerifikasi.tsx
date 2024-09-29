@@ -63,11 +63,11 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        name: values.name,
+        nama: values.name,
         verifikator: values?.verifikator?.value,
         user_id: values?.user_diverifikasi?.map((user: any) => user?.value),
-        modul: values?.modul?.value,
-        order: values?.order?.value,
+        modul_verifikasi: values?.modul?.value,
+        order: values?.order,
       };
       setLoading(true);
       req

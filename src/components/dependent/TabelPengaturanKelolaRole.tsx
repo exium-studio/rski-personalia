@@ -1,23 +1,21 @@
 import { Center, Icon, MenuItem, Text, useDisclosure } from "@chakra-ui/react";
-import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
+import { RiEditLine } from "@remixicon/react";
 import { dummyKelolaRole } from "../../const/dummy";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useDataState from "../../hooks/useDataState";
+import isHasPermissions from "../../lib/isHasPermissions";
+import EditRoleModalDisclosure from "../independent/EditRoleModalDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import CustomTable from "./CustomTable";
 import DetailKelolaRoleModal from "./DetailKelolaRoleModal";
 import Retry from "./Retry";
-import TabelElipsisText from "./TabelElipsisText";
-import EditRoleModalDisclosure from "../independent/EditRoleModalDisclosure";
-import isHasPermissions from "../../lib/isHasPermissions";
-import useAuth from "../../global/useAuth";
-import PermissionTooltip from "../wrapper/PermissionTooltip";
-import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
-import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 import StatusDihapus from "./StatusDihapus";
+import TabelElipsisText from "./TabelElipsisText";
 
 interface Props {
   filterConfig?: any;
@@ -43,36 +41,36 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
       );
     },
 
-    (rowData: any) => {
-      return (
-        <RestoreDataPengaturanModalDisclosure
-          id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/role/restore`}
-        >
-          <MenuItem isDisabled={!rowData.columnsFormat[1]?.value}>
-            <Text>Restore</Text>
-            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
-        </RestoreDataPengaturanModalDisclosure>
-      );
-    },
-    "divider",
-    (rowData: any) => {
-      return (
-        <DeleteDataPengaturanModalDisclosure
-          id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/role`}
-        >
-          <MenuItem
-            fontWeight={500}
-            isDisabled={rowData.columnsFormat[1]?.value}
-          >
-            <Text color={"red.400"}>Delete</Text>
-            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-          </MenuItem>
-        </DeleteDataPengaturanModalDisclosure>
-      );
-    },
+    // (rowData: any) => {
+    //   return (
+    //     <RestoreDataPengaturanModalDisclosure
+    //       id={rowData.id}
+    //       url={`/api/rski/dashboard/pengaturan/role/restore`}
+    //     >
+    //       <MenuItem isDisabled={!rowData.columnsFormat[1]?.value}>
+    //         <Text>Restore</Text>
+    //         <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+    //       </MenuItem>
+    //     </RestoreDataPengaturanModalDisclosure>
+    //   );
+    // },
+    // "divider",
+    // (rowData: any) => {
+    //   return (
+    //     <DeleteDataPengaturanModalDisclosure
+    //       id={rowData.id}
+    //       url={`/api/rski/dashboard/pengaturan/role`}
+    //     >
+    //       <MenuItem
+    //         fontWeight={500}
+    //         isDisabled={rowData.columnsFormat[1]?.value}
+    //       >
+    //         <Text color={"red.400"}>Delete</Text>
+    //         <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
+    //       </MenuItem>
+    //     </DeleteDataPengaturanModalDisclosure>
+    //   );
+    // },
   ];
 
   // Disclosure Config
