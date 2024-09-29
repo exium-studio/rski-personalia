@@ -2,8 +2,8 @@ import { StackProps } from "@chakra-ui/react";
 
 export interface Interface__SelectOption {
   value: any;
-  label: string;
-  label2?: string;
+  label: any;
+  label2?: any;
   original_data?: any;
 }
 

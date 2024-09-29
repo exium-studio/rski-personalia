@@ -42,7 +42,7 @@ export default function SelectModulVerifikasi({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Pilih Status Karyawan"}
+      placeholder={placeholder || "Pilih Modul Verifikasi"}
       nonNullable={nonNullable}
       {...props}
     />

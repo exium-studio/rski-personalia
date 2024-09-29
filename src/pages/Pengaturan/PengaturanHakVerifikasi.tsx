@@ -1,7 +1,7 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import TabelKelolaRole from "../../components/dependent/TabelPengaturanKelolaRole";
+import TabelPengaturanHakVerifikasi from "../../components/dependent/TabelPengaturanHakVerifikasi";
 import TambahHakVerifikasi from "../../components/independent/TambahHakVerifikasi";
 import CContainer from "../../components/wrapper/CContainer";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
@@ -65,7 +65,7 @@ export default function PengaturanHakVerifikasi() {
         </PermissionTooltip>
       </HStack>
 
-      <TabelKelolaRole filterConfig={filterConfig} />
+      <TabelPengaturanHakVerifikasi filterConfig={filterConfig} />
     </CContainer>
   );
 }

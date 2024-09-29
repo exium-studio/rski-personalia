@@ -292,32 +292,32 @@ const optionsModulVerifikasi = [
   {
     value: 1,
     label: "Permintaan Perubahan Data",
-    maxOrder: 1,
+    label2: 1,
   },
   {
     value: 2,
     label: "Tukar Jadwal",
-    maxOrder: 2,
+    label2: 2,
   },
   {
     value: 3,
     label: "Cuti",
-    maxOrder: 2,
+    label2: 2,
   },
   {
     value: 4,
     label: "Izin",
-    maxOrder: 1,
+    label2: 1,
   },
   {
     value: 5,
     label: "Diklat Internal",
-    maxOrder: 3,
+    label2: 3,
   },
   {
     value: 6,
     label: "Diklat Eksternal",
-    maxOrder: 2,
+    label2: 2,
   },
 ];
 

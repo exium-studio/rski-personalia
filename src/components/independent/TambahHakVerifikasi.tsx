@@ -32,6 +32,7 @@ import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
 import MultiSelectKaryawanPenerimaWithUnitKerja from "../dependent/_Select/MultiSelectKaryawanPenerimaWithUnitKerja";
 import NumberInput from "../dependent/input/NumberInput";
+import SelectModulVerifikasi from "../dependent/_Select/SelectModulVerifikasi";
 
 interface Props extends ButtonProps {}
 
@@ -139,43 +140,6 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
           </ModalHeader>
           <ModalBody>
             <form id="tambahRoleForm" onSubmit={formik.handleSubmit}>
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.modul ? true : false}
-              >
-                <FormLabel>
-                  Hal yang Perlu Diverifikasi (Modul)
-                  <RequiredForm />
-                </FormLabel>
-
-                <FormErrorMessage>
-                  {formik.errors.modul as string}
-                </FormErrorMessage>
-              </FormControl>
-
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.order ? true : false}
-              >
-                <FormLabel>
-                  Urutan Verifikasi
-                  <RequiredForm />
-                </FormLabel>
-                <NumberInput
-                  name="order"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("order", input);
-                  }}
-                  inputValue={formik.values.order}
-                />
-                <FormHelperText>
-                  Maksimal urutan verifikasi berdasarkan modul yang dipilih
-                </FormHelperText>
-                <FormErrorMessage>
-                  {formik.errors.order as string}
-                </FormErrorMessage>
-              </FormControl>
-
               <FormControl mb={4} isInvalid={formik.errors.name ? true : false}>
                 <FormLabel>
                   Nama Hak Verifikasi
@@ -191,6 +155,49 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
                 />
                 <FormErrorMessage>
                   {formik.errors.name as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.modul ? true : false}
+              >
+                <FormLabel>
+                  Hal yang Perlu Diverifikasi (Modul)
+                  <RequiredForm />
+                </FormLabel>
+                <SelectModulVerifikasi
+                  name="modul"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("modul", input);
+                  }}
+                  inputValue={formik.values.modul}
+                />
+                <FormErrorMessage>
+                  {formik.errors.modul as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.order ? true : false}
+              >
+                <FormLabel>
+                  Level Verifikasi
+                  <RequiredForm />
+                </FormLabel>
+                <NumberInput
+                  name="order"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("order", input);
+                  }}
+                  inputValue={formik.values.order}
+                />
+                <FormHelperText>
+                  Maksimal level verifikasi berdasarkan modul yang dipilih
+                </FormHelperText>
+                <FormErrorMessage>
+                  {formik.errors.order as string}
                 </FormErrorMessage>
               </FormControl>
 
