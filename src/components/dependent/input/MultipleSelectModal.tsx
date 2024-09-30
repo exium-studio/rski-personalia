@@ -254,7 +254,8 @@ export default function MultipleSelectModal({
               )}
             </Box>
           </ModalHeader>
-          <ModalBody className="scrollY">
+
+          <ModalBody className="scrollY" overflowY={"auto"}>
             {fo && (
               <>
                 <Box
