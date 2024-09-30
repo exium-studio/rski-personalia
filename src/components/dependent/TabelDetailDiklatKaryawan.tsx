@@ -25,10 +25,10 @@ export default function TabelDetailDiklatKaryawan({ data }: Props) {
   });
 
   const fd = data.filter((item: any) => {
-    const searchTerm = filterConfig.search.toLowerCase();
+    const searchTerm = filterConfig?.search?.toLowerCase();
 
-    const matchesSearchTerm1 = (item.kategori_potongan_id?.label)
-      .toLowerCase()
+    const matchesSearchTerm1 = item?.kategori_diklat_id?.label
+      ?.toLowerCase()
       .includes(searchTerm);
 
     const matchesSearchTerm2 = formatDate(item.created_at)
@@ -125,6 +125,8 @@ export default function TabelDetailDiklatKaryawan({ data }: Props) {
     ],
   }));
 
+  // console.log(filterConfig);
+
   return (
     <>
       <HStack mb={responsiveSpacing}>
@@ -137,14 +139,15 @@ export default function TabelDetailDiklatKaryawan({ data }: Props) {
             }));
           }}
           inputValue={filterConfig.search}
-          placeholder="cari dengan tanggal jadwal"
-          tooltipLabel="cari dengan tanggal jadwal (27 Agustus 2024)"
+          placeholder="nama diklat"
+          tooltipLabel="cari dengan nama diklat"
         />
         <MultiSelectKategoriDiklat
           name="kategori_diklat"
           onConfirm={(input) => {
             setFilterConfig(input);
           }}
+          maxW={"240px"}
           inputValue={filterConfig.kategori_diklat}
         />
       </HStack>
