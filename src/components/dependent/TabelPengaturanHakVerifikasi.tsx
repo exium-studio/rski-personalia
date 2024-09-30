@@ -13,7 +13,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
+import { RiDeleteBinLine, RiEditLine } from "@remixicon/react";
 import { dummyKelolaRole } from "../../const/dummy";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
@@ -22,21 +22,19 @@ import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
-import EditRoleModalDisclosure from "../independent/EditRoleModalDisclosure";
+import EditHakVerifikasiModalDisclosure from "../independent/EditHakVerifikasiModalDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
+import CContainer from "../wrapper/CContainer";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
+import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
-import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
-import AvatarAndNameTableData from "./AvatarAndNameTableData";
-import CContainer from "../wrapper/CContainer";
-
 interface ListKaryaanDiverifikasiProps {
   data: any;
 }
@@ -134,30 +132,30 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <EditRoleModalDisclosure rowData={rowData}>
+        <EditHakVerifikasiModalDisclosure rowData={rowData}>
           <PermissionTooltip permission={editPermission}>
             <MenuItem isDisabled={!editPermission}>
               <Text>Edit</Text>
               <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
             </MenuItem>
           </PermissionTooltip>
-        </EditRoleModalDisclosure>
+        </EditHakVerifikasiModalDisclosure>
       );
     },
 
-    (rowData: any) => {
-      return (
-        <RestoreDataPengaturanModalDisclosure
-          id={rowData.id}
-          url={`/api/rski/dashboard/pengaturan/master-verifikasi/restore`}
-        >
-          <MenuItem isDisabled={!rowData.columnsFormat[1]?.value}>
-            <Text>Restore</Text>
-            <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
-        </RestoreDataPengaturanModalDisclosure>
-      );
-    },
+    // (rowData: any) => {
+    //   return (
+    //     <RestoreDataPengaturanModalDisclosure
+    //       id={rowData.id}
+    //       url={`/api/rski/dashboard/pengaturan/master-verifikasi/restore`}
+    //     >
+    //       <MenuItem isDisabled={!rowData.columnsFormat[1]?.value}>
+    //         <Text>Restore</Text>
+    //         <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+    //       </MenuItem>
+    //     </RestoreDataPengaturanModalDisclosure>
+    //   );
+    // },
     "divider",
     (rowData: any) => {
       return (
@@ -256,7 +254,7 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
         td: item?.modul_verifikasi?.label,
       },
       {
-        value: item?.modul_verifikasi?.max_order,
+        value: item?.order,
         td: (
           <HStack gap={1}>
             <Text>{item?.order}</Text>
@@ -270,6 +268,7 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
       },
       {
         value: item?.verifikator?.nama,
+        original_data: item?.verifikator,
         td: (
           <AvatarAndNameTableData
             data={{
@@ -285,6 +284,7 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
       },
       {
         value: "",
+        original_data: item?.user_diverifikasi,
         td: <ListKaryawanDiverifikasiModal data={item} />,
         cProps: {
           justify: "center",

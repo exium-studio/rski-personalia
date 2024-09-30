@@ -48,24 +48,26 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
+      name: "",
       modul: undefined as any,
       order: undefined as any,
-      name: "",
       verifikator: undefined as any,
       user_diverifikasi: undefined as any,
     },
     validationSchema: yup.object().shape({
+      name: yup.string().required("Harus diisi"),
       modul: yup.object().required("Harus diisi"),
       order: yup.number().required("Harus diisi"),
-      name: yup.string().required("Harus diisi"),
       verifikator: yup.object().required("Harus diisi"),
-      user_diverifikasi: yup.array().required("Harus diisi"),
+      user_diverifikasi: yup.array(),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama: values.name,
         verifikator: values?.verifikator?.value,
-        user_id: values?.user_diverifikasi?.map((user: any) => user?.value),
+        user_diverifikasi: values?.user_diverifikasi?.map(
+          (user: any) => user?.value
+        ),
         modul_verifikasi: values?.modul?.value,
         order: values?.order,
       };
@@ -73,7 +75,7 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
       req
         .post(`/api/rski/dashboard/pengaturan/master-verifikasi`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r.status === 201) {
             toast({
               status: "success",
               title: r.data.message,
@@ -228,7 +230,7 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
               >
                 <FormLabel>
                   Karyawan Diverifikasi
-                  <RequiredForm />
+                  {/* <RequiredForm /> */}
                 </FormLabel>
                 <MultiSelectKaryawanWithUnitKerja
                   name="user_diverifikasi"
