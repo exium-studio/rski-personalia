@@ -431,7 +431,7 @@ export default function DateRangePickerModal({
                       <Text
                         textAlign={"center"}
                         opacity={selected?.from ? 1 : 0.6}
-                        color={selected?.from && selected?.to && "p.500"}
+                        // color={selected?.from && selected?.to && "p.500"}
                         fontWeight={selected?.from && selected?.to && "600"}
                       >
                         {`${

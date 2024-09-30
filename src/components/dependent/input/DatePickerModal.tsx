@@ -263,7 +263,7 @@ export default function DatePickerModal({
               >
                 <Text
                   opacity={selected ? 1 : 0.6}
-                  color={selected && "p.500"}
+                  // color={selected && "p.500"}
                   fontWeight={selected && "600"}
                 >
                   {selected
