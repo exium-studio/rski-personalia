@@ -27,6 +27,7 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+import isDatePassed from "../../lib/isDatePassed";
 
 interface Props {
   filterConfig?: any;
@@ -73,7 +74,11 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
       return (
         <EditTransferKaryawanModalDisclosure rowData={rowData}>
           <PermissionTooltip permission={editPermission}>
-            <MenuItem isDisabled={!editPermission}>
+            <MenuItem
+              isDisabled={
+                !editPermission || isDatePassed(rowData.columnsFormat[4].value)
+              }
+            >
               <Text>Edit</Text>
               <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
             </MenuItem>
@@ -253,6 +258,7 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
       },
       {
         value: item.dokumen,
+        original_data: item.dokumen,
         td: (
           <Button
             colorScheme="ap"

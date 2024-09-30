@@ -94,6 +94,8 @@ export default function EditTransferKaryawanModalDisclosure({
       beri_tahu_karyawan: yup.boolean(),
     }),
     onSubmit: (values, { resetForm }) => {
+      console.log(rowData);
+
       const payload = new FormData();
       payload.append("user_id", values.karyawan?.value);
       payload.append("tgl_mulai", formatDate(values.tgl_mulai, "short"));
@@ -113,9 +115,9 @@ export default function EditTransferKaryawanModalDisclosure({
       if (values.role_tujuan?.value !== undefined) {
         payload.append("role_tujuan", values.role_tujuan?.value);
       }
-
       payload.append("alasan", values.alasan);
       payload.append("dokumen", values.dokumen);
+      payload.append("_method", "patch");
 
       setLoading(true);
       req
