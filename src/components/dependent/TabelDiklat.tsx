@@ -736,11 +736,11 @@ export default function TabelDiklat({ filterConfig }: Props) {
     <>
       {error && (
         <>
-          {notFound && isObjectEmpty(filterConfig, ["tahun"]) && (
+          {notFound && isObjectEmpty(filterConfig, ["periode_tahun"]) && (
             <NoData minH={"300px"} />
           )}
 
-          {notFound && !isObjectEmpty(filterConfig, ["tahun"]) && (
+          {notFound && !isObjectEmpty(filterConfig, ["periode_tahun"]) && (
             <NotFound minH={"300px"} />
           )}
 
