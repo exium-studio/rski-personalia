@@ -79,10 +79,6 @@ export default function PengaturanUbahKataSandi() {
       h={"100%"}
     >
       <form id="ubahKataSandiForm" onSubmit={formik.handleSubmit}>
-        {/* <Text fontSize={20} fontWeight={600} mb={responsiveSpacing}>
-                Ubah Kata Sandi
-              </Text> */}
-
         <FormControl
           mb={4}
           isInvalid={formik.errors.password_lama ? true : false}
