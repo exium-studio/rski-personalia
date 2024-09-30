@@ -268,15 +268,16 @@ export default function DetailKaryawanModal({
                       bg={lightDarkColor}
                       px={responsiveSpacing}
                       justify={"space-between"}
-                      gap={3}
+                      gap={4}
                     >
-                      <HStack>
+                      <SimpleGrid columns={[2]} gap={2}>
                         <Skeleton h={"40px"} />
                         <Skeleton h={"40px"} />
                         <Skeleton h={"40px"} />
-                      </HStack>
+                        <Skeleton h={"40px"} />
+                      </SimpleGrid>
 
-                      <Skeleton h={"40px"} />
+                      <Skeleton flexShrink={0} h={"40px"} />
 
                       <Skeleton flexShrink={0} h={"50px"} />
 
@@ -771,7 +772,7 @@ export default function DetailKaryawanModal({
                           className="scrollY"
                         >
                           <SimpleGrid
-                            columns={[2, null, 2]}
+                            columns={[2]}
                             gap={2}
                             px={5}
                             position={"sticky"}
