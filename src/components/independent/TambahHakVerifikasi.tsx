@@ -59,7 +59,7 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
       modul: yup.object().required("Harus diisi"),
       order: yup.number().required("Harus diisi"),
       verifikator: yup.object().required("Harus diisi"),
-      user_diverifikasi: yup.array(),
+      user_diverifikasi: yup.array().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
@@ -230,7 +230,7 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
               >
                 <FormLabel>
                   Karyawan Diverifikasi
-                  {/* <RequiredForm /> */}
+                  <RequiredForm />
                 </FormLabel>
                 <MultiSelectKaryawanWithUnitKerja
                   name="user_diverifikasi"

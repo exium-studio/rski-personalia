@@ -4,6 +4,7 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Modal,
   ModalBody,
@@ -21,9 +22,12 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import req from "../../lib/req";
+import MultiSelectKaryawanWithUnitKerja from "../dependent/_Select/MultiSelectKaryawanWithUnitKerja";
+import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanAllJenisKaryawan";
+import SelectModulVerifikasi from "../dependent/_Select/SelectModulVerifikasi";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import NumberInput from "../dependent/input/NumberInput";
 import StringInput from "../dependent/input/StringInput";
-import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
 
 interface Props extends BoxProps {
@@ -52,23 +56,36 @@ export default function EditHakVerifikasiModalDisclosure({
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      name: "" as any,
-      deskripsi: "" as any,
+      name: "",
+      modul: undefined as any,
+      order: undefined as any,
+      verifikator: undefined as any,
+      user_diverifikasi: undefined as any,
     },
     validationSchema: yup.object().shape({
       name: yup.string().required("Harus diisi"),
-      deskripsi: yup.string().required("Harus diisi"),
+      modul: yup.object().required("Harus diisi"),
+      order: yup.number().required("Harus diisi"),
+      verifikator: yup.object().required("Harus diisi"),
+      user_diverifikasi: yup.array().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        name: values.name,
-        deskripsi: values.deskripsi,
+        nama: values.name,
+        modul_verifikasi: values?.modul?.value,
+        order: values?.order,
+        verifikator: values?.verifikator?.value,
+        user_diverifikasi: values?.user_diverifikasi?.map(
+          (user: any) => user?.value
+        ),
         _method: "patch",
       };
-      console.log(payload);
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/pengaturan/role/${rowData.id}`, payload)
+        .post(
+          `/api/rski/dashboard/pengaturan/master-verifikasi/${rowData.id}`,
+          payload
+        )
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -100,19 +117,18 @@ export default function EditHakVerifikasiModalDisclosure({
   });
 
   const formikRef = useRef(formik);
-  // const rowDataRef = useRef(rowData);
-  // name: "",
-  // modul: undefined as any,
-  // order: undefined as any,
-  // verifikator: undefined as any,
-  // user_diverifikasi: undefined as any,
 
   useEffect(() => {
     formikRef.current.setFieldValue("name", rowData.columnsFormat[0].value);
-    formikRef.current.setFieldValue(
-      "deskripsi",
-      rowData.columnsFormat[1].value || ""
-    );
+    formikRef.current.setFieldValue("modul", {
+      value: rowData.columnsFormat[2].original_data?.id,
+      label: rowData.columnsFormat[2].original_data?.label,
+    });
+    formikRef.current.setFieldValue("order", rowData.columnsFormat[3].value);
+    formikRef.current.setFieldValue("verifikator", {
+      value: rowData.columnsFormat[4].original_data?.id,
+      label: rowData.columnsFormat[4].original_data?.nama,
+    });
   }, [isOpen, rowData, formikRef]);
 
   return (
@@ -142,15 +158,15 @@ export default function EditHakVerifikasiModalDisclosure({
             />
           </ModalHeader>
           <ModalBody>
-            <form id="editUnitKerjaForm" onSubmit={formik.handleSubmit}>
+            <form id="editHakVerifikasiForm" onSubmit={formik.handleSubmit}>
               <FormControl mb={4} isInvalid={formik.errors.name ? true : false}>
                 <FormLabel>
-                  Nama Role
+                  Nama Hak Verifikasi
                   <RequiredForm />
                 </FormLabel>
                 <StringInput
                   name="name"
-                  placeholder="Human Resource"
+                  placeholder="Verifikasi Pak Agung"
                   onChangeSetter={(input) => {
                     formik.setFieldValue("name", input);
                   }}
@@ -161,21 +177,85 @@ export default function EditHakVerifikasiModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={formik.errors.deskripsi ? true : false}>
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.modul ? true : false}
+              >
                 <FormLabel>
-                  Deskripsi
+                  Hal yang Perlu Diverifikasi (Modul)
                   <RequiredForm />
                 </FormLabel>
-                <Textarea
-                  name="deskripsi"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("deskripsi", input);
+                <SelectModulVerifikasi
+                  name="modul"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("modul", input);
                   }}
-                  inputValue={formik.values.deskripsi}
+                  inputValue={formik.values.modul}
                 />
-
                 <FormErrorMessage>
-                  {formik.errors.deskripsi as string}
+                  {formik.errors.modul as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.order ? true : false}
+              >
+                <FormLabel>
+                  Level Verifikasi
+                  <RequiredForm />
+                </FormLabel>
+                <NumberInput
+                  name="order"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("order", input);
+                  }}
+                  inputValue={formik.values.order}
+                />
+                <FormHelperText>
+                  Maksimal level verifikasi berdasarkan modul yang dipilih
+                </FormHelperText>
+                <FormErrorMessage>
+                  {formik.errors.order as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.verifikator ? true : false}
+              >
+                <FormLabel>
+                  Verifikator
+                  <RequiredForm />
+                </FormLabel>
+                <SelectKaryawanAllJenisKaryawan
+                  name="verifikator"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("verifikator", input);
+                  }}
+                  inputValue={formik.values.verifikator}
+                />
+                <FormErrorMessage>
+                  {formik.errors.verifikator as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                isInvalid={formik.errors.user_diverifikasi ? true : false}
+              >
+                <FormLabel>
+                  Karyawan Diverifikasi
+                  <RequiredForm />
+                </FormLabel>
+                <MultiSelectKaryawanWithUnitKerja
+                  name="user_diverifikasi"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("user_diverifikasi", input);
+                  }}
+                  inputValue={formik.values.user_diverifikasi}
+                />
+                <FormErrorMessage>
+                  {formik.errors.user_diverifikasi as string}
                 </FormErrorMessage>
               </FormControl>
             </form>
@@ -184,7 +264,7 @@ export default function EditHakVerifikasiModalDisclosure({
           <ModalFooter>
             <Button
               type="submit"
-              form="editUnitKerjaForm"
+              form="editHakVerifikasiForm"
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}

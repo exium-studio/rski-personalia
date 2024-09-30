@@ -251,6 +251,7 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
       },
       {
         value: item?.modul_verifikasi?.label,
+        original_data: item?.modul_verifikasi,
         td: item?.modul_verifikasi?.label,
       },
       {
