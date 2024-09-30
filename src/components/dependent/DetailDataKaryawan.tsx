@@ -1,8 +1,8 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import Highlighter from "react-highlight-words";
+import useGetUserData from "../../hooks/useGetUserData";
 import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 import formatDate from "../../lib/formatDate";
-import formatDurationShort from "../../lib/formatDurationShort";
 import formatNumber from "../../lib/formatNumber";
 import FlexLine from "../independent/FlexLine";
 import JenisProfesiBadge from "./JenisProfesiBadge";
@@ -17,6 +17,8 @@ interface Props {
 }
 
 export default function DetailDataKaryawan({ data, searchQuery }: Props) {
+  const userData = useGetUserData();
+
   return (
     <>
       <VStack align={"stretch"} gap={0}>
@@ -696,7 +698,7 @@ export default function DetailDataKaryawan({ data, searchQuery }: Props) {
             </Text>
           </HStack>
 
-          {data?.id === 1 && (
+          {userData?.id === 1 && (
             <HStack justify={"space-between"}>
               <Box opacity={0.6}>
                 <Highlighter
@@ -714,7 +716,7 @@ export default function DetailDataKaryawan({ data, searchQuery }: Props) {
             </HStack>
           )}
 
-          <HStack justify={"space-between"}>
+          {/* <HStack justify={"space-between"}>
             <Box opacity={0.6}>
               <Highlighter
                 highlightClassName="hw"
@@ -728,7 +730,7 @@ export default function DetailDataKaryawan({ data, searchQuery }: Props) {
             <Text fontWeight={500} textAlign={"right"}>
               {formatDurationShort(data.masa_diklat)}
             </Text>
-          </HStack>
+          </HStack> */}
         </VStack>
       </VStack>
 

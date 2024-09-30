@@ -6,15 +6,13 @@ interface Props extends BadgeProps {
 
 export default function JenisProfesiBadge({ data, ...props }: Props) {
   return (
-    data && (
-      <Badge
-        textAlign={"center"}
-        borderRadius={"full"}
-        colorScheme={data ? "p" : ""}
-        {...props}
-      >
-        {data ? "Medis" : "Non-Medis"}
-      </Badge>
-    )
+    <Badge
+      textAlign={"center"}
+      borderRadius={"full"}
+      colorScheme={data ? "p" : ""}
+      {...props}
+    >
+      {data ? "Medis" : "Non-Medis"}
+    </Badge>
   );
 }
