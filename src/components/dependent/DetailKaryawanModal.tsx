@@ -70,6 +70,7 @@ import SearchComponent from "./input/SearchComponent";
 import Retry from "./Retry";
 import RunPenilaianModal from "./RunPenilaianModal";
 import StatusAktifBadge from "./StatusAktifBadge";
+import ResetPasswordKaryawan from "./ResetPasswordKaryawan";
 
 interface Props {
   id?: string;
@@ -769,41 +770,18 @@ export default function DetailKaryawanModal({
                           overflowY={[null, null, null, "auto"]}
                           className="scrollY"
                         >
-                          <HStack
+                          <SimpleGrid
+                            columns={[2, null, 2]}
+                            gap={2}
                             px={5}
                             position={"sticky"}
                             top={"0"}
                             bg={lightDarkColor}
                             zIndex={2}
                           >
-                            {/* <Button
-                              flexShrink={0}
-                              leftIcon={
-                                <Icon as={RiStarFill} color={"orange.400"} />
-                              }
-                              pl={5}
-                              className="btn-solid clicky"
-                              flex={1}
-                            >
-                              Run Penilaian
-                            </Button> */}
                             <RunPenilaianModal user_id={data.user.id} />
 
                             {/* Edit */}
-                            <PermissionTooltip
-                              permission={editPermission}
-                              flex={1}
-                              boxProps={{ flex: 1 }}
-                            >
-                              <AktifkanNonaktifkanButton
-                                karyawan_id={data.id}
-                                data={data?.user?.status_aktif}
-                                isDisabled={!editPermission}
-                                flex={1}
-                                w={"100%"}
-                              />
-                            </PermissionTooltip>
-
                             <PermissionTooltip
                               permission={editPermission}
                               label={!editPermission && "Tidak ada akses"}
@@ -818,7 +796,23 @@ export default function DetailKaryawanModal({
                                 />
                               </Box>
                             </PermissionTooltip>
-                          </HStack>
+
+                            <PermissionTooltip
+                              permission={editPermission}
+                              flex={1}
+                              boxProps={{ flex: 1 }}
+                            >
+                              <AktifkanNonaktifkanButton
+                                karyawan_id={data.id}
+                                data={data?.user?.status_aktif}
+                                isDisabled={!editPermission}
+                                flex={1}
+                                w={"100%"}
+                              />
+                            </PermissionTooltip>
+
+                            <ResetPasswordKaryawan userData={data.user} />
+                          </SimpleGrid>
 
                           <CContainer px={5}>
                             <SearchComponent

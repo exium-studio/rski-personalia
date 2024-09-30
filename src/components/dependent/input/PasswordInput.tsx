@@ -1,6 +1,6 @@
 import { Box, Icon, IconButton } from "@chakra-ui/react";
 import { RiEyeLine, RiEyeOffLine } from "@remixicon/react";
-import { useState } from "react";
+import { RefObject, useState } from "react";
 import StringInput from "./StringInput";
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
   inputValue: string | undefined;
   isError?: boolean;
   placeholder?: string;
+  fRef?: RefObject<HTMLInputElement>;
 }
 
 export default function PasswordInput({
@@ -17,6 +18,7 @@ export default function PasswordInput({
   inputValue,
   isError,
   placeholder,
+  fRef,
   ...props
 }: Props) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -24,6 +26,7 @@ export default function PasswordInput({
   return (
     <Box position={"relative"}>
       <StringInput
+        fRef={fRef}
         name={name}
         placeholder={placeholder || "*******"}
         onChangeSetter={(inputValue) => {

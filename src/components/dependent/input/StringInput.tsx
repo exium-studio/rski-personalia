@@ -8,9 +8,10 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { css, Global } from "@emotion/react";
+import { RefObject } from "react";
 
 interface Props extends InputProps {
-  fRef?: any;
+  fRef?: RefObject<HTMLInputElement>;
   name: string;
   onChangeSetter: (inputValue: string | undefined) => void;
   inputValue: string | undefined;
@@ -57,7 +58,7 @@ export default function StringInput({
 
       <Box position={"relative"} w={"100%"} overflow={"visible"} {...boxProps}>
         <ChakraInput
-          ref={fRef}
+          ref={fRef || null}
           name={name}
           border={"1px solid var(--divider3) !important"}
           _focus={{
