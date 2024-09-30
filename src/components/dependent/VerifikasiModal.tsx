@@ -126,10 +126,13 @@ export default function VerifikasiModal({
         <Tooltip label={titleDitolak || "Ditolak"} openDelay={500}>
           <IconButton
             icon={<Icon as={RiCloseLine} fontSize={24} />}
-            className="btn clicky"
+            className="clicky"
             // color={"var(--divider-text)"}
-            color={"red.400"}
+            borderRadius={"full"}
+            size={"sm"}
             variant={"ghost"}
+            color={"red.400"}
+            colorScheme="red"
             onClick={() => {
               setVerifikasi(false);
               onOpen();
@@ -141,10 +144,13 @@ export default function VerifikasiModal({
         <Tooltip label={titleDisetujui || "Disetujui"} openDelay={500}>
           <IconButton
             icon={<Icon as={RiCheckLine} fontSize={24} />}
-            className="btn clicky"
+            className="clicky"
             // color={"var(--divider-text)"}
-            color={"green.400"}
+            borderRadius={"full"}
+            size={"sm"}
             variant={"ghost"}
+            color={"green.400"}
+            colorScheme="green"
             onClick={() => {
               setVerifikasi(true);
               onOpen();
