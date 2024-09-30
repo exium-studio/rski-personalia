@@ -44,7 +44,7 @@ export default function ResetPasswordKaryawan({ userData, ...props }: Props) {
 
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { password: "" },
+    initialValues: { password: "1234" },
     validationSchema: yup
       .object()
       .shape({ password: yup?.string().required("Harus diisi") }),
@@ -158,6 +158,7 @@ export default function ResetPasswordKaryawan({ userData, ...props }: Props) {
               Apakah anda yakin akan reset password karyawan{" "}
               <b>{userData?.nama}</b> ?
             </Text>
+
             <PasswordInput
               fRef={inputPasswordRef}
               name="password"
@@ -166,6 +167,9 @@ export default function ResetPasswordKaryawan({ userData, ...props }: Props) {
               }}
               inputValue={formik.values.password}
             />
+            <Text fontSize={"sm"} opacity={0.4} mt={1}>
+              Input password baru karyawan di input diatas
+            </Text>
           </ModalBody>
           <ModalFooter gap={2}>
             <Button
