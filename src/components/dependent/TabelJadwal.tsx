@@ -106,7 +106,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
         ),
         props: {
           position: "sticky",
-          left: 0,
+          left: 0, 
           zIndex: 2,
         },
         cProps: {

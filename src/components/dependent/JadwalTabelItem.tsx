@@ -162,22 +162,22 @@ export default function TabelJadwalItem({
           listJadwal[index - 1]?.shift?.jam_to
         )
       : false;
-  // const shiftMalamLanjutan = true;
 
-  const renderJamKerja = shiftMalamLanjutan
-    ? jadwal?.shift
-      ? `${formatTime("00:00:00")} - 
+  const renderJamKerja =
+    shiftMalam && shiftMalamLanjutan
+      ? jadwal?.shift
+        ? `${formatTime("00:00:00")} - 
               ${formatTime(jadwal?.shift?.jam_to)}`
-      : "-"
-    : shiftMalam
-    ? jadwal?.shift
-      ? `${formatTime(jadwal?.shift?.jam_from)} - 
+        : "-"
+      : shiftMalam
+      ? jadwal?.shift
+        ? `${formatTime(jadwal?.shift?.jam_from)} - 
               ${formatTime("00:00:00")}`
-      : "-"
-    : jadwal?.shift
-    ? `${formatTime(jadwal?.shift?.jam_from)} - 
+        : "-"
+      : jadwal?.shift
+      ? `${formatTime(jadwal?.shift?.jam_from)} - 
               ${formatTime(jadwal?.shift?.jam_to)}`
-    : "-";
+      : "-";
 
   return (
     <>
