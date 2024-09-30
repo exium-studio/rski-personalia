@@ -9,7 +9,7 @@ export default function JenisProfesiBadge({ data, ...props }: Props) {
     <Badge
       textAlign={"center"}
       borderRadius={"full"}
-      colorScheme={data ? "p" : ""}
+      colorScheme={data ? "p" : "gray"}
       {...props}
     >
       {data ? "Medis" : "Non-Medis"}
