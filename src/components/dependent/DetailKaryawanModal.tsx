@@ -244,7 +244,7 @@ export default function DetailKaryawanModal({
                         </HStack>
                       </VStack>
 
-                      <Skeleton h={"95px"} mb={3} mt={"auto"} />
+                      <Skeleton h={"95px"} flexShrink={0} mb={3} mt={"auto"} />
 
                       <SimpleGrid gap={3} columns={[1, 2, null, 3]}>
                         <Skeleton h={"95px"} />
