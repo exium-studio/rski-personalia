@@ -125,6 +125,7 @@ interface Props {
 }
 
 export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
+  // Permissions
   const { userPermissions } = useAuth();
   const editPermission = isHasPermissions(userPermissions, [60]);
 

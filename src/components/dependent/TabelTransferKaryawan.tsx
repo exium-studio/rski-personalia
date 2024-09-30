@@ -1,15 +1,28 @@
-import { Button, Center, Text, Tooltip } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  Icon,
+  MenuItem,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
+import { RiEditLine } from "@remixicon/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { iconSize } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useTransferKaryawanTableColumnsConfig from "../../global/useTransferKaryawanTableColumnsConfig";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
+import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
+import EditTransferKaryawanModalDisclosure from "../independent/EditTransferKaryawanModalDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
@@ -20,6 +33,10 @@ interface Props {
 }
 
 export default function TabelTransferKaryawan({ filterConfig }: Props) {
+  // Permissions
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [132]);
+
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
@@ -49,6 +66,22 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
         filterConfig,
       ],
     });
+
+  // Row Options Config
+  const rowOptions = [
+    (rowData: any) => {
+      return (
+        <EditTransferKaryawanModalDisclosure rowData={rowData}>
+          <PermissionTooltip permission={editPermission}>
+            <MenuItem isDisabled={!editPermission}>
+              <Text>Edit</Text>
+              <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
+        </EditTransferKaryawanModalDisclosure>
+      );
+    },
+  ];
 
   const formattedHeader = [
     {
@@ -125,6 +158,7 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
     columnsFormat: [
       {
         value: item.user.nama,
+        original_data: item.user,
         td: (
           <AvatarAndNameTableData
             detailKaryawanId={`detail-karyawan-modal-${item.id}-${item.user.id}`}
@@ -151,6 +185,7 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
       },
       {
         value: item.kategori_transfer?.label,
+        original_data: item.kategori_transfer,
         td: item.kategori_transfer?.label,
       },
       {
@@ -163,34 +198,42 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
       },
       {
         value: item.unit_kerja_asal?.nama_unit,
+        original_data: item.unit_kerja_asal,
         td: item.unit_kerja_asal?.nama_unit,
       },
       {
         value: item.unit_kerja_tujuan?.nama_unit,
+        original_data: item.unit_kerja_tujuan,
         td: item.unit_kerja_tujuan?.nama_unit,
       },
       {
         value: item.jabatan_asal?.nama_jabatan,
+        original_data: item.jabatan_asal,
         td: item.jabatan_asal?.nama_jabatan,
       },
       {
         value: item.jabatan_tujuan?.nama_jabatan,
+        original_data: item.jabatan_tujuan,
         td: item.jabatan_tujuan?.nama_jabatan,
       },
       {
         value: item.kelompok_gaji_asal?.nama_kelompok,
+        original_data: item.kelompok_gaji_asal,
         td: item.kelompok_gaji_asal?.nama_kelompok,
       },
       {
         value: item.kelompok_gaji_tujuan?.nama_kelompok,
+        original_data: item.kelompok_gaji_tujuan,
         td: item.kelompok_gaji_tujuan?.nama_kelompok,
       },
       {
         value: item.role_asal?.name,
+        original_data: item.role_asal,
         td: item.role_asal?.name,
       },
       {
         value: item.role_tujuan?.name,
+        original_data: item.role_tujuan,
         td: item.role_tujuan?.name,
       },
       {
@@ -266,9 +309,7 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
                     <CustomTable
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}
-                      // onRowClick={() => {
-                      //   onOpen();
-                      // }}
+                      rowOptions={rowOptions}
                       columnsConfig={columnsConfig}
                     />
                   </CustomTableContainer>

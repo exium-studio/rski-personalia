@@ -2,14 +2,14 @@ import {
   Alert,
   AlertDescription,
   AlertIcon,
+  Box,
+  BoxProps,
   Button,
-  ButtonProps,
   Checkbox,
   FormControl,
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  Icon,
   Modal,
   ModalBody,
   ModalContent,
@@ -20,13 +20,13 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiUserSharedFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
+import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
 import SelectJabatan from "../dependent/_Select/SelectJabatan";
@@ -41,13 +41,24 @@ import FileInput from "../dependent/input/FileInput";
 import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
-import backOnClose from "../../lib/backOnClose";
 
-interface Props extends ButtonProps {}
+interface Props extends BoxProps {
+  rowData: any;
+  children?: ReactNode;
+}
 
-export default function AjukanTransferKaryawanModal({ ...props }: Props) {
+export default function EditTransferKaryawanModalDisclosure({
+  rowData,
+  children,
+  ...props
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("ajukan-transfer-karyawan-modal", isOpen, onOpen, onClose);
+  useBackOnClose(
+    `edit-unit-kerja-modal-${rowData.id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -108,7 +119,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
 
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/karyawan/transfer`, payload)
+        .post(`/api/rski/dashboard/karyawan/transfer/${rowData.id}`, payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -117,8 +128,8 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
               isClosable: true,
               position: "bottom-right",
             });
+            backOnClose();
             setRt(!rt);
-            resetForm();
           }
         })
         .catch((e) => {
@@ -139,18 +150,76 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
     },
   });
 
+  const formikRef = useRef(formik);
+
+  useEffect(() => {
+    console.log(rowData);
+    console.log(rowData?.columnsFormat[8]);
+    // console.log({
+    //   value: rowData.columnsFormat[8].original_data?.id,
+    //   label: rowData.columnsFormat[8].original_data?.nama_jabatan,
+    // });
+
+    formikRef.current.setFieldValue("karyawan", {
+      value: rowData.columnsFormat[0].original_data?.id,
+      label: rowData.columnsFormat[0].original_data?.nama,
+    });
+    formikRef.current.setFieldValue(
+      "tgl_mulai",
+      new Date(formatDate(rowData.columnsFormat[3]?.value, "iso"))
+    );
+    formikRef.current.setFieldValue("kategori_transfer", {
+      value: rowData.columnsFormat[2].original_data?.id,
+      label: rowData.columnsFormat[2].original_data?.label,
+    });
+    formikRef.current.setFieldValue(
+      "unit_kerja_tujuan",
+      rowData?.columnsFormat[5]?.original_data
+        ? {
+            value: rowData.columnsFormat[5].original_data?.id,
+            label: rowData.columnsFormat[5].original_data?.nama_unit,
+          }
+        : undefined
+    );
+    formikRef.current.setFieldValue(
+      "jabatan_tujuan",
+      rowData?.columnsFormat[8]?.original_data
+        ? {
+            value: rowData.columnsFormat[8].original_data?.id,
+            label: rowData.columnsFormat[8].original_data?.nama_jabatan,
+          }
+        : undefined
+    );
+    formikRef.current.setFieldValue(
+      "kelompok_gaji_tujuan",
+      rowData?.columnsFormat[8]?.original_data
+        ? {
+            value: rowData.columnsFormat[10].original_data?.id,
+            label: rowData.columnsFormat[10].original_data?.nama_jabatan,
+          }
+        : undefined
+    );
+    formikRef.current.setFieldValue(
+      "role_tujuan",
+      rowData?.columnsFormat[12]?.original_data
+        ? {
+            value: rowData.columnsFormat[12].original_data?.id,
+            label: rowData.columnsFormat[12].original_data?.nama_jabatan,
+          }
+        : undefined
+    );
+    formikRef.current.setFieldValue("alasan", rowData.columnsFormat[13]?.value);
+    formikRef.current.setFieldValue(
+      "dokumen",
+      rowData.columnsFormat[14]?.value
+    );
+  }, [isOpen, rowData, formikRef]);
+
   return (
     <>
-      <Button
-        colorScheme="ap"
-        className="btn-ap clicky"
-        onClick={onOpen}
-        leftIcon={<Icon as={RiUserSharedFill} fontSize={iconSize} />}
-        pl={5}
-        {...props}
-      >
-        Transfer Karyawan
-      </Button>
+      <Box onClick={onOpen} {...props}>
+        {children}
+      </Box>
 
       <Modal
         isOpen={isOpen}
@@ -168,7 +237,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title={"Edit Transfer Karyawan"}
+              title={"Transfer Karyawan"}
               onClose={() => {
                 formik.resetForm();
               }}
@@ -224,7 +293,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                     }}
                     inputValue={
                       formik.values.tgl_mulai
-                        ? new Date(formatDate(formik.values.tgl_mulai, "iso"))
+                        ? new Date(formik.values.tgl_mulai)
                         : undefined
                     }
                     isError={!!formik.errors.tgl_mulai}
@@ -418,8 +487,6 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
           </ModalBody>
         </ModalContent>
       </Modal>
-
-      {/* <PleaseWaitModal isOpen={loading} /> */}
     </>
   );
 }
