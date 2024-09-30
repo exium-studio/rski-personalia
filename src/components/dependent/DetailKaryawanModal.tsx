@@ -703,36 +703,6 @@ export default function DetailKaryawanModal({
                               </VStack>
                             </DetailLemburKaryawanModalDisclosure>
 
-                            {/* Penilaian */}
-                            <DetailPenilaianKaryawanModalDisclosure
-                              karyawan_id={data.user?.data_karyawan_id}
-                              flexShrink={0}
-                              role="group"
-                            >
-                              <VStack
-                                cursor={"pointer"}
-                                borderRadius={12}
-                                justify={"center"}
-                                p={4}
-                                className="btn-solid clicky"
-                              >
-                                <Icon
-                                  opacity={0.4}
-                                  as={RiUserStarFill}
-                                  fontSize={32}
-                                  transition={"200ms"}
-                                  _groupHover={{ opacity: 1 }}
-                                />
-                                <Text
-                                  fontWeight={500}
-                                  textAlign={"center"}
-                                  lineHeight={1.4}
-                                >
-                                  Penilaian
-                                </Text>
-                              </VStack>
-                            </DetailPenilaianKaryawanModalDisclosure>
-
                             {/* Diklat */}
                             <DetailDiklatKaryawanModalDisclosure
                               karyawan_id={data.user?.data_karyawan_id}
@@ -762,6 +732,36 @@ export default function DetailKaryawanModal({
                                 </Text>
                               </VStack>
                             </DetailDiklatKaryawanModalDisclosure>
+
+                            {/* Penilaian */}
+                            <DetailPenilaianKaryawanModalDisclosure
+                              karyawan_id={data.user?.data_karyawan_id}
+                              flexShrink={0}
+                              role="group"
+                            >
+                              <VStack
+                                cursor={"pointer"}
+                                borderRadius={12}
+                                justify={"center"}
+                                p={4}
+                                className="btn-solid clicky"
+                              >
+                                <Icon
+                                  opacity={0.4}
+                                  as={RiUserStarFill}
+                                  fontSize={32}
+                                  transition={"200ms"}
+                                  _groupHover={{ opacity: 1 }}
+                                />
+                                <Text
+                                  fontWeight={500}
+                                  textAlign={"center"}
+                                  lineHeight={1.4}
+                                >
+                                  Penilaian
+                                </Text>
+                              </VStack>
+                            </DetailPenilaianKaryawanModalDisclosure>
                           </SimpleGrid>
                         </CContainer>
 
