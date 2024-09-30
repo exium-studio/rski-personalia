@@ -158,6 +158,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                   inputValue={formik.values.list_karyawan}
                   isError={!!formik.errors.list_karyawan}
                   optionsDisplay="chip"
+                  withSearch
                 />
                 <FormErrorMessage>
                   {formik.errors.list_karyawan as string}

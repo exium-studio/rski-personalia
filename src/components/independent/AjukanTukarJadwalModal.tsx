@@ -166,6 +166,7 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
                       }}
                       inputValue={formik.values.user_pengajuan}
                       isError={!!formik.errors.user_pengajuan}
+                      withSearch
                     />
                     <FormErrorMessage>
                       {formik.errors.user_pengajuan as string}
