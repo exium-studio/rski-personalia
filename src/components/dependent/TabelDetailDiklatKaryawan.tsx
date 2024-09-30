@@ -21,20 +21,30 @@ export default function TabelDetailDiklatKaryawan({ data }: Props) {
   // Filter Config
   const [filterConfig, setFilterConfig] = useState<any>({
     search: "",
-    kategori_diklat: undefined as any,
+    kategori_diklat: [] as any,
   });
 
   const fd = data.filter((item: any) => {
+    // Ambil nilai pencarian dan jadikan lowercase jika ada
     const searchTerm = filterConfig?.search?.toLowerCase();
 
-    const matchesSearchTerm1 = item?.kategori_diklat_id?.label
-      ?.toLowerCase()
-      .includes(searchTerm);
+    // Periksa apakah searchTerm undefined atau sesuai dengan label diklat
+    const matchesSearchTerm1 =
+      !searchTerm ||
+      item?.kategori_diklat_id?.label?.toLowerCase()?.includes(searchTerm);
 
-    const matchesSearchTerm2 = formatDate(item.created_at)
-      .toLowerCase()
-      .includes(searchTerm);
+    // Ambil daftar kategori diklat yang difilter
+    const filterKategoriDiklat = filterConfig?.kategori_diklat?.map(
+      (x: any) => x.value
+    );
 
+    // Periksa apakah kategori_diklat undefined, array kosong, atau ID diklat ada di dalam daftar filter
+    const matchesSearchTerm2 =
+      !filterKategoriDiklat ||
+      filterKategoriDiklat.length === 0 ||
+      filterKategoriDiklat.includes(item?.kategori_diklat_id?.id);
+
+    // Kembalikan true hanya jika kedua kondisi match
     return matchesSearchTerm1 && matchesSearchTerm2;
   });
 
@@ -145,7 +155,10 @@ export default function TabelDetailDiklatKaryawan({ data }: Props) {
         <MultiSelectKategoriDiklat
           name="kategori_diklat"
           onConfirm={(input) => {
-            setFilterConfig(input);
+            setFilterConfig((ps: any) => ({
+              ...ps,
+              kategori_diklat: input,
+            }));
           }}
           maxW={"240px"}
           inputValue={filterConfig.kategori_diklat}
