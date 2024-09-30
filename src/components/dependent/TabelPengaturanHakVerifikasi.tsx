@@ -224,6 +224,9 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
     },
     {
       th: "Karyawan Diverifikasi",
+      cProps: {
+        justify: "center",
+      },
     },
   ];
   const formattedData = fd?.map((item: any) => ({
