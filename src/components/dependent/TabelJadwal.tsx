@@ -1,4 +1,4 @@
-import { Center, Text, Tooltip } from "@chakra-ui/react";
+import { Center, HStack, Text, Tooltip } from "@chakra-ui/react";
 import { eachDayOfInterval } from "date-fns";
 import { useState } from "react";
 import useDataState from "../../hooks/useDataState";
@@ -17,6 +17,7 @@ import TerapkanJadwalKaryawanTerpilih from "./TerapkanJadwalKaryawanTerpilih";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import CContainer from "../wrapper/CContainer";
 import formatTime from "../../lib/formatTime";
+import formatDurationShort from "../../lib/formatDurationShort";
 
 interface Props {
   filterConfig?: any;
@@ -80,14 +81,28 @@ export default function TabelJadwal({ filterConfig }: Props) {
       {
         value: item.user.nama,
         td: (
-          <AvatarAndNameTableData
-            data={{
-              id: item.user.id,
-              nama: item.user.nama,
-              foto_profil: item.user.foto_profil,
-              unit_kerja: item.unit_kerja,
-            }}
-          />
+          <CContainer>
+            <AvatarAndNameTableData
+              data={{
+                id: item.user.id,
+                nama: item.user.nama,
+                foto_profil: item.user.foto_profil,
+                unit_kerja: item.unit_kerja,
+              }}
+              addition={
+                <HStack my={2} w={"100%"}>
+                  <Text
+                    textAlign={"right"}
+                    ml={"auto"}
+                    fontWeight={600}
+                    opacity={0.4}
+                  >
+                    {formatDurationShort(item?.total_jam)}
+                  </Text>
+                </HStack>
+              }
+            />
+          </CContainer>
         ),
         props: {
           position: "sticky",

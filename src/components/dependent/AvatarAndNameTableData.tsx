@@ -3,6 +3,7 @@ import { Interface__UnitKerja } from "../../constant/interfaces";
 import CContainer from "../wrapper/CContainer";
 import BooleanBadge from "./BooleanBadge";
 import DetailKaryawanModalDisclosure from "./DetailKaryawanModalDisclosure";
+import { ReactNode } from "react";
 
 interface Props extends StackProps {
   detailKaryawanId?: string;
@@ -14,12 +15,14 @@ interface Props extends StackProps {
     unit_kerja?: Interface__UnitKerja;
   };
   noDetail?: boolean;
+  addition?: ReactNode;
 }
 
 export default function AvatarAndNameTableData({
   detailKaryawanId,
   data,
   noDetail = false,
+  addition,
   ...props
 }: Props) {
   return (
@@ -58,19 +61,25 @@ export default function AvatarAndNameTableData({
           </Text>
         </Tooltip>
 
-        {data.unit_kerja && (
-          <BooleanBadge
-            data={parseInt(data.unit_kerja.jenis_karyawan as unknown as string)}
-            colorScheme={
-              parseInt(data.unit_kerja.jenis_karyawan as unknown as string)
-                ? "cyan"
-                : "orange"
-            }
-            trueValue="Shift"
-            falseValue="Non-Shift"
-            w={"100px"}
-          />
-        )}
+        <HStack>
+          {data.unit_kerja && (
+            <BooleanBadge
+              data={parseInt(
+                data.unit_kerja.jenis_karyawan as unknown as string
+              )}
+              colorScheme={
+                parseInt(data.unit_kerja.jenis_karyawan as unknown as string)
+                  ? "cyan"
+                  : "orange"
+              }
+              trueValue="Shift"
+              falseValue="Non-Shift"
+              w={"100px"}
+            />
+          )}
+
+          {addition}
+        </HStack>
       </CContainer>
     </HStack>
   );

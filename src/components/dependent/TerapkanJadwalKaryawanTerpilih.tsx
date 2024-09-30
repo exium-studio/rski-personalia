@@ -138,6 +138,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
           p={3}
           gap={1}
           borderRadius={8}
+          minW={"180px"}
           w={"100%"}
           h={"100%"}
           minH={"74px"}

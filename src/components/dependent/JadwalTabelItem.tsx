@@ -161,6 +161,7 @@ export default function TabelJadwalItem({
           pr={2}
           gap={1}
           borderRadius={8}
+          minW={"180px"}
           w={"100%"}
           minH={"74px"}
           h={"100%"}
