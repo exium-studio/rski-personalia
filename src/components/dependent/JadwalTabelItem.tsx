@@ -39,6 +39,7 @@ import PermissionTooltip from "../wrapper/PermissionTooltip";
 import SelectShift from "./_Select/SelectShift";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
+import isShiftMalam from "../../lib/isShiftMalam";
 
 interface Props {
   data: any;
@@ -148,6 +149,36 @@ export default function TabelJadwalItem({
   const { userPermissions } = useAuth();
   const editPermissions = isHasPermissions(userPermissions, [20]);
 
+  const listJadwal = data?.list_jadwal;
+  const shiftMalam = isShiftMalam(
+    jadwal?.shift?.jam_from,
+    jadwal?.shift?.jam_to
+  );
+
+  const shiftMalamLanjutan =
+    index && index - 1 >= 0 && listJadwal[index - 1]
+      ? isShiftMalam(
+          listJadwal[index - 1]?.shift?.jam_from,
+          listJadwal[index - 1]?.shift?.jam_to
+        )
+      : false;
+  // const shiftMalamLanjutan = true;
+
+  const renderJamKerja = shiftMalamLanjutan
+    ? jadwal?.shift
+      ? `${formatTime("00:00:00")} - 
+              ${formatTime(jadwal?.shift?.jam_to)}`
+      : "-"
+    : shiftMalam
+    ? jadwal?.shift
+      ? `${formatTime(jadwal?.shift?.jam_from)} - 
+              ${formatTime("00:00:00")}`
+      : "-"
+    : jadwal?.shift
+    ? `${formatTime(jadwal?.shift?.jam_from)} - 
+              ${formatTime(jadwal?.shift?.jam_to)}`
+    : "-";
+
   return (
     <>
       <PermissionTooltip
@@ -183,10 +214,7 @@ export default function TabelJadwalItem({
                 whiteSpace={"nowrap"}
                 // opacity={jadwal?.shift ? 1 : 0}
               >
-                {jadwal?.shift
-                  ? `${formatTime(jadwal?.shift?.jam_from)} - 
-              ${formatTime(jadwal?.shift?.jam_to)}`
-                  : "-"}
+                {renderJamKerja}
               </Text>
             </Box>
 
