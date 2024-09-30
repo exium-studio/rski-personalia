@@ -179,7 +179,7 @@ export default function TabelIzin({ filterConfig }: Props) {
             <VerifikasiModal
               aria-label={`perubahan-data-verif-1-button-${item.id}"`}
               id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`api/rski/dashboard/jadwal-karyawan/izin/${item.id}/verifikasi-perizinan `}
+              submitUrl={`api/rski/dashboard/jadwal-karyawan/izin/${item.id}/verifikasi-perizinan`}
               approvePayloadKey="verifikasi_pertama_disetujui"
               disapprovePayloadKey="verifikasi_pertama_ditolak"
               isDisabled={!verif1Permission}

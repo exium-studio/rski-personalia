@@ -180,7 +180,7 @@ export default function EditKaryawanForm({
         label2: `Rp ${formatNumber(data?.kelompok_gaji?.besaran_gaji)}`,
       },
       no_rekening: data?.no_rekening,
-      tunjangan_jabatan: data?.jabatan?.tunjangan_jabatan,
+      tunjangan_jabatan: data?.tunjangan_jabatan,
       tunjangan_kompetensi: data?.kompetensi?.tunjangan_kompetensi,
       tunjangan_fungsional: data?.tunjangan_fungsional,
       tunjangan_khusus: data?.tunjangan_khusus,
@@ -739,7 +739,6 @@ export default function EditKaryawanForm({
               <Text>Rp</Text>
             </InputLeftElement>
             <NumberInput
-              isReadOnly
               pl={12}
               name="tunjangan_jabatan"
               placeholder="500.000"
@@ -749,9 +748,9 @@ export default function EditKaryawanForm({
               inputValue={formik.values.tunjangan_jabatan}
             />
           </InputGroup>
-          <FormHelperText>
+          {/* <FormHelperText>
             Tunjangan diambil dari master data jabatan
-          </FormHelperText>
+          </FormHelperText> */}
           <FormErrorMessage>
             {formik.errors.tunjangan_jabatan as string}
           </FormErrorMessage>
