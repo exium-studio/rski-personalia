@@ -45,7 +45,7 @@ export default function DokumenFileItem({ data, ...props }: Props) {
 
         <HStack opacity={0.4} p={2} justify={"space-between"}>
           <Text fontSize={11} opacity={0.4}>
-            {formatBytes(data.size)}
+            {formatBytes(data.size?.split(" ")[0])}
           </Text>
           <Tooltip
             label={`Diunggah pada ${formatDate(data.created_at)}`}
