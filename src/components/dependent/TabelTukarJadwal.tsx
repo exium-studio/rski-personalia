@@ -1,10 +1,9 @@
-import { Center } from "@chakra-ui/react";
+import { Center, Text, Tooltip } from "@chakra-ui/react";
 import { useState } from "react";
-import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
+import useGetUserData from "../../hooks/useGetUserData";
 import formatDate from "../../lib/formatDate";
-import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -55,10 +54,7 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
       ],
     });
 
-  const { userPermissions } = useAuth();
-  const verif1Permission = isHasPermissions(userPermissions, [31]);
-  const verif2Permission = isHasPermissions(userPermissions, [32]);
-  // console.log(userPermissions);
+  const userData = useGetUserData();
 
   const formattedHeader = [
     {
@@ -124,117 +120,152 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
       },
     },
   ];
-  const formattedData = data?.map((item: any) => ({
-    id: item.id,
-    columnsFormat: [
-      {
-        value: item.created_at,
-        td: formatDate(item.created_at),
-      },
-      {
-        value: item.kategori_penukaran.label,
-        td: item.kategori_penukaran.label,
-      },
-      {
-        value: item.status_penukaran.label,
-        td: <StatusVerifikasiBadge2 data={item.status_penukaran} w={"180px"} />,
-        cProps: {
-          justify: "center",
+  const formattedData = data?.map((item: any) => {
+    const verif1Permission =
+      item?.relasi_verifikasi[0]?.verifikator === userData?.id ||
+      userData?.id === 1;
+    const verif2Permission =
+      item?.relasi_verifikasi[1]?.verifikator === userData?.id ||
+      userData?.id === 1;
+
+    return {
+      id: item.id,
+      columnsFormat: [
+        {
+          value: item.created_at,
+          td: formatDate(item.created_at),
         },
-      },
-      {
-        value: item.unit_kerja?.nama_unit,
-        td: item.unit_kerja?.nama_unit,
-      },
-      {
-        value: item.karyawan_pengajuan.nama,
-        td: (
-          <AvatarAndNameTableData
-            data={{
-              id: item.karyawan_pengajuan.id,
-              nama: item.karyawan_pengajuan.nama,
-              foto_profil: item.karyawan_pengajuan.foto_profil,
-            }}
-          />
-        ),
-      },
-      {
-        value: item.karyawan_ditukar.nama,
-        td: (
-          <AvatarAndNameTableData
-            data={{
-              id: item.karyawan_ditukar.id,
-              nama: item.karyawan_ditukar.nama,
-              foto_profil: item.karyawan_ditukar.foto_profil,
-            }}
-          />
-        ),
-      },
-      {
-        value: item.pertukaran_jadwal,
-        td: (
-          <PertukaranJadwalModal
-            id={item.id}
-            userPengajuan={item.karyawan_pengajuan}
-            userDitukar={item.karyawan_ditukar}
-            data={item.pertukaran_jadwal}
-          />
-        ),
-        cProps: {
-          justify: "center",
+        {
+          value: item.kategori_penukaran.label,
+          td: item.kategori_penukaran.label,
         },
-      },
-      {
-        value: "",
-        td: item?.status_penukaran?.id === 1 && (
-          <PermissionTooltip permission={verif1Permission}>
-            <VerifikasiModal
-              aria-label={`perubahan-data-verif-1-button-${item.id}"`}
-              id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-1`}
-              approvePayloadKey="verifikasi_pertama_disetujui"
-              disapprovePayloadKey="verifikasi_pertama_ditolak"
-              isDisabled={!verif1Permission}
+        {
+          value: item.status_penukaran.label,
+          td: (
+            <StatusVerifikasiBadge2 data={item.status_penukaran} w={"180px"} />
+          ),
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item.unit_kerja?.nama_unit,
+          td: item.unit_kerja?.nama_unit,
+        },
+        {
+          value: item.karyawan_pengajuan.nama,
+          td: (
+            <AvatarAndNameTableData
+              data={{
+                id: item.karyawan_pengajuan.id,
+                nama: item.karyawan_pengajuan.nama,
+                foto_profil: item.karyawan_pengajuan.foto_profil,
+              }}
             />
-          </PermissionTooltip>
-        ),
-        props: {
-          position: "sticky",
-          right: 0,
-          zIndex: 2,
+          ),
         },
-        cProps: {
-          justify: "center",
-          borderLeft: "1px solid var(--divider3)",
-          borderRight: "1px solid var(--divider3)",
-        },
-      },
-      {
-        value: "",
-        td: item?.status_penukaran?.id === 2 && (
-          <PermissionTooltip permission={verif2Permission}>
-            <VerifikasiModal
-              aria-label={`perubahan-data-verif-2-button-${item.id}"`}
-              id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-2`}
-              approvePayloadKey="verifikasi_kedua_disetujui"
-              disapprovePayloadKey="verifikasi_kedua_ditolak"
-              isDisabled={!verif2Permission}
+        {
+          value: item.karyawan_ditukar.nama,
+          td: (
+            <AvatarAndNameTableData
+              data={{
+                id: item.karyawan_ditukar.id,
+                nama: item.karyawan_ditukar.nama,
+                foto_profil: item.karyawan_ditukar.foto_profil,
+              }}
             />
-          </PermissionTooltip>
-        ),
-        props: {
-          // position: "sticky",
-          right: 0,
-          zIndex: 1,
+          ),
         },
-        cProps: {
-          justify: "center",
-          // borderLeft: "1px solid var(--divider3)",
+        {
+          value: item.pertukaran_jadwal,
+          td: (
+            <PertukaranJadwalModal
+              id={item.id}
+              userPengajuan={item.karyawan_pengajuan}
+              userDitukar={item.karyawan_ditukar}
+              data={item.pertukaran_jadwal}
+            />
+          ),
+          cProps: {
+            justify: "center",
+          },
         },
-      },
-    ],
-  }));
+        {
+          value: "",
+          td: (
+            <>
+              {item?.status_penukaran?.id === 2 && (
+                <PermissionTooltip permission={verif1Permission}>
+                  <VerifikasiModal
+                    aria-label={`perubahan-data-verif-2-button-${item.id}"`}
+                    id={`verifikasi-perubahan-data-modal-${item.id}`}
+                    submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-1`}
+                    approvePayloadKey="verifikasi_pertama_disetujui"
+                    disapprovePayloadKey="verifikasi_pertama_ditolak"
+                    isDisabled={!verif1Permission}
+                  />
+                </PermissionTooltip>
+              )}
+
+              {item?.status_penukaran?.id === 4 && (
+                <Tooltip label={item?.relasi_verifikasi?.[1]?.nama}>
+                  <Text opacity={0.4} className="noofline-1">
+                    {item?.relasi_verifikasi?.[1]?.nama}
+                  </Text>
+                </Tooltip>
+              )}
+            </>
+          ),
+          // item?.status_penukaran?.id === 1 && (
+          //   <PermissionTooltip permission={verif1Permission}>
+          //     <VerifikasiModal
+          //       aria-label={`perubahan-data-verif-1-button-${item.id}"`}
+          //       id={`verifikasi-perubahan-data-modal-${item.id}`}
+          //       submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-1`}
+          //       approvePayloadKey="verifikasi_pertama_disetujui"
+          //       disapprovePayloadKey="verifikasi_pertama_ditolak"
+          //       isDisabled={!verif1Permission}
+          //     />
+          //   </PermissionTooltip>
+          // )
+          props: {
+            position: "sticky",
+            right: 0,
+            zIndex: 2,
+          },
+          cProps: {
+            justify: "center",
+            borderLeft: "1px solid var(--divider3)",
+            borderRight: "1px solid var(--divider3)",
+          },
+        },
+        {
+          value: "",
+          td: item?.status_penukaran?.id === 2 && (
+            <PermissionTooltip permission={verif2Permission}>
+              <VerifikasiModal
+                aria-label={`perubahan-data-verif-2-button-${item.id}"`}
+                id={`verifikasi-perubahan-data-modal-${item.id}`}
+                submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-2`}
+                approvePayloadKey="verifikasi_kedua_disetujui"
+                disapprovePayloadKey="verifikasi_kedua_ditolak"
+                isDisabled={!verif2Permission}
+              />
+            </PermissionTooltip>
+          ),
+          props: {
+            // position: "sticky",
+            right: 0,
+            zIndex: 1,
+          },
+          cProps: {
+            justify: "center",
+            // borderLeft: "1px solid var(--divider3)",
+          },
+        },
+      ],
+    };
+  });
 
   return (
     <>

@@ -527,6 +527,12 @@ button[aria-label="Close"] > svg {
 }
 /* Keyframes */
 
+.noofline-1 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .chakra-popover__close-btn > svg {
   width: 10px !important;
 }

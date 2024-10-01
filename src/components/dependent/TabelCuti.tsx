@@ -1,11 +1,10 @@
-import { Center } from "@chakra-ui/react";
+import { Center, Text, Tooltip } from "@chakra-ui/react";
 import { useState } from "react";
-import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
+import useGetUserData from "../../hooks/useGetUserData";
 import countDateRange from "../../lib/countDateRange";
 import formatDate from "../../lib/formatDate";
-import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -53,8 +52,7 @@ export default function TabelCuti({ filterConfig }: Props) {
       ],
     });
 
-  const { userPermissions } = useAuth();
-  const verif1Permission = isHasPermissions(userPermissions, [6]);
+  const userData = useGetUserData();
 
   const formattedHeader = [
     {
@@ -111,7 +109,7 @@ export default function TabelCuti({ filterConfig }: Props) {
       cProps: {
         justify: "center",
         borderLeft: "1px solid var(--divider3)",
-        borderRight: "1px solid var(--divider3)",
+        // borderRight: "1px solid var(--divider3)",
         w: "122px",
       },
     },
@@ -125,136 +123,169 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
       cProps: {
         justify: "center",
-        // borderLeft: "1px solid var(--divider3)",
+        borderLeft: "1px solid var(--divider3)",
         // borderRight: "1px solid var(--divider3)",
         w: "122px",
       },
     },
   ];
-  const formattedData = data?.map((item: any) => ({
-    id: item.id,
-    columnsFormat: [
-      {
-        value: item.user.nama,
-        td: (
-          <AvatarAndNameTableData
-            detailKaryawanId={`detail-karyawan-modal-${item.id}-${item.user.id}`}
-            data={{
-              id: item.user.id,
-              nama: item.user.nama,
-              foto_profil: item.user.foto_profil,
-            }}
-          />
-        ),
-        props: {
-          position: "sticky",
-          left: 0,
-          zIndex: 2,
-        },
-        cProps: {
-          borderRight: "1px solid var(--divider3)",
-        },
-      },
-      {
-        value: item.status_izin,
-        td: (
-          <StatusVerifikasiBadge2
-            data={item.status_cuti}
-            alasan={item?.alasan}
-            w={"180px"}
-          />
-        ),
-        cProps: {
-          justify: "center",
-        },
-      },
-      {
-        value: item.tipe_cuti?.nama,
-        td: item.tipe_cuti?.nama,
-        isDate: true,
-      },
-      {
-        value: item.tgl_from,
-        td: formatDate(item.tgl_from),
-        isDate: true,
-      },
-      {
-        value: item.tgl_to,
-        td: formatDate(item?.tgl_to),
-        isDate: true,
-      },
-      {
-        value: countDateRange(
-          new Date(formatDate(item?.tgl_from, "iso")),
-          new Date(formatDate(item?.tgl_to, "iso"))
-        ),
-        td: `${countDateRange(
-          new Date(formatDate(item?.tgl_from, "iso")),
-          new Date(formatDate(item?.tgl_to, "iso"))
-        )} Hari`,
-        isNumeric: true,
-        cProps: {
-          justify: "center",
-        },
-      },
-      {
-        value: item?.unit_kerja?.nama_unit,
-        td: item?.unit_kerja?.nama_unit,
-      },
-      {
-        value: "",
-        td: item?.status_cuti?.id === 1 && (
-          <PermissionTooltip permission={verif1Permission}>
-            <VerifikasiModal
-              aria-label={`perubahan-data-verif-1-button-${item.id}"`}
-              id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1 `}
-              approvePayloadKey="verifikasi_pertama_disetujui"
-              disapprovePayloadKey="verifikasi_pertama_ditolak"
-              isDisabled={!verif1Permission}
+  const formattedData = data?.map((item: any) => {
+    const verif1Permission =
+      item?.relasi_verifikasi[0]?.verifikator === userData?.id ||
+      userData?.id === 1;
+    const verif2Permission =
+      item?.relasi_verifikasi[1]?.verifikator === userData?.id ||
+      userData?.id === 1;
+
+    return {
+      id: item.id,
+      columnsFormat: [
+        {
+          value: item.user.nama,
+          td: (
+            <AvatarAndNameTableData
+              detailKaryawanId={`detail-karyawan-modal-${item.id}-${item.user.id}`}
+              data={{
+                id: item.user.id,
+                nama: item.user.nama,
+                foto_profil: item.user.foto_profil,
+              }}
             />
-          </PermissionTooltip>
-        ),
-        props: {
-          position: "sticky",
-          right: 0,
-          zIndex: 2,
+          ),
+          props: {
+            position: "sticky",
+            left: 0,
+            zIndex: 2,
+          },
+          cProps: {
+            borderRight: "1px solid var(--divider3)",
+          },
         },
-        cProps: {
-          justify: "center",
-          borderLeft: "1px solid var(--divider3)",
-          borderRight: "1px solid var(--divider3)",
-          w: "122px",
-        },
-      },
-      {
-        value: "",
-        td: item?.status_cuti?.id === 2 && (
-          <PermissionTooltip permission={verif1Permission}>
-            <VerifikasiModal
-              aria-label={`perubahan-data-verif-2-button-${item.id}"`}
-              id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
-              approvePayloadKey="verifikasi_kedua_disetujui"
-              disapprovePayloadKey="verifikasi_kedua_ditolak"
-              isDisabled={!verif1Permission}
+        {
+          value: item.status_izin,
+          td: (
+            <StatusVerifikasiBadge2
+              data={item.status_cuti}
+              alasan={item?.alasan}
+              w={"180px"}
             />
-          </PermissionTooltip>
-        ),
-        props: {
-          // position: "sticky",
-          right: 0,
-          zIndex: 1,
+          ),
+          cProps: {
+            justify: "center",
+          },
         },
-        cProps: {
-          justify: "center",
-          borderLeft: "1px solid var(--divider3)",
-          borderRight: "1px solid var(--divider3)",
-          w: "122px",
+        {
+          value: item.tipe_cuti?.nama,
+          td: item.tipe_cuti?.nama,
+          isDate: true,
         },
-      },
-    ],
-  }));
+        {
+          value: item.tgl_from,
+          td: formatDate(item.tgl_from),
+          isDate: true,
+        },
+        {
+          value: item.tgl_to,
+          td: formatDate(item?.tgl_to),
+          isDate: true,
+        },
+        {
+          value: countDateRange(
+            new Date(formatDate(item?.tgl_from, "iso")),
+            new Date(formatDate(item?.tgl_to, "iso"))
+          ),
+          td: `${countDateRange(
+            new Date(formatDate(item?.tgl_from, "iso")),
+            new Date(formatDate(item?.tgl_to, "iso"))
+          )} Hari`,
+          isNumeric: true,
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item?.unit_kerja?.nama_unit,
+          td: item?.unit_kerja?.nama_unit,
+        },
+        {
+          value: "",
+          td: (
+            <>
+              {item?.status_cuti?.id === 1 && (
+                <PermissionTooltip permission={verif1Permission}>
+                  <VerifikasiModal
+                    aria-label={`cuti-verif-1-button-${item.id}`}
+                    id={`verifikasi-cuti-modal-${item.id}`}
+                    submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1 `}
+                    approvePayloadKey="verifikasi_pertama_disetujui"
+                    disapprovePayloadKey="verifikasi_pertama_ditolak"
+                    isDisabled={!verif1Permission}
+                  />
+                </PermissionTooltip>
+              )}
+
+              {item?.status_cuti?.id === 2 && (
+                <Tooltip label={item?.relasi_verifikasi?.[0]?.nama}>
+                  <Text opacity={0.4} className="noofline-1">
+                    {item?.relasi_verifikasi?.[0]?.nama}
+                  </Text>
+                </Tooltip>
+              )}
+            </>
+          ),
+          props: {
+            position: "sticky",
+            right: 0,
+            zIndex: 2,
+          },
+          cProps: {
+            justify: "center",
+            borderLeft: "1px solid var(--divider3)",
+            // borderRight: "1px solid var(--divider3)",
+            w: "122px",
+          },
+        },
+        {
+          value: "",
+          td: (
+            <>
+              {item?.status_cuti?.id === 2 && (
+                <PermissionTooltip permission={verif2Permission}>
+                  <VerifikasiModal
+                    aria-label={`cuti-verif-2-button-${item.id}`}
+                    id={`verifikasi-cuti-modal-${item.id}`}
+                    submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
+                    approvePayloadKey="verifikasi_kedua_disetujui"
+                    disapprovePayloadKey="verifikasi_kedua_ditolak"
+                    isDisabled={!verif2Permission}
+                  />
+                </PermissionTooltip>
+              )}
+
+              {item?.status_cuti?.id === 4 && (
+                <Tooltip label={item?.relasi_verifikasi?.[1]?.nama}>
+                  <Text opacity={0.4} className="noofline-1">
+                    {item?.relasi_verifikasi?.[1]?.nama}
+                  </Text>
+                </Tooltip>
+              )}
+            </>
+          ),
+          props: {
+            // position: "sticky",
+            right: 0,
+            zIndex: 1,
+          },
+          cProps: {
+            justify: "center",
+            borderLeft: "1px solid var(--divider3)",
+            // borderRight: "1px solid var(--divider3)",
+            w: "122px",
+          },
+        },
+      ],
+    };
+  });
 
   return (
     <>
