@@ -1,15 +1,15 @@
 import { Box, Center, Text, Tooltip } from "@chakra-ui/react";
 import { useState } from "react";
 import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
-import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
-import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
+import VerifikatorBelumDitentukan from "../independent/VerifikatorBelumDitentukan";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import PerubahanDataRender from "./PerubahanDataRender";
@@ -17,7 +17,8 @@ import Retry from "./Retry";
 import StatusApprovalBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
-import PermissionTooltip from "../wrapper/PermissionTooltip";
+import useGetUserData from "../../hooks/useGetUserData";
+import VerifikatorName from "./VerifikatorName";
 
 interface Props {
   filterConfig: any;
@@ -52,8 +53,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
       ],
     });
 
-  const { userPermissions } = useAuth();
-  const verif1Permission = isHasPermissions(userPermissions, [3]);
+  const userData = useGetUserData();
 
   const formattedHeader = [
     {
@@ -107,114 +107,156 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
       },
     },
   ];
-  const formattedData = data?.map((item: any, i: number) => ({
-    id: item.id,
-    columnsFormat: [
-      {
-        value: item.user.nama,
-        td: (
-          <AvatarAndNameTableData
-            detailKaryawanId={item.id}
-            data={{
-              id: item.user.id,
-              nama: item.user.nama,
-              fullName: `${item?.gelar_depan || ""} ${item.user?.nama} ${
-                item?.gelar_belakang || ""
-              }`,
-              foto_profil: item.user.foto_profil,
-            }}
-          />
-        ),
-        props: {
-          position: "sticky",
-          left: 0,
-          zIndex: 2,
-        },
-        cProps: {
-          borderRight: "1px solid var(--divider3)",
-        },
-      },
-      {
-        value: item?.status_perubahan?.id,
-        td: (
-          <Tooltip
-            label={
-              item?.alasan && (
-                <>
-                  <Text>Alasan Ditolak</Text>
+  const formattedData = data?.map((item: any, i: number) => {
+    const verif1Permission =
+      item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
+      userData?.id === 1;
 
-                  <Text opacity={0.4} mt={2}>
-                    {item?.alasan}
-                  </Text>
-                </>
-              )
-            }
-            placement="right"
-          >
-            <Box>
-              <StatusApprovalBadge data={item?.status_perubahan} w={"120px"} />
-            </Box>
-          </Tooltip>
-        ),
-        isNumeric: true,
-        cProps: {
-          justify: "center",
-        },
-      },
-      {
-        value: item.kolom,
-        //@ts-ignore
-        td: dataKaryawanLabel[item.kolom] || "Invalid",
-      },
-      {
-        value: item.data,
-        td: (
-          <PerubahanDataRender
-            column={item?.kolom?.toLowerCase()}
-            data={item.original_data}
-          />
-        ),
-        cProps: {
-          justify: "center",
-        },
-      },
-      {
-        value: item.data,
-        td: (
-          <PerubahanDataRender
-            column={item?.kolom?.toLowerCase()}
-            data={item.updated_data}
-            index={i}
-          />
-        ),
-        cProps: {
-          justify: "center",
-        },
-      },
-      {
-        value: "",
-        td: item?.status_perubahan?.id === 1 && (
-          <PermissionTooltip permission={verif1Permission}>
-            <VerifikasiModal
-              aria-label={`perubahan-data-verif-button-${item.id}"`}
-              id={`verifikasi-perubahan-data-3-modal-${item.id}`}
-              submitUrl={`/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${item.id}`}
-              isDisabled={!verif1Permission}
+    return {
+      id: item.id,
+      columnsFormat: [
+        {
+          value: item.user.nama,
+          td: (
+            <AvatarAndNameTableData
+              detailKaryawanId={item.id}
+              data={{
+                id: item.user.id,
+                nama: item.user.nama,
+                fullName: `${item?.gelar_depan || ""} ${item.user?.nama} ${
+                  item?.gelar_belakang || ""
+                }`,
+                foto_profil: item.user.foto_profil,
+              }}
             />
-          </PermissionTooltip>
-        ),
-        props: {
-          position: "sticky",
-          right: 0,
-          zIndex: 2,
+          ),
+          props: {
+            position: "sticky",
+            left: 0,
+            zIndex: 2,
+          },
+          cProps: {
+            borderRight: "1px solid var(--divider3)",
+          },
         },
-        cProps: {
-          justify: "center",
-          borderLeft: "1px solid var(--divider3)",
+        {
+          value: item?.status_perubahan?.id,
+          td: (
+            <Tooltip
+              label={
+                item?.alasan && (
+                  <>
+                    <Text>Alasan Ditolak</Text>
+
+                    <Text opacity={0.4} mt={2}>
+                      {item?.alasan}
+                    </Text>
+                  </>
+                )
+              }
+              placement="right"
+            >
+              <Box>
+                <StatusApprovalBadge
+                  data={item?.status_perubahan}
+                  w={"120px"}
+                />
+              </Box>
+            </Tooltip>
+          ),
+          isNumeric: true,
+          cProps: {
+            justify: "center",
+          },
         },
-      },
-    ],
-  }));
+        {
+          value: item.kolom,
+          //@ts-ignore
+          td: dataKaryawanLabel[item.kolom] || "Invalid",
+        },
+        {
+          value: item.data,
+          td: (
+            <PerubahanDataRender
+              column={item?.kolom?.toLowerCase()}
+              data={item.original_data}
+            />
+          ),
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item.data,
+          td: (
+            <PerubahanDataRender
+              column={item?.kolom?.toLowerCase()}
+              data={item.updated_data}
+              index={i}
+            />
+          ),
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: "",
+          td: (
+            <>
+              {item?.relasi_verifikasi?.[0]?.id === null && (
+                <VerifikatorBelumDitentukan />
+              )}
+
+              {item?.relasi_verifikasi?.[0]?.id && (
+                <>
+                  {item?.status_izin?.id === 1 && (
+                    <PermissionTooltip permission={verif1Permission}>
+                      <VerifikasiModal
+                        aria-label={`peruibahan-data-verif-1-button-${item.id}`}
+                        id={`verifikasi-peruibahan-data-modal-${item.id}`}
+                        submitUrl={`/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${item.id}`}
+                        // approvePayloadKey="verifikasi_pertama_disetujui"
+                        // disapprovePayloadKey="verifikasi_pertama_ditolak"
+                        isDisabled={!verif1Permission}
+                      />
+                    </PermissionTooltip>
+                  )}
+
+                  {[2, 3].includes(item?.status_izin?.id) && (
+                    <VerifikatorName
+                      nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
+                      verification={
+                        [2].includes(item?.status_izin?.id) ? true : false
+                      }
+                    />
+                  )}
+                </>
+              )}
+            </>
+          ),
+          // item?.status_perubahan?.id === 1 && (
+          //   <PermissionTooltip permission={verif1Permission}>
+          //     <VerifikasiModal
+          //       aria-label={`perubahan-data-verif-button-${item.id}"`}
+          //       id={`verifikasi-perubahan-data-3-modal-${item.id}`}
+          //       submitUrl={`/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${item.id}`}
+          //       isDisabled={!verif1Permission}
+          //     />
+          //   </PermissionTooltip>
+          // )
+          props: {
+            position: "sticky",
+            right: 0,
+            zIndex: 2,
+          },
+          cProps: {
+            justify: "center",
+            borderLeft: "1px solid var(--divider3)",
+          },
+        },
+      ],
+    };
+  });
 
   return (
     <>
