@@ -78,6 +78,10 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
     },
     {
+      th: "Tipe Cuti",
+      isSortable: true,
+    },
+    {
       th: "Tanggal Mulai",
       isSortable: true,
     },
@@ -163,6 +167,11 @@ export default function TabelCuti({ filterConfig }: Props) {
         cProps: {
           justify: "center",
         },
+      },
+      {
+        value: item.tipe_cuti?.nama,
+        td: item.tipe_cuti?.nama,
+        isDate: true,
       },
       {
         value: item.tgl_from,
