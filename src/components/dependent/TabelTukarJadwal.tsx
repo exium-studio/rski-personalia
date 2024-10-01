@@ -122,10 +122,10 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
   ];
   const formattedData = data?.map((item: any) => {
     const verif1Permission =
-      item?.relasi_verifikasi[0]?.verifikator === userData?.id ||
+      item?.relasi_verifikasi?.[0]?.verifikator === userData?.id ||
       userData?.id === 1;
     const verif2Permission =
-      item?.relasi_verifikasi[1]?.verifikator === userData?.id ||
+      item?.relasi_verifikasi?.[1]?.verifikator === userData?.id ||
       userData?.id === 1;
 
     return {

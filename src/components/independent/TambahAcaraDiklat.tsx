@@ -313,50 +313,52 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                   </FormErrorMessage>
                 </FormControl>
 
-                <FormControl mb={4} isInvalid={!!formik.errors.jam_mulai}>
-                  <FormLabel>
-                    Jam Mulai
-                    <RequiredForm />
-                  </FormLabel>
+                <CContainer>
+                  <FormControl mb={4} isInvalid={!!formik.errors.jam_mulai}>
+                    <FormLabel>
+                      Jam Mulai
+                      <RequiredForm />
+                    </FormLabel>
 
-                  <TimePickerModal
-                    id="tambah-acara-diklat"
-                    name="jam_mulai"
-                    onConfirm={(input) => {
-                      formik.setFieldValue("jam_mulai", input);
-                    }}
-                    inputValue={formik.values.jam_mulai}
-                    isError={!!formik.errors.jam_mulai}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.jam_mulai as string}
-                  </FormErrorMessage>
-                </FormControl>
+                    <TimePickerModal
+                      id="tambah-acara-diklat"
+                      name="jam_mulai"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("jam_mulai", input);
+                      }}
+                      inputValue={formik.values.jam_mulai}
+                      isError={!!formik.errors.jam_mulai}
+                    />
+                    <FormErrorMessage>
+                      {formik.errors.jam_mulai as string}
+                    </FormErrorMessage>
+                  </FormControl>
 
-                <FormControl mb={4} isInvalid={!!formik.errors.jam_selesai}>
-                  <FormLabel>
-                    Jam Selesai
-                    <RequiredForm />
-                  </FormLabel>
+                  <FormControl mb={4} isInvalid={!!formik.errors.jam_selesai}>
+                    <FormLabel>
+                      Jam Selesai
+                      <RequiredForm />
+                    </FormLabel>
 
-                  <TimePickerModal
-                    id="tambah-acara-diklat"
-                    name="jam_selesai"
-                    onConfirm={(input) => {
-                      formik.setFieldValue("jam_selesai", input);
-                    }}
-                    inputValue={formik.values.jam_selesai}
-                    isError={!!formik.errors.jam_selesai}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.jam_selesai as string}
-                  </FormErrorMessage>
-                </FormControl>
+                    <TimePickerModal
+                      id="tambah-acara-diklat"
+                      name="jam_selesai"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("jam_selesai", input);
+                      }}
+                      inputValue={formik.values.jam_selesai}
+                      isError={!!formik.errors.jam_selesai}
+                    />
+                    <FormErrorMessage>
+                      {formik.errors.jam_selesai as string}
+                    </FormErrorMessage>
+                  </FormControl>
+                </CContainer>
 
                 <FormControl mb={4} isInvalid={!!formik.errors.skp}>
                   <FormLabel>
                     SKP
-                    <RequiredForm />
+                    {/* <RequiredForm /> */}
                   </FormLabel>
                   <Textarea
                     name="skp"
@@ -364,6 +366,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                       formik.setFieldValue("skp", input);
                     }}
                     inputValue={formik.values.skp}
+                    minH={"128px"}
                   />
                   <FormErrorMessage>
                     {formik.errors.skp as string}
