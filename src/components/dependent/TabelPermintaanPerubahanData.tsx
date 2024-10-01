@@ -209,7 +209,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
 
               {item?.relasi_verifikasi?.[0]?.id && (
                 <>
-                  {item?.status_izin?.id === 1 && (
+                  {item?.status_perubahan?.id === 1 && (
                     <PermissionTooltip permission={verif1Permission}>
                       <VerifikasiModal
                         aria-label={`peruibahan-data-verif-1-button-${item.id}`}
@@ -222,11 +222,11 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
                     </PermissionTooltip>
                   )}
 
-                  {[2, 3].includes(item?.status_izin?.id) && (
+                  {[2, 3].includes(item?.status_perubahan?.id) && (
                     <VerifikatorName
                       nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
                       verification={
-                        [2].includes(item?.status_izin?.id) ? true : false
+                        [2].includes(item?.status_perubahan?.id) ? true : false
                       }
                     />
                   )}
