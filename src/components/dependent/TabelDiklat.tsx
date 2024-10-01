@@ -46,6 +46,9 @@ import req from "../../lib/req";
 import formatTime from "../../lib/formatTime";
 import TabelElipsisText from "./TabelElipsisText";
 import SearchComponent from "./input/SearchComponent";
+import useGetUserData from "../../hooks/useGetUserData";
+import VerifikatorBelumDitentukan from "../independent/VerifikatorBelumDitentukan";
+import VerifikatorName from "./VerifikatorName";
 
 const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
   // api/rski/dashboard/perusahaan/diklat/{diklatId}/delete-peserta-diklat/{userId}
@@ -436,9 +439,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       dependencies: [limitConfig, pageConfig, filterConfig],
     });
 
-  const { userPermissions } = useAuth();
-  const verif1Permission = isHasPermissions(userPermissions, [10]);
-  const verif2Permission = isHasPermissions(userPermissions, [11]);
+  const userData = useGetUserData();
 
   const formattedHeader = [
     {
@@ -589,148 +590,225 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
     },
   ];
-  const formattedData = data?.map((item: any) => ({
-    id: item.id,
-    columnsFormat: [
-      {
-        value: item.nama_diklat,
-        td: <TabelElipsisText data={item.nama_diklat} />,
-        props: {
-          position: "sticky",
-          left: 0,
-          zIndex: 2,
+  const formattedData = data?.map((item: any) => {
+    const verif1Permission =
+      item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
+      userData?.id === 1;
+    const verif2Permission =
+      item?.relasi_verifikasi?.[1]?.verifikator?.id === userData?.id ||
+      userData?.id === 1;
+
+    return {
+      id: item.id,
+      columnsFormat: [
+        {
+          value: item.nama_diklat,
+          td: <TabelElipsisText data={item.nama_diklat} />,
+          props: {
+            position: "sticky",
+            left: 0,
+            zIndex: 2,
+          },
+          cProps: {
+            borderRight: "1px solid var(--divider3)",
+          },
         },
-        cProps: {
-          borderRight: "1px solid var(--divider3)",
+        {
+          value: item.status_diklat.label,
+          td: <StatusVerifikasiBadge2 data={item.status_diklat} w={"180px"} />,
         },
-      },
-      {
-        value: item.status_diklat.label,
-        td: <StatusVerifikasiBadge2 data={item.status_diklat} w={"180px"} />,
-      },
-      {
-        value: item.deskripsi,
-        td: <TabelElipsisText data={item.deskripsi} />,
-      },
-      {
-        value: item.kuota,
-        td: item.kuota,
-        cProps: { justify: "center" },
-      },
-      {
-        value: item.tgl_mulai,
-        td: formatDate(item.tgl_mulai),
-        isDate: true,
-      },
-      {
-        value: item.tgl_selesai,
-        td: formatDate(item.tgl_selesai),
-        isDate: true,
-      },
-      {
-        value: item.jam_mulai,
-        td: formatTime(item.jam_mulai),
-        isTime: true,
-        cProps: {
-          justify: "center",
+        {
+          value: item.deskripsi,
+          td: <TabelElipsisText data={item.deskripsi} />,
         },
-      },
-      {
-        value: item.jam_selesai,
-        td: formatTime(item.jam_selesai),
-        isTime: true,
-        cProps: {
-          justify: "center",
+        {
+          value: item.kuota,
+          td: item.kuota,
+          cProps: { justify: "center" },
         },
-      },
-      {
-        value: item.durasi,
-        td: formatDuration(item.durasi),
-        isTime: true,
-      },
-      {
-        value: item.peserta,
-        td: <PesertaModal data={item} />,
-        cProps: {
-          justify: "center",
+        {
+          value: item.tgl_mulai,
+          td: formatDate(item.tgl_mulai),
+          isDate: true,
         },
-      },
-      {
-        value: item.kategori_diklat?.label,
-        td: item.kategori_diklat?.label,
-      },
-      {
-        value: item.lokasi,
-        td: item.lokasi,
-      },
-      {
-        value: "",
-        td: item?.status_diklat?.id === 1 && (
-          <PermissionTooltip permission={verif1Permission}>
-            <VerifikasiModal
-              aria-label={`perubahan-data-verif-1-button-${item.id}"`}
-              id={`verifikasi-diklat-modal-${item.id}`}
-              submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
-              approvePayloadKey="verifikasi_pertama_disetujui"
-              disapprovePayloadKey="verifikasi_pertama_ditolak"
-              isDisabled={!verif1Permission}
-            />
-          </PermissionTooltip>
-        ),
-        props: {
-          position: "sticky",
-          right: 0,
-          zIndex: 2,
+        {
+          value: item.tgl_selesai,
+          td: formatDate(item.tgl_selesai),
+          isDate: true,
         },
-        cProps: {
-          justify: "center",
-          borderLeft: "1px solid var(--divider3)",
-          borderRight: "1px solid var(--divider3)",
+        {
+          value: item.jam_mulai,
+          td: formatTime(item.jam_mulai),
+          isTime: true,
+          cProps: {
+            justify: "center",
+          },
         },
-      },
-      {
-        value: "",
-        td: item?.status_diklat?.id === 2 && (
-          <PermissionTooltip permission={verif2Permission}>
-            <VerifikasiModal
-              aria-label={`perubahan-data-verif-2-button-${item.id}"`}
-              id={`verifikasi-diklat-modal-2-${item.id}`}
-              submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-2`}
-              approvePayloadKey="verifikasi_kedua_disetujui"
-              disapprovePayloadKey="verifikasi_kedua_ditolak"
-              isDisabled={!verif2Permission}
-            />
-          </PermissionTooltip>
-        ),
-        props: {
-          // position: "sticky",
-          right: 0,
-          zIndex: 1,
+        {
+          value: item.jam_selesai,
+          td: formatTime(item.jam_selesai),
+          isTime: true,
+          cProps: {
+            justify: "center",
+          },
         },
-        cProps: {
-          borderRight: "1px solid var(--divider3)",
-          justify: "center",
-          // borderLeft: "1px solid var(--divider3)",
+        {
+          value: item.durasi,
+          td: formatDuration(item.durasi),
+          isTime: true,
         },
-      },
-      {
-        value: "",
-        td: item.status_diklat.id === 4 && (
-          <KonfirmasiPublikasiSertifikat data={item} />
-        ),
-        props: {
-          // position: "sticky",
-          right: 0,
-          zIndex: 1,
+        {
+          value: item.peserta,
+          td: <PesertaModal data={item} />,
+          cProps: {
+            justify: "center",
+          },
         },
-        cProps: {
-          justify: "center",
-          px: 1,
-          // borderLeft: "1px solid var(--divider3)",
+        {
+          value: item.kategori_diklat?.label,
+          td: item.kategori_diklat?.label,
         },
-      },
-    ],
-  }));
+        {
+          value: item.lokasi,
+          td: item.lokasi,
+        },
+        {
+          value: "",
+          td: (
+            <>
+              {item?.relasi_verifikasi?.[0]?.id === null && (
+                <VerifikatorBelumDitentukan />
+              )}
+
+              {item?.relasi_verifikasi?.[0]?.id && (
+                <>
+                  {item?.status_diklat?.id === 1 && (
+                    <PermissionTooltip permission={verif1Permission}>
+                      <VerifikasiModal
+                        aria-label={`diklat-internal-verif-1-button-${item.id}`}
+                        id={`verifikasi-diklat-internal-modal-${item.id}`}
+                        submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
+                        approvePayloadKey="verifikasi_pertama_disetujui"
+                        disapprovePayloadKey="verifikasi_pertama_ditolak"
+                        isDisabled={!verif1Permission}
+                      />
+                    </PermissionTooltip>
+                  )}
+
+                  {[2, 3, 4, 5].includes(item?.status_diklat?.id) && (
+                    <VerifikatorName
+                      nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
+                      verification={
+                        [2, 4, 5].includes(item?.status_diklat?.id)
+                          ? true
+                          : false
+                      }
+                    />
+                  )}
+                </>
+              )}
+            </>
+          ),
+          props: {
+            position: "sticky",
+            right: 0,
+            zIndex: 2,
+          },
+          cProps: {
+            justify: "center",
+            borderLeft: "1px solid var(--divider3)",
+            borderRight: "1px solid var(--divider3)",
+          },
+        },
+        {
+          value: "",
+          td: (
+            <>
+              {item?.relasi_verifikasi?.[1]?.id === null && (
+                <VerifikatorBelumDitentukan />
+              )}
+
+              {item?.relasi_verifikasi?.[1]?.id && (
+                <>
+                  {[1, 3].includes(item?.status_diklat?.id) && (
+                    <VerifikatorName
+                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                      verification={null}
+                    />
+                  )}
+
+                  {item?.status_diklat?.id === 2 &&
+                    item?.relasi_verifikasi?.[1]?.verifikator?.nama && (
+                      <PermissionTooltip permission={verif2Permission}>
+                        <VerifikasiModal
+                          aria-label={`diklat-internal-verif-2-button-${item.id}`}
+                          id={`verifikasi-diklat-internal-modal-${item.id}`}
+                          submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-2`}
+                          approvePayloadKey="verifikasi_kedua_disetujui"
+                          disapprovePayloadKey="verifikasi_kedua_ditolak"
+                          isDisabled={!verif2Permission}
+                        />
+                      </PermissionTooltip>
+                    )}
+
+                  {item?.relasi_verifikasi?.[1]?.nama && (
+                    <>
+                      {[4, 5].includes(item?.status_diklat?.id) && (
+                        <VerifikatorName
+                          nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                          verification={
+                            item?.status_diklat?.id === 4 ? true : false
+                          }
+                        />
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+            </>
+          ),
+          // item?.status_diklat?.id === 2 && (
+          //   <PermissionTooltip permission={verif2Permission}>
+          //     <VerifikasiModal
+          //       aria-label={`perubahan-data-verif-2-button-${item.id}"`}
+          //       id={`verifikasi-diklat-modal-2-${item.id}`}
+          //       submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-2`}
+          //       approvePayloadKey="verifikasi_kedua_disetujui"
+          //       disapprovePayloadKey="verifikasi_kedua_ditolak"
+          //       isDisabled={!verif2Permission}
+          //     />
+          //   </PermissionTooltip>
+          // )
+          props: {
+            // position: "sticky",
+            right: 0,
+            zIndex: 1,
+          },
+          cProps: {
+            borderRight: "1px solid var(--divider3)",
+            justify: "center",
+            // borderLeft: "1px solid var(--divider3)",
+          },
+        },
+        {
+          value: "",
+          td: item.status_diklat.id === 4 && (
+            <KonfirmasiPublikasiSertifikat data={item} />
+          ),
+          props: {
+            // position: "sticky",
+            right: 0,
+            zIndex: 1,
+          },
+          cProps: {
+            justify: "center",
+            px: 1,
+            // borderLeft: "1px solid var(--divider3)",
+          },
+        },
+      ],
+    };
+  });
 
   return (
     <>

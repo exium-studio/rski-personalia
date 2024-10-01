@@ -224,7 +224,7 @@ export default function TabelCuti({ filterConfig }: Props) {
                       <VerifikasiModal
                         aria-label={`cuti-verif-1-button-${item.id}`}
                         id={`verifikasi-cuti-modal-${item.id}`}
-                        submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1 `}
+                        submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1`}
                         approvePayloadKey="verifikasi_pertama_disetujui"
                         disapprovePayloadKey="verifikasi_pertama_ditolak"
                         isDisabled={!verif1Permission}
