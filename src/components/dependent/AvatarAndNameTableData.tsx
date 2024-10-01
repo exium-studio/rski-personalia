@@ -4,6 +4,8 @@ import CContainer from "../wrapper/CContainer";
 import BooleanBadge from "./BooleanBadge";
 import DetailKaryawanModalDisclosure from "./DetailKaryawanModalDisclosure";
 import { ReactNode } from "react";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props extends StackProps {
   detailKaryawanId?: string;
@@ -25,9 +27,12 @@ export default function AvatarAndNameTableData({
   addition,
   ...props
 }: Props) {
+  const { userPermissions } = useAuth();
+  const viewPermission = isHasPermissions(userPermissions, [50]);
+
   return (
     <HStack w={"243px"} gap={3} {...props}>
-      {noDetail ? (
+      {noDetail || !viewPermission ? (
         <Avatar
           cursor={"pointer"}
           src={data.foto_profil || ""}
