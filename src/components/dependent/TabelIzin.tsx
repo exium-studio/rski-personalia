@@ -1,4 +1,4 @@
-import { Center, Text, Tooltip } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import { useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
@@ -19,6 +19,7 @@ import Retry from "./Retry";
 import StatusVerifikasiBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
+import VerifikatorName from "./VerifikatorName";
 
 interface Props {
   filterConfig: any;
@@ -180,32 +181,35 @@ export default function TabelIzin({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.status_cuti?.id === 1 &&
-                (item?.relasi_verifikasi?.[0]?.verifikator?.nama ? (
-                  <PermissionTooltip permission={verif1Permission}>
-                    <VerifikasiModal
-                      aria-label={`cuti-verif-1-button-${item.id}`}
-                      id={`verifikasi-cuti-modal-${item.id}`}
-                      submitUrl={`api/rski/dashboard/jadwal-karyawan/izin/${item.id}/verifikasi-perizinan`}
-                      approvePayloadKey="verifikasi_pertama_disetujui"
-                      disapprovePayloadKey="verifikasi_pertama_ditolak"
-                      isDisabled={!verif1Permission}
-                    />
-                  </PermissionTooltip>
-                ) : (
-                  <VerifikatorBelumDitentukan />
-                ))}
+              {item?.relasi_verifikasi?.[0]?.id === null && (
+                <VerifikatorBelumDitentukan />
+              )}
 
-              {item?.status_cuti?.id === 2 &&
-                item?.relasi_verifikasi?.[0]?.nama && (
-                  <Tooltip
-                    label={`Diverifikasi oleh ${item?.relasi_verifikasi?.[0]?.verifikator?.nama}`}
-                  >
-                    <Text opacity={0.4} className="noofline-1">
-                      {item?.relasi_verifikasi?.[0]?.verifikator?.nama}
-                    </Text>
-                  </Tooltip>
-                )}
+              {item?.relasi_verifikasi?.[0]?.id && (
+                <>
+                  {item?.status_izin?.id === 1 && (
+                    <PermissionTooltip permission={verif1Permission}>
+                      <VerifikasiModal
+                        aria-label={`cuti-verif-1-button-${item.id}`}
+                        id={`verifikasi-cuti-modal-${item.id}`}
+                        submitUrl={`api/rski/dashboard/jadwal-karyawan/izin/${item.id}/verifikasi-perizinan`}
+                        approvePayloadKey="verifikasi_pertama_disetujui"
+                        disapprovePayloadKey="verifikasi_pertama_ditolak"
+                        isDisabled={!verif1Permission}
+                      />
+                    </PermissionTooltip>
+                  )}
+
+                  {[2, 3].includes(item?.status_izin?.id) && (
+                    <VerifikatorName
+                      nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
+                      verification={
+                        [2].includes(item?.status_izin?.id) ? true : false
+                      }
+                    />
+                  )}
+                </>
+              )}
             </>
           ),
           props: {

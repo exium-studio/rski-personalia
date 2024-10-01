@@ -228,6 +228,7 @@ export default function VerifikasiModal({
               w={"100%"}
               className="btn-solid clicky"
               isDisabled={loading}
+              onClick={backOnClose}
             >
               Tidak
             </Button>

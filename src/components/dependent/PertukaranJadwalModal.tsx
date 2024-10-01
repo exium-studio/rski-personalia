@@ -37,7 +37,7 @@ export default function PertukaranJadwalModal({
   useBackOnClose(`pertukaran-jadwal-modal-${id}`, isOpen, onOpen, onClose);
 
   // console.log(data);
-  console.log(userPengajuan, userDitukar);
+  // console.log(userPengajuan, userDitukar);
 
   return (
     <>
