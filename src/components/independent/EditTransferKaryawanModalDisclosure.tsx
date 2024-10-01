@@ -161,7 +161,7 @@ export default function EditTransferKaryawanModalDisclosure({
     });
     formikRef.current.setFieldValue(
       "tgl_mulai",
-      new Date(formatDate(rowData.columnsFormat[3]?.value, "iso"))
+      new Date(formatDate(rowData.columnsFormat[4]?.value, "iso"))
     );
     formikRef.current.setFieldValue("kategori_transfer", {
       value: rowData.columnsFormat[2].original_data?.id,
