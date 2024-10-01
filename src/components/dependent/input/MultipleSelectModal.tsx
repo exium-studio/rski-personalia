@@ -431,28 +431,31 @@ export default function MultipleSelectModal({
 
             {!fo && <ComponentSpinner my={"auto"} />}
           </ModalBody>
-          <ModalFooter gap={2}>
-            <Button
-              className="btn-solid clicky"
-              w={"100%"}
-              onClick={() => {
-                setSelected([]);
-                setSelectAll(false);
-              }}
-            >
-              Clear
-            </Button>
 
-            <Button
-              colorScheme="ap"
-              className="btn-ap clicky"
-              w={"100%"}
-              isDisabled={nonNullable ? (selected ? false : true) : false}
-              onClick={confirmSelected}
-            >
-              Konfirmasi
-            </Button>
-          </ModalFooter>
+          {fo && (
+            <ModalFooter gap={2}>
+              <Button
+                className="btn-solid clicky"
+                w={"100%"}
+                onClick={() => {
+                  setSelected([]);
+                  setSelectAll(false);
+                }}
+              >
+                Clear
+              </Button>
+
+              <Button
+                colorScheme="ap"
+                className="btn-ap clicky"
+                w={"100%"}
+                isDisabled={nonNullable ? (selected ? false : true) : false}
+                onClick={confirmSelected}
+              >
+                Konfirmasi
+              </Button>
+            </ModalFooter>
+          )}
         </ModalContent>
       </Modal>
     </>

@@ -327,6 +327,7 @@ export default function SingleSelectModal({
 
             {!fo && <ComponentSpinner my={"auto"} />}
           </ModalBody>
+
           {fo && (
             <ModalFooter gap={2}>
               <Button

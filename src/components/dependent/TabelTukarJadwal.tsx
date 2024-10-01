@@ -1,4 +1,5 @@
-import { Center, Text, Tooltip } from "@chakra-ui/react";
+import { Center, Icon, Text, Tooltip } from "@chakra-ui/react";
+import { RiShieldKeyholeLine } from "@remixicon/react";
 import { useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
@@ -122,10 +123,10 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
   ];
   const formattedData = data?.map((item: any) => {
     const verif1Permission =
-      item?.relasi_verifikasi?.[0]?.verifikator === userData?.id ||
+      item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
       userData?.id === 1;
     const verif2Permission =
-      item?.relasi_verifikasi?.[1]?.verifikator === userData?.id ||
+      item?.relasi_verifikasi?.[1]?.verifikator?.id === userData?.id ||
       userData?.id === 1;
 
     return {
@@ -194,7 +195,8 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.status_penukaran?.id === 2 && (
+              {item?.status_penukaran?.id === 1 &&
+              item?.relasi_verifikasi?.[0]?.nama ? (
                 <PermissionTooltip permission={verif1Permission}>
                   <VerifikasiModal
                     aria-label={`perubahan-data-verif-2-button-${item.id}"`}
@@ -205,15 +207,22 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
                     isDisabled={!verif1Permission}
                   />
                 </PermissionTooltip>
-              )}
-
-              {item?.status_penukaran?.id === 4 && (
-                <Tooltip label={item?.relasi_verifikasi?.[1]?.nama}>
-                  <Text opacity={0.4} className="noofline-1">
-                    {item?.relasi_verifikasi?.[1]?.nama}
-                  </Text>
+              ) : (
+                <Tooltip label={"Verifikator Belum Ditentukan"}>
+                  <Center>
+                    <Icon as={RiShieldKeyholeLine} fontSize={24} />
+                  </Center>
                 </Tooltip>
               )}
+
+              {item?.status_penukaran?.id === 4 &&
+                item?.relasi_verifikasi?.[0]?.nama && (
+                  <Tooltip label={item?.relasi_verifikasi?.[1]?.nama}>
+                    <Text opacity={0.4} className="noofline-1">
+                      {item?.relasi_verifikasi?.[0]?.verifikator?.nama}
+                    </Text>
+                  </Tooltip>
+                )}
             </>
           ),
           // item?.status_penukaran?.id === 1 && (
