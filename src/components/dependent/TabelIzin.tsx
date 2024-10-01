@@ -1,16 +1,16 @@
-import { Center } from "@chakra-ui/react";
+import { Center, Text, Tooltip } from "@chakra-ui/react";
 import { useState } from "react";
-import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
+import useGetUserData from "../../hooks/useGetUserData";
 import formatDate from "../../lib/formatDate";
 import formatDurationShort from "../../lib/formatDurationShort";
 import formatTime from "../../lib/formatTime";
-import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
+import VerifikatorBelumDitentukan from "../independent/VerifikatorBelumDitentukan";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
@@ -54,8 +54,7 @@ export default function TabelIzin({ filterConfig }: Props) {
       ],
     });
 
-  const { userPermissions } = useAuth();
-  const verif1Permission = isHasPermissions(userPermissions, [6]);
+  const userData = useGetUserData();
 
   const formattedHeader = [
     {
@@ -113,91 +112,115 @@ export default function TabelIzin({ filterConfig }: Props) {
       },
     },
   ];
-  const formattedData = data?.map((item: any) => ({
-    id: item.id,
-    columnsFormat: [
-      {
-        value: item.user.nama,
-        td: (
-          <AvatarAndNameTableData
-            detailKaryawanId={`detail-karyawan-modal-${item.id}-${item.user.id}`}
-            data={{
-              id: item.user.id,
-              nama: item.user.nama,
-              foto_profil: item.user.foto_profil,
-            }}
-          />
-        ),
-        props: {
-          position: "sticky",
-          left: 0,
-          zIndex: 2,
-        },
-        cProps: {
-          borderRight: "1px solid var(--divider3)",
-        },
-      },
-      {
-        value: item.status_izin,
-        td: (
-          <StatusVerifikasiBadge
-            data={item.status_izin}
-            alasan={item?.alasan}
-            w={"120px"}
-          />
-        ),
-        cProps: {
-          justify: "center",
-        },
-      },
-      {
-        value: item.tgl_izin,
-        td: formatDate(item.tgl_izin),
-        isData: true,
-      },
-      {
-        value: item.waktu_izin,
-        td: formatTime(item?.waktu_izin),
-        isTime: true,
-      },
-      {
-        value: item.durasi,
-        td: formatDurationShort(item?.durasi),
-        isDate: true,
-        cProps: {
-          justify: "center",
-        },
-      },
-      {
-        value: item.keterangan,
-        td: item.keterangan,
-      },
-      {
-        value: "",
-        td: item?.status_izin?.id === 1 && (
-          <PermissionTooltip permission={verif1Permission}>
-            <VerifikasiModal
-              aria-label={`perubahan-data-verif-1-button-${item.id}"`}
-              id={`verifikasi-perubahan-data-modal-${item.id}`}
-              submitUrl={`api/rski/dashboard/jadwal-karyawan/izin/${item.id}/verifikasi-perizinan`}
-              approvePayloadKey="verifikasi_pertama_disetujui"
-              disapprovePayloadKey="verifikasi_pertama_ditolak"
-              isDisabled={!verif1Permission}
+  const formattedData = data?.map((item: any) => {
+    const verif1Permission =
+      item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
+      userData?.id === 1;
+
+    return {
+      id: item.id,
+      columnsFormat: [
+        {
+          value: item.user.nama,
+          td: (
+            <AvatarAndNameTableData
+              detailKaryawanId={`detail-karyawan-modal-${item.id}-${item.user.id}`}
+              data={{
+                id: item.user.id,
+                nama: item.user.nama,
+                foto_profil: item.user.foto_profil,
+              }}
             />
-          </PermissionTooltip>
-        ),
-        props: {
-          position: "sticky",
-          right: 0,
-          zIndex: 2,
+          ),
+          props: {
+            position: "sticky",
+            left: 0,
+            zIndex: 2,
+          },
+          cProps: {
+            borderRight: "1px solid var(--divider3)",
+          },
         },
-        cProps: {
-          justify: "center",
-          borderLeft: "1px solid var(--divider3)",
+        {
+          value: item.status_izin,
+          td: (
+            <StatusVerifikasiBadge
+              data={item.status_izin}
+              alasan={item?.alasan}
+              w={"120px"}
+            />
+          ),
+          cProps: {
+            justify: "center",
+          },
         },
-      },
-    ],
-  }));
+        {
+          value: item.tgl_izin,
+          td: formatDate(item.tgl_izin),
+          isData: true,
+        },
+        {
+          value: item.waktu_izin,
+          td: formatTime(item?.waktu_izin),
+          isTime: true,
+        },
+        {
+          value: item.durasi,
+          td: formatDurationShort(item?.durasi),
+          isDate: true,
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item.keterangan,
+          td: item.keterangan,
+        },
+        {
+          value: "",
+          td: (
+            <>
+              {item?.status_cuti?.id === 1 &&
+                (item?.relasi_verifikasi?.[0]?.verifikator?.nama ? (
+                  <PermissionTooltip permission={verif1Permission}>
+                    <VerifikasiModal
+                      aria-label={`cuti-verif-1-button-${item.id}`}
+                      id={`verifikasi-cuti-modal-${item.id}`}
+                      submitUrl={`api/rski/dashboard/jadwal-karyawan/izin/${item.id}/verifikasi-perizinan`}
+                      approvePayloadKey="verifikasi_pertama_disetujui"
+                      disapprovePayloadKey="verifikasi_pertama_ditolak"
+                      isDisabled={!verif1Permission}
+                    />
+                  </PermissionTooltip>
+                ) : (
+                  <VerifikatorBelumDitentukan />
+                ))}
+
+              {item?.status_cuti?.id === 2 &&
+                item?.relasi_verifikasi?.[0]?.nama && (
+                  <Tooltip
+                    label={`Diverifikasi oleh ${item?.relasi_verifikasi?.[0]?.verifikator?.nama}`}
+                  >
+                    <Text opacity={0.4} className="noofline-1">
+                      {item?.relasi_verifikasi?.[0]?.verifikator?.nama}
+                    </Text>
+                  </Tooltip>
+                )}
+            </>
+          ),
+          props: {
+            position: "sticky",
+            right: 0,
+            zIndex: 2,
+          },
+          cProps: {
+            justify: "center",
+            borderLeft: "1px solid var(--divider3)",
+          },
+        },
+      ],
+    };
+  });
 
   return (
     <>

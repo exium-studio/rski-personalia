@@ -17,6 +17,7 @@ import Retry from "./Retry";
 import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
+import VerifikatorBelumDitentukan from "../independent/VerifikatorBelumDitentukan";
 
 interface Props {
   filterConfig: any;
@@ -131,10 +132,10 @@ export default function TabelCuti({ filterConfig }: Props) {
   ];
   const formattedData = data?.map((item: any) => {
     const verif1Permission =
-      item?.relasi_verifikasi[0]?.verifikator === userData?.id ||
+      item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
       userData?.id === 1;
     const verif2Permission =
-      item?.relasi_verifikasi[1]?.verifikator === userData?.id ||
+      item?.relasi_verifikasi?.[1]?.verifikator?.id === userData?.id ||
       userData?.id === 1;
 
     return {
@@ -211,26 +212,32 @@ export default function TabelCuti({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.status_cuti?.id === 1 && (
-                <PermissionTooltip permission={verif1Permission}>
-                  <VerifikasiModal
-                    aria-label={`cuti-verif-1-button-${item.id}`}
-                    id={`verifikasi-cuti-modal-${item.id}`}
-                    submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1 `}
-                    approvePayloadKey="verifikasi_pertama_disetujui"
-                    disapprovePayloadKey="verifikasi_pertama_ditolak"
-                    isDisabled={!verif1Permission}
-                  />
-                </PermissionTooltip>
-              )}
+              {item?.status_cuti?.id === 1 &&
+                (item?.relasi_verifikasi?.[0]?.verifikator?.nama ? (
+                  <PermissionTooltip permission={verif1Permission}>
+                    <VerifikasiModal
+                      aria-label={`cuti-verif-1-button-${item.id}`}
+                      id={`verifikasi-cuti-modal-${item.id}`}
+                      submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1 `}
+                      approvePayloadKey="verifikasi_pertama_disetujui"
+                      disapprovePayloadKey="verifikasi_pertama_ditolak"
+                      isDisabled={!verif1Permission}
+                    />
+                  </PermissionTooltip>
+                ) : (
+                  <VerifikatorBelumDitentukan />
+                ))}
 
-              {item?.status_cuti?.id === 2 && (
-                <Tooltip label={item?.relasi_verifikasi?.[0]?.nama}>
-                  <Text opacity={0.4} className="noofline-1">
-                    {item?.relasi_verifikasi?.[0]?.nama}
-                  </Text>
-                </Tooltip>
-              )}
+              {item?.status_cuti?.id === 2 &&
+                item?.relasi_verifikasi?.[0]?.nama && (
+                  <Tooltip
+                    label={`Diverifikasi oleh ${item?.relasi_verifikasi?.[0]?.verifikator?.nama}`}
+                  >
+                    <Text opacity={0.4} className="noofline-1">
+                      {item?.relasi_verifikasi?.[0]?.verifikator?.nama}
+                    </Text>
+                  </Tooltip>
+                )}
             </>
           ),
           props: {
@@ -249,26 +256,32 @@ export default function TabelCuti({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.status_cuti?.id === 2 && (
-                <PermissionTooltip permission={verif2Permission}>
-                  <VerifikasiModal
-                    aria-label={`cuti-verif-2-button-${item.id}`}
-                    id={`verifikasi-cuti-modal-${item.id}`}
-                    submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
-                    approvePayloadKey="verifikasi_kedua_disetujui"
-                    disapprovePayloadKey="verifikasi_kedua_ditolak"
-                    isDisabled={!verif2Permission}
-                  />
-                </PermissionTooltip>
-              )}
+              {item?.status_cuti?.id === 2 &&
+                (item?.relasi_verifikasi?.[1]?.verifikator?.nama ? (
+                  <PermissionTooltip permission={verif2Permission}>
+                    <VerifikasiModal
+                      aria-label={`cuti-verif-2-button-${item.id}`}
+                      id={`verifikasi-cuti-modal-${item.id}`}
+                      submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
+                      approvePayloadKey="verifikasi_kedua_disetujui"
+                      disapprovePayloadKey="verifikasi_kedua_ditolak"
+                      isDisabled={!verif2Permission}
+                    />
+                  </PermissionTooltip>
+                ) : (
+                  <VerifikatorBelumDitentukan />
+                ))}
 
-              {item?.status_cuti?.id === 4 && (
-                <Tooltip label={item?.relasi_verifikasi?.[1]?.nama}>
-                  <Text opacity={0.4} className="noofline-1">
-                    {item?.relasi_verifikasi?.[1]?.nama}
-                  </Text>
-                </Tooltip>
-              )}
+              {item?.status_cuti?.id === 4 &&
+                item?.relasi_verifikasi?.[1]?.nama && (
+                  <Tooltip
+                    label={`Diverifikasi oleh ${item?.relasi_verifikasi?.[1]?.verifikator?.nama}`}
+                  >
+                    <Text opacity={0.4} className="noofline-1">
+                      {item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                    </Text>
+                  </Tooltip>
+                )}
             </>
           ),
           props: {
