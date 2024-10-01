@@ -34,7 +34,6 @@ import CustomTable from "./CustomTable";
 import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
-import StatusDihapus from "./StatusDihapus";
 interface ListKaryaanDiverifikasiProps {
   data: any;
 }
@@ -205,13 +204,6 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
       },
     },
     {
-      th: "Status Dihapus",
-      isSortable: true,
-      cProps: {
-        justify: "center",
-      },
-    },
-    {
       th: "Modul",
       isSortable: true,
     },
@@ -243,14 +235,6 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
         },
         cProps: {
           borderRight: "1px solid var(--divider3)",
-        },
-      },
-      {
-        value: item.deleted_at,
-        td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
-        isDate: true,
-        cProps: {
-          justify: "center",
         },
       },
       {

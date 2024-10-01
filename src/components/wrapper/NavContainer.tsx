@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { RiShieldUserFill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { useContentBgColor, useLightDarkColor } from "../../constant/colors";
 import navs from "../../constant/navs";
@@ -60,8 +60,6 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
   const { userPermissions } = useAuth();
   const hasPermissions = isHasSomePermissions(userPermissions, nav.allowed);
 
-  const navigate = useNavigate();
-
   // console.log(nav.label, hasPermissions);
 
   return (
@@ -84,9 +82,9 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
             border: "none !important",
           }}
           className="btn"
-          onClick={() => {
-            navigate(nav.link);
-          }}
+          // onClick={() => {
+          //   navigate(nav.link);
+          // }}
           color={active === i ? "p.500" : ""}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}

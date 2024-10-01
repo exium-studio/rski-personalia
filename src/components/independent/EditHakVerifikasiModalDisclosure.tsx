@@ -121,14 +121,21 @@ export default function EditHakVerifikasiModalDisclosure({
   useEffect(() => {
     formikRef.current.setFieldValue("name", rowData.columnsFormat[0].value);
     formikRef.current.setFieldValue("modul", {
-      value: rowData.columnsFormat[2].original_data?.id,
-      label: rowData.columnsFormat[2].original_data?.label,
+      value: rowData.columnsFormat[1].original_data?.id,
+      label: rowData.columnsFormat[1].original_data?.label,
     });
-    formikRef.current.setFieldValue("order", rowData.columnsFormat[3].value);
+    formikRef.current.setFieldValue("order", rowData.columnsFormat[2].value);
     formikRef.current.setFieldValue("verifikator", {
-      value: rowData.columnsFormat[4].original_data?.id,
-      label: rowData.columnsFormat[4].original_data?.nama,
+      value: rowData.columnsFormat[3].original_data?.id,
+      label: rowData.columnsFormat[3].original_data?.nama,
     });
+    formikRef.current.setFieldValue(
+      "user_diverifikasi",
+      rowData.columnsFormat[4].original_data?.map((user: any) => ({
+        value: user.id,
+        label: user.nama,
+      }))
+    );
   }, [isOpen, rowData, formikRef]);
 
   return (
