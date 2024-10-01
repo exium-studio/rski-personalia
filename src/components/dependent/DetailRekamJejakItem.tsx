@@ -195,7 +195,7 @@ export default function DetailRekamJejakItem({ dataList, data, index }: Props) {
         <Accordion allowMultiple>
           <AccordionItem
             border={"none"}
-            borderRadius={12}
+            borderRadius={8}
             bg={"var(--divider)"}
             overflow={"clip"}
           >
