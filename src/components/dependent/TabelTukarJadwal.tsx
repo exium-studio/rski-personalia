@@ -1,5 +1,4 @@
-import { Center, Icon, Text, Tooltip } from "@chakra-ui/react";
-import { RiShieldKeyholeLine } from "@remixicon/react";
+import { Center, Text, Tooltip } from "@chakra-ui/react";
 import { useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
@@ -9,6 +8,7 @@ import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
+import VerifikatorBelumDitentukan from "../independent/VerifikatorBelumDitentukan";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
@@ -199,8 +199,8 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
               item?.relasi_verifikasi?.[0]?.nama ? (
                 <PermissionTooltip permission={verif1Permission}>
                   <VerifikasiModal
-                    aria-label={`perubahan-data-verif-2-button-${item.id}"`}
-                    id={`verifikasi-perubahan-data-modal-${item.id}`}
+                    aria-label={`tukar-jadwal-verif-1-button-${item.id}"`}
+                    id={`verifikasi-tukar-jadwal-modal-${item.id}`}
                     submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-1`}
                     approvePayloadKey="verifikasi_pertama_disetujui"
                     disapprovePayloadKey="verifikasi_pertama_ditolak"
@@ -208,16 +208,12 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
                   />
                 </PermissionTooltip>
               ) : (
-                <Tooltip label={"Verifikator Belum Ditentukan"}>
-                  <Center>
-                    <Icon as={RiShieldKeyholeLine} fontSize={24} />
-                  </Center>
-                </Tooltip>
+                <VerifikatorBelumDitentukan />
               )}
 
               {item?.status_penukaran?.id === 4 &&
                 item?.relasi_verifikasi?.[0]?.nama && (
-                  <Tooltip label={item?.relasi_verifikasi?.[1]?.nama}>
+                  <Tooltip label={item?.relasi_verifikasi?.[0]?.nama}>
                     <Text opacity={0.4} className="noofline-1">
                       {item?.relasi_verifikasi?.[0]?.verifikator?.nama}
                     </Text>
@@ -225,18 +221,6 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
                 )}
             </>
           ),
-          // item?.status_penukaran?.id === 1 && (
-          //   <PermissionTooltip permission={verif1Permission}>
-          //     <VerifikasiModal
-          //       aria-label={`perubahan-data-verif-1-button-${item.id}"`}
-          //       id={`verifikasi-perubahan-data-modal-${item.id}`}
-          //       submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-1`}
-          //       approvePayloadKey="verifikasi_pertama_disetujui"
-          //       disapprovePayloadKey="verifikasi_pertama_ditolak"
-          //       isDisabled={!verif1Permission}
-          //     />
-          //   </PermissionTooltip>
-          // )
           props: {
             position: "sticky",
             right: 0,
@@ -250,17 +234,33 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
         },
         {
           value: "",
-          td: item?.status_penukaran?.id === 2 && (
-            <PermissionTooltip permission={verif2Permission}>
-              <VerifikasiModal
-                aria-label={`perubahan-data-verif-2-button-${item.id}"`}
-                id={`verifikasi-perubahan-data-modal-${item.id}`}
-                submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-2`}
-                approvePayloadKey="verifikasi_kedua_disetujui"
-                disapprovePayloadKey="verifikasi_kedua_ditolak"
-                isDisabled={!verif2Permission}
-              />
-            </PermissionTooltip>
+          td: (
+            <>
+              {item?.status_penukaran?.id === 1 &&
+              item?.relasi_verifikasi?.[1]?.nama ? (
+                <PermissionTooltip permission={verif2Permission}>
+                  <VerifikasiModal
+                    aria-label={`tukar-jadwal-verif-2-button-${item.id}"`}
+                    id={`verifikasi-tukar-jadwal-modal-${item.id}`}
+                    submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-2`}
+                    approvePayloadKey="verifikasi_kedua_disetujui"
+                    disapprovePayloadKey="verifikasi_kedua_ditolak"
+                    isDisabled={!verif2Permission}
+                  />
+                </PermissionTooltip>
+              ) : (
+                <VerifikatorBelumDitentukan />
+              )}
+
+              {item?.status_penukaran?.id === 4 &&
+                item?.relasi_verifikasi?.[1]?.nama && (
+                  <Tooltip label={item?.relasi_verifikasi?.[1]?.nama}>
+                    <Text opacity={0.4} className="noofline-1">
+                      {item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                    </Text>
+                  </Tooltip>
+                )}
+            </>
           ),
           props: {
             // position: "sticky",
