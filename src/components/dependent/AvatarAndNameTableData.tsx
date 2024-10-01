@@ -61,25 +61,27 @@ export default function AvatarAndNameTableData({
           </Text>
         </Tooltip>
 
-        <HStack>
-          {data.unit_kerja && (
-            <BooleanBadge
-              data={parseInt(
-                data.unit_kerja.jenis_karyawan as unknown as string
-              )}
-              colorScheme={
-                parseInt(data.unit_kerja.jenis_karyawan as unknown as string)
-                  ? "cyan"
-                  : "orange"
-              }
-              trueValue="Shift"
-              falseValue="Non-Shift"
-              w={"100px"}
-            />
-          )}
+        {(data.unit_kerja || addition) && (
+          <HStack>
+            {data.unit_kerja && (
+              <BooleanBadge
+                data={parseInt(
+                  data.unit_kerja.jenis_karyawan as unknown as string
+                )}
+                colorScheme={
+                  parseInt(data.unit_kerja.jenis_karyawan as unknown as string)
+                    ? "cyan"
+                    : "orange"
+                }
+                trueValue="Shift"
+                falseValue="Non-Shift"
+                w={"100px"}
+              />
+            )}
 
-          {addition}
-        </HStack>
+            {addition}
+          </HStack>
+        )}
       </CContainer>
     </HStack>
   );
