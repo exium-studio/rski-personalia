@@ -137,7 +137,7 @@ export default function PertukaranJadwalModal({
 
                 <Icon
                   as={RiArrowLeftRightLine}
-                  color={"p.500"}
+                  // color={"p.500"}
                   mx={4}
                   fontSize={20}
                   my={"auto"}
