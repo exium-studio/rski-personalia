@@ -5,6 +5,7 @@ import {
   InputGroup,
   InputGroupProps,
   InputLeftElement,
+  InputProps,
   Tooltip,
 } from "@chakra-ui/react";
 import { RiCloseLine, RiSearchLine } from "@remixicon/react";
@@ -19,6 +20,7 @@ interface Props extends InputGroupProps {
   placeholder?: string;
   tooltipLabel?: string;
   inputRef?: any;
+  inputProps?: InputProps;
 }
 
 export default function SearchComponent({
@@ -28,6 +30,7 @@ export default function SearchComponent({
   onChangeSetter,
   tooltipLabel,
   placeholder = "Pencarian",
+  inputProps,
   ...props
 }: Props) {
   const [searchLocal, setSearchLocal] = useState(inputValue);
@@ -78,6 +81,7 @@ export default function SearchComponent({
           }}
           inputValue={searchLocal}
           boxShadow={"none !important"}
+          {...inputProps}
         />
 
         {searchLocal && (

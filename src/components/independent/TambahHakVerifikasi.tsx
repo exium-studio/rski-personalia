@@ -26,13 +26,13 @@ import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnCloseOld";
 import isHasPermissions from "../../lib/isHasPermissions";
 import req from "../../lib/req";
+import MultiSelectKaryawanWithUnitKerja from "../dependent/_Select/MultiSelectKaryawanWithUnitKerja";
 import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanAllJenisKaryawan";
+import SelectModulVerifikasi from "../dependent/_Select/SelectModulVerifikasi";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import NumberInput from "../dependent/input/NumberInput";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
-import MultiSelectKaryawanWithUnitKerja from "../dependent/_Select/MultiSelectKaryawanWithUnitKerja";
-import NumberInput from "../dependent/input/NumberInput";
-import SelectModulVerifikasi from "../dependent/_Select/SelectModulVerifikasi";
 
 interface Props extends ButtonProps {}
 
@@ -238,6 +238,7 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
                     formik.setFieldValue("user_diverifikasi", input);
                   }}
                   inputValue={formik.values.user_diverifikasi}
+                  optionsDisplay="chip"
                 />
                 <FormErrorMessage>
                   {formik.errors.user_diverifikasi as string}

@@ -260,6 +260,7 @@ export default function EditHakVerifikasiModalDisclosure({
                     formik.setFieldValue("user_diverifikasi", input);
                   }}
                   inputValue={formik.values.user_diverifikasi}
+                  optionsDisplay="chip"
                 />
                 <FormErrorMessage>
                   {formik.errors.user_diverifikasi as string}

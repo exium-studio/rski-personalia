@@ -13,9 +13,6 @@ import {
   Checkbox,
   HStack,
   Icon,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Modal,
   ModalBody,
   ModalContent,
@@ -27,11 +24,11 @@ import {
   useToast,
   Wrap,
 } from "@chakra-ui/react";
-import { RiArrowDownSLine, RiSearch2Line } from "@remixicon/react";
+import { RiArrowDownSLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { useErrorColor } from "../../../constant/colors";
 import { Interface__SelectOption } from "../../../constant/interfaces";
-import { iconSize, responsiveSpacing } from "../../../constant/sizes";
+import { responsiveSpacing } from "../../../constant/sizes";
 import useBackOnClose from "../../../hooks/useBackOnClose";
 import useScreenHeight from "../../../hooks/useScreenHeight";
 import backOnClose from "../../../lib/backOnClose";
@@ -107,7 +104,7 @@ const ListUnitKerja = ({ listKaryawan, selected, setSelected }: any) => {
   }
 
   return (
-    <Accordion allowToggle mb={4}>
+    <Accordion allowToggle mb={2}>
       <AccordionItem
         bg={"var(--divider)"}
         borderRadius={8}
@@ -123,38 +120,30 @@ const ListUnitKerja = ({ listKaryawan, selected, setSelected }: any) => {
         <AccordionPanel px={4}>
           {!options && <ComponentSpinner minH={"300px"} />}
 
-          <InputGroup
-            position={"sticky"}
-            top={0}
+          <SearchComponent
+            name="search_unit_kerja"
+            onChangeSetter={(input) => {
+              setSearch(input);
+            }}
+            inputValue={search}
+            placeholder="nama unit kerja"
+            tooltipLabel="Cari dengan nama unit kerja"
             mb={4}
-            // bg={useBodyColor()}
-            zIndex={2}
-          >
-            <InputLeftElement>
-              <Icon as={RiSearch2Line} fontSize={iconSize} opacity={0.4} />
-            </InputLeftElement>
-
-            <Input
-              name="search"
-              placeholder="Pencarian"
-              border={"0 !important"}
-              borderBottom={"1px solid var(--divider) !important"}
-              borderRadius={"0 !important"}
-              _focus={{
+            inputProps={{
+              border: "0px !important",
+              borderBottom: "1px solid var(--divider) !important",
+              borderRadius: "0 !important",
+              _focus: {
                 border: "0 !important",
                 borderBottom: "1px solid var(--p500) !important",
-              }}
-              onChange={(e) => {
-                setSearch(e.target.value);
-              }}
-              value={search}
-            />
-          </InputGroup>
+              },
+            }}
+          />
 
-          <Wrap spacing={2}>
+          <Wrap spacing={2} pb={2}>
             {options && (
               <>
-                {fd.length === 0 && <NotFound minH={"300px"} />}
+                {fd.length === 0 && <NotFound minH={"300px"} mb={4} />}
 
                 {fd.length > 0 &&
                   fd?.map((item: any, i: number) => (
@@ -373,6 +362,7 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
         size={"lg"}
       >
         <ModalOverlay />
+
         <ModalContent
           my={sh < 650 ? 0 : ""}
           h={
@@ -392,30 +382,9 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
           </ModalHeader>
 
           <ModalBody className="scrollY" overflowY={"auto"}>
-            {(withSearch ||
-              (optionsDisplay === "list" && options && options?.length > 10) ||
-              (optionsDisplay === "chip" &&
-                options &&
-                options?.length > 20)) && (
-              <Box pb={responsiveSpacing}>
-                <SearchComponent
-                  name="search select options"
-                  inputValue={search}
-                  onChangeSetter={(inputValue) => {
-                    setSearch(inputValue);
-                  }}
-                />
-              </Box>
-            )}
-
             {fo && (
               <>
-                <Alert
-                  flexShrink={0}
-                  // status="warning"
-                  mb={4}
-                  alignItems={"start"}
-                >
+                <Alert flexShrink={0} mb={2} alignItems={"start"}>
                   <AlertIcon />
                   <AlertDescription maxW={"640px !important"}>
                     Klik Unit Kerja untuk memilih semua karyawan di unit kerja
@@ -428,6 +397,24 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
                   selected={selected}
                   setSelected={setSelected}
                 />
+
+                {(withSearch ||
+                  (optionsDisplay === "list" &&
+                    options &&
+                    options?.length > 10) ||
+                  (optionsDisplay === "chip" &&
+                    options &&
+                    options?.length > 20)) && (
+                  <Box pb={responsiveSpacing}>
+                    <SearchComponent
+                      name="search select options"
+                      inputValue={search}
+                      onChangeSetter={(inputValue) => {
+                        setSearch(inputValue);
+                      }}
+                    />
+                  </Box>
+                )}
 
                 <Box
                   onClick={() => {
