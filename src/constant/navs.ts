@@ -22,7 +22,7 @@ const navs = [
     ],
   },
   {
-    allowed: [50],
+    allowed: [50, 133],
     label: "Karyawan",
     link: "/karyawan",
     icon: RiGroupFill,
@@ -33,7 +33,7 @@ const navs = [
         link: "/karyawan",
       },
       {
-        allowed: [50],
+        allowed: [133],
         label: "Transfer Karyawan",
         link: "/karyawan/transfer-karyawan",
       },
