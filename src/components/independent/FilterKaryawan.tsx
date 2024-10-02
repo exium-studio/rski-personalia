@@ -1,5 +1,8 @@
 import {
   Accordion,
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   ButtonGroup,
   ButtonProps,
@@ -18,7 +21,7 @@ import {
 import { RiEqualizer3Fill } from "@remixicon/react";
 import { useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
-import { iconSize } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useCallBackOnNavigate from "../../hooks/useCallBackOnNavigate";
@@ -36,6 +39,7 @@ import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
+import { useLocation } from "react-router-dom";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -45,6 +49,8 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("filter-karyawan", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
+
+  const { pathname } = useLocation();
 
   // const [clear, setClear] = useState<boolean>(false);
 
@@ -204,6 +210,16 @@ export default function FilterKaryawan({ title, ...props }: Props) {
           </ModalHeader>
 
           <ModalBody className="scrollY">
+            {pathname === "/jadwal" && (
+              <Alert mb={responsiveSpacing} alignItems={"start"}>
+                <AlertIcon />
+                <AlertDescription maxW={"640px !important"}>
+                  Jika tidak punya akses Bypass Unit Kerja, maka filter unit
+                  kerja akan dikunci sesuai dengan unit kerja anda.
+                </AlertDescription>
+              </Alert>
+            )}
+
             <Accordion allowToggle>
               <FilterUnitKerja
                 filterConfig={localFilterConfig}
