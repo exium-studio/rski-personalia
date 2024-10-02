@@ -17,20 +17,25 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiDeleteBinLine } from "@remixicon/react";
+import { RiDeleteBinLine, RiSendPlaneFill } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import useGetUserData from "../../hooks/useGetUserData";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
+import formatTime from "../../lib/formatTime";
 import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
+import req from "../../lib/req";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
+import VerifikatorBelumDitentukan from "../independent/VerifikatorBelumDitentukan";
 import CContainer from "../wrapper/CContainer";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
@@ -39,16 +44,11 @@ import CustomTable from "./CustomTable";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
+import TabelElipsisText from "./TabelElipsisText";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
-import req from "../../lib/req";
-import formatTime from "../../lib/formatTime";
-import TabelElipsisText from "./TabelElipsisText";
-import SearchComponent from "./input/SearchComponent";
-import useGetUserData from "../../hooks/useGetUserData";
-import VerifikatorBelumDitentukan from "../independent/VerifikatorBelumDitentukan";
 import VerifikatorName from "./VerifikatorName";
+import SearchComponent from "./input/SearchComponent";
 
 const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
   // api/rski/dashboard/perusahaan/diklat/{diklatId}/delete-peserta-diklat/{userId}
@@ -232,7 +232,7 @@ const PesertaModal = ({ data }: any) => {
 const KonfirmasiPublikasiSertifikat = ({
   data,
   verif3Permission,
-  verifikatoprName,
+  verifikatorName,
 }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
@@ -323,7 +323,18 @@ const KonfirmasiPublikasiSertifikat = ({
           </Button>
         </PermissionTooltip>
       ) : (
-        <VerifikatorName nama={verifikatoprName} verification={true} />
+        <VerifikatorName
+          nama={verifikatorName}
+          verification={true}
+          icon={
+            <Icon
+              as={RiSendPlaneFill}
+              color={"green.400"}
+              fontSize={iconSize}
+            />
+          }
+          label={`Dipublikasi oleh ${verifikatorName || "Super Admin"}`}
+        />
       )}
 
       <Modal
@@ -780,7 +791,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
             <KonfirmasiPublikasiSertifikat
               data={item}
               verif3Permission={verif3Permission}
-              verifikatoprName={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+              verifikatorName={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
             />
           ),
           props: {

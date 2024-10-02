@@ -198,11 +198,11 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.relasi_verifikasi_pengajuan?.[0]?.id === null && (
-                <VerifikatorBelumDitentukan />
-              )}
+              {item?.relasi_verifikasi_pengajuan?.[0]?.id === null &&
+                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
 
-              {item?.relasi_verifikasi_pengajuan?.[0]?.id && (
+              {(item?.relasi_verifikasi_pengajuan?.[0]?.id ||
+                userData?.id === 1) && (
                 <>
                   {item?.status_penukaran?.id === 1 && (
                     <PermissionTooltip permission={verif1Permission}>
@@ -249,11 +249,11 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.relasi_verifikasi_pengajuan?.[1]?.id === null && (
-                <VerifikatorBelumDitentukan />
-              )}
+              {item?.relasi_verifikasi_pengajuan?.[1]?.id === null &&
+                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
 
-              {item?.relasi_verifikasi_pengajuan?.[1]?.id && (
+              {(item?.relasi_verifikasi_pengajuan?.[1]?.id ||
+                userData?.id === 1) && (
                 <>
                   {[1, 3].includes(item?.status_penukaran?.id) && (
                     <VerifikatorName
@@ -278,20 +278,16 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
                     </PermissionTooltip>
                   )}
 
-                  {item?.relasi_verifikasi_pengajuan?.[1]?.nama && (
-                    <>
-                      {[4, 5].includes(item?.status_penukaran?.id) && (
-                        <VerifikatorName
-                          nama={
-                            item?.relasi_verifikasi_pengajuan?.[1]?.verifikator
-                              ?.nama
-                          }
-                          verification={
-                            item?.status_penukaran?.id === 4 ? true : false
-                          }
-                        />
-                      )}
-                    </>
+                  {[4, 5].includes(item?.status_penukaran?.id) && (
+                    <VerifikatorName
+                      nama={
+                        item?.relasi_verifikasi_pengajuan?.[1]?.verifikator
+                          ?.nama
+                      }
+                      verification={
+                        item?.status_penukaran?.id === 4 ? true : false
+                      }
+                    />
                   )}
                 </>
               )}
