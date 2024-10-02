@@ -203,12 +203,12 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.relasi_verifikasi?.[0]?.id === null &&
-                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
-
-              {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
+              {item?.status_perubahan?.id === 1 && (
                 <>
-                  {item?.status_perubahan?.id === 1 && (
+                  {item?.relasi_verifikasi?.[0]?.id === null &&
+                    userData?.id !== 1 && <VerifikatorBelumDitentukan />}
+
+                  {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
                     <PermissionTooltip permission={verif1Permission}>
                       <VerifikasiModal
                         aria-label={`peruibahan-data-verif-1-button-${item.id}`}
@@ -220,16 +220,16 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
                       />
                     </PermissionTooltip>
                   )}
-
-                  {[2, 3].includes(item?.status_perubahan?.id) && (
-                    <VerifikatorName
-                      nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
-                      verification={
-                        [2].includes(item?.status_perubahan?.id) ? true : false
-                      }
-                    />
-                  )}
                 </>
+              )}
+
+              {[2, 3].includes(item?.status_perubahan?.id) && (
+                <VerifikatorName
+                  nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
+                  verification={
+                    [2].includes(item?.status_perubahan?.id) ? true : false
+                  }
+                />
               )}
             </>
           ),

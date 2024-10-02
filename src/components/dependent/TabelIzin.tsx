@@ -181,12 +181,12 @@ export default function TabelIzin({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.relasi_verifikasi?.[0]?.id === null &&
-                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
-
-              {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
+              {item?.status_izin?.id === 1 && (
                 <>
-                  {item?.status_izin?.id === 1 && (
+                  {item?.relasi_verifikasi?.[0]?.id === null &&
+                    userData?.id !== 1 && <VerifikatorBelumDitentukan />}
+
+                  {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
                     <PermissionTooltip permission={verif1Permission}>
                       <VerifikasiModal
                         aria-label={`cuti-verif-1-button-${item.id}`}
@@ -198,16 +198,16 @@ export default function TabelIzin({ filterConfig }: Props) {
                       />
                     </PermissionTooltip>
                   )}
-
-                  {[2, 3].includes(item?.status_izin?.id) && (
-                    <VerifikatorName
-                      nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
-                      verification={
-                        [2].includes(item?.status_izin?.id) ? true : false
-                      }
-                    />
-                  )}
                 </>
+              )}
+
+              {[2, 3].includes(item?.status_izin?.id) && (
+                <VerifikatorName
+                  nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
+                  verification={
+                    [2].includes(item?.status_izin?.id) ? true : false
+                  }
+                />
               )}
             </>
           ),

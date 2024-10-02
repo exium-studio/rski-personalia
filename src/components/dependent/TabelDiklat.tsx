@@ -690,12 +690,12 @@ export default function TabelDiklat({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.relasi_verifikasi?.[0]?.id === null &&
-                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
-
-              {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
+              {item?.status_diklat?.id === 1 && (
                 <>
-                  {item?.status_diklat?.id === 1 && (
+                  {item?.relasi_verifikasi?.[0]?.id === null &&
+                    userData?.id !== 1 && <VerifikatorBelumDitentukan />}
+
+                  {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
                     <PermissionTooltip permission={verif1Permission}>
                       <VerifikasiModal
                         aria-label={`diklat-internal-verif-1-button-${item.id}`}
@@ -707,18 +707,16 @@ export default function TabelDiklat({ filterConfig }: Props) {
                       />
                     </PermissionTooltip>
                   )}
-
-                  {[2, 3, 4, 5].includes(item?.status_diklat?.id) && (
-                    <VerifikatorName
-                      nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
-                      verification={
-                        [2, 4, 5].includes(item?.status_diklat?.id)
-                          ? true
-                          : false
-                      }
-                    />
-                  )}
                 </>
+              )}
+
+              {[2, 3, 4, 5].includes(item?.status_diklat?.id) && (
+                <VerifikatorName
+                  nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
+                  verification={
+                    [2, 4, 5].includes(item?.status_diklat?.id) ? true : false
+                  }
+                />
               )}
             </>
           ),
