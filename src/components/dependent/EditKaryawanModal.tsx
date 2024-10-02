@@ -41,6 +41,7 @@ export default function EditKaryawanModal({ initialData, ...props }: Props) {
   useBackOnClose(`edit-karyawan-modal`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
   const userData = useGetUserData();
+  const isSuperAdmin = userData?.id === 1;
 
   const steps = [
     { title: "Data Karyawan" },
@@ -97,7 +98,6 @@ export default function EditKaryawanModal({ initialData, ...props }: Props) {
               mb={6}
             >
               {steps.map((step, index) => {
-                const isSuperAdmin = userData?.id === 1;
                 let ok = 2;
                 if (isSuperAdmin) {
                   ok = 3;
