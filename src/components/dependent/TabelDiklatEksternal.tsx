@@ -277,7 +277,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
                       <VerifikasiModal
                         aria-label={`diklat-eksternal-verif-1-button-${item.id}`}
                         id={`verifikasi-diklat-eksternal-modal-${item.id}`}
-                        submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
+                        submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-diklat-eksternal-step-1`}
                         approvePayloadKey="verifikasi_pertama_disetujui"
                         disapprovePayloadKey="verifikasi_pertama_ditolak"
                         isDisabled={!verif1Permission}
@@ -345,7 +345,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
                         <VerifikasiModal
                           aria-label={`diklat-eksternal-verif-2-button-${item.id}`}
                           id={`verifikasi-diklat-eksternal-modal-${item.id}`}
-                          submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-2`}
+                          submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-diklat-eksternal-step-2`}
                           approvePayloadKey="verifikasi_kedua_disetujui"
                           disapprovePayloadKey="verifikasi_kedua_ditolak"
                           isDisabled={!verif2Permission}
