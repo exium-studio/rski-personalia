@@ -28,7 +28,6 @@ import isHasSomePermissions from "../../lib/isHasSomePermissions";
 import req from "../../lib/req";
 import useScreenWidth from "../../lib/useScreenWidth";
 import Header from "../dependent/Header";
-import TopNavs from "../dependent/TopNavs";
 import ComponentSpinner from "../independent/ComponentSpinner";
 import CContainer from "./CContainer";
 import Container from "./Container";
@@ -339,11 +338,11 @@ export default function NavContainer({
               />
             )}
 
-            {topNavsData &&
+            {/* {topNavsData &&
               topNavsData.length > 1 &&
               typeof topNavActive === "number" && (
                 <TopNavs data={topNavsData} active={topNavActive} />
-              )}
+              )} */}
 
             <VStack
               gap={0}
