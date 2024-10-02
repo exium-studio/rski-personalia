@@ -19,6 +19,13 @@ import useGetUserData from "../../hooks/useGetUserData";
 import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Jadwal() {
+  // Permissions
+  const { userPermissions } = useAuth();
+  const exportPermissions = isHasPermissions(userPermissions, [23]);
+  const importPermissions = isHasPermissions(userPermissions, [24]);
+  const createPermissions = isHasPermissions(userPermissions, [19]);
+  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+
   const today = new Date();
   const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
   const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
@@ -41,6 +48,7 @@ export default function Jadwal() {
     formattedFilterKaryawan,
     setFormattedFilterKaryawan,
   } = useFilterKaryawan();
+
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterKaryawan({ search });
@@ -51,6 +59,7 @@ export default function Jadwal() {
       clearTimeout(handler);
     };
   }, [search, setFilterKaryawan, setFormattedFilterKaryawan]);
+
   const confirmDateRange = (
     inputValue: { from: Date; to: Date } | undefined
   ) => {
@@ -75,13 +84,10 @@ export default function Jadwal() {
       // console.log("uk user", unitKerjaUser);
       // console.log(unitKerjaUser);
 
-      if (unitKerjaUser) {
+      if (unitKerjaUser && !bypassUnitKerjaPermission) {
         const unitKerjaExists = filterKaryawan.unit_kerja.some(
           (uk: any) => uk.id === unitKerjaUser.id
         );
-
-        // console.log(filterKaryawan);
-        // console.log(unitKerjaExists);
 
         if (!unitKerjaExists) {
           const presetUnitKerjaFilterKaryawan = {
@@ -114,18 +120,18 @@ export default function Jadwal() {
         }
       }
     }
-  }, [filterKaryawan, setFilterKaryawan, setFormattedFilterKaryawan]);
+  }, [
+    filterKaryawan,
+    setFilterKaryawan,
+    setFormattedFilterKaryawan,
+    bypassUnitKerjaPermission,
+  ]);
 
   // console.log(filterKaryawan);
   // console.log(formattedFilterKaryawan);
 
   // SX
   const lightDarkColor = useLightDarkColor();
-
-  const { userPermissions } = useAuth();
-  const exportPermissions = isHasPermissions(userPermissions, [23]);
-  const importPermissions = isHasPermissions(userPermissions, [24]);
-  const createPermissions = isHasPermissions(userPermissions, [19]);
 
   return (
     <>
