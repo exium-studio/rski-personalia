@@ -81,7 +81,7 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
                     <HStack>
                       <Text opacity={0.4}>Hubungan Keluarga</Text>
                       <FlexLine />
-                      <Text>{anggota?.hubungan}</Text>
+                      <Text textAlign={"right"}>{anggota?.hubungan}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Status Hidup</Text>
@@ -93,22 +93,24 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
                     <HStack>
                       <Text opacity={0.4}>Pendidikan Terakhir</Text>
                       <FlexLine />
-                      <Text>{anggota?.pendidikan_terakhir?.label}</Text>
+                      <Text textAlign={"right"}>
+                        {anggota?.pendidikan_terakhir?.label}
+                      </Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Pekerjaan</Text>
                       <FlexLine />
-                      <Text>{anggota.pekerjaan}</Text>
+                      <Text textAlign={"right"}>{anggota.pekerjaan}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Nomor Telepon</Text>
                       <FlexLine />
-                      <Text>{anggota.no_hp}</Text>
+                      <Text textAlign={"right"}>{anggota.no_hp}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Email</Text>
                       <FlexLine />
-                      <Text>{anggota.email}</Text>
+                      <Text textAlign={"right"}>{anggota.email}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Tanggungan BPJS</Text>
