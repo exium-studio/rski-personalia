@@ -18,6 +18,7 @@ interface Props {
 
 export default function DetailDataKaryawan({ data, searchQuery }: Props) {
   const userData = useGetUserData();
+  const dataPotonganGaji = data?.potongan_gaji || userData?.potongan_gaji;
 
   return (
     <>
@@ -1014,11 +1015,11 @@ export default function DetailDataKaryawan({ data, searchQuery }: Props) {
         </Text>
 
         <VStack align={"stretch"} gap={4}>
-          {data.potongan_gaji?.length === 0 && (
+          {dataPotonganGaji?.length === 0 && (
             <Text opacity={0.4}>Tidak ada potongan gaji</Text>
           )}
 
-          {data.potongan_gaji?.map((potongan: any, i: number) => (
+          {dataPotonganGaji?.map((potongan: any, i: number) => (
             <HStack justify={"space-between"} key={i}>
               <Box opacity={0.6}>
                 <Highlighter
