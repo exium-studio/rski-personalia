@@ -46,7 +46,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   useBackOnClose("filter-karyawan", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
-  const [clear, setClear] = useState<boolean>(false);
+  // const [clear, setClear] = useState<boolean>(false);
 
   const {
     defaultFilterKaryawan,
@@ -126,15 +126,21 @@ export default function FilterKaryawan({ title, ...props }: Props) {
 
     setFilterKaryawan(localFilterConfig);
 
-    if (clear) {
-      clearFormattedFilterKaryawan();
-    } else {
-      clearFormattedFilterKaryawan();
-      // console.log(formattedFilterKaryawanReducer(formattedFilters));
-      setFormattedFilterKaryawan(
-        formattedFilterKaryawanReducer(formattedFilters)
-      );
-    }
+    clearFormattedFilterKaryawan();
+    // console.log(formattedFilterKaryawanReducer(formattedFilters));
+    setFormattedFilterKaryawan(
+      formattedFilterKaryawanReducer(formattedFilters)
+    );
+
+    // if (clear) {
+    //   clearFormattedFilterKaryawan();
+    // } else {
+    //   clearFormattedFilterKaryawan();
+    //   // console.log(formattedFilterKaryawanReducer(formattedFilters));
+    //   setFormattedFilterKaryawan(
+    //     formattedFilterKaryawanReducer(formattedFilters)
+    //   );
+    // }
   }
 
   useCallBackOnNavigate(() => {
@@ -155,7 +161,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
         onClick={() => {
           onOpen();
           setLocalFilterConfig(filterKaryawan);
-          setClear(false);
+          // setClear(false);
         }}
         {...props}
       >
@@ -257,8 +263,16 @@ export default function FilterKaryawan({ title, ...props }: Props) {
                 w={"50%"}
                 className="btn-solid clicky"
                 onClick={() => {
-                  setLocalFilterConfig(defaultFilterKaryawan);
-                  setClear(true);
+                  // console.log("prev search", localFilterConfig?.search);
+                  setLocalFilterConfig({
+                    ...defaultFilterKaryawan,
+                    search: localFilterConfig?.search,
+                  });
+                  // console.log({
+                  //   ...defaultFilterKaryawan,
+                  //   search: localFilterConfig?.search,
+                  // });
+                  // setClear(true);
                 }}
               >
                 Clear
