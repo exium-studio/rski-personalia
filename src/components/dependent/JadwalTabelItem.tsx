@@ -200,7 +200,11 @@ export default function TabelJadwalItem({
           justify={"center"}
           className="btn-solid clicky"
           cursor={"pointer"}
-          onClick={onOpen}
+          onClick={() => {
+            if (!(shiftMalam && shiftMalamLanjutan)) {
+              onOpen();
+            }
+          }}
           isDisabled={!editPermissions}
         >
           <HStack gap={3} justify={"space-between"} flex={1}>
@@ -224,7 +228,11 @@ export default function TabelJadwalItem({
                   as={RiEditBoxLine}
                   fontSize={20}
                   alignSelf={"flex-start"}
-                  color={"p.500"}
+                  color={
+                    shiftMalam && shiftMalamLanjutan
+                      ? "var(--divider-text)"
+                      : "p.500"
+                  }
                   mb={"auto"}
                 />
               )}
