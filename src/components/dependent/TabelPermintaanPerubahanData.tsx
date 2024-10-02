@@ -203,11 +203,10 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.relasi_verifikasi?.[0]?.id === null && (
-                <VerifikatorBelumDitentukan />
-              )}
+              {item?.relasi_verifikasi?.[0]?.id === null &&
+                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
 
-              {item?.relasi_verifikasi?.[0]?.id && (
+              {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
                 <>
                   {item?.status_perubahan?.id === 1 && (
                     <PermissionTooltip permission={verif1Permission}>
@@ -234,16 +233,6 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
               )}
             </>
           ),
-          // item?.status_perubahan?.id === 1 && (
-          //   <PermissionTooltip permission={verif1Permission}>
-          //     <VerifikasiModal
-          //       aria-label={`perubahan-data-verif-button-${item.id}"`}
-          //       id={`verifikasi-perubahan-data-3-modal-${item.id}`}
-          //       submitUrl={`/api/rski/dashboard/karyawan/riwayat-perubahan/verifikasi-data/${item.id}`}
-          //       isDisabled={!verif1Permission}
-          //     />
-          //   </PermissionTooltip>
-          // )
           props: {
             position: "sticky",
             right: 0,

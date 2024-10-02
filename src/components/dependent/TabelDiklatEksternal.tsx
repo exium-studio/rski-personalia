@@ -266,11 +266,10 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.relasi_verifikasi?.[0]?.id === null && (
-                <VerifikatorBelumDitentukan />
-              )}
+              {item?.relasi_verifikasi?.[0]?.id === null &&
+                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
 
-              {item?.relasi_verifikasi?.[0]?.id && (
+              {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
                 <>
                   {item?.status_diklat?.id === 1 && (
                     <PermissionTooltip permission={verif1Permission}>
@@ -299,18 +298,6 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
               )}
             </>
           ),
-          // item?.status_diklat?.id === 1 && (
-          //   <PermissionTooltip permission={verif1Permission}>
-          //     <VerifikasiModal
-          //       aria-label={`perubahan-data-verif-1-button-${item.id}"`}
-          //       id={`verifikasi-diklat-modal-${item.id}`}
-          //       submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
-          //       approvePayloadKey="verifikasi_pertama_disetujui"
-          //       disapprovePayloadKey="verifikasi_pertama_ditolak"
-          //       isDisabled={!verif1Permission}
-          //     />
-          //   </PermissionTooltip>
-          // )
           props: {
             position: "sticky",
             right: 0,
@@ -326,11 +313,10 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.relasi_verifikasi?.[1]?.id === null && (
-                <VerifikatorBelumDitentukan />
-              )}
+              {item?.relasi_verifikasi?.[1]?.id === null &&
+                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
 
-              {item?.relasi_verifikasi?.[1]?.id && (
+              {(item?.relasi_verifikasi?.[1]?.id || userData?.id === 1) && (
                 <>
                   {[1, 3].includes(item?.status_diklat?.id) && (
                     <VerifikatorName
@@ -339,48 +325,31 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
                     />
                   )}
 
-                  {item?.status_diklat?.id === 2 &&
-                    item?.relasi_verifikasi?.[1]?.verifikator?.nama && (
-                      <PermissionTooltip permission={verif2Permission}>
-                        <VerifikasiModal
-                          aria-label={`diklat-eksternal-verif-2-button-${item.id}`}
-                          id={`verifikasi-diklat-eksternal-modal-${item.id}`}
-                          submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-diklat-eksternal-step-2`}
-                          approvePayloadKey="verifikasi_kedua_disetujui"
-                          disapprovePayloadKey="verifikasi_kedua_ditolak"
-                          isDisabled={!verif2Permission}
-                        />
-                      </PermissionTooltip>
-                    )}
+                  {item?.status_diklat?.id === 2 && (
+                    <PermissionTooltip permission={verif2Permission}>
+                      <VerifikasiModal
+                        aria-label={`diklat-eksternal-verif-2-button-${item.id}`}
+                        id={`verifikasi-diklat-eksternal-modal-${item.id}`}
+                        submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-diklat-eksternal-step-2`}
+                        approvePayloadKey="verifikasi_kedua_disetujui"
+                        disapprovePayloadKey="verifikasi_kedua_ditolak"
+                        isDisabled={!verif2Permission}
+                      />
+                    </PermissionTooltip>
+                  )}
 
-                  {item?.relasi_verifikasi?.[1]?.nama && (
-                    <>
-                      {[4, 5].includes(item?.status_diklat?.id) && (
-                        <VerifikatorName
-                          nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
-                          verification={
-                            item?.status_diklat?.id === 4 ? true : false
-                          }
-                        />
-                      )}
-                    </>
+                  {[4, 5].includes(item?.status_diklat?.id) && (
+                    <VerifikatorName
+                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                      verification={
+                        item?.status_diklat?.id === 4 ? true : false
+                      }
+                    />
                   )}
                 </>
               )}
             </>
           ),
-          // item?.status_diklat?.id === 2 && (
-          //   <PermissionTooltip permission={verif2Permission}>
-          //     <VerifikasiModal
-          //       aria-label={`perubahan-data-verif-2-button-${item.id}"`}
-          //       id={`verifikasi-diklat-modal-2-${item.id}`}
-          //       submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-2`}
-          //       approvePayloadKey="verifikasi_kedua_disetujui"
-          //       disapprovePayloadKey="verifikasi_kedua_ditolak"
-          //       isDisabled={!verif2Permission}
-          //     />
-          //   </PermissionTooltip>
-          // )
           props: {
             // position: "sticky",
             right: 0,

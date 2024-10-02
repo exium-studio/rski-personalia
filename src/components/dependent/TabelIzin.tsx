@@ -181,11 +181,10 @@ export default function TabelIzin({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.relasi_verifikasi?.[0]?.id === null && (
-                <VerifikatorBelumDitentukan />
-              )}
+              {item?.relasi_verifikasi?.[0]?.id === null &&
+                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
 
-              {item?.relasi_verifikasi?.[0]?.id && (
+              {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
                 <>
                   {item?.status_izin?.id === 1 && (
                     <PermissionTooltip permission={verif1Permission}>

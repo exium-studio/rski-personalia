@@ -15,7 +15,7 @@ export default function VerifikatorName({ verification, nama }: Props) {
           : verification
           ? "Diverifikasi oleh"
           : "Ditolak oleh"
-      } ${nama || "Verifikator"}`}
+      } ${nama || "Super Admin"}`}
       openDelay={500}
     >
       <HStack maxW={"80px"}>
@@ -31,7 +31,7 @@ export default function VerifikatorName({ verification, nama }: Props) {
           }
         />
         <Text className="noofline-1" opacity={verification === null ? 0.4 : 1}>
-          {nama || "Verifikator"}
+          {nama || "Super Admin"}
         </Text>
       </HStack>
     </Tooltip>
