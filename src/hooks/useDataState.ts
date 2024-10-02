@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import req from "../lib/req";
 import useRenderTrigger from "./useRenderTrigger";
 
@@ -23,6 +23,7 @@ const useDataState = <T>({
   page = 1,
   noRt = false,
 }: Props<T>) => {
+  const [message, setMessage] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [notFound, setNotFound] = useState<boolean>(false);
   const [forbidden, setForbidden] = useState<boolean>(false);
@@ -32,7 +33,7 @@ const useDataState = <T>({
   const [paginationData, setPaginationData] = useState<T | undefined>(
     initialData
   );
-  // const [offset, setOffset] = useState<number>((page - 1) * (limit || 0));
+  const [offset] = useState<number>((page - 1) * (limit || 0));
   const { rt } = useRenderTrigger();
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -52,7 +53,6 @@ const useDataState = <T>({
   }, [conditions, url, page, ...(noRt ? [] : [rt]), ...dependencies]);
 
   const makeRequest = () => {
-    // console.log(abortControllerRef.current);
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -78,6 +78,7 @@ const useDataState = <T>({
         setError(false);
         if (response.status === 200) {
           setData(response.data.data);
+          setMessage(response.data.message);
           setPaginationData(response.data?.pagination);
         }
       })
@@ -89,9 +90,9 @@ const useDataState = <T>({
 
           if (error?.response?.status === 404) {
             setNotFound(true);
-          }
-          if (error?.response?.status === 403) {
-            setForbidden(true);
+            setData(error?.response?.data?.data);
+            setMessage(error?.response?.data?.message);
+            console.log("error", error);
           }
           setError(true);
           console.log(error);
@@ -107,11 +108,47 @@ const useDataState = <T>({
 
   function loadMore() {
     setLoadingLoadMore(true);
-    // if (limit) {
-    //   setOffset((ps) => ps + limit);
-    // }
 
-    //TODO http request dan append ke data
+    const method = payload ? "POST" : "GET";
+    const data = {
+      ...payload,
+      limit: limit,
+      offset: offset,
+    };
+
+    req({
+      method,
+      url,
+      data: method === "POST" ? data : undefined,
+      // params: method === "GET" ? data : undefined,
+      //  signal: abortController.signal,
+    })
+      .then((response) => {
+        setLoading(false);
+        setError(false);
+        if (response.status === 200) {
+          const newData = [...data, ...response.data.data];
+          //@ts-ignore
+          setData(newData);
+          // setPaginationData(response.data?.pagination);
+        }
+      })
+      .catch((error) => {
+        if (error.name === "CanceledError") {
+          return;
+        } else {
+          setLoading(false);
+
+          if (error?.response?.status === 403) {
+            setForbidden(true);
+          }
+          if (error?.response?.status === 404) {
+            setNotFound(true);
+          }
+          setError(true);
+          console.log(error);
+        }
+      });
   }
 
   return {
@@ -119,12 +156,14 @@ const useDataState = <T>({
     setData,
     loading,
     setLoading,
+    message,
+    setMessage,
     notFound,
     setNotFound,
-    forbidden,
-    setForbidden,
     error,
     setError,
+    forbidden,
+    setForbidden,
     retry,
     loadMore,
     loadingLoadMore,
