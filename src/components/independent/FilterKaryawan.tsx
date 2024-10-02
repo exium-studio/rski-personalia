@@ -215,7 +215,8 @@ export default function FilterKaryawan({ title, ...props }: Props) {
                 <AlertIcon />
                 <AlertDescription maxW={"640px !important"}>
                   Jika tidak punya akses Bypass Unit Kerja, maka filter unit
-                  kerja akan dikunci sesuai dengan unit kerja anda.
+                  kerja akan dikunci/tidak bisa dihilangkan sesuai dengan unit
+                  kerja anda.
                 </AlertDescription>
               </Alert>
             )}
