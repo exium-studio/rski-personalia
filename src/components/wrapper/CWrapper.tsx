@@ -10,7 +10,7 @@ export default function CWrapper({ children, ...props }: Props) {
 
   return (
     <VStack
-      px={smScreen ? 4 : 6}
+      px={smScreen ? 4 : 5}
       align={"stretch"}
       className="CWrapper noScroll"
       gap={0}

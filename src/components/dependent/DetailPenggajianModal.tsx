@@ -22,12 +22,13 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { RiSendPlaneFill } from "@remixicon/react";
+import { RiRestartLine, RiSendPlaneFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useCountdown from "../../hooks/useCountdown";
 import useDataState from "../../hooks/useDataState";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
@@ -41,7 +42,6 @@ import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusPublikasiPenggajian from "./StatusPublikasiPenggajian";
 import TabelDetailPenggajian from "./TabelDetailPenggajian";
-import useCountdown from "../../hooks/useCountdown";
 
 interface PublikasiButtonProps extends ButtonProps {
   penggajian_id: number;
@@ -147,7 +147,7 @@ const PublikasiButtonModal = ({
   );
 };
 
-const UpdateBor = ({ penggajian_id }: any) => {
+const UpdateBor = ({ penggajian_id, status_penggajian }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("update-bor-modal", isOpen, onOpen, onClose);
 
@@ -206,12 +206,14 @@ const UpdateBor = ({ penggajian_id }: any) => {
   return (
     <>
       <Button
+        leftIcon={<Icon as={RiRestartLine} fontSize={iconSize} />}
         colorScheme="ap"
         variant={"outline"}
         size={"lg"}
         onClick={onOpen}
         className="clicky"
         isLoading={loading}
+        isDisabled={status_penggajian?.id === 2}
       >
         Penyesuaian Penggajian
       </Button>
@@ -458,7 +460,12 @@ export default function DetailPenggajianModal({
                         </VStack>
 
                         <HStack ml={"auto"}>
-                          <UpdateBor penggajian_id={penggajian_id} />
+                          <UpdateBor
+                            penggajian_id={penggajian_id}
+                            status_penggajian={
+                              data.data_riwayat?.status_riwayat_gaji
+                            }
+                          />
 
                           <PublikasiButtonModal
                             penggajian_id={penggajian_id}
