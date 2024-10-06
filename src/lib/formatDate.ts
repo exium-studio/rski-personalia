@@ -36,6 +36,12 @@ const formatDate = (dateString: Date | string, options?: any) => {
     year: "numeric",
   };
 
+  const short2Format: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+
   const periodeFormat: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
@@ -47,6 +53,7 @@ const formatDate = (dateString: Date | string, options?: any) => {
     long: longFormat,
     longShort: longShortFormat,
     short: shortFormat,
+    short2: short2Format,
     periode: periodeFormat,
   };
 
@@ -76,6 +83,12 @@ const formatDate = (dateString: Date | string, options?: any) => {
 
   if (options === "iso") {
     formattedDate = date.toISOString();
+  } else if (options === "short2") {
+    // Format as yyyy-mm-dd
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    formattedDate = `${year}-${month}-${day}`;
   } else if (options === "short") {
     formattedDate = date
       .toLocaleDateString("id-ID", formatOptions)
