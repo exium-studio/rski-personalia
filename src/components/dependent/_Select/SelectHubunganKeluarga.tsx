@@ -1,12 +1,12 @@
 import { ButtonProps, useDisclosure } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import { optionsHubunganKeluarga } from "../../../constant/selectOptions";
-import MultipleSelectModal from "../input/MultipleSelectModal";
+import SingleSelectModal from "../input/SingleSelectModal";
 
 interface Props extends ButtonProps {
   name: string;
-  onConfirm: (inputValue: Interface__SelectOption[] | undefined) => void;
-  inputValue: Interface__SelectOption[] | undefined;
+  onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
+  inputValue: Interface__SelectOption | undefined;
   withSearch?: boolean;
   optionsDisplay?: "list" | "chip";
   isError?: boolean;
@@ -14,7 +14,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function MultiSelectHubunganKeluarga({
+export default function SelectHubunganKeluarga({
   name,
   onConfirm,
   inputValue,
@@ -28,8 +28,8 @@ export default function MultiSelectHubunganKeluarga({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <MultipleSelectModal
-      id="multi-select-hubungan-kerja-modal"
+    <SingleSelectModal
+      id="select-hubungan-kerja-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
@@ -42,7 +42,7 @@ export default function MultiSelectHubunganKeluarga({
       withSearch={withSearch}
       optionsDisplay={optionsDisplay}
       isError={isError}
-      placeholder={placeholder || "Multi Pilih Hubungan Keluarga"}
+      placeholder={placeholder || "Pilih Hubungan Keluarga"}
       nonNullable={nonNullable}
       {...props}
     />

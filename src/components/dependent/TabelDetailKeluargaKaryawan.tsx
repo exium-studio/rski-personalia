@@ -1,6 +1,6 @@
-import { HStack } from "@chakra-ui/react";
+import { HStack, Icon, MenuItem, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import { responsiveSpacing } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import NotFound from "../independent/NotFound";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import MultiSelectHubunganKeluarga from "./_Select/MultiSelectHubunganKeluarga";
@@ -8,12 +8,23 @@ import MultiSelectStatusHidup from "./_Select/MultiSelectStatusHidup";
 import BooleanBadge from "./BooleanBadge";
 import CustomTable from "./CustomTable";
 import SearchComponent from "./input/SearchComponent";
+import useGetUserData from "../../hooks/useGetUserData";
+import { RiEditLine } from "@remixicon/react";
+import EditAnggotaKeluargaModalDisclosure from "../independent/EditAnggotaKeluargaModalDisclosure";
 
 interface Props {
+  idKaryawan: number;
   data: any[];
 }
 
-export default function TabelDetailKeluargaKaryawan({ data }: Props) {
+export default function TabelDetailKeluargaKaryawan({
+  idKaryawan,
+  data,
+}: Props) {
+  // Permission States
+  const userData = useGetUserData();
+  const isUserSuperAdmin = userData?.role?.id === 1;
+
   // Filter Config
   const [filterConfig, setFilterConfig] = useState({
     search: "",
@@ -21,12 +32,31 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
     status_hidup: undefined as any,
   });
 
+  // Row Options
+  const rowOptions = [
+    (rowData: any) => {
+      return (
+        <EditAnggotaKeluargaModalDisclosure
+          idKaryawan={idKaryawan}
+          rowData={rowData}
+        >
+          <MenuItem isDisabled={!isUserSuperAdmin}>
+            <Text>Edit</Text>
+            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+          </MenuItem>
+        </EditAnggotaKeluargaModalDisclosure>
+      );
+    },
+  ];
+
   const fd = data.filter((item: any) => {
     const searchTerm = filterConfig.search.toLowerCase();
     const hubunganTerm = filterConfig.hubungan_keluarga;
     const statusHidupTerm = filterConfig.status_hidup;
 
-    const matchesSearchTerm = item.nama.toLowerCase().includes(searchTerm);
+    const matchesSearchTerm = item.nama_keluarga
+      .toLowerCase()
+      .includes(searchTerm);
     const matchesHubunganTerm =
       hubunganTerm && hubunganTerm.length > 0
         ? hubunganTerm.some(
@@ -109,8 +139,8 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
     id: item.id,
     columnsFormat: [
       {
-        value: item.nama,
-        td: item.nama,
+        value: item.nama_keluarga,
+        td: item.nama_keluarga,
       },
       // {
       //   value: item.status_keluarga,
@@ -194,6 +224,7 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
       //   },
       // },
     ],
+    originalData: item,
   }));
 
   return (
@@ -248,7 +279,7 @@ export default function TabelDetailKeluargaKaryawan({ data }: Props) {
           <CustomTable
             formattedHeader={formattedHeader}
             formattedData={formattedData}
-            // rowOptions={rowOptions}
+            rowOptions={isUserSuperAdmin ? rowOptions : undefined}
           />
         </CustomTableContainer>
       )}

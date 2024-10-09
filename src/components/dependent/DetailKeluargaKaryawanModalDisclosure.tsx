@@ -94,10 +94,9 @@ const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
       } else {
         payload = payload2;
       }
-
       req
         .post(
-          `/api/rski/dashboard/karyawan/detail-karyawan-keluarga/${data.id}/verifikasi`,
+          `/api/rski/dashboard/karyawan/detail-karyawan-keluarga/${data.user.data_karyawan_id}/verifikasi`,
           payload
         )
         .then((r) => {
@@ -443,6 +442,7 @@ export default function DetailKeluargaKaryawanModalDisclosure({
                         </Wrap>
 
                         <TabelDetailKeluargaKaryawan
+                          idKaryawan={data.user.data_karyawan_id}
                           data={data.data_keluarga}
                         />
                       </CContainer>

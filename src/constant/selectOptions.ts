@@ -8,17 +8,19 @@ const optionsAgama = [
 ];
 
 const optionsHubunganKeluarga = [
-  { value: 1, label: "Ayah" },
-  { value: 2, label: "Ibu" },
-  { value: 3, label: "Anak" },
-  { value: 4, label: "Suami" },
-  { value: 5, label: "Istri" },
-  { value: 6, label: "Nenek" },
-  { value: 7, label: "Kakek" },
-  { value: 8, label: "Ayah Suami" },
-  { value: 9, label: "Ibu Suami" },
-  { value: 10, label: "Ayah Istri" },
-  { value: 11, label: "Ibu Istri" },
+  { value: "Suami", label: "Suami" },
+  { value: "Istri", label: "Istri" },
+  { value: "Anak Ke-1", label: "Anak Ke-1" },
+  { value: "Anak Ke-2", label: "Anak Ke-2" },
+  { value: "Anak Ke-3", label: "Anak Ke-3" },
+  { value: "Anak Ke-4", label: "Anak Ke-4" },
+  { value: "Anak Ke-5", label: "Anak Ke-5" },
+  { value: "Ibu", label: "Ibu" },
+  { value: "Bapak", label: "Bapak" },
+  { value: "Ibu Mertua", label: "Ibu Mertua" },
+  { value: "Bapak Mertua", label: "Bapak Mertua" },
+  // { value: "Nenek", label: "Nenek" },
+  // { value: "Kakek", label: "Kakek" },
 ];
 
 const optionsKategoriCuti = [
