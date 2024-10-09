@@ -28,7 +28,7 @@ import {
   RiListCheck,
   RiMore2Fill,
 } from "@remixicon/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
 import {
   Interface__FormattedTableBody,
@@ -170,14 +170,16 @@ export default function CustomTable({
 
   // console.log(columnsConfig);
 
-  const tableBody = columnsConfig
-    ? formattedData.map((data) => {
-        const filteredColumns = columnsConfig.map(
-          (columnIndex) => data.columnsFormat[columnIndex]
-        );
-        return { ...data, columnsFormat: filteredColumns };
-      })
-    : [...formattedData];
+  const tableBody = useMemo(() => {
+    return columnsConfig
+      ? formattedData.map((data) => {
+          const filteredColumns = columnsConfig.map(
+            (columnIndex) => data.columnsFormat[columnIndex]
+          );
+          return { ...data, columnsFormat: filteredColumns };
+        })
+      : [...formattedData];
+  }, [columnsConfig, formattedData]); // Add dependencies here
 
   // console.log(tableBody);
 
@@ -192,9 +194,10 @@ export default function CustomTable({
     direction: initialSortOrder || "asc",
   });
 
+  // Handle original state change if collumn config changes
   useEffect(() => {
-    setOriginalDataState([...tableBody]); // Simpan data asli saat pertama kali dirender
-  }, [formattedData]);
+    setOriginalDataState(tableBody);
+  }, [tableBody]);
 
   // Row Click
   const handleRowClick = (rowData: any) => {
