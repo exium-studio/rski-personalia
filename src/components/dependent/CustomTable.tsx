@@ -168,6 +168,8 @@ export default function CustomTable({
     ? columnsConfig.map((columnIndex) => formattedHeader[columnIndex])
     : formattedHeader;
 
+  // console.log(columnsConfig);
+
   const tableBody = columnsConfig
     ? formattedData.map((data) => {
         const filteredColumns = columnsConfig.map(
@@ -177,7 +179,9 @@ export default function CustomTable({
       })
     : [...formattedData];
 
-  const [originalDataState, setOriginalDataState] = useState(formattedData); // Simpan data asli
+  // console.log(tableBody);
+
+  const [originalDataState, setOriginalDataState] = useState(tableBody);
   const [selectAllRows, setSelectAllRows] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [sortConfig, setSortConfig] = useState<{
@@ -189,7 +193,7 @@ export default function CustomTable({
   });
 
   useEffect(() => {
-    setOriginalDataState([...formattedData]); // Simpan data asli saat pertama kali dirender
+    setOriginalDataState([...tableBody]); // Simpan data asli saat pertama kali dirender
   }, [formattedData]);
 
   // Row Click
@@ -322,7 +326,7 @@ export default function CustomTable({
       ? sortedData()
       : originalDataState;
 
-  // console.log(dataToMap);
+  // console.log("data", dataToMap);
 
   return (
     <>
