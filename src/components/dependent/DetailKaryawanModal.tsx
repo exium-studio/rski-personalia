@@ -71,6 +71,7 @@ import ResetPasswordKaryawan from "./ResetPasswordKaryawan";
 import Retry from "./Retry";
 import RunPenilaianModal from "./RunPenilaianModal";
 import StatusAktifBadge from "./StatusAktifBadge";
+import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props {
   id?: string;
@@ -108,6 +109,8 @@ export default function DetailKaryawanModal({
   });
   const [search, setSearch] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string[]>([]);
+  const userData = useGetUserData();
+  const isUserSuperAdmin = userData?.role?.id === 1;
 
   useEffect(() => {
     const words = search?.split(" ")?.filter((word) => word.length > 0);
@@ -144,6 +147,7 @@ export default function DetailKaryawanModal({
         "sip",
         "email",
         "riwayat_penyakit",
+        ...(isUserSuperAdmin ? [] : ["role"]),
         ...(isMedic ? [] : nonMedicTerm),
       ];
       let emptyDataLabels: any[] = [];
@@ -165,7 +169,7 @@ export default function DetailKaryawanModal({
 
       return emptyDataLabels;
     },
-    [isMedic]
+    [isMedic, isUserSuperAdmin]
   );
 
   useEffect(() => {
