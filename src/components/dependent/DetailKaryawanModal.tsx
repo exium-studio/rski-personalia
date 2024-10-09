@@ -67,10 +67,10 @@ import DetailTukarJadwalKaryawanModalDisclosure from "./DetailTukarJadwalKaryawa
 import DisclosureHeader from "./DisclosureHeader";
 import EditKaryawanModal from "./EditKaryawanModal";
 import SearchComponent from "./input/SearchComponent";
+import ResetPasswordKaryawan from "./ResetPasswordKaryawan";
 import Retry from "./Retry";
 import RunPenilaianModal from "./RunPenilaianModal";
 import StatusAktifBadge from "./StatusAktifBadge";
-import ResetPasswordKaryawan from "./ResetPasswordKaryawan";
 
 interface Props {
   id?: string;
@@ -99,8 +99,6 @@ export default function DetailKaryawanModal({
   );
 
   const initialRef = useRef(null);
-
-  // const loading = true;
 
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,

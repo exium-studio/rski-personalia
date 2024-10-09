@@ -16,15 +16,16 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { RiLock2Fill } from "@remixicon/react";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "./DisclosureHeader";
-import PasswordInput from "./input/PasswordInput";
 import { useFormik } from "formik";
+import { useRef, useState } from "react";
 import * as yup from "yup";
 import { responsiveSpacing } from "../../constant/sizes";
-import { useRef, useState } from "react";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import backOnClose from "../../lib/backOnClose";
 import req from "../../lib/req";
+import DisclosureHeader from "./DisclosureHeader";
+import PasswordInput from "./input/PasswordInput";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface Props extends ButtonProps {
   userData: any;
@@ -38,6 +39,8 @@ export default function ResetPasswordKaryawan({ userData, ...props }: Props) {
     onOpen,
     onClose
   );
+
+  const isUserSuperAdmin = userData?.role?.id === 1;
 
   const toast = useToast();
   const [loading, setLoading] = useState<boolean>(false);
@@ -126,14 +129,18 @@ export default function ResetPasswordKaryawan({ userData, ...props }: Props) {
 
   return (
     <>
-      <Button
-        className="btn-solid clicky"
-        leftIcon={<Icon as={RiLock2Fill} mb={"2px"} color={"blue.400"} />}
-        onClick={onOpen}
-        {...props}
-      >
-        Reset Password
-      </Button>
+      <PermissionTooltip permission={isUserSuperAdmin} boxProps={{ w: "100%" }}>
+        <Button
+          w={"100%"}
+          className="btn-solid clicky"
+          leftIcon={<Icon as={RiLock2Fill} mb={"2px"} color={"blue.400"} />}
+          onClick={onOpen}
+          isDisabled={!isUserSuperAdmin}
+          {...props}
+        >
+          Reset Password
+        </Button>
+      </PermissionTooltip>
 
       <Modal
         isOpen={isOpen}
