@@ -147,6 +147,7 @@ export default function DetailKaryawanModal({
         "sip",
         "email",
         "riwayat_penyakit",
+        "masa_diklat",
         ...(isUserSuperAdmin ? [] : ["role"]),
         ...(isMedic ? [] : nonMedicTerm),
       ];
