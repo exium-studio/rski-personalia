@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   ButtonProps,
   FormControl,
@@ -18,7 +21,7 @@ import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
-import { iconSize } from "../../constant/sizes";
+import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
@@ -125,6 +128,14 @@ export default function TambahRole({ ...props }: Props) {
             />
           </ModalHeader>
           <ModalBody>
+            <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
+              <AlertIcon />
+              <AlertDescription maxW={"640px !important"}>
+                Pastikan role yang akan dibuat sudah valid, karena role tidak
+                bisa dihapus demi kestabilan sistem.
+              </AlertDescription>
+            </Alert>
+
             <form id="tambahRoleForm" onSubmit={formik.handleSubmit}>
               <FormControl mb={4} isInvalid={formik.errors.name ? true : false}>
                 <FormLabel>
