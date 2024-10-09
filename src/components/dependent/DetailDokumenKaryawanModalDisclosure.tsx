@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Avatar,
   Badge,
   Box,
@@ -284,8 +287,10 @@ export default function DetailDokumenKaryawanModalDisclosure({
       .toLowerCase()
       .includes(searchTerm);
 
-    return matchesSearchTerm && matchesSearchTerm2;
+    return matchesSearchTerm || matchesSearchTerm2;
   });
+
+  console.log(search);
 
   // SX
 
@@ -479,19 +484,34 @@ export default function DetailDokumenKaryawanModalDisclosure({
                         {fd?.length === 0 && <NotFound />}
 
                         {fd?.length > 0 && (
-                          <SimpleGrid
-                            columns={[2, 3, null, 4, 5]}
-                            gap={3}
-                            borderRadius={12}
-                          >
-                            {fd.map((dokumen: any, i: number) => (
-                              <DokumenFileItem
-                                key={i}
-                                data={dokumen}
-                                bg={"var(--divider)"}
-                              />
-                            ))}
-                          </SimpleGrid>
+                          <>
+                            <Alert
+                              status="info"
+                              mb={responsiveSpacing}
+                              alignItems={"start"}
+                              flexShrink={0}
+                            >
+                              <AlertIcon />
+                              <AlertDescription maxW={"100% !important"}>
+                                Arahkan mouse pada item dokumen dan cheklist
+                                dokumen yang ingin diverifikasi/ditolak
+                              </AlertDescription>
+                            </Alert>
+
+                            <SimpleGrid
+                              columns={[2, 3, null, 4, 5]}
+                              gap={3}
+                              borderRadius={12}
+                            >
+                              {fd.map((dokumen: any, i: number) => (
+                                <DokumenFileItem
+                                  key={i}
+                                  data={dokumen}
+                                  bg={"var(--divider)"}
+                                />
+                              ))}
+                            </SimpleGrid>
+                          </>
                         )}
                       </CContainer>
                     )}
