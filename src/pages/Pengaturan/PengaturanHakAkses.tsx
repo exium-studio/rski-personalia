@@ -23,6 +23,7 @@ import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import TabelPengaturanHakAkses from "../../components/dependent/TabelPengaturanHakAkses";
+import backOnClose from "../../lib/backOnClose";
 
 interface Props {
   role_id: number;
@@ -98,6 +99,7 @@ export default function PengaturanHakAkses({ role_id }: Props) {
         .then((r) => {
           if (r.status === 200) {
             setRt(!rt);
+            backOnClose();
             toast({
               status: "success",
               title: r?.data?.message,

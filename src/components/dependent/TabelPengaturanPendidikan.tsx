@@ -27,8 +27,8 @@ export default function TabelPengaturanPendidikan({ filterConfig }: Props) {
   // SX
 
   const { userPermissions } = useAuth();
-  const editPermission = isHasPermissions(userPermissions, [78]);
-  const deletePermission = isHasPermissions(userPermissions, [79]);
+  const editPermission = isHasPermissions(userPermissions, [123]);
+  const deletePermission = isHasPermissions(userPermissions, [124]);
 
   // Row Options Config
   const rowOptions = [

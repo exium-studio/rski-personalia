@@ -293,12 +293,12 @@ export default function TabelPengaturanHakAkses({
                     w={"100%"}
                     maxW={"240px"}
                     borderRight={"1px solid var(--divider3)"}
-                    h={"48px"}
+                    // h={"48px"}
                     px={4}
                     py={2}
                   >
                     <Text
-                      fontWeight={500}
+                      lineHeight={1.2}
                       // border={"1px solid red"}
                     >
                       {item.name}
@@ -311,7 +311,9 @@ export default function TabelPengaturanHakAkses({
                     overflowX={"auto"}
                     className="scrollX"
                     gap={12}
-                    h={"48px"}
+                    minH={"48px"}
+                    h={"100%"}
+                    my={"auto"}
                     px={6}
                     py={2}
                   >

@@ -14,7 +14,6 @@ import PermissionTooltip from "../wrapper/PermissionTooltip";
 import CustomTable from "./CustomTable";
 import DetailKelolaRoleModal from "./DetailKelolaRoleModal";
 import Retry from "./Retry";
-import StatusDihapus from "./StatusDihapus";
 import TabelElipsisText from "./TabelElipsisText";
 
 interface Props {
@@ -31,7 +30,7 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
     (rowData: any) => {
       return (
         <EditRoleModalDisclosure rowData={rowData}>
-          <PermissionTooltip permission={editPermission}>
+          <PermissionTooltip permission={editPermission} placement="left">
             <MenuItem isDisabled={!editPermission}>
               <Text>Edit</Text>
               <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
@@ -104,13 +103,13 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
         borderRight: "1px solid var(--divider3)",
       },
     },
-    {
-      th: "Status Dihapus",
-      isSortable: true,
-      cProps: {
-        justify: "center",
-      },
-    },
+    // {
+    //   th: "Status Dihapus",
+    //   isSortable: true,
+    //   cProps: {
+    //     justify: "center",
+    //   },
+    // },
     {
       th: "Deskripsi",
       isSortable: true,
@@ -131,14 +130,14 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
           borderRight: "1px solid var(--divider3)",
         },
       },
-      {
-        value: item.deleted_at,
-        td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
-        isDate: true,
-        cProps: {
-          justify: "center",
-        },
-      },
+      // {
+      //   value: item.deleted_at,
+      //   td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
+      //   isDate: true,
+      //   cProps: {
+      //     justify: "center",
+      //   },
+      // },
       {
         value: item.deskripsi,
         td: <TabelElipsisText data={item.deskripsi} maxW={"max-content"} />,

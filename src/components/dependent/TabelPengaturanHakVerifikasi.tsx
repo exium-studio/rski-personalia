@@ -127,13 +127,14 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
   // Permissions
   const { userPermissions } = useAuth();
   const editPermission = isHasPermissions(userPermissions, [60]);
+  const deletePermission = isHasPermissions(userPermissions, [129]);
 
   // Row Options Config
   const rowOptions = [
     (rowData: any) => {
       return (
         <EditHakVerifikasiModalDisclosure rowData={rowData}>
-          <PermissionTooltip permission={editPermission}>
+          <PermissionTooltip permission={editPermission} placement="left">
             <MenuItem isDisabled={!editPermission}>
               <Text>Edit</Text>
               <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
@@ -163,13 +164,16 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
           id={rowData.id}
           url={`/api/rski/dashboard/pengaturan/master-verifikasi`}
         >
-          <MenuItem
-            fontWeight={500}
-            isDisabled={rowData.columnsFormat[1]?.value}
-          >
-            <Text color={"red.400"}>Delete</Text>
-            <Icon color={"red.400"} as={RiDeleteBinLine} fontSize={iconSize} />
-          </MenuItem>
+          <PermissionTooltip permission={deletePermission} placement="left">
+            <MenuItem fontWeight={500} isDisabled={!deletePermission}>
+              <Text color={"red.400"}>Delete</Text>
+              <Icon
+                color={"red.400"}
+                as={RiDeleteBinLine}
+                fontSize={iconSize}
+              />
+            </MenuItem>
+          </PermissionTooltip>
         </DeleteDataPengaturanModalDisclosure>
       );
     },
