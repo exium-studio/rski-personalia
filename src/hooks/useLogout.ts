@@ -1,7 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { removeCookie } from "typescript-cookie";
 import req from "../lib/req";
 
 export default function useLogout() {
@@ -15,7 +14,8 @@ export default function useLogout() {
       .get("/api/rski/dashboard/logout")
       .then((r) => {
         if (r.status === 200) {
-          removeCookie("__auth_token");
+          // removeCookie("__auth_token");
+          localStorage.removeItem("__auth_token");
           localStorage.removeItem("__user_data");
           navigate("/");
           toast({

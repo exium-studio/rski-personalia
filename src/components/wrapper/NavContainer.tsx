@@ -17,7 +17,6 @@ import {
 import { RiShieldUserFill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { getCookie } from "typescript-cookie";
 import { useContentBgColor, useLightDarkColor } from "../../constant/colors";
 import navs from "../../constant/navs";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
@@ -181,7 +180,7 @@ export default function NavContainer({
   const userPermissionsRef = useRef(userPermissions);
   const logoutRef = useRef(logout);
   useEffect(() => {
-    const authToken = getCookie("__auth_token");
+    const authToken = localStorage.getItem("__auth_token");
     if (!authToken) {
       logoutRef.current();
     } else {

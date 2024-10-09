@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie, removeCookie } from "typescript-cookie";
+import { removeCookie } from "typescript-cookie";
 
 const req = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -14,7 +14,7 @@ const req = axios.create({
 // Add a request interceptor
 req.interceptors.request.use(
   (config) => {
-    const token = getCookie("__auth_token");
+    const token = localStorage.getItem("__auth_token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

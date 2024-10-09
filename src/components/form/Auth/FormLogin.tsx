@@ -11,16 +11,15 @@ import {
 import { useFormik } from "formik";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { setCookie } from "typescript-cookie";
 import * as yup from "yup";
 import { responsiveSpacing } from "../../../constant/sizes";
+import useAuth from "../../../global/useAuth";
 import useGetUserData from "../../../hooks/useGetUserData";
 import req from "../../../lib/req";
 import PasswordInput from "../../dependent/input/PasswordInput";
 import StringInput from "../../dependent/input/StringInput";
 import CContainer from "../../wrapper/CContainer";
 import RequiredForm from "../RequiredForm";
-import useAuth from "../../../global/useAuth";
 
 export default function FormLogin() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -57,7 +56,8 @@ export default function FormLogin() {
           // console.log(r.data.user.data);
 
           if (r.status === 200) {
-            setCookie("__auth_token", r.data.token);
+            // setCookie("__auth_token", r.data.token);
+            localStorage.setItem("__auth_token", r.data.token);
             localStorage.setItem(
               "__user_data",
               JSON.stringify(r.data.user.data)
