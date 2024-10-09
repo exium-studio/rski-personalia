@@ -25,14 +25,19 @@ export default function FileTypeIcon({ type, ...props }: Props) {
         return RiFilePdf2Fill;
       case "docx":
       case "doc":
+      case "vnd.ms-word":
+      case "vnd.openxmlformats-officedocument.wordprocessingml.document":
         color.current = "blue.400";
         return RiFileWordFill;
       case "xls":
       case "xlsx":
+      case "vnd.ms-excel":
         color.current = "green.400";
         return RiFileExcelFill;
       case "ppt":
       case "pptx":
+      case "vnd.ms-presentation":
+      case "vnd.openxmlformats-officedocument.presentationml.presentation":
         color.current = "green.400";
         return RiFileExcelFill;
       case "csv":

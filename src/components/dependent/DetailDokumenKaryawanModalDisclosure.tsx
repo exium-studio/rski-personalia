@@ -3,7 +3,6 @@ import {
   AlertDescription,
   AlertIcon,
   Avatar,
-  Badge,
   Box,
   BoxProps,
   Button,
@@ -20,7 +19,6 @@ import {
   ModalOverlay,
   SimpleGrid,
   Text,
-  Tooltip,
   useDisclosure,
   useToast,
   VStack,
@@ -31,31 +29,32 @@ import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
+import isHasPermissions from "../../lib/isHasPermissions";
 import req from "../../lib/req";
 import RequiredForm from "../form/RequiredForm";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 import DisclosureHeader from "./DisclosureHeader";
 import DokumenFileItem from "./DokumenFileItem";
+import SearchComponent from "./input/SearchComponent";
 import Textarea from "./input/Textarea";
 import Retry from "./Retry";
-import formatDate from "../../lib/formatDate";
-import SearchComponent from "./input/SearchComponent";
-import useAuth from "../../global/useAuth";
-import PermissionTooltip from "../wrapper/PermissionTooltip";
-import isHasPermissions from "../../lib/isHasPermissions";
 
 interface VerifikasiProps {
   data: any;
+  selectedDokumen: number[];
 }
 
-const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
+const VerifikasiButtonModal = ({ data, selectedDokumen }: VerifikasiProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
     `verifikasi-dokumen-karyawan-${data.id}`,
@@ -94,9 +93,9 @@ const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
         alasan: values.alasan,
       };
       if (values.verifikasi === 1) {
-        payload = payload1;
+        payload = { berkas_id: selectedDokumen, ...payload1 };
       } else {
-        payload = payload2;
+        payload = { berkas_id: selectedDokumen, ...payload2 };
       }
 
       req
@@ -269,6 +268,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
   );
   const initialRef = useRef(null);
 
+  // States
   // const loading = true;
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
@@ -276,9 +276,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
     dependencies: [],
     conditions: !!(isOpen && karyawan_id),
   });
-
   const [search, setSearch] = useState("");
-
   const fd = data?.data_dokumen?.filter((item: any) => {
     const searchTerm = search?.toLowerCase();
 
@@ -289,8 +287,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
 
     return matchesSearchTerm || matchesSearchTerm2;
   });
-
-  console.log(search);
+  const [selectedDokumen, setSelectedDokumen] = useState<number[]>([]);
 
   // SX
 
@@ -410,66 +407,71 @@ export default function DetailDokumenKaryawanModalDisclosure({
                           mb={8}
                           align={"center"}
                         >
-                          <Avatar
-                            size={"lg"}
-                            src={data.user.foto_profil}
-                            name={data.user.nama}
-                            w={"55px"}
-                            h={"55px"}
+                          <>
+                            <Avatar
+                              size={"lg"}
+                              src={data.user.foto_profil}
+                              name={data.user.nama}
+                              w={"55px"}
+                              h={"55px"}
+                            />
+
+                            <VStack align={"stretch"}>
+                              <Text fontSize={14} opacity={0.6}>
+                                Nama Karyawan
+                              </Text>
+                              <Text fontWeight={500}>{data.user.nama}</Text>
+                            </VStack>
+
+                            <VStack align={"stretch"}>
+                              <Text fontSize={14} opacity={0.6}>
+                                Jumlah Dokumen
+                              </Text>
+                              <Text fontWeight={500}>
+                                {data.jumlah_dokumen || 0}
+                              </Text>
+                            </VStack>
+
+                            {/* <VStack align={"stretch"}>
+                              <Text fontSize={14} opacity={0.6}>
+                                Status Verifikasi
+                              </Text>
+                              <Text fontWeight={500}>
+                                <Tooltip label={data?.alasan}>
+                                  <Badge
+                                    colorScheme={
+                                      data?.status_berkas?.status ===
+                                      "Diverifikasi"
+                                        ? "green"
+                                        : data?.status_berkas?.status ===
+                                          "Menunggu"
+                                        ? "orange"
+                                        : "red"
+                                    }
+                                    borderRadius={"full"}
+                                  >
+                                    {data?.status_berkas?.status}
+                                  </Badge>
+                                </Tooltip>
+                              </Text>
+                            </VStack> */}
+
+                            <VStack align={"stretch"}>
+                              <Text fontSize={14} opacity={0.6}>
+                                Terakhir Diverifikasi
+                              </Text>
+                              <Text fontWeight={500}>
+                                {formatDate(
+                                  data?.status_berkas?.terakhir_diperbarui
+                                )}
+                              </Text>
+                            </VStack>
+                          </>
+
+                          <VerifikasiButtonModal
+                            data={data}
+                            selectedDokumen={selectedDokumen}
                           />
-
-                          <VStack align={"stretch"}>
-                            <Text fontSize={14} opacity={0.6}>
-                              Nama Karyawan
-                            </Text>
-                            <Text fontWeight={500}>{data.user.nama}</Text>
-                          </VStack>
-
-                          <VStack align={"stretch"}>
-                            <Text fontSize={14} opacity={0.6}>
-                              Jumlah Dokumen
-                            </Text>
-                            <Text fontWeight={500}>
-                              {data.jumlah_dokumen || 0}
-                            </Text>
-                          </VStack>
-
-                          <VStack align={"stretch"}>
-                            <Text fontSize={14} opacity={0.6}>
-                              Status Verifikasi
-                            </Text>
-                            <Text fontWeight={500}>
-                              <Tooltip label={data?.alasan}>
-                                <Badge
-                                  colorScheme={
-                                    data?.status_berkas?.status ===
-                                    "Diverifikasi"
-                                      ? "green"
-                                      : data?.status_berkas?.status ===
-                                        "Menunggu"
-                                      ? "orange"
-                                      : "red"
-                                  }
-                                  borderRadius={"full"}
-                                >
-                                  {data?.status_berkas?.status}
-                                </Badge>
-                              </Tooltip>
-                            </Text>
-                          </VStack>
-
-                          <VStack align={"stretch"}>
-                            <Text fontSize={14} opacity={0.6}>
-                              Terakhir Diverifikasi
-                            </Text>
-                            <Text fontWeight={500}>
-                              {formatDate(
-                                data?.status_berkas?.terakhir_diperbarui
-                              )}
-                            </Text>
-                          </VStack>
-
-                          <VerifikasiButtonModal data={data} />
                         </Wrap>
 
                         <SearchComponent
@@ -507,6 +509,8 @@ export default function DetailDokumenKaryawanModalDisclosure({
                                 <DokumenFileItem
                                   key={i}
                                   data={dokumen}
+                                  selectedDokumen={selectedDokumen}
+                                  setSelectedDokumen={setSelectedDokumen}
                                   bg={"var(--divider)"}
                                 />
                               ))}
