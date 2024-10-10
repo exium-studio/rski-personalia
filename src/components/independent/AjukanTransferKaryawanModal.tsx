@@ -378,7 +378,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                 </FormControl>
 
                 <CContainer gap={4} pt={8}>
-                  <FormControl>
+                  {/* <FormControl>
                     <Checkbox colorScheme="ap" alignItems={"start"}>
                       <Text mt={"-2px"}>
                         Beritahu Manajer Karyawan dan Direktur Melalui Email
@@ -387,7 +387,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                     <FormErrorMessage>
                       {formik.errors.beri_tahu_manajer_direktur as string}
                     </FormErrorMessage>
-                  </FormControl>
+                  </FormControl> */}
 
                   <FormControl>
                     <Checkbox colorScheme="ap">

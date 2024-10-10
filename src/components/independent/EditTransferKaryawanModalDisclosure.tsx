@@ -442,7 +442,7 @@ export default function EditTransferKaryawanModalDisclosure({
                 </FormControl>
 
                 <CContainer gap={4} pt={8}>
-                  <FormControl>
+                  {/* <FormControl>
                     <Checkbox colorScheme="ap" alignItems={"start"}>
                       <Text mt={"-2px"}>
                         Beritahu Manajer Karyawan dan Direktur Melalui Email
@@ -451,7 +451,7 @@ export default function EditTransferKaryawanModalDisclosure({
                     <FormErrorMessage>
                       {formik.errors.beri_tahu_manajer_direktur as string}
                     </FormErrorMessage>
-                  </FormControl>
+                  </FormControl> */}
 
                   <FormControl>
                     <Checkbox colorScheme="ap">
