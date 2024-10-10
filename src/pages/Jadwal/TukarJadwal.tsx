@@ -4,16 +4,15 @@ import MultiSelectStatusPenukaranJadwal from "../../components/dependent/_Select
 import ExportModal from "../../components/dependent/ExportModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelTukarJadwal from "../../components/dependent/TabelTukarJadwal";
-import AjukanTukarJadwalModal from "../../components/independent/AjukanTukarJadwalModal";
 import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useAuth from "../../global/useAuth";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
 import isHasPermissions from "../../lib/isHasPermissions";
-import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function TukarJadwal() {
   // Filter Config
@@ -47,7 +46,7 @@ export default function TukarJadwal() {
   const lightDarkColor = useLightDarkColor();
 
   const { userPermissions } = useAuth();
-  const createPermissions = isHasPermissions(userPermissions, [26]);
+  // const createPermissions = isHasPermissions(userPermissions, [26]);
   const exportPermissions = isHasPermissions(userPermissions, [30]);
 
   return (
@@ -110,7 +109,7 @@ export default function TukarJadwal() {
               />
             </PermissionTooltip>
 
-            <PermissionTooltip
+            {/* <PermissionTooltip
               permission={createPermissions}
               boxProps={{ w: "fit-content" }}
             >
@@ -118,7 +117,7 @@ export default function TukarJadwal() {
                 minW={"fit-content"}
                 isDisabled={!createPermissions}
               />
-            </PermissionTooltip>
+            </PermissionTooltip> */}
           </HStack>
 
           <TabelTukarJadwal filterConfig={filterConfig} />

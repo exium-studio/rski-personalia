@@ -5,8 +5,8 @@ import pengaturanNavs from "../../constant/pengaturanNavs";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
-import isHasSomePermissions from "../../lib/isHasSomePermissions";
 import CContainer from "../wrapper/CContainer";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface Props {
   activeGroup?: number;
@@ -41,52 +41,58 @@ export default function PengaturanNavs({ activeGroup, active }: Props) {
         className="scrollY"
       >
         {pengaturanNavs.map((nav, i) => {
-          const hasPermissions = isHasSomePermissions(
-            userPermissions,
-            nav.allowed
-          );
+          // const hasSomePermissions = isHasSomePermissions(
+          //   userPermissions,
+          //   nav.allowed
+          // );
 
           return (
-            hasPermissions && (
-              <CContainer key={i} gap={2}>
-                <Text fontWeight={600} opacity={0.4}>
-                  {nav.groupName}
-                </Text>
-                {nav.navs.map((subNav, ii) => {
-                  const hasPermissiong = isHasPermissions(
-                    userPermissions,
-                    subNav.allowed
-                  );
+            <CContainer key={i} gap={2}>
+              <Text fontWeight={600} opacity={0.4}>
+                {nav.groupName}
+              </Text>
 
-                  return (
-                    hasPermissiong && (
-                      <Button
-                        key={ii}
-                        justifyContent={"flex-start"}
-                        leftIcon={
-                          <Icon
-                            as={subNav.icon}
-                            fontSize={iconSize}
-                            // opacity={0.4}
-                          />
-                        }
-                        className={
-                          activeGroup === i && ii === active ? "btn-apa" : "btn"
-                        }
-                        fontWeight={500}
-                        as={Link}
-                        to={subNav.link}
-                        h={"40px"}
-                        size={"sm"}
-                        px={"8px !important"}
-                      >
-                        {subNav.label}
-                      </Button>
-                    )
-                  );
-                })}
-              </CContainer>
-            )
+              {nav.navs.map((subNav, ii) => {
+                const hasPermission = isHasPermissions(
+                  userPermissions,
+                  subNav.allowed
+                );
+
+                return (
+                  <PermissionTooltip
+                    key={ii}
+                    permission={hasPermission}
+                    placement="right"
+                    boxProps={{
+                      w: "fit-content",
+                    }}
+                  >
+                    <Button
+                      justifyContent={"flex-start"}
+                      leftIcon={
+                        <Icon
+                          as={subNav.icon}
+                          fontSize={iconSize}
+                          // opacity={0.4}
+                        />
+                      }
+                      isDisabled={!hasPermission}
+                      className={
+                        activeGroup === i && ii === active ? "btn-apa" : "btn"
+                      }
+                      fontWeight={500}
+                      as={Link}
+                      to={hasPermission ? subNav.link : ""}
+                      h={"40px"}
+                      size={"sm"}
+                      px={"8px !important"}
+                    >
+                      {subNav.label}
+                    </Button>
+                  </PermissionTooltip>
+                );
+              })}
+            </CContainer>
           );
         })}
       </CContainer>

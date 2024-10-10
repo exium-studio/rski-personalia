@@ -8,11 +8,13 @@ import {
   RiGraduationCapLine,
   RiGroup3Line,
   RiHandCoinLine,
+  RiHospitalLine,
   RiIdCardLine,
   RiLandscapeLine,
   RiListIndefinite,
   RiLockLine,
   RiMapPinLine,
+  RiMedalLine,
   RiQuestionLine,
   RiQuestionMark,
   RiUserSettingsLine,
@@ -45,7 +47,7 @@ const pengaturanNavs = [
     ],
   },
   {
-    allowed: [80, 72, 69, 76, 114, 84, 125],
+    allowed: [80, 72, 69, 76, 114, 84, 125, 140],
     groupName: "Karyawan",
     navs: [
       {
@@ -88,6 +90,18 @@ const pengaturanNavs = [
         allowed: [84],
         icon: RiQuestionMark,
         label: "Kuesioner Penilaian",
+        link: "/pengaturan/karyawan/kuisioner",
+      },
+      {
+        allowed: [140],
+        icon: RiHospitalLine,
+        label: "Tentang Rumah Sakit",
+        link: "/pengaturan/karyawan/kuisioner",
+      },
+      {
+        allowed: [140],
+        icon: RiMedalLine,
+        label: "Mutu Rumah Sakit",
         link: "/pengaturan/karyawan/kuisioner",
       },
     ],
