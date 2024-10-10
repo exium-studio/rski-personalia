@@ -64,7 +64,7 @@ export default function PengaturanNavs({ activeGroup, active }: Props) {
                     permission={hasPermission}
                     placement="right"
                     boxProps={{
-                      w: "fit-content",
+                      w: "100%",
                     }}
                   >
                     <Button
@@ -84,6 +84,7 @@ export default function PengaturanNavs({ activeGroup, active }: Props) {
                       as={Link}
                       to={hasPermission ? subNav.link : ""}
                       h={"40px"}
+                      w={"100%"}
                       size={"sm"}
                       px={"8px !important"}
                     >
