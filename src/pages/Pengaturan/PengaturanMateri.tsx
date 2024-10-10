@@ -42,7 +42,7 @@ export default function PengaturanMateri() {
       borderRadius={12}
       flex={"1 1 600px"}
     >
-      <SimpleGrid columns={[1]} gap={responsiveSpacing}>
+      <SimpleGrid columns={[1, 2, null, null, 3]} gap={responsiveSpacing}>
         <FileInputLarge
           name="dokumen_1"
           onChangeSetter={(input) => {

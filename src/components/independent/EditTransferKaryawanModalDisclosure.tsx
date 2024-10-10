@@ -425,7 +425,7 @@ export default function EditTransferKaryawanModalDisclosure({
                   isInvalid={formik.errors.alasan ? true : false}
                 >
                   <FormLabel>
-                    Alesan
+                    Alasan
                     <RequiredForm />
                   </FormLabel>
                   <Textarea

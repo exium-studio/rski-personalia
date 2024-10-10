@@ -361,7 +361,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                   isInvalid={formik.errors.alasan ? true : false}
                 >
                   <FormLabel>
-                    Alesan
+                    Alasan
                     <RequiredForm />
                   </FormLabel>
                   <Textarea
