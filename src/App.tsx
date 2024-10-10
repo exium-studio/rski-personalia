@@ -50,6 +50,7 @@ import PengaturanKompetensi from "./pages/Pengaturan/PengaturanKompetensi";
 import PengaturanKuisioner from "./pages/Pengaturan/PengaturanKuisioner";
 import PengaturanLanding from "./pages/Pengaturan/PengaturanLanding";
 import PengaturanLokasiPresensi from "./pages/Pengaturan/PengaturanLokasiPresensi";
+import PengaturanMateri from "./pages/Pengaturan/PengaturanMateri";
 import PengaturanPendidikan from "./pages/Pengaturan/PengaturanPendidikan";
 import PengaturanPremi from "./pages/Pengaturan/PengaturanPotongan";
 import PengaturanPtkp from "./pages/Pengaturan/PengaturanPtkp";
@@ -589,7 +590,7 @@ export const App = () => {
                 title="Pengaturan - Materi"
               >
                 <PengaturanContainer activeGroup={1} active={8}>
-                  <PengaturanKuisioner />
+                  <PengaturanMateri />
                 </PengaturanContainer>
               </NavContainer>
             }

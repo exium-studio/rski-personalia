@@ -232,7 +232,7 @@ export default function EditTransferKaryawanModalDisclosure({
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title={"Transfer Karyawan"}
+              title={"Edit Transfer Karyawan"}
               onClose={() => {
                 formik.resetForm();
               }}

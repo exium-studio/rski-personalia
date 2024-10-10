@@ -168,7 +168,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title={"Edit Transfer Karyawan"}
+              title={"Transfer Karyawan"}
               onClose={() => {
                 formik.resetForm();
               }}
