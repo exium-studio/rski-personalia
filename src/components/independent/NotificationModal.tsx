@@ -158,7 +158,7 @@ export default function NotificationModal({ ...props }: Props) {
             top={-2}
             right={-2}
           >
-            <Text fontWeight={550} fontSize={12}>
+            <Text fontWeight={550} fontSize={12} color={"white"}>
               {notRedCount}
             </Text>
           </Center>
