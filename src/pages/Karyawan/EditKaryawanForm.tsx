@@ -41,6 +41,7 @@ import formatNumber from "../../lib/formatNumber";
 import parseNumber from "../../lib/parseNumber";
 import req from "../../lib/req";
 import SelectPendidikan from "../../components/dependent/_Select/SelectPendidikan";
+import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props {
   activeStep: number;
@@ -59,6 +60,8 @@ export default function EditKaryawanForm({
 }: Props) {
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
+  const userData = useGetUserData();
+  const isUserSuperAdmin = userData?.role?.id === 1;
 
   const [noLimitStr, setNoLimitStr] = useState<boolean>(
     data?.masa_berlaku_str === null ? true : false
@@ -170,10 +173,12 @@ export default function EditKaryawanForm({
             label: data?.kompetensi?.nama_kompetensi,
           }
         : undefined,
-      role: {
-        value: data?.role?.id,
-        label: data?.role?.name,
-      },
+      role: data?.role
+        ? {
+            value: data?.role?.id,
+            label: data?.role?.name,
+          }
+        : undefined,
       kelompok_gaji: {
         value: data?.kelompok_gaji?.id,
         label: data?.kelompok_gaji?.nama_kelompok,
@@ -267,7 +272,7 @@ export default function EditKaryawanForm({
         unit_kerja_id: values.unit_kerja.value,
         jabatan_id: values.jabatan.value,
         kompetensi_id: values?.kompetensi?.value,
-        role_id: values.role.value,
+        role_id: values?.role?.value,
         kelompok_gaji_id: values.kelompok_gaji.value,
         no_rekening: values.no_rekening,
         tunjangan_jabatan: values.tunjangan_jabatan,
@@ -347,7 +352,7 @@ export default function EditKaryawanForm({
   const handleNext = () => {
     formik.validateForm().then((errors) => {
       if (Object.keys(errors).length === 0) {
-        if (activeStep === 2) {
+        if (isUserSuperAdmin ? activeStep === 2 : activeStep === 1) {
           formik.submitForm();
         } else {
           setActiveStep(activeStep + 1);
@@ -983,7 +988,7 @@ export default function EditKaryawanForm({
           onClick={handleNext}
           isLoading={loading}
         >
-          Lanjut
+          {isUserSuperAdmin ? "Lanjut" : "Simpan"}
         </Button>
       </ButtonGroup>
     );
