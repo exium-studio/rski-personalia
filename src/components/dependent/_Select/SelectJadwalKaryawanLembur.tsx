@@ -5,6 +5,7 @@ import backOnClose from "../../../lib/backOnClose";
 import formatTime from "../../../lib/formatTime";
 import req from "../../../lib/req";
 import SingleSelectModal from "../input/SingleSelectModal";
+import formatDate from "../../../lib/formatDate";
 
 interface Props extends ButtonProps {
   user_id?: number;
@@ -50,7 +51,8 @@ export default function SelectJadwalKaryawanLembur({
             optionsRaw = optionsRaw.filter((item: any) => item !== null);
             const options = optionsRaw.map((item: any) => ({
               value: item?.id,
-              label: item?.nama_shift || item?.nama,
+              // label: item?.nama_shift || item?.nama,
+              label: formatDate(item?.tanggal),
               label2: `${formatTime(item?.jam_from)} - ${formatTime(
                 item?.jam_to
               )}`,
