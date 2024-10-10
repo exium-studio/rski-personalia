@@ -668,6 +668,47 @@ button[aria-label="Close"] > svg {
   max-height: 250px !important;
 }
 
+/* Jodit Styles */
+.jodit-toolbar__box {
+  top: -20px !important;
+}
+.jodit-container {
+  color: black;
+}
+.jodit-status-bar__item:nth-child(3),
+.jodit-status-bar__item:nth-child(4) {
+  display: none;
+}
+.jodit-ui-input__wrapper,
+.jodit-ui-text-area__wrapper {
+  border: none !important;
+}
+.jodit-ui-block {
+  margin-bottom: 0 !important;
+}
+.jodit-ui-button {
+  border-radius: 8px !important;
+}
+.jodit-ui-button_variant_primary {
+  background: var(--p500) !important;
+}
+.jodit-popup,
+.jodit-popup__content {
+  border-radius: 16px !important;
+}
+.jodit-popup__content {
+  padding: 12px !important;
+}
+.jodit_hovered {
+  background: var(--divider3) !important;
+  border: none !important;
+  color: white;
+}
+.jodit-dialog__panel {
+  border-radius: 16px !important;
+  padding: 16px !important;
+}
+
 /* Custom Start*/
 
 .leaflet-control-zoom {

@@ -54,6 +54,7 @@ import PengaturanPendidikan from "./pages/Pengaturan/PengaturanPendidikan";
 import PengaturanPremi from "./pages/Pengaturan/PengaturanPotongan";
 import PengaturanPtkp from "./pages/Pengaturan/PengaturanPtkp";
 import PengaturanShift from "./pages/Pengaturan/PengaturanShift";
+import PengaturanTentang from "./pages/Pengaturan/PengaturanTentang";
 import PengaturanTerPph21 from "./pages/Pengaturan/PengaturanTerPph21";
 import PengaturanCuti from "./pages/Pengaturan/PengaturanTipeCuti";
 import PengaturanUbahKataSandi from "./pages/Pengaturan/PengaturanUbahKataSandi";
@@ -570,10 +571,10 @@ export const App = () => {
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pengaturan - Kuesioner Penilaian"
+                title="Pengaturan - Tentang Rumah Sakit"
               >
                 <PengaturanContainer activeGroup={1} active={7}>
-                  <PengaturanKuisioner />
+                  <PengaturanTentang />
                 </PengaturanContainer>
               </NavContainer>
             }
@@ -585,7 +586,7 @@ export const App = () => {
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pengaturan - Kuesioner Penilaian"
+                title="Pengaturan - Materi"
               >
                 <PengaturanContainer activeGroup={1} active={8}>
                   <PengaturanKuisioner />

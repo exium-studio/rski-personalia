@@ -8,7 +8,7 @@ interface Props extends ButtonProps {
 
 export default function Retry({ loading, retry, ...props }: Props) {
   return (
-    <VStack p={4}>
+    <VStack p={4} m={"auto"}>
       <Icon opacity={0.2} as={RiErrorWarningLine} fontSize={80} />
       <Text opacity={0.2} textAlign={"center"} fontWeight={600} mb={2}>
         Maaf, data gagal dimuat
