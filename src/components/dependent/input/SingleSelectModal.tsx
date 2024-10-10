@@ -234,7 +234,9 @@ export default function SingleSelectModal({
                         {fo.map((option, i) => (
                           <Tooltip
                             key={i}
-                            label={`${option?.label} ${option?.label2}`}
+                            label={`${option?.label || ""} ${
+                              option?.label2 || ""
+                            }`}
                             placement="bottom-start"
                             openDelay={500}
                           >
