@@ -47,7 +47,7 @@ const pengaturanNavs = [
     ],
   },
   {
-    allowed: [80, 72, 69, 76, 114, 84, 125, 140],
+    allowed: [80, 72, 69, 76, 114, 84, 125, 140, 137],
     groupName: "Karyawan",
     navs: [
       {
@@ -99,7 +99,7 @@ const pengaturanNavs = [
         link: "/pengaturan/karyawan/tentang",
       },
       {
-        allowed: [140],
+        allowed: [137],
         icon: RiBook2Line,
         label: "Materi",
         link: "/pengaturan/karyawan/materi",
