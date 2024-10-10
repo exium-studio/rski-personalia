@@ -7,7 +7,7 @@ interface Props extends StackProps {
 
 export default function NoData({ label, ...props }: Props) {
   return (
-    <VStack flex={1} justify={"center"} opacity={0.2} {...props}>
+    <VStack flex={1} justify={"center"} opacity={0.2} m={"auto"} {...props}>
       <Icon as={RiCloseCircleLine} fontSize={80} />
       <Text textAlign={"center"} fontWeight={600}>
         {label || "Tidak ada data"}

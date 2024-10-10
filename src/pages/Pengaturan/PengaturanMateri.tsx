@@ -1,11 +1,251 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  HStack,
+  Icon,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  SimpleGrid,
+  Text,
+  Tooltip,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
+import { RiBook2Line } from "@remixicon/react";
 import { useFormik } from "formik";
+import { useState } from "react";
 import * as yup from "yup";
-import FileInputLarge from "../../components/dependent/input/FileInputLarge";
+import DisclosureHeader from "../../components/dependent/DisclosureHeader";
+import FileInput from "../../components/dependent/input/FileInput";
+import StringInput from "../../components/dependent/input/StringInput";
+import Textarea from "../../components/dependent/input/Textarea";
+import Retry from "../../components/dependent/Retry";
+import RequiredForm from "../../components/form/RequiredForm";
+import NoData from "../../components/independent/NoData";
+import Skeleton from "../../components/independent/Skeleton";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import useGetUserData from "../../hooks/useGetUserData";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
+import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
+import req from "../../lib/req";
+
+const MateriSlot = ({ initialValues }: any) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`materi-modal-${1}`, isOpen, onOpen, onClose);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+  const userData = useGetUserData();
+
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues,
+    validationSchema: yup.object().shape({}),
+    onSubmit: (values, { resetForm }) => {
+      setLoading(true);
+
+      const url = `api/rski/dashboard/pengaturan/materi-pelatihan/${initialValues?.id}`;
+      const payload = new FormData();
+      payload.append("_method", "patch");
+      payload.append("user_id", userData?.id);
+      payload.append("judul", values.judul);
+      payload.append("deskripsi", values.deskripsi);
+      payload.append(`dokumen_materi_1`, values?.dokumen_materi_1);
+      payload.append(`dokumen_materi_2`, values?.dokumen_materi_2);
+      payload.append(`dokumen_materi_3`, values?.dokumen_materi_3);
+
+      req
+        .post(url, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            setRt(!rt);
+            backOnClose();
+            toast({
+              status: "success",
+              title: r?.data?.message,
+              position: "bottom-right",
+              isClosable: true,
+            });
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Maaf terjadi kesalahan pada sistem",
+            position: "bottom-right",
+            isClosable: true,
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+  });
+
+  return (
+    <>
+      <CContainer
+        flex={0}
+        bg={"var(--divider)"}
+        borderRadius={8}
+        cursor={"pointer"}
+        position={"relative"}
+        overflow={"clip"}
+        onClick={onOpen}
+      >
+        <HStack py={3} px={4}>
+          <Text>{initialValues?.judul}</Text>
+        </HStack>
+
+        <Center p={4} flexDir={"column"}>
+          <Icon as={RiBook2Line} fontSize={72} mb={2} />
+          <Text textAlign={"center"} opacity={0.4}>
+            Klik untuk edit
+          </Text>
+        </Center>
+
+        <HStack opacity={0.4} justify={"space-between"} py={3} px={4}>
+          <Tooltip
+            label={`Diunggah pada ${formatDate(initialValues.created_at)}`}
+            openDelay={500}
+          >
+            <Text fontSize={11}>
+              {formatDate(initialValues.created_at, "short")}
+            </Text>
+          </Tooltip>
+
+          <Tooltip
+            label={`Diperbarui pada ${formatDate(initialValues.updated_at)}`}
+            openDelay={500}
+          >
+            <Text fontSize={11}>
+              {formatDate(initialValues.updated_at, "short")}
+            </Text>
+          </Tooltip>
+        </HStack>
+      </CContainer>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Materi"} />
+          </ModalHeader>
+          <ModalBody mb={6}>
+            <form id="materiForm" onSubmit={formik.handleSubmit}>
+              <FormControl mb={4} isInvalid={!!formik.errors.judul}>
+                <FormLabel>
+                  Judul
+                  <RequiredForm />
+                </FormLabel>
+                <StringInput
+                  name="judul"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("judul", input);
+                  }}
+                  inputValue={formik.values.judul}
+                  placeholder="Materi Diklat"
+                />
+                <FormErrorMessage>
+                  {formik.errors.judul as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={4} isInvalid={!!formik.errors.deskripsi}>
+                <FormLabel>
+                  Deskripsi
+                  <RequiredForm />
+                </FormLabel>
+                <Textarea
+                  name="deskripsi"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("deskripsi", input);
+                  }}
+                  inputValue={formik.values.deskripsi}
+                  placeholder="Materi Diklat"
+                />
+                <FormErrorMessage>
+                  {formik.errors.deskripsi as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={4} isInvalid={!!formik.errors.dokumen_materi_1}>
+                <FormLabel>Dokumen 1</FormLabel>
+                <FileInput
+                  name="dokumen_materi_1"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("dokumen_materi_1", input);
+                  }}
+                  inputValue={formik.values.dokumen_materi_1}
+                  accept=".pdf, pptx, docx"
+                />
+                <FormErrorMessage>
+                  {formik.errors.dokumen_materi_1 as string}
+                </FormErrorMessage>
+              </FormControl>
+            </form>
+
+            <Button
+              mt={2}
+              type="submit"
+              form="materiForm"
+              colorScheme="ap"
+              className="btn-ap clicky"
+              isLoading={loading}
+            >
+              Simpan
+            </Button>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+interface MateriItemProps {
+  initialData: any;
+}
+
+const MateriItem = ({ initialData }: MateriItemProps) => {
+  const initialValues = {
+    id: initialData.id,
+    judul: initialData?.judul || "",
+    deskripsi: initialData?.deskripsi || "",
+    user: initialData?.user,
+    dokumen_materi_1: (initialData?.dokumen_materi_1?.path || "") as any,
+    dokumen_materi_2: (initialData?.dokumen_materi_2?.path || "") as any,
+    dokumen_materi_3: (initialData?.dokumen_materi_3?.path || "") as any,
+    created_at: initialData?.created_at,
+    updated_at: initialData?.updated_at,
+  };
+
+  return (
+    <>
+      <MateriSlot initialValues={initialValues} />
+    </>
+  );
+};
 
 export default function PengaturanMateri() {
   // SX
@@ -18,18 +258,37 @@ export default function PengaturanMateri() {
     dependencies: [],
   });
 
-  const formik = useFormik({
-    validateOnChange: false,
-    initialValues: {
-      dokumen_1: "",
-      dokumen_2: "",
-      dokumen_3: "",
-    },
-    validationSchema: yup.object().shape({}),
-    onSubmit: (values, { resetForm }) => {
-      console.log(values);
-    },
-  });
+  // Render Lateral
+  const render = {
+    loading: (
+      <>
+        <SimpleGrid columns={[2, 3, null, 4, 5]} gap={responsiveSpacing}>
+          {Array?.from({ length: 3 }).map((_, i) => (
+            <Skeleton key={i} h={"210px"} />
+          ))}
+        </SimpleGrid>
+      </>
+    ),
+    error: (
+      <>
+        <Retry retry={retry} />
+      </>
+    ),
+    empty: (
+      <>
+        <NoData />
+      </>
+    ),
+    loaded: (
+      <>
+        <SimpleGrid columns={[2, 3, null, 4, 5]} gap={responsiveSpacing}>
+          {data?.map((item: any, i: number) => (
+            <MateriItem key={i} initialData={item} />
+          ))}
+        </SimpleGrid>
+      </>
+    ),
+  };
 
   return (
     <CContainer
@@ -42,31 +301,18 @@ export default function PengaturanMateri() {
       borderRadius={12}
       flex={"1 1 600px"}
     >
-      <SimpleGrid columns={[1, 2, null, null, 3]} gap={responsiveSpacing}>
-        <FileInputLarge
-          name="dokumen_1"
-          onChangeSetter={(input) => {
-            formik.setFieldValue("dokumen_1", input);
-          }}
-          inputValue={formik.values.dokumen_1}
-        />
-
-        <FileInputLarge
-          name="dokumen_2"
-          onChangeSetter={(input) => {
-            formik.setFieldValue("dokumen_2", input);
-          }}
-          inputValue={formik.values.dokumen_2}
-        />
-
-        <FileInputLarge
-          name="dokumen_3"
-          onChangeSetter={(input) => {
-            formik.setFieldValue("dokumen_3", input);
-          }}
-          inputValue={formik.values.dokumen_3}
-        />
-      </SimpleGrid>
+      {loading && render.loading}
+      {!loading && (
+        <>
+          {error && render.error}
+          {!error && (
+            <>
+              {!data && render.empty}
+              {data && render.loaded}
+            </>
+          )}
+        </>
+      )}
     </CContainer>
   );
 }
