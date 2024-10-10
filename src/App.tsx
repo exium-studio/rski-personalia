@@ -564,6 +564,38 @@ export const App = () => {
             }
           />
           <Route
+            path="/pengaturan/karyawan/tentang"
+            element={
+              <NavContainer
+                active={7}
+                topNavsData={navs[7].subNavs}
+                topNavActive={0}
+                title="Pengaturan - Kuesioner Penilaian"
+              >
+                <PengaturanContainer activeGroup={1} active={7}>
+                  <PengaturanKuisioner />
+                </PengaturanContainer>
+              </NavContainer>
+            }
+          />
+          <Route
+            path="/pengaturan/karyawan/materi"
+            element={
+              <NavContainer
+                active={7}
+                topNavsData={navs[7].subNavs}
+                topNavActive={0}
+                title="Pengaturan - Kuesioner Penilaian"
+              >
+                <PengaturanContainer activeGroup={1} active={8}>
+                  <PengaturanKuisioner />
+                </PengaturanContainer>
+              </NavContainer>
+            }
+          />
+
+          {/* Potongan */}
+          <Route
             path="/pengaturan/keuangan/premi"
             element={
               <NavContainer
