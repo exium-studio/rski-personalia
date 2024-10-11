@@ -39,8 +39,8 @@ const JamKerjaItem = ({ id, day }: any) => {
     },
     validationSchema: yup.object().shape({
       nama: yup.string().required("Harus diisi"),
-      jam_from: yup.string().required("Harus diisi"),
-      jam_to: yup.string().required("Harus diisi"),
+      jam_from: yup.string(),
+      jam_to: yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
