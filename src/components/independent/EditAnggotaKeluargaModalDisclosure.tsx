@@ -168,7 +168,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
         <ModalContent>
           <ModalHeader>
             <DisclosureHeader
-              title="Tambah Anggota Keluarga"
+              title="Edit Anggota Keluarga"
               onClose={() => {
                 formik.resetForm();
               }}

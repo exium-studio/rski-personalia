@@ -288,6 +288,7 @@ button[aria-label="Close"] > svg {
 
 .scrollX::-webkit-scrollbar-thumb,
 .scrollY::-webkit-scrollbar-thumb {
+  /* background-color: red !important; */
   background-color: var(--divider2);
   border-radius: 100px;
 }
