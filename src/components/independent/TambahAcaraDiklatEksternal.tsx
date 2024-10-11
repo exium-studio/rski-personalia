@@ -21,23 +21,23 @@ import { useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
+import req from "../../lib/req";
 import SelectKategoriDiklat from "../dependent/_Select/SelectKategoriDiklat";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DateRangePickerModal from "../dependent/input/DateRangePickerModal";
 import FileInputLarge from "../dependent/input/FileInputLarge";
-import NumberInput from "../dependent/input/NumberInput";
 import Textarea from "../dependent/input/Textarea";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
-import req from "../../lib/req";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
-import formatDate from "../../lib/formatDate";
+import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanAllJenisKaryawan";
 
 interface Props extends ButtonProps {}
 
-export default function TambahAcaraDiklat({ ...props }: Props) {
+export default function TambahAcaraDiklatEksternal({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("tambah-acara-diklat-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
@@ -49,14 +49,15 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      gambar: undefined as any,
+      user: undefined as any,
       nama: "",
       kategori: {
-        value: 1,
-        label: "Internal",
+        value: 2,
+        label: "Eksternal",
       },
       deskripsi: "",
-      kuota: undefined as any,
+      dokumen: undefined as any,
+      // kuota: undefined as any,
       lokasi: "",
       tgl_mulai: undefined as any,
       tgl_selesai: undefined as any,
@@ -65,11 +66,12 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       skp: "" as any,
     },
     validationSchema: yup.object().shape({
-      gambar: yup.string().required("Harus diisi"),
+      user: yup.object().required("Harus diisi"),
+      dokumen: yup.string().required("Harus diisi"),
       nama: yup.string().required("Harus diisi"),
       kategori: yup.object().required("Harus diisi"),
       deskripsi: yup.string().required("Harus diisi"),
-      kuota: yup.number().required("Harus diisi"),
+      // kuota: yup.number().required("Harus diisi"),
       lokasi: yup.string().required("Harus diisi"),
       tgl_mulai: yup.string().required("Harus diisi"),
       tgl_selesai: yup.string().required("Harus diisi"),
@@ -79,10 +81,11 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = new FormData();
-      payload.append("dokumen", values.gambar);
+      payload.append("user_id", values.user?.value);
+      payload.append("dokumen", values.dokumen);
       payload.append("nama", values.nama);
       payload.append("deskripsi", values.deskripsi);
-      payload.append("kuota", values.kuota);
+      // payload.append("kuota", values.kuota);
       payload.append("tgl_mulai", formatDate(values.tgl_mulai, "short"));
       payload.append("tgl_selesai", formatDate(values.tgl_selesai, "short"));
       payload.append("jam_mulai", values.jam_mulai);
@@ -92,7 +95,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
 
       setLoading(true);
       req
-        .post(`/api/rski/dashboard/perusahaan/diklat`, payload)
+        .post(`/api/rski/dashboard/perusahaan/diklat-eksternal-user`, payload)
         .then((r) => {
           if (r.status === 201) {
             toast({
@@ -101,8 +104,9 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
               isClosable: true,
               position: "bottom-right",
             });
-            setRt(!rt);
             resetForm();
+            backOnClose();
+            setRt(!rt);
           }
         })
         .catch((e) => {
@@ -133,7 +137,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
         pl={5}
         {...props}
       >
-        Buat Acara Diklat
+        Tambah Data
       </Button>
 
       <Modal
@@ -151,7 +155,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
         <ModalContent minH={"calc(100vh - 32px)"} borderRadius={12}>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Buat Acara Diklat"
+              title="Tambah Data Diklat"
               onClose={() => {
                 formik.resetForm();
               }}
@@ -160,30 +164,24 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
           <ModalBody className="scrollY">
             <form id="tambahAcaraDiklatForm" onSubmit={formik.handleSubmit}>
               <SimpleGrid columns={[1, 2]} spacingX={4} mb={2}>
-                <FormControl
-                  flex={"1 1"}
-                  mb={4}
-                  isInvalid={!!formik.errors.gambar}
-                >
-                  <FormLabel>
-                    Gambar Thumbnail
-                    <RequiredForm />
-                  </FormLabel>
-                  <FileInputLarge
-                    name="gambar"
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("gambar", input);
-                    }}
-                    inputValue={formik.values.gambar}
-                    // cProps={{ h: "100%" }}
-                    isError={!!formik.errors.gambar}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.gambar as string}
-                  </FormErrorMessage>
-                </FormControl>
-
                 <CContainer flex={"1 1"}>
+                  <FormControl mb={4} isInvalid={!!formik.errors.user}>
+                    <FormLabel>
+                      Karyawan
+                      <RequiredForm />
+                    </FormLabel>
+                    <SelectKaryawanAllJenisKaryawan
+                      name="user"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("user", input);
+                      }}
+                      inputValue={formik.values.user}
+                    />
+                    <FormErrorMessage>
+                      {formik.errors.user as string}
+                    </FormErrorMessage>
+                  </FormControl>
+
                   <FormControl mb={4} isInvalid={!!formik.errors.nama}>
                     <FormLabel>
                       Nama Diklat
@@ -237,10 +235,33 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                     </FormErrorMessage>
                   </FormControl>
                 </CContainer>
+
+                <FormControl
+                  flex={"1 1"}
+                  mb={4}
+                  isInvalid={!!formik.errors.dokumen}
+                >
+                  <FormLabel>
+                    Sertifikat
+                    <RequiredForm />
+                  </FormLabel>
+                  <FileInputLarge
+                    name="dokumen"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("dokumen", input);
+                    }}
+                    inputValue={formik.values.dokumen}
+                    isError={!!formik.errors.dokumen}
+                    // cProps={{ flex: "1" }}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.dokumen as string}
+                  </FormErrorMessage>
+                </FormControl>
               </SimpleGrid>
 
               <SimpleGrid columns={[1, 2, 3]} spacingX={4}>
-                <FormControl mb={4} isInvalid={!!formik.errors.kuota}>
+                {/* <FormControl mb={4} isInvalid={!!formik.errors.kuota}>
                   <FormLabel>
                     Kuota Peserta
                     <RequiredForm />
@@ -255,7 +276,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                   <FormErrorMessage>
                     {formik.errors.kuota as string}
                   </FormErrorMessage>
-                </FormControl>
+                </FormControl> */}
 
                 <FormControl
                   mb={4}
@@ -296,6 +317,46 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                   </FormErrorMessage>
                 </FormControl>
 
+                <FormControl mb={4} isInvalid={!!formik.errors.jam_mulai}>
+                  <FormLabel>
+                    Jam Mulai
+                    <RequiredForm />
+                  </FormLabel>
+
+                  <TimePickerModal
+                    id="tambah-acara-diklat"
+                    name="jam_mulai"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("jam_mulai", input);
+                    }}
+                    inputValue={formik.values.jam_mulai}
+                    isError={!!formik.errors.jam_mulai}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.jam_mulai as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.jam_selesai}>
+                  <FormLabel>
+                    Jam Selesai
+                    <RequiredForm />
+                  </FormLabel>
+
+                  <TimePickerModal
+                    id="tambah-acara-diklat"
+                    name="jam_selesai"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("jam_selesai", input);
+                    }}
+                    inputValue={formik.values.jam_selesai}
+                    isError={!!formik.errors.jam_selesai}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.jam_selesai as string}
+                  </FormErrorMessage>
+                </FormControl>
+
                 <FormControl mb={4} isInvalid={!!formik.errors.lokasi}>
                   <FormLabel>
                     Lokasi
@@ -311,48 +372,6 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                     {formik.errors.lokasi as string}
                   </FormErrorMessage>
                 </FormControl>
-
-                <CContainer>
-                  <FormControl mb={4} isInvalid={!!formik.errors.jam_mulai}>
-                    <FormLabel>
-                      Jam Mulai
-                      <RequiredForm />
-                    </FormLabel>
-
-                    <TimePickerModal
-                      id="tambah-acara-diklat"
-                      name="jam_mulai"
-                      onConfirm={(input) => {
-                        formik.setFieldValue("jam_mulai", input);
-                      }}
-                      inputValue={formik.values.jam_mulai}
-                      isError={!!formik.errors.jam_mulai}
-                    />
-                    <FormErrorMessage>
-                      {formik.errors.jam_mulai as string}
-                    </FormErrorMessage>
-                  </FormControl>
-
-                  <FormControl mb={4} isInvalid={!!formik.errors.jam_selesai}>
-                    <FormLabel>
-                      Jam Selesai
-                      <RequiredForm />
-                    </FormLabel>
-
-                    <TimePickerModal
-                      id="tambah-acara-diklat"
-                      name="jam_selesai"
-                      onConfirm={(input) => {
-                        formik.setFieldValue("jam_selesai", input);
-                      }}
-                      inputValue={formik.values.jam_selesai}
-                      isError={!!formik.errors.jam_selesai}
-                    />
-                    <FormErrorMessage>
-                      {formik.errors.jam_selesai as string}
-                    </FormErrorMessage>
-                  </FormControl>
-                </CContainer>
 
                 <FormControl mb={4} isInvalid={!!formik.errors.skp}>
                   <FormLabel>
@@ -386,7 +405,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                 flexShrink={0}
                 isLoading={loading}
               >
-                Buat Acara Diklat
+                Tambahkan Data
               </Button>
             </CContainer>
           </ModalBody>

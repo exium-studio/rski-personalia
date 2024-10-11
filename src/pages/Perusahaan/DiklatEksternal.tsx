@@ -11,6 +11,8 @@ import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
+import TambahAcaraDiklatEksternal from "../../components/independent/TambahAcaraDiklatEksternal";
+import useGetUserData from "../../hooks/useGetUserData";
 
 export default function DiklatEksternal() {
   // SX
@@ -35,7 +37,9 @@ export default function DiklatEksternal() {
     };
   }, [search, tahun, setFilterConfig]);
 
+  const userData = useGetUserData();
   const { userPermissions } = useAuth();
+  const createPermissions = userData?.role?.id === 1;
   const exportPermissions = isHasPermissions(userPermissions, [9]);
 
   return (
@@ -89,6 +93,13 @@ export default function DiklatEksternal() {
                 downloadFileName="data diklat"
                 isDisabled={!exportPermissions}
               />
+            </PermissionTooltip>
+
+            <PermissionTooltip
+              permission={createPermissions}
+              boxProps={{ w: "fit-content" }}
+            >
+              <TambahAcaraDiklatEksternal isDisabled={!createPermissions} />
             </PermissionTooltip>
           </HStack>
 
