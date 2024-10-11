@@ -13,6 +13,9 @@ import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function DiklatEksternal() {
+  // SX
+  const lightDarkColor = useLightDarkColor();
+
   // Filter Config
   const defaultFilterConfig = {
     search: "",
@@ -31,9 +34,6 @@ export default function DiklatEksternal() {
       clearTimeout(handler);
     };
   }, [search, tahun, setFilterConfig]);
-
-  // SX
-  const lightDarkColor = useLightDarkColor();
 
   const { userPermissions } = useAuth();
   const exportPermissions = isHasPermissions(userPermissions, [9]);
