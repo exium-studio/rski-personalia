@@ -148,11 +148,11 @@ export default function TabelJadwal({ filterConfig }: Props) {
                       </Text>
                     </Tooltip>
                     <Text fontSize={14} whiteSpace={"nowrap"}>
-                      {jadwal
+                      {jadwal?.jam_from && jadwal?.jam_to
                         ? `${formatTime(jadwal?.jam_from)} - ${formatTime(
                             jadwal?.jam_to
                           )}`
-                        : "-"}
+                        : "Libur"}
                     </Text>
                   </CContainer>
                 )}
