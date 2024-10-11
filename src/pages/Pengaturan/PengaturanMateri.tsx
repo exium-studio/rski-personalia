@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   Center,
   FormControl,
   FormErrorMessage,
@@ -9,6 +10,7 @@ import {
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
@@ -45,6 +47,102 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import isHasPermissions from "../../lib/isHasPermissions";
 import req from "../../lib/req";
+
+const DeleteMateri = ({ id }: any) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`delete-confirmation-${id}`, isOpen, onOpen, onClose);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+  function handleDelete() {
+    setLoading(true);
+
+    req
+      .delete(`/api/rski/dashboard/pengaturan/materi-pelatihan/${id}`)
+      .then((r) => {
+        if (r.status === 200) {
+          setRt(!rt);
+          backOnClose();
+          backOnClose();
+          toast({
+            status: "success",
+            title: r?.data?.message,
+            position: "bottom-right",
+            isClosable: true,
+          });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Maaf terjadi kesalahan pada sistem",
+          position: "bottom-right",
+          isClosable: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  return (
+    <>
+      <Button
+        w={"100%"}
+        mt={2}
+        color={"red.400"}
+        className="btn-solid clicky"
+        isLoading={loading}
+        onClick={onOpen}
+      >
+        Delete
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Delete Materi"} />
+          </ModalHeader>
+          <ModalBody>
+            <Text opacity={0.4}>
+              Apakah anda yakin akan menghapus materi ini?
+            </Text>
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button
+              w={"100%"}
+              className="btn-solid clicky"
+              onClick={backOnClose}
+              isDisabled={loading}
+            >
+              Tidak
+            </Button>
+            <Button
+              onClick={handleDelete}
+              w={"100%"}
+              colorScheme="red"
+              className="clicky"
+              isLoading={loading}
+            >
+              Ya
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 const MateriSlot = ({ initialValues }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -242,16 +340,21 @@ const MateriSlot = ({ initialValues }: any) => {
               </FormControl>
             </form>
 
-            <Button
-              mt={2}
-              type="submit"
-              form="materiForm"
-              colorScheme="ap"
-              className="btn-ap clicky"
-              isLoading={loading}
-            >
-              Simpan
-            </Button>
+            <ButtonGroup gap={2}>
+              <DeleteMateri id={initialValues.id} />
+
+              <Button
+                w={"100%"}
+                mt={2}
+                type="submit"
+                form="materiForm"
+                colorScheme="ap"
+                className="btn-ap clicky"
+                isLoading={loading}
+              >
+                Simpan
+              </Button>
+            </ButtonGroup>
           </ModalBody>
         </ModalContent>
       </Modal>
