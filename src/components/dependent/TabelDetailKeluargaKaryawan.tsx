@@ -11,6 +11,7 @@ import SearchComponent from "./input/SearchComponent";
 import useGetUserData from "../../hooks/useGetUserData";
 import { RiEditLine } from "@remixicon/react";
 import EditAnggotaKeluargaModalDisclosure from "../independent/EditAnggotaKeluargaModalDisclosure";
+import TambahAnggotaKeluarga from "./TambahAnggotaKeluarga";
 
 interface Props {
   idKaryawan: number;
@@ -270,6 +271,8 @@ export default function TabelDetailKeluargaKaryawan({
           minW={"fit-content"}
           w={"fit-content"}
         />
+
+        <TambahAnggotaKeluarga idKaryawan={idKaryawan} />
       </HStack>
 
       {fd.length === 0 && <NotFound />}

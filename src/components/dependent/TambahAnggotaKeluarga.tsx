@@ -1,6 +1,4 @@
 import {
-  Box,
-  BoxProps,
   Button,
   Checkbox,
   FormControl,
@@ -16,35 +14,24 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useFormik } from "formik";
-import { ReactNode, useEffect, useRef, useState } from "react";
-import * as yup from "yup";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import { useState } from "react";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import backOnClose from "../../lib/backOnClose";
-import req from "../../lib/req";
-import SelectHubunganKeluarga from "../dependent/_Select/SelectHubunganKeluarga";
-import SelectPendidikan from "../dependent/_Select/SelectPendidikan";
-import SelectStatusHidup from "../dependent/_Select/SelectStatusHidup";
-import DisclosureHeader from "../dependent/DisclosureHeader";
-import StringInput from "../dependent/input/StringInput";
+import DisclosureHeader from "./DisclosureHeader";
 import RequiredForm from "../form/RequiredForm";
+import StringInput from "./input/StringInput";
+import SelectHubunganKeluarga from "./_Select/SelectHubunganKeluarga";
+import SelectStatusHidup from "./_Select/SelectStatusHidup";
+import SelectPendidikan from "./_Select/SelectPendidikan";
+import req from "../../lib/req";
 
-interface Props extends BoxProps {
-  idKaryawan: number;
-  rowData: any;
-  children?: ReactNode;
-}
-
-export default function EditAnggotaKeluargaModalDisclosure({
-  idKaryawan,
-  rowData,
-  children,
-  ...props
-}: Props) {
+export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
-    `edit-unit-kerja-modal-${rowData.id}`,
+    `tambah-anggota-keluarga-${idKaryawan}`,
     isOpen,
     onOpen,
     onClose
@@ -54,70 +41,55 @@ export default function EditAnggotaKeluargaModalDisclosure({
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
-  const data = rowData?.originalData;
-
-  const initialValues = {
-    nama_keluarga: data?.nama_keluarga,
-    hubungan: {
-      value: data?.hubungan,
-      label: data?.hubungan,
-    },
-    status_hidup: {
-      value: data?.status_hidup,
-      label: data?.status_hidup ? "Hidup" : "Meninggal",
-    },
-    pendidikan_terakhir: {
-      value: data?.pendidikan_terakhir?.id,
-      label: data?.pendidikan_terakhir?.label,
-    },
-    pekerjaan: data?.pekerjaan,
-    no_hp: data?.no_hp,
-    email: data?.email || "",
-    is_bpjs: data.is_bpjs,
-  };
-
   const formik = useFormik({
     validateOnChange: false,
-    initialValues,
+    initialValues: {
+      nama_keluarga: "",
+      hubungan: undefined as any,
+      pendidikan_terakhir: undefined as any,
+      status_hidup: undefined as any,
+      pekerjaan: "",
+      no_hp: "",
+      email: "",
+      is_bpjs: false,
+    },
     validationSchema: yup.object().shape({
       nama_keluarga: yup.string().required("Harus diisi"),
       hubungan: yup.object().required("Harus diisi"),
-      status_hidup: yup.object().required("Harus diisi"),
       pendidikan_terakhir: yup.object().required("Harus diisi"),
+      status_hidup: yup.object().required("Harus diisi"),
       pekerjaan: yup.string().required("Harus diisi"),
       no_hp: yup.string().required("Harus diisi"),
       email: yup.string(),
       is_bpjs: yup.boolean(),
     }),
     onSubmit: (values, { resetForm }) => {
+      setLoading(true);
+
+      const url = `/api/rski/dashboard/karyawan/detail-karyawan-keluarga/${idKaryawan}/create-keluarga`;
       const payload = {
         nama_keluarga: values.nama_keluarga,
-        hubungan: values.hubungan.value,
+        hubungan: values.hubungan?.value,
+        pendidikan_terakhir: values.pendidikan_terakhir?.value,
         status_hidup: values.status_hidup.value,
-        pendidikan_terakhir: values.pendidikan_terakhir.value,
         pekerjaan: values.pekerjaan,
         no_hp: values.no_hp,
         email: values.email,
         is_bpjs: values.is_bpjs,
-        // _method: "patch",
       };
-      console.log(payload);
-      setLoading(true);
+
       req
-        .post(
-          `/api/rski/dashboard/karyawan/detail-karyawan-keluarga/${idKaryawan}/update-keluarga/${rowData.id}`,
-          payload
-        )
+        .post(url, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r.status === 201) {
+            setRt(!rt);
+            backOnClose();
             toast({
               status: "success",
-              title: r.data.message,
-              isClosable: true,
+              title: r?.data?.message,
               position: "bottom-right",
+              isClosable: true,
             });
-            backOnClose();
-            setRt(!rt);
           }
         })
         .catch((e) => {
@@ -127,9 +99,9 @@ export default function EditAnggotaKeluargaModalDisclosure({
             title:
               (typeof e?.response?.data?.message === "string" &&
                 (e?.response?.data?.message as string)) ||
-              "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
-            isClosable: true,
+              "Maaf terjadi kesalahan pada sistem",
             position: "bottom-right",
+            isClosable: true,
           });
         })
         .finally(() => {
@@ -138,22 +110,17 @@ export default function EditAnggotaKeluargaModalDisclosure({
     },
   });
 
-  const formikRef = useRef(formik);
-  // const rowDataRef = useRef(rowData);
-
-  useEffect(() => {
-    formikRef.current.setFieldValue("name", rowData.columnsFormat[0].value);
-    formikRef.current.setFieldValue(
-      "deskripsi",
-      rowData.columnsFormat[1].value || ""
-    );
-  }, [isOpen, rowData, formikRef]);
-
   return (
     <>
-      <Box onClick={onOpen} {...props}>
-        {children}
-      </Box>
+      <Button
+        flexShrink={0}
+        colorScheme="ap"
+        variant={"outline"}
+        className="clicky"
+        onClick={onOpen}
+      >
+        Tambah Anggota
+      </Button>
 
       <Modal
         isOpen={isOpen}
