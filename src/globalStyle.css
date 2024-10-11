@@ -669,9 +669,7 @@ button[aria-label="Close"] > svg {
 }
 
 /* Jodit Styles */
-.jodit-toolbar__box {
-  top: -20px !important;
-}
+
 .jodit-container {
   color: black;
 }

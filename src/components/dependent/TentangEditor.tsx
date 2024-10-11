@@ -57,7 +57,7 @@ export default function TentangEditor({ tentangId, data }: Props) {
 
   return (
     <>
-      <CContainer flex={1}>
+      <CContainer flex={1} overflowY={"auto"} className="scrollY">
         <JoditEditor
           ref={editor}
           value={content}
