@@ -17,27 +17,33 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiBook2Line } from "@remixicon/react";
+import { RiBook2Fill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from "yup";
 import DisclosureHeader from "../../components/dependent/DisclosureHeader";
 import FileInput from "../../components/dependent/input/FileInput";
+import SearchComponent from "../../components/dependent/input/SearchComponent";
 import StringInput from "../../components/dependent/input/StringInput";
 import Textarea from "../../components/dependent/input/Textarea";
 import Retry from "../../components/dependent/Retry";
 import RequiredForm from "../../components/form/RequiredForm";
 import NoData from "../../components/independent/NoData";
+import NotFound from "../../components/independent/NotFound";
 import Skeleton from "../../components/independent/Skeleton";
+import TambahMateri from "../../components/independent/TambahMateri";
 import CContainer from "../../components/wrapper/CContainer";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import useGetUserData from "../../hooks/useGetUserData";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
+import isHasPermissions from "../../lib/isHasPermissions";
 import req from "../../lib/req";
 
 const MateriSlot = ({ initialValues }: any) => {
@@ -114,7 +120,7 @@ const MateriSlot = ({ initialValues }: any) => {
         </HStack>
 
         <Center p={4} flexDir={"column"}>
-          <Icon as={RiBook2Line} fontSize={72} mb={2} />
+          <Icon as={RiBook2Fill} fontSize={72} mb={2} />
           <Text textAlign={"center"} opacity={0.4}>
             Klik untuk edit
           </Text>
@@ -134,7 +140,7 @@ const MateriSlot = ({ initialValues }: any) => {
             label={`Diperbarui pada ${formatDate(initialValues.updated_at)}`}
             openDelay={500}
           >
-            <Text fontSize={11}>
+            <Text fontSize={11} opacity={0.4}>
               {formatDate(initialValues.updated_at, "short")}
             </Text>
           </Tooltip>
@@ -204,6 +210,36 @@ const MateriSlot = ({ initialValues }: any) => {
                   {formik.errors.dokumen_materi_1 as string}
                 </FormErrorMessage>
               </FormControl>
+
+              <FormControl mb={4} isInvalid={!!formik.errors.dokumen_materi_2}>
+                <FormLabel>Dokumen 2</FormLabel>
+                <FileInput
+                  name="dokumen_materi_2"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("dokumen_materi_2", input);
+                  }}
+                  inputValue={formik.values.dokumen_materi_2}
+                  accept=".pdf, pptx, docx"
+                />
+                <FormErrorMessage>
+                  {formik.errors.dokumen_materi_2 as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={6} isInvalid={!!formik.errors.dokumen_materi_3}>
+                <FormLabel>Dokumen 3</FormLabel>
+                <FileInput
+                  name="dokumen_materi_3"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("dokumen_materi_3", input);
+                  }}
+                  inputValue={formik.values.dokumen_materi_3}
+                  accept=".pdf, pptx, docx"
+                />
+                <FormErrorMessage>
+                  {formik.errors.dokumen_materi_3 as string}
+                </FormErrorMessage>
+              </FormControl>
             </form>
 
             <Button
@@ -251,11 +287,28 @@ export default function PengaturanMateri() {
   // SX
   const lightDarkColor = useLightDarkColor();
 
+  // Permissions
+  const { userPermissions } = useAuth();
+  const createPermission = isHasPermissions(userPermissions, [138]);
+
+  // Filter Config
+  const defaultFilterConfig = {
+    search: "",
+  };
+  const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
+
   // States
-  const { error, loading, data, retry } = useDataState<any>({
+  const { error, loading, notFound, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/pengaturan/materi-pelatihan`,
     dependencies: [],
+  });
+  const fd = data?.filter((item: any) => {
+    const searchTerm = filterConfig?.search?.toLowerCase();
+
+    const matches1 = item?.judul?.toLowerCase().includes(searchTerm);
+
+    return matches1;
   });
 
   // Render Lateral
@@ -263,7 +316,7 @@ export default function PengaturanMateri() {
     loading: (
       <>
         <SimpleGrid columns={[2, 3, null, 4, 5]} gap={responsiveSpacing}>
-          {Array?.from({ length: 3 }).map((_, i) => (
+          {Array?.from({ length: 15 }).map((_, i) => (
             <Skeleton key={i} h={"210px"} />
           ))}
         </SimpleGrid>
@@ -271,7 +324,8 @@ export default function PengaturanMateri() {
     ),
     error: (
       <>
-        <Retry retry={retry} />
+        {!notFound && <Retry retry={retry} />}
+        {notFound && <NoData />}
       </>
     ),
     empty: (
@@ -281,11 +335,15 @@ export default function PengaturanMateri() {
     ),
     loaded: (
       <>
-        <SimpleGrid columns={[2, 3, null, 4, 5]} gap={responsiveSpacing}>
-          {data?.map((item: any, i: number) => (
-            <MateriItem key={i} initialData={item} />
-          ))}
-        </SimpleGrid>
+        {fd && fd.length > 0 ? (
+          <SimpleGrid columns={[2, 3, null, 4, 5]} gap={responsiveSpacing}>
+            {fd?.map((item: any, i: number) => (
+              <MateriItem key={i} initialData={item} />
+            ))}
+          </SimpleGrid>
+        ) : (
+          <NotFound />
+        )}
       </>
     ),
   };
@@ -301,6 +359,34 @@ export default function PengaturanMateri() {
       borderRadius={12}
       flex={"1 1 600px"}
     >
+      <HStack
+        py={responsiveSpacing}
+        justify={"space-between"}
+        w={"100%"}
+        className="tabelConfig scrollX"
+        overflowX={"auto"}
+        flexShrink={0}
+      >
+        <SearchComponent
+          flex={"1 1 0"}
+          minW={"165px"}
+          name="search"
+          onChangeSetter={(input) => {
+            setFilterConfig((ps: any) => ({
+              ...ps,
+              search: input,
+            }));
+          }}
+          inputValue={filterConfig.search}
+          tooltipLabel="Cari dengan judul materi"
+          placeholder="judul materi"
+        />
+
+        <PermissionTooltip permission={createPermission}>
+          <TambahMateri minW={"fit-content"} isDisabled={!createPermission} />
+        </PermissionTooltip>
+      </HStack>
+
       {loading && render.loading}
       {!loading && (
         <>

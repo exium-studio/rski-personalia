@@ -95,7 +95,7 @@ const pengaturanNavs = [
       {
         allowed: [140],
         icon: RiHospitalLine,
-        label: "Tentang Rumah Sakit",
+        label: "Tentang",
         link: "/pengaturan/karyawan/tentang",
       },
       {

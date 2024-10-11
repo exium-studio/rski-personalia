@@ -7,7 +7,7 @@ interface Props extends StackProps {
 
 export default function NotFound({ label, ...props }: Props) {
   return (
-    <VStack flex={1} justify={"center"} opacity={0.2} {...props}>
+    <VStack flex={1} justify={"center"} opacity={0.2} m={"auto"} {...props}>
       <Icon as={RiSearchLine} fontSize={80} />
       <Text textAlign={"center"} fontWeight={600}>
         {label || "Data tidak ditemukan"}
