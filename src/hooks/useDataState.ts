@@ -74,7 +74,6 @@ const useDataState = <T>({
       signal: abortController.signal,
     })
       .then((response) => {
-        setLoading(false);
         setError(false);
         if (response.status === 200) {
           setData(response.data.data);
@@ -86,17 +85,19 @@ const useDataState = <T>({
         if (error.name === "CanceledError") {
           return;
         } else {
-          setLoading(false);
-
+          if (error?.response?.status === 403) {
+            setForbidden(true);
+          }
           if (error?.response?.status === 404) {
             setNotFound(true);
-            setData(error?.response?.data?.data);
-            setMessage(error?.response?.data?.message);
-            console.log("error", error);
           }
+          setData(error?.response?.data?.data);
+          setMessage(error?.response?.data?.message);
           setError(true);
-          console.log(error);
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -124,7 +125,6 @@ const useDataState = <T>({
       //  signal: abortController.signal,
     })
       .then((response) => {
-        setLoading(false);
         setError(false);
         if (response.status === 200) {
           const newData = [...data, ...response.data.data];
@@ -137,17 +137,18 @@ const useDataState = <T>({
         if (error.name === "CanceledError") {
           return;
         } else {
-          setLoading(false);
-
           if (error?.response?.status === 403) {
+            console.log("Jancok");
             setForbidden(true);
           }
           if (error?.response?.status === 404) {
             setNotFound(true);
           }
           setError(true);
-          console.log(error);
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }
 

@@ -31,7 +31,6 @@ export default function DashboardPengumuman({ ...props }: Props) {
       url: `/api/rski/dashboard/pengumuman`,
       dependencies: [],
     });
-
   const fd = data?.filter((pengumuman: any) => {
     const searchTerm = search?.toLocaleLowerCase();
 
