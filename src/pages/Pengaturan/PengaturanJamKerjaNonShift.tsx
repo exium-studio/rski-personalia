@@ -44,7 +44,6 @@ const JamKerjaItem = ({ id, day }: any) => {
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
-        _method: "patch",
         nama: values.nama,
         jam_from: values.jam_from,
         jam_to: values.jam_to,
@@ -79,8 +78,6 @@ const JamKerjaItem = ({ id, day }: any) => {
         .finally(() => {
           setUpdateLoading(false);
         });
-
-      console.log(day);
     },
   });
 
