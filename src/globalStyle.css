@@ -692,7 +692,7 @@ button[aria-label="Close"] > svg {
 }
 .jodit-popup,
 .jodit-popup__content {
-  border-radius: 16px !important;
+  border-radius: 8px !important;
 }
 .jodit-popup__content {
   padding: 12px !important;
@@ -704,7 +704,7 @@ button[aria-label="Close"] > svg {
 }
 .jodit-dialog__panel {
   border-radius: 16px !important;
-  padding: 16px !important;
+  padding: 12px !important;
 }
 
 /* Custom Start*/
