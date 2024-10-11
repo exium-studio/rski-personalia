@@ -106,7 +106,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
         ),
         props: {
           position: "sticky",
-          left: 0, 
+          left: 0,
           zIndex: 2,
         },
         cProps: {
@@ -128,34 +128,6 @@ export default function TabelJadwal({ filterConfig }: Props) {
                     index={i}
                     rowIndex={rowIndex}
                   />
-                ) : dateList[i]?.getDay() === 0 ? (
-                  <CContainer
-                    bg={"var(--divider)"}
-                    p={4}
-                    borderRadius={8}
-                    justify={"center"}
-                    gap={1}
-                  >
-                    <Text fontSize={14}>Libur</Text>
-                    <Text fontSize={14}>Minggu</Text>
-                  </CContainer>
-                ) : parseInt(jadwal?.status) === 2 ? (
-                  <CContainer
-                    bg={"var(--divider)"}
-                    p={4}
-                    borderRadius={8}
-                    justify={"center"}
-                    gap={1}
-                  >
-                    <Text fontSize={14}>{jadwal.nama}</Text>
-                    <Text fontSize={14} whiteSpace={"nowrap"}>
-                      {jadwal
-                        ? `${formatTime(jadwal?.jam_from)} - ${formatTime(
-                            jadwal?.jam_to
-                          )}`
-                        : "-"}
-                    </Text>
-                  </CContainer>
                 ) : (
                   <CContainer
                     bg={"var(--divider)"}
@@ -164,11 +136,9 @@ export default function TabelJadwal({ filterConfig }: Props) {
                     justify={"center"}
                     gap={1}
                   >
-                    <Text fontSize={14}>Libur</Text>
-                    <Tooltip label={jadwal?.nama}>
+                    <Tooltip label={jadwal?.nama} openDelay={500}>
                       <Text
                         fontSize={14}
-                        w={"100%"}
                         maxW={"130px"}
                         whiteSpace={"nowrap"}
                         overflow={"hidden"}
@@ -177,6 +147,13 @@ export default function TabelJadwal({ filterConfig }: Props) {
                         {jadwal?.nama}
                       </Text>
                     </Tooltip>
+                    <Text fontSize={14} whiteSpace={"nowrap"}>
+                      {jadwal
+                        ? `${formatTime(jadwal?.jam_from)} - ${formatTime(
+                            jadwal?.jam_to
+                          )}`
+                        : "-"}
+                    </Text>
                   </CContainer>
                 )}
               </>
