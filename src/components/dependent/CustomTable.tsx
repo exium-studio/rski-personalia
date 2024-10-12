@@ -44,7 +44,6 @@ interface BatchActionsProps {
   handleSelectAllRows: (isChecked: boolean) => void;
   tableRef: any;
 }
-
 const BatchActions = ({
   selectedRows,
   batchActions,
@@ -104,7 +103,6 @@ interface RowOptionsProps {
   rowOptions: any[];
   tableRef: any;
 }
-
 const RowOptions = ({ rowData, rowOptions, tableRef }: RowOptionsProps) => {
   // console.log("row data", row);
   return (
@@ -126,7 +124,9 @@ const RowOptions = ({ rowData, rowOptions, tableRef }: RowOptionsProps) => {
             return option === "divider" ? (
               <MenuDivider key={i} />
             ) : (
-              <Box key={i}>{option(rowData)}</Box>
+              <Box className="menuItemContainer" key={i}>
+                {option(rowData)}
+              </Box>
             );
           })}
         </MenuList>
@@ -147,7 +147,6 @@ interface Props extends TableProps {
   initialSortColumnIndex?: number;
   trBodyProps?: TableRowProps;
 }
-
 export default function CustomTable({
   formattedHeader,
   formattedData,

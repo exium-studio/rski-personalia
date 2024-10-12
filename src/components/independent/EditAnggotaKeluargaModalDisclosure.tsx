@@ -44,7 +44,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
-    `edit-unit-kerja-modal-${rowData.id}`,
+    `edit-anggota-keluarga-modal-${rowData.id}`,
     isOpen,
     onOpen,
     onClose
