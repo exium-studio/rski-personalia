@@ -12,6 +12,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Portal,
   Text,
   useDisclosure,
   useToast,
@@ -53,6 +54,8 @@ export default function EditAnggotaKeluargaModalDisclosure({
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
+  const bodyElement = document.querySelector("body");
+  const bodyRef = useRef(bodyElement);
 
   const data = rowData?.originalData;
 
@@ -155,181 +158,183 @@ export default function EditAnggotaKeluargaModalDisclosure({
         {children}
       </Box>
 
-      <Modal
-        isOpen={isOpen}
-        onClose={() => {
-          backOnClose();
-          formik.resetForm();
-        }}
-        isCentered
-        blockScrollOnMount={false}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <DisclosureHeader
-              title="Edit Anggota Keluarga"
-              onClose={() => {
-                formik.resetForm();
-              }}
-            />
-          </ModalHeader>
-          <ModalBody>
-            <form id="keluargaForm" onSubmit={formik.handleSubmit}>
-              <FormControl mb={4} isInvalid={!!formik.errors.nama_keluarga}>
-                <FormLabel>
-                  Nama Keluarga
-                  <RequiredForm />
-                </FormLabel>
-                <StringInput
-                  name="nama_keluarga"
-                  placeholder="Yeli Kurniawan"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("nama_keluarga", input);
-                  }}
-                  inputValue={formik.values.nama_keluarga}
-                />
-                <FormErrorMessage>
-                  {formik.errors.nama_keluarga as string}
-                </FormErrorMessage>
-              </FormControl>
+      <Portal containerRef={bodyRef}>
+        <Modal
+          isOpen={isOpen}
+          onClose={() => {
+            backOnClose();
+            formik.resetForm();
+          }}
+          isCentered
+          blockScrollOnMount={false}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>
+              <DisclosureHeader
+                title="Edit Anggota Keluarga"
+                onClose={() => {
+                  formik.resetForm();
+                }}
+              />
+            </ModalHeader>
+            <ModalBody>
+              <form id="keluargaForm" onSubmit={formik.handleSubmit}>
+                <FormControl mb={4} isInvalid={!!formik.errors.nama_keluarga}>
+                  <FormLabel>
+                    Nama Keluarga
+                    <RequiredForm />
+                  </FormLabel>
+                  <StringInput
+                    name="nama_keluarga"
+                    placeholder="Yeli Kurniawan"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("nama_keluarga", input);
+                    }}
+                    inputValue={formik.values.nama_keluarga}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.nama_keluarga as string}
+                  </FormErrorMessage>
+                </FormControl>
 
-              <FormControl mb={4} isInvalid={!!formik.errors.hubungan}>
-                <FormLabel>
-                  Hubungan
-                  <RequiredForm />
-                </FormLabel>
-                <SelectHubunganKeluarga
-                  name="hubungan"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("hubungan", input);
-                  }}
-                  inputValue={formik.values.hubungan}
-                />
-                <FormErrorMessage>
-                  {formik.errors.hubungan as string}
-                </FormErrorMessage>
-              </FormControl>
+                <FormControl mb={4} isInvalid={!!formik.errors.hubungan}>
+                  <FormLabel>
+                    Hubungan
+                    <RequiredForm />
+                  </FormLabel>
+                  <SelectHubunganKeluarga
+                    name="hubungan"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("hubungan", input);
+                    }}
+                    inputValue={formik.values.hubungan}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.hubungan as string}
+                  </FormErrorMessage>
+                </FormControl>
 
-              <FormControl mb={4} isInvalid={!!formik.errors.status_hidup}>
-                <FormLabel>
-                  Status Hidup
-                  <RequiredForm />
-                </FormLabel>
-                <SelectStatusHidup
-                  name="status_hidup"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("status_hidup", input);
-                  }}
-                  inputValue={formik.values.status_hidup}
-                />
-                <FormErrorMessage>
-                  {formik.errors.status_hidup as string}
-                </FormErrorMessage>
-              </FormControl>
+                <FormControl mb={4} isInvalid={!!formik.errors.status_hidup}>
+                  <FormLabel>
+                    Status Hidup
+                    <RequiredForm />
+                  </FormLabel>
+                  <SelectStatusHidup
+                    name="status_hidup"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("status_hidup", input);
+                    }}
+                    inputValue={formik.values.status_hidup}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.status_hidup as string}
+                  </FormErrorMessage>
+                </FormControl>
 
-              <FormControl
-                mb={4}
-                isInvalid={!!formik.errors.pendidikan_terakhir}
-              >
-                <FormLabel>
-                  Pendidikan Terakhir
-                  <RequiredForm />
-                </FormLabel>
-                <SelectPendidikan
-                  name="pendidikan_terakhir"
-                  onConfirm={(input) => {
-                    formik.setFieldValue("pendidikan_terakhir", input);
-                  }}
-                  inputValue={formik.values.pendidikan_terakhir}
-                />
-                <FormErrorMessage>
-                  {formik.errors.pendidikan_terakhir as string}
-                </FormErrorMessage>
-              </FormControl>
-
-              <FormControl mb={4} isInvalid={!!formik.errors.pekerjaan}>
-                <FormLabel>
-                  Pekerjaan
-                  <RequiredForm />
-                </FormLabel>
-                <StringInput
-                  name="pekerjaan"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("pekerjaan", input);
-                  }}
-                  inputValue={formik.values.pekerjaan}
-                  placeholder="Dokter"
-                />
-                <FormErrorMessage>
-                  {formik.errors.pekerjaan as string}
-                </FormErrorMessage>
-              </FormControl>
-
-              <FormControl mb={4} isInvalid={!!formik.errors.no_hp}>
-                <FormLabel>
-                  No.Telp
-                  <RequiredForm />
-                </FormLabel>
-                <StringInput
-                  name="no_hp"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("no_hp", input);
-                  }}
-                  inputValue={formik.values.no_hp}
-                  placeholder="08**********"
-                />
-                <FormErrorMessage>
-                  {formik.errors.no_hp as string}
-                </FormErrorMessage>
-              </FormControl>
-
-              <FormControl mb={4} isInvalid={!!formik.errors.email}>
-                <FormLabel>Email</FormLabel>
-                <StringInput
-                  name="email"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("email", input);
-                  }}
-                  inputValue={formik.values.email}
-                  placeholder="example@email.com"
-                />
-                <FormErrorMessage>
-                  {formik.errors.email as string}
-                </FormErrorMessage>
-              </FormControl>
-
-              <FormControl mt={4} isInvalid={!!formik.errors.is_bpjs}>
-                <Checkbox
-                  colorScheme="ap"
-                  isChecked={formik.values.is_bpjs}
-                  onChange={(e) => {
-                    formik.setFieldValue("is_bpjs", e.target.checked);
-                  }}
+                <FormControl
+                  mb={4}
+                  isInvalid={!!formik.errors.pendidikan_terakhir}
                 >
-                  <Text mt={"-3px"}>Tanggungan BPJS</Text>
-                </Checkbox>
-                <FormErrorMessage>
-                  {formik.errors.is_bpjs as string}
-                </FormErrorMessage>
-              </FormControl>
-            </form>
-          </ModalBody>
+                  <FormLabel>
+                    Pendidikan Terakhir
+                    <RequiredForm />
+                  </FormLabel>
+                  <SelectPendidikan
+                    name="pendidikan_terakhir"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("pendidikan_terakhir", input);
+                    }}
+                    inputValue={formik.values.pendidikan_terakhir}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.pendidikan_terakhir as string}
+                  </FormErrorMessage>
+                </FormControl>
 
-          <ModalFooter>
-            <Button
-              type="submit"
-              form="keluargaForm"
-              className="btn-ap clicky"
-              colorScheme="ap"
-              w={"100%"}
-              isLoading={loading}
-            >
-              Simpan
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+                <FormControl mb={4} isInvalid={!!formik.errors.pekerjaan}>
+                  <FormLabel>
+                    Pekerjaan
+                    <RequiredForm />
+                  </FormLabel>
+                  <StringInput
+                    name="pekerjaan"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("pekerjaan", input);
+                    }}
+                    inputValue={formik.values.pekerjaan}
+                    placeholder="Dokter"
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.pekerjaan as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.no_hp}>
+                  <FormLabel>
+                    No.Telp
+                    <RequiredForm />
+                  </FormLabel>
+                  <StringInput
+                    name="no_hp"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("no_hp", input);
+                    }}
+                    inputValue={formik.values.no_hp}
+                    placeholder="08**********"
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.no_hp as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.email}>
+                  <FormLabel>Email</FormLabel>
+                  <StringInput
+                    name="email"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("email", input);
+                    }}
+                    inputValue={formik.values.email}
+                    placeholder="example@email.com"
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.email as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mt={4} isInvalid={!!formik.errors.is_bpjs}>
+                  <Checkbox
+                    colorScheme="ap"
+                    isChecked={formik.values.is_bpjs}
+                    onChange={(e) => {
+                      formik.setFieldValue("is_bpjs", e.target.checked);
+                    }}
+                  >
+                    <Text mt={"-3px"}>Tanggungan BPJS</Text>
+                  </Checkbox>
+                  <FormErrorMessage>
+                    {formik.errors.is_bpjs as string}
+                  </FormErrorMessage>
+                </FormControl>
+              </form>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                type="submit"
+                form="keluargaForm"
+                className="btn-ap clicky"
+                colorScheme="ap"
+                w={"100%"}
+                isLoading={loading}
+              >
+                Simpan
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Portal>
     </>
   );
 }
