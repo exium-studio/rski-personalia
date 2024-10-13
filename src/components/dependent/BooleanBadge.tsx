@@ -19,8 +19,11 @@ export default function BooleanBadge({
       borderRadius={"full"}
       textAlign={"center"}
       colorScheme={
-        data ? "green" : data === null && nullValue ? "orange" : "gray"
+        data ? "green" : data === null && nullValue ? "orange" : "divider"
       }
+      // bg={
+      //   data ? "unset" : data === null && nullValue ? "unset" : "var(--divider)"
+      // }
       {...props}
     >
       {data ? trueValue : data === null && nullValue ? nullValue : falseValue}

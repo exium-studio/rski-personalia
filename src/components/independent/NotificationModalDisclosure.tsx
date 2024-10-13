@@ -135,7 +135,7 @@ export default function NotificationModalDisclosure({
     Cuti: "/jadwal/cuti",
     "Tukar Jadwal": "/jadwal/penukaran-jadwal",
     Lembur: "/jadwal/lembur",
-    "Event & Diklat": "/jadwal/diklat-eksternal",
+    "Event & Diklat": "/perusahaan/diklat-eksternal",
     Dokumen: "/karyawan",
     Perizinan: "/jadwal/izin",
     "Perubahan Data": "/karyawan/perubahan-data-karyawan",
