@@ -1,11 +1,9 @@
 import {
   Box,
+  BoxProps,
   Button,
   Center,
   HStack,
-  Icon,
-  IconButton,
-  IconButtonProps,
   Modal,
   ModalBody,
   ModalContent,
@@ -17,8 +15,8 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiMailDownloadLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useLightDarkColor } from "../../constant/colors";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -30,11 +28,15 @@ import Retry from "../dependent/Retry";
 import CContainer from "../wrapper/CContainer";
 import NoData from "./NoData";
 import Skeleton from "./Skeleton";
-import { Link } from "react-router-dom";
 
-interface Props extends IconButtonProps {}
+interface Props extends BoxProps {
+  children?: any;
+}
 
-export default function NotificationModal({ ...props }: Props) {
+export default function NotificationModalDisclosure({
+  children,
+  ...props
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("notification-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
@@ -146,7 +148,7 @@ export default function NotificationModal({ ...props }: Props) {
 
   return (
     <>
-      <Box position={"relative"}>
+      <Box onClick={onOpen} position={"relative"}>
         {notRedCount ? (
           <Center
             position={"absolute"}
@@ -166,12 +168,7 @@ export default function NotificationModal({ ...props }: Props) {
           ""
         )}
 
-        <IconButton
-          icon={<Icon as={RiMailDownloadLine} mb={"2px"} fontSize={18} />}
-          className="btn-solid clicky"
-          onClick={onOpen}
-          {...props}
-        />
+        {children}
       </Box>
 
       <Modal

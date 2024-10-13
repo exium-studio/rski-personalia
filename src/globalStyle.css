@@ -672,7 +672,7 @@ button[aria-label="Close"] > svg {
 /* Jodit Styles */
 
 .jodit-react-container {
-  color: black;
+  color: black !important;
 }
 .jodit-status-bar__item:nth-child(3),
 .jodit-status-bar__item:nth-child(4) {
@@ -681,6 +681,7 @@ button[aria-label="Close"] > svg {
 .jodit-ui-input__wrapper,
 .jodit-ui-text-area__wrapper {
   border: none !important;
+  color: black !important;
 }
 .jodit-ui-block {
   margin-bottom: 0 !important;
@@ -697,6 +698,7 @@ button[aria-label="Close"] > svg {
 }
 .jodit-popup__content {
   padding: 12px !important;
+  color: black !important;
 }
 .jodit_hovered {
   background: var(--divider3) !important;
@@ -704,8 +706,9 @@ button[aria-label="Close"] > svg {
   color: white;
 }
 .jodit-dialog__panel {
-  border-radius: 16px !important;
+  border-radius: 8px !important;
   padding: 12px !important;
+  color: black !important;
 }
 
 /* Custom Start*/

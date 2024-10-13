@@ -12,6 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import {
+  RiMailDownloadLine,
   RiMenu4Line,
   RiNotification2Line,
   RiRestartLine,
@@ -24,7 +25,7 @@ import useScreenWidth from "../../lib/useScreenWidth";
 import AdminMiniProfile from "../independent/AdminMiniProfile";
 import BackButton from "../independent/BackButton";
 import { ColorModeSwitcherHeaderMenu } from "../independent/ColorModeSwitcherHeaderMenu";
-import NotificationButton from "../independent/NotificationModal";
+import NotificationButtonDisclosure from "../independent/NotificationModalDisclosure";
 import RefreshButton from "../independent/RefreshButton";
 
 interface Props extends StackProps {
@@ -76,7 +77,13 @@ export default function Header({
           <ButtonGroup>
             <RefreshButton className="btn-solid clicky" />
 
-            <NotificationButton aria-label="Notification Button" />
+            <NotificationButtonDisclosure>
+              <IconButton
+                aria-label="Notification Button"
+                icon={<Icon as={RiMailDownloadLine} mb={"2px"} fontSize={18} />}
+                className="btn-solid clicky"
+              />
+            </NotificationButtonDisclosure>
 
             <ColorModeSwitcher className="btn-solid clicky" />
 
@@ -108,12 +115,14 @@ export default function Header({
                 </HStack>
               </MenuItem>
 
-              <MenuItem>
-                <HStack>
-                  <Icon as={RiNotification2Line} fontSize={iconSize} />
-                  <Text>Notifikasi</Text>
-                </HStack>
-              </MenuItem>
+              <NotificationButtonDisclosure>
+                <MenuItem>
+                  <HStack>
+                    <Icon as={RiNotification2Line} fontSize={iconSize} />
+                    <Text>Notifikasi</Text>
+                  </HStack>
+                </MenuItem>
+              </NotificationButtonDisclosure>
 
               <MenuItem p={0}>
                 {/* <HStack>
