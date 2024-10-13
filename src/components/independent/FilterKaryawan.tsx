@@ -40,6 +40,7 @@ import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 import { useLocation } from "react-router-dom";
+import FilterJenisKompetensi from "../dependent/_FilterOptions/FilterJenisKompetensi";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -76,6 +77,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     if (values.jenis_karyawan && values.jenis_karyawan.length > 0) {
       count += values.jenis_karyawan.length;
     }
+    if (values.jenis_kompetensi && values.jenis_kompetensi.length > 0) {
+      count += values.jenis_kompetensi.length;
+    }
     if (values.jabatan && values.jabatan.length > 0) {
       count += values.jabatan.length;
     }
@@ -108,6 +112,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       search: localFilterConfig.search,
       unit_kerja: localFilterConfig.unit_kerja.map((item: any) => item.id),
       jenis_karyawan: localFilterConfig.jenis_karyawan.map(
+        (item: any) => item.value
+      ),
+      jenis_kompetensi: localFilterConfig.jenis_kompetensi.map(
         (item: any) => item.value
       ),
       jabatan: localFilterConfig.jabatan.map((item: any) => item.id),
@@ -228,6 +235,11 @@ export default function FilterKaryawan({ title, ...props }: Props) {
               />
 
               <FilterJenisPegawai
+                filterConfig={localFilterConfig}
+                setFilterConfig={setLocalFilterConfig}
+              />
+
+              <FilterJenisKompetensi
                 filterConfig={localFilterConfig}
                 setFilterConfig={setLocalFilterConfig}
               />
