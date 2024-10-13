@@ -671,7 +671,7 @@ button[aria-label="Close"] > svg {
 
 /* Jodit Styles */
 
-.jodit-container {
+.jodit-react-container {
   color: black;
 }
 .jodit-status-bar__item:nth-child(3),
