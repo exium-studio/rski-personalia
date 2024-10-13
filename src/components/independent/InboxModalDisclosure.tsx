@@ -28,6 +28,8 @@ import Retry from "../dependent/Retry";
 import CContainer from "../wrapper/CContainer";
 import NoData from "./NoData";
 import Skeleton from "./Skeleton";
+import SearchComponent from "../dependent/input/SearchComponent";
+import NotFound from "./NotFound";
 
 interface Props extends BoxProps {
   children?: any;
@@ -38,8 +40,10 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
   useBackOnClose("notification-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
+  // States
+  const [deleteLoading, setDeleteloading] = useState<boolean>(false);
   const [rt, setRt] = useState<boolean>(false);
-
+  const [search, setSearch] = useState("");
   const { error, notFound, loading, setLoading, data, retry } =
     useDataState<any>({
       initialData: undefined,
@@ -47,7 +51,6 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
       dependencies: [rt],
       noRt: true,
     });
-
   const [notRedCount, setNotReadCount] = useState<number | undefined>(
     undefined
   );
@@ -67,8 +70,33 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
       setNotReadCount(count);
     }
   }, [data]);
+  const fdv = data?.notifikasi_verifikasi?.filter((item: any) => {
+    const searchTerm = search?.toLowerCase();
 
-  const [deleteLoading, setDeleteloading] = useState<boolean>(false);
+    // console.log(searchTerm, item?.kategori_notifikasi?.label?.toLowerCase());
+    // console.log(searchTerm, item?.message?.toLowerCase());
+
+    // Kategori Inbox
+    const matches1 = item?.kategori_notifikasi?.label
+      ?.toLowerCase()
+      ?.includes(searchTerm);
+    const matches2 = item?.message?.toLowerCase().includes(searchTerm);
+
+    return matches1 || matches2;
+  });
+  const fdr = data?.notifikasi_verifikasi?.filter((item: any) => {
+    const searchTerm = search?.toLowerCase();
+
+    // Kategori Inbox
+    const matches1 = item?.kategori_notifikasi?.label
+      ?.toLowerCase()
+      ?.includes(searchTerm);
+    const matches2 = item?.message?.toLowerCase().includes(searchTerm);
+
+    return matches1 || matches2;
+  });
+
+  // Utils
   const toast = useToast();
 
   function tandaiBaca(notif_id: number) {
@@ -223,106 +251,34 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
                     {(data || (data && data.length > 0)) && (
                       <>
                         <CContainer>
-                          {data?.notifikasi_verifikasi?.length > 0 && (
+                          <Box
+                            px={5}
+                            pb={6}
+                            bg={lightDarkColor}
+                            position={"sticky"}
+                            top={0}
+                            zIndex={3}
+                          >
+                            <SearchComponent
+                              name="search"
+                              onChangeSetter={(input) => {
+                                setSearch(input);
+                              }}
+                              inputValue={search}
+                            />
+                          </Box>
+
+                          {fdv?.length > 0 && (
                             <>
                               <CContainer px={6}>
                                 <Text fontWeight={500} mb={2}>
                                   Perlu Verifikasi
                                 </Text>
                               </CContainer>
-                              {data?.notifikasi_verifikasi?.map(
-                                (inbox: any, i: number) => {
-                                  // @ts-ignore
+                              {fdv?.map((inbox: any, i: number) => {
+                                // @ts-ignore
 
-                                  return (
-                                    <HStack
-                                      onClick={() => {
-                                        tandaiBaca(inbox.id);
-                                      }}
-                                      align={"start"}
-                                      key={i}
-                                      px={6}
-                                      py={4}
-                                      cursor={"pointer"}
-                                      _hover={{ bg: "var(--divider)" }}
-                                      transition={"200ms"}
-                                      borderBottom={
-                                        i !== data.length - 1
-                                          ? "1px solid var(--divider)"
-                                          : ""
-                                      }
-                                      as={Link}
-                                      to={
-                                        // @ts-ignore
-                                        verificationLinks[
-                                          inbox?.kategori_notifikasi?.label
-                                        ]
-                                      }
-                                    >
-                                      <CContainer gap={1}>
-                                        <Tooltip
-                                          label={
-                                            inbox?.kategori_notifikasi?.label
-                                          }
-                                          openDelay={500}
-                                        >
-                                          <Text
-                                            fontWeight={600}
-                                            w={"fit-content"}
-                                          >
-                                            {inbox?.kategori_notifikasi?.label}
-                                          </Text>
-                                        </Tooltip>
-
-                                        <Text
-                                          fontSize={14}
-                                          // noOfLines={1}
-                                          opacity={0.6}
-                                        >
-                                          {inbox?.message}
-                                        </Text>
-
-                                        <Text
-                                          fontSize={12}
-                                          opacity={0.4}
-                                          pt={2}
-                                        >
-                                          {formatDate(inbox?.created_at)}
-                                        </Text>
-                                      </CContainer>
-
-                                      {!inbox?.is_read && (
-                                        <Box
-                                          w={"6px"}
-                                          h={"6px"}
-                                          borderRadius={"full"}
-                                          bg={"red.400"}
-                                        />
-                                      )}
-                                    </HStack>
-                                  );
-                                }
-                              )}
-                            </>
-                          )}
-
-                          {data?.notifikasi_reguler?.length > 0 && (
-                            <>
-                              <CContainer px={6}>
-                                <Text
-                                  fontWeight={500}
-                                  mt={
-                                    data?.notifikasi_verifikasi?.length > 0
-                                      ? 4
-                                      : 0
-                                  }
-                                  mb={2}
-                                >
-                                  Reguler
-                                </Text>
-                              </CContainer>
-                              {data?.notifikasi_reguler?.map(
-                                (inbox: any, i: number) => (
+                                return (
                                   <HStack
                                     onClick={() => {
                                       tandaiBaca(inbox.id);
@@ -338,6 +294,13 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
                                       i !== data.length - 1
                                         ? "1px solid var(--divider)"
                                         : ""
+                                    }
+                                    as={Link}
+                                    to={
+                                      // @ts-ignore
+                                      verificationLinks[
+                                        inbox?.kategori_notifikasi?.label
+                                      ]
                                     }
                                   >
                                     <CContainer gap={1}>
@@ -377,9 +340,82 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
                                       />
                                     )}
                                   </HStack>
-                                )
-                              )}
+                                );
+                              })}
                             </>
+                          )}
+
+                          {fdr?.length > 0 && (
+                            <>
+                              <CContainer px={6}>
+                                <Text
+                                  fontWeight={500}
+                                  mt={
+                                    data?.notifikasi_verifikasi?.length > 0
+                                      ? 4
+                                      : 0
+                                  }
+                                  mb={2}
+                                >
+                                  Reguler
+                                </Text>
+                              </CContainer>
+                              {fdr?.map((inbox: any, i: number) => (
+                                <HStack
+                                  onClick={() => {
+                                    tandaiBaca(inbox.id);
+                                  }}
+                                  align={"start"}
+                                  key={i}
+                                  px={6}
+                                  py={4}
+                                  cursor={"pointer"}
+                                  _hover={{ bg: "var(--divider)" }}
+                                  transition={"200ms"}
+                                  borderBottom={
+                                    i !== data.length - 1
+                                      ? "1px solid var(--divider)"
+                                      : ""
+                                  }
+                                >
+                                  <CContainer gap={1}>
+                                    <Tooltip
+                                      label={inbox?.kategori_notifikasi?.label}
+                                      openDelay={500}
+                                    >
+                                      <Text fontWeight={600} w={"fit-content"}>
+                                        {inbox?.kategori_notifikasi?.label}
+                                      </Text>
+                                    </Tooltip>
+
+                                    <Text
+                                      fontSize={14}
+                                      // noOfLines={1}
+                                      opacity={0.6}
+                                    >
+                                      {inbox?.message}
+                                    </Text>
+
+                                    <Text fontSize={12} opacity={0.4} pt={2}>
+                                      {formatDate(inbox?.created_at)}
+                                    </Text>
+                                  </CContainer>
+
+                                  {!inbox?.is_read && (
+                                    <Box
+                                      w={"6px"}
+                                      h={"6px"}
+                                      borderRadius={"full"}
+                                      bg={"red.400"}
+                                    />
+                                  )}
+                                </HStack>
+                              ))}
+                            </>
+                          )}
+
+                          {fdv?.length === 0 && fdr?.length === 0 && (
+                            <NotFound minH={"300px"} />
                           )}
                         </CContainer>
                       </>

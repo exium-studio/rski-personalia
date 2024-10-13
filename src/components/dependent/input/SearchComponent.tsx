@@ -61,7 +61,7 @@ export default function SearchComponent({
 
   return (
     <Tooltip
-      label={tooltipLabel || placeholder}
+      label={!searchLocal && (tooltipLabel || placeholder)}
       openDelay={500}
       placement="bottom-start"
     >
