@@ -65,7 +65,7 @@ export default function SetLokasiPresensiLeafletMap({
   onClose,
 }: Props) {
   const officeIcon = new L.Icon({
-    iconUrl: "/vectors/icons/hospital.svg",
+    iconUrl: "/vectors/icons/hospital.png",
     iconSize: [80, 80], // Ukuran ikon
   });
 

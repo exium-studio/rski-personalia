@@ -1,4 +1,5 @@
-import { Button, HStack, useDisclosure } from "@chakra-ui/react";
+import { Button, HStack, Icon, useDisclosure } from "@chakra-ui/react";
+import { RiFocus3Line } from "@remixicon/react";
 import { Dispatch, useRef, useState } from "react";
 import { LatLng } from "../../constant/interfaces";
 import { responsiveSpacing } from "../../constant/sizes";
@@ -31,7 +32,7 @@ export default function SetLokasiPresensi({
     setLoading(true);
     getLocation()
       .then(({ lat, long }) => {
-        setOfficeLoc({ lat: lat, lng: long });
+        // setOfficeLoc({ lat: lat, lng: long });
         setCenter({ lat: lat, lng: long });
       })
       .catch((e) => {
@@ -61,8 +62,9 @@ export default function SetLokasiPresensi({
           className="btn-solid clicky"
           onClick={setLokasiSaatIni}
           isLoading={loading}
+          leftIcon={<Icon as={RiFocus3Line} />}
         >
-          Gunakan Lokasi Saat Ini
+          Lokasi Saat Ini
         </Button>
       </HStack>
 
