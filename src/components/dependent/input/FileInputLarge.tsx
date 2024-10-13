@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonProps,
   Center,
   Icon,
   Image,
@@ -23,7 +24,7 @@ import { useErrorColor } from "../../../constant/colors";
 import formatBytes from "../../../lib/formatBytes";
 import CContainer from "../../independent/wrapper/CContainer";
 
-interface Props {
+interface Props extends ButtonProps {
   name: string;
   onChangeSetter: (inputValue: File | string | undefined) => void;
   inputValue: File | string | undefined;
@@ -45,6 +46,7 @@ export default function FileInputLarge({
   initialFilepath,
   cProps,
   iProps,
+  ...props
 }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -91,8 +93,6 @@ export default function FileInputLarge({
 
   //@ts-ignore@
   const isImage = fileURL && /image\/.*/.test(inputValue?.type || "");
-
-  console.log(fileName);
 
   return (
     <>

@@ -163,7 +163,7 @@ export default function TambahAcaraDiklatEksternal({ ...props }: Props) {
           </ModalHeader>
           <ModalBody className="scrollY">
             <form id="tambahAcaraDiklatForm" onSubmit={formik.handleSubmit}>
-              <SimpleGrid columns={[1, 2]} spacingX={4} mb={2}>
+              <SimpleGrid columns={[1, 2]} spacingX={4} mb={8}>
                 <CContainer flex={"1 1"}>
                   <FormControl mb={4} isInvalid={!!formik.errors.user}>
                     <FormLabel>
@@ -252,7 +252,8 @@ export default function TambahAcaraDiklatEksternal({ ...props }: Props) {
                     }}
                     inputValue={formik.values.dokumen}
                     isError={!!formik.errors.dokumen}
-                    // cProps={{ flex: "1" }}
+                    h={"100% !important"}
+                    cProps={{ h: "100% !important", flex: "1" }}
                   />
                   <FormErrorMessage>
                     {formik.errors.dokumen as string}
