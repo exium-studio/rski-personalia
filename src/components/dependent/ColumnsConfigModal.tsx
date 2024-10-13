@@ -1,8 +1,10 @@
 import {
   Badge,
+  Box,
   Button,
   ButtonGroup,
   ButtonProps,
+  HStack,
   Icon,
   Modal,
   ModalBody,
@@ -181,28 +183,30 @@ export default function ColumnsConfigModal({
               </Wrap>
             </CContainer>
 
-            <CContainer mt={"auto"} mb={2}>
+            <CContainer mt={"auto"}>
               <Text fontWeight={500} mb={2} opacity={0.6}>
                 Urutan Kolom (dari kiri ke kanan)
               </Text>
-              <Wrap>
-                {selected.length === 0 && (
-                  <Text opacity={0.4}>Tidak ada kolom yang dipilih</Text>
-                )}
-                {selected.map((columnIndex, i) => (
-                  <Badge
-                    textTransform={"none"}
-                    bg={"var(--divider)"}
-                    color={"var(--divider-text)"}
-                    // border={"1px solid var(--p500a2)"}
-                    fontWeight={450}
-                    fontSize={"md"}
-                    key={i}
-                  >
-                    {allColumns[columnIndex].label}
-                  </Badge>
-                ))}
-              </Wrap>
+              <Box overflowX={"auto"} className="scrollX" pb={4}>
+                <HStack>
+                  {selected.length === 0 && (
+                    <Text opacity={0.4}>Tidak ada kolom yang dipilih</Text>
+                  )}
+                  {selected.map((columnIndex, i) => (
+                    <Badge
+                      textTransform={"none"}
+                      bg={"var(--divider)"}
+                      color={"var(--divider-text)"}
+                      // border={"1px solid var(--p500a2)"}
+                      fontWeight={450}
+                      fontSize={"md"}
+                      key={i}
+                    >
+                      {allColumns[columnIndex].label}
+                    </Badge>
+                  ))}
+                </HStack>
+              </Box>
             </CContainer>
           </ModalBody>
 
