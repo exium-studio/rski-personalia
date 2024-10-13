@@ -33,10 +33,7 @@ interface Props extends BoxProps {
   children?: any;
 }
 
-export default function NotificationModalDisclosure({
-  children,
-  ...props
-}: Props) {
+export default function InboxModalDisclosure({ children, ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("notification-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
