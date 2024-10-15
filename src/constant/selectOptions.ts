@@ -210,6 +210,10 @@ const optionsStatusKepegawaian = [
     value: 8,
     label: "Paruh Waktu",
   },
+  {
+    value: 9,
+    label: "Dokter Mitra",
+  },
 ];
 
 const optionsPendidikan = [
