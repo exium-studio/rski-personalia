@@ -189,7 +189,7 @@ const optionsSumberPotongan = [
   },
 ];
 
-const optionsStatusKepegawaian = [
+const optionsStatusKaryawan = [
   {
     value: 1,
     label: "Tetap",
@@ -333,7 +333,7 @@ export {
   optionsGoldar,
   optionsStatusAktif,
   optionsPendidikan,
-  optionsStatusKepegawaian,
+  optionsStatusKaryawan,
   optionsSumberPotongan,
   optionsTipeTransfer,
   optionsKategoriDiklat,

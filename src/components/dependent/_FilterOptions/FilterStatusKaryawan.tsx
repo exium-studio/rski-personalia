@@ -1,6 +1,6 @@
 import { HStack, Text, Wrap } from "@chakra-ui/react";
 import { Dispatch } from "react";
-import { optionsStatusKepegawaian } from "../../../constant/selectOptions";
+import { optionsStatusKaryawan } from "../../../constant/selectOptions";
 import FilterItemWrapper from "../../wrapper/FilterItemWrapper";
 
 interface Props {
@@ -22,7 +22,7 @@ export default function FilterStatusKaryawan({
       filterKey="status_karyawan"
     >
       <Wrap py={4}>
-        {optionsStatusKepegawaian?.map((data, i) => {
+        {optionsStatusKaryawan?.map((data, i) => {
           const active =
             filterConfig?.status_karyawan &&
             filterConfig?.status_karyawan.some(

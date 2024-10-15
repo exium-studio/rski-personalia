@@ -1,7 +1,7 @@
 import { ButtonProps, useDisclosure } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import SingleSelectModal from "../input/SingleSelectModal";
-import { optionsStatusKepegawaian } from "../../../constant/selectOptions";
+import { optionsStatusKaryawan } from "../../../constant/selectOptions";
 
 interface Props extends ButtonProps {
   name: string;
@@ -34,7 +34,7 @@ export default function SelectStatusKaryawan({
       isOpen={isOpen}
       onOpen={onOpen}
       onClose={onClose}
-      options={optionsStatusKepegawaian}
+      options={optionsStatusKaryawan}
       onConfirm={(input) => {
         onConfirm(input);
       }}

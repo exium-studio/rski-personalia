@@ -1,6 +1,6 @@
 import { ButtonProps, useDisclosure } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
-import { optionsStatusKepegawaian } from "../../../constant/selectOptions";
+import { optionsStatusKaryawan } from "../../../constant/selectOptions";
 import MultipleSelectModal from "../input/MultipleSelectModal";
 
 interface Props extends ButtonProps {
@@ -34,7 +34,7 @@ export default function MultiSelectStatusKaryawan({
       isOpen={isOpen}
       onOpen={onOpen}
       onClose={onClose}
-      options={optionsStatusKepegawaian}
+      options={optionsStatusKaryawan}
       onConfirm={(input) => {
         onConfirm(input);
       }}
