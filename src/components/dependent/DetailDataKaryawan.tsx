@@ -939,7 +939,7 @@ export default function DetailDataKaryawan({ data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data?.jabatan?.tunjangan_jabatan || 0)}
+              Rp {formatNumber(data?.tunjangan_jabatan || 0)}
             </Text>
           </HStack>
 
