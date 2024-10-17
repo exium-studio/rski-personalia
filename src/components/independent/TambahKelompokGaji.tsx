@@ -3,6 +3,7 @@ import {
   ButtonProps,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Icon,
   InputGroup,
@@ -44,15 +45,21 @@ export default function TambahKelompokGaji({ ...props }: Props) {
 
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { nama_kelompok: "", besaran_gaji: undefined as any },
+    initialValues: {
+      nama_kelompok: "",
+      besaran_gaji: undefined as any,
+      tunjangan_jabatan: undefined as any,
+    },
     validationSchema: yup.object().shape({
       nama_kelompok: yup.string().required("Harus diisi"),
       besaran_gaji: yup.number().required("Harus diisi"),
+      tunjangan_jabatan: yup.number().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_kelompok: values.nama_kelompok,
         besaran_gaji: values.besaran_gaji,
+        tunjangan_jabatan: values.tunjangan_jabatan,
       };
       setLoading(true);
       req
@@ -143,6 +150,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
               </FormControl>
 
               <FormControl
+                mb={4}
                 isInvalid={formik.errors.besaran_gaji ? true : false}
               >
                 <FormLabel>
@@ -165,6 +173,36 @@ export default function TambahKelompokGaji({ ...props }: Props) {
                 </InputGroup>
                 <FormErrorMessage>
                   {formik.errors.besaran_gaji as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                isInvalid={formik.errors.tunjangan_jabatan ? true : false}
+              >
+                <FormLabel>
+                  Default Tunjangan Jabatan
+                  <RequiredForm />
+                </FormLabel>
+                <InputGroup>
+                  <InputLeftElement pl={4}>
+                    <Text>Rp</Text>
+                  </InputLeftElement>
+                  <NumberInput
+                    pl={12}
+                    name="tunjangan_jabatan"
+                    placeholder="500.000"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("tunjangan_jabatan", input);
+                    }}
+                    inputValue={formik.values.tunjangan_jabatan}
+                  />
+                </InputGroup>
+                <FormHelperText>
+                  Nilai ini otomatis terisi saat tambah karyawan, namun dapat
+                  diubah untuk setiap karyawan.
+                </FormHelperText>
+                <FormErrorMessage>
+                  {formik.errors.tunjangan_jabatan as string}
                 </FormErrorMessage>
               </FormControl>
             </form>

@@ -4,6 +4,7 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   InputGroup,
   InputLeftElement,
@@ -56,10 +57,12 @@ export default function EditKelompokGajiModalDisclosure({
     initialValues: {
       nama_kelompok: "" as any,
       besaran_gaji: undefined as any,
+      tunjangan_jabatan: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_kelompok: yup.string().required("Harus diisi"),
       besaran_gaji: yup.number().required("Harus diisi"),
+      tunjangan_jabatan: yup.number().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
@@ -108,11 +111,15 @@ export default function EditKelompokGajiModalDisclosure({
   useEffect(() => {
     formikRef.current.setFieldValue(
       "nama_kelompok",
-      rowData.columnsFormat[0].value
+      rowData.originalData?.nama_kelompok
     );
     formikRef.current.setFieldValue(
       "besaran_gaji",
-      rowData.columnsFormat[2].value
+      rowData.originalData?.besaran_gaji
+    );
+    formikRef.current.setFieldValue(
+      "tunjangan_jabatan",
+      rowData.originalData?.tunjangan_jabatan
     );
   }, [isOpen, rowData, formikRef]);
 
@@ -166,6 +173,7 @@ export default function EditKelompokGajiModalDisclosure({
               </FormControl>
 
               <FormControl
+                mb={4}
                 isInvalid={formik.errors.besaran_gaji ? true : false}
               >
                 <FormLabel>
@@ -188,6 +196,36 @@ export default function EditKelompokGajiModalDisclosure({
                 </InputGroup>
                 <FormErrorMessage>
                   {formik.errors.besaran_gaji as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                isInvalid={formik.errors.tunjangan_jabatan ? true : false}
+              >
+                <FormLabel>
+                  Default Tunjangan Jabatan
+                  <RequiredForm />
+                </FormLabel>
+                <InputGroup>
+                  <InputLeftElement pl={4}>
+                    <Text>Rp</Text>
+                  </InputLeftElement>
+                  <NumberInput
+                    pl={12}
+                    name="tunjangan_jabatan"
+                    placeholder="500.000"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("tunjangan_jabatan", input);
+                    }}
+                    inputValue={formik.values.tunjangan_jabatan}
+                  />
+                </InputGroup>
+                <FormHelperText>
+                  Nilai ini otomatis terisi saat tambah karyawan, namun dapat
+                  diubah untuk setiap karyawan.
+                </FormHelperText>
+                <FormErrorMessage>
+                  {formik.errors.tunjangan_jabatan as string}
                 </FormErrorMessage>
               </FormControl>
             </form>

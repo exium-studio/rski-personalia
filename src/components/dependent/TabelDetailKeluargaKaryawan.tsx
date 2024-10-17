@@ -12,6 +12,7 @@ import useGetUserData from "../../hooks/useGetUserData";
 import { RiEditLine } from "@remixicon/react";
 import EditAnggotaKeluargaModalDisclosure from "../independent/EditAnggotaKeluargaModalDisclosure";
 import TambahAnggotaKeluarga from "./TambahAnggotaKeluarga";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 interface Props {
   idKaryawan: number;
@@ -41,10 +42,12 @@ export default function TabelDetailKeluargaKaryawan({
           idKaryawan={idKaryawan}
           rowData={rowData}
         >
-          <MenuItem isDisabled={!isUserSuperAdmin}>
-            <Text>Edit</Text>
-            <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
-          </MenuItem>
+          <PermissionTooltip permission={isUserSuperAdmin}>
+            <MenuItem isDisabled={!isUserSuperAdmin}>
+              <Text>Edit</Text>
+              <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
         </EditAnggotaKeluargaModalDisclosure>
       );
     },
@@ -282,7 +285,7 @@ export default function TabelDetailKeluargaKaryawan({
           <CustomTable
             formattedHeader={formattedHeader}
             formattedData={formattedData}
-            rowOptions={isUserSuperAdmin ? rowOptions : undefined}
+            rowOptions={rowOptions}
           />
         </CustomTableContainer>
       )}

@@ -144,6 +144,7 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
   ];
   const formattedData = fd?.map((item: any) => ({
     id: item.id,
+    originalData: item,
     columnsFormat: [
       {
         value: item.nama_kelompok,

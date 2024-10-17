@@ -27,6 +27,8 @@ import SelectHubunganKeluarga from "./_Select/SelectHubunganKeluarga";
 import SelectStatusHidup from "./_Select/SelectStatusHidup";
 import SelectPendidikan from "./_Select/SelectPendidikan";
 import req from "../../lib/req";
+import useGetUserData from "../../hooks/useGetUserData";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
 
 export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,6 +38,8 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
     onOpen,
     onClose
   );
+  const userData = useGetUserData();
+  const isSuperAdmin = userData?.id === 1;
 
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
@@ -112,15 +116,18 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
 
   return (
     <>
-      <Button
-        flexShrink={0}
-        colorScheme="ap"
-        variant={"outline"}
-        className="clicky"
-        onClick={onOpen}
-      >
-        Tambah Anggota
-      </Button>
+      <PermissionTooltip permission={isSuperAdmin}>
+        <Button
+          flexShrink={0}
+          colorScheme="ap"
+          variant={"outline"}
+          className="clicky"
+          onClick={onOpen}
+          isDisabled={!isSuperAdmin}
+        >
+          Tambah Anggota
+        </Button>
+      </PermissionTooltip>
 
       <Modal
         isOpen={isOpen}

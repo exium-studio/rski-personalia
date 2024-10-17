@@ -209,7 +209,17 @@ export default function TambahKaryawanModal({ ...props }: Props) {
     },
   });
 
-  // console.log(formik.values);
+  const formikRef = useRef(formik);
+  useEffect(() => {
+    if (formik.values.jabatan) {
+      formikRef.current.setFieldValue(
+        "tunjangan_jabtan",
+        formik.values.jabatan.original_data.tunjangan_jabatan
+      );
+    }
+  }, [formik.values.jabatan]);
+
+  // console.log(formik.values.jabatan.original_data.tunjangan_jabatan);
 
   const handleNext = () => {
     formik.validateForm().then((errors) => {
@@ -623,7 +633,6 @@ export default function TambahKaryawanModal({ ...props }: Props) {
               <Text>Rp</Text>
             </InputLeftElement>
             <NumberInput
-              isReadOnly
               pl={12}
               name="tunjangan_jabatan"
               placeholder="500.000"
