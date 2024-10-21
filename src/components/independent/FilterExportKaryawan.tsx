@@ -33,6 +33,7 @@ import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryaw
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -84,9 +85,9 @@ export default function FilterExportKaryawan({ title, ...props }: Props) {
     if (values.jenis_kelamin && values.jenis_kelamin.length > 0) {
       count += values.jenis_kelamin.length;
     }
-    // if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
-    //   count += values.pendidikan_terakhir.length;
-    // }
+    if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
+      count += values.pendidikan_terakhir.length;
+    }
     return count;
   }
 
@@ -111,9 +112,9 @@ export default function FilterExportKaryawan({ title, ...props }: Props) {
       jenis_kelamin: localFilterConfig.jenis_kelamin.map(
         (item: any) => item.value
       ),
-      // pendidikan_terakhir: localFilterConfig.pendidikan_terakhir.map(
-      //   (item: any) => item.value
-      // ),
+      pendidikan_terakhir: localFilterConfig.pendidikan_terakhir.map(
+        (item: any) => item.value
+      ),
     };
 
     // Menghapus properti dengan array kosong kecuali 'search'
@@ -234,10 +235,10 @@ export default function FilterExportKaryawan({ title, ...props }: Props) {
                 setFilterConfig={setLocalFilterConfig}
               />
 
-              {/* <FilterPendidikanTerakhir
+              <FilterPendidikanTerakhir
                 filterConfig={localFilterConfig}
                 setFilterConfig={setLocalFilterConfig}
-              /> */}
+              />
             </Accordion>
           </ModalBody>
 
