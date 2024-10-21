@@ -1,5 +1,6 @@
 import { Center, Text, useDisclosure } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import formatTime from "../../lib/formatTimeOld";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -13,7 +14,6 @@ import CustomTable from "./CustomTable";
 import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
 interface Props {
   filterConfig?: any;
 }
