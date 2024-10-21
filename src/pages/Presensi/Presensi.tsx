@@ -14,6 +14,7 @@ import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
+import formatDate from "../../lib/formatDate";
 
 export default function Presensi() {
   const today = new Date();
@@ -112,7 +113,11 @@ export default function Presensi() {
             </PermissionTooltip>
           </HStack>
 
-          <TabelPresensi filterConfig={filterConfig} />
+          <TabelPresensi
+            filterConfig={{
+              tanggal: formatDate(filterConfig.tanggal, "short"),
+            }}
+          />
         </CContainer>
       </CWrapper>
     </>
