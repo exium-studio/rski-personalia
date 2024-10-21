@@ -115,6 +115,7 @@ export default function Presensi() {
 
           <TabelPresensi
             filterConfig={{
+              ...filterConfig,
               tanggal: formatDate(filterConfig.tanggal, "short"),
             }}
           />
