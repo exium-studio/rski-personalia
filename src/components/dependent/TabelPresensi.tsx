@@ -1,5 +1,5 @@
 import { Center, Text, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useDataState from "../../hooks/useDataState";
 import formatTime from "../../lib/formatTimeOld";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -28,11 +28,17 @@ export default function TabelPresensi({ filterConfig }: Props) {
   // Filter Karyawan Config
   const { formattedFilterKaryawan } = useFilterKaryawan();
 
+  // console.log(filterConfig);
+
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any>({
       initialData: undefined,
       url: `/api/rski/dashboard/presensi/get-data-presensi?page=${pageConfig}`,
-      payload: { ...filterConfig, ...formattedFilterKaryawan },
+      payload: {
+        search: filterConfig.search,
+        tanggal: filterConfig.tanggal,
+        ...formattedFilterKaryawan,
+      },
       limit: limitConfig,
       dependencies: [
         limitConfig,

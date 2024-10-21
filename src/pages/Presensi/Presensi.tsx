@@ -1,4 +1,4 @@
-import { HStack } from "@chakra-ui/react";
+import { filter, HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ExportPresensiModal from "../../components/dependent/ExportPresensiModal";
 import ImportModal from "../../components/dependent/ImportModal";
@@ -114,10 +114,11 @@ export default function Presensi() {
           </HStack>
 
           <TabelPresensi
-            filterConfig={{
-              ...filterConfig,
-              tanggal: formatDate(filterConfig.tanggal, "short"),
-            }}
+            // filterConfig={{
+            //   ...filterConfig,
+            //   tanggal: formatDate(filterConfig.tanggal, "short"),
+            // }}
+            filterConfig={filterConfig}
           />
         </CContainer>
       </CWrapper>
