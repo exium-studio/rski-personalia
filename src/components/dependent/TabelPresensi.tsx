@@ -14,6 +14,7 @@ import CustomTable from "./CustomTable";
 import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+import formatDate from "../../lib/formatDate";
 interface Props {
   filterConfig?: any;
 }
@@ -36,7 +37,7 @@ export default function TabelPresensi({ filterConfig }: Props) {
       url: `/api/rski/dashboard/presensi/get-data-presensi?page=${pageConfig}`,
       payload: {
         search: filterConfig.search,
-        tanggal: filterConfig.tanggal,
+        tanggal: formatDate(filterConfig.tanggal, "short"),
         ...formattedFilterKaryawan,
       },
       limit: limitConfig,
