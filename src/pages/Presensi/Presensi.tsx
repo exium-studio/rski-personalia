@@ -47,7 +47,7 @@ export default function Presensi() {
   return (
     <>
       <CWrapper>
-        <PresensiTotal mb={responsiveSpacing} />
+        <PresensiTotal tanggal={filterConfig.tanggal} mb={responsiveSpacing} />
 
         <CContainer
           flex={1}

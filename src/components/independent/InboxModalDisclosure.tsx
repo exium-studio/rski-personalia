@@ -178,7 +178,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
         {notRedCount ? (
           <Center
             position={"absolute"}
-            w={"20px"}
+            minW={"20px"}
             h={"20px"}
             borderRadius={"full"}
             bg={"red.400"}
