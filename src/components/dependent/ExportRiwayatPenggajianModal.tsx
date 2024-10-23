@@ -17,8 +17,10 @@ import {
 import {
   RiArrowDownLine,
   RiBankLine,
+  RiGroup3Line,
   RiHandCoinLine,
   RiUploadLine,
+  RiVerifiedBadgeLine,
 } from "@remixicon/react";
 import { useRef, useState } from "react";
 import { iconSize } from "../../constant/sizes";
@@ -55,12 +57,20 @@ export default function ExportRiwayatPenggajianModal({
     let url = "";
     let fileName = "";
     if (tipeExport === 1) {
-      url = "/api/rski/dashboard/keuangan/penggajian/export-penerimaan";
-      fileName = "Penggajian Penerimaan";
+      url =
+        "/api/rski/dashboard/keuangan/penggajian/export-penerimaan-karyawan";
+      fileName = "Penggajian Penerimaan Karyawan";
     } else if (tipeExport === 2) {
+      url = "/api/rski/dashboard/keuangan/penggajian/export-penerimaan-unit";
+      fileName = "Penggajian Penerimaan Unit";
+    } else if (tipeExport === 3) {
+      url =
+        "/api/rski/dashboard/keuangan/penggajian/export-penerimaan-kompetensi";
+      fileName = "Penggajian Penerimaan Kompetensi";
+    } else if (tipeExport === 4) {
       url = "/api/rski/dashboard/keuangan/penggajian/export-potongan";
       fileName = "Penggajian Potongan";
-    } else if (tipeExport === 3) {
+    } else if (tipeExport === 5) {
       url = "/api/rski/dashboard/keuangan/penggajian/export-bank";
       fileName = "Penggajian Bank";
     }
@@ -159,8 +169,9 @@ export default function ExportRiwayatPenggajianModal({
                 }
                 rightIcon={<Icon as={RiArrowDownLine} fontSize={iconSize} />}
               >
-                Penggajian Penerimaan
+                Penggajian Penerimaan Karyawan
               </Button>
+
               <Button
                 onClick={() => {
                   setTipeExport(2);
@@ -169,10 +180,11 @@ export default function ExportRiwayatPenggajianModal({
                 className={
                   tipeExport === 2 ? "selected clicky" : "btn-outline clicky"
                 }
-                rightIcon={<Icon as={RiHandCoinLine} fontSize={iconSize} />}
+                rightIcon={<Icon as={RiGroup3Line} fontSize={iconSize} />}
               >
-                Penggajian Potongan
+                Penggajian Penerimaan Unit
               </Button>
+
               <Button
                 onClick={() => {
                   setTipeExport(3);
@@ -180,6 +192,34 @@ export default function ExportRiwayatPenggajianModal({
                 justifyContent={"space-between"}
                 className={
                   tipeExport === 3 ? "selected clicky" : "btn-outline clicky"
+                }
+                rightIcon={
+                  <Icon as={RiVerifiedBadgeLine} fontSize={iconSize} />
+                }
+              >
+                Penggajian Penerimaan Kompetensi
+              </Button>
+
+              <Button
+                onClick={() => {
+                  setTipeExport(4);
+                }}
+                justifyContent={"space-between"}
+                className={
+                  tipeExport === 4 ? "selected clicky" : "btn-outline clicky"
+                }
+                rightIcon={<Icon as={RiHandCoinLine} fontSize={iconSize} />}
+              >
+                Penggajian Potongan
+              </Button>
+
+              <Button
+                onClick={() => {
+                  setTipeExport(5);
+                }}
+                justifyContent={"space-between"}
+                className={
+                  tipeExport === 5 ? "selected clicky" : "btn-outline clicky"
                 }
                 rightIcon={<Icon as={RiBankLine} fontSize={iconSize} />}
               >
