@@ -153,33 +153,41 @@ export default function PengaturanJadwalPenggajian() {
                     </FormLabel>
 
                     <SimpleGrid w={"100%"} columns={[7]} gap={4}>
-                      {Array.from({ length: 28 }).map((_, i) => (
-                        <Center
-                          p={4}
-                          borderRadius={12}
-                          className={
-                            i === formik.values.tgl_mulai - 1
-                              ? "btn-apa clicky"
-                              : "btn-outline clicky"
-                          }
-                          border={
-                            i === formik.values.tgl_mulai - 1
-                              ? "1px solid var(--p500a2)"
-                              : "1px solid var(--divider3)"
-                          }
-                          key={i}
-                          aspectRatio={1}
-                          cursor={"pointer"}
-                          flex={"1 1 50px"}
-                          onClick={() => {
-                            formik.setFieldValue("tgl_mulai", i + 1);
-                          }}
-                        >
-                          <Text fontSize={22} fontWeight={600}>
-                            {i + 1}
-                          </Text>
-                        </Center>
-                      ))}
+                      {Array.from({ length: 28 }).map((_, i) => {
+                        const today = new Date().getDate();
+
+                        return (
+                          <Center
+                            isDisabled={i < today}
+                            p={4}
+                            borderRadius={12}
+                            as={Button}
+                            w={"100%"}
+                            h={"100%"}
+                            className={
+                              i === formik.values.tgl_mulai - 1
+                                ? "btn-apa clicky"
+                                : "btn-outline clicky"
+                            }
+                            border={
+                              i === formik.values.tgl_mulai - 1
+                                ? "1px solid var(--p500a2)"
+                                : "1px solid var(--divider3)"
+                            }
+                            key={i}
+                            aspectRatio={1}
+                            cursor={"pointer"}
+                            flex={"1 1 50px"}
+                            onClick={() => {
+                              formik.setFieldValue("tgl_mulai", i + 1);
+                            }}
+                          >
+                            <Text fontSize={22} fontWeight={600}>
+                              {i + 1}
+                            </Text>
+                          </Center>
+                        );
+                      })}
                     </SimpleGrid>
 
                     <FormErrorMessage>
