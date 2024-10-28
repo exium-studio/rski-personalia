@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  ButtonProps,
   HStack,
   Icon,
   Modal,
@@ -27,7 +28,7 @@ import DisclosureHeader from "../DisclosureHeader";
 import SearchComponent from "./SearchComponent";
 import { responsiveSpacing } from "../../../constant/sizes";
 
-interface Props {
+interface Props extends ButtonProps {
   id: string;
   name: string;
   isOpen: boolean;

@@ -19,6 +19,7 @@ import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
+import { Interface__SelectOption } from "../../constant/interfaces";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
@@ -30,9 +31,47 @@ import MultiSelectKaryawanWithUnitKerja from "../dependent/_Select/MultiSelectKa
 import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanAllJenisKaryawan";
 import SelectModulVerifikasi from "../dependent/_Select/SelectModulVerifikasi";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import NumberInput from "../dependent/input/NumberInput";
+import SingleSelectModal from "../dependent/input/SingleSelectModal";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
+
+interface SelectLevelProps {
+  selectedModul: any;
+  onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
+  inputValue: Interface__SelectOption | undefined;
+  isDisabled?: boolean;
+}
+
+const SelectLevel = ({
+  selectedModul,
+  inputValue,
+  onConfirm,
+  isDisabled,
+}: SelectLevelProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const options = Array.from({ length: selectedModul?.label2 || 0 }).map(
+    (_, i) => ({
+      value: i + 1,
+      label: i + 1,
+    })
+  );
+
+  return (
+    <SingleSelectModal
+      id="select-level-verifikasi"
+      name="order"
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onClose={onClose}
+      inputValue={inputValue}
+      onConfirm={onConfirm}
+      placeholder="Pilih Level Verifikasi"
+      isDisabled={isDisabled}
+      options={options}
+    />
+  );
+};
 
 interface Props extends ButtonProps {}
 
@@ -57,7 +96,7 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
     validationSchema: yup.object().shape({
       name: yup.string().required("Harus diisi"),
       modul: yup.object().required("Harus diisi"),
-      order: yup.number().required("Harus diisi"),
+      order: yup.object().required("Harus diisi"),
       verifikator: yup.object().required("Harus diisi"),
       user_diverifikasi: yup.array().required("Harus diisi"),
     }),
@@ -69,7 +108,7 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
           (user: any) => user?.value
         ),
         modul_verifikasi: values?.modul?.value,
-        order: values?.order,
+        order: values?.order?.value,
       };
       setLoading(true);
       req
@@ -190,9 +229,10 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
                   Level Verifikasi
                   <RequiredForm />
                 </FormLabel>
-                <NumberInput
-                  name="order"
-                  onChangeSetter={(input) => {
+                <SelectLevel
+                  selectedModul={formik.values.modul}
+                  isDisabled={!formik.values.modul}
+                  onConfirm={(input) => {
                     formik.setFieldValue("order", input);
                   }}
                   inputValue={formik.values.order}
