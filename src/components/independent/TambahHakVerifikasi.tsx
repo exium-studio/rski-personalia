@@ -52,7 +52,7 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
       modul: undefined as any,
       order: undefined as any,
       verifikator: undefined as any,
-      user_diverifikasi: undefined as any,
+      user_diverifikasi: [] as any,
     },
     validationSchema: yup.object().shape({
       name: yup.string().required("Harus diisi"),
