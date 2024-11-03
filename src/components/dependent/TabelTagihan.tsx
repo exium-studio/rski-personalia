@@ -1,5 +1,5 @@
 import { Center, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
@@ -34,6 +34,10 @@ export default function TabelTagihan({ filterConfig }: Props) {
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, filterConfig],
     });
+
+  useEffect(() => {
+    setPageConfig(1);
+  }, [filterConfig]);
 
   const formattedHeader = [
     {

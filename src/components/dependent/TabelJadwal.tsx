@@ -1,6 +1,6 @@
 import { Center, HStack, Text, Tooltip } from "@chakra-ui/react";
 import { eachDayOfInterval } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -51,6 +51,10 @@ export default function TabelJadwal({ filterConfig }: Props) {
         formattedFilterKaryawan,
       ],
     });
+
+  useEffect(() => {
+    setPageConfig(1);
+  }, [formattedFilterKaryawan, filterConfig]);
 
   const dateList = eachDayOfInterval({
     start: filterConfig.tgl_mulai,

@@ -1,5 +1,5 @@
 import { Box, Center, Text, Tooltip } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
@@ -52,6 +52,10 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
         filterConfig,
       ],
     });
+
+  useEffect(() => {
+    setPageConfig(1);
+  }, [formattedFilterKaryawan, filterConfig]);
 
   const userData = useGetUserData();
 

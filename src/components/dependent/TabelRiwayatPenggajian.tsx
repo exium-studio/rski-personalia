@@ -1,5 +1,5 @@
 import { Center, Text, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -34,6 +34,10 @@ export default function TabelRiwayatPenggajian({ filterConfig }: Props) {
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, filterConfig],
     });
+
+  useEffect(() => {
+    setPageConfig(1);
+  }, [filterConfig]);
 
   const formattedHeader = [
     {

@@ -450,6 +450,10 @@ export default function TabelDiklat({ filterConfig }: Props) {
       dependencies: [limitConfig, pageConfig, filterConfig],
     });
 
+  useEffect(() => {
+    setPageConfig(1);
+  }, [filterConfig]);
+
   const userData = useGetUserData();
 
   const formattedHeader = [

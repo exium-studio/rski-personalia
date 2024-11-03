@@ -1,5 +1,5 @@
 import { Center } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import useGetUserData from "../../hooks/useGetUserData";
@@ -55,6 +55,10 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
         filterConfig,
       ],
     });
+
+  useEffect(() => {
+    setPageConfig(1);
+  }, [formattedFilterKaryawan, filterConfig]);
 
   const userData = useGetUserData();
 

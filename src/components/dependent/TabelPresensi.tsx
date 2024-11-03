@@ -1,5 +1,5 @@
 import { Center, Text, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import formatTime from "../../lib/formatTimeOld";
@@ -48,6 +48,10 @@ export default function TabelPresensi({ filterConfig }: Props) {
         formattedFilterKaryawan,
       ],
     });
+
+  useEffect(() => {
+    setPageConfig(1);
+  }, [formattedFilterKaryawan, filterConfig]);
 
   const formattedHeader = [
     {

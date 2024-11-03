@@ -1,5 +1,5 @@
 import { Center, Text, Tooltip } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
@@ -39,6 +39,10 @@ export default function TabelLembur({ filterConfig }: Props) {
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
     });
+
+  useEffect(() => {
+    setPageConfig(1);
+  }, [formattedFilterKaryawan, filterConfig]);
 
   const formattedHeader = [
     {

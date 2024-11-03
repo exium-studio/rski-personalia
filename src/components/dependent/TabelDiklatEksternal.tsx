@@ -1,5 +1,5 @@
 import { Button, Center } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useDataState from "../../hooks/useDataState";
 import useGetUserData from "../../hooks/useGetUserData";
@@ -42,6 +42,10 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, filterConfig],
     });
+
+  useEffect(() => {
+    setPageConfig(1);
+  }, [filterConfig]);
 
   const userData = useGetUserData();
 

@@ -1,5 +1,5 @@
 import { Center, Text, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Interface__DetailKaryawan } from "../../constant/interfaces";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useKaryawanTableColumnsConfig from "../../global/useKaryawanTableColumnsConfig";
@@ -41,6 +41,10 @@ export default function TabelKaryawan() {
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, formattedFilterKaryawan],
     });
+
+  useEffect(() => {
+    setPageConfig(1);
+  }, [formattedFilterKaryawan]);
 
   const formattedHeader = [
     {

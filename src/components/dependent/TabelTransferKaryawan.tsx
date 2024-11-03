@@ -7,7 +7,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { RiEditLine } from "@remixicon/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
@@ -67,6 +67,10 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
         filterConfig,
       ],
     });
+
+  useEffect(() => {
+    setPageConfig(1);
+  }, [formattedFilterKaryawan, filterConfig]);
 
   // Row Options Config
   const rowOptions = [
