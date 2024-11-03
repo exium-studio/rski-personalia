@@ -1,4 +1,4 @@
-import { Center } from "@chakra-ui/react";
+import { Center, HStack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
@@ -95,6 +95,13 @@ export default function TabelCuti({ filterConfig }: Props) {
     },
     {
       th: "Durasi",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
+      th: "Sisa Kuota",
       isSortable: true,
       cProps: {
         justify: "center",
@@ -204,6 +211,19 @@ export default function TabelCuti({ filterConfig }: Props) {
             new Date(formatDate(item?.tgl_from, "iso")),
             new Date(formatDate(item?.tgl_to, "iso"))
           )} Hari`,
+          isNumeric: true,
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item?.sisa_kuota,
+          td: (
+            <HStack>
+              <Text>{item?.sisa_kuota}</Text>
+              <Text opacity={0.4}>/ {item?.total_kuota}</Text>
+            </HStack>
+          ),
           isNumeric: true,
           cProps: {
             justify: "center",
