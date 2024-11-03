@@ -11,8 +11,13 @@ interface Props {
     backgroundColor: string[];
     borderWidth: number;
   }[];
+  cutout?: number;
 }
-export default function ChartDoughnut({ labels, datasets }: Props) {
+export default function ChartDoughnut({
+  labels,
+  datasets,
+  cutout = 60,
+}: Props) {
   const data = {
     labels: labels,
     datasets: datasets,
@@ -27,6 +32,7 @@ export default function ChartDoughnut({ labels, datasets }: Props) {
     tooltip: {
       tooltip: false,
     },
+    cutout: cutout,
   };
 
   return <Doughnut data={data} options={options} />;
