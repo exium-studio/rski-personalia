@@ -34,6 +34,7 @@ export default function FormDashboardUpdatePengumuman({
     initialValues: {
       judul: data.judul,
       konten: data.konten,
+      tgl_mulai: new Date(formatDate(data.tgl_berakhir, "iso")),
       tgl_berakhir: new Date(formatDate(data.tgl_berakhir, "iso")),
       user_id: data.user?.map((item: any) => ({
         value: item.id,
@@ -42,14 +43,16 @@ export default function FormDashboardUpdatePengumuman({
     },
     validationSchema: yup.object().shape({
       judul: yup.string().required("Judul harus diisi"),
-      konten: yup.string().required("Pengumuman harus diisi"),
-      tgl_berakhir: yup.string().required("Pengumuman harus diisi"),
-      user_id: yup.array().required("Pengumuman harus diisi"),
+      konten: yup.string().required("Harus diisi"),
+      tgl_mulai: yup.string().required("Harus diisi"),
+      tgl_berakhir: yup.string().required("Harus diisi"),
+      user_id: yup.array().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         judul: values.judul,
         konten: values.konten,
+        tgl_mulai: formatDate(values.tgl_mulai, "short"),
         tgl_berakhir: formatDate(values.tgl_berakhir, "short"),
         user_id: values?.user_id?.map((user: any) => user.value),
         _method: "patch",
@@ -121,6 +124,22 @@ export default function FormDashboardUpdatePengumuman({
           inputValue={formik.values.judul}
         />
         <FormErrorMessage>{formik.errors.judul as string}</FormErrorMessage>
+      </FormControl>
+
+      <FormControl mb={4} isInvalid={!!formik.errors.tgl_mulai}>
+        <FormLabel>
+          Tanggal Mulai
+          <RequiredForm />
+        </FormLabel>
+        <DatePickerModal
+          id="tambah-pengumuman"
+          name="tgl_mulai"
+          onConfirm={(input) => {
+            formik.setFieldValue("tgl_mulai", input);
+          }}
+          inputValue={formik.values.tgl_mulai}
+        />
+        <FormErrorMessage>{formik.errors.tgl_mulai as string}</FormErrorMessage>
       </FormControl>
 
       <FormControl mb={4} isInvalid={formik.errors.tgl_berakhir ? true : false}>
