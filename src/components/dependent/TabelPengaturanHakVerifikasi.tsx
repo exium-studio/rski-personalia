@@ -214,6 +214,9 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
     {
       th: "Level Verifikasi",
       isSortable: true,
+      cProps: {
+        justify: "center",
+      },
     },
     {
       th: "Verifikator",
