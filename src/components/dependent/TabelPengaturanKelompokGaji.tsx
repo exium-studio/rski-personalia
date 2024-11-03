@@ -135,7 +135,7 @@ export default function TabelPengaturanKelompokGaji({ filterConfig }: Props) {
       },
     },
     {
-      th: "Besaran Gaji",
+      th: "Default Besaran Gaji",
       isSortable: true,
       cProps: {
         justify: "end",
