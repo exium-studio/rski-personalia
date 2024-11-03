@@ -34,10 +34,10 @@ import CustomTable from "./CustomTable";
 import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
+
 interface ListKaryaanDiverifikasiProps {
   data: any;
 }
-
 const ListKaryawanDiverifikasiModal = ({
   data,
 }: ListKaryaanDiverifikasiProps) => {
@@ -122,7 +122,6 @@ const ListKaryawanDiverifikasiModal = ({
 interface Props {
   filterConfig?: any;
 }
-
 export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
   // Permissions
   const { userPermissions } = useAuth();
