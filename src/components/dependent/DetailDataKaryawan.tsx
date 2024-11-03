@@ -11,12 +11,13 @@ import SmallLink from "./SmallLink";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
 
 interface Props {
+  nama?: string;
   userData?: any;
   data: any;
   searchQuery: (string | RegExp)[];
 }
 
-export default function DetailDataKaryawan({ data, searchQuery }: Props) {
+export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
   const userData = useGetUserData();
   const dataPotonganGaji = data?.potongan_gaji || userData?.potongan_gaji;
 
@@ -78,7 +79,7 @@ export default function DetailDataKaryawan({ data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data?.user?.nama}
+              {nama}
             </Text>
           </HStack>
 

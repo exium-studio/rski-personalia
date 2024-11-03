@@ -225,6 +225,7 @@ export default function Profil() {
               {userData?.role?.id === 1 && <NoData />}
               {userData?.role?.id !== 1 && (
                 <DetailDataKaryawan
+                nama={userData?.nama}
                   data={userData?.data_karyawan}
                   searchQuery={searchQuery}
                 />
