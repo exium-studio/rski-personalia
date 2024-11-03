@@ -179,6 +179,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
           <Center
             position={"absolute"}
             minW={"20px"}
+            px={notRedCount > 99 ? 1 : 0}
             h={"20px"}
             borderRadius={"full"}
             bg={"red.400"}
@@ -187,7 +188,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
             right={-2}
           >
             <Text fontWeight={550} fontSize={12} color={"white"}>
-              {notRedCount}
+              {notRedCount > 99 ? "99+" : notRedCount}
             </Text>
           </Center>
         ) : (
