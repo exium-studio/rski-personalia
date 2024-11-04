@@ -28,7 +28,7 @@ import {
   RiListCheck,
   RiMore2Fill,
 } from "@remixicon/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
 import {
   Interface__FormattedTableBody,
@@ -44,6 +44,7 @@ interface BatchActionsProps {
   handleSelectAllRows: (isChecked: boolean) => void;
   tableRef: any;
 }
+
 const BatchActions = ({
   selectedRows,
   batchActions,
@@ -103,6 +104,7 @@ interface RowOptionsProps {
   rowOptions: any[];
   tableRef: any;
 }
+
 const RowOptions = ({ rowData, rowOptions, tableRef }: RowOptionsProps) => {
   // console.log("row data", row);
   return (
@@ -124,9 +126,7 @@ const RowOptions = ({ rowData, rowOptions, tableRef }: RowOptionsProps) => {
             return option === "divider" ? (
               <MenuDivider key={i} />
             ) : (
-              <Box className="menuItemContainer" key={i}>
-                {option(rowData)}
-              </Box>
+              <Box key={i}>{option(rowData)}</Box>
             );
           })}
         </MenuList>
@@ -147,6 +147,7 @@ interface Props extends TableProps {
   initialSortColumnIndex?: number;
   trBodyProps?: TableRowProps;
 }
+
 export default function CustomTable({
   formattedHeader,
   formattedData,
@@ -167,22 +168,16 @@ export default function CustomTable({
     ? columnsConfig.map((columnIndex) => formattedHeader[columnIndex])
     : formattedHeader;
 
-  // console.log(columnsConfig);
+  const tableBody = columnsConfig
+    ? formattedData.map((data) => {
+        const filteredColumns = columnsConfig.map(
+          (columnIndex) => data.columnsFormat[columnIndex]
+        );
+        return { ...data, columnsFormat: filteredColumns };
+      })
+    : [...formattedData];
 
-  const tableBody = useMemo(() => {
-    return columnsConfig
-      ? formattedData.map((data) => {
-          const filteredColumns = columnsConfig.map(
-            (columnIndex) => data.columnsFormat[columnIndex]
-          );
-          return { ...data, columnsFormat: filteredColumns };
-        })
-      : [...formattedData];
-  }, [columnsConfig, formattedData]); // Add dependencies here
-
-  // console.log(tableBody);
-
-  const [originalDataState, setOriginalDataState] = useState(tableBody);
+  const [originalDataState, setOriginalDataState] = useState(formattedData); // Simpan data asli
   const [selectAllRows, setSelectAllRows] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [sortConfig, setSortConfig] = useState<{
@@ -193,10 +188,9 @@ export default function CustomTable({
     direction: initialSortOrder || "asc",
   });
 
-  // Handle original state change if collumn config changes
   useEffect(() => {
-    setOriginalDataState(tableBody);
-  }, [tableBody]);
+    setOriginalDataState([...formattedData]); // Simpan data asli saat pertama kali dirender
+  }, [formattedData]);
 
   // Row Click
   const handleRowClick = (rowData: any) => {
@@ -328,7 +322,7 @@ export default function CustomTable({
       ? sortedData()
       : originalDataState;
 
-  // console.log("data", dataToMap);
+  // console.log(dataToMap);
 
   return (
     <>
