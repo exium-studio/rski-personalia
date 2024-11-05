@@ -1,6 +1,7 @@
 import { ButtonProps, useDisclosure } from "@chakra-ui/react";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import MultipleSelectModal from "../input/MultipleSelectModal";
+import { optionsStatusTukarJadwal } from "../../../constant/selectOptions";
 
 interface Props extends ButtonProps {
   name: string;
@@ -28,21 +29,6 @@ export default function MultiSelectStatusPenukaranJadwal({
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const options = [
-    {
-      value: 1,
-      label: "Menunggu",
-    },
-    {
-      value: 2,
-      label: "Disetujui",
-    },
-    {
-      value: 3,
-      label: "Ditolak",
-    },
-  ];
-
   return (
     <MultipleSelectModal
       id="select-status-karyawan-modal"
@@ -50,7 +36,7 @@ export default function MultiSelectStatusPenukaranJadwal({
       isOpen={isOpen}
       onOpen={onOpen}
       onClose={onClose}
-      options={options}
+      options={optionsStatusTukarJadwal}
       onConfirm={(input) => {
         onConfirm(input);
       }}

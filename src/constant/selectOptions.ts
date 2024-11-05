@@ -35,13 +35,13 @@ const optionsKategoriTukarJadwal = [
 ];
 
 const optionsStatusTukarJadwal = [
-  { value: 1, label: "Menunggu Verifikasi" },
+  { value: 1, label: "Menunggu" },
   { value: 7, label: "Disetujui Karyawan" },
   { value: 6, label: "Ditolak Karyawan" },
-  { value: 2, label: "Verifikasi 1 Disetujui" },
-  { value: 3, label: "Verifikasi 1 Ditolak" },
-  { value: 4, label: "Verifikasi 2 Disetujui" },
-  { value: 5, label: "Verifikasi 2 Ditolak" },
+  { value: 2, label: "Verif. 1 Disetujui" },
+  { value: 3, label: "Verif. 1 Ditolak" },
+  { value: 4, label: "Verif. 2 Disetujui" },
+  { value: 5, label: "Verif. 2 Ditolak" },
 ];
 
 const optionsStatusKerja = [
