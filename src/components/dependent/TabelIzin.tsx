@@ -39,11 +39,8 @@ export default function TabelIzin({ filterConfig }: Props) {
       url: `/api/rski/dashboard/jadwal-karyawan/get-perizinan?page=${pageConfig}`,
       payload: {
         ...formattedFilterKaryawan,
-        ...(filterConfig?.status_cuti?.length > 0 && {
-          status_cuti: filterConfig.status_cuti.map((sp: any) => sp.value),
-        }),
-        ...(filterConfig?.tipe_cuti?.length > 0 && {
-          tipe_cuti: filterConfig.tipe_cuti.map((sp: any) => sp.value),
+        ...(filterConfig?.status_izin?.length > 0 && {
+          status_izin: filterConfig.status_izin.map((sp: any) => sp.value),
         }),
       },
       limit: limitConfig,
