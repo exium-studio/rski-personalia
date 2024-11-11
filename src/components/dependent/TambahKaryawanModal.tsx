@@ -165,6 +165,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         kelompok_gaji_id: values.kelompok_gaji?.value,
         no_rekening: values.no_rekening,
         tunjangan_fungsional: values.tunjangan_fungsional,
+        tunjangan_jabatan: values.tunjangan_jabatan,
         tunjangan_khusus: values.tunjangan_khusus,
         tunjangan_lainnya: values.tunjangan_lainnya,
         uang_lembur: values.uang_lembur,
