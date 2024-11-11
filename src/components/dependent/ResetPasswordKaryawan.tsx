@@ -43,8 +43,6 @@ export default function ResetPasswordKaryawan({ userData, ...props }: Props) {
 
   const isUserSuperAdmin = useGetUserData()?.role?.id === 1;
 
-  console.log(useGetUserData()?.role?.id);
-
   const toast = useToast();
   const [loading, setLoading] = useState<boolean>(false);
 
