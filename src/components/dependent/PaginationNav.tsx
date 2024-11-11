@@ -46,8 +46,9 @@ export default function PaginationNav({
           setPage(page + 1);
         }}
         isDisabled={
-          page === paginationData?.meta?.last_page &&
-          !paginationData?.links?.next
+          !paginationData ||
+          (page === paginationData?.meta?.last_page &&
+            !paginationData?.links?.next)
         }
       />
     </HStack>
