@@ -26,6 +26,7 @@ import req from "../../lib/req";
 import DisclosureHeader from "./DisclosureHeader";
 import PasswordInput from "./input/PasswordInput";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
+import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props extends ButtonProps {
   userData: any;
@@ -40,7 +41,9 @@ export default function ResetPasswordKaryawan({ userData, ...props }: Props) {
     onClose
   );
 
-  const isUserSuperAdmin = userData?.role?.id === 1;
+  const isUserSuperAdmin = useGetUserData()?.role?.id === 1;
+
+  console.log(useGetUserData()?.role?.id);
 
   const toast = useToast();
   const [loading, setLoading] = useState<boolean>(false);
