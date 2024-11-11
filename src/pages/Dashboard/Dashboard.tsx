@@ -20,9 +20,9 @@ export default function Dashboard() {
 
           <DashboardJabatan flex={"1 1 0"} />
 
-          <DashboardProfesi flex={"1 1 0"} />
-
           <DashboardStatusKaryawan flex={"1 1 0"} />
+
+          <DashboardProfesi flex={"1 1 0"} />
 
           <DashboardSiapaYangLembur flex={"1 1 0"} />
 
