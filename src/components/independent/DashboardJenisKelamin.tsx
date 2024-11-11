@@ -34,7 +34,7 @@ export default function DashboardJenisKelamin({ ...props }: Props) {
     {
       label: "Persentase (%)",
       data: [data?.persen_laki_laki, data?.persen_perempuan],
-      backgroundColor: ["#FBD38D", "#805AD5"],
+      backgroundColor: ["#90CDF4", "#805AD5"],
       borderWidth: 0,
     },
   ];
@@ -120,7 +120,7 @@ export default function DashboardJenisKelamin({ ...props }: Props) {
                           borderRadius={"full"}
                           w={"10px"}
                           h={"10px"}
-                          bg={"orange.200"}
+                          bg={"blue.200"}
                         />
 
                         <Text>Pria</Text>

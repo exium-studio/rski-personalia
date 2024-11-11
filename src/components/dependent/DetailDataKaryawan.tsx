@@ -111,7 +111,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.tempat_lahir}
+              {data?.tempat_lahir}
             </Text>
           </HStack>
 
@@ -127,7 +127,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {formatDate(data.tgl_lahir)}
+              {formatDate(data?.tgl_lahir)}
             </Text>
           </HStack>
 
@@ -167,7 +167,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.no_hp}
+              {data?.no_hp}
             </Text>
           </HStack>
 
@@ -223,7 +223,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.npwp}
+              {data?.npwp}
             </Text>
           </HStack>
 
@@ -239,9 +239,9 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.jenis_kelamin === 1
+              {data?.jenis_kelamin === 1
                 ? "Laki - laki"
-                : data.jenis_kelamin === 0
+                : data?.jenis_kelamin === 0
                 ? "Perempuan"
                 : ""}
             </Text>
@@ -259,7 +259,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.agama?.label}
+              {data?.agama?.label}
             </Text>
           </HStack>
 
@@ -291,7 +291,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.golongan_darah?.label}
+              {data?.golongan_darah?.label}
             </Text>
           </HStack>
 
@@ -306,9 +306,9 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
               />
             </Box>
             <FlexLine />
-            {data.tinggi_badan && (
+            {data?.tinggi_badan && (
               <Text fontWeight={500} textAlign={"right"}>
-                {data.tinggi_badan} cm
+                {data?.tinggi_badan} cm
               </Text>
             )}
           </HStack>
@@ -326,7 +326,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             <FlexLine />
             {data?.berat_badan && (
               <Text fontWeight={500} textAlign={"right"}>
-                {data.berat_badan} kg
+                {data?.berat_badan} kg
               </Text>
             )}
           </HStack>
@@ -361,7 +361,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.ptkp?.kode_ptkp}
+              {data?.ptkp?.kode_ptkp}
             </Text>
           </HStack>
 
@@ -377,7 +377,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <HStack>
-              {data.pendidikan_terakhir && (
+              {data?.pendidikan_terakhir && (
                 <Text fontWeight={500} textAlign={"right"}>
                   {data?.pendidikan_terakhir?.label}
                 </Text>
@@ -397,7 +397,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <HStack>
-              {data.pendidikan_terakhir && (
+              {data?.pendidikan_terakhir && (
                 <Text fontWeight={500} textAlign={"right"}>
                   {data?.asal_sekolah}
                 </Text>
@@ -433,7 +433,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.jabatan?.nama_jabatan}
+              {data?.jabatan?.nama_jabatan}
             </Text>
           </HStack>
 
@@ -449,7 +449,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {formatDate(data.tgl_masuk)}
+              {formatDate(data?.tgl_masuk)}
             </Text>
           </HStack>
 
@@ -465,7 +465,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {formatDate(data.tgl_diangkat)}
+              {formatDate(data?.tgl_diangkat)}
             </Text>
           </HStack>
 
@@ -481,7 +481,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {formatDate(data.tgl_berakhir_pks)}
+              {formatDate(data?.tgl_berakhir_pks)}
             </Text>
           </HStack>
 
@@ -497,7 +497,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.unit_kerja?.nama_unit}
+              {data?.unit_kerja?.nama_unit}
             </Text>
           </HStack>
 
@@ -512,7 +512,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
               />
             </Box>
             <FlexLine />
-            <StatusKaryawanBadge data={data.status_karyawan} />
+            <StatusKaryawanBadge data={data?.status_karyawan} />
           </HStack>
 
           <HStack justify={"space-between"}>
@@ -527,7 +527,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.kompetensi?.nama_kompetensi}
+              {data?.kompetensi?.nama_kompetensi}
             </Text>
           </HStack>
         </VStack>
@@ -664,7 +664,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              <JenisProfesiBadge data={data.kompetensi?.jenis_kompetensi} />
+              <JenisProfesiBadge data={data?.kompetensi?.jenis_kompetensi} />
             </Text>
           </HStack>
 
@@ -680,7 +680,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {formatDate(data.tgl_keluar)}
+              {formatDate(data?.tgl_keluar)}
             </Text>
           </HStack>
 
@@ -696,7 +696,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {calculateMasaKerjaFromTanggalMasuk(data.tgl_masuk)}
+              {calculateMasaKerjaFromTanggalMasuk(data?.tgl_masuk)}
             </Text>
           </HStack>
 
@@ -713,7 +713,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
               </Box>
               <FlexLine />
               <Text fontWeight={500} textAlign={"right"}>
-                {data.role?.name}
+                {data?.role?.name}
               </Text>
             </HStack>
           )}
@@ -730,7 +730,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {formatDurationShort(data.masa_diklat)}
+              {formatDurationShort(data?.masa_diklat)}
             </Text>
           </HStack> */}
         </VStack>
@@ -824,8 +824,8 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.masa_berlaku_sip
-                ? formatDate(data.masa_berlaku_sip)
+              {data?.masa_berlaku_sip
+                ? formatDate(data?.masa_berlaku_sip)
                 : data?.no_sip
                 ? "Seumur Hidup"
                 : ""}
@@ -852,7 +852,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {data.no_rekening}
+              {data?.no_rekening}
             </Text>
           </HStack>
 
@@ -884,7 +884,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data.kelompok_gaji?.besaran_gaji || 0)}
+              Rp {formatNumber(data?.kelompok_gaji?.besaran_gaji || 0)}
             </Text>
           </HStack>
 
@@ -900,7 +900,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data.uang_makan || 0)}
+              Rp {formatNumber(data?.uang_makan || 0)}
             </Text>
           </HStack>
 
@@ -916,7 +916,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data.uang_lembur || 0)}
+              Rp {formatNumber(data?.uang_lembur || 0)}
             </Text>
           </HStack>
         </VStack>
@@ -956,7 +956,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data.kompetensi?.nilai_bor || 0)}
+              Rp {formatNumber(data?.kompetensi?.nilai_bor || 0)}
             </Text>
           </HStack>
 

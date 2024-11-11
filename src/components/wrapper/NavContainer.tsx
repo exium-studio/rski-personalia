@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { RiShieldUserFill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContentBgColor, useLightDarkColor } from "../../constant/colors";
 import navs from "../../constant/navs";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
@@ -172,6 +172,7 @@ export default function NavContainer({
   const contentBgColor = useContentBgColor();
 
   const { logout } = useLogout();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
@@ -182,6 +183,7 @@ export default function NavContainer({
   useEffect(() => {
     const authToken = localStorage.getItem("__auth_token");
     if (!authToken) {
+      navigate("/");
       logoutRef.current();
     } else {
       if (!userPermissionsRef.current) {
@@ -216,7 +218,7 @@ export default function NavContainer({
           });
       }
     }
-  }, [setUserPermissions, toast]);
+  }, [setUserPermissions, toast, navigate]);
 
   const navsRef = useRef(null);
 

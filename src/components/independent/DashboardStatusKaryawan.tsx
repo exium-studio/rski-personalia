@@ -28,7 +28,14 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
     dependencies: [],
     noRt: true,
   });
-  const labels = ["Tetap", "Kontrak", "Magang"];
+  const labels = [
+    "Tetap",
+    "Kontrak",
+    "Magang",
+    "Outsourcing",
+    "Paruh Waktu",
+    "Dokter Mitra",
+  ];
   const datasets = [
     {
       label: "Jumlah Karyawan",
@@ -36,8 +43,18 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
         data?.[0]?.jumlah_karyawan,
         data?.[1]?.jumlah_karyawan,
         data?.[2]?.jumlah_karyawan,
+        data?.[3]?.jumlah_karyawan,
+        data?.[4]?.jumlah_karyawan,
+        data?.[5]?.jumlah_karyawan,
       ],
-      backgroundColor: ["#FBD38D", "#805AD5", "#48BB78"],
+      backgroundColor: [
+        "#805AD5",
+        "#90CDF4",
+        "#FBD38D",
+        "#A0AEC0",
+        "#FBB6CE",
+        "#81E6D9",
+      ],
       borderWidth: 0,
     },
   ];
@@ -123,7 +140,7 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
                           borderRadius={"full"}
                           w={"10px"}
                           h={"10px"}
-                          bg={"orange.200"}
+                          bg={"purple.400"}
                         />
 
                         <Text>Tetap</Text>
@@ -136,7 +153,7 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
                           borderRadius={"full"}
                           w={"10px"}
                           h={"10px"}
-                          bg={"purple.400"}
+                          bg={"blue.200"}
                         />
                         <Text>Kontrak</Text>
 
@@ -150,12 +167,53 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
                           borderRadius={"full"}
                           w={"10px"}
                           h={"10px"}
-                          bg={"green.400"}
+                          bg={"orange.200"}
                         />
                         <Text>Magang</Text>
 
                         <Text pl={2} ml={"auto"}>
                           {data[2].jumlah_karyawan}
+                        </Text>
+                      </HStack>
+
+                      <HStack gap={4}>
+                        <Box
+                          borderRadius={"full"}
+                          w={"10px"}
+                          h={"10px"}
+                          bg={"gray.400"}
+                        />
+
+                        <Text>Outsourcing</Text>
+
+                        <Text ml={"auto"}>{data[3].jumlah_karyawan}</Text>
+                      </HStack>
+
+                      <HStack gap={4}>
+                        <Box
+                          borderRadius={"full"}
+                          w={"10px"}
+                          h={"10px"}
+                          bg={"pink.200"}
+                        />
+                        <Text>Paruh Waktu</Text>
+
+                        <Text pl={2} ml={"auto"}>
+                          {data[4].jumlah_karyawan}
+                        </Text>
+                      </HStack>
+
+                      <HStack gap={4}>
+                        <Box
+                          borderRadius={"full"}
+                          w={"10px"}
+                          h={"10px"}
+                          bg={"teal.200"}
+                        />
+                        <Text>Dokter Mitra</Text>
+
+                        <Text pl={2} ml={"auto"}>
+                          {data[5].jumlah_karyawan}
                         </Text>
                       </HStack>
                     </VStack>

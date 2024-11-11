@@ -3,7 +3,6 @@ import {
   BoxProps,
   Input as ChakraInput,
   InputProps,
-  Text,
   TextProps,
   useColorMode,
 } from "@chakra-ui/react";
@@ -67,10 +66,11 @@ export default function StringInput({
           }}
           onChange={handleChange}
           value={inputValue}
-          placeholder=" "
+          placeholder={placeholder}
+          _placeholder={{ color: "#96969691" }}
           {...props}
         />
-        {!inputValue && (
+        {/* {!inputValue && (
           <Text
             w={"calc(100% - 32px)"}
             position={"absolute"}
@@ -86,7 +86,7 @@ export default function StringInput({
           >
             {placeholder}
           </Text>
-        )}
+        )} */}
       </Box>
     </>
   );
