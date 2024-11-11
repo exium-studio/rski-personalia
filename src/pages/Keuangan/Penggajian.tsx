@@ -25,7 +25,7 @@ export default function Penggajian() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterConfig({ search: search, tahun: tahun });
-    }, 300);
+    }, 1);
 
     return () => {
       clearTimeout(handler);

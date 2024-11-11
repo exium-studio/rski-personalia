@@ -26,7 +26,7 @@ export default function Presensi() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterConfig((ps: any) => ({ ...ps, search: search }));
-    }, 300);
+    }, 1);
 
     return () => {
       clearTimeout(handler);

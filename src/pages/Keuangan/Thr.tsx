@@ -26,7 +26,7 @@ export default function Thr() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterConfig({ search: search, tahun: tahun });
-    }, 300);
+    }, 1);
 
     return () => {
       clearTimeout(handler);

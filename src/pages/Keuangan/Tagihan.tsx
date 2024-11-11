@@ -24,7 +24,7 @@ export default function Tagihan() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterConfig({ search: search });
-    }, 300);
+    }, 1);
 
     return () => {
       clearTimeout(handler);

@@ -21,7 +21,7 @@ export default function PermintaanPerubahanDataKaryawan() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setFormattedFilterKaryawan({ search });
-    }, 300);
+    }, 1);
 
     return () => {
       clearTimeout(handler);

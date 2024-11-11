@@ -27,7 +27,7 @@ export default function TransferKaryawan() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setFormattedFilterKaryawan({ search });
-    }, 300);
+    }, 1);
 
     return () => {
       clearTimeout(handler);
