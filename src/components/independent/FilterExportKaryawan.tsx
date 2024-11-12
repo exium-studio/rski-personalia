@@ -113,7 +113,7 @@ export default function FilterExportKaryawan({ title, ...props }: Props) {
         (item: any) => item.value
       ),
       pendidikan_terakhir: localFilterConfig.pendidikan_terakhir.map(
-        (item: any) => item.value
+        (item: any) => item.id
       ),
     };
 
