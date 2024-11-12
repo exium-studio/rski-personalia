@@ -65,7 +65,7 @@ export default function TabelDetailCutiKaryawan({ data }: Props) {
       },
       {
         value: item.status_cuti.label,
-        td: <ApprovalStatus data={item.status_cuti.id} />,
+        td: <ApprovalStatus data={item.status_cuti} />,
       },
       {
         value: item.tgl_from,
