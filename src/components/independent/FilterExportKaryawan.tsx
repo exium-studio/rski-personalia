@@ -34,6 +34,7 @@ import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
+import formatDate from "../../lib/formatDate";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -107,7 +108,10 @@ export default function FilterExportKaryawan({ title, ...props }: Props) {
       status_aktif: localFilterConfig.status_aktif.map(
         (item: any) => item.value
       ),
-      tgl_masuk: localFilterConfig.tgl_masuk,
+      tgl_masuk:
+        localFilterConfig.tgl_masuk?.length > 0
+          ? [formatDate(localFilterConfig.tgl_masuk?.[0], "short")]
+          : [],
       agama: localFilterConfig.agama.map((item: any) => item.value),
       jenis_kelamin: localFilterConfig.jenis_kelamin.map(
         (item: any) => item.value
