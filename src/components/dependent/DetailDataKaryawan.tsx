@@ -79,7 +79,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <Text fontWeight={500} textAlign={"right"}>
-              {nama}
+              {nama || data?.user?.nama}
             </Text>
           </HStack>
 
