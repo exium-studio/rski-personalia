@@ -5,9 +5,6 @@ import {
   BoxProps,
   Button,
   Center,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
   HStack,
   Icon,
   Modal,
@@ -16,7 +13,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  SimpleGrid,
   Text,
   Tooltip,
   useDisclosure,
@@ -25,9 +21,7 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { RiVerifiedBadgeFill } from "@remixicon/react";
-import { useFormik } from "formik";
 import { useRef, useState } from "react";
-import * as yup from "yup";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
@@ -37,13 +31,11 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import isHasPermissions from "../../lib/isHasPermissions";
 import req from "../../lib/req";
-import RequiredForm from "../form/RequiredForm";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import DisclosureHeader from "./DisclosureHeader";
-import Textarea from "./input/Textarea";
 import Retry from "./Retry";
 import TabelDetailKeluargaKaryawan from "./TabelDetailKeluargaKaryawan";
 
