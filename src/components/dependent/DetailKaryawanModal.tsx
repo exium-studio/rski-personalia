@@ -150,6 +150,7 @@ export default function DetailKaryawanModal({
         "email",
         "riwayat_penyakit",
         "masa_diklat",
+        "kompetensi",
         ...(isUserSuperAdmin ? [] : ["role"]),
         ...(isMedic ? [] : nonMedicTerm),
       ];
