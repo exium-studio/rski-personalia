@@ -41,6 +41,7 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 import { useLocation } from "react-router-dom";
 import FilterJenisKompetensi from "../dependent/_FilterOptions/FilterJenisKompetensi";
+import formatDate from "../../lib/formatDate";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -52,8 +53,6 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   const initialRef = useRef(null);
 
   const { pathname } = useLocation();
-
-  // const [clear, setClear] = useState<boolean>(false);
 
   const {
     defaultFilterKaryawan,
@@ -101,9 +100,9 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     if (values.jenis_kelamin && values.jenis_kelamin.length > 0) {
       count += values.jenis_kelamin.length;
     }
-    // if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
-    //   count += values.pendidikan_terakhir.length;
-    // }
+    if (values.pendidikan_terakhir && values.pendidikan_terakhir.length > 0) {
+      count += values.pendidikan_terakhir.length;
+    }
     return count;
   }
 
@@ -125,35 +124,26 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       status_aktif: localFilterConfig.status_aktif.map(
         (item: any) => item.value
       ),
-      tgl_masuk: localFilterConfig.tgl_masuk,
+      tgl_masuk:
+        localFilterConfig.tgl_masuk?.length > 0
+          ? [formatDate(localFilterConfig.tgl_masuk?.[0], "short")]
+          : [],
       agama: localFilterConfig.agama.map((item: any) => item.value),
       jenis_kelamin: localFilterConfig.jenis_kelamin.map(
         (item: any) => item.value
       ),
-      // pendidikan_terakhir: localFilterConfig.pendidikan_terakhir.map(
-      //   (item: any) => item.value
-      // ),
+      pendidikan_terakhir: localFilterConfig.pendidikan_terakhir.map(
+        (item: any) => item.id
+      ),
     };
-
-    // console.log(formattedFilterKaryawanReducer(formattedFilters));
 
     setFilterKaryawan(localFilterConfig);
 
     clearFormattedFilterKaryawan();
-    // console.log(formattedFilterKaryawanReducer(formattedFilters));
+
     setFormattedFilterKaryawan(
       formattedFilterKaryawanReducer(formattedFilters)
     );
-
-    // if (clear) {
-    //   clearFormattedFilterKaryawan();
-    // } else {
-    //   clearFormattedFilterKaryawan();
-    //   // console.log(formattedFilterKaryawanReducer(formattedFilters));
-    //   setFormattedFilterKaryawan(
-    //     formattedFilterKaryawanReducer(formattedFilters)
-    //   );
-    // }
   }
 
   useCallBackOnNavigate(() => {
