@@ -106,7 +106,7 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
             <>
               {data && (
                 <>
-                  <Wrap m={"auto"} spacing={10}>
+                  <Wrap m={"auto"} spacingX={10}>
                     <VStack
                       flex={"1 1 0"}
                       my={responsiveSpacing}
