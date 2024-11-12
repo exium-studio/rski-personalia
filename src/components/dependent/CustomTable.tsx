@@ -189,8 +189,16 @@ export default function CustomTable({
   });
 
   useEffect(() => {
-    setOriginalDataState([...formattedData]); // Simpan data asli saat pertama kali dirender
-  }, [formattedData]);
+    const newOriginalDataState = columnsConfig
+      ? formattedData.map((data) => {
+          const filteredColumns = columnsConfig.map(
+            (columnIndex) => data.columnsFormat[columnIndex]
+          );
+          return { ...data, columnsFormat: filteredColumns };
+        })
+      : [...formattedData];
+    setOriginalDataState([...newOriginalDataState]); // Simpan data asli saat pertama kali dirender
+  }, [formattedData, columnsConfig]);
 
   // Row Click
   const handleRowClick = (rowData: any) => {
