@@ -601,7 +601,18 @@ export default function DetailKaryawanModal({
                                 justify={"center"}
                                 p={4}
                                 className="btn-solid clicky"
+                                position={"relative"}
                               >
+                                {data?.status_berkas && (
+                                  <Icon
+                                    as={RiCircleFill}
+                                    color={"red.400"}
+                                    position={"absolute"}
+                                    top={3}
+                                    right={3}
+                                    fontSize={10}
+                                  />
+                                )}
                                 <Icon
                                   opacity={0.4}
                                   as={RiArchiveStackFill}
