@@ -105,12 +105,14 @@ export default function AktifkanNonaktifkanButton({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <DisclosureHeader title={data ? "Non-aktifkan" : "Aktifkan"} />
+            <DisclosureHeader
+              title={data === 2 ? "Non-aktifkan" : "Aktifkan"}
+            />
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.4}>
-              Apakah anda yakin akan {data ? "menonaktifkan" : "mengaktifkan"}{" "}
-              akun ini?
+              Apakah anda yakin akan{" "}
+              {data === 2 ? "menonaktifkan" : "mengaktifkan"} akun ini?
             </Text>
           </ModalBody>
           <ModalFooter gap={2}>

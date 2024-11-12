@@ -177,8 +177,9 @@ export default function PerubahanDataRender({ column, data, index }: any) {
     case "agama":
       return <Text whiteSpace={"nowrap"}>{data.label}</Text>;
     case "tinggi_badan":
-    case "berat_badan":
       return <Text whiteSpace={"nowrap"}>{formatNumber(data)} cm</Text>;
+    case "berat_badan":
+      return <Text whiteSpace={"nowrap"}>{formatNumber(data)} kg</Text>;
     case "tempat_lahir":
     case "no_hp":
     case "nik_ktp":
