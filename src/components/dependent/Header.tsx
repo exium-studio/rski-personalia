@@ -10,6 +10,7 @@ import {
   MenuList,
   StackProps,
   Text,
+  Wrap,
 } from "@chakra-ui/react";
 import {
   RiMailDownloadLine,
@@ -47,7 +48,7 @@ export default function Header({
   const smScreen = useScreenWidth() <= 768;
 
   return (
-    <HStack
+    <Wrap
       justify={"space-between"}
       gap={4}
       position={"sticky"}
@@ -135,6 +136,6 @@ export default function Header({
           </Menu>
         </HStack>
       )}
-    </HStack>
+    </Wrap>
   );
 }

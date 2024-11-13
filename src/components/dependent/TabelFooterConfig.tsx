@@ -46,7 +46,8 @@ export default function TabelFooterConfig({
       spacing={responsiveSpacing}
       justify={"space-between"}
       mt={responsiveSpacing}
-      align={"center"}
+      align={["strech", null, "center"]}
+      flexDir={["column", null, "row"]}
     >
       <Box w={"100%"} maxW={"200px"}>
         {typeof limitConfig === "number" && setLimitConfig && (
@@ -118,7 +119,7 @@ export default function TabelFooterConfig({
 
       {footer}
 
-      <HStack w={"100%"} maxW={"200px"} justify={"end"}>
+      <HStack w={"100%"} maxW={"200px"} justify={["", null, "end"]}>
         {pageConfig && setPageConfig && (
           <PaginationNav
             page={pageConfig}

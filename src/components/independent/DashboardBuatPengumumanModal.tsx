@@ -17,6 +17,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FormDashboardBuatPengumuman from "../form/Dashboard/FormDashboardBuatPengumuman";
+import useScreenWidth from "../../lib/useScreenWidth";
 
 interface Props extends ButtonProps {}
 
@@ -27,17 +28,20 @@ export default function DashboardBuatPengumumanModal({ ...props }: Props) {
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  const sw = useScreenWidth();
+
   return (
     <>
       <Button
         leftIcon={<Icon as={RiAddLine} fontSize={iconSize} />}
         pl={4}
+        pr={sw < 768 ? "2 !important" : ""}
         className="btn-ap clicky"
         colorScheme="ap"
         onClick={onOpen}
         {...props}
       >
-        Buat Pengumuman
+        {sw < 768 ? "" : " Buat Pengumuman"}
       </Button>
 
       <Modal

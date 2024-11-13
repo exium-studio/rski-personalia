@@ -30,6 +30,7 @@ import NoData from "./NoData";
 import Skeleton from "./Skeleton";
 import SearchComponent from "../dependent/input/SearchComponent";
 import NotFound from "./NotFound";
+import useScreenWidth from "../../lib/useScreenWidth";
 
 interface Props extends BoxProps {
   children?: any;
@@ -98,6 +99,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
 
   // Utils
   const toast = useToast();
+  const sw = useScreenWidth();
 
   function tandaiBaca(notif_id: number) {
     setLoading(true);
@@ -184,8 +186,8 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
             borderRadius={"full"}
             bg={"red.400"}
             color={lightDarkColor}
-            top={-2}
-            right={-2}
+            top={sw < 768 ? "12px" : -2}
+            right={sw < 768 ? "4" : -2}
           >
             <Text fontWeight={550} fontSize={12} color={"white"}>
               {notRedCount > 99 ? "99+" : notRedCount}

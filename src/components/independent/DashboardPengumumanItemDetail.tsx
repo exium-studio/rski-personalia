@@ -16,6 +16,7 @@ import {
   useDisclosure,
   useToast,
   VStack,
+  Wrap,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
@@ -170,13 +171,13 @@ export default function DashboardPengumumanItemDetail({
     <>
       <VStack
         align={"stretch"}
-        borderBottom={"1px solid var(--divider3)"}
         py={4}
         px={responsiveSpacing}
         onClick={onOpen}
         cursor={"pointer"}
         _hover={{ bg: "var(--divider)" }}
         transition={"200ms"}
+        borderBottom={"1px solid var(--divider2)"}
         {...props}
       >
         <HStack justify={"space-between"} align={"start"}>
@@ -197,14 +198,14 @@ export default function DashboardPengumumanItemDetail({
 
         <Text fontSize={14}>{initialData.konten}</Text>
 
-        <HStack mt={"auto"} pt={2} justify={"space-between"}>
+        <Wrap mt={"auto"} pt={2} justify={"space-between"}>
           <Text fontSize={14} opacity={0.4}>
             diperbarui : {timeSince(initialData.updated_at as string)}
           </Text>
           <Text fontSize={14} opacity={0.4}>
             berakhir {formatDate(initialData.tgl_berakhir)}
           </Text>
-        </HStack>
+        </Wrap>
       </VStack>
 
       <Modal

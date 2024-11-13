@@ -192,7 +192,7 @@ export default function TabelPresensi({ filterConfig }: Props) {
 
               {formattedData && (
                 <>
-                  <CustomTableContainer>
+                  <CustomTableContainer minH="'400px">
                     <CustomTable
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}

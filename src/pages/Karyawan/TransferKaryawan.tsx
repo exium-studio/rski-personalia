@@ -84,6 +84,7 @@ export default function TransferKaryawan() {
               inputValue={filterConfig.kategori_transfer}
               placeholder="Filter Kategori Transfer"
               maxW={"165px !important"}
+              minW={"100px"}
               optionsDisplay="chip"
               _focus={{ border: "1px solid var(--divider)" }}
             />

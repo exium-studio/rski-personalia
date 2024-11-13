@@ -80,7 +80,7 @@ export default function Thr() {
               inputValue={tahun}
               placeholder={"Periode Tahun"}
               noFormat
-              boxProps={{ w: "fit-content" }}
+              boxProps={{ w: "fit-content", minW: "80px" }}
             />
 
             <PermissionTooltip

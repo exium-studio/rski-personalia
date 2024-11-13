@@ -6,7 +6,7 @@ const checkBoxTextMt = ["-2px", null, "-2px"];
 
 const dashboardItemHeight = "600px";
 
-const dashboardItemMinWidth = "350px";
+const dashboardItemMinWidth = "288px";
 
 const responsiveSpacing = [4, null, 5];
 

@@ -8,7 +8,11 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useBodyColor } from "../../constant/colors";
-import { dashboardItemHeight, responsiveSpacing } from "../../constant/sizes";
+import {
+  dashboardItemHeight,
+  dashboardItemMinWidth,
+  responsiveSpacing,
+} from "../../constant/sizes";
 import useDataState from "../../hooks/useDataState";
 import SearchComponent from "../dependent/input/SearchComponent";
 import Retry from "../dependent/Retry";
@@ -52,7 +56,7 @@ export default function DashboardPengumuman({ ...props }: Props) {
       bg={bodyColor}
       borderRadius={12}
       gap={0}
-      minW={"450px"}
+      minW={dashboardItemMinWidth}
       overflowX={"hidden"}
       h={dashboardItemHeight}
       {...props}

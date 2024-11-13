@@ -31,6 +31,7 @@ import ComponentSpinner from "../independent/ComponentSpinner";
 import CContainer from "./CContainer";
 import Container from "./Container";
 import PermissionTooltip from "./PermissionTooltip";
+import TopNavs from "../dependent/TopNavs";
 
 const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -282,37 +283,35 @@ export default function NavContainer({
           )}
 
           {!noNavs && smScreen && (
-            <Box overflowX={"auto"}>
-              <HStack
-                id="navs"
-                position={"fixed"}
-                bottom={0}
-                left={0}
-                minW={"100%"}
-                h={"70px"}
-                pb={4}
-                zIndex={99}
-                bg={lightDarkColor}
-                justify={"center"}
-              >
-                {navs.map((nav, i) => (
-                  <Tooltip key={i} placement="top">
-                    <IconButton
-                      aria-label={`Nav Button ${nav.label}`}
-                      icon={
-                        <Icon
-                          as={nav.icon}
-                          fontSize={20}
-                          opacity={active === i ? 1 : 0.6}
-                        />
-                      }
-                      className="btn clicky"
-                      color={active === i ? "p.500" : ""}
-                      as={Link}
-                      to={nav.link}
-                    />
-                  </Tooltip>
-                ))}
+            <Box
+              overflowX={"auto"}
+              position={"fixed"}
+              bottom={0}
+              left={0}
+              w={"100vw"}
+              bg={lightDarkColor}
+            >
+              <HStack id="navs" w={"100%"} h={"70px"} pb={4} zIndex={99}>
+                <HStack justify={"center"} px={5}>
+                  {navs.map((nav, i) => (
+                    <Tooltip key={i} placement="top">
+                      <IconButton
+                        aria-label={`Nav Button ${nav.label}`}
+                        icon={
+                          <Icon
+                            as={nav.icon}
+                            fontSize={20}
+                            opacity={active === i ? 1 : 0.6}
+                          />
+                        }
+                        className="btn clicky"
+                        color={active === i ? "p.500" : ""}
+                        as={Link}
+                        to={nav.link}
+                      />
+                    </Tooltip>
+                  ))}
+                </HStack>
               </HStack>
             </Box>
           )}
@@ -339,11 +338,12 @@ export default function NavContainer({
               />
             )}
 
-            {/* {topNavsData &&
+            {topNavsData &&
+              smScreen &&
               topNavsData.length > 1 &&
               typeof topNavActive === "number" && (
-                <TopNavs data={topNavsData} active={topNavActive} />
-              )} */}
+                <TopNavs data={topNavsData} active={topNavActive} mb={4} />
+              )}
 
             <VStack
               gap={0}
