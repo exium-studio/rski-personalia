@@ -1033,7 +1033,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
               </Box>
               <FlexLine />
               <Text fontWeight={500} textAlign={"right"}>
-                {potongan.jenis_premi === "0"
+                {potongan.jenis_premi === 0 || potongan.jenis_premi === "0"
                   ? `${formatNumber(potongan.besaran_premi || 0)}%`
                   : `Rp ${formatNumber(potongan.besaran_premi || 0)}`}
               </Text>
