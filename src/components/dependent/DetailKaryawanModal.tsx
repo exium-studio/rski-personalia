@@ -510,7 +510,7 @@ export default function DetailKaryawanModal({
                                   textAlign={"center"}
                                   lineHeight={1.4}
                                 >
-                                  Jadwal Aktif
+                                  Jadwal Minggu Ini
                                 </Text>
                               </VStack>
                             </DetailJadwalKaryawanModalDisclosure>

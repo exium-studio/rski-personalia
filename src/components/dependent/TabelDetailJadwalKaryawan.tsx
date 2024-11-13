@@ -17,16 +17,14 @@ export default function TabelDetailJadwalKaryawan({ data }: Props) {
   // Filter Config
   const [filterConfig, setFilterConfig] = useState({
     search: "",
-    hubungan_keluarga: undefined as any,
-    status_hidup: undefined as any,
   });
 
   const fd = data.filter((item: any) => {
     const searchTerm = filterConfig.search.toLowerCase();
 
-    const matchesSearchTerm = item.shift.nama
-      .toLowerCase()
-      .includes(searchTerm);
+    const matchesSearchTerm = item.shift
+      ? item.shift.nama.toLowerCase().includes(searchTerm)
+      : "libur".includes(searchTerm);
 
     return matchesSearchTerm;
   });
@@ -56,8 +54,8 @@ export default function TabelDetailJadwalKaryawan({ data }: Props) {
     id: item.id,
     columnsFormat: [
       {
-        value: item.shift.nama,
-        td: item.shift.nama,
+        value: item?.shift?.nama || "Libur",
+        td: item?.shift?.nama || "Libur",
       },
       {
         value: item.tgl_mulai,
@@ -70,10 +68,12 @@ export default function TabelDetailJadwalKaryawan({ data }: Props) {
         isDate: true,
       },
       {
-        value: item.shift.jam_from,
-        td: `${formatTime(item.shift.jam_from as string)} - ${formatTime(
-          item.shift.jam_to as string
-        )}`,
+        value: item?.shift?.jam_from,
+        td: item?.shift
+          ? `${formatTime(item.shift.jam_from as string)} - ${formatTime(
+              item?.shift?.jam_to as string
+            )}`
+          : "Libur",
         isTime: true,
         cProps: {
           justify: "center",

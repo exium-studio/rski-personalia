@@ -153,24 +153,22 @@ export default function DetailJadwalKaryawanModalDisclosure({
                             w={"55px"}
                             h={"55px"}
                             src={data.user.foto_profil}
-                            name={data.user.nama}
+                            name={data.user?.nama}
                           />
 
                           <VStack align={"stretch"}>
                             <Text fontSize={14} opacity={0.6}>
                               Nama Karyawan
                             </Text>
-                            <FlexLine />
-                            <Text fontWeight={500}>{data.user.nama}</Text>
+                            <Text fontWeight={500}>{data.user?.nama}</Text>
                           </VStack>
 
                           <VStack align={"stretch"}>
                             <Text fontSize={14} opacity={0.6}>
                               Unit Kerja
                             </Text>
-                            <FlexLine />
                             <Text fontWeight={500}>
-                              {data.unit_kerja.nama_unit}
+                              {data.unit_kerja?.nama_unit}
                             </Text>
                           </VStack>
                         </Wrap>

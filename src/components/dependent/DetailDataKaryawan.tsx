@@ -397,7 +397,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             </Box>
             <FlexLine />
             <HStack>
-              {data?.pendidikan_terakhir && (
+              {data?.asal_sekolah && (
                 <Text fontWeight={500} textAlign={"right"}>
                   {data?.asal_sekolah}
                 </Text>
