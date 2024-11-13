@@ -50,7 +50,7 @@ export default function Profil() {
           pt={"0 !important"}
           gap={0}
           animation={"flyInFromTop 500ms ease"}
-          minW={"400px"}
+          // minW={"400px"}
         >
           <>
             <Box minW={"50px"} flex={"1 1 50px"} bg={"#353535"} mx={"auto"} />
@@ -188,7 +188,7 @@ export default function Profil() {
         <CContainer
           flexShrink={0}
           p={responsiveSpacing}
-          pl={"0 !important"}
+          // pl={"0 !important"}
           flex={1}
           gap={responsiveSpacing}
           overflowY={[null, null, null, "auto"]}
@@ -222,10 +222,10 @@ export default function Profil() {
               gap={responsiveSpacing}
               px={responsiveSpacing}
             >
-              {userData?.role?.id === 1 && <NoData />}
+              {userData?.role?.id === 1 && <NoData minH={"300px"} />}
               {userData?.role?.id !== 1 && (
                 <DetailDataKaryawan
-                nama={userData?.nama}
+                  nama={userData?.nama}
                   data={userData?.data_karyawan}
                   searchQuery={searchQuery}
                 />
