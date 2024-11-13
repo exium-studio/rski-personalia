@@ -19,6 +19,7 @@ import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import useGetUserData from "../../hooks/useGetUserData";
 import VerifikatorName from "./VerifikatorName";
+import formatDate from "../../lib/formatDate";
 
 interface Props {
   filterConfig: any;
@@ -79,6 +80,10 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
       cProps: {
         justify: "center",
       },
+    },
+    {
+      th: "Tanggal Pengajuan",
+      isSortable: true,
     },
     {
       th: "Kolom",
@@ -172,6 +177,10 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
           cProps: {
             justify: "center",
           },
+        },
+        {
+          value: item.created_at,
+          td: formatDate(item.created_at),
         },
         {
           value: item.kolom,

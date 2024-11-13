@@ -149,7 +149,7 @@ export default function PerubahanDataRender({ column, data, index }: any) {
     default:
       return <Text>Invalid</Text>;
     case "pendidikan_terakhir":
-      return <Text>{data?.label || "Invalid Constant"}</Text>;
+      return <Text>{data > 0 ? data?.label : "-"}</Text>;
     case "data keluarga":
     case "Data Keluarga":
       return <ListKeluargaModal data={data} index={index} />;
