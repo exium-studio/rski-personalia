@@ -389,7 +389,7 @@ export default function DetailPresensiKaryawanModal({
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {data?.unit_kerja?.jenis_karyawan === 1
                                         ? data?.data_presensi?.jadwal_shift
-                                            ?.nama
+                                            ?.shift?.nama
                                         : data?.data_presensi?.jadwal_non_shift
                                             ?.nama}
                                     </Text>
@@ -510,7 +510,15 @@ export default function DetailPresensiKaryawanModal({
                                   </HStack>
 
                                   <HStack justify={"space-between"}>
-                                    <Text opacity={0.6}>Presensi Keluar</Text>
+                                    <Box opacity={0.6}>
+                                      <Highlighter
+                                        highlightClassName="hw"
+                                        unhighlightClassName="uw"
+                                        searchWords={searchQuery}
+                                        autoEscape={true}
+                                        textToHighlight={"Presensi Keluar"}
+                                      />
+                                    </Box>
                                     <FlexLine />
                                     <Text fontWeight={500} textAlign={"right"}>
                                       {formatTimeOld(
