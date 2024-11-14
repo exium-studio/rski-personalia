@@ -28,11 +28,16 @@ import isHasPermissions from "../../lib/isHasPermissions";
 interface Props extends StackProps {}
 
 export default function DashboardPengumuman({ ...props }: Props) {
+  const { userPermissions } = useAuth();
+  const viewPermission = isHasPermissions(userPermissions, [56]);
+  const createPermission = isHasPermissions(userPermissions, [53]);
+
   const [search, setSearch] = useState<string>("");
   const { error, notFound, forbidden, loading, data, retry } =
     useDataState<any>({
       initialData: undefined,
       url: `/api/rski/dashboard/pengumuman`,
+      conditions: viewPermission,
       dependencies: [],
     });
   const fd = data?.filter((pengumuman: any) => {
@@ -46,9 +51,6 @@ export default function DashboardPengumuman({ ...props }: Props) {
 
   // SX
   const bodyColor = useBodyColor();
-
-  const { userPermissions } = useAuth();
-  const createPermission = isHasPermissions(userPermissions, [53]);
 
   return (
     <VStack
@@ -73,11 +75,7 @@ export default function DashboardPengumuman({ ...props }: Props) {
       {!loading && (
         <>
           <Box p={responsiveSpacing}>
-            <HStack
-              justify={"space-between"}
-              mb={responsiveSpacing}
-              align={"start"}
-            >
+            <HStack justify={"space-between"} align={"start"}>
               <Box>
                 <Text fontWeight={600}>Pengumuman</Text>
                 <Text fontSize={14} opacity={0.6}>
@@ -90,13 +88,16 @@ export default function DashboardPengumuman({ ...props }: Props) {
               </PermissionTooltip>
             </HStack>
 
-            <SearchComponent
-              name="search"
-              onChangeSetter={(input) => {
-                setSearch(input);
-              }}
-              inputValue={search}
-            />
+            {viewPermission && (
+              <SearchComponent
+                name="search"
+                onChangeSetter={(input) => {
+                  setSearch(input);
+                }}
+                inputValue={search}
+                mt={responsiveSpacing}
+              />
+            )}
           </Box>
 
           {error && (
@@ -128,22 +129,30 @@ export default function DashboardPengumuman({ ...props }: Props) {
                 </Text>
               )}
 
+              {!viewPermission && <NoData label="Tidak ada akses" />}
+
               {data && (
                 <>
                   {fd?.length === 0 && (
                     <NotFound label="Pengumuman tidak ditemukan" />
                   )}
 
-                  {fd?.map((pengumuman: any, i: number) => (
-                    <DashboardPengumumanItemDetail
-                      key={i}
-                      pengumumanId={pengumuman.id}
-                      borderBottom={
-                        i < data.length - 1 ? "1px solid var(--divider2)" : ""
-                      }
-                      initialData={pengumuman}
-                    />
-                  ))}
+                  {viewPermission && (
+                    <>
+                      {fd?.map((pengumuman: any, i: number) => (
+                        <DashboardPengumumanItemDetail
+                          key={i}
+                          pengumumanId={pengumuman.id}
+                          borderBottom={
+                            i < data.length - 1
+                              ? "1px solid var(--divider2)"
+                              : ""
+                          }
+                          initialData={pengumuman}
+                        />
+                      ))}
+                    </>
+                  )}
                 </>
               )}
             </VStack>

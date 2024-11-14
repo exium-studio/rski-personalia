@@ -21,8 +21,8 @@ import isHasPermissions from "../../lib/isHasPermissions";
 export default function Jadwal() {
   // Permissions
   const { userPermissions } = useAuth();
-  const exportPermissions = isHasPermissions(userPermissions, [23]);
-  const importPermissions = isHasPermissions(userPermissions, [24]);
+  const exportPermissions = isHasPermissions(userPermissions, [24]);
+  const importPermissions = isHasPermissions(userPermissions, [23]);
   const createPermissions = isHasPermissions(userPermissions, [19]);
   const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
 

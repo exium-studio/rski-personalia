@@ -39,7 +39,6 @@ import Retry from "../dependent/Retry";
 interface DeletePengumumanProps extends ButtonProps {
   data: any;
 }
-
 const DeletePengumuman = ({ data, ...props }: DeletePengumumanProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`delete-pengmuman-${data.id}`, isOpen, onOpen, onClose);

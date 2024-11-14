@@ -52,6 +52,8 @@ import DateRangePickerModal from "./input/DateRangePickerModal";
 import NumberInput from "./input/NumberInput";
 import SearchComponent from "./input/SearchComponent";
 import StringInput from "./input/StringInput";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 interface PenyesuaianProps extends ButtonProps {
   riwayat_id?: number;
@@ -74,6 +76,9 @@ function PenyesuaianGajiButtonModal({
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
+
+  const { userPermissions } = useAuth();
+  const editPermissions = isHasPermissions(userPermissions, [16]);
 
   const formik = useFormik({
     validateOnChange: false,
@@ -147,6 +152,7 @@ function PenyesuaianGajiButtonModal({
         minW={"fit-content"}
         onClick={onOpen}
         pl={5}
+        isDisabled={!editPermissions}
         {...props}
       >
         Penyesuaian Gaji

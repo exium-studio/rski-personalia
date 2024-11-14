@@ -43,7 +43,7 @@ export default function RunThr({ ...props }: Props) {
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
 
-  const { countDown } = useCountdown({ initialValue: 5 });
+  const { countDown } = useCountdown({ initialValue: 5, conditions: isOpen });
 
   const formik = useFormik({
     validateOnChange: false,

@@ -35,8 +35,8 @@ export default function Tagihan() {
   const lightDarkColor = useLightDarkColor();
 
   const { userPermissions } = useAuth();
-  const createPermissions = isHasPermissions(userPermissions, [12]);
-  const exportPermissions = isHasPermissions(userPermissions, [14]);
+  const createPermissions = isHasPermissions(userPermissions, [15]);
+  const exportPermissions = isHasPermissions(userPermissions, [18]);
   const importPermission = isHasPermissions(userPermissions, [126]);
 
   return (

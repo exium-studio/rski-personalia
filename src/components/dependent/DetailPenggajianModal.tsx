@@ -21,6 +21,7 @@ import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useCountdown from "../../hooks/useCountdown";
 import useDataState from "../../hooks/useDataState";
@@ -28,6 +29,7 @@ import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
+import isHasPermissions from "../../lib/isHasPermissions";
 import req from "../../lib/req";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
@@ -145,6 +147,9 @@ const DeletePenggajian = ({ penggajian_id, status_penggajian }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("delete-penggajian", isOpen, onOpen, onClose);
 
+  const { userPermissions } = useAuth();
+  const deletePermissions = isHasPermissions(userPermissions, [15]);
+
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
@@ -207,7 +212,7 @@ const DeletePenggajian = ({ penggajian_id, status_penggajian }: any) => {
         onClick={onOpen}
         className="clicky"
         isLoading={loading}
-        isDisabled={status_penggajian?.id === 2}
+        isDisabled={!deletePermissions || status_penggajian?.id === 2}
       >
         Delete Penggajian
       </Button>
@@ -468,6 +473,9 @@ export default function DetailPenggajianModal({
                             penggajian_id={penggajian_id}
                             status_penggajian={
                               data.data_riwayat?.status_riwayat_gaji
+                            }
+                            isDisabled={
+                              data.data_riwayat.status_riwayat_gaji.id === 2
                             }
                           />
 

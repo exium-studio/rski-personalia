@@ -4,6 +4,7 @@ import ExportModal from "../../components/dependent/ExportModal";
 import NumberInput from "../../components/dependent/input/NumberInput";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelDiklatEksternal from "../../components/dependent/TabelDiklatEksternal";
+import TambahAcaraDiklatEksternal from "../../components/independent/TambahAcaraDiklatEksternal";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
@@ -11,8 +12,6 @@ import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
-import TambahAcaraDiklatEksternal from "../../components/independent/TambahAcaraDiklatEksternal";
-import useGetUserData from "../../hooks/useGetUserData";
 
 export default function DiklatEksternal() {
   // SX
@@ -37,9 +36,8 @@ export default function DiklatEksternal() {
     };
   }, [search, tahun, setFilterConfig]);
 
-  const userData = useGetUserData();
   const { userPermissions } = useAuth();
-  const createPermissions = userData?.role?.id === 1;
+  const createPermissions = isHasPermissions(userPermissions, [7]);
   const exportPermissions = isHasPermissions(userPermissions, [9]);
 
   return (
