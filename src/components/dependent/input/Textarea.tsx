@@ -38,7 +38,7 @@ export default function Textarea({
       minH={"80px"}
       name={name}
       // fontSize={"16px !important"}
-      placeholder={placeholder || "Masukkan Deskripsi Singkat"}
+      placeholder={placeholder || "Masukkan deskripsi singkat"}
       onChange={(e) => {
         onChangeSetter(e.target.value);
       }}
