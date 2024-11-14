@@ -1,13 +1,7 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Box,
   Button,
   ButtonProps,
-  Checkbox,
-  FormControl,
-  FormHelperText,
   HStack,
   Icon,
   Modal,
@@ -166,8 +160,12 @@ const DeletePenggajian = ({ penggajian_id, status_penggajian }: any) => {
 
       setLoading(true);
 
+      const payload = {
+        riwayat_penggajian_id: penggajian_id,
+      };
+
       req
-        .post("/api/rski/dashboard/keuangan/delete-gaji")
+        .post("/api/rski/dashboard/keuangan/delete-gaji", payload)
         .then((r) => {
           if (r.status === 200) {
             setRt(!rt);

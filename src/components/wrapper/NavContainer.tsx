@@ -59,6 +59,8 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
   const { userPermissions } = useAuth();
   const hasSomePermissions = isHasSomePermissions(userPermissions, nav.allowed);
 
+  // console.log(userPermissions);
+
   return (
     <Menu isOpen={isOpen}>
       <PermissionTooltip permission={hasSomePermissions} placement="right">
@@ -178,44 +180,48 @@ export default function NavContainer({
 
   const { userPermissions, setUserPermissions } = useAuth();
   const userPermissionsRef = useRef(userPermissions);
+
   const logoutRef = useRef(logout);
+
+  const authToken = localStorage.getItem("__auth_token");
+  if (!authToken) {
+    navigate("/");
+    logoutRef.current();
+  }
+
   useEffect(() => {
-    const authToken = localStorage.getItem("__auth_token");
-    if (!authToken) {
-      navigate("/");
-      logoutRef.current();
-    } else {
-      if (!userPermissionsRef.current) {
-        setLoading(true);
-        req
-          .get(`/api/rski/dashboard/user-info`)
-          .then((r) => {
-            if (r.status === 200) {
-              const userData = r.data.data;
-              if (userData.status_aktif === 2) {
-                setUserPermissions(userData.permission);
-              } else {
-                logoutRef.current();
-                console.log("logging out...");
-              }
+    if (!userPermissionsRef.current) {
+      console.log("permission kosong");
+      setLoading(true);
+      req
+        .get(`/api/rski/dashboard/user-info`)
+        .then((r) => {
+          if (r.status === 200) {
+            const userData = r.data.data;
+            if (userData.status_aktif === 2) {
+              setUserPermissions(userData.permission);
+              userPermissionsRef.current = userData.permission;
+            } else {
+              logoutRef.current();
+              console.log("logging out...");
             }
-          })
-          .catch((e) => {
-            console.log(e);
-            toast({
-              status: "error",
-              title:
-                (typeof e?.response?.data?.message === "string" &&
-                  (e?.response?.data?.message as string)) ||
-                "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
-              position: "bottom-right",
-              isClosable: true,
-            });
-          })
-          .finally(() => {
-            setLoading(false);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
+            position: "bottom-right",
+            isClosable: true,
           });
-      }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }, [setUserPermissions, toast, navigate]);
 
@@ -288,6 +294,7 @@ export default function NavContainer({
               left={0}
               w={"100vw"}
               bg={lightDarkColor}
+              zIndex={99999}
             >
               <HStack id="navs" w={"100%"} h={"70px"} pb={4} zIndex={99}>
                 <HStack justify={"center"} px={5}>
