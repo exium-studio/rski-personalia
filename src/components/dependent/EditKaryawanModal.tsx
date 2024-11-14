@@ -38,7 +38,12 @@ interface Props extends ButtonProps {
 
 export default function EditKaryawanModal({ initialData, ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`edit-karyawan-modal`, isOpen, onOpen, onClose);
+  useBackOnClose(
+    `edit-karyawan-modal-${initialData.id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
   const initialRef = useRef(null);
   const userData = useGetUserData();
   const isSuperAdmin = userData?.id === 1;

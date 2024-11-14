@@ -266,6 +266,7 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
         original_data: item?.verifikator,
         td: (
           <AvatarAndNameTableData
+            detailKaryawanId={`detail-karyawan-${item.id}-${item.verifikator?.id}`}
             data={{
               id: item.verifikator?.id,
               nama: item.verifikator?.nama,

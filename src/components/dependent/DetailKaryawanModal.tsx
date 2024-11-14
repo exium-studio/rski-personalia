@@ -467,6 +467,7 @@ export default function DetailKaryawanModal({
                                 justify={"center"}
                                 p={4}
                                 className="btn-solid clicky"
+                                h={"100%"}
                               >
                                 <Icon
                                   opacity={0.4}
@@ -492,6 +493,7 @@ export default function DetailKaryawanModal({
                               role="group"
                             >
                               <VStack
+                                h={"100%"}
                                 cursor={"pointer"}
                                 borderRadius={12}
                                 justify={"center"}
@@ -522,8 +524,8 @@ export default function DetailKaryawanModal({
                               role="group"
                             >
                               <VStack
-                                cursor={"pointer"}
                                 h={"100%"}
+                                cursor={"pointer"}
                                 borderRadius={12}
                                 justify={"center"}
                                 p={4}
@@ -553,8 +555,8 @@ export default function DetailKaryawanModal({
                               role="group"
                             >
                               <VStack
-                                cursor={"pointer"}
                                 h={"100%"}
+                                cursor={"pointer"}
                                 borderRadius={12}
                                 justify={"center"}
                                 p={4}
@@ -596,6 +598,7 @@ export default function DetailKaryawanModal({
                               role="group"
                             >
                               <VStack
+                                h={"100%"}
                                 cursor={"pointer"}
                                 borderRadius={12}
                                 justify={"center"}
@@ -637,6 +640,7 @@ export default function DetailKaryawanModal({
                               role="group"
                             >
                               <VStack
+                                h={"100%"}
                                 cursor={"pointer"}
                                 borderRadius={12}
                                 justify={"center"}
@@ -667,6 +671,7 @@ export default function DetailKaryawanModal({
                               role="group"
                             >
                               <VStack
+                                h={"100%"}
                                 cursor={"pointer"}
                                 borderRadius={12}
                                 justify={"center"}
@@ -697,6 +702,7 @@ export default function DetailKaryawanModal({
                               role="group"
                             >
                               <VStack
+                                h={"100%"}
                                 cursor={"pointer"}
                                 borderRadius={12}
                                 justify={"center"}
@@ -727,6 +733,7 @@ export default function DetailKaryawanModal({
                               role="group"
                             >
                               <VStack
+                                h={"100%"}
                                 cursor={"pointer"}
                                 borderRadius={12}
                                 justify={"center"}
@@ -757,6 +764,7 @@ export default function DetailKaryawanModal({
                               role="group"
                             >
                               <VStack
+                                h={"100%"}
                                 cursor={"pointer"}
                                 borderRadius={12}
                                 justify={"center"}
