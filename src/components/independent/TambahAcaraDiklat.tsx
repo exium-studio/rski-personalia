@@ -175,6 +175,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                       formik.setFieldValue("gambar", input);
                     }}
                     inputValue={formik.values.gambar}
+                    placeholder="Mendukung .png .jpg .jpeg .svg"
                     // cProps={{ h: "100%" }}
                     isError={!!formik.errors.gambar}
                   />
