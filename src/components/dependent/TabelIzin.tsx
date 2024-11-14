@@ -24,7 +24,6 @@ import VerifikatorName from "./VerifikatorName";
 interface Props {
   filterConfig: any;
 }
-
 export default function TabelIzin({ filterConfig }: Props) {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
