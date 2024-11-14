@@ -24,7 +24,7 @@ import {
 
 const pengaturanNavs = [
   {
-    allowed: [61, null],
+    allowed: [61, 130, null],
     groupName: "Akun",
     navs: [
       {
@@ -34,7 +34,7 @@ const pengaturanNavs = [
         link: "/pengaturan/akun/kelola-role",
       },
       {
-        allowed: [61],
+        allowed: [130],
         icon: RiVerifiedBadgeLine,
         label: "Hak Verifikasi",
         link: "/pengaturan/akun/hak-verifikasi",
@@ -47,7 +47,7 @@ const pengaturanNavs = [
     ],
   },
   {
-    allowed: [80, 72, 69, 76, 114, 84, 125, 140, 137],
+    allowed: [125, 80, 72, 68, 76, 114, 84, 140, 137],
     groupName: "Karyawan",
     navs: [
       {
@@ -69,7 +69,7 @@ const pengaturanNavs = [
         link: "/pengaturan/karyawan/jabatan",
       },
       {
-        allowed: [64],
+        allowed: [68],
         icon: RiGroup3Line,
         label: "Unit Kerja",
         link: "/pengaturan/karyawan/unit-kerja",
@@ -101,7 +101,7 @@ const pengaturanNavs = [
       {
         allowed: [137],
         icon: RiBook2Line,
-        label: "Materi",
+        label: "Materi Pelatihan",
         link: "/pengaturan/karyawan/materi",
       },
     ],
@@ -148,7 +148,7 @@ const pengaturanNavs = [
     ],
   },
   {
-    allowed: [112, 102, 52, 106, 110],
+    allowed: [112, 102, 106, 110],
     groupName: "Manajemen Waktu",
     navs: [
       {

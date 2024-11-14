@@ -22,7 +22,7 @@ const navs = [
     ],
   },
   {
-    allowed: [50, 133],
+    allowed: [50, 133, 2],
     label: "Karyawan",
     link: "/karyawan",
     icon: RiGroupFill,
@@ -122,7 +122,7 @@ const navs = [
 
   // Perusahaan
   {
-    allowed: [8, 114],
+    allowed: [8],
     label: "Perusahaan",
     link: "/perusahaan/diklat",
     icon: RiBuilding2Fill,
