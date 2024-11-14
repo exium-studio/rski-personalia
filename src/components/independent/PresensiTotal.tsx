@@ -228,14 +228,17 @@ export default function PresensiTotal({ ...props }: Props) {
                             fontWeight={600}
                             color={"var(--divider-text)"}
                           >
-                            {formatNumber(data.total_absen)}
+                            {formatNumber(
+                              data.total_karyawan -
+                                (data.total_hadir - data.total_tidak_hadir)
+                            )}
                           </Text>
                           <Text
                             fontSize={14}
                             opacity={0.6}
                             whiteSpace={"nowrap"}
                           >
-                            Alpha
+                            Belum
                           </Text>
                         </VStack>
                       </HStack>
