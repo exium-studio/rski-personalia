@@ -123,7 +123,10 @@ export default function VerifikasiModal({
   return (
     <>
       <HStack>
-        <Tooltip label={titleDitolak || "Ditolak"} openDelay={500}>
+        <Tooltip
+          label={props?.isDisabled ? "" : titleDitolak || "Ditolak"}
+          openDelay={500}
+        >
           <IconButton
             icon={<Icon as={RiCloseLine} fontSize={24} />}
             className="clicky"
@@ -141,7 +144,10 @@ export default function VerifikasiModal({
           />
         </Tooltip>
 
-        <Tooltip label={titleDisetujui || "Disetujui"} openDelay={500}>
+        <Tooltip
+          label={props?.isDisabled ? "" : titleDisetujui || "Disetujui"}
+          openDelay={500}
+        >
           <IconButton
             icon={<Icon as={RiCheckLine} fontSize={24} />}
             className="clicky"

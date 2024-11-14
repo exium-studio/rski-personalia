@@ -101,7 +101,7 @@ export default function TabelCuti({ filterConfig }: Props) {
       },
     },
     {
-      th: "Sisa Kuota",
+      th: "Sisa Kuota (Jika Disetujui)",
       isSortable: true,
       cProps: {
         justify: "center",
