@@ -162,6 +162,7 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
           value: item.karyawan_pengajuan.nama,
           td: (
             <AvatarAndNameTableData
+              detailKaryawanId={item.id}
               data={{
                 id: item.karyawan_pengajuan.id,
                 nama: item.karyawan_pengajuan.nama,

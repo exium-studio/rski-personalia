@@ -29,7 +29,7 @@ export default function DiklatEksternal() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterConfig({ search: search, periode_tahun: tahun });
-    }, 300);
+    }, 1);
 
     return () => {
       clearTimeout(handler);

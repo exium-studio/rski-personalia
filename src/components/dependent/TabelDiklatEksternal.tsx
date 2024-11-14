@@ -188,6 +188,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
           value: item?.list_peserta?.[0].user.nama,
           td: (
             <AvatarAndNameTableData
+              detailKaryawanId={item.id}
               data={{
                 id: item?.list_peserta?.[0].user.id,
                 nama: item?.list_peserta?.[0].user.nama,

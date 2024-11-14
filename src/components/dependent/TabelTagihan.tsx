@@ -92,6 +92,7 @@ export default function TabelTagihan({ filterConfig }: Props) {
         value: item.user.nama,
         td: (
           <AvatarAndNameTableData
+            detailKaryawanId={item.id}
             data={{
               id: item.user.id,
               nama: item.user.nama,
