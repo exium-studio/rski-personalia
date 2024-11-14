@@ -62,7 +62,7 @@ const navs = [
     ],
   },
   {
-    allowed: [22, 29, 36, 41],
+    allowed: [22, 29, 36, 41, 4],
     label: "Jadwal",
     link: "/jadwal",
     icon: RiTimeFill,

@@ -57,13 +57,11 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
   };
 
   const { userPermissions } = useAuth();
-  const hasPermissions = isHasSomePermissions(userPermissions, nav.allowed);
-
-  // console.log(nav.label, hasPermissions);
+  const hasSomePermissions = isHasSomePermissions(userPermissions, nav.allowed);
 
   return (
     <Menu isOpen={isOpen}>
-      <PermissionTooltip permission={hasPermissions} placement="right">
+      <PermissionTooltip permission={hasSomePermissions} placement="right">
         <MenuButton
           as={IconButton}
           aria-label={`Nav Button ${nav.label}`}
@@ -87,7 +85,7 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
           color={active === i ? "p.500" : ""}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          isDisabled={!hasPermissions}
+          isDisabled={!hasSomePermissions}
         />
       </PermissionTooltip>
 
