@@ -41,7 +41,7 @@ export default function BuatPenggajianModal({ ...props }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
-  const { countDown } = useCountdown({ initialValue: 5 });
+  const { countDown } = useCountdown({ initialValue: 5, conditions: isOpen });
 
   const formik = useFormik({
     validateOnChange: false,

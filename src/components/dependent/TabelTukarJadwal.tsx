@@ -134,8 +134,6 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
       item?.relasi_verifikasi?.[1]?.verifikator?.id === userData?.id ||
       userData?.id === 1;
 
-    console.log(item?.status_penukaran?.id);
-
     return {
       id: item.id,
       columnsFormat: [

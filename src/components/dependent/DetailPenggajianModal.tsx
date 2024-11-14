@@ -22,7 +22,7 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { RiRestartLine, RiSendPlaneFill } from "@remixicon/react";
+import { RiDeleteBinLine, RiSendPlaneFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
@@ -147,9 +147,9 @@ const PublikasiButtonModal = ({
   );
 };
 
-const UpdateBor = ({ penggajian_id, status_penggajian }: any) => {
+const DeletePenggajian = ({ penggajian_id, status_penggajian }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("update-bor-modal", isOpen, onOpen, onClose);
+  useBackOnClose("delete-penggajian", isOpen, onOpen, onClose);
 
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
@@ -166,16 +166,12 @@ const UpdateBor = ({ penggajian_id, status_penggajian }: any) => {
 
       setLoading(true);
 
-      const payload = {
-        bor: values.bor,
-        riwayat_penggajian_id: penggajian_id,
-      };
-
       req
-        .post("/api/rski/dashboard/keuangan/penyesuaian-bor", payload)
+        .post("/api/rski/dashboard/keuangan/delete-gaji")
         .then((r) => {
           if (r.status === 200) {
             setRt(!rt);
+            backOnClose();
             backOnClose();
             toast({
               status: "success",
@@ -206,7 +202,7 @@ const UpdateBor = ({ penggajian_id, status_penggajian }: any) => {
   return (
     <>
       <Button
-        leftIcon={<Icon as={RiRestartLine} fontSize={iconSize} />}
+        leftIcon={<Icon as={RiDeleteBinLine} fontSize={iconSize} />}
         colorScheme="ap"
         variant={"outline"}
         size={"lg"}
@@ -215,7 +211,7 @@ const UpdateBor = ({ penggajian_id, status_penggajian }: any) => {
         isLoading={loading}
         isDisabled={status_penggajian?.id === 2}
       >
-        Penyesuaian Penggajian
+        Delete Penggajian
       </Button>
 
       <Modal
@@ -230,7 +226,10 @@ const UpdateBor = ({ penggajian_id, status_penggajian }: any) => {
             <DisclosureHeader title={"Penyesuaian Penggajian"} />
           </ModalHeader>
           <ModalBody>
-            <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
+            <Text opacity={0.6}>
+              Apakah anda yakin akan menghapus data penggajian ini?
+            </Text>
+            {/* <Alert status="warning" mb={responsiveSpacing} alignItems={"start"}>
               <AlertIcon />
               <AlertDescription maxW={"640px !important"}>
                 Jika terjadi penyesuaian penggajian, maka data penggajian akan
@@ -249,9 +248,16 @@ const UpdateBor = ({ penggajian_id, status_penggajian }: any) => {
               <FormHelperText>
                 Centang Sertakan BOR jika penggajian ini menyertakan BOR
               </FormHelperText>
-            </FormControl>
+            </FormControl> */}
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter gap={2}>
+            <Button
+              w={"100%"}
+              onClick={backOnClose}
+              className="btn-solid clicky"
+            >
+              Tidak
+            </Button>
             <Button
               type="submit"
               onClick={() => {
@@ -263,7 +269,7 @@ const UpdateBor = ({ penggajian_id, status_penggajian }: any) => {
               isLoading={loading}
               isDisabled={countDown !== 0}
             >
-              {countDown !== 0 ? `Tunggu ${countDown} detik` : "Simpan"}
+              {countDown !== 0 ? `Tunggu ${countDown} detik` : "Ya"}
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -460,7 +466,7 @@ export default function DetailPenggajianModal({
                         </VStack>
 
                         <HStack ml={"auto"}>
-                          <UpdateBor
+                          <DeletePenggajian
                             penggajian_id={penggajian_id}
                             status_penggajian={
                               data.data_riwayat?.status_riwayat_gaji
