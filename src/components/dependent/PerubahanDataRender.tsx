@@ -165,13 +165,14 @@ export default function PerubahanDataRender({ column, data, index }: any) {
         </ViewPhotoModalDisclosure>
       );
     case "tgl_lahir":
-      return <Text whiteSpace={"nowrap"}>{formatDate(data)}</Text>;
+      return <Text whiteSpace={"nowrap"}>{data ? formatDate(data) : "-"}</Text>;
     case "jenis_kelamin":
       return (
         <Text whiteSpace={"nowrap"}>{data ? "Laki - laki" : "Perempuan"}</Text>
       );
     case "alamat":
-      return <TabelElipsisText data={data} />;
+    case "asal_sekolah":
+      return <TabelElipsisText data={data} textAlign={"center"} />;
     case "golongan_darah":
     case "agama":
       return <Text whiteSpace={"nowrap"}>{data.label}</Text>;
@@ -188,8 +189,11 @@ export default function PerubahanDataRender({ column, data, index }: any) {
     case "gelar_depan":
     case "gelar_belakang":
     case "riwayat_penyakit":
-    case "asal_sekolah":
-      return <Text>{typeof data === "string" ? data : "-"}</Text>;
+      return (
+        <Text>
+          {typeof data === "string" || typeof data === "number" ? data : "-"}
+        </Text>
+      );
     case "ktp":
     case "bpjsksh":
     case "bpjsktk":
