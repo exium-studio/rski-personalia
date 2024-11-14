@@ -55,6 +55,7 @@ export default function Header({
       top={0}
       zIndex={99}
       bg={useContentBgColor()}
+      align={"center"}
       {...props}
     >
       <HStack>
