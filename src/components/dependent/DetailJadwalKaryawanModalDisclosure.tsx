@@ -25,7 +25,6 @@ import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import TabelDetailJadwalKaryawan from "./TabelDetailJadwalKaryawan";
-import FlexLine from "../independent/FlexLine";
 
 interface Props extends BoxProps {
   karyawan_id: number;
