@@ -235,7 +235,7 @@ export default function PresensiTotal({ ...props }: Props) {
                             opacity={0.6}
                             whiteSpace={"nowrap"}
                           >
-                            Alfa
+                            Alpha
                           </Text>
                         </VStack>
                       </HStack>
