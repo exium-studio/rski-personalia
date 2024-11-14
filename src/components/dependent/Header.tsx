@@ -95,47 +95,53 @@ export default function Header({
       )}
 
       {smScreen && (
-        <HStack>
-          <AdminMiniProfile />
+        <>
+          <Text opacity={0.6} whiteSpace={"nowrap"}>
+            {formatDate(new Date(), "long")}
+          </Text>
 
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              icon={<Icon as={RiMenu4Line} fontSize={24} />}
-              className="btn-solid"
-            />
+          <HStack>
+            <AdminMiniProfile />
 
-            <MenuList>
-              <MenuItem
-                onClick={() => {
-                  window.location.reload();
-                }}
-              >
-                <HStack>
-                  <Icon as={RiRestartLine} fontSize={iconSize} />
-                  <Text>Reload</Text>
-                </HStack>
-              </MenuItem>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                icon={<Icon as={RiMenu4Line} fontSize={24} />}
+                className="btn-solid"
+              />
 
-              <NotificationButtonDisclosure>
-                <MenuItem>
+              <MenuList>
+                <MenuItem
+                  onClick={() => {
+                    window.location.reload();
+                  }}
+                >
                   <HStack>
-                    <Icon as={RiNotification2Line} fontSize={iconSize} />
-                    <Text>Notifikasi</Text>
+                    <Icon as={RiRestartLine} fontSize={iconSize} />
+                    <Text>Reload</Text>
                   </HStack>
                 </MenuItem>
-              </NotificationButtonDisclosure>
 
-              <MenuItem p={0}>
-                {/* <HStack>
+                <NotificationButtonDisclosure>
+                  <MenuItem>
+                    <HStack>
+                      <Icon as={RiNotification2Line} fontSize={iconSize} />
+                      <Text>Notifikasi</Text>
+                    </HStack>
+                  </MenuItem>
+                </NotificationButtonDisclosure>
+
+                <MenuItem p={0}>
+                  {/* <HStack>
                   <Icon as={RiNotification2Line} fontSize={iconSize} />
                   <Text>Mode Gelap</Text>
                 </HStack> */}
-                <ColorModeSwitcherHeaderMenu />
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        </HStack>
+                  <ColorModeSwitcherHeaderMenu />
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </HStack>
+        </>
       )}
     </Wrap>
   );
