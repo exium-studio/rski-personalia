@@ -13,7 +13,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { RiDeleteBinLine, RiEditLine } from "@remixicon/react";
+import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
 import { dummyKelolaRole } from "../../const/dummy";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
@@ -34,6 +34,8 @@ import CustomTable from "./CustomTable";
 import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisclosure";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
+import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
+import StatusDihapus from "./StatusDihapus";
 
 interface ListKaryaanDiverifikasiProps {
   data: any;
@@ -143,19 +145,23 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
       );
     },
 
-    // (rowData: any) => {
-    //   return (
-    //     <RestoreDataPengaturanModalDisclosure
-    //       id={rowData.id}
-    //       url={`/api/rski/dashboard/pengaturan/master-verifikasi/restore`}
-    //     >
-    //       <MenuItem isDisabled={!rowData.columnsFormat[1]?.value}>
-    //         <Text>Restore</Text>
-    //         <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
-    //       </MenuItem>
-    //     </RestoreDataPengaturanModalDisclosure>
-    //   );
-    // },
+    (rowData: any) => {
+      return (
+        <RestoreDataPengaturanModalDisclosure
+          id={rowData.id}
+          url={`/api/rski/dashboard/pengaturan/master-verifikasi/restore`}
+        >
+          <PermissionTooltip permission={deletePermission} placement="left">
+            <MenuItem
+              isDisabled={!rowData.columnsFormat[1].value || !deletePermission}
+            >
+              <Text>Restore</Text>
+              <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
+        </RestoreDataPengaturanModalDisclosure>
+      );
+    },
     "divider",
     (rowData: any) => {
       return (
@@ -207,6 +213,13 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
       },
     },
     {
+      th: "Status Dihapus",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
       th: "Modul",
       isSortable: true,
     },
@@ -241,6 +254,14 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
         },
         cProps: {
           borderRight: "1px solid var(--divider3)",
+        },
+      },
+      {
+        value: item.deleted_at,
+        td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
+        isDate: true,
+        cProps: {
+          justify: "center",
         },
       },
       {
