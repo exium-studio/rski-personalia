@@ -6,7 +6,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useBodyColor } from "../../constant/colors";
 import {
   dashboardItemHeight,
@@ -33,13 +33,20 @@ export default function DashboardPengumuman({ ...props }: Props) {
   const createPermission = isHasPermissions(userPermissions, [53]);
 
   const [search, setSearch] = useState<string>("");
-  const { error, notFound, forbidden, loading, data, retry } =
+  const { error, notFound, forbidden, loading, setLoading, data, retry } =
     useDataState<any>({
       initialData: undefined,
       url: `/api/rski/dashboard/pengumuman`,
       conditions: viewPermission,
       dependencies: [],
     });
+
+  useEffect(() => {
+    if (!viewPermission) {
+      setLoading(false);
+    }
+  }, [viewPermission]);
+
   const fd = data?.filter((pengumuman: any) => {
     const searchTerm = search?.toLocaleLowerCase();
 
@@ -123,7 +130,7 @@ export default function DashboardPengumuman({ ...props }: Props) {
               gap={0}
               pb={responsiveSpacing}
             >
-              {!data && (
+              {!data && viewPermission && (
                 <Text m={"auto"} opacity={0.6}>
                   Tidak ada pengumuman
                 </Text>

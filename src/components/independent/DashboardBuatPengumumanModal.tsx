@@ -36,6 +36,7 @@ export default function DashboardBuatPengumumanModal({ ...props }: Props) {
         className="btn-ap clicky"
         colorScheme="ap"
         onClick={onOpen}
+        {...props}
       />
 
       <Modal
