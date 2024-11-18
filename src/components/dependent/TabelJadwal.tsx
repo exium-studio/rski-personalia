@@ -124,6 +124,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
           td:
             jadwal !== null ? (
               <>
+                {/* Render Jadwal Shift */}
                 {parseInt(item.unit_kerja?.jenis_karyawan) === 1 ? (
                   <TabelJadwalItem
                     data={item}
@@ -133,6 +134,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
                     rowIndex={rowIndex}
                   />
                 ) : (
+                  // Render Jadwal Non Shift
                   <CContainer
                     bg={"var(--divider)"}
                     p={4}
@@ -162,6 +164,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
                 )}
               </>
             ) : parseInt(item.unit_kerja?.jenis_karyawan) === 1 ? (
+              // Render Terapkan Jadwal Shift
               <TerapkanJadwalKaryawanTerpilih
                 data={item}
                 tgl={dateList[i]}
@@ -169,6 +172,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
                 rowIndex={rowIndex}
               />
             ) : (
+              // Render Jadwal Nonshift kosong
               <CContainer
                 bg={"var(--divider)"}
                 p={4}

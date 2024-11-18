@@ -127,8 +127,9 @@ export default function PeriodPickerModal({
   }
 
   function confirm() {
-    if (bulanLocal && tahunLocal) {
+    if (typeof bulanLocal === "number" && typeof tahunLocal === "number") {
       const period = new Date(tahunLocal, bulanLocal);
+      console.log("period", period);
       onConfirm(period);
       backOnClose();
     }
