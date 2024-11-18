@@ -1,12 +1,26 @@
-import { Center, HStack, Text, Tooltip } from "@chakra-ui/react";
+import {
+  Center,
+  HStack,
+  Popover,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
 import { eachDayOfInterval } from "date-fns";
 import { useEffect, useState } from "react";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
+import formatDurationShort from "../../lib/formatDurationShort";
+import formatTime from "../../lib/formatTime";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
+import CContainer from "../wrapper/CContainer";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
@@ -14,10 +28,6 @@ import TabelJadwalItem from "./JadwalTabelItem";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 import TerapkanJadwalKaryawanTerpilih from "./TerapkanJadwalKaryawanTerpilih";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
-import CContainer from "../wrapper/CContainer";
-import formatTime from "../../lib/formatTime";
-import formatDurationShort from "../../lib/formatDurationShort";
 
 interface Props {
   filterConfig?: any;
@@ -163,6 +173,39 @@ export default function TabelJadwal({ filterConfig }: Props) {
                   </CContainer>
                 )}
               </>
+            ) : jadwal?.status === 5 ? (
+              <CContainer
+                bg={"var(--divider)"}
+                p={4}
+                borderRadius={8}
+                justify={"center"}
+                gap={1}
+              >
+                <Text fontSize={"sm"} whiteSpace={"wrap"}>
+                  {jadwal?.nama || "Nama Cuti"}
+                </Text>
+                {jadwal?.keterangan ? (
+                  <Popover>
+                    <PopoverTrigger>
+                      <Text fontSize={"sm"} whiteSpace={"wrap"} noOfLines={1}>
+                        {jadwal?.keterangan}
+                      </Text>
+                    </PopoverTrigger>
+
+                    <PopoverContent>
+                      <PopoverCloseButton />
+                      <PopoverBody>
+                        <Text mb={2}>Keterangan</Text>
+                        <Text fontSize={"sm"} whiteSpace={"wrap"}>
+                          {jadwal?.keterangan}
+                        </Text>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+                ) : (
+                  <Text>-</Text>
+                )}
+              </CContainer>
             ) : parseInt(item.unit_kerja?.jenis_karyawan) === 1 ? (
               // Render Terapkan Jadwal Shift
               <TerapkanJadwalKaryawanTerpilih
