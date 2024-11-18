@@ -45,7 +45,7 @@ export default function DashboardPengumuman({ ...props }: Props) {
     if (!viewPermission) {
       setLoading(false);
     }
-  }, [viewPermission]);
+  }, [viewPermission, setLoading]);
 
   const fd = data?.filter((pengumuman: any) => {
     const searchTerm = search?.toLocaleLowerCase();
