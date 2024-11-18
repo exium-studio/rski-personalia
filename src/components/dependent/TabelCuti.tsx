@@ -19,6 +19,7 @@ import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
+import TabelElipsisText from "./TabelElipsisText";
 
 interface Props {
   filterConfig: any;
@@ -109,6 +110,10 @@ export default function TabelCuti({ filterConfig }: Props) {
     },
     {
       th: "Unit Kerja",
+      isSortable: true,
+    },
+    {
+      th: "Keterangan",
       isSortable: true,
     },
     {
@@ -232,6 +237,10 @@ export default function TabelCuti({ filterConfig }: Props) {
         {
           value: item?.unit_kerja?.nama_unit,
           td: item?.unit_kerja?.nama_unit,
+        },
+        {
+          value: item?.keterangan,
+          td: <TabelElipsisText data={item?.keterangan} />,
         },
         {
           value: "",

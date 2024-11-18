@@ -138,6 +138,10 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
         justify: "center",
       },
     },
+    {
+      th: "Unit Kerja",
+      isSortable: true,
+    },
   ];
   const formattedData = fd?.map((item: any) => ({
     id: item.id,
@@ -173,6 +177,11 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
         cProps: {
           justify: "center",
         },
+      },
+      {
+        original_data: item?.unit_kerja,
+        value: item.unit_kerja?.nama_unit,
+        td: item.unit_kerja?.nama_unit,
       },
     ],
   }));

@@ -27,6 +27,7 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
+import SelectUnitKerja from "../dependent/_Select/SelectUnitKerja";
 
 interface Props extends BoxProps {
   rowData: any;
@@ -57,17 +58,20 @@ export default function EditShiftModalDisclosure({
       nama: "",
       jam_from: undefined as any,
       jam_to: undefined as any,
+      unit_kerja: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama: yup.string().required("Harus diisi"),
       jam_from: yup.string().required("Harus diisi"),
       jam_to: yup.string().required("Harus diisi"),
+      unit_kerja: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama: values.nama,
         jam_from: values.jam_from,
         jam_to: values.jam_to,
+        unit_kerja_id: values.unit_kerja.value,
         _method: "patch",
       };
       setLoading(true);
@@ -114,6 +118,10 @@ export default function EditShiftModalDisclosure({
     formikRef.current.setFieldValue(
       "jam_to",
       rowData.columnsFormat[2].original_data.jam_to
+    );
+    formikRef.current.setFieldValue(
+      "unit_kerja",
+      rowData.columnsFormat[3].original_data
     );
   }, [isOpen, rowData, formikRef]);
 
@@ -168,7 +176,7 @@ export default function EditShiftModalDisclosure({
                 <RequiredForm />
               </FormLabel>
 
-              <Wrap spacing={4}>
+              <Wrap spacing={4} mb={4}>
                 <FormControl flex={"1 1"} isInvalid={!!formik.errors.jam_from}>
                   <TimePickerModal
                     id="tambah-shift-jam-from-modal"
@@ -203,6 +211,24 @@ export default function EditShiftModalDisclosure({
                   </FormErrorMessage>
                 </FormControl>
               </Wrap>
+
+              <FormControl isInvalid={formik.errors.unit_kerja ? true : false}>
+                <FormLabel>
+                  Unit Kerja
+                  <RequiredForm />
+                </FormLabel>
+                <SelectUnitKerja
+                  name="unit_kerja"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("unit_kerja", input);
+                  }}
+                  inputValue={formik.values.unit_kerja}
+                  isError={!!formik.errors.unit_kerja}
+                />
+                <FormErrorMessage>
+                  {formik.errors.unit_kerja as string}
+                </FormErrorMessage>
+              </FormControl>
             </form>
           </ModalBody>
 
