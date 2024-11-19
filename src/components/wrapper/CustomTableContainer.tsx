@@ -40,6 +40,7 @@ export default function CustomTableContainer({
       w={"100%"}
       // flex={1}
       minH={minH || sh < 625 ? "400px" : ""}
+      h={"100%"}
       // maxH={[
       //   `calc(100vh - 318px - ${tabelConfigH}px)`,
       //   null,
