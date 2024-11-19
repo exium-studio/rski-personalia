@@ -4,10 +4,11 @@ import {
   Image,
   Stack,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import FormForgotPasswordStep1 from "./components/form/Auth/FormForgotPasswordStep1";
@@ -159,6 +160,53 @@ export const App = () => {
       setBodyRef(bodyRef);
     }
   }, [bodyRef, setBodyRef]);
+
+  // Connection handler
+  const [firstLoad, setFirstLoad] = useState<boolean>(true);
+  const toast = useToast();
+
+  useEffect(() => {
+    const handleOnline = () => {
+      if (!firstLoad) {
+        toast({
+          title: "Koneksi Pulih",
+          description: "Anda kembali online.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    };
+
+    const handleOffline = () => {
+      toast({
+        title: "Jaringan Terputus",
+        description: "Anda sedang offline.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+    };
+
+    // Tambahkan event listener
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    // Cleanup event listener saat komponen di-unmount
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, [toast, firstLoad]);
+
+  // Hindari toast pertama kali
+  useEffect(() => {
+    if (firstLoad) {
+      setFirstLoad(false);
+    }
+  }, [firstLoad]);
 
   return (
     <ChakraProvider theme={globalTheme}>
