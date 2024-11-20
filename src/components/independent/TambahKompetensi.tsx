@@ -106,7 +106,7 @@ export default function TambahKompetensi({ ...props }: Props) {
         pl={5}
         {...props}
       >
-        Tambah Kompetensi
+        Tambah Profesi
       </Button>
 
       <Modal
@@ -122,7 +122,7 @@ export default function TambahKompetensi({ ...props }: Props) {
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Tambah Kompetensi"
+              title="Tambah Profesi"
               onClose={() => {
                 formik.resetForm();
               }}
@@ -135,7 +135,7 @@ export default function TambahKompetensi({ ...props }: Props) {
                 isInvalid={formik.errors.nama_kompetensi ? true : false}
               >
                 <FormLabel>
-                  Nama Kompetensi
+                  Nama Profesi
                   <RequiredForm />
                 </FormLabel>
                 <Input
@@ -154,7 +154,7 @@ export default function TambahKompetensi({ ...props }: Props) {
                 isInvalid={formik.errors.jenis_kompetensi ? true : false}
               >
                 <FormLabel>
-                  Jenis Kompetensi
+                  Jenis Profesi
                   <RequiredForm />
                 </FormLabel>
                 <SelectJenisKompetensi

@@ -153,7 +153,7 @@ export default function EditKompetensiModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit Kompetensi"
+              title="Edit Profesi"
               onClose={() => {
                 formik.resetForm();
               }}
@@ -166,7 +166,7 @@ export default function EditKompetensiModalDisclosure({
                 isInvalid={formik.errors.nama_kompetensi ? true : false}
               >
                 <FormLabel>
-                  Nama Kompetensi
+                  Nama Profesi
                   <RequiredForm />
                 </FormLabel>
                 <StringInput
@@ -187,7 +187,7 @@ export default function EditKompetensiModalDisclosure({
                 isInvalid={formik.errors.jenis_kompetensi ? true : false}
               >
                 <FormLabel>
-                  Jenis Kompetensi
+                  Jenis Profesi
                   <RequiredForm />
                 </FormLabel>
                 <SelectJenisKompetensi

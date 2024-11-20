@@ -77,7 +77,7 @@ const pengaturanNavs = [
       {
         allowed: [76],
         icon: RiVerifiedBadgeLine,
-        label: "Kompetensi",
+        label: "Profesi",
         link: "/pengaturan/karyawan/kompetensi",
       },
       {

@@ -116,7 +116,7 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
 
   const formattedHeader = [
     {
-      th: "Nama Kompetensi",
+      th: "Nama Profesi",
       isSortable: true,
       props: {
         position: "sticky",
@@ -136,7 +136,7 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
       },
     },
     {
-      th: "Jenis Kompetensi",
+      th: "Jenis Profesi ",
       isSortable: true,
       cProps: {
         justify: "center",
