@@ -150,7 +150,6 @@ export default function TambahKelompokGaji({ ...props }: Props) {
               </FormControl>
 
               <FormControl
-                mb={4}
                 isInvalid={formik.errors.besaran_gaji ? true : false}
               >
                 <FormLabel>
