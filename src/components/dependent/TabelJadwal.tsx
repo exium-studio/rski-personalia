@@ -1,4 +1,5 @@
 import {
+  Box,
   Center,
   HStack,
   Popover,
@@ -133,80 +134,95 @@ export default function TabelJadwal({ filterConfig }: Props) {
           value: jadwal?.label,
           td:
             jadwal !== null ? (
-              <>
-                {/* Render Jadwal Shift */}
-                {parseInt(item.unit_kerja?.jenis_karyawan) === 1 ? (
-                  <TabelJadwalItem
-                    data={item}
-                    jadwal={jadwal}
-                    tgl={dateList[i]}
-                    index={i}
-                    rowIndex={rowIndex}
+              // Render cuti
+              jadwal?.status === 5 ? (
+                <CContainer
+                  bg={"var(--divider)"}
+                  p={4}
+                  borderRadius={8}
+                  justify={"center"}
+                  gap={1}
+                  position={"relative"}
+                >
+                  <Box
+                    position={"absolute"}
+                    top={2}
+                    right={2}
+                    bg={"yellow.400"}
+                    w={"8px"}
+                    h={"8px"}
+                    borderRadius={"full"}
                   />
-                ) : (
-                  // Render Jadwal Non Shift
-                  <CContainer
-                    bg={"var(--divider)"}
-                    p={4}
-                    borderRadius={8}
-                    justify={"center"}
-                    gap={1}
-                  >
-                    <Tooltip label={jadwal?.nama} openDelay={500}>
-                      <Text
-                        fontSize={14}
-                        maxW={"130px"}
-                        whiteSpace={"nowrap"}
-                        overflow={"hidden"}
-                        textOverflow={"ellipsis"}
-                      >
-                        {jadwal?.nama}
-                      </Text>
-                    </Tooltip>
-                    <Text fontSize={14} whiteSpace={"nowrap"}>
-                      {jadwal?.jam_from && jadwal?.jam_to
-                        ? `${formatTime(jadwal?.jam_from)} - ${formatTime(
-                            jadwal?.jam_to
-                          )}`
-                        : "Libur"}
-                    </Text>
-                  </CContainer>
-                )}
-              </>
-            ) : jadwal?.status === 5 ? (
-              <CContainer
-                bg={"var(--divider)"}
-                p={4}
-                borderRadius={8}
-                justify={"center"}
-                gap={1}
-              >
-                <Text fontSize={"sm"} whiteSpace={"wrap"}>
-                  {jadwal?.nama || "Nama Cuti"}
-                </Text>
-                {jadwal?.keterangan ? (
-                  <Popover>
-                    <PopoverTrigger>
-                      <Text fontSize={"sm"} whiteSpace={"wrap"} noOfLines={1}>
-                        {jadwal?.keterangan}
-                      </Text>
-                    </PopoverTrigger>
 
-                    <PopoverContent>
-                      <PopoverCloseButton />
-                      <PopoverBody>
-                        <Text mb={2}>Keterangan</Text>
-                        <Text fontSize={"sm"} whiteSpace={"wrap"}>
+                  <Text fontSize={"sm"} whiteSpace={"wrap"}>
+                    {jadwal?.tipe_cuti?.nama || "Nama Cuti"}
+                  </Text>
+                  {jadwal?.keterangan ? (
+                    <Popover>
+                      <PopoverTrigger>
+                        <Text fontSize={"sm"} whiteSpace={"wrap"} noOfLines={1}>
                           {jadwal?.keterangan}
                         </Text>
-                      </PopoverBody>
-                    </PopoverContent>
-                  </Popover>
-                ) : (
-                  <Text>-</Text>
-                )}
-              </CContainer>
-            ) : parseInt(item.unit_kerja?.jenis_karyawan) === 1 ? (
+                      </PopoverTrigger>
+
+                      <PopoverContent>
+                        <PopoverCloseButton />
+                        <PopoverBody>
+                          <Text mb={2}>Keterangan</Text>
+                          <Text fontSize={"sm"} whiteSpace={"wrap"}>
+                            {jadwal?.keterangan}
+                          </Text>
+                        </PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                  ) : (
+                    <Text>-</Text>
+                  )}
+                </CContainer>
+              ) : (
+                <>
+                  {/* Render Jadwal Shift */}
+                  {parseInt(item.unit_kerja?.jenis_karyawan) === 1 ? (
+                    <TabelJadwalItem
+                      data={item}
+                      jadwal={jadwal}
+                      tgl={dateList[i]}
+                      index={i}
+                      rowIndex={rowIndex}
+                    />
+                  ) : (
+                    // Render Jadwal Non Shift
+                    <CContainer
+                      bg={"var(--divider)"}
+                      p={4}
+                      borderRadius={8}
+                      justify={"center"}
+                      gap={1}
+                    >
+                      <Tooltip label={jadwal?.nama} openDelay={500}>
+                        <Text
+                          fontSize={14}
+                          maxW={"130px"}
+                          whiteSpace={"nowrap"}
+                          overflow={"hidden"}
+                          textOverflow={"ellipsis"}
+                        >
+                          {jadwal?.nama}
+                        </Text>
+                      </Tooltip>
+                      <Text fontSize={14} whiteSpace={"nowrap"}>
+                        {jadwal?.jam_from && jadwal?.jam_to
+                          ? `${formatTime(jadwal?.jam_from)} - ${formatTime(
+                              jadwal?.jam_to
+                            )}`
+                          : "Libur"}
+                      </Text>
+                    </CContainer>
+                  )}
+                </>
+              )
+            ) : // Render jika data jadwal null
+            parseInt(item.unit_kerja?.jenis_karyawan) === 1 ? (
               // Render Terapkan Jadwal Shift
               <TerapkanJadwalKaryawanTerpilih
                 data={item}

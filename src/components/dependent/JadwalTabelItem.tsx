@@ -209,12 +209,19 @@ export default function TabelJadwalItem({
         >
           <HStack gap={3} justify={"space-between"} flex={1}>
             <Box>
-              <Text textAlign={"left"} noOfLines={1} mb={1} fontSize={14}>
+              <Text
+                fontWeight={400}
+                textAlign={"left"}
+                noOfLines={1}
+                mb={1}
+                fontSize={"sm"}
+              >
                 {jadwal?.shift?.nama || "Libur"}
               </Text>
               <Text
+                fontWeight={400}
                 textAlign={"left"}
-                fontSize={14}
+                fontSize={"sm"}
                 whiteSpace={"nowrap"}
                 // opacity={jadwal?.shift ? 1 : 0}
               >
@@ -268,9 +275,7 @@ export default function TabelJadwalItem({
                   <Text w={"120px"} opacity={0.6}>
                     Nama
                   </Text>
-                  <Text textAlign={"right"} fontWeight={500}>
-                    {data.user.nama}
-                  </Text>
+                  <Text textAlign={"right"}>{data.user.nama}</Text>
                 </HStack>
 
                 <HStack justify={"space-between"}>
