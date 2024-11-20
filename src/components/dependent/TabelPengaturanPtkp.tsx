@@ -1,5 +1,4 @@
 import { Center, Text } from "@chakra-ui/react";
-import { Interface__SelectOption } from "../../constant/interfaces";
 import useDataState from "../../hooks/useDataState";
 import formatNumber from "../../lib/formatNumber";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -69,21 +68,23 @@ export default function TabelPengaturanPtkp({ filterConfig }: Props) {
 
   const fd = data?.filter((item: any) => {
     const searchTerm = filterConfig?.search.toLowerCase();
-    const isDeletedTerm = filterConfig?.is_deleted?.map(
-      (term: Interface__SelectOption) => term.value
-    );
+    // const isDeletedTerm = filterConfig?.is_deleted?.map(
+    //   (term: Interface__SelectOption) => term.value
+    // );
 
     const matchesSearchTerm = item.kode_ptkp.toLowerCase().includes(searchTerm);
-    const matchesIsDeletedTerm =
-      isDeletedTerm?.includes(1) && isDeletedTerm?.includes(0)
-        ? true
-        : isDeletedTerm?.includes(1)
-        ? !!item.deleted_at
-        : isDeletedTerm?.includes(0)
-        ? !item.deleted_at
-        : true;
 
-    return matchesSearchTerm && matchesIsDeletedTerm;
+    console.log(matchesSearchTerm);
+    // const matchesIsDeletedTerm =
+    //   isDeletedTerm?.includes(1) && isDeletedTerm?.includes(0)
+    //     ? true
+    //     : isDeletedTerm?.includes(1)
+    //     ? !!item.deleted_at
+    //     : isDeletedTerm?.includes(0)
+    //     ? !item.deleted_at
+    //     : true;
+
+    return matchesSearchTerm;
   });
 
   const formattedHeader = [
@@ -118,7 +119,7 @@ export default function TabelPengaturanPtkp({ filterConfig }: Props) {
       },
     },
   ];
-  const formattedData = data?.map((item: any) => ({
+  const formattedData = fd?.map((item: any) => ({
     id: item.id,
     columnsFormat: [
       {
