@@ -25,6 +25,7 @@ import SelectGoldar from "../../components/dependent/_Select/SelectGoldar";
 import SelectJabatan from "../../components/dependent/_Select/SelectJabatan";
 import SelectKelompokGaji from "../../components/dependent/_Select/SelectKelompokGaji";
 import SelectKompetensi from "../../components/dependent/_Select/SelectKompetensi";
+import SelectPendidikan from "../../components/dependent/_Select/SelectPendidikan";
 import SelectPtkp from "../../components/dependent/_Select/SelectPtkp";
 import SelectRole from "../../components/dependent/_Select/SelectRole";
 import SelectStatusKaryawan from "../../components/dependent/_Select/SelectStatusKaryawan";
@@ -34,14 +35,13 @@ import NumberInput from "../../components/dependent/input/NumberInput";
 import StringInput from "../../components/dependent/input/StringInput";
 import Textarea from "../../components/dependent/input/Textarea";
 import RequiredForm from "../../components/form/RequiredForm";
+import useGetUserData from "../../hooks/useGetUserData";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
 import parseNumber from "../../lib/parseNumber";
 import req from "../../lib/req";
-import SelectPendidikan from "../../components/dependent/_Select/SelectPendidikan";
-import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props {
   activeStep: number;
@@ -1206,7 +1206,7 @@ export default function EditKaryawanForm({
           <FormControl mb={4} isInvalid={!!formik.errors.riwayat_penyakit}>
             <FormLabel>
               Riwayat Penyakit
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <Textarea
               name="riwayat_penyakit"
@@ -1464,7 +1464,7 @@ export default function EditKaryawanForm({
           >
             <FormLabel>
               No. BPJS Kesehatan
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <StringInput
               name="no_bpjsksh"
@@ -1500,7 +1500,7 @@ export default function EditKaryawanForm({
           <FormControl mb={6} isInvalid={formik.errors.npwp ? true : false}>
             <FormLabel>
               NPWP
-              <RequiredForm />
+              {/* <RequiredForm /> */}
             </FormLabel>
             <StringInput
               name="npwp"
