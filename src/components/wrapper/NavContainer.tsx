@@ -191,7 +191,6 @@ export default function NavContainer({
 
   useEffect(() => {
     if (!userPermissionsRef.current) {
-      console.log("permission kosong");
       setLoading(true);
       req
         .get(`/api/rski/dashboard/user-info`)

@@ -48,7 +48,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
     initialValues: {
       nama_kelompok: "",
       besaran_gaji: undefined as any,
-      tunjangan_jabatan: undefined as any,
+      // tunjangan_jabatan: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_kelompok: yup.string().required("Harus diisi"),
@@ -59,7 +59,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
       const payload = {
         nama_kelompok: values.nama_kelompok,
         besaran_gaji: values.besaran_gaji,
-        tunjangan_jabatan: values.tunjangan_jabatan,
+        // tunjangan_jabatan: values.tunjangan_jabatan,
       };
       setLoading(true);
       req
@@ -176,7 +176,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
+              {/* <FormControl
                 isInvalid={formik.errors.tunjangan_jabatan ? true : false}
               >
                 <FormLabel>
@@ -204,7 +204,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
                 <FormErrorMessage>
                   {formik.errors.tunjangan_jabatan as string}
                 </FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
             </form>
           </ModalBody>
 

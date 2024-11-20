@@ -57,12 +57,12 @@ export default function EditKelompokGajiModalDisclosure({
     initialValues: {
       nama_kelompok: "" as any,
       besaran_gaji: undefined as any,
-      tunjangan_jabatan: undefined as any,
+      // tunjangan_jabatan: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_kelompok: yup.string().required("Harus diisi"),
       besaran_gaji: yup.number().required("Harus diisi"),
-      tunjangan_jabatan: yup.number().required("Harus diisi"),
+      // tunjangan_jabatan: yup.number().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
@@ -108,6 +108,8 @@ export default function EditKelompokGajiModalDisclosure({
 
   const formikRef = useRef(formik);
 
+  console.log(rowData.originalData?.tunjangan_jabatan);
+
   useEffect(() => {
     formikRef.current.setFieldValue(
       "nama_kelompok",
@@ -117,10 +119,10 @@ export default function EditKelompokGajiModalDisclosure({
       "besaran_gaji",
       rowData.originalData?.besaran_gaji
     );
-    formikRef.current.setFieldValue(
-      "tunjangan_jabatan",
-      rowData.originalData?.tunjangan_jabatan
-    );
+    // formikRef.current.setFieldValue(
+    //   "tunjangan_jabatan",
+    //   rowData.originalData?.tunjangan_jabatan
+    // );
   }, [isOpen, rowData, formikRef]);
 
   return (
@@ -199,7 +201,7 @@ export default function EditKelompokGajiModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
+              {/* <FormControl
                 isInvalid={formik.errors.tunjangan_jabatan ? true : false}
               >
                 <FormLabel>
@@ -227,7 +229,7 @@ export default function EditKelompokGajiModalDisclosure({
                 <FormErrorMessage>
                   {formik.errors.tunjangan_jabatan as string}
                 </FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
             </form>
           </ModalBody>
 

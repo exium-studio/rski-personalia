@@ -172,7 +172,7 @@ export default function EditJabatanModalDisclosure({
                 isInvalid={formik.errors.tunjangan ? true : false}
               >
                 <FormLabel>
-                  Tunjangan
+                  Default Tunjangan Jabatan
                   <RequiredForm />
                 </FormLabel>
                 <InputGroup>
@@ -189,6 +189,11 @@ export default function EditJabatanModalDisclosure({
                     inputValue={formik.values.tunjangan}
                   />
                 </InputGroup>
+
+                <FormHelperText>
+                  Nilai ini otomatis terisi saat tambah karyawan, namun dapat
+                  diubah untuk setiap karyawan.
+                </FormHelperText>
 
                 <FormErrorMessage>
                   {formik.errors.tunjangan as string}
