@@ -119,10 +119,10 @@ export default function EditShiftModalDisclosure({
       "jam_to",
       rowData.columnsFormat[2].original_data.jam_to
     );
-    formikRef.current.setFieldValue(
-      "unit_kerja",
-      rowData.columnsFormat[3].original_data
-    );
+    formikRef.current.setFieldValue("unit_kerja", {
+      value: rowData.columnsFormat[3].original_data.id,
+      label: rowData.columnsFormat[3].original_data.nama_unit,
+    });
   }, [isOpen, rowData, formikRef]);
 
   return (
