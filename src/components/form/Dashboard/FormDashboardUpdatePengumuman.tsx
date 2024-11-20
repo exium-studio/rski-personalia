@@ -34,7 +34,7 @@ export default function FormDashboardUpdatePengumuman({
     initialValues: {
       judul: data.judul,
       konten: data.konten,
-      tgl_mulai: new Date(formatDate(data.tgl_berakhir, "iso")),
+      tgl_mulai: new Date(formatDate(data.tgl_mulai, "iso")),
       tgl_berakhir: new Date(formatDate(data.tgl_berakhir, "iso")),
       user_id: data.user?.map((item: any) => ({
         value: item.id,
