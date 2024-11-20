@@ -60,7 +60,6 @@ const JamKerjaItem = ({ id, day }: any) => {
               position: "bottom-right",
             });
             setRt(!rt);
-            resetForm();
           }
         })
         .catch((e) => {
