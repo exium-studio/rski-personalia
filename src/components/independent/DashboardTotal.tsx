@@ -46,7 +46,7 @@ export default function DashboardTotal({ ...props }: Props) {
     },
     {
       key: "jumlah_absen",
-      label: "Total Absen",
+      label: "Total Alpha",
       icon: RiFileCopy2Fill,
       iconBgColor: "red.400",
       bgColor: "red.200",
