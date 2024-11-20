@@ -170,7 +170,10 @@ export default function TabelPengaturanHakVerifikasi({ filterConfig }: Props) {
           url={`/api/rski/dashboard/pengaturan/master-verifikasi`}
         >
           <PermissionTooltip permission={deletePermission} placement="left">
-            <MenuItem fontWeight={500} isDisabled={!deletePermission}>
+            <MenuItem
+              fontWeight={500}
+              isDisabled={!deletePermission || rowData.columnsFormat[1].value}
+            >
               <Text color={"red.400"}>Delete</Text>
               <Icon
                 color={"red.400"}
