@@ -276,59 +276,63 @@ export default function EditPotonganModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.minimal_rate ? true : false}
-              >
-                <FormLabel>Minimal Rate</FormLabel>
+              {formik.values.jenis_premi?.value && (
+                <>
+                  <FormControl
+                    mb={4}
+                    isInvalid={formik.errors.minimal_rate ? true : false}
+                  >
+                    <FormLabel>Minimal Rate</FormLabel>
 
-                <InputGroup>
-                  <InputLeftElement pl={4}>
-                    <Text>Rp</Text>
-                  </InputLeftElement>
-                  <NumberInput
-                    isDisabled={formik.values.jenis_premi === undefined}
-                    pl={12}
-                    name="minimal_rate"
-                    placeholder="500.000"
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("minimal_rate", input);
-                    }}
-                    inputValue={formik.values.minimal_rate}
-                  />
-                </InputGroup>
+                    <InputGroup>
+                      <InputLeftElement pl={4}>
+                        <Text>Rp</Text>
+                      </InputLeftElement>
+                      <NumberInput
+                        isDisabled={formik.values.jenis_premi === undefined}
+                        pl={12}
+                        name="minimal_rate"
+                        placeholder="500.000"
+                        onChangeSetter={(input) => {
+                          formik.setFieldValue("minimal_rate", input);
+                        }}
+                        inputValue={formik.values.minimal_rate}
+                      />
+                    </InputGroup>
 
-                <FormErrorMessage>
-                  {formik.errors.minimal_rate as string}
-                </FormErrorMessage>
-              </FormControl>
+                    <FormErrorMessage>
+                      {formik.errors.minimal_rate as string}
+                    </FormErrorMessage>
+                  </FormControl>
 
-              <FormControl
-                mb={4}
-                isInvalid={formik.errors.maksimal_rate ? true : false}
-              >
-                <FormLabel>Maksimal Rate</FormLabel>
+                  <FormControl
+                    mb={4}
+                    isInvalid={formik.errors.maksimal_rate ? true : false}
+                  >
+                    <FormLabel>Maksimal Rate</FormLabel>
 
-                <InputGroup>
-                  <InputLeftElement pl={4}>
-                    <Text>Rp</Text>
-                  </InputLeftElement>
-                  <NumberInput
-                    isDisabled={formik.values.jenis_premi === undefined}
-                    pl={12}
-                    name="maksimal_rate"
-                    placeholder="500.000"
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("maksimal_rate", input);
-                    }}
-                    inputValue={formik.values.maksimal_rate}
-                  />
-                </InputGroup>
+                    <InputGroup>
+                      <InputLeftElement pl={4}>
+                        <Text>Rp</Text>
+                      </InputLeftElement>
+                      <NumberInput
+                        isDisabled={formik.values.jenis_premi === undefined}
+                        pl={12}
+                        name="maksimal_rate"
+                        placeholder="500.000"
+                        onChangeSetter={(input) => {
+                          formik.setFieldValue("maksimal_rate", input);
+                        }}
+                        inputValue={formik.values.maksimal_rate}
+                      />
+                    </InputGroup>
 
-                <FormErrorMessage>
-                  {formik.errors.maksimal_rate as string}
-                </FormErrorMessage>
-              </FormControl>
+                    <FormErrorMessage>
+                      {formik.errors.maksimal_rate as string}
+                    </FormErrorMessage>
+                  </FormControl>
+                </>
+              )}
             </form>
           </ModalBody>
 
