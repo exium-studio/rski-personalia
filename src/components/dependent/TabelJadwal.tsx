@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { eachDayOfInterval } from "date-fns";
 import { useEffect, useState } from "react";
-import { useDarkLightColor } from "../../constant/colors";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
