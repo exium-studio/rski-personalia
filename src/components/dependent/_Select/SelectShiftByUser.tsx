@@ -39,7 +39,7 @@ export default function SelectShiftByUser({
   useEffect(() => {
     if (isOpen && !options) {
       req
-        .get(`api /api/get-list-shift/${data_karyawan_id}`)
+        .get(`/api/get-list-shift/${data_karyawan_id}`)
         .then((r) => {
           if (r.status === 200) {
             const options = r.data.data.map((item: any) => ({
@@ -70,7 +70,7 @@ export default function SelectShiftByUser({
 
   return (
     <SingleSelectModal
-      id="select-shift-modal"
+      id="select-shift-by-user-modal"
       name={name}
       isOpen={isOpen}
       onOpen={onOpen}
