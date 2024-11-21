@@ -187,7 +187,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
             </Center>
           )}
 
-          <Text>Filter Kar.</Text>
+          <Text>Filter Kary.</Text>
         </HStack>
       </Button>
 
