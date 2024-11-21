@@ -174,7 +174,7 @@ export const App = () => {
           status: "success",
           duration: 3000,
           isClosable: true,
-          position: "top",
+          position: "bottom-right",
         });
       }
     };
@@ -186,7 +186,7 @@ export const App = () => {
         status: "error",
         duration: 3000,
         isClosable: true,
-        position: "top",
+        position: "bottom-right",
       });
     };
 
