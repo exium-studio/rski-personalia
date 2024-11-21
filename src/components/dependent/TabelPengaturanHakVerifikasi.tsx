@@ -65,6 +65,7 @@ const ListKaryawanDiverifikasiModal = ({
         }}
         isCentered
         blockScrollOnMount={false}
+        scrollBehavior="inside"
       >
         <ModalOverlay />
         <ModalContent>
@@ -74,7 +75,7 @@ const ListKaryawanDiverifikasiModal = ({
               onClose={onClose}
             />
           </ModalHeader>
-          <ModalBody>
+          <ModalBody className="scrollY">
             <CContainer gap={2}>
               {data?.user_diverifikasi?.length === 0 && (
                 <NoData minH={"300px"} />
@@ -89,6 +90,7 @@ const ListKaryawanDiverifikasiModal = ({
                       p={4}
                       bg={"var(--divider)"}
                       borderRadius={8}
+                      className="noofline-1"
                     >
                       <AvatarAndNameTableData
                         data={{
@@ -97,8 +99,7 @@ const ListKaryawanDiverifikasiModal = ({
                           foto_profil: user?.foto_profil,
                         }}
                         // noDetail
-                        w={"fit-content"}
-                        maxW={"fit-content"}
+                        w={"100%"}
                       />
                     </HStack>
                   ))}
