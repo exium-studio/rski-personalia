@@ -1,5 +1,4 @@
 import {
-  Box,
   Center,
   HStack,
   Popover,
@@ -12,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { eachDayOfInterval } from "date-fns";
 import { useEffect, useState } from "react";
+import { useDarkLightColor } from "../../constant/colors";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
@@ -137,22 +137,24 @@ export default function TabelJadwal({ filterConfig }: Props) {
               // Render cuti
               jadwal?.status === 5 ? (
                 <CContainer
-                  bg={"var(--divider)"}
+                  // bg={"var(--divider)"}
+                  border={"2px solid var(--divider2)"}
                   p={4}
                   borderRadius={8}
                   justify={"center"}
                   gap={1}
                   position={"relative"}
                 >
-                  <Box
+                  {/* <Box
                     position={"absolute"}
                     top={2}
                     right={2}
-                    bg={"yellow.400"}
-                    w={"8px"}
-                    h={"8px"}
+                    bg={darkLightColor}
+                    w={"6px"}
+                    h={"6px"}
                     borderRadius={"full"}
-                  />
+                    opacity={0.8}
+                  /> */}
 
                   <Text fontSize={"sm"} whiteSpace={"wrap"}>
                     {jadwal?.tipe_cuti?.nama || "Nama Cuti"}
