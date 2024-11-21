@@ -34,7 +34,7 @@ import isHasPermissions from "../../lib/isHasPermissions";
 import req from "../../lib/req";
 import RequiredForm from "../form/RequiredForm";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
-import SelectShift from "./_Select/SelectShift";
+import SelectShiftByUser from "./_Select/SelectShiftByUser";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 
@@ -58,6 +58,8 @@ export default function TerapkanJadwalKaryawanTerpilih({
     onOpen,
     onClose
   );
+
+  console.log(data);
 
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
@@ -220,7 +222,8 @@ export default function TerapkanJadwalKaryawanTerpilih({
                   Jam Kerja (Shift)
                   <RequiredForm />
                 </FormLabel>
-                <SelectShift
+                <SelectShiftByUser
+                  data_karyawan_id={data.user.data_karyawan_id}
                   name="shift"
                   placeholder="Pilih Jam Kerja"
                   onConfirm={(input) => {

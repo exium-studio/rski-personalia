@@ -6,6 +6,7 @@ import formatTime from "../../../lib/formatTime";
 import SingleSelectModal from "../input/SingleSelectModal";
 
 interface Props extends ButtonProps {
+  data_karyawan_id: number;
   name: string;
   onConfirm: (inputValue: Interface__SelectOption | undefined) => void;
   inputValue: Interface__SelectOption | undefined;
@@ -16,7 +17,8 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function SelectJadwal({
+export default function SelectShiftByUser({
+  data_karyawan_id,
   name,
   onConfirm,
   inputValue,
@@ -37,7 +39,7 @@ export default function SelectJadwal({
   useEffect(() => {
     if (isOpen && !options) {
       req
-        .get("/api/get-list-shift")
+        .get(`api /api/get-list-shift/${data_karyawan_id}`)
         .then((r) => {
           if (r.status === 200) {
             const options = r.data.data.map((item: any) => ({
@@ -64,7 +66,7 @@ export default function SelectJadwal({
           });
         });
     }
-  }, [isOpen, options, toast]);
+  }, [isOpen, options, toast, data_karyawan_id]);
 
   return (
     <SingleSelectModal
