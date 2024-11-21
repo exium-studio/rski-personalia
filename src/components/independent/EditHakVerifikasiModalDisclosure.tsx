@@ -158,7 +158,7 @@ export default function EditHakVerifikasiModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit Role"
+              title="Edit Hak Verifikasi"
               onClose={() => {
                 formik.resetForm();
               }}
