@@ -35,6 +35,7 @@ import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 import formatDate from "../../lib/formatDate";
+import FilterJenisKompetensi from "../dependent/_FilterOptions/FilterJenisKompetensi";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -98,6 +99,9 @@ export default function FilterExportKaryawan({ title, ...props }: Props) {
       search: localFilterConfig.search,
       unit_kerja: localFilterConfig.unit_kerja.map((item: any) => item.id),
       jenis_karyawan: localFilterConfig.jenis_karyawan.map(
+        (item: any) => item.value
+      ),
+      jenis_kompetensi: localFilterConfig.jenis_kompetensi.map(
         (item: any) => item.value
       ),
       jabatan: localFilterConfig.jabatan.map((item: any) => item.id),
@@ -200,6 +204,11 @@ export default function FilterExportKaryawan({ title, ...props }: Props) {
               />
 
               <FilterJenisPegawai
+                filterConfig={localFilterConfig}
+                setFilterConfig={setLocalFilterConfig}
+              />
+
+              <FilterJenisKompetensi
                 filterConfig={localFilterConfig}
                 setFilterConfig={setLocalFilterConfig}
               />

@@ -19,7 +19,7 @@ export default function FilterJenisKompetensi({
 
   return (
     <FilterItemWrapper
-      title="Jenis Kompetensi"
+      title="Jenis Profesi"
       filterValue={filterConfig.jenis_kompetensi}
       setFilterConfig={setFilterConfig}
       filterKey="jenis_kompetensi"
