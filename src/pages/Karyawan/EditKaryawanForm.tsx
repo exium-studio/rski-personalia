@@ -423,7 +423,7 @@ export default function EditKaryawanForm({
           </FormLabel>
           <StringInput
             name="email"
-            placeholder="Jolitos Kurniawan"
+            placeholder="example@mail.com"
             onChangeSetter={(input) => {
               formik.setFieldValue("email", input);
             }}
