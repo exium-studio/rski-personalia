@@ -190,7 +190,7 @@ export default function EditTransferKaryawanModalDisclosure({
       rowData?.columnsFormat[8]?.original_data
         ? {
             value: rowData.columnsFormat[10].original_data?.id,
-            label: rowData.columnsFormat[10].original_data?.nama_jabatan,
+            label: rowData.columnsFormat[10].original_data?.nama_kelompok,
           }
         : undefined
     );
@@ -476,7 +476,7 @@ export default function EditTransferKaryawanModalDisclosure({
                 className="btn-ap clicky"
                 isLoading={loading}
               >
-                Transfer Karyawan
+                Simpan
               </Button>
             </CContainer>
           </ModalBody>
