@@ -33,13 +33,13 @@ import formatDate from "../../lib/formatDate";
 import formatTime from "../../lib/formatTime";
 import isDatePassed from "../../lib/isDatePassed";
 import isHasPermissions from "../../lib/isHasPermissions";
+import isShiftMalam from "../../lib/isShiftMalam";
 import req from "../../lib/req";
 import RequiredForm from "../form/RequiredForm";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
-import SelectShift from "./_Select/SelectShift";
+import SelectShiftByUser from "./_Select/SelectShiftByUser";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
-import isShiftMalam from "../../lib/isShiftMalam";
 
 interface Props {
   data: any;
@@ -326,7 +326,8 @@ export default function TabelJadwalItem({
                     Jam Kerja (Shift)
                     <RequiredForm />
                   </FormLabel>
-                  <SelectShift
+                  <SelectShiftByUser
+                    data_karyawan_id={data.user.data_karyawan_id}
                     name="shift"
                     placeholder="Pilih Jam Kerja (Shift)"
                     onConfirm={(input) => {
