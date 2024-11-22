@@ -155,7 +155,6 @@ export default function EditTransferKaryawanModalDisclosure({
   const formikRef = useRef(formik);
 
   useEffect(() => {
-    console.log(rowData?.columnsFormat[12]?.original_data);
     formikRef.current.setFieldValue("karyawan", {
       value: rowData.columnsFormat[0].original_data?.id,
       label: rowData.columnsFormat[0].original_data?.nama,
