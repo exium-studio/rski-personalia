@@ -383,7 +383,7 @@ export default function EditTransferKaryawanModalDisclosure({
                 </FormControl>
 
                 <FormControl mb={4} isInvalid={!!formik.errors.role_tujuan}>
-                  <FormLabel>Role Tujuan</FormLabel>
+                  <FormLabel>Hak Akses (Role) Tujuan</FormLabel>
                   <SelectRole
                     name="role_tujuan"
                     onConfirm={(input) => {

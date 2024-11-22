@@ -75,6 +75,7 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
   // Row Options Config
   const rowOptions = [
     (rowData: any) => {
+      console.log(rowData.columnsFormat[4].value);
       return (
         <EditTransferKaryawanModalDisclosure rowData={rowData}>
           <PermissionTooltip permission={editPermission}>
@@ -147,11 +148,11 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
       isSortable: true,
     },
     {
-      th: "Role Asal",
+      th: "Hak Akses (Role) Asal",
       isSortable: true,
     },
     {
-      th: "Role Tujuan",
+      th: "Hak Akses (Role) Tujuan",
       isSortable: true,
     },
     {
