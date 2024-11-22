@@ -79,6 +79,10 @@ export default function TabelPresensi({ filterConfig }: Props) {
       isSortable: true,
     },
     {
+      th: "Kategori",
+      isSortable: true,
+    },
+    {
       th: "Presensi Masuk",
       isSortable: true,
       cProps: {
@@ -137,6 +141,10 @@ export default function TabelPresensi({ filterConfig }: Props) {
       {
         value: item.unit_kerja.nama_unit,
         td: item.unit_kerja.nama_unit,
+      },
+      {
+        value: item.kategori_presensi?.label,
+        td: item.kategori_presensi?.label,
       },
       {
         value: item.jam_masuk,
