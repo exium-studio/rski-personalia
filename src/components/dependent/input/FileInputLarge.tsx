@@ -26,7 +26,7 @@ import CContainer from "../../independent/wrapper/CContainer";
 
 interface Props extends ButtonProps {
   name: string;
-  onChangeSetter: (inputValue: File | string | undefined) => void;
+  onChangeSetter: (inputValue: File | string | null | undefined) => void;
   inputValue: File | string | undefined;
   accept?: string;
   isError?: boolean;
@@ -49,6 +49,8 @@ export default function FileInputLarge({
   ...props
 }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // console.log("input value", inputValue);
 
   const [fileName, setFileName] = useState(
     typeof inputValue === "string"
@@ -91,7 +93,7 @@ export default function FileInputLarge({
 
   const errorColor = useErrorColor();
 
-  //@ts-ignore@
+  //@ts-ignore@ 1
   const isImage = fileURL && /image\/.*/.test(inputValue?.type || "");
 
   return (
@@ -246,8 +248,9 @@ export default function FileInputLarge({
               colorScheme="error"
               size={"xs"}
               onClick={() => {
-                onChangeSetter(undefined);
+                onChangeSetter(null);
                 setFileName("");
+                setFileURL("");
               }}
             >
               <Text fontSize={12}>Clear</Text>

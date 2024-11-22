@@ -66,6 +66,9 @@ export default function FilterExportKaryawan({ title, ...props }: Props) {
     if (values.jenis_karyawan && values.jenis_karyawan.length > 0) {
       count += values.jenis_karyawan.length;
     }
+    if (values.jenis_kompetensi && values.jenis_kompetensi.length > 0) {
+      count += values.jenis_kompetensi.length;
+    }
     if (values.jabatan && values.jabatan.length > 0) {
       count += values.jabatan.length;
     }

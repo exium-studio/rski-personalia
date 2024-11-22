@@ -4,6 +4,7 @@ const defaultFilterConfig = {
   search: "",
   unit_kerja: [],
   jenis_karyawan: [],
+  jenis_kompetensi: [],
   jabatan: [],
   status_karyawan: [],
   masa_kerja: [],
