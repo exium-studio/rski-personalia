@@ -59,8 +59,6 @@ export default function TerapkanJadwalKaryawanTerpilih({
     onClose
   );
 
-  console.log(data);
-
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();

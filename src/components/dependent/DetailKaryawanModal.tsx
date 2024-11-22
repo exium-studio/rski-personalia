@@ -860,6 +860,7 @@ export default function DetailKaryawanModal({
                             gap={responsiveSpacing}
                             px={responsiveSpacing}
                           >
+                            {/* Empty data */}
                             <>
                               {!emptyDataLabel && <Skeleton h={"50px"} />}
 
