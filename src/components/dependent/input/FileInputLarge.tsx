@@ -110,6 +110,9 @@ export default function FileInputLarge({
             const file = files[0];
             setFileName(file.name);
             onChangeSetter(file);
+
+            // Reset nilai input untuk memungkinkan file yang sama dipilih lagi
+            e.target.value = "";
           }
         }}
         mb={4}
@@ -134,6 +137,7 @@ export default function FileInputLarge({
           }}
           onClick={() => {
             if (inputRef.current) {
+              inputRef.current.value = ""; // Reset nilai sebelum dialog dibuka
               inputRef.current.click();
             }
           }}
@@ -251,6 +255,9 @@ export default function FileInputLarge({
                 onChangeSetter(null);
                 setFileName("");
                 setFileURL("");
+                if (inputRef.current) {
+                  inputRef.current.value = ""; // Reset input file saat file dihapus
+                }
               }}
             >
               <Text fontSize={12}>Clear</Text>

@@ -88,56 +88,6 @@ export default function FileInput({
     }
   };
 
-  // const fileIcons = (fileType: string) => {
-  //   const basicType = fileType.split("/")[0];
-  //   const type = fileType.split("/")[1];
-
-  //   switch (basicType) {
-  //     case "image":
-  //       return RiFileImageLine;
-  //     case "audio":
-  //       return RiFileMusicLine;
-  //     case "video":
-  //       return RiFileVideoLine;
-  //     case "text":
-  //       return RiFileTextLine;
-  //     case "application":
-  //       if (type === "json") {
-  //         return RiFileCodeLine;
-  //       } else if (
-  //         type === "zip" ||
-  //         type === "x-zip-compressed" ||
-  //         type === "x-rar-compressed" ||
-  //         type === "x-7z-compressed"
-  //       ) {
-  //         return RiFileZipLine;
-  //       } else if (type === "pdf") {
-  //         return RiFilePdf2Line;
-  //       } else if (
-  //         type === "msword" ||
-  //         type === "vnd.openxmlformats-officedocument.wordprocessingml.document"
-  //       ) {
-  //         return RiFileWord2Line;
-  //       } else if (
-  //         type === "vnd.ms-excel" ||
-  //         type === "vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-  //       ) {
-  //         return RiFileExcel2Line;
-  //       } else if (
-  //         type === "vnd.ms-powerpoint" ||
-  //         type ===
-  //           "vnd.openxmlformats-officedocument.presentationml.presentation"
-  //       ) {
-  //         return RiFilePpt2Line;
-  //       } else {
-  //         return RiFileLine;
-  //       }
-  //     default:
-  //       return RiFileLine;
-  //   }
-  // };
-
-  // SX
   const errorColor = useErrorColor();
 
   return (
@@ -154,6 +104,9 @@ export default function FileInput({
             const file = files[0];
             setFileName(file.name);
             onChangeSetter(file);
+
+            // Reset nilai input untuk memungkinkan file yang sama dipilih ulang
+            e.target.value = "";
           }
         }}
         mb={4}
@@ -178,6 +131,7 @@ export default function FileInput({
           }}
           onClick={() => {
             if (inputRef.current) {
+              inputRef.current.value = ""; // Reset input sebelum dialog file dibuka
               inputRef.current.click();
             }
           }}
@@ -190,16 +144,6 @@ export default function FileInput({
             <Box px={4} py={2} w={"100%"}>
               <Tooltip label={fileName}>
                 <HStack justify={"center"} opacity={inputValue ? 1 : 0.3}>
-                  {/* <Icon
-                  as={
-                    typeof inputValue === "string"
-                      ? RiFileLine
-                      : inputValue
-                      ? fileIcons(inputValue.type)
-                      : RiUploadCloud2Line
-                  }
-                  fontSize={iconSize}
-                /> */}
                   <Icon as={inputValue ? RiFileLine : RiUploadCloud2Line} />
                   <Text
                     overflow={"hidden"}
@@ -224,9 +168,7 @@ export default function FileInput({
               mt={2}
               pl={"6px"}
               leftIcon={<Icon className="iconButton" as={RiEyeFill} />}
-              // variant={"ghost"}
               className="btn"
-              // colorScheme="ap"
               size={"xs"}
               as={Link}
               to={fileUrl}
@@ -252,6 +194,9 @@ export default function FileInput({
               onClick={() => {
                 onChangeSetter(undefined);
                 setFileName("");
+                if (inputRef.current) {
+                  inputRef.current.value = ""; // Reset input saat file dihapus
+                }
               }}
             >
               <Text fontSize={12}>Clear</Text>
