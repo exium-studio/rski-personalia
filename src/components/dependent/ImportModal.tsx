@@ -112,8 +112,6 @@ export default function ImportModal({
     },
   });
 
-  console.log("formik values", formik.values);
-
   const downloadTemplate = () => {
     setdLoading(true);
     req
@@ -206,7 +204,6 @@ export default function ImportModal({
                   name="file"
                   accept=".csv, .xls"
                   onChangeSetter={(input) => {
-                    console.log("input", input);
                     formik.setFieldValue("file", input);
                   }}
                   inputValue={formik.values.file}
