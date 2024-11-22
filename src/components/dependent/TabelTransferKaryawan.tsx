@@ -75,7 +75,6 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
   // Row Options Config
   const rowOptions = [
     (rowData: any) => {
-      console.log(rowData.columnsFormat[4].value);
       return (
         <EditTransferKaryawanModalDisclosure rowData={rowData}>
           <PermissionTooltip permission={editPermission}>
