@@ -13,7 +13,7 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { RiMapPin2Fill, RiUserFill } from "@remixicon/react";
+import { RiMapPin2Fill, RiMarkPenLine, RiUserFill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useLightDarkColor } from "../../constant/colors";
@@ -355,7 +355,9 @@ export default function DetailPresensiKaryawanModal({
                               pb={responsiveSpacing}
                             >
                               <SearchComponent
+                                icon={RiMarkPenLine}
                                 name="search"
+                                placeholder="highlight data presensi"
                                 onChangeSetter={(input) => {
                                   setSearch(input);
                                 }}

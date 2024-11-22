@@ -32,6 +32,7 @@ import {
   RiGraduationCapFill,
   RiHeartFill,
   RiLoginBoxFill,
+  RiMarkPenLine,
   RiUserStarFill,
 } from "@remixicon/react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -842,12 +843,13 @@ export default function DetailKaryawanModal({
 
                           <CContainer px={5}>
                             <SearchComponent
+                              icon={RiMarkPenLine}
                               name="search"
                               onChangeSetter={(input) => {
                                 setSearch(input);
                               }}
                               inputValue={search}
-                              placeholder="data karyawan"
+                              placeholder="highlight data karyawan"
                               tooltipLabel="Cari data karyawan"
                             />
                           </CContainer>

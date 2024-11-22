@@ -21,6 +21,7 @@ interface Props extends InputGroupProps {
   tooltipLabel?: string;
   inputRef?: any;
   inputProps?: InputProps;
+  icon?: any;
 }
 
 export default function SearchComponent({
@@ -31,6 +32,7 @@ export default function SearchComponent({
   tooltipLabel,
   placeholder = "Pencarian",
   inputProps,
+  icon,
   ...props
 }: Props) {
   const [searchLocal, setSearchLocal] = useState(inputValue);
@@ -67,7 +69,7 @@ export default function SearchComponent({
     >
       <InputGroup {...props}>
         <InputLeftElement>
-          <Icon as={RiSearchLine} fontSize={iconSize} mb={"1px"} />
+          <Icon as={icon || RiSearchLine} fontSize={iconSize} mb={"1px"} />
         </InputLeftElement>
 
         <StringInput
