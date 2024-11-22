@@ -4,6 +4,7 @@ import { Interface__SelectOption } from "../../../constant/interfaces";
 import req from "../../../lib/req";
 import formatTime from "../../../lib/formatTime";
 import SingleSelectModal from "../input/SingleSelectModal";
+import backOnClose from "../../../lib/backOnClose";
 
 interface Props extends ButtonProps {
   data_karyawan_id: number;
@@ -64,6 +65,7 @@ export default function SelectShiftByUser({
             isClosable: true,
             position: "bottom-right",
           });
+          backOnClose();
         });
     }
   }, [isOpen, options, toast, data_karyawan_id]);
