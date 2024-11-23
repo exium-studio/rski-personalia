@@ -394,8 +394,16 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                   </FormControl> */}
 
                   <FormControl>
-                    <Checkbox colorScheme="ap">
-                      <Text mt={"-2px"}>Beritahu Karyawan Melalui Email</Text>
+                    <Checkbox
+                      colorScheme="ap"
+                      onChange={(e) => {
+                        formik.setFieldValue(
+                          "beri_tahu_karyawan",
+                          e.target.checked
+                        );
+                      }}
+                    >
+                      <Text mt={"-2px"}>Beri tahu karyawan melalui email</Text>
                     </Checkbox>
                     <FormErrorMessage>
                       {formik.errors.beri_tahu_karyawan as string}
