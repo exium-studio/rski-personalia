@@ -117,6 +117,10 @@ export default function EditTransferKaryawanModalDisclosure({
       }
       payload.append("alasan", values.alasan);
       payload.append("dokumen", values.dokumen);
+      payload.append(
+        "beri_tahu_karyawan",
+        values.beri_tahu_karyawan ? "1" : "0"
+      );
       payload.append("_method", "patch");
 
       setLoading(true);

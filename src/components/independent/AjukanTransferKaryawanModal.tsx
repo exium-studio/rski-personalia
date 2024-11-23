@@ -105,6 +105,10 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
 
       payload.append("alasan", values.alasan);
       payload.append("dokumen", values.dokumen);
+      payload.append(
+        "beri_tahu_karyawan",
+        values.beri_tahu_karyawan ? "1" : "0"
+      );
 
       setLoading(true);
       req
