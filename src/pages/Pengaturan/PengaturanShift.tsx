@@ -10,6 +10,7 @@ import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSele
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
+import MultiSelectUnitKerja from "../../components/dependent/_Select/MultiSelectUnitKerja";
 
 export default function PengaturanShift() {
   // SX
@@ -18,6 +19,7 @@ export default function PengaturanShift() {
   // Filter Config
   const defaultFilterConfig = {
     search: "",
+    unit_kerja: [],
     is_deleted: [],
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
@@ -55,6 +57,19 @@ export default function PengaturanShift() {
           inputValue={filterConfig.search}
           placeholder="nama shift"
           tooltipLabel="Cari dengan nama shift"
+        />
+
+        <MultiSelectUnitKerja
+          name="unit_kerja"
+          onConfirm={(input) => {
+            setFilterConfig((ps: any) => ({
+              ...ps,
+              unit_kerja: input,
+            }));
+          }}
+          inputValue={filterConfig.unit_kerja}
+          optionsDisplay="chip"
+          placeholder="Filter Unit Kerja"
         />
 
         <MultiSelectPengaturanDeletedAt

@@ -99,6 +99,15 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
     );
 
     const matchesSearchTerm = item.nama.toLowerCase().includes(searchTerm);
+
+    const matchesUnitKerjaTerm =
+      filterConfig.unit_kerja.length === 0
+        ? true
+        : filterConfig.unit_kerja.some(
+            (unitKerja: { value: number }) =>
+              unitKerja.value === item.unit_kerja.id
+          );
+
     const matchesIsDeletedTerm =
       isDeletedTerm?.includes(1) && isDeletedTerm?.includes(0)
         ? true
@@ -108,8 +117,9 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
         ? !item.deleted_at
         : true;
 
-    return matchesSearchTerm && matchesIsDeletedTerm;
+    return matchesSearchTerm && matchesUnitKerjaTerm && matchesIsDeletedTerm;
   });
+
   const formattedHeader = [
     {
       th: "Nama Shift",
