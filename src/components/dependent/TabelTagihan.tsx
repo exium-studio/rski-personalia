@@ -105,7 +105,7 @@ export default function TabelTagihan({ filterConfig }: Props) {
         ),
         props: {
           position: "sticky",
-          left: "2px",
+          left: "0",
           zIndex: 2,
         },
         cProps: {
