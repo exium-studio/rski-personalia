@@ -114,7 +114,7 @@ export default function TabelTagihan({ filterConfig }: Props) {
       }, // 0
       {
         value: item.status_tagihan?.label,
-        td: <StatusTagihanBadge data={item.status_tagihan} w={"120px"} />,
+        td: <StatusTagihanBadge data={item.status_tagihan} w={"140px"} />,
         cProps: {
           justify: "center",
         },
