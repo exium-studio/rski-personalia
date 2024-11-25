@@ -69,7 +69,7 @@ const validationSchemaStep1 = yup.object({
   no_rm: yup.string().required("Harus diisi"),
   no_manulife: yup.string().required("Harus diisi"),
   tgl_masuk: yup.string().required("Harus diisi"),
-  tgl_diangkat: yup.string().required("Harus diisi"),
+  tgl_diangkat: yup.string(),
   status_karyawan: yup.object().required("Harus diisi"),
   unit_kerja: yup.object().required("Harus diisi"),
   jabatan: yup.object().required("Harus diisi"),
@@ -409,7 +409,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         >
           <FormLabel>
             Tanggal Diangkat
-            <RequiredForm />
+            {/* <RequiredForm /> */}
           </FormLabel>
           <DatePickerModal
             id="tambah-karyawan-date-picker"

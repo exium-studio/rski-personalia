@@ -540,7 +540,7 @@ export default function EditKaryawanForm({
         >
           <FormLabel>
             Tanggal Diangkat
-            <RequiredForm />
+            {/* <RequiredForm /> */}
           </FormLabel>
           <DatePickerModal
             id="tambah-karyawan-date-picker"
