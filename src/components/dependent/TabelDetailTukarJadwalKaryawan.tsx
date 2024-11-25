@@ -8,20 +8,19 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import SearchComponent from "./input/SearchComponent";
 import ApprovalStatus from "./StatusVerifikasiBadge";
+import PertukaranJadwalModal from "./PertukaranJadwalModal";
 
 interface Props {
-  data: any[];
+  data: any;
 }
 
 export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
   // Filter Config
   const [filterConfig, setFilterConfig] = useState({
     search: "",
-    hubungan_keluarga: undefined as any,
-    status_hidup: undefined as any,
   });
 
-  const fd = data.filter((item: any) => {
+  const fd = data.list_tukar_jadwal.filter((item: any) => {
     const searchTerm = filterConfig.search.toLowerCase();
 
     const matchesSearchTerm1 = item.user_pengajuan.user.nama
@@ -69,65 +68,70 @@ export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
       },
     },
   ];
-  const formattedData = fd?.map((item: any) => ({
-    id: item.id,
-    columnsFormat: [
-      {
-        value: item.created_at,
-        td: formatDate(item.created_at),
-      },
-      {
-        value: item.user_pengajuan?.kategori?.label,
-        td: item.user_pengajuan?.kategori?.label,
-      },
-      {
-        value: item.user_pengajuan?.status?.label,
-        td: (
-          <ApprovalStatus data={item.user_pengajuan?.status?.id} w={"120px"} />
-        ),
-        cProps: {
-          justify: "center",
+  const formattedData = fd?.map((item: any) => {
+    return {
+      id: item.id,
+      columnsFormat: [
+        {
+          value: item.created_at,
+          td: formatDate(item.created_at),
         },
-      },
-      {
-        value: item.unit_kerja?.nama_unit,
-        td: item.unit_kerja?.nama_unit,
-      },
-      {
-        value: item.user_pengajuan?.user?.nama,
-        td: (
-          <AvatarAndNameTableData
-            data={{
-              id: item.user_pengajuan?.user?.id,
-              nama: item.user_pengajuan?.user?.nama,
-              foto_profil: item.user_pengajuan?.user?.foto_profil,
-            }}
-          />
-        ),
-      },
-      {
-        value: item.user_ditukar?.user?.nama,
-        td: (
-          <AvatarAndNameTableData
-            data={{
-              id: item.user_ditukar?.user?.id,
-              nama: item.user_ditukar?.user?.nama,
-              foto_profil: item.user_ditukar?.user?.foto_profil,
-            }}
-          />
-        ),
-      },
-      // {
-      //   value: item.pertukaran_jadwal,
-      //   td: (
-      //     <PertukaranJadwalModal id={item.id} data={item.pertukaran_jadwal} />
-      //   ),
-      //   cProps: {
-      //     justify: "center",
-      //   },
-      // },
-    ],
-  }));
+        {
+          value: item.user_pengajuan?.kategori?.label,
+          td: item.user_pengajuan?.kategori?.label,
+        },
+        {
+          value: item.user_pengajuan?.status?.label,
+          td: <ApprovalStatus data={item.user_pengajuan?.status} w={"180px"} />,
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: data.unit_kerja?.nama_unit,
+          td: data.unit_kerja?.nama_unit,
+        },
+        {
+          value: item.user_pengajuan?.user?.nama,
+          td: (
+            <AvatarAndNameTableData
+              data={{
+                id: item.user_pengajuan?.user?.id,
+                nama: item.user_pengajuan?.user?.nama,
+                foto_profil: item.user_pengajuan?.user?.foto_profil,
+              }}
+            />
+          ),
+        },
+        {
+          value: item.user_ditukar?.user?.nama,
+          td: (
+            <AvatarAndNameTableData
+              data={{
+                id: item.user_ditukar?.user?.id,
+                nama: item.user_ditukar?.user?.nama,
+                foto_profil: item.user_ditukar?.user?.foto_profil,
+              }}
+            />
+          ),
+        },
+        {
+          value: item.pertukaran_jadwal,
+          td: (
+            <PertukaranJadwalModal
+              id={item.id}
+              userPengajuan={item.user_pengajuan}
+              userDitukar={item.user_ditukar}
+              data={item.pertukaran_jadwal}
+            />
+          ),
+          cProps: {
+            justify: "center",
+          },
+        },
+      ],
+    };
+  });
 
   return (
     <>

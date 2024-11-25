@@ -12,14 +12,14 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { RiArrowLeftRightLine, RiLoginBoxLine } from "@remixicon/react";
+import { RiArrowDownLine, RiArrowUpLine } from "@remixicon/react";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatTime from "../../lib/formatTime";
 import CContainer from "../wrapper/CContainer";
-import DisclosureHeader from "./DisclosureHeader";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
+import DisclosureHeader from "./DisclosureHeader";
 
 interface PertukaranJadwalProps {
   id: number;
@@ -36,8 +36,7 @@ export default function PertukaranJadwalModal({
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`pertukaran-jadwal-modal-${id}`, isOpen, onOpen, onClose);
 
-  // console.log(data);
-  // console.log(userPengajuan, userDitukar);
+  console.log(userPengajuan, userDitukar);
 
   return (
     <>
@@ -63,7 +62,7 @@ export default function PertukaranJadwalModal({
             <DisclosureHeader title={"Pertukaran Jadwal"} />
           </ModalHeader>
           <ModalBody>
-            <HStack mb={4} gap={16}>
+            <HStack mb={4} gap={4}>
               <CContainer>
                 <AvatarAndNameTableData
                   w={"180px"}
@@ -87,8 +86,15 @@ export default function PertukaranJadwalModal({
             </HStack>
 
             {data?.map((pertukaran: any, i: number) => (
-              <HStack key={i}>
-                <CContainer gap={2} flex={1}>
+              <HStack key={i} gap={4}>
+                <CContainer
+                  gap={2}
+                  flex={1}
+                  // bg={"var(--divider)"}
+                  border={"1px solid var(--divider2)"}
+                  p={4}
+                  borderRadius={8}
+                >
                   {pertukaran?.jadwal_karyawan_pengajuan?.shift ? (
                     <Text opacity={0.4}>
                       {pertukaran?.jadwal_karyawan_pengajuan?.shift?.nama}
@@ -109,7 +115,7 @@ export default function PertukaranJadwalModal({
                           bg={"var(--p500a4)"}
                           p={1}
                         >
-                          <Icon as={RiLoginBoxLine} color={"p.500"} />
+                          <Icon as={RiArrowUpLine} color={"p.500"} />
                         </Center>
                         <Text>
                           {formatTime(
@@ -121,7 +127,7 @@ export default function PertukaranJadwalModal({
 
                       <HStack>
                         <Center borderRadius={"full"} bg={"var(--reda)"} p={1}>
-                          <Icon as={RiLoginBoxLine} color={"red.400"} />
+                          <Icon as={RiArrowDownLine} color={"red.400"} />
                         </Center>
                         <Text>
                           {formatTime(
@@ -135,15 +141,14 @@ export default function PertukaranJadwalModal({
                   )}
                 </CContainer>
 
-                <Icon
-                  as={RiArrowLeftRightLine}
-                  // color={"p.500"}
-                  mx={4}
-                  fontSize={20}
-                  my={"auto"}
-                />
-
-                <CContainer gap={2} flex={1}>
+                <CContainer
+                  gap={2}
+                  flex={1}
+                  // bg={"var(--divider)"}
+                  border={"1px solid var(--divider2)"}
+                  p={4}
+                  borderRadius={8}
+                >
                   {pertukaran?.jadwal_karyawan_ditukar?.shift ? (
                     <Text opacity={0.4}>
                       {pertukaran?.jadwal_karyawan_ditukar?.shift?.nama}
@@ -164,7 +169,7 @@ export default function PertukaranJadwalModal({
                           bg={"var(--p500a4)"}
                           p={1}
                         >
-                          <Icon as={RiLoginBoxLine} color={"p.500"} />
+                          <Icon as={RiArrowUpLine} color={"p.500"} />
                         </Center>
                         <Text>
                           {formatTime(
@@ -175,7 +180,7 @@ export default function PertukaranJadwalModal({
 
                       <HStack>
                         <Center borderRadius={"full"} bg={"var(--reda)"} p={1}>
-                          <Icon as={RiLoginBoxLine} color={"red.400"} />
+                          <Icon as={RiArrowDownLine} color={"red.400"} />
                         </Center>
                         <Text>
                           {formatTime(

@@ -173,9 +173,7 @@ export default function DetailTukarJadwalKaryawanModalDisclosure({
                           </VStack>
                         </Wrap>
 
-                        <TabelDetailTukarJadwalKaryawan
-                          data={data?.list_tukar_jadwal}
-                        />
+                        <TabelDetailTukarJadwalKaryawan data={data} />
                       </CContainer>
                     )}
                   </>
