@@ -74,7 +74,7 @@ export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
       columnsFormat: [
         {
           value: item.created_at,
-          td: formatDate(item.created_at),
+          td: formatDate(item.tanggal_pengajuan),
         },
         {
           value: item.user_pengajuan?.kategori?.label,
@@ -120,8 +120,8 @@ export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
           td: (
             <PertukaranJadwalModal
               id={item.id}
-              userPengajuan={item.user_pengajuan}
-              userDitukar={item.user_ditukar}
+              userPengajuan={item.karyawan_pengajuan}
+              userDitukar={item.karyawan_ditukar}
               data={item.pertukaran_jadwal}
             />
           ),
