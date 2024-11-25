@@ -48,7 +48,8 @@ export default function SelectShiftByUser({
               label: `${formatTime(item.jam_from)} - ${formatTime(
                 item.jam_to
               )}`,
-              label2: item?.unit_kerja?.nama_unit,
+              // label2: item?.unit_kerja?.nama_unit,
+              label2: item?.nama,
             }));
             // setOptions([{ value: 0, label: "Libur" }, ...options]);
             setOptions(options);
