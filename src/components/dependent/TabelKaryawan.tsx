@@ -147,6 +147,7 @@ export default function TabelKaryawan() {
         value: item.user.nama,
         td: (
           <AvatarAndNameTableData
+            noDetail
             data={{
               id: item.user.id,
               nama: item.user.nama,

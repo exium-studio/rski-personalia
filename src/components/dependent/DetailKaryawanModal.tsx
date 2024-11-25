@@ -665,8 +665,9 @@ export default function DetailKaryawanModal({
                               </VStack>
                             </DetailCutiKaryawanModalDisclosure>
 
-                            {/* Tukar Jadwal */}
+                            {/* Tukar Jadwal  */}
                             <DetailTukarJadwalKaryawanModalDisclosure
+                              disclosure_id={id}
                               karyawan_id={data.user?.data_karyawan_id}
                               flexShrink={0}
                               role="group"

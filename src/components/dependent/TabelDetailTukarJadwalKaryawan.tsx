@@ -49,10 +49,10 @@ export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
         justify: "center",
       },
     },
-    {
-      th: "Unit Kerja",
-      isSortable: true,
-    },
+    // {
+    //   th: "Unit Kerja",
+    //   isSortable: true,
+    // },
     {
       th: "Karyawan Pengajuan",
       isSortable: true,
@@ -87,10 +87,10 @@ export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
             justify: "center",
           },
         },
-        {
-          value: data.unit_kerja?.nama_unit,
-          td: data.unit_kerja?.nama_unit,
-        },
+        // {
+        //   value: data.unit_kerja?.nama_unit,
+        //   td: data.unit_kerja?.nama_unit,
+        // },
         {
           value: item.user_pengajuan?.user?.nama,
           td: (

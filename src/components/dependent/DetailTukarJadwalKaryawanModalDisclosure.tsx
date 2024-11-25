@@ -27,10 +27,12 @@ import Retry from "./Retry";
 import TabelDetailTukarJadwalKaryawan from "./TabelDetailTukarJadwalKaryawan";
 
 interface Props extends BoxProps {
+  disclosure_id?: string;
   karyawan_id: number;
   children?: any;
 }
 export default function DetailTukarJadwalKaryawanModalDisclosure({
+  disclosure_id,
   karyawan_id,
   children,
   ...props
@@ -38,7 +40,9 @@ export default function DetailTukarJadwalKaryawanModalDisclosure({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useBackOnClose(
-    `detail-tukar-jadwal-karyawan-modal-${karyawan_id}`,
+    `detail-tukar-jadwal-karyawan-modal-${
+      disclosure_id || "disclosure_id"
+    }-${karyawan_id}`,
     isOpen,
     onOpen,
     onClose
