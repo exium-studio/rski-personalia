@@ -31,8 +31,8 @@ import {
   RiFileChartFill,
   RiGraduationCapFill,
   RiHeartFill,
-  RiLoginBoxFill,
   RiMarkPenLine,
+  RiTimerFill,
   RiUserStarFill,
 } from "@remixicon/react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -46,6 +46,7 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import useGetUserData from "../../hooks/useGetUserData";
 import backOnClose from "../../lib/backOnClose";
 import formatDurationShort from "../../lib/formatDurationShort";
 import isHasPermissions from "../../lib/isHasPermissions";
@@ -72,7 +73,6 @@ import ResetPasswordKaryawan from "./ResetPasswordKaryawan";
 import Retry from "./Retry";
 import RunPenilaianModal from "./RunPenilaianModal";
 import StatusAktifBadge from "./StatusAktifBadge";
-import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props {
   id?: string;
@@ -474,7 +474,7 @@ export default function DetailKaryawanModal({
                                   opacity={0.4}
                                   transition={"200ms"}
                                   _groupHover={{ opacity: 1 }}
-                                  as={RiLoginBoxFill}
+                                  as={RiTimerFill}
                                   fontSize={32}
                                 />
                                 <Text
@@ -482,7 +482,7 @@ export default function DetailKaryawanModal({
                                   textAlign={"center"}
                                   lineHeight={1.4}
                                 >
-                                  Aktivitas
+                                  Presensi
                                 </Text>
                               </VStack>
                             </DetailAktivitasKaryawanModalDisclosure>
