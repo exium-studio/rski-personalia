@@ -60,7 +60,7 @@ export default function DetailAktivitasKaryawanModalDisclosure({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-presensi/${karyawan_id}`,
     payload: {
-      month: month,
+      month: month + 1,
       year: year,
     },
     dependencies: [month, year],
