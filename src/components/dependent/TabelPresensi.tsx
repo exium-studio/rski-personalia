@@ -2,6 +2,7 @@ import { Center, Text, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
+import formatDate from "../../lib/formatDate";
 import formatTime from "../../lib/formatTimeOld";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
@@ -9,12 +10,11 @@ import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
-import BooleanBadge from "./BooleanBadge";
 import CustomTable from "./CustomTable";
 import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
+import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
-import formatDate from "../../lib/formatDate";
 interface Props {
   filterConfig?: any;
 }
@@ -59,7 +59,7 @@ export default function TabelPresensi({ filterConfig }: Props) {
       isSortable: true,
       props: {
         position: "sticky",
-        left: 0,
+        left: "2px",
         zIndex: 99,
         w: "243px",
       },
@@ -116,7 +116,7 @@ export default function TabelPresensi({ filterConfig }: Props) {
         ),
         props: {
           position: "sticky",
-          left: 0,
+          left: "2px",
           zIndex: 2,
         },
         cProps: {
@@ -125,15 +125,7 @@ export default function TabelPresensi({ filterConfig }: Props) {
       },
       {
         value: item.unit_kerja.jenis_karyawan,
-        td: (
-          <BooleanBadge
-            w={"120px"}
-            data={item.unit_kerja.jenis_karyawan}
-            colorScheme={item.unit_kerja.jenis_karyawan ? "cyan" : "orange"}
-            trueValue="Shift"
-            falseValue="Non-Shift"
-          />
-        ),
+        td: <JenisKaryawanBadge data={item.unit_kerja.jenis_karyawan} />,
         cProps: {
           justify: "center",
         },

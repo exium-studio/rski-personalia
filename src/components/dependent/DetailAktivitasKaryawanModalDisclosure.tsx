@@ -25,6 +25,7 @@ import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import TabelDetailAktivitasKaryawan from "./TabelDetailAktivitasKaryawan";
+import JenisKaryawanBadge from "./JenisKaryawanBadge";
 
 interface Props extends BoxProps {
   karyawan_id: number;
@@ -78,7 +79,7 @@ export default function DetailAktivitasKaryawanModalDisclosure({
         <ModalOverlay />
         <ModalContent borderRadius={12} minH={"calc(100vh - 32px)"}>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Detail Aktifitas Presensi Karyawan"} />
+            <DisclosureHeader title={"Detail Presensi Karyawan"} />
           </ModalHeader>
           <ModalBody>
             {error && (
@@ -103,6 +104,11 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                       align={"center"}
                     >
                       <Skeleton w={"55px"} h={"55px"} borderRadius={"full"} />
+
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
 
                       <VStack align={"stretch"}>
                         <Skeleton w={"100px"} h={"16px"} />
@@ -169,6 +175,15 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                             <Text fontWeight={500}>
                               {data.unit_kerja.nama_unit}
                             </Text>
+                          </VStack>
+
+                          <VStack align={"stretch"}>
+                            <Text fontSize={14} opacity={0.6}>
+                              Jenis Karyawan
+                            </Text>
+                            <JenisKaryawanBadge
+                              data={data.unit_kerja.jenis_karyawan}
+                            />
                           </VStack>
                         </Wrap>
 
