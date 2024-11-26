@@ -173,7 +173,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
       columnsFormat: [
         {
           value: item.nama_diklat,
-          td: item.nama_diklat,
+          td: <TabelElipsisText data={item.nama_diklat} />,
           props: {
             position: "sticky",
             left: 0,

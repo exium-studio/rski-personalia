@@ -86,7 +86,7 @@ export default function DiklatEksternal() {
               boxProps={{ w: "fit-content" }}
             >
               <ExportModal
-                url="/api/rski/dashboard/perusahaan/diklat/export"
+                url="/api/rski/dashboard/perusahaan/diklat-eksternal/export"
                 title="Export Diklat Eksternal"
                 downloadFileName="data diklat"
                 isDisabled={!exportPermissions}
