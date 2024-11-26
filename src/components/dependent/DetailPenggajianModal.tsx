@@ -206,7 +206,7 @@ const DeletePenggajian = ({ penggajian_id, status_penggajian }: any) => {
     <>
       <Button
         leftIcon={<Icon as={RiDeleteBinLine} fontSize={iconSize} />}
-        colorScheme="ap"
+        colorScheme="red"
         variant={"outline"}
         size={"lg"}
         onClick={onOpen}
@@ -267,8 +267,8 @@ const DeletePenggajian = ({ penggajian_id, status_penggajian }: any) => {
                 formik.submitForm();
               }}
               w={"100%"}
-              colorScheme="ap"
-              className="btn-ap clicky"
+              colorScheme="red"
+              className="clicky"
               isLoading={loading}
               isDisabled={countDown !== 0}
             >
