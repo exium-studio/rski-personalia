@@ -43,7 +43,6 @@ interface PublikasiButtonProps extends ButtonProps {
   penggajian_id: number;
   periode: string;
 }
-
 const PublikasiButtonModal = ({
   penggajian_id,
   periode,

@@ -18,18 +18,18 @@ import formatTime from "../../lib/formatTime";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
+import { useEffect, useState } from "react";
+import TabelFooterConfig from "./TabelFooterConfig";
 
 interface Props {
   filterConfig?: any;
 }
 
 export default function TabelPengaturanShift({ filterConfig }: Props) {
-  // SX
-
-  const { userPermissions } = useAuth();
-  const editPermission = isHasPermissions(userPermissions, [100]);
-  const deletePermission = isHasPermissions(userPermissions, [101]);
-
+  // Limit Config
+  const [limitConfig, setLimitConfig] = useState<number>(10);
+  // Pagination Config
+  const [pageConfig, setPageConfig] = useState<number>(1);
   // Row Options Config
   const rowOptions = [
     (rowData: any) => {
@@ -86,13 +86,21 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
     },
   ];
 
+  useEffect(() => {
+    setPageConfig(1);
+  }, [filterConfig]);
+
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [100]);
+  const deletePermission = isHasPermissions(userPermissions, [101]);
+
   const { error, notFound, loading, data, retry } = useDataState<any[]>({
     initialData: undefined,
     url: "/api/rski/dashboard/pengaturan/shift",
     dependencies: [],
   });
 
-  const fd = data?.filter((item: any) => {
+  const fd: any = data?.filter((item: any) => {
     const searchTerm = filterConfig?.search.toLowerCase();
     const isDeletedTerm = filterConfig?.is_deleted?.map(
       (term: Interface__SelectOption) => term.value
@@ -101,7 +109,7 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
     const matchesSearchTerm = item.nama.toLowerCase().includes(searchTerm);
 
     const matchesUnitKerjaTerm =
-      filterConfig.unit_kerja.length === 0
+      filterConfig.unit_kerja?.length === 0
         ? true
         : filterConfig.unit_kerja.some(
             (unitKerja: { value: number }) =>
@@ -119,6 +127,13 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
 
     return matchesSearchTerm && matchesUnitKerjaTerm && matchesIsDeletedTerm;
   });
+
+  // Calculate the total number of pages
+  const totalPage = limitConfig === 0 ? 1 : Math.ceil(fd?.length / limitConfig);
+
+  // Calculate start and end index for the current page
+  const startIndex = (pageConfig - 1) * limitConfig;
+  const endIndex = limitConfig === 0 ? fd?.length : startIndex + limitConfig;
 
   const formattedHeader = [
     {
@@ -153,48 +168,67 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
       isSortable: true,
     },
   ];
-  const formattedData = fd?.map((item: any) => ({
-    id: item.id,
-    columnsFormat: [
-      {
-        value: item.nama,
-        td: item.nama,
-        props: {
-          position: "sticky",
-          left: 0,
-          zIndex: 2,
+  const formattedData = fd
+    ?.slice(startIndex, endIndex)
+    .map((item: any) => ({
+      id: item.id,
+      columnsFormat: [
+        {
+          value: item.nama,
+          td: item.nama,
+          props: {
+            position: "sticky",
+            left: 0,
+            zIndex: 2,
+          },
+          cProps: {
+            borderRight: "1px solid var(--divider3)",
+          },
         },
-        cProps: {
-          borderRight: "1px solid var(--divider3)",
+        {
+          value: item.deleted_at,
+          td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
+          isDate: true,
+          cProps: {
+            justify: "center",
+          },
         },
-      },
-      {
-        value: item.deleted_at,
-        td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
-        isDate: true,
-        cProps: {
-          justify: "center",
+        {
+          original_data: {
+            jam_from: item.jam_from,
+            jam_to: item.jam_to,
+          },
+          value: item.jam_from,
+          td: `${formatTime(item.jam_from)} - ${formatTime(item.jam_to)}`,
+          isTime: true,
+          cProps: {
+            justify: "center",
+          },
         },
-      },
-      {
-        original_data: {
-          jam_from: item.jam_from,
-          jam_to: item.jam_to,
+        {
+          original_data: item?.unit_kerja,
+          value: item.unit_kerja?.nama_unit,
+          td: item.unit_kerja?.nama_unit,
         },
-        value: item.jam_from,
-        td: `${formatTime(item.jam_from)} - ${formatTime(item.jam_to)}`,
-        isTime: true,
-        cProps: {
-          justify: "center",
-        },
-      },
-      {
-        original_data: item?.unit_kerja,
-        value: item.unit_kerja?.nama_unit,
-        td: item.unit_kerja?.nama_unit,
-      },
-    ],
-  }));
+      ],
+    }))
+    .filter(Boolean);
+
+  // Pagination data for the footer
+  const paginationData = {
+    links: {
+      first: "",
+      last: "",
+      prev: null,
+      next: null,
+    },
+    meta: {
+      current_page: pageConfig,
+      last_page: totalPage,
+      per_page: limitConfig,
+      total: fd?.length,
+    },
+  };
 
   return (
     <>
@@ -242,6 +276,14 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
                   )}
                 </>
               )}
+
+              <TabelFooterConfig
+                limitConfig={limitConfig}
+                setLimitConfig={setLimitConfig}
+                pageConfig={pageConfig}
+                setPageConfig={setPageConfig}
+                paginationData={paginationData}
+              />
             </>
           )}
         </>
