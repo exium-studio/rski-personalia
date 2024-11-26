@@ -1,40 +1,32 @@
-import { HStack, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
-import { responsiveSpacing } from "../../constant/sizes";
+import { useDisclosure } from "@chakra-ui/react";
 import formatDate from "../../lib/formatDate";
-import formatTime from "../../lib/formatTime";
+import formatDuration from "../../lib/formatDuration";
+import formatTime from "../../lib/formatTimeOld";
 import NotFound from "../independent/NotFound";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
-import SearchComponent from "./input/SearchComponent";
 import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
-import formatDuration from "../../lib/formatDuration";
 
 interface Props {
   data: any[];
+  filterConfig?: any;
 }
 
-export default function TabelDetailAktivitasKaryawan({ data }: Props) {
-  // Filter Config
-  const [filterConfig, setFilterConfig] = useState({
-    search: "",
-    hubungan_keluarga: undefined as any,
-    status_hidup: undefined as any,
-  });
+export default function TabelDetailAktivitasKaryawan({
+  data,
+  filterConfig,
+}: Props) {
   // Presensi Detail Disclosure Config
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const fd = data?.filter((item: any) => {
     const searchTerm = filterConfig?.search.toLowerCase();
 
-    const matchesSearchTerm = item?.presensi
-      ?.toLowerCase()
-      .includes(searchTerm);
     const matchesSearchTerm2 = formatDate(item?.tanggal)
       ?.toLowerCase()
       .includes(searchTerm);
 
-    return matchesSearchTerm || matchesSearchTerm2;
+    return matchesSearchTerm2;
   });
 
   const formattedHeader = [
@@ -92,7 +84,7 @@ export default function TabelDetailAktivitasKaryawan({ data }: Props) {
         },
         {
           value: item.jam_masuk,
-          td: formatTime(item.jam_masuk) || "--:--",
+          td: formatTime(item.jam_masuk),
           isTime: true,
           cProps: {
             justify: "center",
@@ -100,7 +92,7 @@ export default function TabelDetailAktivitasKaryawan({ data }: Props) {
         },
         {
           value: item.jam_keluar,
-          td: formatTime(item.jam_keluar) || "--:--",
+          td: formatTime(item.jam_keluar),
           isTime: true,
           cProps: {
             justify: "center",
@@ -108,7 +100,7 @@ export default function TabelDetailAktivitasKaryawan({ data }: Props) {
         },
         {
           value: item.durasi,
-          td: formatDuration(item.duration),
+          td: formatDuration(item.durasi),
           isNumber: true,
           cProps: {
             justify: "center",
@@ -122,19 +114,6 @@ export default function TabelDetailAktivitasKaryawan({ data }: Props) {
 
   return (
     <>
-      <HStack mb={responsiveSpacing}>
-        <SearchComponent
-          name="search"
-          onChangeSetter={(input) => {
-            setFilterConfig((ps) => ({
-              ...ps,
-              search: input,
-            }));
-          }}
-          inputValue={filterConfig.search}
-        />
-      </HStack>
-
       {fd?.length === 0 && <NotFound />}
 
       {fd?.length > 0 && (

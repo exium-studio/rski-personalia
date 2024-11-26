@@ -14,7 +14,7 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
@@ -23,9 +23,11 @@ import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
+import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
 import TabelDetailAktivitasKaryawan from "./TabelDetailAktivitasKaryawan";
-import JenisKaryawanBadge from "./JenisKaryawanBadge";
+import PeriodPickerForDatePickerModal from "./input/PeriodPickerForDatePickerModal";
+import SearchComponent from "./input/SearchComponent";
 
 interface Props extends BoxProps {
   karyawan_id: number;
@@ -38,6 +40,15 @@ export default function DetailAktivitasKaryawanModalDisclosure({
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  // Filter Config
+  const [filterConfig, setFilterConfig] = useState({
+    search: "",
+  });
+
+  const today = new Date();
+  const [month, setMonth] = useState<number>(today.getMonth());
+  const [year, setYear] = useState<number>(today.getFullYear());
+
   useBackOnClose(
     `detail-aktivitas-karyawan-modal-${karyawan_id}`,
     isOpen,
@@ -48,11 +59,13 @@ export default function DetailAktivitasKaryawanModalDisclosure({
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-presensi/${karyawan_id}`,
-    dependencies: [],
+    payload: {
+      month: month,
+      year: year,
+    },
+    dependencies: [month, year],
     conditions: !!(isOpen && karyawan_id),
   });
-
-  // SX
 
   return (
     <>
@@ -187,8 +200,33 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                           </VStack>
                         </Wrap>
 
+                        <HStack mb={responsiveSpacing}>
+                          <SearchComponent
+                            name="search"
+                            onChangeSetter={(input) => {
+                              setFilterConfig((ps) => ({
+                                ...ps,
+                                search: input,
+                              }));
+                            }}
+                            inputValue={filterConfig.search}
+                            placeholder="tanggal"
+                          />
+
+                          <PeriodPickerForDatePickerModal
+                            id="periode-picker-for-export-presensi"
+                            name="periode export presensi"
+                            bulan={month}
+                            setBulan={setMonth}
+                            tahun={year}
+                            setTahun={setYear}
+                            minW={"200px"}
+                          />
+                        </HStack>
+
                         <TabelDetailAktivitasKaryawan
                           data={data.list_presensi}
+                          filterConfig={filterConfig}
                         />
                       </CContainer>
                     )}
