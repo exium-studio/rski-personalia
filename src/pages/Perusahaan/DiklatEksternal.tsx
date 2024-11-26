@@ -88,7 +88,7 @@ export default function DiklatEksternal() {
               <ExportModal
                 url="/api/rski/dashboard/perusahaan/diklat-eksternal/export"
                 title="Export Diklat Eksternal"
-                downloadFileName="data diklat"
+                downloadFileName="Data Diklat Eksternal"
                 isDisabled={!exportPermissions}
               />
             </PermissionTooltip>
