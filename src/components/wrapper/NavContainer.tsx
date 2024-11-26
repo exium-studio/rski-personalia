@@ -10,14 +10,13 @@ import {
   MenuList,
   Portal,
   StackProps,
-  Tooltip,
   useToast,
   VStack,
 } from "@chakra-ui/react";
 import { RiShieldUserFill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useContentBgColor, useLightDarkColor } from "../../constant/colors";
+import { useContentBgColor } from "../../constant/colors";
 import navs from "../../constant/navs";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
@@ -27,11 +26,11 @@ import isHasSomePermissions from "../../lib/isHasSomePermissions";
 import req from "../../lib/req";
 import useScreenWidth from "../../lib/useScreenWidth";
 import Header from "../dependent/Header";
+import TopNavs from "../dependent/TopNavs";
 import ComponentSpinner from "../independent/ComponentSpinner";
 import CContainer from "./CContainer";
 import Container from "./Container";
 import PermissionTooltip from "./PermissionTooltip";
-import TopNavs from "../dependent/TopNavs";
 
 const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -87,6 +86,7 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
           color={active === i ? "p.500" : ""}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          onClick={handleMouseEnter}
           isDisabled={!hasSomePermissions}
         />
       </PermissionTooltip>
@@ -169,7 +169,6 @@ export default function NavContainer({
   const smScreen = useScreenWidth() <= 768;
 
   // SX
-  const lightDarkColor = useLightDarkColor();
   const contentBgColor = useContentBgColor();
 
   const { logout } = useLogout();
@@ -252,7 +251,7 @@ export default function NavContainer({
 
       {!loading && (
         <HStack flex={1} align={"stretch"} gap={0}>
-          {!noNavs && !smScreen && (
+          {!noNavs && (
             <VStack
               ref={navsRef}
               id="navs"
@@ -285,7 +284,7 @@ export default function NavContainer({
             </VStack>
           )}
 
-          {!noNavs && smScreen && (
+          {/* {!noNavs && smScreen && (
             <Box
               overflowX={"auto"}
               position={"fixed"}
@@ -318,11 +317,11 @@ export default function NavContainer({
                 </HStack>
               </HStack>
             </Box>
-          )}
+          )} */}
 
           <CContainer
             bg={contentBgColor}
-            pb={["86px", null, 0]}
+            // pb={["86px", null, 0]}
             align={"stretch"}
             h={"100vh"}
             maxW={smScreen ? "100%" : "calc(100% - 72px)"}

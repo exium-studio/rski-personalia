@@ -1,5 +1,5 @@
 import {
-  RiBuilding2Fill,
+  RiGraduationCapFill,
   RiGroupFill,
   RiHome6Fill,
   RiMoneyDollarCircleFill,
@@ -123,9 +123,9 @@ const navs = [
   // Perusahaan
   {
     allowed: [8],
-    label: "Perusahaan",
+    label: "Pendidikan",
     link: "/perusahaan/diklat",
-    icon: RiBuilding2Fill,
+    icon: RiGraduationCapFill,
     subNavs: [
       {
         allowed: [8],
