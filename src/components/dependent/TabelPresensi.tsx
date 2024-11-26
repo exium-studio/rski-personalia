@@ -125,7 +125,12 @@ export default function TabelPresensi({ filterConfig }: Props) {
       },
       {
         value: item.unit_kerja.jenis_karyawan,
-        td: <JenisKaryawanBadge data={item.unit_kerja.jenis_karyawan} />,
+        td: (
+          <JenisKaryawanBadge
+            data={item.unit_kerja.jenis_karyawan}
+            w={"120px"}
+          />
+        ),
         cProps: {
           justify: "center",
         },
