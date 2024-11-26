@@ -1,10 +1,10 @@
 import {
+  RiCalendarFill,
   RiGraduationCapFill,
   RiGroupFill,
   RiHome6Fill,
   RiMoneyDollarCircleFill,
   RiSettings3Fill,
-  RiTimeFill,
   RiTimerFill,
   RiUserFill,
 } from "@remixicon/react";
@@ -65,7 +65,7 @@ const navs = [
     allowed: [22, 29, 36, 41, 4],
     label: "Jadwal",
     link: "/jadwal",
-    icon: RiTimeFill,
+    icon: RiCalendarFill,
     subNavs: [
       {
         allowed: [22],
