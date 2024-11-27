@@ -211,7 +211,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
               <Alert mb={responsiveSpacing} alignItems={"start"}>
                 <AlertIcon />
                 <AlertDescription maxW={"640px !important"}>
-                  Jika tidak punya akses Bypass Unit Kerja, maka filter unit
+                  Jika tidak memiliki akses Bypass Unit Kerja, maka filter unit
                   kerja akan dikunci/tidak bisa dihilangkan sesuai dengan unit
                   kerja anda.
                 </AlertDescription>
