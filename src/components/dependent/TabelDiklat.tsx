@@ -120,7 +120,7 @@ const KonfirmasiDeleteUser = ({
             <DisclosureHeader title={"Hapus Karyawan Dari Peserta Diklat"} />
           </ModalHeader>
           <ModalBody>
-            <Text>
+            <Text opacity={0.6}>
               Apakah anda yakin akan menghapus <b>{peserta.user.nama}</b> dari
               peserta Diklat?
             </Text>
