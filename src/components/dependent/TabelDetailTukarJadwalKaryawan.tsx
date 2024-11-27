@@ -23,10 +23,10 @@ export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
   const fd = data.pertukaran_jadwal.filter((item: any) => {
     const searchTerm = filterConfig.search.toLowerCase();
 
-    const matchesSearchTerm1 = item.user_pengajuan.user.nama
+    const matchesSearchTerm1 = item.karyawan_pengajuan.nama
       .toLowerCase()
       .includes(searchTerm);
-    const matchesSearchTerm2 = item.user_ditukar.user.nama
+    const matchesSearchTerm2 = item.karyawan_ditukar.nama
       .toLowerCase()
       .includes(searchTerm);
 
@@ -77,12 +77,12 @@ export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
           td: formatDate(item.tanggal_pengajuan),
         },
         {
-          value: item.user_pengajuan?.kategori?.label,
-          td: item.user_pengajuan?.kategori?.label,
+          value: item.karyawan_pengajuan.nama,
+          td: item.karyawan_pengajuan.nama,
         },
         {
-          value: item.user_pengajuan?.status?.label,
-          td: <ApprovalStatus data={item.user_pengajuan?.status} w={"180px"} />,
+          value: item?.status_penukaran?.label,
+          td: <ApprovalStatus data={item?.status_penukaran} w={"180px"} />,
           cProps: {
             justify: "center",
           },
@@ -92,25 +92,25 @@ export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
         //   td: data.unit_kerja?.nama_unit,
         // },
         {
-          value: item.user_pengajuan?.user?.nama,
+          value: item.karyawan_pengajuan?.nama,
           td: (
             <AvatarAndNameTableData
               data={{
-                id: item.user_pengajuan?.user?.id,
-                nama: item.user_pengajuan?.user?.nama,
-                foto_profil: item.user_pengajuan?.user?.foto_profil,
+                id: item.karyawan_pengajuan?.id,
+                nama: item.karyawan_pengajuan?.nama,
+                foto_profil: item.karyawan_pengajuan?.foto_profil,
               }}
             />
           ),
         },
         {
-          value: item.user_ditukar?.user?.nama,
+          value: item.karyawan_ditukar?.nama,
           td: (
             <AvatarAndNameTableData
               data={{
-                id: item.user_ditukar?.user?.id,
-                nama: item.user_ditukar?.user?.nama,
-                foto_profil: item.user_ditukar?.user?.foto_profil,
+                id: item.karyawan_ditukar?.id,
+                nama: item.karyawan_ditukar?.nama,
+                foto_profil: item.karyawan_ditukar?.foto_profil,
               }}
             />
           ),
@@ -122,7 +122,7 @@ export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
               id={item.id}
               userPengajuan={item.karyawan_pengajuan}
               userDitukar={item.karyawan_ditukar}
-              data={item.pertukaran_jadwal}
+              data={item.list_jadwal}
             />
           ),
           cProps: {
