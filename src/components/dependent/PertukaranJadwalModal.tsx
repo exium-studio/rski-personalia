@@ -36,8 +36,6 @@ export default function PertukaranJadwalModal({
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`pertukaran-jadwal-modal-${id}`, isOpen, onOpen, onClose);
 
-  console.log(userPengajuan, userDitukar);
-
   return (
     <>
       <Button

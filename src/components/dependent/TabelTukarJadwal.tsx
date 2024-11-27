@@ -15,6 +15,7 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import PertukaranJadwalModal from "./PertukaranJadwalModal";
 import Retry from "./Retry";
+import StatusTukarJadwalApprovalKaryawanBadge from "./StatusTukarJadwalApprovalKaryawanBadge";
 import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
@@ -70,6 +71,13 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
     {
       th: "Kategori Penukaran",
       isSortable: true,
+    },
+    {
+      th: "Persetujuan Karyawan",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
     },
     {
       th: "Status Penukaran",
@@ -146,7 +154,19 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
           td: item.kategori_penukaran.label,
         },
         {
-          value: item.status_penukaran.label,
+          value: item.acc_user_ditukar,
+          td: (
+            <StatusTukarJadwalApprovalKaryawanBadge
+              data={item.acc_user_ditukar}
+              w={"120px"}
+            />
+          ),
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item.acc_user_ditukar,
           td: (
             <StatusVerifikasiBadge2 data={item.status_penukaran} w={"180px"} />
           ),
@@ -154,6 +174,7 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
             justify: "center",
           },
         },
+
         {
           value: item.unit_kerja?.nama_unit,
           td: item.unit_kerja?.nama_unit,
@@ -207,19 +228,30 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
                   {item?.relasi_verifikasi_pengajuan?.[0]?.id === null &&
                     userData?.id !== 1 && <VerifikatorBelumDitentukan />}
 
-                  {(item?.relasi_verifikasi_pengajuan?.[0]?.id ||
-                    userData?.id === 1) && (
-                    <PermissionTooltip permission={verif1Permission}>
-                      <VerifikasiModal
-                        aria-label={`tukar-jadwal-verif-1-button-${item.id}`}
-                        id={`verifikasi-tukar-jadwal-modal-${item.id}`}
-                        submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-1`}
-                        approvePayloadKey="verifikasi_pertama_disetujui"
-                        disapprovePayloadKey="verifikasi_pertama_ditolak"
-                        isDisabled={!verif1Permission}
-                      />
-                    </PermissionTooltip>
+                  {[1, 3].includes(item?.acc_user_ditukar) && (
+                    <VerifikatorName
+                      nama={
+                        item?.relasi_verifikasi_pengajuan?.[1]?.verifikator
+                          ?.nama
+                      }
+                      verification={null}
+                    />
                   )}
+
+                  {(item?.relasi_verifikasi_pengajuan?.[0]?.id ||
+                    userData?.id === 1) &&
+                    item?.acc_user_ditukar === 2 && (
+                      <PermissionTooltip permission={verif1Permission}>
+                        <VerifikasiModal
+                          aria-label={`tukar-jadwal-verif-1-button-${item.id}`}
+                          id={`verifikasi-tukar-jadwal-modal-${item.id}`}
+                          submitUrl={`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal/${item.id}/verifikasi-step-1`}
+                          approvePayloadKey="verifikasi_pertama_disetujui"
+                          disapprovePayloadKey="verifikasi_pertama_ditolak"
+                          isDisabled={!verif1Permission}
+                        />
+                      </PermissionTooltip>
+                    )}
                 </>
               )}
 
