@@ -20,7 +20,7 @@ export default function TabelDetailTukarJadwalKaryawan({ data }: Props) {
     search: "",
   });
 
-  const fd = data.list_tukar_jadwal.filter((item: any) => {
+  const fd = data.pertukaran_jadwal.filter((item: any) => {
     const searchTerm = filterConfig.search.toLowerCase();
 
     const matchesSearchTerm1 = item.user_pengajuan.user.nama

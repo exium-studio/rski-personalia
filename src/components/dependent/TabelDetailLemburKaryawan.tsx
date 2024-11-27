@@ -22,15 +22,16 @@ export default function TabelDetailLemburKaryawan({ data }: Props) {
     status_hidup: undefined as any,
   });
 
-  const fd = data.filter((item: any) => {
-    const searchTerm = filterConfig.search.toLowerCase();
+  // const fd = data.filter((item: any) => {
+  //   const searchTerm = filterConfig.search.toLowerCase();
 
-    const matchesSearchTerm1 = formatDate(item.created_at)
-      .toLowerCase()
-      .includes(searchTerm);
+  //   const matchesSearchTerm1 = formatDate(item?.tgl_pengajuan)
+  //     .toLowerCase()
+  //     .includes(searchTerm);
 
-    return matchesSearchTerm1;
-  });
+  //   return matchesSearchTerm1;
+  // });
+  const fd = data;
 
   const formattedHeader = [
     {
@@ -38,7 +39,7 @@ export default function TabelDetailLemburKaryawan({ data }: Props) {
       isSortable: true,
     },
     {
-      th: "Jadwal",
+      th: "Tanggal Lembur",
       isSortable: true,
     },
     {
@@ -63,20 +64,24 @@ export default function TabelDetailLemburKaryawan({ data }: Props) {
         value: item.created_at,
         td: (
           <StatusLemburBadge
-            tgl_mulai_jadwal={item.jadwal?.tgl_mulai}
+            tgl_mulai_jadwal={
+              item.jadwal_shift?.tgl_mulai || item.tgl_pengajuan
+            }
             w={"120px"}
           />
         ),
       },
       {
-        value: item.jadwal?.tgl_mulai,
-        td: formatDate(item.jadwal?.tgl_mulai),
+        value: item.jadwal_shift?.tgl_mulai || item.tgl_pengajuan,
+        td: formatDate(item.jadwal_shift?.tgl_mulai || item.tgl_pengajuan),
         isDate: true,
       },
       {
-        value: item.jadwal?.shift?.jam_from,
-        td: `${formatTime(item.jadwal?.shift?.jam_from)} - ${formatTime(
-          item.jadwal?.shift?.jam_to
+        value: item.jadwal?.shift?.jam_from || item.jadwal_non_shift?.jam_from,
+        td: `${formatTime(
+          item.jadwal_shift?.shift?.jam_from || item.jadwal_non_shift?.jam_from
+        )} - ${formatTime(
+          item.jadwal_shift?.shift?.jam_to || item.jadwal_non_shift?.jam_to
         )}`,
         isTime: true,
         cProps: {

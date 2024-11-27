@@ -168,7 +168,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
               {formik.values?.karyawan?.label2 === "Non-Shift" && (
                 <FormControl mb={4} isInvalid={!!formik.errors.tgl_pengajuan}>
                   <FormLabel>
-                    Tanggal Pengajuan
+                    Tanggal Lembur
                     <RequiredForm />
                   </FormLabel>
                   <DatePickerModal
