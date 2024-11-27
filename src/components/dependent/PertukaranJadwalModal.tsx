@@ -152,7 +152,7 @@ export default function PertukaranJadwalModal({
                       {pertukaran?.jadwal_karyawan_ditukar?.shift?.nama}
                     </Text>
                   ) : (
-                    <Text opacity={0.4}>Libur</Text>
+                    <Text>Libur</Text>
                   )}
 
                   <Text>
