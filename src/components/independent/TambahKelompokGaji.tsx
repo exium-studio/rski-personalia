@@ -52,7 +52,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
     validationSchema: yup.object().shape({
       nama_kelompok: yup.string().required("Harus diisi"),
       besaran_gaji: yup.number().required("Harus diisi"),
-      tunjangan_jabatan: yup.number().required("Harus diisi"),
+      // tunjangan_jabatan: yup.number().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
