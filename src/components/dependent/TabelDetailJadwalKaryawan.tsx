@@ -1,16 +1,16 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
-import { Interface__JadwalItem } from "../../constant/interfaces";
 import { responsiveSpacing } from "../../constant/sizes";
+import formatDate from "../../lib/formatDate";
 import formatTime from "../../lib/formatTime";
+import getThisWeekDates from "../../lib/getThisWeekDates";
 import NotFound from "../independent/NotFound";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
 import SearchComponent from "./input/SearchComponent";
-import formatDate from "../../lib/formatDate";
 
 interface Props {
-  data: Interface__JadwalItem[];
+  data: any;
 }
 
 export default function TabelDetailJadwalKaryawan({ data }: Props) {
@@ -22,12 +22,16 @@ export default function TabelDetailJadwalKaryawan({ data }: Props) {
   const fd = data.filter((item: any) => {
     const searchTerm = filterConfig.search.toLowerCase();
 
-    const matchesSearchTerm = item.shift
-      ? item.shift.nama.toLowerCase().includes(searchTerm)
+    const matchesSearchTerm = item?.shift
+      ? item?.shift?.nama.toLowerCase().includes(searchTerm)
       : "libur".includes(searchTerm);
 
     return matchesSearchTerm;
   });
+
+  const thisWeekDates = getThisWeekDates();
+
+  console.log(thisWeekDates);
 
   const formattedHeader = [
     {
@@ -50,37 +54,43 @@ export default function TabelDetailJadwalKaryawan({ data }: Props) {
       },
     },
   ];
-  const formattedData = fd.map((item) => ({
-    id: item.id,
-    columnsFormat: [
-      {
-        value: item?.shift?.nama || "Libur",
-        td: item?.shift?.nama || "Libur",
-      },
-      {
-        value: item.tgl_mulai,
-        td: formatDate(item.tgl_mulai),
-        isDate: true,
-      },
-      {
-        value: item.tgl_selesai,
-        td: formatDate(item.tgl_selesai),
-        isDate: true,
-      },
-      {
-        value: item?.shift?.jam_from,
-        td: item?.shift
-          ? `${formatTime(item.shift.jam_from as string)} - ${formatTime(
-              item?.shift?.jam_to as string
-            )}`
-          : "Libur",
-        isTime: true,
-        cProps: {
-          justify: "center",
-        },
-      },
-    ],
-  }));
+  const formattedData: any[] = fd
+    .filter((item: any) => item !== null)
+    .map((item: any, i: number) => {
+      return {
+        id: item?.id,
+        columnsFormat: [
+          {
+            value: item?.shift?.nama || item?.nama || "Libur",
+            td: item?.shift?.nama || item?.nama || "Libur",
+          },
+          {
+            value: item.tgl_mulai || thisWeekDates[i],
+            td: formatDate(item.tgl_mulai) || formatDate(thisWeekDates[i]),
+            isDate: true,
+          },
+          {
+            value: item.tgl_selesai || thisWeekDates[i],
+            td: formatDate(item.tgl_selesai) || formatDate(thisWeekDates[i]),
+            isDate: true,
+          },
+          {
+            value: item?.shift?.jam_from,
+            td: item?.shift
+              ? `${formatTime(item?.shift?.jam_from as string)} - ${formatTime(
+                  item?.shift?.jam_to as string
+                )}`
+              : `${formatTime(item?.jam_from as string)} - ${formatTime(
+                  item?.jam_to as string
+                )}`,
+            isTime: true,
+            cProps: {
+              justify: "center",
+            },
+          },
+        ],
+      };
+    });
 
   return (
     <>
