@@ -71,7 +71,7 @@ export default function Header({
       </HStack>
 
       {!smScreen && (
-        <>
+        <HStack gap={4}>
           <Text ml={"auto"} opacity={0.6} whiteSpace={"nowrap"}>
             {formatDate(new Date(), "long")}
           </Text>
@@ -91,16 +91,16 @@ export default function Header({
 
             {!noMiniProfile && <AdminMiniProfile />}
           </ButtonGroup>
-        </>
+        </HStack>
       )}
 
       {smScreen && (
         <>
-          <Text opacity={0.6} whiteSpace={"nowrap"}>
+          <Text opacity={0.6} whiteSpace={"nowrap"} ml={"auto"}>
             {formatDate(new Date(), "long")}
           </Text>
 
-          <HStack>
+          <HStack ml={"auto"}>
             <AdminMiniProfile />
 
             <Menu>
