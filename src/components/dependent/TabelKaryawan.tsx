@@ -141,20 +141,20 @@ export default function TabelKaryawan() {
     // },
   ];
   const formattedData = data?.map((item: Interface__DetailKaryawan) => ({
-    id: item.user.id,
+    id: item?.user.id,
     columnsFormat: [
       {
-        value: item.user.nama,
+        value: item?.user.nama,
         td: (
           <AvatarAndNameTableData
             noDetail
             data={{
-              id: item.user.id,
-              nama: item.user.nama,
-              fullName: `${item?.gelar_depan || ""} ${item.user?.nama} ${
+              id: item?.user.id,
+              nama: item?.user.nama,
+              fullName: `${item?.gelar_depan || ""} ${item?.user?.nama} ${
                 item?.gelar_belakang || ""
               }`,
-              foto_profil: item.user.foto_profil,
+              foto_profil: item?.user.foto_profil,
             }}
           />
         ),
@@ -168,66 +168,66 @@ export default function TabelKaryawan() {
         },
       }, // 0
       {
-        value: item.user.status_aktif,
-        td: <StatusAktifBadge data={item.user.status_aktif} w={"120px"} />,
+        value: item?.user.status_aktif,
+        td: <StatusAktifBadge data={item?.user.status_aktif} w={"120px"} />,
         cProps: {
           justify: "center",
         },
       }, // 1
       {
-        value: item.nik,
-        td: item.nik,
+        value: item?.nik,
+        td: item?.nik,
         isNumeric: true,
       }, // 2
       {
-        value: item.status_karyawan?.label,
-        td: <StatusKaryawanBadge w={"120px"} data={item.status_karyawan} />,
+        value: item?.status_karyawan?.label,
+        td: <StatusKaryawanBadge w={"120px"} data={item?.status_karyawan} />,
         cProps: {
           justify: "center",
         },
       }, // 3
       {
-        value: item.no_rm,
-        td: item.no_rm,
+        value: item?.no_rm,
+        td: item?.no_rm,
         isNumeric: true,
       }, // 4
       {
-        value: item.unit_kerja.nama_unit,
-        td: item.unit_kerja.nama_unit,
+        value: item?.unit_kerja?.nama_unit,
+        td: item?.unit_kerja?.nama_unit,
       }, // 5
       {
-        value: item.agama?.label,
-        td: item.agama?.label,
+        value: item?.agama?.label,
+        td: item?.agama?.label,
       }, // 6
       {
-        value: item.jenis_kelamin,
+        value: item?.jenis_kelamin,
         td:
-          item.jenis_kelamin === 1
+          item?.jenis_kelamin === 1
             ? "Laki - laki"
-            : item.jenis_kelamin === 0
+            : item?.jenis_kelamin === 0
             ? "Perempuan"
             : "",
         isNumeric: true,
       }, // 7
       {
-        value: item.jabatan.nama_jabatan,
-        td: item.jabatan.nama_jabatan,
+        value: item?.jabatan?.nama_jabatan,
+        td: item?.jabatan?.nama_jabatan,
       }, // 8
       {
-        value: item.pendidikan_terakhir?.label,
-        td: item.pendidikan_terakhir?.label,
+        value: item?.pendidikan_terakhir?.label,
+        td: item?.pendidikan_terakhir?.label,
       }, // 9
       {
-        value: item.email,
-        td: item.email,
+        value: item?.email,
+        td: item?.email,
       }, // 10
       {
-        value: item.ayah,
-        td: item.ayah,
+        value: item?.ayah,
+        td: item?.ayah,
       }, // 11
       {
-        value: item.ibu,
-        td: item.ibu,
+        value: item?.ibu,
+        td: item?.ibu,
       }, // 12
       {
         value: item?.jumlah_keluarga,
@@ -237,18 +237,18 @@ export default function TabelKaryawan() {
         },
       }, // 13
       {
-        value: item.tgl_masuk,
-        td: formatDate(item.tgl_masuk),
+        value: item?.tgl_masuk,
+        td: formatDate(item?.tgl_masuk),
         isDate: true,
       }, // 14
       {
-        value: item.tgl_keluar,
-        td: formatDate(item.tgl_keluar),
+        value: item?.tgl_keluar,
+        td: formatDate(item?.tgl_keluar),
         isDate: true,
       }, // 15
       {
-        value: item.tgl_masuk,
-        td: calculateMasaKerjaFromTanggalMasuk(item.tgl_masuk as string),
+        value: item?.tgl_masuk,
+        td: calculateMasaKerjaFromTanggalMasuk(item?.tgl_masuk as string),
       }, // 16
       // {
       //   value: "-",
