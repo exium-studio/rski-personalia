@@ -20,7 +20,6 @@ import {
 import { RiDeleteBinLine, RiSendPlaneFill } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import { iconSize } from "../../constant/sizes";
-import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import useGetUserData from "../../hooks/useGetUserData";
@@ -29,7 +28,6 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
 import formatTime from "../../lib/formatTime";
-import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import req from "../../lib/req";
 import NoData from "../independent/NoData";
@@ -50,7 +48,11 @@ import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
 import SearchComponent from "./input/SearchComponent";
 
-const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
+const KonfirmasiDeleteUser = ({
+  peserta,
+  dataDiklat,
+  verif3Permission,
+}: any) => {
   // api/rski/dashboard/perusahaan/diklat/{diklatId}/delete-peserta-diklat/{userId}
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
@@ -93,19 +95,16 @@ const KonfirmasiDeleteUser = ({ peserta, dataDiklat }: any) => {
       });
   }
 
-  const { userPermissions } = useAuth();
-  const vearif2Permission = isHasPermissions(userPermissions, [11]);
-
   return (
     <>
-      <PermissionTooltip permission={vearif2Permission}>
+      <PermissionTooltip permission={verif3Permission}>
         <IconButton
           aria-label="delete"
           icon={<Icon as={RiDeleteBinLine} fontSize={iconSize} />}
           variant={"ghost"}
           colorScheme="red"
           onClick={onOpen}
-          isDisabled={!vearif2Permission}
+          isDisabled={!verif3Permission}
         />
       </PermissionTooltip>
 
@@ -403,6 +402,7 @@ const KonfirmasiPublikasiSertifikat = ({
                         <KonfirmasiDeleteUser
                           dataDiklat={data}
                           peserta={peserta}
+                          verif3Permission={verif3Permission}
                         />
                       )}
                     </HStack>
