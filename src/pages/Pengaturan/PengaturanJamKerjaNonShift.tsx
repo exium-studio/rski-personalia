@@ -45,8 +45,8 @@ const JamKerjaItem = ({ id, day }: any) => {
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama: values.nama,
-        jam_from: values.jam_from,
-        jam_to: values.jam_to,
+        jam_from: values.jam_from || null,
+        jam_to: values.jam_to || null,
       };
       setUpdateLoading(true);
       req
