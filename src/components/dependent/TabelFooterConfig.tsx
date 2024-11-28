@@ -46,7 +46,7 @@ export default function TabelFooterConfig({
       spacing={responsiveSpacing}
       justify={"space-between"}
       mt={responsiveSpacing}
-      align={["strech", null, "center"]}
+      align={["start", null, "center"]}
       flexDir={["column", null, "row"]}
     >
       <Box w={"100%"} maxW={"200px"}>

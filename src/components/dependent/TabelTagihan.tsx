@@ -1,4 +1,4 @@
-import { Center, Text } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
@@ -198,11 +198,6 @@ export default function TabelTagihan({ filterConfig }: Props) {
         pageConfig={pageConfig}
         setPageConfig={setPageConfig}
         paginationData={paginationData}
-        footer={
-          <Text opacity={0.4} textAlign={"center"}>
-            Klik row untuk melihat laporan penggajian
-          </Text>
-        }
       />
     </>
   );
