@@ -1,4 +1,4 @@
-import { Center, Text } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
