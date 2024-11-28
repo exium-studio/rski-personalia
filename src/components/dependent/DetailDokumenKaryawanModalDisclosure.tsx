@@ -213,7 +213,7 @@ const VerifikasiButtonModal = ({ data, selectedDokumen }: VerifikasiProps) => {
               </FormControl>
 
               <FormControl mt={4} isInvalid={!!formik.errors.alasan}>
-                <FormLabel>
+                <FormLabel opacity={formik.values.verifikasi !== 0 ? 0.4 : 1}>
                   Alasan
                   <RequiredForm />
                 </FormLabel>
