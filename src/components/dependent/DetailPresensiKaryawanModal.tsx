@@ -35,6 +35,7 @@ import SearchComponent from "./input/SearchComponent";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import LokasiPresensi from "./LokasiPresensi";
 import Retry from "./Retry";
+import useScreenWidth from "../../lib/useScreenWidth";
 
 interface Props {
   presensi_id: number;
@@ -55,6 +56,7 @@ export default function DetailPresensiKaryawanModal({
     onClose
   );
   const initialRef = useRef(null);
+  const sw = useScreenWidth();
 
   const { error, loading, data, retry } = useDataState<any>({
     initialData: undefined,
@@ -131,7 +133,11 @@ export default function DetailPresensiKaryawanModal({
                     </VStack>
                   </Wrap>
 
-                  <SimpleGrid flex={1} columns={[1, 2]} gap={responsiveSpacing}>
+                  <SimpleGrid
+                    flex={1}
+                    columns={sw < 1000 ? 1 : 2}
+                    gap={responsiveSpacing}
+                  >
                     <SimpleGrid columns={[1, 2]} gap={responsiveSpacing}>
                       <Skeleton h={"100%"} />
                       <Skeleton h={"100%"} />
@@ -202,7 +208,10 @@ export default function DetailPresensiKaryawanModal({
                         overflowY={"auto"}
                         className="scrollY"
                       >
-                        <SimpleGrid columns={[1, 2]} overflowY={"auto"}>
+                        <SimpleGrid
+                          columns={sw < 1000 ? 1 : 2}
+                          overflowY={"auto"}
+                        >
                           <CContainer
                             gap={responsiveSpacing}
                             overflowY={"auto"}
