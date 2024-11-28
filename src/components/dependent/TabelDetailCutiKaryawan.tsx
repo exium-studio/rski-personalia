@@ -77,7 +77,7 @@ export default function TabelDetailCutiKaryawan({ data }: Props) {
       },
       {
         value: item.durasi,
-        td: formatNumber(item.durasi),
+        td: `${formatNumber(item.durasi)} hari`,
       },
       {
         value: item.catatan,

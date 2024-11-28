@@ -133,7 +133,7 @@ const VerifikasiButtonModal = ({ data, selectedDokumen }: VerifikasiProps) => {
   });
 
   const { userPermissions } = useAuth();
-  const editPermission = isHasPermissions(userPermissions, [1]);
+  const editPermission = isHasPermissions(userPermissions, [49]);
 
   return (
     <>
