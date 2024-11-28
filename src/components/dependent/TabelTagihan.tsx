@@ -198,11 +198,6 @@ export default function TabelTagihan({ filterConfig }: Props) {
         pageConfig={pageConfig}
         setPageConfig={setPageConfig}
         paginationData={paginationData}
-        footer={
-          <Text opacity={0.4} textAlign={"center"}>
-            Klik row untuk melihat laporan penggajian
-          </Text>
-        }
       />
     </>
   );

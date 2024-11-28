@@ -185,7 +185,7 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
         setPageConfig={setPageConfig}
         paginationData={paginationData}
         footer={
-          <Text opacity={0.4} textAlign={"center"}>
+          <Text opacity={0.4} textAlign={["left", null, "center"]}>
             Klik row untuk melihat laporan penggajian
           </Text>
         }
