@@ -210,7 +210,7 @@ export default function DetailPresensiKaryawanModal({
                       >
                         <SimpleGrid
                           columns={sw < 1000 ? 1 : 2}
-                          overflowY={"auto"}
+                          overflowY={sw < 1000 ? "visible" : "auto"}
                         >
                           <CContainer
                             gap={responsiveSpacing}
