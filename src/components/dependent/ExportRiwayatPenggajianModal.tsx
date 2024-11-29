@@ -160,6 +160,7 @@ export default function ExportRiwayatPenggajianModal({
               </Alert>
 
               <Button
+                px={4}
                 onClick={() => {
                   setTipeExport(1);
                 }}
@@ -173,6 +174,7 @@ export default function ExportRiwayatPenggajianModal({
               </Button>
 
               <Button
+                px={4}
                 onClick={() => {
                   setTipeExport(2);
                 }}
@@ -186,6 +188,7 @@ export default function ExportRiwayatPenggajianModal({
               </Button>
 
               <Button
+                px={4}
                 onClick={() => {
                   setTipeExport(3);
                 }}
@@ -201,6 +204,7 @@ export default function ExportRiwayatPenggajianModal({
               </Button>
 
               <Button
+                px={4}
                 onClick={() => {
                   setTipeExport(4);
                 }}
@@ -214,6 +218,7 @@ export default function ExportRiwayatPenggajianModal({
               </Button>
 
               <Button
+                px={4}
                 onClick={() => {
                   setTipeExport(5);
                 }}

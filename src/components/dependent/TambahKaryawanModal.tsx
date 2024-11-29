@@ -958,9 +958,11 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             </Stepper>
 
             {sw < 768 && (
-              <Text mb={6}>
-                Step {activeStep + 1} : <b>{activeStepText}</b>
-              </Text>
+              <CContainer px={5}>
+                <Text mb={6}>
+                  Step {activeStep + 1} : <b>{activeStepText}</b>
+                </Text>
+              </CContainer>
             )}
 
             <CContainer
