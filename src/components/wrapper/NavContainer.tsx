@@ -226,7 +226,7 @@ export default function NavContainer({
 
   return (
     <Container
-      maxH={"100vh"}
+      maxH={"100dvh"}
       overflowY={"clip"}
       border={"1px solid transparent"}
     >
