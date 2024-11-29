@@ -81,7 +81,7 @@ export default function EditKaryawanForm({
     email: yup.string().email("Email tidak valid"),
     tgl_berakhir_pks: yup.string().required("Harus diisi"),
     no_rm: yup.string().required("Harus diisi"),
-    no_manulife: yup.string().required("Harus diisi"),
+    no_manulife: yup.string(),
     tgl_masuk: yup.string().required("Harus diisi"),
     status_karyawan: yup.object().required("Harus diisi"),
     unit_kerja: yup.object().required("Harus diisi"),
@@ -490,7 +490,7 @@ export default function EditKaryawanForm({
         >
           <FormLabel>
             No. Manulife
-            <RequiredForm />
+            {/* <RequiredForm /> */}
           </FormLabel>
           <StringInput
             name="no_manulife"

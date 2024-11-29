@@ -67,7 +67,7 @@ const validationSchemaStep1 = yup.object({
   email: yup.string().email("Email tidak valid"),
   tgl_berakhir_pks: yup.string().required("Harus diisi"),
   no_rm: yup.string().required("Harus diisi"),
-  no_manulife: yup.string().required("Harus diisi"),
+  no_manulife: yup.string(),
   tgl_masuk: yup.string().required("Harus diisi"),
   tgl_diangkat: yup.string(),
   status_karyawan: yup.object().required("Harus diisi"),
@@ -363,7 +363,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         >
           <FormLabel>
             No. Manulife
-            <RequiredForm />
+            {/* <RequiredForm /> */}
           </FormLabel>
           <StringInput
             name="no_manulife"
