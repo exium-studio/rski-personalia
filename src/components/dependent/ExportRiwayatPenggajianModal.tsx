@@ -200,7 +200,7 @@ export default function ExportRiwayatPenggajianModal({
                   <Icon as={RiVerifiedBadgeLine} fontSize={iconSize} />
                 }
               >
-                Penggajian Penerimaan Kompetensi
+                Penggajian Penerimaan Profesi
               </Button>
 
               <Button
