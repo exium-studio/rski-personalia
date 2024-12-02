@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   Center,
   Modal,
@@ -92,6 +95,14 @@ const KonfirmasiPelunasan = ({ item }: any) => {
             <DisclosureHeader title={"Konfirmasi Pelunasan"} />
           </ModalHeader>
           <ModalBody>
+            <Alert mb={4} status="warning" alignItems={"start"}>
+              <AlertIcon />
+              <AlertDescription>
+                Ketika penggajian bulan ini sudah dijalankan, maka segala
+                perubahan data tagihan karyawan tidak akan berpengaruh terhadap
+                data penggajian bulan ini.
+              </AlertDescription>
+            </Alert>
             <Text opacity={0.4}>
               Apakah anda yakin tagihan <b>{item.user.nama}</b> akan{" "}
               <b>dilunasi</b>?

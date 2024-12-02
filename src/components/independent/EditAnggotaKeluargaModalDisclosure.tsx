@@ -185,8 +185,9 @@ export default function EditAnggotaKeluargaModalDisclosure({
               <Alert mb={4} status="warning" alignItems={"start"}>
                 <AlertIcon />
                 <AlertDescription>
-                  Sebelum melakukan penambahan atau perubahan data keluarga,
-                  pastikan penggajian bulan ini belum dijalankan.
+                  Ketika penggajian bulan ini sudah dijalankan, maka segala
+                  perubahan data keluarga karyawan tidak akan berpengaruh
+                  terhadap data penggajian bulan ini.
                 </AlertDescription>
               </Alert>
 
