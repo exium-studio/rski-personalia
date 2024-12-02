@@ -186,7 +186,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
                 <AlertIcon />
                 <AlertDescription>
                   Sebelum melakukan penambahan atau perubahan data keluarga,
-                  pastikan penggajian bulan ini belum di jalankan.
+                  pastikan penggajian bulan ini belum dijalankan.
                 </AlertDescription>
               </Alert>
 
