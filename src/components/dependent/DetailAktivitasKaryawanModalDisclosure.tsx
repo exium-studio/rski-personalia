@@ -217,7 +217,7 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                               }));
                             }}
                             inputValue={filterConfig.search}
-                            placeholder="tanggal"
+                            placeholder="kategori presensi"
                           />
 
                           <PeriodPickerForDatePickerModal

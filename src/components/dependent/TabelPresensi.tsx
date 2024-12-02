@@ -15,10 +15,10 @@ import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+
 interface Props {
   filterConfig?: any;
 }
-
 export default function TabelPresensi({ filterConfig }: Props) {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
@@ -145,7 +145,9 @@ export default function TabelPresensi({ filterConfig }: Props) {
       },
       {
         value: item.jam_masuk,
-        td: formatTime(item.jam_masuk),
+        td: `${formatDate(item.jam_masuk, "basicShort")} - ${formatTime(
+          item.jam_masuk
+        )}`,
         isTime: true,
         cProps: {
           justify: "center",
@@ -153,7 +155,9 @@ export default function TabelPresensi({ filterConfig }: Props) {
       },
       {
         value: item.jam_keluar,
-        td: formatTime(item.jam_keluar),
+        td: `${formatDate(item.jam_keluar, "basicShort")} - ${formatTime(
+          item.jam_keluar
+        )}`,
         isTime: true,
         cProps: {
           justify: "center",

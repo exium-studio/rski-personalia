@@ -1,11 +1,11 @@
 import { useDisclosure } from "@chakra-ui/react";
-import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
 import formatTime from "../../lib/formatTimeOld";
 import NotFound from "../independent/NotFound";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
 import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
+import formatDate from "../../lib/formatDate";
 
 interface Props {
   data: any[];
@@ -22,16 +22,9 @@ export default function TabelDetailAktivitasKaryawan({
   const fd = data?.filter((item: any) => {
     const searchTerm = filterConfig?.search.toLowerCase();
 
-    const matchesSearchTerm2 = formatDate(item?.tanggal)
+    const matchesSearchTerm2 = item?.kategori_presensi?.label
       ?.toLowerCase()
       .includes(searchTerm);
-
-    console.log(
-      matchesSearchTerm2,
-      item,
-      formatDate(item?.tanggal),
-      searchTerm
-    );
 
     return matchesSearchTerm2;
   });
@@ -46,10 +39,10 @@ export default function TabelDetailAktivitasKaryawan({
         zIndex: 2,
       },
     },
-    {
-      th: "Jadwal",
-      isSortable: true,
-    },
+    // {
+    //   th: "Jadwal",
+    //   isSortable: true,
+    // },
     {
       th: "Presensi Masuk",
       isSortable: true,
@@ -85,13 +78,17 @@ export default function TabelDetailAktivitasKaryawan({
             zIndex: 2,
           },
         },
-        {
-          value: item?.presensi,
-          td: `${""} - ${""}`,
-        },
+        // {
+        //   value: item?.presensi,
+        //   td: `${formatDate(item?.jadwal?.tgl_mulai)} - ${formatDate(
+        //     item?.jadwal?.tgl_selesai
+        //   )}`,
+        // },
         {
           value: item.jam_masuk,
-          td: formatTime(item.jam_masuk),
+          td: `${formatDate(item.jam_masuk, "basicShort")} - ${formatTime(
+            item.jam_masuk
+          )}`,
           isTime: true,
           cProps: {
             justify: "center",
@@ -99,7 +96,9 @@ export default function TabelDetailAktivitasKaryawan({
         },
         {
           value: item.jam_keluar,
-          td: formatTime(item.jam_keluar),
+          td: `${formatDate(item.jam_keluar, "basicShort")} - ${formatTime(
+            item.jam_keluar
+          )}`,
           isTime: true,
           cProps: {
             justify: "center",
