@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   BoxProps,
   Button,
@@ -179,6 +182,14 @@ export default function EditAnggotaKeluargaModalDisclosure({
               />
             </ModalHeader>
             <ModalBody>
+              <Alert mb={4} status="warning" alignItems={"start"}>
+                <AlertIcon />
+                <AlertDescription>
+                  Sebelum melakukan penambahan atau perubahan data keluarga,
+                  pastikan penggajian bulan ini belum di jalankan.
+                </AlertDescription>
+              </Alert>
+
               <form id="keluargaForm" onSubmit={formik.handleSubmit}>
                 <FormControl mb={4} isInvalid={!!formik.errors.nama_keluarga}>
                   <FormLabel>

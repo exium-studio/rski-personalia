@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   Checkbox,
   FormControl,
@@ -149,6 +152,14 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
             />
           </ModalHeader>
           <ModalBody>
+            <Alert mb={4} status="warning" alignItems={"start"}>
+              <AlertIcon />
+              <AlertDescription>
+                Sebelum melakukan penambahan atau perubahan data keluarga,
+                pastikan penggajian bulan ini belum di jalankan.
+              </AlertDescription>
+            </Alert>
+
             <form id="keluargaForm" onSubmit={formik.handleSubmit}>
               <FormControl mb={4} isInvalid={!!formik.errors.nama_keluarga}>
                 <FormLabel>
