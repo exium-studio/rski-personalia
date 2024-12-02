@@ -28,6 +28,9 @@ import Retry from "./Retry";
 import TabelDetailAktivitasKaryawan from "./TabelDetailAktivitasKaryawan";
 import PeriodPickerForDatePickerModal from "./input/PeriodPickerForDatePickerModal";
 import SearchComponent from "./input/SearchComponent";
+import ExportModal from "./ExportModal";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props extends BoxProps {
   karyawan_id: number;
@@ -66,6 +69,11 @@ export default function DetailAktivitasKaryawanModalDisclosure({
     dependencies: [month, year],
     conditions: !!(isOpen && karyawan_id),
   });
+
+  // Permission
+  const { userPermissions } = useAuth();
+  // TODO Ganti id permission
+  const exportPermissions = isHasPermissions(userPermissions, [9]);
 
   return (
     <>
@@ -150,8 +158,6 @@ export default function DetailAktivitasKaryawanModalDisclosure({
 
                 {!loading && (
                   <>
-                    {(!data || (data && data.length === 0)) && <NoData />}
-
                     {(data || (data && data.length > 0)) && (
                       <CContainer
                         overflowY={"auto"}
@@ -200,6 +206,7 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                           </VStack>
                         </Wrap>
 
+                        {/* Filters */}
                         <HStack mb={responsiveSpacing}>
                           <SearchComponent
                             name="search"
@@ -222,7 +229,20 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                             setTahun={setYear}
                             minW={"200px"}
                           />
+
+                          {/* TODO ganti url ke export detail presensi by kary */}
+                          <ExportModal
+                            url="/api/rski/dashboard/perusahaan/diklat-internal/export"
+                            title={`Export Presensi ${data.user.nama}`}
+                            downloadFileName={`Export Presensi ${data.user.nama}`}
+                            isDisabled={!exportPermissions}
+                          />
                         </HStack>
+
+                        {(!data ||
+                          (data && data.list_presensi?.length === 0)) && (
+                          <NoData />
+                        )}
 
                         <TabelDetailAktivitasKaryawan
                           data={data.list_presensi}

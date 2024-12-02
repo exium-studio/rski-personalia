@@ -26,6 +26,13 @@ export default function TabelDetailAktivitasKaryawan({
       ?.toLowerCase()
       .includes(searchTerm);
 
+    console.log(
+      matchesSearchTerm2,
+      item,
+      formatDate(item?.tanggal),
+      searchTerm
+    );
+
     return matchesSearchTerm2;
   });
 
@@ -80,7 +87,7 @@ export default function TabelDetailAktivitasKaryawan({
         },
         {
           value: item?.presensi,
-          td: "21/11/2024 - 21/11/2024 (09:00 - 18:00)",
+          td: `${""} - ${""}`,
         },
         {
           value: item.jam_masuk,
@@ -114,9 +121,9 @@ export default function TabelDetailAktivitasKaryawan({
 
   return (
     <>
-      {fd?.length === 0 && <NotFound />}
+      {data.length > 0 && fd?.length === 0 && <NotFound />}
 
-      {fd?.length > 0 && (
+      {data.length > 0 && fd?.length > 0 && (
         <>
           <CustomTableContainer>
             <CustomTable
