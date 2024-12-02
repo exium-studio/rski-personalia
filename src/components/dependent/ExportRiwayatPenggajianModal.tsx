@@ -18,6 +18,7 @@ import {
   RiArrowDownLine,
   RiBankLine,
   RiGroup3Line,
+  RiGroupLine,
   RiHandCoinLine,
   RiUploadLine,
   RiVerifiedBadgeLine,
@@ -71,6 +72,10 @@ export default function ExportRiwayatPenggajianModal({
       url = "/api/rski/dashboard/keuangan/penggajian/export-potongan";
       fileName = "Penggajian Potongan";
     } else if (tipeExport === 5) {
+      url = "/api/rski/dashboard/keuangan/penggajian/export-bank";
+      fileName = "Penggajian Bank";
+    } else if (tipeExport === 6) {
+      // TODO ganti url ke url export penggajian semua kary
       url = "/api/rski/dashboard/keuangan/penggajian/export-bank";
       fileName = "Penggajian Bank";
     }
@@ -162,15 +167,29 @@ export default function ExportRiwayatPenggajianModal({
               <Button
                 px={4}
                 onClick={() => {
+                  setTipeExport(6);
+                }}
+                justifyContent={"space-between"}
+                className={
+                  tipeExport === 6 ? "selected clicky" : "btn-outline clicky"
+                }
+                rightIcon={<Icon as={RiArrowDownLine} fontSize={iconSize} />}
+              >
+                Penggajian Semua Karyawan
+              </Button>
+
+              <Button
+                px={4}
+                onClick={() => {
                   setTipeExport(1);
                 }}
                 justifyContent={"space-between"}
                 className={
                   tipeExport === 1 ? "selected clicky" : "btn-outline clicky"
                 }
-                rightIcon={<Icon as={RiArrowDownLine} fontSize={iconSize} />}
+                rightIcon={<Icon as={RiGroupLine} fontSize={iconSize} />}
               >
-                Penggajian Penerimaan Karyawan
+                Penggajian Karyawan per Unit Kerja
               </Button>
 
               <Button
