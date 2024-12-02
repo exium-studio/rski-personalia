@@ -24,6 +24,7 @@ import download from "../../lib/download";
 interface Props extends ButtonProps {
   url: string;
   title?: string;
+  payload?: any;
   downloadFileName?: string;
   extension?: string;
 }
@@ -31,6 +32,7 @@ interface Props extends ButtonProps {
 export default function ExportModal({
   url,
   title,
+  payload,
   downloadFileName,
   extension = "xls",
   ...props

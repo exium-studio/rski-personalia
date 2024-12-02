@@ -232,7 +232,7 @@ export default function DetailAktivitasKaryawanModalDisclosure({
 
                           {/* TODO ganti url ke export detail presensi by kary */}
                           <ExportModal
-                            url="/api/rski/dashboard/perusahaan/diklat-internal/export"
+                            url={`/api/rski/dashboard/karyawan/detail-karyawan-presensi/${data.user.data_karyawan_id}/export`}
                             title={`Export Presensi ${data.user.nama}`}
                             downloadFileName={`Export Presensi ${data.user.nama}`}
                             isDisabled={!exportPermissions}
