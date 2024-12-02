@@ -15,7 +15,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import {
-  RiArrowDownLine,
   RiBankLine,
   RiGroup3Line,
   RiGroupLine,
@@ -24,11 +23,11 @@ import {
   RiVerifiedBadgeLine,
 } from "@remixicon/react";
 import { useRef, useState } from "react";
+import months from "../../constant/months";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import download from "../../lib/download";
-import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
@@ -74,16 +73,14 @@ export default function ExportRiwayatPenggajianModal({
     } else if (tipeExport === 5) {
       url = "/api/rski/dashboard/keuangan/penggajian/export-bank";
       fileName = "Penggajian Bank";
-    } else if (tipeExport === 6) {
-      // TODO ganti url ke url export penggajian semua kary
-      url = "/api/rski/dashboard/keuangan/penggajian/export-bank";
-      fileName = "Penggajian Bank";
     }
 
     const payload = {
       months: [new Date(periode).getMonth() + 1],
       years: [new Date(periode).getFullYear()],
     };
+
+    // console.log(months[new Date(periode).getMonth()]);
 
     req
       .post(url, payload, {
@@ -93,7 +90,9 @@ export default function ExportRiwayatPenggajianModal({
         if (r.status === 200) {
           download(
             r.data,
-            `${fileName || "Laporan Penggajian"} ${formatDate(periode)}`,
+            `${fileName || "Laporan Penggajian"} ${
+              months[new Date(periode).getMonth()]
+            } ${new Date(periode).getFullYear()}`,
             "xls"
           );
         } else {
@@ -167,20 +166,6 @@ export default function ExportRiwayatPenggajianModal({
               <Button
                 px={4}
                 onClick={() => {
-                  setTipeExport(6);
-                }}
-                justifyContent={"space-between"}
-                className={
-                  tipeExport === 6 ? "selected clicky" : "btn-outline clicky"
-                }
-                rightIcon={<Icon as={RiArrowDownLine} fontSize={iconSize} />}
-              >
-                Penggajian Semua Karyawan
-              </Button>
-
-              <Button
-                px={4}
-                onClick={() => {
                   setTipeExport(1);
                 }}
                 justifyContent={"space-between"}
@@ -189,7 +174,7 @@ export default function ExportRiwayatPenggajianModal({
                 }
                 rightIcon={<Icon as={RiGroupLine} fontSize={iconSize} />}
               >
-                Penggajian Karyawan per Unit Kerja
+                Penggajian Semua Karyawan
               </Button>
 
               <Button
