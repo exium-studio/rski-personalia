@@ -46,13 +46,18 @@ export default function ExportModal({
 
   const handleExport = () => {
     setLoading(true);
-    req
-      .get(url, {
-        responseType: "blob", // Penting untuk menangani file biner
-      })
-      .then((r) => {
-        if (r.status === 200) {
-          download(r.data, downloadFileName, extension);
+
+    const config = {
+      method: payload ? "post" : "get",
+      url: url,
+      responseType: "blob" as const,
+      data: payload,
+    };
+
+    req(config)
+      .then((response) => {
+        if (response.status === 200) {
+          download(response.data, downloadFileName, extension);
         } else {
           toast({
             status: "error",
@@ -69,7 +74,7 @@ export default function ExportModal({
           status: "error",
           title:
             (typeof e?.response?.data?.message === "string" &&
-              (e?.response?.data?.message as string)) ||
+              e?.response?.data?.message) ||
             "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
           isClosable: true,
           position: "bottom-right",
