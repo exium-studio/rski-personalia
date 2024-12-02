@@ -235,6 +235,10 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                             url={`/api/rski/dashboard/karyawan/detail-karyawan-presensi/${data.user.data_karyawan_id}/export`}
                             title={`Export Presensi ${data.user.nama}`}
                             downloadFileName={`Export Presensi ${data.user.nama}`}
+                            payload={{
+                              month: month + 1,
+                              year: year,
+                            }}
                             isDisabled={!exportPermissions}
                           />
                         </HStack>
