@@ -133,7 +133,7 @@ const VerifikasiButtonModal = ({ data }: VerifikasiProps) => {
             <DisclosureHeader title={"Verifikasi Dokumen"} />
           </ModalHeader>
           <ModalBody>
-            <Text>
+            <Text opacity={0.6}>
               Apakah anda yakin verifikasi keluarga karyawan ini disetujui?
             </Text>
           </ModalBody>
