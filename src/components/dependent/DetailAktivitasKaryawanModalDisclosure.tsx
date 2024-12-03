@@ -14,23 +14,25 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
+import { endOfWeek, startOfWeek } from "date-fns";
 import { useRef, useState } from "react";
 import { responsiveSpacing } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
+import isHasPermissions from "../../lib/isHasPermissions";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
+import ExportModal from "./ExportModal";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import Retry from "./Retry";
 import TabelDetailAktivitasKaryawan from "./TabelDetailAktivitasKaryawan";
-import PeriodPickerForDatePickerModal from "./input/PeriodPickerForDatePickerModal";
+import DateRangePickerModal from "./input/DateRangePickerModal";
 import SearchComponent from "./input/SearchComponent";
-import ExportModal from "./ExportModal";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props extends BoxProps {
   karyawan_id: number;
@@ -49,8 +51,31 @@ export default function DetailAktivitasKaryawanModalDisclosure({
   });
 
   const today = new Date();
-  const [month, setMonth] = useState<number>(today.getMonth());
-  const [year, setYear] = useState<number>(today.getFullYear());
+  const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
+  const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
+  const defaultRangeTgl = {
+    from: startOfWeekDate,
+    to: endOfWeekDate,
+  };
+
+  // Filter Config
+  const defaultFilterConfig = {
+    tgl_mulai: defaultRangeTgl?.from,
+    tgl_selesai: defaultRangeTgl?.to,
+  };
+
+  const [dateRange, setDateRange] = useState<any>(defaultFilterConfig);
+
+  const confirmDateRange = (
+    inputValue: { from: Date; to: Date } | undefined
+  ) => {
+    setDateRange({
+      tgl_mulai: inputValue?.from,
+      tgl_selesai: inputValue?.to,
+    });
+  };
+  // const [month, setMonth] = useState<number>(today.getMonth());
+  // const [year, setYear] = useState<number>(today.getFullYear());
 
   useBackOnClose(
     `detail-aktivitas-karyawan-modal-${karyawan_id}`,
@@ -63,17 +88,17 @@ export default function DetailAktivitasKaryawanModalDisclosure({
     initialData: undefined,
     url: `/api/rski/dashboard/karyawan/detail-karyawan-presensi/${karyawan_id}`,
     payload: {
-      month: month + 1,
-      year: year,
+      search: filterConfig.search,
+      tgl_mulai: formatDate(dateRange.tgl_mulai, "short"),
+      tgl_selesai: formatDate(dateRange.tgl_selesai, "short"),
     },
-    dependencies: [month, year],
+    dependencies: [dateRange],
     conditions: !!(isOpen && karyawan_id),
   });
 
   // Permission
   const { userPermissions } = useAuth();
-  // TODO Ganti id permission
-  const exportPermissions = isHasPermissions(userPermissions, [9]);
+  const exportPermissions = isHasPermissions(userPermissions, [47]);
 
   return (
     <>
@@ -220,7 +245,7 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                             placeholder="kategori presensi"
                           />
 
-                          <PeriodPickerForDatePickerModal
+                          {/* <PeriodPickerForDatePickerModal
                             id="periode-picker-for-export-presensi"
                             name="periode export presensi"
                             bulan={month}
@@ -228,6 +253,20 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                             tahun={year}
                             setTahun={setYear}
                             minW={"200px"}
+                          /> */}
+                          <DateRangePickerModal
+                            id="jadwal-date-range"
+                            name="date-range"
+                            minW={"165px"}
+                            w={"fit-content"}
+                            onConfirm={confirmDateRange}
+                            inputValue={{
+                              from: dateRange.tgl_mulai,
+                              to: dateRange.tgl_selesai,
+                            }}
+                            maxRange={31}
+                            nonNullable
+                            presetsConfig={["thisWeek", "thisMonth"]}
                           />
 
                           {/* TODO ganti url ke export detail presensi by kary */}
@@ -236,8 +275,14 @@ export default function DetailAktivitasKaryawanModalDisclosure({
                             title={`Export Presensi ${data.user.nama}`}
                             downloadFileName={`Export Presensi ${data.user.nama}`}
                             payload={{
-                              month: month + 1,
-                              year: year,
+                              tgl_mulai: formatDate(
+                                dateRange.tgl_mulai,
+                                "short"
+                              ),
+                              tgl_selesai: formatDate(
+                                dateRange.tgl_selesai,
+                                "short"
+                              ),
                             }}
                             isDisabled={!exportPermissions}
                           />

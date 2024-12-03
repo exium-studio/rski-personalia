@@ -37,7 +37,8 @@ export default function TabelPresensi({ filterConfig }: Props) {
       url: `/api/rski/dashboard/presensi/get-data-presensi?page=${pageConfig}`,
       payload: {
         search: filterConfig.search,
-        tanggal: formatDate(filterConfig.tanggal, "short"),
+        tgl_mulai: formatDate(filterConfig.tgl_mulai, "short"),
+        tgl_selesai: formatDate(filterConfig.tgl_selesai, "short"),
         ...formattedFilterKaryawan,
       },
       limit: limitConfig,
