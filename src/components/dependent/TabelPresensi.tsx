@@ -29,8 +29,6 @@ export default function TabelPresensi({ filterConfig }: Props) {
   // Filter Karyawan Config
   const { formattedFilterKaryawan } = useFilterKaryawan();
 
-  // console.log(filterConfig);
-
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any>({
       initialData: undefined,
