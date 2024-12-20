@@ -1,10 +1,10 @@
 import {
+  Box,
+  BoxProps,
   Button,
-  ButtonProps,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Icon,
   Modal,
   ModalBody,
   ModalContent,
@@ -14,11 +14,9 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiAddCircleFill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
@@ -27,11 +25,23 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
 
-interface Props extends ButtonProps {}
+interface Props extends BoxProps {
+  rowData: any;
+  children?: ReactNode;
+}
 
-export default function TambahPendidikan({ ...props }: Props) {
+export default function EditStatusKaryawanModalDisclosure({
+  rowData,
+  children,
+  ...props
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("tambah-pendidikan-modal", isOpen, onOpen, onClose);
+  useBackOnClose(
+    `edit-status-karyawan-modal-${rowData.id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -40,17 +50,24 @@ export default function TambahPendidikan({ ...props }: Props) {
 
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { label: "" },
+    initialValues: {
+      label: "" as any,
+    },
     validationSchema: yup.object().shape({
       label: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         label: values.label,
+        _method: "patch",
       };
+      console.log(payload);
       setLoading(true);
       req
-        .post("/api/rski/dashboard/pengaturan/pendidikan", payload)
+        .post(
+          `/api/rski/dashboard/pengaturan/status-karyawan/${rowData.id}`,
+          payload
+        )
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -59,8 +76,8 @@ export default function TambahPendidikan({ ...props }: Props) {
               isClosable: true,
               position: "bottom-right",
             });
+            backOnClose();
             setRt(!rt);
-            resetForm();
           }
         })
         .catch((e) => {
@@ -81,18 +98,17 @@ export default function TambahPendidikan({ ...props }: Props) {
     },
   });
 
+  const formikRef = useRef(formik);
+
+  useEffect(() => {
+    formikRef.current.setFieldValue("label", rowData.columnsFormat[0].value);
+  }, [isOpen, rowData, formikRef]);
+
   return (
     <>
-      <Button
-        className="btn-ap clicky"
-        colorScheme="ap"
-        onClick={onOpen}
-        leftIcon={<Icon as={RiAddCircleFill} fontSize={iconSize} />}
-        pl={5}
-        {...props}
-      >
-        Tambah Pendidikan
-      </Button>
+      <Box onClick={onOpen} {...props}>
+        {children}
+      </Box>
 
       <Modal
         isOpen={isOpen}
@@ -108,17 +124,20 @@ export default function TambahPendidikan({ ...props }: Props) {
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Tambah Pendidikan"
+              title="Edit Pendidikan"
               onClose={() => {
                 formik.resetForm();
               }}
             />
           </ModalHeader>
           <ModalBody>
-            <form id="tambahPendidikanForm" onSubmit={formik.handleSubmit}>
-              <FormControl isInvalid={formik.errors.label ? true : false}>
+            <form id="editStatusKaryawanForm" onSubmit={formik.handleSubmit}>
+              <FormControl
+                // mb={4}
+                isInvalid={formik.errors.label ? true : false}
+              >
                 <FormLabel>
-                  Nama Pendidikan
+                  Nama Status Karyawan
                   <RequiredForm />
                 </FormLabel>
                 <StringInput
@@ -139,13 +158,13 @@ export default function TambahPendidikan({ ...props }: Props) {
           <ModalFooter>
             <Button
               type="submit"
-              form="tambahPendidikanForm"
+              form="editStatusKaryawanForm"
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}
               isLoading={loading}
             >
-              Tambahkan
+              Simpan
             </Button>
           </ModalFooter>
         </ModalContent>

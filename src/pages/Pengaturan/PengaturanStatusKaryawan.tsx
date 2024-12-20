@@ -1,9 +1,9 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
-import TabelPengaturanPendidikan from "../../components/dependent/TabelPengaturanPendidikan";
+import TabelPengaturanStatusKaryawan from "../../components/dependent/TabelPengaturanStatusKaryawan";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import TambahPendidikan from "../../components/independent/TambahPendidikan";
+import TambahStatusKaryawan from "../../components/independent/TambahStatusKaryawan";
 import CContainer from "../../components/wrapper/CContainer";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
@@ -11,7 +11,7 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
 
-export default function PengaturanPendidikan() {
+export default function PengaturanStatusKaryawan() {
   // Filter Config
   const defaultFilterConfig = {
     search: "",
@@ -23,7 +23,7 @@ export default function PengaturanPendidikan() {
   const lightDarkColor = useLightDarkColor();
 
   const { userPermissions } = useAuth();
-  const createPermission = isHasPermissions(userPermissions, [77]);
+  const createPermission = isHasPermissions(userPermissions, [144]);
 
   return (
     <CContainer
@@ -56,8 +56,8 @@ export default function PengaturanPendidikan() {
             }));
           }}
           inputValue={filterConfig.search}
-          tooltipLabel="Cari dengan nama pendidikan"
-          placeholder="nama pendidikan"
+          tooltipLabel="Cari dengan nama status karyawan"
+          placeholder="nama status karyawan"
         />
 
         <MultiSelectPengaturanDeletedAt
@@ -76,14 +76,14 @@ export default function PengaturanPendidikan() {
         />
 
         <PermissionTooltip permission={createPermission}>
-          <TambahPendidikan
+          <TambahStatusKaryawan
             minW={"fit-content"}
             isDisabled={!createPermission}
           />
         </PermissionTooltip>
       </HStack>
 
-      <TabelPengaturanPendidikan filterConfig={filterConfig} />
+      <TabelPengaturanStatusKaryawan filterConfig={filterConfig} />
     </CContainer>
   );
 }

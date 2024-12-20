@@ -29,9 +29,9 @@ import RequiredForm from "../form/RequiredForm";
 
 interface Props extends ButtonProps {}
 
-export default function TambahPendidikan({ ...props }: Props) {
+export default function TambahStatusKaryawan({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("tambah-pendidikan-modal", isOpen, onOpen, onClose);
+  useBackOnClose("tambah-status-karyawan-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,7 +50,7 @@ export default function TambahPendidikan({ ...props }: Props) {
       };
       setLoading(true);
       req
-        .post("/api/rski/dashboard/pengaturan/pendidikan", payload)
+        .post("/api/rski/dashboard/pengaturan/status-karyawan", payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -91,7 +91,7 @@ export default function TambahPendidikan({ ...props }: Props) {
         pl={5}
         {...props}
       >
-        Tambah Pendidikan
+        Tambah Status Karyawan
       </Button>
 
       <Modal
@@ -115,10 +115,10 @@ export default function TambahPendidikan({ ...props }: Props) {
             />
           </ModalHeader>
           <ModalBody>
-            <form id="tambahPendidikanForm" onSubmit={formik.handleSubmit}>
+            <form id="tambahStatusKaryawanForm" onSubmit={formik.handleSubmit}>
               <FormControl isInvalid={formik.errors.label ? true : false}>
                 <FormLabel>
-                  Nama Pendidikan
+                  Nama Status Karyawan
                   <RequiredForm />
                 </FormLabel>
                 <StringInput
@@ -139,7 +139,7 @@ export default function TambahPendidikan({ ...props }: Props) {
           <ModalFooter>
             <Button
               type="submit"
-              form="tambahPendidikanForm"
+              form="tambahStatusKaryawanForm"
               className="btn-ap clicky"
               colorScheme="ap"
               w={"100%"}

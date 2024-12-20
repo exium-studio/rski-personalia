@@ -37,7 +37,7 @@ export default function EditPendidikanModalDisclosure({
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
-    `edit-kompetensi-modal-${rowData.id}`,
+    `edit-pendidikan-modal-${rowData.id}`,
     isOpen,
     onOpen,
     onClose
@@ -137,7 +137,7 @@ export default function EditPendidikanModalDisclosure({
                 isInvalid={formik.errors.label ? true : false}
               >
                 <FormLabel>
-                  Pendidikan
+                  Nama Pendidikan
                   <RequiredForm />
                 </FormLabel>
                 <StringInput

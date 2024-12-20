@@ -67,6 +67,7 @@ import PenilaianKaryawan from "./pages/Perusahaan/PenilaianKaryawan";
 import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
+import PengaturanStatusKaryawan from "./pages/Pengaturan/PengaturanStatusKaryawan";
 
 const AuthPageLayout = () => {
   // SX
@@ -504,6 +505,22 @@ export const App = () => {
               >
                 <PengaturanContainer activeGroup={0} active={2}>
                   <PengaturanUbahKataSandi />
+                </PengaturanContainer>
+              </NavContainer>
+            }
+          />
+
+          <Route
+            path="/pengaturan/karyawan/status-karyawan"
+            element={
+              <NavContainer
+                active={7}
+                topNavsData={navs[7].subNavs}
+                topNavActive={0}
+                title="Pengaturan - Status Karyawan"
+              >
+                <PengaturanContainer activeGroup={1} active={0}>
+                  <PengaturanStatusKaryawan />
                 </PengaturanContainer>
               </NavContainer>
             }
