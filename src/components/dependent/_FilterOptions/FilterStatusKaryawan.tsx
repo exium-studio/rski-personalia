@@ -1,6 +1,7 @@
 import { HStack, Text, Wrap } from "@chakra-ui/react";
-import { Dispatch } from "react";
-import { optionsStatusKaryawan } from "../../../constant/selectOptions";
+import { Dispatch, useEffect, useState } from "react";
+import req from "../../../lib/req";
+import ComponentSpinner from "../../independent/ComponentSpinner";
 import FilterItemWrapper from "../../wrapper/FilterItemWrapper";
 
 interface Props {
@@ -12,7 +13,26 @@ export default function FilterStatusKaryawan({
   filterConfig,
   setFilterConfig,
 }: Props) {
-  // SX
+  const [options, setOptions] = useState<any>(undefined);
+
+  useEffect(() => {
+    if (!options) {
+      req
+        .get("/api/get-list-status-karyawan")
+        .then((r) => {
+          if (r.status === 200) {
+            const options = r.data.data.map((item: any) => ({
+              id: item.id,
+              label: item.label,
+            }));
+            setOptions(options);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [options]);
 
   return (
     <FilterItemWrapper
@@ -21,7 +41,75 @@ export default function FilterStatusKaryawan({
       setFilterConfig={setFilterConfig}
       filterKey="status_karyawan"
     >
-      <Wrap py={4}>
+      {!options && <ComponentSpinner my="auto" />}
+
+      {options && (
+        <Wrap py={4} w={"100%"}>
+          {options?.map((data: any, i: number) => {
+            const active =
+              filterConfig?.unit_kerja &&
+              filterConfig?.unit_kerja.some(
+                (unit: any) => unit?.id === data?.id
+              );
+
+            return (
+              <HStack
+                key={i}
+                borderRadius={"full"}
+                className="btn-outline"
+                fontWeight={400}
+                opacity={active ? 1 : 0.6}
+                bg={active && `var(--p500a5) !important`}
+                borderColor={active && "p.500 !important"}
+                flexShrink={0}
+                h={"40px"}
+                maxW={"100%"}
+                justify={"center"}
+                px={4}
+                cursor={"pointer"}
+                transition={"200ms"}
+                onClick={() => {
+                  setFilterConfig((ps: any) => {
+                    // Mengecek apakah data sudah ada dalam unit_kerja
+                    const isDataExist =
+                      ps.unit_kerja &&
+                      ps.unit_kerja.some((unit: any) => unit.id === data.id);
+
+                    // Jika data sudah ada, maka hapus data dari unit_kerja
+                    if (isDataExist) {
+                      return {
+                        ...ps,
+                        unit_kerja: ps.unit_kerja.filter(
+                          (unit: any) => unit.id !== data.id
+                        ),
+                      };
+                    } else {
+                      // Jika data belum ada, maka tambahkan data ke unit_kerja
+                      return {
+                        ...ps,
+                        unit_kerja: ps.unit_kerja
+                          ? [...ps.unit_kerja, data]
+                          : [data],
+                      };
+                    }
+                  });
+                }}
+              >
+                <Text
+                  lineHeight={1.3}
+                  textAlign={"center"}
+                  w={"100%"}
+                  h={"20px !important"}
+                  noOfLines={1}
+                >
+                  {data.label}
+                </Text>
+              </HStack>
+            );
+          })}
+        </Wrap>
+      )}
+      {/* <Wrap py={4}>
         {optionsStatusKaryawan?.map((data, i) => {
           const active =
             filterConfig?.status_karyawan &&
@@ -81,7 +169,7 @@ export default function FilterStatusKaryawan({
             </HStack>
           );
         })}
-      </Wrap>
+      </Wrap> */}
     </FilterItemWrapper>
   );
 }
