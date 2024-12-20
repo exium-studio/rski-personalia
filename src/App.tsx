@@ -509,21 +509,6 @@ export const App = () => {
             }
           />
           <Route
-            path="/pengaturan/karyawan/pendidikan"
-            element={
-              <NavContainer
-                active={7}
-                topNavsData={navs[7].subNavs}
-                topNavActive={0}
-                title="Pendidikan Terakhir"
-              >
-                <PengaturanContainer activeGroup={1} active={0}>
-                  <PengaturanPendidikan />
-                </PengaturanContainer>
-              </NavContainer>
-            }
-          />
-          <Route
             path="/pengaturan/karyawan/kelompok-gaji"
             element={
               <NavContainer
@@ -569,6 +554,21 @@ export const App = () => {
             }
           />
           <Route
+            path="/pengaturan/karyawan/pendidikan"
+            element={
+              <NavContainer
+                active={7}
+                topNavsData={navs[7].subNavs}
+                topNavActive={0}
+                title="Pendidikan Terakhir"
+              >
+                <PengaturanContainer activeGroup={1} active={4}>
+                  <PengaturanPendidikan />
+                </PengaturanContainer>
+              </NavContainer>
+            }
+          />
+          <Route
             path="/pengaturan/karyawan/kompetensi"
             element={
               <NavContainer
@@ -577,7 +577,7 @@ export const App = () => {
                 topNavActive={0}
                 title="Pengaturan - Kompetensi"
               >
-                <PengaturanContainer activeGroup={1} active={4}>
+                <PengaturanContainer activeGroup={1} active={5}>
                   <PengaturanKompetensi />
                 </PengaturanContainer>
               </NavContainer>
@@ -592,7 +592,7 @@ export const App = () => {
                 topNavActive={0}
                 title="Pengaturan - Jenis Penilaian"
               >
-                <PengaturanContainer activeGroup={1} active={5}>
+                <PengaturanContainer activeGroup={1} active={6}>
                   <PengaturanJenisPenilaian />
                 </PengaturanContainer>
               </NavContainer>
@@ -607,7 +607,7 @@ export const App = () => {
                 topNavActive={0}
                 title="Pengaturan - Kuesioner Penilaian"
               >
-                <PengaturanContainer activeGroup={1} active={6}>
+                <PengaturanContainer activeGroup={1} active={7}>
                   <PengaturanKuisioner />
                 </PengaturanContainer>
               </NavContainer>
@@ -622,7 +622,7 @@ export const App = () => {
                 topNavActive={0}
                 title="Pengaturan - Tentang Rumah Sakit"
               >
-                <PengaturanContainer activeGroup={1} active={7}>
+                <PengaturanContainer activeGroup={1} active={8}>
                   <PengaturanTentang />
                 </PengaturanContainer>
               </NavContainer>
@@ -637,7 +637,7 @@ export const App = () => {
                 topNavActive={0}
                 title="Pengaturan - Materi"
               >
-                <PengaturanContainer activeGroup={1} active={8}>
+                <PengaturanContainer activeGroup={1} active={9}>
                   <PengaturanMateri />
                 </PengaturanContainer>
               </NavContainer>

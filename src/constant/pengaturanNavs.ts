@@ -54,7 +54,7 @@ const pengaturanNavs = [
         allowed: [80],
         icon: RiWalletLine,
         label: "Status Karyawan",
-        link: "/pengaturan/karyawan/kelompok-gaji",
+        link: "/pengaturan/karyawan/status-karyawan",
       },
       {
         allowed: [80],
