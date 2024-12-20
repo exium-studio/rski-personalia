@@ -56,8 +56,8 @@ export default function PengaturanKelompokGaji() {
             }));
           }}
           inputValue={filterConfig.search}
-          tooltipLabel="Cari dengan nama kelompok gaji"
-          placeholder="nama kelompok gaji"
+          tooltipLabel="Cari dengan nama gaji pokok"
+          placeholder="nama gaji pokok"
         />
 
         <MultiSelectPengaturanDeletedAt

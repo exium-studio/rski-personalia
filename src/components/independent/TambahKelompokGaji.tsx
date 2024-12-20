@@ -102,7 +102,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
         pl={5}
         {...props}
       >
-        Tambah Kelompok Gaji
+        Tambah Gaji Pokok
       </Button>
 
       <Modal
@@ -119,7 +119,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Tambah Kelompok Gaji"
+              title="Tambah Gaji Pokok"
               onClose={() => {
                 formik.resetForm();
               }}
@@ -132,7 +132,7 @@ export default function TambahKelompokGaji({ ...props }: Props) {
                 isInvalid={formik.errors.nama_kelompok ? true : false}
               >
                 <FormLabel>
-                  Nama Kelompok
+                  Nama Gaji Pokok
                   <RequiredForm />
                 </FormLabel>
                 <StringInput

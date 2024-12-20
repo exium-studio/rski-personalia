@@ -530,7 +530,7 @@ export const App = () => {
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pengaturan - Kelompok Gaji"
+                title="Pengaturan - Gaji Pokok"
               >
                 <PengaturanContainer activeGroup={1} active={1}>
                   <PengaturanKelompokGaji />

@@ -47,19 +47,19 @@ const pengaturanNavs = [
     ],
   },
   {
-    allowed: [125, 80, 72, 68, 76, 114, 84, 140, 137],
+    allowed: [125, 80, 72, 68, 76, 114, 84, 140, 137, 147],
     groupName: "Karyawan",
     navs: [
       {
-        allowed: [125],
-        icon: RiGraduationCapLine,
-        label: "Pendidikan Terakhir",
-        link: "/pengaturan/karyawan/pendidikan",
+        allowed: [80],
+        icon: RiWalletLine,
+        label: "Status Karyawan",
+        link: "/pengaturan/karyawan/kelompok-gaji",
       },
       {
         allowed: [80],
         icon: RiWalletLine,
-        label: "Kelompok Gaji",
+        label: "Gaji Pokok",
         link: "/pengaturan/karyawan/kelompok-gaji",
       },
       {
@@ -73,6 +73,12 @@ const pengaturanNavs = [
         icon: RiGroup3Line,
         label: "Unit Kerja",
         link: "/pengaturan/karyawan/unit-kerja",
+      },
+      {
+        allowed: [125],
+        icon: RiGraduationCapLine,
+        label: "Pendidikan Terakhir",
+        link: "/pengaturan/karyawan/pendidikan",
       },
       {
         allowed: [76],
