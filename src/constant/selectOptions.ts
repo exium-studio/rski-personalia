@@ -67,8 +67,8 @@ const optionsJenisAktivitasPresensi = [
 ];
 
 const optionsStatusHidup = [
-  { value: 1, label: "Hidup" },
-  { value: 0, label: "Meninggal" },
+  { value: 1, label: "Aktif" },
+  { value: 0, label: "Tidak Aktif" },
 ];
 
 const optionsJenisKelamin = [

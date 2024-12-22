@@ -70,7 +70,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
     },
     status_hidup: {
       value: data?.status_hidup,
-      label: data?.status_hidup ? "Hidup" : "Meninggal",
+      label: data?.status_hidup ? "Aktif" : "Tidak Aktif",
     },
     pendidikan_terakhir: {
       value: data?.pendidikan_terakhir?.id,
