@@ -162,8 +162,8 @@ export default function TabelDetailKeluargaKaryawan({
         td: (
           <BooleanBadge
             data={item.status_hidup}
-            trueValue="Hidup"
-            falseValue="Meninggal"
+            trueValue="Aktif"
+            falseValue="Tidak Aktif"
             w={"120px"}
           />
         ),
