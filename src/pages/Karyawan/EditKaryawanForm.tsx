@@ -304,9 +304,9 @@ export default function EditKaryawanForm({
         gelar_belakang: values.gelar_belakang || "",
 
         no_str: values?.str,
-        masa_berlaku_str: values?.masa_berlaku_str || "",
+        masa_berlaku_str: formatDate(values?.masa_berlaku_str, "short") || "",
         no_sip: values?.sip,
-        masa_berlaku_sip: values?.masa_berlaku_sip || "",
+        masa_berlaku_sip: formatDate(values?.masa_berlaku_sip, "short") || "",
         no_bpjsksh: values?.no_bpjsksh,
         no_bpjsktk: values?.no_bpjsktk,
         npwp: values?.npwp,

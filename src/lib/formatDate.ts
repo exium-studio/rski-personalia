@@ -1,4 +1,4 @@
-const formatDate = (dateString: Date | string, options?: any) => {
+const formatDate = (dateString: Date | string | undefined, options?: any) => {
   // Cek jika dateString kosong atau tidak valid
   if (!dateString) {
     return "";
