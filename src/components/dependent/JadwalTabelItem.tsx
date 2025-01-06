@@ -156,7 +156,10 @@ export default function TabelJadwalItem({
   );
 
   const shiftMalamLanjutan =
-    index && index - 1 >= 0 && listJadwal[index - 1]
+    index &&
+    index - 1 >= 0 &&
+    listJadwal[index - 1] &&
+    listJadwal[index].id === listJadwal[index - 1].id
       ? isShiftMalam(
           listJadwal[index - 1]?.shift?.jam_from,
           listJadwal[index - 1]?.shift?.jam_to
