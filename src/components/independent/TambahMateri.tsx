@@ -33,7 +33,7 @@ interface Props extends ButtonProps {}
 
 export default function TambahMateri({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("tambah-kelompok-gaji-modal", isOpen, onOpen, onClose);
+  useBackOnClose("tambah-materi-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
   const userData = useGetUserData();
 
