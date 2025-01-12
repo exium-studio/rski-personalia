@@ -225,6 +225,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
                       formik.setFieldValue("hubungan", input);
                     }}
                     inputValue={formik.values.hubungan}
+                    isError={!!formik.errors.hubungan}
                   />
                   <FormErrorMessage>
                     {formik.errors.hubungan as string}
@@ -242,6 +243,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
                       formik.setFieldValue("status_hidup", input);
                     }}
                     inputValue={formik.values.status_hidup}
+                    isError={!!formik.errors.status_hidup}
                   />
                   <FormErrorMessage>
                     {formik.errors.status_hidup as string}
@@ -281,6 +283,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
                       formik.setFieldValue("pendidikan_terakhir", input);
                     }}
                     inputValue={formik.values.pendidikan_terakhir}
+                    isError={!!formik.errors.pendidikan_terakhir}
                   />
                   <FormErrorMessage>
                     {formik.errors.pendidikan_terakhir as string}
