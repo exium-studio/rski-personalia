@@ -13,6 +13,8 @@ import { RiEditLine } from "@remixicon/react";
 import EditAnggotaKeluargaModalDisclosure from "../independent/EditAnggotaKeluargaModalDisclosure";
 import TambahAnggotaKeluarga from "./TambahAnggotaKeluarga";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
+import formatDate from "../../lib/formatDate";
+import calculateAge from "../../lib/calculateAge";
 
 interface Props {
   idKaryawan: number;
@@ -101,6 +103,10 @@ export default function TabelDetailKeluargaKaryawan({
       },
     },
     {
+      th: "Tanggal Lahir",
+      isSortable: true,
+    },
+    {
       th: "Pendidikan Terakhir",
       isSortable: true,
     },
@@ -167,6 +173,16 @@ export default function TabelDetailKeluargaKaryawan({
             w={"120px"}
           />
         ),
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item.status_hidup,
+        td: item?.tgl_lahir
+          ? `${formatDate(item?.tgl_lahir)} (
+                        ${calculateAge(item?.tgl_lahir)} Tahun)`
+          : "",
         cProps: {
           justify: "center",
         },
