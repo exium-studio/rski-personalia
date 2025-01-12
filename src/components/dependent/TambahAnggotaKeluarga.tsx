@@ -32,6 +32,7 @@ import SelectPendidikan from "./_Select/SelectPendidikan";
 import req from "../../lib/req";
 import useGetUserData from "../../hooks/useGetUserData";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
+import DatePickerModal from "./input/DatePickerModal";
 
 export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -59,6 +60,7 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
       no_hp: "",
       email: "",
       is_bpjs: false,
+      tgl_lahir: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_keluarga: yup.string().required("Harus diisi"),
@@ -69,6 +71,7 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
       no_hp: yup.string().required("Harus diisi"),
       email: yup.string(),
       is_bpjs: yup.boolean(),
+      tgl_lahir: yup.string().required(),
     }),
     onSubmit: (values, { resetForm }) => {
       setLoading(true);
@@ -191,6 +194,7 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
                     formik.setFieldValue("hubungan", input);
                   }}
                   inputValue={formik.values.hubungan}
+                  isError={!!formik.errors.hubungan}
                 />
                 <FormErrorMessage>
                   {formik.errors.hubungan as string}
@@ -208,9 +212,29 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
                     formik.setFieldValue("status_hidup", input);
                   }}
                   inputValue={formik.values.status_hidup}
+                  isError={!!formik.errors.status_hidup}
                 />
                 <FormErrorMessage>
                   {formik.errors.status_hidup as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={4} isInvalid={!!formik.errors.tgl_lahir}>
+                <FormLabel>
+                  Tanggal Lahir
+                  <RequiredForm />
+                </FormLabel>
+                <DatePickerModal
+                  id={`date-picker-tambah-keluarga-${idKaryawan}`}
+                  name="tgl_lahir"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("tgl_lahir", input);
+                  }}
+                  inputValue={formik.values.tgl_lahir}
+                  isError={!!formik.errors.tgl_lahir}
+                />
+                <FormErrorMessage>
+                  {formik.errors.tgl_lahir as string}
                 </FormErrorMessage>
               </FormControl>
 
@@ -228,6 +252,7 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
                     formik.setFieldValue("pendidikan_terakhir", input);
                   }}
                   inputValue={formik.values.pendidikan_terakhir}
+                  isError={!!formik.errors.pendidikan_terakhir}
                 />
                 <FormErrorMessage>
                   {formik.errors.pendidikan_terakhir as string}

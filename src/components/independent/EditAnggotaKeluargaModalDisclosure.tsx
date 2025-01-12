@@ -33,6 +33,7 @@ import SelectStatusHidup from "../dependent/_Select/SelectStatusHidup";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
+import DatePickerModal from "../dependent/input/DatePickerModal";
 
 interface Props extends BoxProps {
   idKaryawan: number;
@@ -80,6 +81,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
     no_hp: data?.no_hp,
     email: data?.email || "",
     is_bpjs: data.is_bpjs,
+    tgl_lahir: data?.tgl_lahir,
   };
 
   const formik = useFormik({
@@ -94,6 +96,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
       no_hp: yup.string().required("Harus diisi"),
       email: yup.string(),
       is_bpjs: yup.boolean(),
+      tgl_lahir: yup.string().required(),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
@@ -105,6 +108,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
         no_hp: values.no_hp,
         email: values.email,
         is_bpjs: values.is_bpjs,
+        tgl_lahir: values.tgl_lahir,
         // _method: "patch",
       };
       console.log(payload);
@@ -241,6 +245,25 @@ export default function EditAnggotaKeluargaModalDisclosure({
                   />
                   <FormErrorMessage>
                     {formik.errors.status_hidup as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.tgl_lahir}>
+                  <FormLabel>
+                    Tanggal Lahir
+                    <RequiredForm />
+                  </FormLabel>
+                  <DatePickerModal
+                    id={`date-picker-tambah-keluarga-${idKaryawan}`}
+                    name="tgl_lahir"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("tgl_lahir", input);
+                    }}
+                    inputValue={formik.values.tgl_lahir}
+                    isError={!!formik.errors.tgl_lahir}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.tgl_lahir as string}
                   </FormErrorMessage>
                 </FormControl>
 

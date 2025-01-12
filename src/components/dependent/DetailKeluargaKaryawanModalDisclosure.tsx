@@ -38,6 +38,7 @@ import PermissionTooltip from "../wrapper/PermissionTooltip";
 import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import TabelDetailKeluargaKaryawan from "./TabelDetailKeluargaKaryawan";
+import TambahAnggotaKeluarga from "./TambahAnggotaKeluarga";
 
 interface VerifikasiProps {
   data: any;
@@ -219,7 +220,13 @@ export default function DetailKeluargaKaryawanModalDisclosure({
           <ModalBody>
             {error && (
               <>
-                {notFound && <NoData minH={"300px"} />}
+                {notFound && (
+                  <CContainer justify={"center"} align={"center"} my={"auto"}>
+                    <NoData mb={5} />
+
+                    <TambahAnggotaKeluarga idKaryawan={karyawan_id} />
+                  </CContainer>
+                )}
 
                 {!notFound && (
                   <Center my={"auto"} minH={"300px"}>
