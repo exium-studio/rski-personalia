@@ -33,6 +33,7 @@ import req from "../../lib/req";
 import useGetUserData from "../../hooks/useGetUserData";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import DatePickerModal from "./input/DatePickerModal";
+import formatDate from "../../lib/formatDate";
 
 export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -86,6 +87,7 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
         no_hp: values.no_hp,
         email: values.email,
         is_bpjs: values.is_bpjs,
+        tgl_lahir: formatDate(values.tgl_lahir, "short2"),
       };
 
       req

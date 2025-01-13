@@ -34,6 +34,7 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
 import DatePickerModal from "../dependent/input/DatePickerModal";
+import formatDate from "../../lib/formatDate";
 
 interface Props extends BoxProps {
   idKaryawan: number;
@@ -108,7 +109,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
         no_hp: values.no_hp,
         email: values.email,
         is_bpjs: values.is_bpjs,
-        tgl_lahir: values.tgl_lahir,
+        tgl_lahir: formatDate(values.tgl_lahir, "short2"),
         // _method: "patch",
       };
       console.log(payload);
