@@ -83,6 +83,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
     email: data?.email || "",
     is_bpjs: data.is_bpjs,
     tgl_lahir: data?.tgl_lahir,
+    is_menikah: data.is_menikah,
   };
 
   const formik = useFormik({
@@ -98,6 +99,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
       email: yup.string(),
       is_bpjs: yup.boolean(),
       tgl_lahir: yup.string().required(),
+      is_menikah: yup.boolean().required(),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
@@ -110,6 +112,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
         email: values.email,
         is_bpjs: values.is_bpjs,
         tgl_lahir: formatDate(values.tgl_lahir, "short2"),
+        is_menikah: values.is_menikah,
         // _method: "patch",
       };
       console.log(payload);
@@ -339,6 +342,28 @@ export default function EditAnggotaKeluargaModalDisclosure({
                   />
                   <FormErrorMessage>
                     {formik.errors.email as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl isInvalid={!!formik.errors.is_menikah} mb={4}>
+                  {/* <FormLabel>
+                Tanggungan BPJS
+                 <RequiredForm />
+              </FormLabel> */}
+
+                  <Checkbox
+                    colorScheme="ap"
+                    onChange={(e) => {
+                      formik.setFieldValue("is_menikah", e.target.checked);
+                    }}
+                    isChecked={formik.values.is_menikah}
+                    isDisabled={!formik.values.status_hidup?.value}
+                  >
+                    <Text mt={"-2.5px"}>Sudah Menikah</Text>
+                  </Checkbox>
+
+                  <FormErrorMessage>
+                    {formik.errors.is_menikah as string}
                   </FormErrorMessage>
                 </FormControl>
 

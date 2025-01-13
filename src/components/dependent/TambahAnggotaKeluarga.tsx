@@ -62,6 +62,7 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
       email: "",
       is_bpjs: false,
       tgl_lahir: undefined as any,
+      is_menikah: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_keluarga: yup.string().required("Harus diisi"),
@@ -73,6 +74,7 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
       email: yup.string(),
       is_bpjs: yup.boolean(),
       tgl_lahir: yup.string().required(),
+      is_menikah: yup.boolean().required(),
     }),
     onSubmit: (values, { resetForm }) => {
       setLoading(true);
@@ -88,6 +90,7 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
         email: values.email,
         is_bpjs: values.is_bpjs,
         tgl_lahir: formatDate(values.tgl_lahir, "short2"),
+        is_menikah: values.is_menikah,
       };
 
       req
@@ -309,6 +312,27 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
                 />
                 <FormErrorMessage>
                   {formik.errors.email as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl isInvalid={!!formik.errors.is_menikah} mb={4}>
+                {/* <FormLabel>
+                Tanggungan BPJS
+                 <RequiredForm />
+              </FormLabel> */}
+
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    formik.setFieldValue("is_menikah", e.target.checked);
+                  }}
+                  isChecked={formik.values.is_menikah}
+                >
+                  <Text mt={"-2.5px"}>Sudah Menikah</Text>
+                </Checkbox>
+
+                <FormErrorMessage>
+                  {formik.errors.is_menikah as string}
                 </FormErrorMessage>
               </FormControl>
 

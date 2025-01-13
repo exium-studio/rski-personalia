@@ -123,6 +123,10 @@ export default function TabelDetailKeluargaKaryawan({
       isSortable: true,
     },
     {
+      th: "Sudah Menikah",
+      isSortable: true,
+    },
+    {
       th: "Tanggungan BPJS",
       isSortable: true,
       cProps: {
@@ -202,6 +206,20 @@ export default function TabelDetailKeluargaKaryawan({
       {
         value: item.email,
         td: item.email,
+      },
+      {
+        value: item.is_menikah,
+        td: (
+          <BooleanBadge
+            data={item.is_menikah}
+            trueValue="Sudah Menikah"
+            falseValue="Belum Menikah"
+            w={"150px"}
+          />
+        ),
+        cProps: {
+          justify: "center",
+        },
       },
       {
         value: item.is_bpjs,
