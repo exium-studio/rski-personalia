@@ -911,7 +911,7 @@ export default function EditKaryawanForm({
           isInvalid={!!formik.errors.uang_makan}
         >
           <FormLabel>
-            Uang Makan per Hari
+            Uang Makan
             <RequiredForm />
           </FormLabel>
           <InputGroup>
