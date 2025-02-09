@@ -131,7 +131,7 @@ export default function EditHariLiburModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit Unit Kerja"
+              title="Edit Hari Libur Non-Shift"
               onClose={() => {
                 formik.resetForm();
               }}
@@ -141,7 +141,7 @@ export default function EditHariLiburModalDisclosure({
             <form id="editUnitKerjaForm" onSubmit={formik.handleSubmit}>
               <FormControl mb={4} isInvalid={!!formik.errors.nama}>
                 <FormLabel>
-                  Nama Unit
+                  Nama Hari Libur
                   <RequiredForm />
                 </FormLabel>
                 <StringInput
@@ -159,7 +159,7 @@ export default function EditHariLiburModalDisclosure({
 
               <FormControl isInvalid={!!formik.errors.tanggal}>
                 <FormLabel>
-                  Jenis Karyawan
+                  Tanggal
                   <RequiredForm />
                 </FormLabel>
                 <DatePickerModal
