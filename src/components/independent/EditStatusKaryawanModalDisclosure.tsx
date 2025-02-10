@@ -124,7 +124,7 @@ export default function EditStatusKaryawanModalDisclosure({
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Edit Pendidikan"
+              title="Edit Status Karyawan"
               onClose={() => {
                 formik.resetForm();
               }}

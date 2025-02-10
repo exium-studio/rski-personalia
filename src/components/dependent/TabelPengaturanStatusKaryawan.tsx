@@ -113,7 +113,7 @@ export default function TabelPengaturanStatusKaryawan({ filterConfig }: Props) {
 
   const formattedHeader = [
     {
-      th: "Pendidikan",
+      th: "Status Karyawan",
       isSortable: true,
       props: {
         position: "sticky",

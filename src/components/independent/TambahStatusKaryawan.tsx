@@ -108,7 +108,7 @@ export default function TambahStatusKaryawan({ ...props }: Props) {
         <ModalContent>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Tambah Pendidikan"
+              title="Tambah Status Karyawan"
               onClose={() => {
                 formik.resetForm();
               }}
