@@ -204,7 +204,7 @@ export default function TabelKaryawan() {
         td:
           item?.jenis_kelamin === 1
             ? "Laki - laki"
-            : item?.jenis_kelamin === 2
+            : item?.jenis_kelamin === 0
             ? "Perempuan"
             : "",
         isNumeric: true,

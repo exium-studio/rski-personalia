@@ -241,7 +241,7 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
             <Text fontWeight={500} textAlign={"right"}>
               {data?.jenis_kelamin === 1
                 ? "Laki - laki"
-                : data?.jenis_kelamin === 2
+                : data?.jenis_kelamin === 0
                 ? "Perempuan"
                 : ""}
             </Text>
