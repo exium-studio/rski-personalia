@@ -1,7 +1,11 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Button,
   Center,
   HStack,
+  ListItem,
   MenuItem,
   Modal,
   ModalBody,
@@ -10,6 +14,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  UnorderedList,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -103,20 +108,34 @@ const DeleteCutiConfirmation = ({ selectedRows }: any) => {
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.4}>
-              Apakah anda yakin akan menghapus cuti yang dipilih ?, aksi ini
-              tidak dapat dibatalkan. Data presensi, jadwal, tukar jadwal,
-              lembur, izin akan dikembalikan seperti semula.
+              Apakah anda yakin akan menghapus cuti yang dipilih?
             </Text>
+
+            <Alert status="warning" alignItems={"start"} mt={4}>
+              <AlertIcon />
+              <AlertDescription>
+                Aksi ini tidak dapat dibatalkan. Data karyawan yang akan
+                dipulihkan:
+                <UnorderedList>
+                  <ListItem>Jadwal</ListItem>
+                  <ListItem>Presensi</ListItem>
+                  <ListItem>Lembur</ListItem>
+                  <ListItem>Izin</ListItem>
+                </UnorderedList>
+              </AlertDescription>
+            </Alert>
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter gap={2}>
             <Button
               onClick={backOnClose}
-              className="clicky btn"
+              className="clicky btn-solid"
               isDisabled={deleteCutiLoading}
+              w={"50%"}
             >
               Cancel
             </Button>
             <Button
+              w={"50%"}
               className="clicky"
               colorScheme="red"
               onClick={() => {
