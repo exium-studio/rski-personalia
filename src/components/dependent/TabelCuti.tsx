@@ -1,11 +1,28 @@
-import { Center, HStack, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  HStack,
+  MenuItem,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import useGetUserData from "../../hooks/useGetUserData";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
+import backOnClose from "../../lib/backOnClose";
 import countDateRange from "../../lib/countDateRange";
 import formatDate from "../../lib/formatDate";
 import isObjectEmpty from "../../lib/isObjectEmpty";
+import req from "../../lib/req";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
@@ -14,17 +31,111 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
+import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
+import TabelElipsisText from "./TabelElipsisText";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
-import TabelElipsisText from "./TabelElipsisText";
+import useBackOnClose from "../../hooks/useBackOnClose";
+
+const DeleteCutiConfirmation = ({ selectedRows }: any) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`delete-cuti-confirmation`, isOpen, onOpen, onClose);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+  const [deleteCutiLoading, setDeleteCutiLoading] = useState(false);
+  function handleDeleteCuti(selectedRows: any) {
+    const payload = {
+      ids_cuti: selectedRows.map((item: any) => item.id),
+    };
+    req
+      .post(`/api/rski/dashboard/jadwal-karyawan/delete-cuti`, payload)
+      .then((r) => {
+        if (r.status === 200) {
+          toast({
+            status: "success",
+            title: r.data.message,
+            isClosable: true,
+            position: "bottom-right",
+          });
+          setRt(!rt);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
+          isClosable: true,
+          position: "bottom-right",
+        });
+      })
+      .finally(() => {
+        setDeleteCutiLoading(false);
+      });
+  }
+
+  return (
+    <>
+      <MenuItem
+        color={"red.400"}
+        isDisabled={selectedRows.length === 0}
+        onClick={onOpen}
+      >
+        Delete...
+      </MenuItem>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Delete/Batalkan Cuti"} />
+          </ModalHeader>
+          <ModalBody>
+            <Text opacity={0.4}>
+              Apakah anda yakin akan menghapus cuti yang dipilih ?, aksi ini
+              tidak dapat dibatalkan. Data presensi, jadwal, tukar jadwal,
+              lembur, izin akan dikembalikan seperti semula.
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              onClick={backOnClose}
+              className="clicky btn"
+              isDisabled={deleteCutiLoading}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="clicky"
+              colorScheme="red"
+              onClick={() => {
+                handleDeleteCuti(selectedRows);
+              }}
+              isLoading={deleteCutiLoading}
+            >
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 interface Props {
   filterConfig: any;
 }
-
 export default function TabelCuti({ filterConfig }: Props) {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
@@ -380,6 +491,15 @@ export default function TabelCuti({ filterConfig }: Props) {
                     <CustomTable
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}
+                      batchActions={[
+                        (selectedRows: any) => {
+                          return (
+                            <DeleteCutiConfirmation
+                              selectedRows={selectedRows}
+                            />
+                          );
+                        },
+                      ]}
                     />
                   </CustomTableContainer>
                 </>
