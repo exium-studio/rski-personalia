@@ -52,6 +52,7 @@ const DeleteCutiConfirmation = ({ selectedRows }: any) => {
   const { rt, setRt } = useRenderTrigger();
   const [deleteCutiLoading, setDeleteCutiLoading] = useState(false);
   function handleDeleteCuti(selectedRows: any) {
+    //
     const payload = {
       ids_cuti: selectedRows.map((item: any) => item.id),
     };
