@@ -74,7 +74,7 @@ export default function FilterStatusKaryawan({
                     const isDataExist =
                       ps.status_karyawan &&
                       ps.status_karyawan.some(
-                        (unit: any) => unit.id === data.id
+                        (item: any) => item.id === data.id
                       );
 
                     // Jika data sudah ada, maka hapus data dari status_karyawan
@@ -82,7 +82,7 @@ export default function FilterStatusKaryawan({
                       return {
                         ...ps,
                         status_karyawan: ps.status_karyawan.filter(
-                          (unit: any) => unit.id !== data.id
+                          (item: any) => item.id !== data.id
                         ),
                       };
                     } else {
