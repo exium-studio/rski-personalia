@@ -8,7 +8,12 @@ const defaultFilterConfig = {
   jabatan: [],
   status_karyawan: [],
   masa_kerja: [],
-  status_aktif: [],
+  status_aktif: [
+    {
+      value: 2,
+      label: "Aktif",
+    },
+  ],
   tgl_masuk: [],
   agama: [],
   jenis_kelamin: [],

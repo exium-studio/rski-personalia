@@ -19,7 +19,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { RiEqualizer3Fill } from "@remixicon/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
 import { iconSize, responsiveSpacing } from "../../constant/sizes";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
@@ -150,6 +150,10 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     setFilterKaryawan(defaultFilterKaryawan);
     clearFormattedFilterKaryawan();
   });
+
+  useEffect(() => {
+    handleApplyFilter();
+  }, []);
 
   // SX
   const lightDarkColor = useLightDarkColor();
