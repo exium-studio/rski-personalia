@@ -151,8 +151,10 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     clearFormattedFilterKaryawan();
   });
 
+  const handleApplyFilterRef = useRef(handleApplyFilter);
+
   useEffect(() => {
-    handleApplyFilter();
+    handleApplyFilterRef.current();
   }, []);
 
   // SX
