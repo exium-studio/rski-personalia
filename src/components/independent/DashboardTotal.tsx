@@ -31,6 +31,13 @@ export default function DashboardTotal({ ...props }: Props) {
       bgColor: "green.200",
     },
     {
+      key: "karyawan_nonaktif",
+      label: "Karyawan Tidak Aktif",
+      icon: RiFileCopy2Fill,
+      iconBgColor: "red.400",
+      bgColor: "red.200",
+    },
+    {
       key: "jumlah_libur",
       label: "Total Libur",
       icon: RiHome4Fill,
@@ -43,13 +50,6 @@ export default function DashboardTotal({ ...props }: Props) {
       icon: RiLandscapeFill,
       iconBgColor: "#D7AA67",
       bgColor: "#FBD38D",
-    },
-    {
-      key: "jumlah_absen",
-      label: "Total Alpha",
-      icon: RiFileCopy2Fill,
-      iconBgColor: "red.400",
-      bgColor: "red.200",
     },
   ];
 
@@ -101,7 +101,7 @@ export default function DashboardTotal({ ...props }: Props) {
                 </HStack>
 
                 <Text fontWeight={700} fontSize={24}>
-                  {formatNumber(data[stat.key])}
+                  {formatNumber(data[stat.key] || 0)}
                 </Text>
               </VStack>
             ))}

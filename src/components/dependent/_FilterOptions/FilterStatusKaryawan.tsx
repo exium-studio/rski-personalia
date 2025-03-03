@@ -47,8 +47,8 @@ export default function FilterStatusKaryawan({
         <Wrap py={4} w={"100%"}>
           {options?.map((data: any, i: number) => {
             const active =
-              filterConfig?.unit_kerja &&
-              filterConfig?.unit_kerja.some(
+              filterConfig?.status_karyawan &&
+              filterConfig?.status_karyawan.some(
                 (unit: any) => unit?.id === data?.id
               );
 
@@ -70,25 +70,27 @@ export default function FilterStatusKaryawan({
                 transition={"200ms"}
                 onClick={() => {
                   setFilterConfig((ps: any) => {
-                    // Mengecek apakah data sudah ada dalam unit_kerja
+                    // Mengecek apakah data sudah ada dalam status_karyawan
                     const isDataExist =
-                      ps.unit_kerja &&
-                      ps.unit_kerja.some((unit: any) => unit.id === data.id);
+                      ps.status_karyawan &&
+                      ps.status_karyawan.some(
+                        (unit: any) => unit.id === data.id
+                      );
 
-                    // Jika data sudah ada, maka hapus data dari unit_kerja
+                    // Jika data sudah ada, maka hapus data dari status_karyawan
                     if (isDataExist) {
                       return {
                         ...ps,
-                        unit_kerja: ps.unit_kerja.filter(
+                        status_karyawan: ps.status_karyawan.filter(
                           (unit: any) => unit.id !== data.id
                         ),
                       };
                     } else {
-                      // Jika data belum ada, maka tambahkan data ke unit_kerja
+                      // Jika data belum ada, maka tambahkan data ke status_karyawan
                       return {
                         ...ps,
-                        unit_kerja: ps.unit_kerja
-                          ? [...ps.unit_kerja, data]
+                        status_karyawan: ps.status_karyawan
+                          ? [...ps.status_karyawan, data]
                           : [data],
                       };
                     }
