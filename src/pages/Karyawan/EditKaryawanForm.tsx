@@ -301,10 +301,11 @@ export default function EditKaryawanForm({
         asal_sekolah: values.asal_sekolah || "",
         gelar_depan: values.gelar_depan || "",
         gelar_belakang: values.gelar_belakang || "",
-
         no_str: values?.str,
+        created_str: formatDate(values?.created_str, "short") || "",
         masa_berlaku_str: formatDate(values?.masa_berlaku_str, "short") || "",
         no_sip: values?.sip,
+        created_sip: formatDate(values?.created_sip, "short") || "",
         masa_berlaku_sip: formatDate(values?.masa_berlaku_sip, "short") || "",
         no_bpjsksh: values?.no_bpjsksh,
         no_bpjsktk: values?.no_bpjsktk,
