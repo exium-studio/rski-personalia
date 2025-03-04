@@ -4,8 +4,6 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Alert,
-  AlertDescription,
   Avatar,
   Badge,
   Box,
