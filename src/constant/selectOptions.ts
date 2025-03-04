@@ -77,7 +77,7 @@ const optionsJenisKelamin = [
     label: "Laki - Laki",
   },
   {
-    value: 2,
+    value: 0,
     label: "Perempuan",
   },
 ];
