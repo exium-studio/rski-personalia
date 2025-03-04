@@ -4,6 +4,8 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Alert,
+  AlertDescription,
   Avatar,
   Badge,
   Box,
@@ -152,6 +154,8 @@ export default function DetailKaryawanModal({
         "riwayat_penyakit",
         "masa_diklat",
         "kompetensi",
+        "created_str",
+        "created_sip",
         ...(isUserSuperAdmin ? [] : ["role"]),
         ...(isMedic ? [] : nonMedicTerm),
       ];
@@ -390,9 +394,23 @@ export default function DetailKaryawanModal({
                             </VStack>
                           </VStack>
 
+                          {data.user.alasan && (
+                            <CContainer
+                              bg={"var(--divider)"}
+                              p={4}
+                              borderRadius={12}
+                              mb={3}
+                              mt={"auto"}
+                            >
+                              <Text opacity={0.4} mb={1}>
+                                Catatan dinonaktifkan:
+                              </Text>
+                              <Text>{data.user.alasan}</Text>
+                            </CContainer>
+                          )}
+
                           {/* Stats Diklat */}
                           <HStack
-                            mt={"auto"}
                             bg={"var(--divider)"}
                             p={4}
                             borderRadius={12}
