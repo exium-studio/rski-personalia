@@ -240,10 +240,12 @@ export default function EditKaryawanForm({
       gelar_depan: data?.gelar_depan || "",
       gelar_belakang: data?.gelar_belakang || "",
       str: data?.no_str,
+      created_str: new Date(data?.created_str),
       masa_berlaku_str: data?.masa_berlaku_str
         ? new Date(data?.masa_berlaku_str)
         : undefined,
       sip: data?.no_sip,
+      created_sip: new Date(data?.created_sip),
       masa_berlaku_sip: data?.masa_berlaku_sip
         ? new Date(data?.masa_berlaku_sip)
         : undefined,
@@ -1368,6 +1370,29 @@ export default function EditKaryawanForm({
 
           <FormControl
             mb={4}
+            isInvalid={formik.errors.created_str ? true : false}
+          >
+            <FormLabel>
+              Tanggal Terbit STR
+              {/* <RequiredForm /> */}
+            </FormLabel>
+            <DatePickerModal
+              id="lengkapi-data-user-3-tgl-terbit-str"
+              name={"created_str"}
+              onConfirm={(inputValue) => {
+                formik.setFieldValue("created_str", inputValue);
+              }}
+              inputValue={formik.values.created_str}
+              isError={!!formik.errors.created_str}
+              isDisabled={noLimitStr}
+            />
+            <FormErrorMessage>
+              {formik.errors.created_str as string}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl
+            mb={4}
             isInvalid={formik.errors.masa_berlaku_str ? true : false}
           >
             <FormLabel>
@@ -1418,6 +1443,29 @@ export default function EditKaryawanForm({
               inputValue={formik.values.sip}
             />
             <FormErrorMessage>{formik.errors.sip as string}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl
+            mb={4}
+            isInvalid={formik.errors.created_sip ? true : false}
+          >
+            <FormLabel>
+              Tanggal Terbit SIP
+              {/* <RequiredForm /> */}
+            </FormLabel>
+            <DatePickerModal
+              id="lengkapi-data-user-3-tgl-terbit-sip"
+              name={"created_sip"}
+              onConfirm={(inputValue) => {
+                formik.setFieldValue("created_sip", inputValue);
+              }}
+              inputValue={formik.values.created_sip}
+              isError={!!formik.errors.created_sip}
+              isDisabled={noLimitStr}
+            />
+            <FormErrorMessage>
+              {formik.errors.created_sip as string}
+            </FormErrorMessage>
           </FormControl>
 
           <FormControl
