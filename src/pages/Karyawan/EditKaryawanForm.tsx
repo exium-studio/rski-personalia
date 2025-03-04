@@ -108,11 +108,8 @@ export default function EditKaryawanForm({
     // tgl_lahir: yup.date().required("Harus diisi"),
     // no_hp: yup.string().required("Harus diisi"),
     // jenis_kelamin: yup.object().required("Harus diisi"),
-    // nik_ktp: yup
-    //   .string()
-    //   .required("Harus diisi")
-    //   .length(16, "Harus 16 karakter"),
-    // no_kk: yup.string().required("Harus diisi").length(16, "Harus 16 karakter"),
+    nik_ktp: yup.string().length(16, "Harus 16 karakter"),
+    no_kk: yup.string().length(16, "Harus 16 karakter"),
     // agama: yup.object().required("Harus diisi"),
     // golongan_darah: yup.object().required("Harus diisi"),
     // tinggi_badan: yup.string().required("Harus diisi"),
@@ -240,12 +237,12 @@ export default function EditKaryawanForm({
       gelar_depan: data?.gelar_depan || "",
       gelar_belakang: data?.gelar_belakang || "",
       str: data?.no_str,
-      created_str: new Date(data?.created_str),
+      created_str: data?.created_str ? new Date(data?.created_str) : undefined,
       masa_berlaku_str: data?.masa_berlaku_str
         ? new Date(data?.masa_berlaku_str)
         : undefined,
       sip: data?.no_sip,
-      created_sip: new Date(data?.created_sip),
+      created_sip: data?.created_sip ? new Date(data?.created_sip) : undefined,
       masa_berlaku_sip: data?.masa_berlaku_sip
         ? new Date(data?.masa_berlaku_sip)
         : undefined,
@@ -1384,7 +1381,6 @@ export default function EditKaryawanForm({
               }}
               inputValue={formik.values.created_str}
               isError={!!formik.errors.created_str}
-              isDisabled={noLimitStr}
             />
             <FormErrorMessage>
               {formik.errors.created_str as string}
@@ -1461,7 +1457,6 @@ export default function EditKaryawanForm({
               }}
               inputValue={formik.values.created_sip}
               isError={!!formik.errors.created_sip}
-              isDisabled={noLimitStr}
             />
             <FormErrorMessage>
               {formik.errors.created_sip as string}
