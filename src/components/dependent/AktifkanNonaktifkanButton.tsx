@@ -20,6 +20,7 @@ import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import req from "../../lib/req";
 import DisclosureHeader from "./DisclosureHeader";
+import Textarea from "./input/Textarea";
 
 interface Props extends ButtonProps {
   karyawan_id: number;
@@ -41,12 +42,20 @@ export default function AktifkanNonaktifkanButton({
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
+  const [alasan, setAlasan] = useState("");
 
   function handleToggleAktifkan() {
     setLoading(true);
 
+    const payload = {
+      alasan: alasan,
+    };
+
     req
-      .post(`/api/rski/dashboard/karyawan/${karyawan_id}/status-karyawan`)
+      .post(
+        `/api/rski/dashboard/karyawan/${karyawan_id}/status-karyawan`,
+        payload
+      )
       .then((r) => {
         if (r.status === 200) {
           toast({
@@ -114,6 +123,18 @@ export default function AktifkanNonaktifkanButton({
               Apakah anda yakin akan{" "}
               {data === 2 ? "menonaktifkan" : "mengaktifkan"} akun ini?
             </Text>
+
+            {data === 2 && (
+              <Textarea
+                mt={4}
+                name="alasan"
+                onChangeSetter={(inputValue) => {
+                  setAlasan(inputValue || "");
+                }}
+                inputValue={alasan}
+                placeholder="Catatan karyawan dinonaktifkan"
+              />
+            )}
           </ModalBody>
           <ModalFooter gap={2}>
             <Button
