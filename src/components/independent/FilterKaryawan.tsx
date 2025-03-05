@@ -1,8 +1,5 @@
 import {
   Accordion,
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Button,
   ButtonGroup,
   ButtonProps,
@@ -21,30 +18,29 @@ import {
 import { RiEqualizer3Fill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
-import { iconSize, responsiveSpacing } from "../../constant/sizes";
+import { iconSize } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useCallBackOnNavigate from "../../hooks/useCallBackOnNavigate";
+import useGetUserData from "../../hooks/useGetUserData";
 import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
 import formattedFilterKaryawanReducer from "../../lib/formattedFilterKaryawanReducer";
+import isHasPermissions from "../../lib/isHasPermissions";
 import FilterAgama from "../dependent/_FilterOptions/FilterAgama";
 import FilterJebatan from "../dependent/_FilterOptions/FilterJabatan";
 import FilterJenisKelamin from "../dependent/_FilterOptions/FilterJenisKelamin";
+import FilterJenisKompetensi from "../dependent/_FilterOptions/FilterJenisKompetensi";
 import FilterJenisPegawai from "../dependent/_FilterOptions/FilterJenisPegawai";
 import FilterMasaKerja from "../dependent/_FilterOptions/FilterMasaKerja";
+import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 import FilterStatusAktif from "../dependent/_FilterOptions/FilterStatusAktif";
 import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryawan";
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
-import { useLocation } from "react-router-dom";
-import FilterJenisKompetensi from "../dependent/_FilterOptions/FilterJenisKompetensi";
-import formatDate from "../../lib/formatDate";
-import useGetUserData from "../../hooks/useGetUserData";
-import isHasPermissions from "../../lib/isHasPermissions";
-import useAuth from "../../global/useAuth";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -54,8 +50,6 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("filter-karyawan", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
-
-  const { pathname } = useLocation();
 
   const {
     defaultFilterKaryawan,
@@ -275,17 +269,6 @@ export default function FilterKaryawan({ title, ...props }: Props) {
           </ModalHeader>
 
           <ModalBody className="scrollY">
-            {pathname === "/jadwal" && (
-              <Alert mb={responsiveSpacing} alignItems={"start"}>
-                <AlertIcon />
-                <AlertDescription maxW={"640px !important"}>
-                  Jika tidak memiliki akses Bypass Unit Kerja, maka filter unit
-                  kerja akan dikunci/tidak bisa dihilangkan sesuai dengan unit
-                  kerja anda.
-                </AlertDescription>
-              </Alert>
-            )}
-
             <Accordion allowToggle>
               <FilterUnitKerja
                 filterConfig={localFilterConfig}
