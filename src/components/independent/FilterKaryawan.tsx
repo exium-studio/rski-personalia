@@ -207,11 +207,11 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     bypassUnitKerjaPermission,
   ]);
 
-  // const handleApplyFilterRef = useRef(handleApplyFilter);
+  const handleApplyFilterRef = useRef(handleApplyFilter);
 
-  // useEffect(() => {
-  //   handleApplyFilterRef.current();
-  // }, []);
+  useEffect(() => {
+    handleApplyFilterRef.current();
+  }, []);
 
   // SX
   const lightDarkColor = useLightDarkColor();
