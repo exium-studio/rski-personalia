@@ -37,7 +37,6 @@ export default function Izin() {
       <CWrapper>
         <CContainer
           flex={1}
-          px={responsiveSpacing}
           pb={responsiveSpacing}
           pt={0}
           bg={lightDarkColor}
@@ -46,7 +45,7 @@ export default function Izin() {
           className="scrollY"
         >
           <HStack
-            py={responsiveSpacing}
+            p={responsiveSpacing}
             justify={"space-between"}
             w={"100%"}
             className="tabelConfig scrollX"
@@ -85,7 +84,9 @@ export default function Izin() {
             <FilterKaryawan />
           </HStack>
 
-          <TabelIzin filterConfig={filterConfig} />
+          <CContainer px={responsiveSpacing}>
+            <TabelIzin filterConfig={filterConfig} />
+          </CContainer>
         </CContainer>
       </CWrapper>
     </>
