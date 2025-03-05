@@ -3,6 +3,8 @@ import { Dispatch, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
 import NotFound from "../independent/NotFound";
 import CContainer from "../wrapper/CContainer";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props {
   role_id: number;
@@ -24,6 +26,9 @@ export default function TabelPengaturanHakAkses({
   setAllPermissions,
   formik,
 }: Props) {
+  const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [62]);
+
   // SX
   const lightDarkColor = useLightDarkColor();
 
@@ -327,7 +332,7 @@ export default function TabelPengaturanHakAkses({
                               onChange={() => {
                                 handleCheckboxChange(i, key);
                               }}
-                              isDisabled={role_id === 1}
+                              isDisabled={role_id === 1 || !editPermission}
                               isChecked={item.permissions[key]?.has_permission}
                             >
                               <Text
