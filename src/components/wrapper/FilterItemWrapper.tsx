@@ -63,7 +63,12 @@ export default function FilterItemWrapper({
           <HStack>
             {filterValue && filterValue.length > 0 && (
               <>
-                {bypassUnitKerjaPermission && (
+                {/* {bypassUnitKerjaPermission && (
+
+                )} */}
+
+                {((filterKey === "unit_kerja" && bypassUnitKerjaPermission) ||
+                  filterKey !== "unit_kerja") && (
                   <Tooltip label={"Hapus filter ini"} openDelay={500}>
                     <IconButton
                       as={Center}
