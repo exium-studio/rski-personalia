@@ -11,6 +11,7 @@ import {
 
 const navs = [
   {
+    allowed: [149],
     label: "Dashboard",
     link: "/dashboard",
     icon: RiHome6Fill,
