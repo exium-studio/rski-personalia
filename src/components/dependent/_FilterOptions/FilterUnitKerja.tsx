@@ -1,5 +1,5 @@
 import {
-  HStack,
+  Button,
   Icon,
   Input,
   InputGroup,
@@ -11,11 +11,13 @@ import {
 import { RiSearch2Line } from "@remixicon/react";
 import { Dispatch, useEffect, useState } from "react";
 import { useBodyColor } from "../../../constant/colors";
-import req from "../../../lib/req";
 import { iconSize } from "../../../constant/sizes";
+import useAuth from "../../../global/useAuth";
+import isHasPermissions from "../../../lib/isHasPermissions";
+import req from "../../../lib/req";
+import ComponentSpinner from "../../independent/ComponentSpinner";
 import DataNotFound from "../../independent/DataNotFound";
 import FilterItemWrapper from "../../wrapper/FilterItemWrapper";
-import ComponentSpinner from "../../independent/ComponentSpinner";
 
 interface Props {
   filterConfig: any;
@@ -26,6 +28,9 @@ export default function FilterUnitKerja({
   filterConfig,
   setFilterConfig,
 }: Props) {
+  const { userPermissions } = useAuth();
+  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+
   const [search, setSearch] = useState<string>("");
 
   const [options, setOptions] = useState<any>(undefined);
@@ -103,7 +108,7 @@ export default function FilterUnitKerja({
                 );
 
               return (
-                <HStack
+                <Button
                   key={i}
                   borderRadius={"full"}
                   className="btn-outline"
@@ -114,7 +119,8 @@ export default function FilterUnitKerja({
                   flexShrink={0}
                   h={"40px"}
                   maxW={"100%"}
-                  justify={"center"}
+                  disabled={!bypassUnitKerjaPermission}
+                  // justify={"center"}
                   px={4}
                   cursor={"pointer"}
                   transition={"200ms"}
@@ -154,7 +160,7 @@ export default function FilterUnitKerja({
                   >
                     {data.label}
                   </Text>
-                </HStack>
+                </Button>
               );
             })}
           </Wrap>

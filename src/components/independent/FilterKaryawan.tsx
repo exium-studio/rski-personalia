@@ -42,6 +42,9 @@ import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidik
 import { useLocation } from "react-router-dom";
 import FilterJenisKompetensi from "../dependent/_FilterOptions/FilterJenisKompetensi";
 import formatDate from "../../lib/formatDate";
+import useGetUserData from "../../hooks/useGetUserData";
+import isHasPermissions from "../../lib/isHasPermissions";
+import useAuth from "../../global/useAuth";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -58,7 +61,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     defaultFilterKaryawan,
     filterKaryawan,
     setFilterKaryawan,
-    // formattedFilterKaryawan,
+    formattedFilterKaryawan,
     setFormattedFilterKaryawan,
     clearFormattedFilterKaryawan,
   } = useFilterKaryawan();
@@ -151,11 +154,70 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     clearFormattedFilterKaryawan();
   });
 
-  const handleApplyFilterRef = useRef(handleApplyFilter);
+  const user = useGetUserData();
+  const userRef = useRef(user);
+  const { userPermissions } = useAuth();
+  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+  // const filterKaryawanRef = useRef(filterKaryawan);
+  const formattedFilterKaryawanRef = useRef(formattedFilterKaryawan);
 
   useEffect(() => {
-    handleApplyFilterRef.current();
-  }, []);
+    // console.log(userRef.current);
+
+    if (userRef.current) {
+      const unitKerjaUser = userRef.current?.data_karyawan?.unit_kerja;
+
+      // console.log("uk user", unitKerjaUser);
+      // console.log(unitKerjaUser);
+
+      if (unitKerjaUser && !bypassUnitKerjaPermission) {
+        const unitKerjaExists = filterKaryawan.unit_kerja.some(
+          (uk: any) => uk.id === unitKerjaUser.id
+        );
+
+        if (!unitKerjaExists) {
+          const presetUnitKerjaFilterKaryawan = {
+            ...filterKaryawan,
+            unit_kerja: [
+              ...filterKaryawan.unit_kerja,
+              {
+                id: unitKerjaUser?.id,
+                label: unitKerjaUser?.nama_unit,
+              },
+            ],
+          };
+          setFilterKaryawan(presetUnitKerjaFilterKaryawan);
+        }
+
+        const formattedUnitKerjaExists =
+          formattedFilterKaryawanRef.current?.unit_kerja?.includes(
+            unitKerjaUser.id
+          );
+
+        if (!formattedUnitKerjaExists) {
+          const presetUnitKerjaFormattedFilterKaryawan = {
+            ...formattedFilterKaryawanRef.current,
+            unit_kerja: [
+              ...(formattedFilterKaryawanRef.current?.unit_kerja || []),
+              unitKerjaUser.id,
+            ],
+          };
+          setFormattedFilterKaryawan(presetUnitKerjaFormattedFilterKaryawan);
+        }
+      }
+    }
+  }, [
+    filterKaryawan,
+    setFilterKaryawan,
+    setFormattedFilterKaryawan,
+    bypassUnitKerjaPermission,
+  ]);
+
+  // const handleApplyFilterRef = useRef(handleApplyFilter);
+
+  // useEffect(() => {
+  //   handleApplyFilterRef.current();
+  // }, []);
 
   // SX
   const lightDarkColor = useLightDarkColor();

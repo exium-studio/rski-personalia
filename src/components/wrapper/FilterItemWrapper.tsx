@@ -16,6 +16,8 @@ import { RiCloseLine } from "@remixicon/react";
 import { Dispatch } from "react";
 import { useBodyColor } from "../../constant/colors";
 import formatNumber from "../../lib/formatNumber";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props extends AccordionItemProps {
   title: string;
@@ -36,6 +38,9 @@ export default function FilterItemWrapper({
 }: Props) {
   // SX
   const bodyColor = useBodyColor();
+
+  const { userPermissions } = useAuth();
+  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
 
   return (
     <AccordionItem {...props}>
@@ -58,26 +63,28 @@ export default function FilterItemWrapper({
           <HStack>
             {filterValue && filterValue.length > 0 && (
               <>
-                <Tooltip label={"Hapus filter ini"} openDelay={500}>
-                  <IconButton
-                    as={Center}
-                    aria-label="Delete filter item button"
-                    icon={<Icon as={RiCloseLine} fontSize={20} />}
-                    size={"xs"}
-                    borderRadius={"full"}
-                    colorScheme="red"
-                    variant={"ghost"}
-                    opacity={0}
-                    _groupHover={{ opacity: 1 }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setFilterConfig((ps: any) => ({
-                        ...ps,
-                        [filterKey]: [],
-                      }));
-                    }}
-                  />
-                </Tooltip>
+                {bypassUnitKerjaPermission && (
+                  <Tooltip label={"Hapus filter ini"} openDelay={500}>
+                    <IconButton
+                      as={Center}
+                      aria-label="Delete filter item button"
+                      icon={<Icon as={RiCloseLine} fontSize={20} />}
+                      size={"xs"}
+                      borderRadius={"full"}
+                      colorScheme="red"
+                      variant={"ghost"}
+                      opacity={0}
+                      _groupHover={{ opacity: 1 }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setFilterConfig((ps: any) => ({
+                          ...ps,
+                          [filterKey]: [],
+                        }));
+                      }}
+                    />
+                  </Tooltip>
+                )}
 
                 <Center
                   flexShrink={0}

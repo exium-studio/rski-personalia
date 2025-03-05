@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { endOfWeek, startOfWeek } from "date-fns";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ExportJadwalModal from "../../components/dependent/ExportJadwalModal";
 import ImportModal from "../../components/dependent/ImportModal";
 import DateRangePickerModal from "../../components/dependent/input/DateRangePickerModal";
@@ -15,7 +15,6 @@ import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
-import useGetUserData from "../../hooks/useGetUserData";
 import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Jadwal() {
@@ -24,7 +23,7 @@ export default function Jadwal() {
   const exportPermissions = isHasPermissions(userPermissions, [24]);
   const importPermissions = isHasPermissions(userPermissions, [23]);
   const createPermissions = isHasPermissions(userPermissions, [19]);
-  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+  // const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
 
   const today = new Date();
   const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
@@ -42,12 +41,7 @@ export default function Jadwal() {
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
   const [search, setSearch] = useState("");
-  const {
-    filterKaryawan,
-    setFilterKaryawan,
-    formattedFilterKaryawan,
-    setFormattedFilterKaryawan,
-  } = useFilterKaryawan();
+  const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -69,63 +63,6 @@ export default function Jadwal() {
       tgl_selesai: inputValue?.to,
     }));
   };
-
-  const user = useGetUserData();
-  const userRef = useRef(user);
-  // const filterKaryawanRef = useRef(filterKaryawan);
-  const formattedFilterKaryawanRef = useRef(formattedFilterKaryawan);
-
-  useEffect(() => {
-    // console.log(userRef.current);
-
-    if (userRef.current) {
-      const unitKerjaUser = userRef.current?.data_karyawan?.unit_kerja;
-
-      // console.log("uk user", unitKerjaUser);
-      // console.log(unitKerjaUser);
-
-      if (unitKerjaUser && !bypassUnitKerjaPermission) {
-        const unitKerjaExists = filterKaryawan.unit_kerja.some(
-          (uk: any) => uk.id === unitKerjaUser.id
-        );
-
-        if (!unitKerjaExists) {
-          const presetUnitKerjaFilterKaryawan = {
-            ...filterKaryawan,
-            unit_kerja: [
-              ...filterKaryawan.unit_kerja,
-              {
-                id: unitKerjaUser?.id,
-                label: unitKerjaUser?.nama_unit,
-              },
-            ],
-          };
-          setFilterKaryawan(presetUnitKerjaFilterKaryawan);
-        }
-
-        const formattedUnitKerjaExists =
-          formattedFilterKaryawanRef.current?.unit_kerja?.includes(
-            unitKerjaUser.id
-          );
-
-        if (!formattedUnitKerjaExists) {
-          const presetUnitKerjaFormattedFilterKaryawan = {
-            ...formattedFilterKaryawanRef.current,
-            unit_kerja: [
-              ...(formattedFilterKaryawanRef.current?.unit_kerja || []),
-              unitKerjaUser.id,
-            ],
-          };
-          setFormattedFilterKaryawan(presetUnitKerjaFormattedFilterKaryawan);
-        }
-      }
-    }
-  }, [
-    filterKaryawan,
-    setFilterKaryawan,
-    setFormattedFilterKaryawan,
-    bypassUnitKerjaPermission,
-  ]);
 
   // console.log(filterKaryawan);
   // console.log(formattedFilterKaryawan);
