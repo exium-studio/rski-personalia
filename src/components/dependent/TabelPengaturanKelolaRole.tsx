@@ -95,7 +95,7 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
       isSortable: true,
       props: {
         position: "sticky",
-        left: 0,
+        left: viewPermission ? "2px" : 0,
         zIndex: 3,
         w: "243px",
       },
@@ -123,7 +123,7 @@ export default function TabelPengaturanKelolaRole({ filterConfig }: Props) {
         td: item.name,
         props: {
           position: "sticky",
-          left: 0,
+          left: viewPermission ? "2px" : 0,
           zIndex: 2,
         },
         cProps: {
