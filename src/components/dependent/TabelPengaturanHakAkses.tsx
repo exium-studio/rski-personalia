@@ -3,8 +3,6 @@ import { Dispatch, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
 import NotFound from "../independent/NotFound";
 import CContainer from "../wrapper/CContainer";
-import SearchComponent from "./input/SearchComponent";
-import { responsiveSpacing } from "../../constant/sizes";
 
 interface Props {
   role_id: number;
@@ -21,7 +19,6 @@ export default function TabelPengaturanHakAkses({
   role_id,
   data,
   totalPermissions,
-  setTotalPermissions,
   totalPermissionsAllowed,
   setTotalPermissionsAllowed,
   setAllPermissions,
@@ -31,7 +28,7 @@ export default function TabelPengaturanHakAkses({
   const lightDarkColor = useLightDarkColor();
 
   // Filter Config
-  const [filterConfig, setFilterConfig] = useState({
+  const [filterConfig] = useState({
     search: "",
   });
 
@@ -224,7 +221,7 @@ export default function TabelPengaturanHakAkses({
 
   return (
     <>
-      <HStack mb={responsiveSpacing}>
+      {/* <HStack mb={responsiveSpacing}>
         <SearchComponent
           name="search"
           onChangeSetter={(input) => {
@@ -235,7 +232,7 @@ export default function TabelPengaturanHakAkses({
           }}
           inputValue={filterConfig.search}
         />
-      </HStack>
+      </HStack> */}
 
       {fd?.length === 0 && <NotFound />}
 
