@@ -56,6 +56,7 @@ import PengaturanPendidikan from "./pages/Pengaturan/PengaturanPendidikan";
 import PengaturanPremi from "./pages/Pengaturan/PengaturanPotongan";
 import PengaturanPtkp from "./pages/Pengaturan/PengaturanPtkp";
 import PengaturanShift from "./pages/Pengaturan/PengaturanShift";
+import PengaturanStatusKaryawan from "./pages/Pengaturan/PengaturanStatusKaryawan";
 import PengaturanTentang from "./pages/Pengaturan/PengaturanTentang";
 import PengaturanTerPph21 from "./pages/Pengaturan/PengaturanTerPph21";
 import PengaturanCuti from "./pages/Pengaturan/PengaturanTipeCuti";
@@ -63,11 +64,9 @@ import PengaturanUbahKataSandi from "./pages/Pengaturan/PengaturanUbahKataSandi"
 import PengaturanUnitKerja from "./pages/Pengaturan/PengaturanUnitKerja";
 import Diklat from "./pages/Perusahaan/Diklat";
 import DiklatEksternal from "./pages/Perusahaan/DiklatEksternal";
-import PenilaianKaryawan from "./pages/Perusahaan/PenilaianKaryawan";
 import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
-import PengaturanStatusKaryawan from "./pages/Pengaturan/PengaturanStatusKaryawan";
 
 const AuthPageLayout = () => {
   // SX
@@ -228,6 +227,7 @@ export const App = () => {
               element={<FormForgotPasswordStep3 />}
             />
           </Route>
+
           <Route
             path="/dashboard"
             element={
@@ -236,6 +236,7 @@ export const App = () => {
                 title="Dashboard"
                 topNavsData={navs[0].subNavs}
                 topNavActive={0}
+                allowed={[149]}
               >
                 <Dashboard />
               </NavContainer>
@@ -249,6 +250,7 @@ export const App = () => {
                 title="Karyawan"
                 topNavsData={navs[1].subNavs}
                 topNavActive={0}
+                allowed={[50]}
               >
                 <Karyawan />
               </NavContainer>
@@ -262,6 +264,7 @@ export const App = () => {
                 title="Transfer Karyawan"
                 topNavsData={navs[1].subNavs}
                 topNavActive={1}
+                allowed={[133]}
               >
                 <TransferKaryawan />
               </NavContainer>
@@ -275,6 +278,7 @@ export const App = () => {
                 title="Permintaan Perubahan Data"
                 topNavsData={navs[1].subNavs}
                 topNavActive={2}
+                allowed={[2]}
               >
                 <PerubahanDataKaryawan />
               </NavContainer>
@@ -288,6 +292,7 @@ export const App = () => {
                 title="Presensi"
                 topNavsData={navs[2].subNavs}
                 topNavActive={0}
+                allowed={[45]}
               >
                 <Presensi />
               </NavContainer>
@@ -301,6 +306,7 @@ export const App = () => {
                 title="Jadwal"
                 topNavsData={navs[3].subNavs}
                 topNavActive={0}
+                allowed={[22]}
               >
                 <Jadwal />
               </NavContainer>
@@ -314,6 +320,7 @@ export const App = () => {
                 title="Penukaran Jadwal"
                 topNavsData={navs[3].subNavs}
                 topNavActive={1}
+                allowed={[29]}
               >
                 <TukarJadwal />
               </NavContainer>
@@ -327,6 +334,7 @@ export const App = () => {
                 title="Lembur"
                 topNavsData={navs[3].subNavs}
                 topNavActive={2}
+                allowed={[36]}
               >
                 <Lembur />
               </NavContainer>
@@ -340,6 +348,7 @@ export const App = () => {
                 title="Cuti"
                 topNavsData={navs[3].subNavs}
                 topNavActive={3}
+                allowed={[41]}
               >
                 <Cuti />
               </NavContainer>
@@ -353,6 +362,7 @@ export const App = () => {
                 title="Izin"
                 topNavsData={navs[3].subNavs}
                 topNavActive={4}
+                allowed={[4]}
               >
                 <Izin />
               </NavContainer>
@@ -366,6 +376,7 @@ export const App = () => {
                 title="Penggajian"
                 topNavsData={navs[4].subNavs}
                 topNavActive={0}
+                allowed={[17]}
               >
                 <Penggajian />
               </NavContainer>
@@ -379,6 +390,7 @@ export const App = () => {
                 title="THR"
                 topNavsData={navs[4].subNavs}
                 topNavActive={1}
+                allowed={[13]}
               >
                 <Thr />
               </NavContainer>
@@ -392,6 +404,7 @@ export const App = () => {
                 title="Tagihan"
                 topNavsData={navs[4].subNavs}
                 topNavActive={2}
+                allowed={[17]}
               >
                 <Tagihan />
               </NavContainer>
@@ -405,6 +418,7 @@ export const App = () => {
                 title="Diklat Internal"
                 topNavsData={navs[5].subNavs}
                 topNavActive={0}
+                allowed={[8]}
               >
                 <Diklat />
               </NavContainer>
@@ -418,12 +432,13 @@ export const App = () => {
                 title="Diklat Eksternal"
                 topNavsData={navs[5].subNavs}
                 topNavActive={1}
+                allowed={[8]}
               >
                 <DiklatEksternal />
               </NavContainer>
             }
           />
-          <Route
+          {/* <Route
             path="/perusahaan/penilaian-karyawan"
             element={
               <NavContainer
@@ -435,7 +450,7 @@ export const App = () => {
                 <PenilaianKaryawan />
               </NavContainer>
             }
-          />
+          /> */}
           <Route
             path="/profil"
             element={
@@ -472,6 +487,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Hak Akses (Role)"
+                allowed={[61]}
               >
                 <PengaturanContainer activeGroup={0} active={0}>
                   <PengaturanKelolaRole />
@@ -487,6 +503,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Hak Verifikasi"
+                allowed={[130]}
               >
                 <PengaturanContainer activeGroup={0} active={1}>
                   <PengaturanHakVerifikasi />
@@ -518,6 +535,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Status Karyawan"
+                allowed={[147]}
               >
                 <PengaturanContainer activeGroup={1} active={0}>
                   <PengaturanStatusKaryawan />
@@ -533,6 +551,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Gaji Pokok"
+                allowed={[80]}
               >
                 <PengaturanContainer activeGroup={1} active={1}>
                   <PengaturanKelompokGaji />
@@ -548,6 +567,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Jabatan"
+                allowed={[72]}
               >
                 <PengaturanContainer activeGroup={1} active={2}>
                   <PengaturanJabatan />
@@ -563,6 +583,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Unit Kerja"
+                allowed={[68]}
               >
                 <PengaturanContainer activeGroup={1} active={3}>
                   <PengaturanUnitKerja />
@@ -578,6 +599,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pendidikan Terakhir"
+                allowed={[125]}
               >
                 <PengaturanContainer activeGroup={1} active={4}>
                   <PengaturanPendidikan />
@@ -593,6 +615,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Kompetensi"
+                allowed={[76]}
               >
                 <PengaturanContainer activeGroup={1} active={5}>
                   <PengaturanKompetensi />
@@ -608,6 +631,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Jenis Penilaian"
+                allowed={[114]}
               >
                 <PengaturanContainer activeGroup={1} active={6}>
                   <PengaturanJenisPenilaian />
@@ -623,6 +647,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Kuesioner Penilaian"
+                allowed={[84]}
               >
                 <PengaturanContainer activeGroup={1} active={7}>
                   <PengaturanKuisioner />
@@ -638,6 +663,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Tentang Rumah Sakit"
+                allowed={[140]}
               >
                 <PengaturanContainer activeGroup={1} active={8}>
                   <PengaturanTentang />
@@ -653,6 +679,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Materi"
+                allowed={[137]}
               >
                 <PengaturanContainer activeGroup={1} active={9}>
                   <PengaturanMateri />
@@ -670,6 +697,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Potongan"
+                allowed={[88]}
               >
                 <PengaturanContainer activeGroup={2} active={0}>
                   <PengaturanPremi />
@@ -685,6 +713,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Kategori TER"
+                allowed={[92]}
               >
                 <PengaturanContainer activeGroup={2} active={1}>
                   <PengaturanKategoriTer />
@@ -700,6 +729,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - TER pph21"
+                allowed={[92]}
               >
                 <PengaturanContainer activeGroup={2} active={2}>
                   <PengaturanTerPph21 />
@@ -715,6 +745,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - PTKP"
+                allowed={[92]}
               >
                 <PengaturanContainer activeGroup={2} active={3}>
                   <PengaturanPtkp />
@@ -730,6 +761,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Tanggal Penggajian"
+                allowed={[94]}
               >
                 <PengaturanContainer activeGroup={2} active={4}>
                   <PengaturanJadwalPenggajian />
@@ -745,6 +777,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Lokasi Kantor"
+                allowed={[112]}
               >
                 <PengaturanContainer activeGroup={3} active={0}>
                   <PengaturanLokasiPresensi />
@@ -760,6 +793,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Jam Kerja Shift"
+                allowed={[102]}
               >
                 <PengaturanContainer activeGroup={3} active={1}>
                   <PengaturanShift />
@@ -775,6 +809,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Jam Kerja Non Shift"
+                allowed={[102]}
               >
                 <PengaturanContainer activeGroup={3} active={2}>
                   <PengaturanJamKerjaNonShift />
@@ -790,6 +825,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Hari Libur Non-Shift"
+                allowed={[106]}
               >
                 <PengaturanContainer activeGroup={3} active={3}>
                   <PengaturanHariLibur />
@@ -805,6 +841,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Tipe Cuti"
+                allowed={[110]}
               >
                 <PengaturanContainer activeGroup={3} active={4}>
                   <PengaturanCuti />

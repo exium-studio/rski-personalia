@@ -51,7 +51,7 @@ const pengaturanNavs = [
     groupName: "Karyawan",
     navs: [
       {
-        allowed: [80],
+        allowed: [147],
         icon: RiWalletLine,
         label: "Status Karyawan",
         link: "/pengaturan/karyawan/status-karyawan",

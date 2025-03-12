@@ -71,6 +71,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
       setNotReadCount(count);
     }
   }, [data]);
+
   const fdv = data?.notifikasi_verifikasi?.filter((item: any) => {
     const searchTerm = search?.toLowerCase();
 
@@ -85,7 +86,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
 
     return matches1 || matches2;
   });
-  const fdr = data?.notifikasi_verifikasi?.filter((item: any) => {
+  const fdr = data?.notifikasi_reguler?.filter((item: any) => {
     const searchTerm = search?.toLowerCase();
 
     // Kategori Inbox

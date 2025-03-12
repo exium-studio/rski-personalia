@@ -222,6 +222,18 @@ export default function NavContainer({
     }
   }, [setUserPermissions, toast, navigate]);
 
+  useEffect(() => {
+    if (!isHasPermissions(userPermissions, allowed)) {
+      window.history.back();
+      toast({
+        status: "error",
+        title: "Tidak ada akses",
+        position: "bottom-right",
+        isClosable: true,
+      });
+    }
+  }, [userPermissions, allowed, toast]);
+
   const navsRef = useRef(null);
 
   return (
