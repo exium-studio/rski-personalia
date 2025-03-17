@@ -15,6 +15,7 @@ import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
+import useGetUserData from "../../hooks/useGetUserData";
 
 export default function Presensi() {
   const today = new Date();
@@ -55,6 +56,9 @@ export default function Presensi() {
     }));
   };
 
+  const userData = useGetUserData();
+  const isUserSuperAdmin = userData?.role?.id === 1;
+
   // const confirmDate = (newDate: Date | undefined) => {
   //   setFilterConfig((ps: any) => ({ ...ps, tanggal: newDate }));
   // };
@@ -69,7 +73,9 @@ export default function Presensi() {
   return (
     <>
       <CWrapper>
-        <PresensiTotal tanggal={today} mb={responsiveSpacing} />
+        {isUserSuperAdmin && (
+          <PresensiTotal tanggal={today} mb={responsiveSpacing} />
+        )}
 
         <CContainer
           flex={1}
