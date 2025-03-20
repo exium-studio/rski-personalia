@@ -17,6 +17,7 @@ import {
   RiMapPinLine,
   RiQuestionLine,
   RiQuestionMark,
+  RiUser2Line,
   RiUserSettingsLine,
   RiVerifiedBadgeLine,
   RiWalletLine,
@@ -52,7 +53,7 @@ const pengaturanNavs = [
     navs: [
       {
         allowed: [147],
-        icon: RiWalletLine,
+        icon: RiUser2Line,
         label: "Status Karyawan",
         link: "/pengaturan/karyawan/status-karyawan",
       },
