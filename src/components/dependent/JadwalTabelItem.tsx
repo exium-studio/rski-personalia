@@ -66,6 +66,17 @@ export default function TabelJadwalItem({
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
+  const [libur, setLibur] = useState<boolean>(false);
+  const [exLibur, setExLibur] = useState<boolean>(false);
+  useEffect(() => {
+    if (jadwal?.ex_libur) {
+      setExLibur(true);
+    } else {
+      if (!jadwal?.shift) {
+        setLibur(true);
+      }
+    }
+  }, [jadwal]);
 
   const formik = useFormik({
     validateOnChange: false,
@@ -92,6 +103,7 @@ export default function TabelJadwalItem({
         shift_id: values.shift.value,
         tgl_mulai: formatDate(values.tgl_mulai as string, "short"),
         tgl_selesai: "",
+        ex_libur: exLibur ? 1 : 0,
         _method: "patch",
       };
       setLoading(true);
@@ -131,13 +143,6 @@ export default function TabelJadwalItem({
     },
   });
 
-  const [libur, setLibur] = useState<boolean>(false);
-  useEffect(() => {
-    if (!jadwal?.shift) {
-      setLibur(true);
-    }
-  }, [jadwal?.shift]);
-
   const formikRef = useRef(formik);
   useEffect(() => {
     formikRef.current.resetForm();
@@ -145,6 +150,12 @@ export default function TabelJadwalItem({
       formikRef.current.setFieldValue("shift", { value: 0, label: "Libur" });
     }
   }, [libur, formikRef]);
+  useEffect(() => {
+    formikRef.current.resetForm();
+    if (exLibur) {
+      formikRef.current.setFieldValue("shift", { value: 0, label: "Ex Libur" });
+    }
+  }, [exLibur, formikRef]);
 
   const { userPermissions } = useAuth();
   const editPermissions = isHasPermissions(userPermissions, [20]);
@@ -219,7 +230,7 @@ export default function TabelJadwalItem({
                 mb={1}
                 fontSize={"sm"}
               >
-                {jadwal?.shift?.nama || "Libur"}
+                {jadwal.ex_libur ? "Ex Libur" : jadwal?.shift?.nama || "Libur"}
               </Text>
               <Text
                 fontWeight={400}
@@ -228,7 +239,7 @@ export default function TabelJadwalItem({
                 whiteSpace={"nowrap"}
                 // opacity={jadwal?.shift ? 1 : 0}
               >
-                {renderJamKerja}
+                {jadwal.ex_libur ? "-" : renderJamKerja}
               </Text>
             </Box>
 
@@ -349,6 +360,16 @@ export default function TabelJadwalItem({
                     isDisabled={isDatePassed(tgl as string)}
                   >
                     <Text mt={"-3px"}>Jadwalkan Libur</Text>
+                  </Checkbox>
+                  <Checkbox
+                    colorScheme="ap"
+                    onChange={(e) => {
+                      setExLibur(e.target.checked);
+                    }}
+                    isChecked={exLibur}
+                    isDisabled={isDatePassed(tgl as string)}
+                  >
+                    <Text mt={"-3px"}>Jadwalkan Ex Libur</Text>
                   </Checkbox>
                   <FormErrorMessage>
                     {formik.errors.shift as string}

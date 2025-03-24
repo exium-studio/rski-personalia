@@ -62,6 +62,8 @@ export default function TerapkanJadwalKaryawanTerpilih({
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
+  const [libur, setLibur] = useState<boolean>(false);
+  const [exLibur, setExLibur] = useState<boolean>(false);
 
   const formik = useFormik({
     validateOnChange: false,
@@ -75,6 +77,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
         shift_id: values.shift.value,
         tgl_mulai: formatDate(values.tgl_mulai as string, "short"),
         tgl_selesai: "",
+        ex_libur: exLibur ? 1 : 0,
       };
       setLoading(true);
       req
@@ -112,8 +115,6 @@ export default function TerapkanJadwalKaryawanTerpilih({
     },
   });
 
-  const [libur, setLibur] = useState<boolean>(false);
-
   const formikRef = useRef(formik);
   useEffect(() => {
     formikRef.current.resetForm();
@@ -121,6 +122,15 @@ export default function TerapkanJadwalKaryawanTerpilih({
       formikRef.current.setFieldValue("shift", { value: 0, label: "Libur" });
     }
   }, [libur, formikRef]);
+  useEffect(() => {
+    formikRef.current.resetForm();
+    if (exLibur) {
+      formikRef.current.setFieldValue("shift", {
+        value: 0,
+        label: "Ex Libur",
+      });
+    }
+  }, [exLibur, formikRef]);
 
   // SX
 
@@ -240,6 +250,15 @@ export default function TerapkanJadwalKaryawanTerpilih({
                   isChecked={libur}
                 >
                   <Text mt={"-3px"}>Jadwalkan Libur</Text>
+                </Checkbox>
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    setExLibur(e.target.checked);
+                  }}
+                  isChecked={exLibur}
+                >
+                  <Text mt={"-3px"}>Jadwalkan Ex Libur</Text>
                 </Checkbox>
                 <FormErrorMessage>
                   {formik.errors.shift as string}

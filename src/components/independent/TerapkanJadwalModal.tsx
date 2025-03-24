@@ -43,6 +43,8 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
+  const [libur, setLibur] = useState<boolean>(false);
+  const [exLibur, setExLibur] = useState<boolean>(false);
 
   const formik = useFormik({
     validateOnChange: false,
@@ -66,6 +68,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
         tgl_mulai: formatDate(values.tgl_mulai as string, "short"),
         tgl_selesai: "",
         shift_id: values.shift.value,
+        ex_libur: exLibur ? 1 : 0,
       };
 
       setLoading(true);
@@ -102,13 +105,19 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
     },
   });
   const formikRef = useRef(formik);
-  const [libur, setLibur] = useState<boolean>(false);
+
   useEffect(() => {
-    formikRef.current.setFieldValue("shift", undefined);
+    formikRef.current.resetForm();
     if (libur) {
       formikRef.current.setFieldValue("shift", { value: 0, label: "Libur" });
     }
   }, [libur, formikRef]);
+  useEffect(() => {
+    formikRef.current.resetForm();
+    if (exLibur) {
+      formikRef.current.setFieldValue("shift", { value: 0, label: "Ex Libur" });
+    }
+  }, [exLibur, formikRef]);
 
   return (
     <>
@@ -213,6 +222,15 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                   isChecked={libur}
                 >
                   <Text mt={"-3px"}>Jadwalkan Libur</Text>
+                </Checkbox>
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    setExLibur(e.target.checked);
+                  }}
+                  isChecked={exLibur}
+                >
+                  <Text mt={"-3px"}>Jadwalkan Ex Libur</Text>
                 </Checkbox>
                 <FormErrorMessage>
                   {formik.errors.shift as string}
