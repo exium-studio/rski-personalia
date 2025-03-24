@@ -52,6 +52,22 @@ import Retry from "./Retry";
 import StringInput from "./input/StringInput";
 import FileInputLarge from "./input/FileInputLarge";
 
+const Empty = ({ karyawan_id }: any) => {
+  return (
+    <CContainer justify={"center"} align={"center"} my={"auto"}>
+      <NoData />
+      <TambahDokumenDisclosure karyawan_id={karyawan_id}>
+        <Button
+          colorScheme="p"
+          leftIcon={<Icon as={RiAddLine} fontSize={iconSize} />}
+        >
+          Tambah Dokumen
+        </Button>
+      </TambahDokumenDisclosure>
+    </CContainer>
+  );
+};
+
 const TambahDokumenDisclosure = ({ karyawan_id }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`tambah-dokumen-${karyawan_id}`, isOpen, onOpen, onClose);
@@ -458,19 +474,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
           <ModalBody px={0}>
             {error && (
               <>
-                {notFound && (
-                  <CContainer>
-                    <NoData />
-                    <TambahDokumenDisclosure karyawan_id={karyawan_id}>
-                      <Button
-                        colorScheme="p"
-                        leftIcon={<Icon as={RiAddLine} fontSize={iconSize} />}
-                      >
-                        Tambah Dokumen
-                      </Button>
-                    </TambahDokumenDisclosure>
-                  </CContainer>
-                )}
+                {notFound && <Empty karyawan_id={karyawan_id} />}
 
                 {!notFound && (
                   <Center my={"auto"} minH={"300px"}>
@@ -542,19 +546,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
                 {!loading && (
                   <>
                     {(!data || (data && data.length === 0)) && (
-                      <CContainer>
-                        <NoData />
-                        <TambahDokumenDisclosure karyawan_id={karyawan_id}>
-                          <Button
-                            colorScheme="p"
-                            leftIcon={
-                              <Icon as={RiAddLine} fontSize={iconSize} />
-                            }
-                          >
-                            Tambah Dokumen
-                          </Button>
-                        </TambahDokumenDisclosure>
-                      </CContainer>
+                      <Empty karyawan_id={karyawan_id} />
                     )}
 
                     {(data || (data && data.length > 0)) && (
