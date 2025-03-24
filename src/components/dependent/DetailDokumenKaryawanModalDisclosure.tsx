@@ -57,11 +57,7 @@ const Empty = ({ karyawan_id }: any) => {
     <CContainer justify={"center"} align={"center"} my={"auto"}>
       <NoData mb={5} />
       <TambahDokumenDisclosure karyawan_id={karyawan_id}>
-        <Button
-          colorScheme="p"
-          variant={"outline"}
-          leftIcon={<Icon as={RiAddLine} fontSize={iconSize} />}
-        >
+        <Button colorScheme="p" variant={"outline"}>
           Tambah Dokumen
         </Button>
       </TambahDokumenDisclosure>
@@ -644,12 +640,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
                           />
 
                           <TambahDokumenDisclosure karyawan_id={karyawan_id}>
-                            <Button
-                              colorScheme="p"
-                              leftIcon={
-                                <Icon as={RiAddLine} fontSize={iconSize} />
-                              }
-                            >
+                            <Button colorScheme="p" variant={"outline"}>
                               Tambah Dokumen
                             </Button>
                           </TambahDokumenDisclosure>
