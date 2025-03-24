@@ -464,11 +464,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
                     <TambahDokumenDisclosure karyawan_id={karyawan_id}>
                       <Button
                         colorScheme="p"
-                        leftIcon={
-                          <Icon>
-                            <RiAddLine />
-                          </Icon>
-                        }
+                        leftIcon={<Icon as={RiAddLine} fontSize={iconSize} />}
                       >
                         Tambah Dokumen
                       </Button>
@@ -552,9 +548,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
                           <Button
                             colorScheme="p"
                             leftIcon={
-                              <Icon>
-                                <RiAddLine />
-                              </Icon>
+                              <Icon as={RiAddLine} fontSize={iconSize} />
                             }
                           >
                             Tambah Dokumen
@@ -658,9 +652,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
                             <Button
                               colorScheme="p"
                               leftIcon={
-                                <Icon>
-                                  <RiAddLine />
-                                </Icon>
+                                <Icon as={RiAddLine} fontSize={iconSize} />
                               }
                             >
                               Tambah Dokumen
