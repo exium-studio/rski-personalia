@@ -34,6 +34,7 @@ import SelectShift from "../dependent/_Select/SelectShift";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import RequiredForm from "../form/RequiredForm";
+import CContainer from "../wrapper/CContainer";
 
 interface Props extends ButtonProps {}
 
@@ -214,24 +215,26 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                   isError={!!formik.errors.shift}
                   mb={4}
                 />
-                <Checkbox
-                  colorScheme="ap"
-                  onChange={(e) => {
-                    setLibur(e.target.checked);
-                  }}
-                  isChecked={libur}
-                >
-                  <Text mt={"-3px"}>Jadwalkan Libur</Text>
-                </Checkbox>
-                <Checkbox
-                  colorScheme="ap"
-                  onChange={(e) => {
-                    setExLibur(e.target.checked);
-                  }}
-                  isChecked={exLibur}
-                >
-                  <Text mt={"-3px"}>Jadwalkan Ex Libur</Text>
-                </Checkbox>
+                <CContainer gap={2}>
+                  <Checkbox
+                    colorScheme="ap"
+                    onChange={(e) => {
+                      setLibur(e.target.checked);
+                    }}
+                    isChecked={libur}
+                  >
+                    <Text mt={"-3px"}>Jadwalkan Libur</Text>
+                  </Checkbox>
+                  <Checkbox
+                    colorScheme="ap"
+                    onChange={(e) => {
+                      setExLibur(e.target.checked);
+                    }}
+                    isChecked={exLibur}
+                  >
+                    <Text mt={"-3px"}>Jadwalkan Ex Libur</Text>
+                  </Checkbox>
+                </CContainer>
                 <FormErrorMessage>
                   {formik.errors.shift as string}
                 </FormErrorMessage>

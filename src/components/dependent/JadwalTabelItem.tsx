@@ -40,6 +40,7 @@ import PermissionTooltip from "../wrapper/PermissionTooltip";
 import SelectShiftByUser from "./_Select/SelectShiftByUser";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
+import CContainer from "../wrapper/CContainer";
 
 interface Props {
   data: any;
@@ -351,26 +352,28 @@ export default function TabelJadwalItem({
                     isDisabled={isDatePassed(tgl as string) || libur}
                     mb={4}
                   />
-                  <Checkbox
-                    colorScheme="ap"
-                    onChange={(e) => {
-                      setLibur(e.target.checked);
-                    }}
-                    isChecked={libur}
-                    isDisabled={isDatePassed(tgl as string)}
-                  >
-                    <Text mt={"-3px"}>Jadwalkan Libur</Text>
-                  </Checkbox>
-                  <Checkbox
-                    colorScheme="ap"
-                    onChange={(e) => {
-                      setExLibur(e.target.checked);
-                    }}
-                    isChecked={exLibur}
-                    isDisabled={isDatePassed(tgl as string)}
-                  >
-                    <Text mt={"-3px"}>Jadwalkan Ex Libur</Text>
-                  </Checkbox>
+                  <CContainer gap={2}>
+                    <Checkbox
+                      colorScheme="ap"
+                      onChange={(e) => {
+                        setLibur(e.target.checked);
+                      }}
+                      isChecked={libur}
+                      isDisabled={isDatePassed(tgl as string)}
+                    >
+                      <Text mt={"-3px"}>Jadwalkan Libur</Text>
+                    </Checkbox>
+                    <Checkbox
+                      colorScheme="ap"
+                      onChange={(e) => {
+                        setExLibur(e.target.checked);
+                      }}
+                      isChecked={exLibur}
+                      isDisabled={isDatePassed(tgl as string)}
+                    >
+                      <Text mt={"-3px"}>Jadwalkan Ex Libur</Text>
+                    </Checkbox>
+                  </CContainer>
                   <FormErrorMessage>
                     {formik.errors.shift as string}
                   </FormErrorMessage>
