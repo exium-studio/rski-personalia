@@ -147,7 +147,7 @@ export default function EditKaryawanForm({
           formatDate(data?.tgl_berakhir_pks as string, "iso")
         ) as any) || undefined,
       no_rm: data?.no_rm as string,
-      no_manulife: data?.no_manulife as string,
+      no_manulife: data?.no_manulife ?? "",
       tgl_masuk: new Date(formatDate(data?.tgl_masuk as string, "iso")) as any,
       tgl_diangkat: new Date(
         formatDate(data?.tgl_diangkat as string, "iso")
@@ -494,7 +494,7 @@ export default function EditKaryawanForm({
           </FormLabel>
           <StringInput
             name="no_manulife"
-            placeholder="Jolitos Kurniawan"
+            placeholder="331**********"
             onChangeSetter={(input) => {
               formik.setFieldValue("no_manulife", input);
             }}
