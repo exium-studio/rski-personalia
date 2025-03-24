@@ -68,7 +68,7 @@ const Empty = ({ karyawan_id }: any) => {
   );
 };
 
-const TambahDokumenDisclosure = ({ karyawan_id }: any) => {
+const TambahDokumenDisclosure = ({ children, karyawan_id }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`tambah-dokumen-${karyawan_id}`, isOpen, onOpen, onClose);
 
@@ -136,7 +136,9 @@ const TambahDokumenDisclosure = ({ karyawan_id }: any) => {
           e.stopPropagation();
           onOpen();
         }}
-      ></Box>
+      >
+        {children}
+      </Box>
 
       <Modal
         isOpen={isOpen}
