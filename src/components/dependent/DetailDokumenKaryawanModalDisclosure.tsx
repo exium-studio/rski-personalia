@@ -55,10 +55,11 @@ import FileInputLarge from "./input/FileInputLarge";
 const Empty = ({ karyawan_id }: any) => {
   return (
     <CContainer justify={"center"} align={"center"} my={"auto"}>
-      <NoData />
+      <NoData mb={5} />
       <TambahDokumenDisclosure karyawan_id={karyawan_id}>
         <Button
           colorScheme="p"
+          variant={"outline"}
           leftIcon={<Icon as={RiAddLine} fontSize={iconSize} />}
         >
           Tambah Dokumen
@@ -91,7 +92,7 @@ const TambahDokumenDisclosure = ({ children, karyawan_id }: any) => {
 
       const payload = new FormData();
       payload.append("label", values.label);
-      payload.append("file", values.file);
+      payload.append("dokumen", values.file);
 
       req
         .post(
