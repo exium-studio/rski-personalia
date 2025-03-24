@@ -10,6 +10,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   Icon,
   Modal,
   ModalBody,
@@ -24,7 +25,7 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { RiVerifiedBadgeFill } from "@remixicon/react";
+import { RiAddLine, RiVerifiedBadgeFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
@@ -48,12 +49,149 @@ import DokumenFileItem from "./DokumenFileItem";
 import SearchComponent from "./input/SearchComponent";
 import Textarea from "./input/Textarea";
 import Retry from "./Retry";
+import StringInput from "./input/StringInput";
+import FileInputLarge from "./input/FileInputLarge";
+
+const TambahDokumenDisclosure = ({ karyawan_id }: any) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`tambah-dokumen-${karyawan_id}`, isOpen, onOpen, onClose);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      label: "",
+      file: undefined as any,
+    },
+    validationSchema: yup.object().shape({
+      label: yup.string().required("Harus diisi"),
+      file: yup.mixed().required("Harus diisi"),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      setLoading(true);
+
+      const payload = new FormData();
+      payload.append("label", values.label);
+      payload.append("file", values.file);
+
+      req
+        .post(
+          `api/rski/dashboard/karyawan/detail-karyawan-dokumen/${karyawan_id}/create-berkas`,
+          payload
+        )
+        .then((r) => {
+          if (r.status === 200) {
+            resetForm();
+            setRt(!rt);
+            backOnClose();
+            toast({
+              status: "success",
+              title: r?.data?.message,
+              position: "bottom-right",
+              isClosable: true,
+            });
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
+            position: "bottom-right",
+            isClosable: true,
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+  });
+
+  return (
+    <>
+      <Box
+        onClick={(e) => {
+          e.stopPropagation();
+          onOpen();
+        }}
+      ></Box>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Tambah Dokumen"} />
+          </ModalHeader>
+          <ModalBody>
+            <form id="tambahDokumenForm" onSubmit={formik.handleSubmit}>
+              <FormControl mb={4} isInvalid={!!formik.errors.label}>
+                <FormLabel>
+                  Nama
+                  <RequiredForm />
+                </FormLabel>
+                <StringInput
+                  name="label"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("label", input);
+                  }}
+                  inputValue={formik.values.label}
+                  placeholder="Dokumen Penting"
+                />
+                <FormErrorMessage>
+                  {formik.errors.file as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={6} isInvalid={!!formik.errors.file}>
+                <FormLabel>
+                  Dokumen
+                  <RequiredForm />
+                </FormLabel>
+                <FileInputLarge
+                  name="file"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("file", input);
+                  }}
+                  inputValue={formik.values.file}
+                />
+                <FormErrorMessage>
+                  {formik.errors.file as string}
+                </FormErrorMessage>
+              </FormControl>
+            </form>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              colorScheme="ap"
+              className="btn-ap clicky"
+              type="submit"
+              form="tambahDokumenForm"
+              isLoading={loading}
+            >
+              Tambahkan
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 interface VerifikasiProps {
   data: any;
   selectedDokumen: number[];
 }
-
 const VerifikasiButtonModal = ({ data, selectedDokumen }: VerifikasiProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
@@ -320,7 +458,23 @@ export default function DetailDokumenKaryawanModalDisclosure({
           <ModalBody px={0}>
             {error && (
               <>
-                {notFound && <NoData minH={"300px"} />}
+                {notFound && (
+                  <CContainer>
+                    <NoData />
+                    <TambahDokumenDisclosure karyawan_id={karyawan_id}>
+                      <Button
+                        colorScheme="p"
+                        leftIcon={
+                          <Icon>
+                            <RiAddLine />
+                          </Icon>
+                        }
+                      >
+                        Tambah Dokumen
+                      </Button>
+                    </TambahDokumenDisclosure>
+                  </CContainer>
+                )}
 
                 {!notFound && (
                   <Center my={"auto"} minH={"300px"}>
@@ -391,7 +545,23 @@ export default function DetailDokumenKaryawanModalDisclosure({
 
                 {!loading && (
                   <>
-                    {(!data || (data && data.length === 0)) && <NoData />}
+                    {(!data || (data && data.length === 0)) && (
+                      <CContainer>
+                        <NoData />
+                        <TambahDokumenDisclosure karyawan_id={karyawan_id}>
+                          <Button
+                            colorScheme="p"
+                            leftIcon={
+                              <Icon>
+                                <RiAddLine />
+                              </Icon>
+                            }
+                          >
+                            Tambah Dokumen
+                          </Button>
+                        </TambahDokumenDisclosure>
+                      </CContainer>
+                    )}
 
                     {(data || (data && data.length > 0)) && (
                       <CContainer
@@ -474,14 +644,29 @@ export default function DetailDokumenKaryawanModalDisclosure({
                           />
                         </Wrap>
 
-                        <SearchComponent
-                          name="search"
-                          onChangeSetter={(input) => {
-                            setSearch(input);
-                          }}
-                          inputValue={search}
-                          mb={responsiveSpacing}
-                        />
+                        <HStack>
+                          <SearchComponent
+                            name="search"
+                            onChangeSetter={(input) => {
+                              setSearch(input);
+                            }}
+                            inputValue={search}
+                            mb={responsiveSpacing}
+                          />
+
+                          <TambahDokumenDisclosure karyawan_id={karyawan_id}>
+                            <Button
+                              colorScheme="p"
+                              leftIcon={
+                                <Icon>
+                                  <RiAddLine />
+                                </Icon>
+                              }
+                            >
+                              Tambah Dokumen
+                            </Button>
+                          </TambahDokumenDisclosure>
+                        </HStack>
 
                         {fd?.length === 0 && <NotFound />}
 
