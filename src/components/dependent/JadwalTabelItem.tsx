@@ -145,6 +145,7 @@ export default function TabelJadwalItem({
   });
 
   const formikRef = useRef(formik);
+  useEffect(() => {}, []);
   useEffect(() => {
     if (libur) {
       formikRef.current.setFieldValue("shift", { value: 0, label: "Libur" });
@@ -159,8 +160,25 @@ export default function TabelJadwalItem({
     }
   }, [exLibur, formikRef]);
   useEffect(() => {
-    if (!libur && !exLibur) {
+    if (!libur && !exLibur && !jadwal) {
       formikRef.current.setFieldValue("shift", undefined);
+    }
+    if (!libur && !exLibur && jadwal) {
+      formikRef.current.setFieldValue(
+        "shift",
+        jadwal?.shift
+          ? {
+              value: jadwal?.shift?.id,
+              label: `${formatTime(jadwal?.shift?.jam_from)}-${formatTime(
+                jadwal?.shift?.jam_to
+              )}`,
+              label2: jadwal?.shift?.nama,
+            }
+          : {
+              value: 0,
+              label: "Libur",
+            }
+      );
     }
   }, [libur, exLibur, formikRef]);
 
