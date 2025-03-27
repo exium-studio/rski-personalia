@@ -180,7 +180,7 @@ export default function TabelJadwalItem({
             }
       );
     }
-  }, [libur, exLibur, formikRef]);
+  }, [libur, exLibur, jadwal, formikRef]);
 
   const { userPermissions } = useAuth();
   const editPermissions = isHasPermissions(userPermissions, [20]);
