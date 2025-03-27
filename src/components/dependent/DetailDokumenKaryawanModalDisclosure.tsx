@@ -25,7 +25,7 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { RiAddLine, RiVerifiedBadgeFill } from "@remixicon/react";
+import { RiVerifiedBadgeFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
