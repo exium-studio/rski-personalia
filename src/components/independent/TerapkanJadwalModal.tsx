@@ -125,8 +125,6 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
     }
   }, [libur, exLibur, formikRef]);
 
-  console.log(formik.values.shift);
-
   return (
     <>
       <Button

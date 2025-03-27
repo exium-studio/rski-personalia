@@ -136,8 +136,6 @@ export default function TerapkanJadwalKaryawanTerpilih({
     }
   }, [libur, exLibur, formikRef]);
 
-  console.log(formik.values.shift);
-
   const { userPermissions } = useAuth();
   const createPermissions = isHasPermissions(userPermissions, [19]);
 

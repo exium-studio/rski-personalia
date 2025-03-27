@@ -105,7 +105,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
 
   function handleApplyFilter() {
     const formattedFilters = {
-      search: localFilterConfig.search,
+      // search: localFilterConfig.search,
       unit_kerja: localFilterConfig.unit_kerja.map((item: any) => item.id),
       jenis_karyawan: localFilterConfig.jenis_karyawan.map(
         (item: any) => item.value
@@ -207,11 +207,11 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     bypassUnitKerjaPermission,
   ]);
 
-  const handleApplyFilterRef = useRef(handleApplyFilter);
+  // const handleApplyFilterRef = useRef(handleApplyFilter);
 
-  useEffect(() => {
-    handleApplyFilterRef.current();
-  }, []);
+  // useEffect(() => {
+  //   handleApplyFilterRef.current();
+  // }, []);
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -345,7 +345,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
                   // setClear(true);
                 }}
               >
-                Clear
+                Reset default
               </Button>
 
               <Button
