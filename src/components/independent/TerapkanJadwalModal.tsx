@@ -106,19 +106,26 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
     },
   });
   const formikRef = useRef(formik);
-
   useEffect(() => {
-    formikRef.current.resetForm();
     if (libur) {
       formikRef.current.setFieldValue("shift", { value: 0, label: "Libur" });
     }
   }, [libur, formikRef]);
   useEffect(() => {
-    formikRef.current.resetForm();
     if (exLibur) {
-      formikRef.current.setFieldValue("shift", { value: 0, label: "Ex Libur" });
+      formikRef.current.setFieldValue("shift", {
+        value: 0,
+        label: "Ex Libur",
+      });
     }
   }, [exLibur, formikRef]);
+  useEffect(() => {
+    if (!libur && !exLibur) {
+      formikRef.current.setFieldValue("shift", undefined);
+    }
+  }, [libur, exLibur, formikRef]);
+
+  console.log(formik.values.shift);
 
   return (
     <>
@@ -150,6 +157,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
               onClose={() => {
                 formik.resetForm();
                 setLibur(false);
+                setExLibur(false);
               }}
             />
           </ModalHeader>
@@ -213,12 +221,14 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                   }}
                   inputValue={formik.values.shift}
                   isError={!!formik.errors.shift}
+                  isDisabled={libur || exLibur}
                   mb={4}
                 />
                 <CContainer gap={2}>
                   <Checkbox
                     colorScheme="ap"
                     onChange={(e) => {
+                      setExLibur(false);
                       setLibur(e.target.checked);
                     }}
                     isChecked={libur}
@@ -228,6 +238,7 @@ export default function TerapkanJadwalModal({ ...props }: Props) {
                   <Checkbox
                     colorScheme="ap"
                     onChange={(e) => {
+                      setLibur(false);
                       setExLibur(e.target.checked);
                     }}
                     isChecked={exLibur}

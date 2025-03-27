@@ -146,17 +146,23 @@ export default function TabelJadwalItem({
 
   const formikRef = useRef(formik);
   useEffect(() => {
-    formikRef.current.resetForm();
     if (libur) {
       formikRef.current.setFieldValue("shift", { value: 0, label: "Libur" });
     }
   }, [libur, formikRef]);
   useEffect(() => {
-    formikRef.current.resetForm();
     if (exLibur) {
-      formikRef.current.setFieldValue("shift", { value: 0, label: "Ex Libur" });
+      formikRef.current.setFieldValue("shift", {
+        value: 0,
+        label: "Ex Libur",
+      });
     }
   }, [exLibur, formikRef]);
+  useEffect(() => {
+    if (!libur && !exLibur) {
+      formikRef.current.setFieldValue("shift", undefined);
+    }
+  }, [libur, exLibur, formikRef]);
 
   const { userPermissions } = useAuth();
   const editPermissions = isHasPermissions(userPermissions, [20]);
@@ -349,13 +355,14 @@ export default function TabelJadwalItem({
                       formik.setFieldValue("shift", input);
                     }}
                     inputValue={formik.values.shift}
-                    isDisabled={isDatePassed(tgl as string) || libur}
+                    isDisabled={isDatePassed(tgl as string) || libur || exLibur}
                     mb={4}
                   />
                   <CContainer gap={2}>
                     <Checkbox
                       colorScheme="ap"
                       onChange={(e) => {
+                        setExLibur(false);
                         setLibur(e.target.checked);
                       }}
                       isChecked={libur}
@@ -366,6 +373,7 @@ export default function TabelJadwalItem({
                     <Checkbox
                       colorScheme="ap"
                       onChange={(e) => {
+                        setLibur(false);
                         setExLibur(e.target.checked);
                       }}
                       isChecked={exLibur}

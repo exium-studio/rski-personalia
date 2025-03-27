@@ -118,13 +118,11 @@ export default function TerapkanJadwalKaryawanTerpilih({
 
   const formikRef = useRef(formik);
   useEffect(() => {
-    formikRef.current.resetForm();
     if (libur) {
       formikRef.current.setFieldValue("shift", { value: 0, label: "Libur" });
     }
   }, [libur, formikRef]);
   useEffect(() => {
-    formikRef.current.resetForm();
     if (exLibur) {
       formikRef.current.setFieldValue("shift", {
         value: 0,
@@ -132,8 +130,13 @@ export default function TerapkanJadwalKaryawanTerpilih({
       });
     }
   }, [exLibur, formikRef]);
+  useEffect(() => {
+    if (!libur && !exLibur) {
+      formikRef.current.setFieldValue("shift", undefined);
+    }
+  }, [libur, exLibur, formikRef]);
 
-  // SX
+  console.log(formik.values.shift);
 
   const { userPermissions } = useAuth();
   const createPermissions = isHasPermissions(userPermissions, [19]);
@@ -172,6 +175,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
           backOnClose();
           formik.resetForm();
           setLibur(false);
+          setExLibur(false);
         }}
         isCentered
         blockScrollOnMount={false}
@@ -240,13 +244,14 @@ export default function TerapkanJadwalKaryawanTerpilih({
                   }}
                   inputValue={formik.values.shift}
                   isError={!!formik.errors.shift}
-                  isDisabled={libur}
+                  isDisabled={libur || exLibur}
                   mb={4}
                 />
                 <CContainer gap={2}>
                   <Checkbox
                     colorScheme="ap"
                     onChange={(e) => {
+                      setExLibur(false);
                       setLibur(e.target.checked);
                     }}
                     isChecked={libur}
@@ -257,6 +262,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
                   <Checkbox
                     colorScheme="ap"
                     onChange={(e) => {
+                      setLibur(false);
                       setExLibur(e.target.checked);
                     }}
                     isChecked={exLibur}
