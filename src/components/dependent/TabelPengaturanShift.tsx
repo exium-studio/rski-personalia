@@ -113,7 +113,7 @@ export default function TabelPengaturanShift({ filterConfig }: Props) {
         ? true
         : filterConfig.unit_kerja.some(
             (unitKerja: { value: number }) =>
-              unitKerja.value === item.unit_kerja.id
+              unitKerja.value === item.unit_kerja?.id
           );
 
     const matchesIsDeletedTerm =

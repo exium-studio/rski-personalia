@@ -39,6 +39,7 @@ export default function EditShiftModalDisclosure({
   children,
   ...props
 }: Props) {
+  console.log(rowData);
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
     `edit-unit-kerja-modal-${rowData.id}`,
@@ -120,8 +121,8 @@ export default function EditShiftModalDisclosure({
       rowData.columnsFormat[2].original_data.jam_to
     );
     formikRef.current.setFieldValue("unit_kerja", {
-      value: rowData.columnsFormat[3].original_data.id,
-      label: rowData.columnsFormat[3].original_data.nama_unit,
+      value: rowData.columnsFormat[3].original_data?.id,
+      label: rowData.columnsFormat[3].original_data?.nama_unit,
     });
   }, [isOpen, rowData, formikRef]);
 
