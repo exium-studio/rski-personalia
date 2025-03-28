@@ -33,14 +33,13 @@ import formatDate from "../../lib/formatDate";
 import formatTime from "../../lib/formatTime";
 import isDatePassed from "../../lib/isDatePassed";
 import isHasPermissions from "../../lib/isHasPermissions";
-import isShiftMalam from "../../lib/isShiftMalam";
 import req from "../../lib/req";
 import RequiredForm from "../form/RequiredForm";
+import CContainer from "../wrapper/CContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import SelectShiftByUser from "./_Select/SelectShiftByUser";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
-import CContainer from "../wrapper/CContainer";
 
 interface Props {
   data: any;
@@ -185,38 +184,43 @@ export default function TabelJadwalItem({
   const { userPermissions } = useAuth();
   const editPermissions = isHasPermissions(userPermissions, [20]);
 
-  const listJadwal = data?.list_jadwal;
-  const shiftMalam = isShiftMalam(
-    jadwal?.shift?.jam_from,
-    jadwal?.shift?.jam_to
-  );
+  // const listJadwal = data?.list_jadwal;
+  // const shiftMalam = isShiftMalam(
+  //   jadwal?.shift?.jam_from,
+  //   jadwal?.shift?.jam_to
+  // );
 
-  const shiftMalamLanjutan =
-    index &&
-    index - 1 >= 0 &&
-    listJadwal[index - 1] &&
-    listJadwal[index].id === listJadwal[index - 1].id
-      ? isShiftMalam(
-          listJadwal[index - 1]?.shift?.jam_from,
-          listJadwal[index - 1]?.shift?.jam_to
-        )
-      : false;
+  // const shiftMalamLanjutan =
+  //   index &&
+  //   index - 1 >= 0 &&
+  //   listJadwal[index - 1] &&
+  //   listJadwal[index].id === listJadwal[index - 1].id
+  //     ? isShiftMalam(
+  //         listJadwal[index - 1]?.shift?.jam_from,
+  //         listJadwal[index - 1]?.shift?.jam_to
+  //       )
+  //     : false;
 
-  const renderJamKerja =
-    shiftMalam && shiftMalamLanjutan
-      ? jadwal?.shift
-        ? `${formatTime("00:00:00")} - 
+  // const renderJamKerja =
+  //   shiftMalam && shiftMalamLanjutan
+  //     ? jadwal?.shift
+  //       ? `${formatTime("00:00:00")} -
+  //             ${formatTime(jadwal?.shift?.jam_to)}`
+  //       : "-"
+  //     : shiftMalam
+  //     ? jadwal?.shift
+  //       ? `${formatTime(jadwal?.shift?.jam_from)} -
+  //             ${formatTime("00:00:00")}`
+  //       : "-"
+  //     : jadwal?.shift
+  //     ? `${formatTime(jadwal?.shift?.jam_from)} -
+  //             ${formatTime(jadwal?.shift?.jam_to)}`
+  //     : "-";
+
+  const renderJamKerja = jadwal?.shift
+    ? `${formatTime(jadwal?.shift?.jam_from)} - 
               ${formatTime(jadwal?.shift?.jam_to)}`
-        : "-"
-      : shiftMalam
-      ? jadwal?.shift
-        ? `${formatTime(jadwal?.shift?.jam_from)} - 
-              ${formatTime("00:00:00")}`
-        : "-"
-      : jadwal?.shift
-      ? `${formatTime(jadwal?.shift?.jam_from)} - 
-              ${formatTime(jadwal?.shift?.jam_to)}`
-      : "-";
+    : "-";
 
   return (
     <>
@@ -240,9 +244,10 @@ export default function TabelJadwalItem({
           className="btn-solid clicky"
           cursor={"pointer"}
           onClick={() => {
-            if (!(shiftMalam && shiftMalamLanjutan)) {
-              onOpen();
-            }
+            // if (!(shiftMalam && shiftMalamLanjutan)) {
+            //   onOpen();
+            // }
+            onOpen();
           }}
           isDisabled={!editPermissions}
         >
@@ -275,9 +280,10 @@ export default function TabelJadwalItem({
                   fontSize={20}
                   alignSelf={"flex-start"}
                   color={
-                    shiftMalam && shiftMalamLanjutan
-                      ? "var(--divider-text)"
-                      : "p.500"
+                    // shiftMalam && shiftMalamLanjutan
+                    //   ? "var(--divider-text)"
+                    //   : "p.500"
+                    "p.500"
                   }
                   mb={"auto"}
                 />
