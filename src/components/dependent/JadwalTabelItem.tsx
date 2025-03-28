@@ -165,7 +165,8 @@ export default function TabelJadwalItem({
     if (!libur && !exLibur && jadwal) {
       formikRef.current.setFieldValue(
         "shift",
-        jadwal?.shift
+
+        jadwal.shift
           ? {
               value: jadwal?.shift?.id,
               label: `${formatTime(jadwal?.shift?.jam_from)}-${formatTime(
@@ -173,10 +174,7 @@ export default function TabelJadwalItem({
               )}`,
               label2: jadwal?.shift?.nama,
             }
-          : {
-              value: 0,
-              label: "Libur",
-            }
+          : undefined
       );
     }
   }, [libur, exLibur, jadwal, formikRef]);
