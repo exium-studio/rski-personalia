@@ -31,13 +31,13 @@ req.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 500:
-          // window.location.href = "/servererror";
+          window.location.href = "/servererror";
           break;
         case 503:
           window.location.href = "/maintenance";
           break;
         case 401:
-          removeCookie("__auth_token");
+          localStorage.removeItem("__auth_token");
           localStorage.removeItem("__user_data");
           window.location.href = "/";
           break;
