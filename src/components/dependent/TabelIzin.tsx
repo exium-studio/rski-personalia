@@ -258,7 +258,7 @@ export default function TabelIzin({ filterConfig }: Props) {
 
               {formattedData && (
                 <>
-                  <CustomTableContainer>
+                  <CustomTableContainer minH="400px">
                     <CustomTable
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}

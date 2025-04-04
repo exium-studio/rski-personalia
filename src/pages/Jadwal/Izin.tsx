@@ -84,7 +84,7 @@ export default function Izin() {
             <FilterKaryawan />
           </HStack>
 
-          <CContainer px={responsiveSpacing}>
+          <CContainer flex={1} px={responsiveSpacing}>
             <TabelIzin filterConfig={filterConfig} />
           </CContainer>
         </CContainer>
