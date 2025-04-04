@@ -36,7 +36,6 @@ export default function PermintaanPerubahanDataKaryawan() {
       <CWrapper overflowY={"auto"}>
         <CContainer
           flex={1}
-          px={responsiveSpacing}
           pb={responsiveSpacing}
           pt={0}
           bg={lightDarkColor}
@@ -45,7 +44,7 @@ export default function PermintaanPerubahanDataKaryawan() {
           className="scrollY"
         >
           <HStack
-            py={responsiveSpacing}
+            p={responsiveSpacing}
             justify={"space-between"}
             w={"100%"}
             className="tabelConfig scrollX"
@@ -81,7 +80,9 @@ export default function PermintaanPerubahanDataKaryawan() {
             <FilterKaryawan />
           </HStack>
 
-          <TabelPerubahanData filterConfig={filterConfig} />
+          <CContainer flex={1} px={responsiveSpacing}>
+            <TabelPerubahanData filterConfig={filterConfig} />
+          </CContainer>
         </CContainer>
       </CWrapper>
     </>
