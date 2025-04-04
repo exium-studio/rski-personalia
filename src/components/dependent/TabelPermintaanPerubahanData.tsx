@@ -20,6 +20,8 @@ import VerifikasiModal from "./VerifikasiModal";
 import useGetUserData from "../../hooks/useGetUserData";
 import VerifikatorName from "./VerifikatorName";
 import formatDate from "../../lib/formatDate";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props {
   filterConfig: any;
@@ -260,17 +262,24 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
     };
   });
 
+  const { userPermissions } = useAuth();
+  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+
   return (
     <>
       {error && (
         <>
-          {notFound && isObjectEmpty(formattedFilterKaryawan) && (
-            <NoData minH={"300px"} />
-          )}
+          {notFound &&
+            isObjectEmpty(formattedFilterKaryawan, [
+              "search",
+              !bypassUnitKerjaPermission ? "unit_kerja" : "",
+            ]) && <NoData minH={"300px"} />}
 
-          {notFound && !isObjectEmpty(formattedFilterKaryawan) && (
-            <NotFound minH={"300px"} />
-          )}
+          {notFound &&
+            !isObjectEmpty(formattedFilterKaryawan, [
+              "search",
+              !bypassUnitKerjaPermission ? "unit_kerja" : "",
+            ]) && <NotFound minH={"300px"} />}
 
           {!notFound && (
             <Center my={"auto"} minH={"300px"}>

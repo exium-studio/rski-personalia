@@ -18,6 +18,8 @@ import Retry from "./Retry";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function TabelKaryawan() {
   // Limit Config
@@ -263,16 +265,23 @@ export default function TabelKaryawan() {
 
   const user_id = parseInt(localStorage.getItem("user_id") as string);
 
+  const { userPermissions } = useAuth();
+  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+
   const render = {
     error: (
       <>
-        {notFound && isObjectEmpty(formattedFilterKaryawan) && (
-          <NoData minH={"300px"} />
-        )}
+        {notFound &&
+          isObjectEmpty(formattedFilterKaryawan, [
+            "search",
+            !bypassUnitKerjaPermission ? "unit_kerja" : "",
+          ]) && <NoData minH={"300px"} />}
 
-        {notFound && !isObjectEmpty(formattedFilterKaryawan) && (
-          <NotFound minH={"300px"} />
-        )}
+        {notFound &&
+          !isObjectEmpty(formattedFilterKaryawan, [
+            "search",
+            !bypassUnitKerjaPermission ? "unit_kerja" : "",
+          ]) && <NotFound minH={"300px"} />}
 
         {!notFound && (
           <Center my={"auto"} minH={"300px"}>
