@@ -20,6 +20,7 @@ interface Props {
 export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
   const userData = useGetUserData();
   const dataPotonganGaji = data?.potongan_gaji || userData?.potongan_gaji;
+  const isSuperAdmin = userData.id === 1;
 
   return (
     <>
@@ -870,213 +871,217 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
         </VStack>
       </VStack>
 
-      <VStack align={"stretch"} gap={0}>
-        <Text fontSize={20} fontWeight={600} mb={4}>
-          Keuangan
-        </Text>
-
-        <VStack align={"stretch"} gap={4}>
-          <HStack justify={"space-between"}>
-            <Box opacity={0.6}>
-              <Highlighter
-                highlightClassName="hw"
-                unhighlightClassName="uw"
-                searchWords={searchQuery}
-                autoEscape={true}
-                textToHighlight="No. Rekening"
-              />
-            </Box>
-            <FlexLine />
-            <Text fontWeight={500} textAlign={"right"}>
-              {data?.no_rekening}
+      {isSuperAdmin && (
+        <>
+          <VStack align={"stretch"} gap={0}>
+            <Text fontSize={20} fontWeight={600} mb={4}>
+              Keuangan
             </Text>
-          </HStack>
 
-          <HStack justify={"space-between"}>
-            <Box opacity={0.6}>
-              <Highlighter
-                highlightClassName="hw"
-                unhighlightClassName="uw"
-                searchWords={searchQuery}
-                autoEscape={true}
-                textToHighlight="Kelompok Gaji"
-              />
-            </Box>
-            <FlexLine />
-            <Text fontWeight={500} textAlign={"right"}>
-              {data?.kelompok_gaji?.nama_kelompok}
+            <VStack align={"stretch"} gap={4}>
+              <HStack justify={"space-between"}>
+                <Box opacity={0.6}>
+                  <Highlighter
+                    highlightClassName="hw"
+                    unhighlightClassName="uw"
+                    searchWords={searchQuery}
+                    autoEscape={true}
+                    textToHighlight="No. Rekening"
+                  />
+                </Box>
+                <FlexLine />
+                <Text fontWeight={500} textAlign={"right"}>
+                  {data?.no_rekening}
+                </Text>
+              </HStack>
+
+              <HStack justify={"space-between"}>
+                <Box opacity={0.6}>
+                  <Highlighter
+                    highlightClassName="hw"
+                    unhighlightClassName="uw"
+                    searchWords={searchQuery}
+                    autoEscape={true}
+                    textToHighlight="Kelompok Gaji"
+                  />
+                </Box>
+                <FlexLine />
+                <Text fontWeight={500} textAlign={"right"}>
+                  {data?.kelompok_gaji?.nama_kelompok}
+                </Text>
+              </HStack>
+
+              <HStack justify={"space-between"}>
+                <Box opacity={0.6}>
+                  <Highlighter
+                    highlightClassName="hw"
+                    unhighlightClassName="uw"
+                    searchWords={searchQuery}
+                    autoEscape={true}
+                    textToHighlight="Gaji"
+                  />
+                </Box>
+                <FlexLine />
+                <Text fontWeight={500} textAlign={"right"}>
+                  Rp {formatNumber(data?.kelompok_gaji?.besaran_gaji || 0)}
+                </Text>
+              </HStack>
+
+              <HStack justify={"space-between"}>
+                <Box opacity={0.6}>
+                  <Highlighter
+                    highlightClassName="hw"
+                    unhighlightClassName="uw"
+                    searchWords={searchQuery}
+                    autoEscape={true}
+                    textToHighlight="Uang Makan"
+                  />
+                </Box>
+                <FlexLine />
+                <Text fontWeight={500} textAlign={"right"}>
+                  Rp {formatNumber(data?.uang_makan || 0)}
+                </Text>
+              </HStack>
+
+              <HStack justify={"space-between"}>
+                <Box opacity={0.6}>
+                  <Highlighter
+                    highlightClassName="hw"
+                    unhighlightClassName="uw"
+                    searchWords={searchQuery}
+                    autoEscape={true}
+                    textToHighlight="Uang Lembur"
+                  />
+                </Box>
+                <FlexLine />
+                <Text fontWeight={500} textAlign={"right"}>
+                  Rp {formatNumber(data?.uang_lembur || 0)}
+                </Text>
+              </HStack>
+            </VStack>
+          </VStack>
+
+          <VStack align={"stretch"} gap={0}>
+            <Text fontSize={20} fontWeight={600} mb={4}>
+              Tunjangan
             </Text>
-          </HStack>
 
-          <HStack justify={"space-between"}>
-            <Box opacity={0.6}>
-              <Highlighter
-                highlightClassName="hw"
-                unhighlightClassName="uw"
-                searchWords={searchQuery}
-                autoEscape={true}
-                textToHighlight="Gaji"
-              />
-            </Box>
-            <FlexLine />
-            <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data?.kelompok_gaji?.besaran_gaji || 0)}
+            <VStack align={"stretch"} gap={4}>
+              <HStack justify={"space-between"}>
+                <Box opacity={0.6}>
+                  <Highlighter
+                    highlightClassName="hw"
+                    unhighlightClassName="uw"
+                    searchWords={searchQuery}
+                    autoEscape={true}
+                    textToHighlight="Tunjangan Jabatan"
+                  />
+                </Box>
+                <FlexLine />
+                <Text fontWeight={500} textAlign={"right"}>
+                  Rp {formatNumber(data?.tunjangan_jabatan || 0)}
+                </Text>
+              </HStack>
+
+              <HStack justify={"space-between"}>
+                <Box opacity={0.6}>
+                  <Highlighter
+                    highlightClassName="hw"
+                    unhighlightClassName="uw"
+                    searchWords={searchQuery}
+                    autoEscape={true}
+                    textToHighlight="Besaran BOR"
+                  />
+                </Box>
+                <FlexLine />
+                <Text fontWeight={500} textAlign={"right"}>
+                  Rp {formatNumber(data?.kompetensi?.nilai_bor || 0)}
+                </Text>
+              </HStack>
+
+              <HStack justify={"space-between"}>
+                <Box opacity={0.6}>
+                  <Highlighter
+                    highlightClassName="hw"
+                    unhighlightClassName="uw"
+                    searchWords={searchQuery}
+                    autoEscape={true}
+                    textToHighlight="Tunjangan Fungsional"
+                  />
+                </Box>
+                <FlexLine />
+                <Text fontWeight={500} textAlign={"right"}>
+                  Rp {formatNumber(data?.tunjangan_fungsional || 0)}
+                </Text>
+              </HStack>
+
+              <HStack justify={"space-between"}>
+                <Box opacity={0.6}>
+                  <Highlighter
+                    highlightClassName="hw"
+                    unhighlightClassName="uw"
+                    searchWords={searchQuery}
+                    autoEscape={true}
+                    textToHighlight="Tunjangan Khusus"
+                  />
+                </Box>
+                <FlexLine />
+                <Text fontWeight={500} textAlign={"right"}>
+                  Rp {formatNumber(data?.tunjangan_khusus || 0)}
+                </Text>
+              </HStack>
+
+              <HStack justify={"space-between"}>
+                <Box opacity={0.6}>
+                  <Highlighter
+                    highlightClassName="hw"
+                    unhighlightClassName="uw"
+                    searchWords={searchQuery}
+                    autoEscape={true}
+                    textToHighlight="Tunjangan Lainnya"
+                  />
+                </Box>
+                <FlexLine />
+                <Text fontWeight={500} textAlign={"right"}>
+                  Rp {formatNumber(data?.tunjangan_lainnya || 0)}
+                </Text>
+              </HStack>
+            </VStack>
+          </VStack>
+
+          <VStack align={"stretch"} gap={0}>
+            <Text fontSize={20} fontWeight={600} mb={4}>
+              Potongan
             </Text>
-          </HStack>
 
-          <HStack justify={"space-between"}>
-            <Box opacity={0.6}>
-              <Highlighter
-                highlightClassName="hw"
-                unhighlightClassName="uw"
-                searchWords={searchQuery}
-                autoEscape={true}
-                textToHighlight="Uang Makan"
-              />
-            </Box>
-            <FlexLine />
-            <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data?.uang_makan || 0)}
-            </Text>
-          </HStack>
+            <VStack align={"stretch"} gap={4}>
+              {dataPotonganGaji?.length === 0 && (
+                <Text opacity={0.4}>Tidak ada potongan gaji</Text>
+              )}
 
-          <HStack justify={"space-between"}>
-            <Box opacity={0.6}>
-              <Highlighter
-                highlightClassName="hw"
-                unhighlightClassName="uw"
-                searchWords={searchQuery}
-                autoEscape={true}
-                textToHighlight="Uang Lembur"
-              />
-            </Box>
-            <FlexLine />
-            <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data?.uang_lembur || 0)}
-            </Text>
-          </HStack>
-        </VStack>
-      </VStack>
-
-      <VStack align={"stretch"} gap={0}>
-        <Text fontSize={20} fontWeight={600} mb={4}>
-          Tunjangan
-        </Text>
-
-        <VStack align={"stretch"} gap={4}>
-          <HStack justify={"space-between"}>
-            <Box opacity={0.6}>
-              <Highlighter
-                highlightClassName="hw"
-                unhighlightClassName="uw"
-                searchWords={searchQuery}
-                autoEscape={true}
-                textToHighlight="Tunjangan Jabatan"
-              />
-            </Box>
-            <FlexLine />
-            <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data?.tunjangan_jabatan || 0)}
-            </Text>
-          </HStack>
-
-          <HStack justify={"space-between"}>
-            <Box opacity={0.6}>
-              <Highlighter
-                highlightClassName="hw"
-                unhighlightClassName="uw"
-                searchWords={searchQuery}
-                autoEscape={true}
-                textToHighlight="Besaran BOR"
-              />
-            </Box>
-            <FlexLine />
-            <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data?.kompetensi?.nilai_bor || 0)}
-            </Text>
-          </HStack>
-
-          <HStack justify={"space-between"}>
-            <Box opacity={0.6}>
-              <Highlighter
-                highlightClassName="hw"
-                unhighlightClassName="uw"
-                searchWords={searchQuery}
-                autoEscape={true}
-                textToHighlight="Tunjangan Fungsional"
-              />
-            </Box>
-            <FlexLine />
-            <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data?.tunjangan_fungsional || 0)}
-            </Text>
-          </HStack>
-
-          <HStack justify={"space-between"}>
-            <Box opacity={0.6}>
-              <Highlighter
-                highlightClassName="hw"
-                unhighlightClassName="uw"
-                searchWords={searchQuery}
-                autoEscape={true}
-                textToHighlight="Tunjangan Khusus"
-              />
-            </Box>
-            <FlexLine />
-            <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data?.tunjangan_khusus || 0)}
-            </Text>
-          </HStack>
-
-          <HStack justify={"space-between"}>
-            <Box opacity={0.6}>
-              <Highlighter
-                highlightClassName="hw"
-                unhighlightClassName="uw"
-                searchWords={searchQuery}
-                autoEscape={true}
-                textToHighlight="Tunjangan Lainnya"
-              />
-            </Box>
-            <FlexLine />
-            <Text fontWeight={500} textAlign={"right"}>
-              Rp {formatNumber(data?.tunjangan_lainnya || 0)}
-            </Text>
-          </HStack>
-        </VStack>
-      </VStack>
-
-      <VStack align={"stretch"} gap={0}>
-        <Text fontSize={20} fontWeight={600} mb={4}>
-          Potongan
-        </Text>
-
-        <VStack align={"stretch"} gap={4}>
-          {dataPotonganGaji?.length === 0 && (
-            <Text opacity={0.4}>Tidak ada potongan gaji</Text>
-          )}
-
-          {dataPotonganGaji?.map((potongan: any, i: number) => (
-            <HStack justify={"space-between"} key={i}>
-              <Box opacity={0.6}>
-                <Highlighter
-                  highlightClassName="hw"
-                  unhighlightClassName="uw"
-                  searchWords={searchQuery}
-                  autoEscape={true}
-                  textToHighlight={potongan.nama_premi}
-                />
-              </Box>
-              <FlexLine />
-              <Text fontWeight={500} textAlign={"right"}>
-                {potongan.jenis_premi === 0 || potongan.jenis_premi === "0"
-                  ? `${formatNumber(potongan.besaran_premi || 0)}%`
-                  : `Rp ${formatNumber(potongan.besaran_premi || 0)}`}
-              </Text>
-            </HStack>
-          ))}
-        </VStack>
-      </VStack>
+              {dataPotonganGaji?.map((potongan: any, i: number) => (
+                <HStack justify={"space-between"} key={i}>
+                  <Box opacity={0.6}>
+                    <Highlighter
+                      highlightClassName="hw"
+                      unhighlightClassName="uw"
+                      searchWords={searchQuery}
+                      autoEscape={true}
+                      textToHighlight={potongan.nama_premi}
+                    />
+                  </Box>
+                  <FlexLine />
+                  <Text fontWeight={500} textAlign={"right"}>
+                    {potongan.jenis_premi === 0 || potongan.jenis_premi === "0"
+                      ? `${formatNumber(potongan.besaran_premi || 0)}%`
+                      : `Rp ${formatNumber(potongan.besaran_premi || 0)}`}
+                  </Text>
+                </HStack>
+              ))}
+            </VStack>
+          </VStack>
+        </>
+      )}
     </>
   );
 }
