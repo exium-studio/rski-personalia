@@ -54,6 +54,7 @@ const DeleteCutiConfirmation = ({ selectedRows }: any) => {
   const { rt, setRt } = useRenderTrigger();
   const [deleteCutiLoading, setDeleteCutiLoading] = useState(false);
   function handleDeleteCuti(selectedRows: any) {
+    setDeleteCutiLoading(true);
     const payload = {
       ids_cuti: selectedRows,
     };
