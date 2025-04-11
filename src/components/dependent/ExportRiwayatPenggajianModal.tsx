@@ -93,7 +93,7 @@ export default function ExportRiwayatPenggajianModal({
             `${fileName || "Laporan Penggajian"} ${
               months[new Date(periode).getMonth()]
             } ${new Date(periode).getFullYear()}`,
-            "xls"
+            [1, 2, 3].includes(tipeExport!!) ? "zip" : "xls"
           );
         } else {
           toast({
