@@ -118,7 +118,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
         (item: any) => item.id
       ),
       masa_kerja: localFilterConfig.masa_kerja,
-      status_aktif: localFilterConfig.status_aktif.map(
+      status_aktif_id: localFilterConfig.status_aktif.map(
         (item: any) => item.value
       ),
       tgl_masuk:
