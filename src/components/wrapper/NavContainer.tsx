@@ -195,7 +195,7 @@ export default function NavContainer({
         .then((r) => {
           if (r.status === 200) {
             const userData = r.data.data;
-            if (userData.status_aktif === 2) {
+            if (userData.status_aktif_id === 2) {
               setUserPermissions(userData.permission);
               userPermissionsRef.current = userData.permission;
             } else {
