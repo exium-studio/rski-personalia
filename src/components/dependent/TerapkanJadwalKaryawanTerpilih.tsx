@@ -159,7 +159,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
           colorScheme="ap"
           onClick={onOpen}
           justify={"center"}
-          isDisabled={isDatePassed(tgl) || !createPermissions}
+          isDisabled={isDatePassed(tgl, true) || !createPermissions}
           // border={"1px solid var(--divider3) !important"}
         >
           <Icon as={RiEditBoxLine} fontSize={20} />

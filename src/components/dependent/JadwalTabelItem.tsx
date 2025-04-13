@@ -272,7 +272,7 @@ export default function TabelJadwalItem({
             </Box>
 
             {data.unit_kerja?.jenis_karyawan === 1 &&
-              !isDatePassed(tgl as string) && (
+              !isDatePassed(tgl as string, true) && (
                 <Icon
                   as={RiEditBoxLine}
                   fontSize={20}
@@ -377,7 +377,9 @@ export default function TabelJadwalItem({
                       formik.setFieldValue("shift", input);
                     }}
                     inputValue={formik.values.shift}
-                    isDisabled={isDatePassed(tgl as string) || libur || exLibur}
+                    isDisabled={
+                      isDatePassed(tgl as string, true) || libur || exLibur
+                    }
                     mb={4}
                   />
                   <CContainer gap={2}>
@@ -388,7 +390,7 @@ export default function TabelJadwalItem({
                         setLibur(e.target.checked);
                       }}
                       isChecked={libur}
-                      isDisabled={isDatePassed(tgl as string)}
+                      isDisabled={isDatePassed(tgl as string, true)}
                     >
                       <Text mt={"-3px"}>Jadwalkan Libur</Text>
                     </Checkbox>
@@ -399,7 +401,7 @@ export default function TabelJadwalItem({
                         setExLibur(e.target.checked);
                       }}
                       isChecked={exLibur}
-                      isDisabled={isDatePassed(tgl as string)}
+                      isDisabled={isDatePassed(tgl as string, true)}
                     >
                       <Text mt={"-3px"}>Jadwalkan Ex Libur</Text>
                     </Checkbox>
@@ -421,7 +423,7 @@ export default function TabelJadwalItem({
                   colorScheme="ap"
                   className="btn-ap clicky"
                   isLoading={loading}
-                  isDisabled={isDatePassed(tgl as string)}
+                  isDisabled={isDatePassed(tgl as string, true)}
                 >
                   Simpan
                 </Button>
