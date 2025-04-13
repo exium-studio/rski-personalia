@@ -2,7 +2,7 @@ import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import MultiSelectStatusVerifikasi2 from "../../components/dependent/_Select/MultiSelectStatusVerifikasi2";
 import MultiSelectTipeCuti from "../../components/dependent/_Select/MultiSelectTipeCuti";
-import ExportModal from "../../components/dependent/ExportModal";
+import ExportCutiModal from "../../components/dependent/ExportCutiModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelCuti from "../../components/dependent/TabelCuti";
 import AjukanCutiModal from "../../components/independent/AjukanCutiModal";
@@ -117,12 +117,13 @@ export default function Cuti() {
               permission={exportPermissions}
               boxProps={{ w: "fit-content" }}
             >
-              <ExportModal
+              {/* <ExportModal
                 url="/api/rski/dashboard/jadwal-karyawan/cuti/export"
                 title="Export Cuti"
                 downloadFileName="Data Cuti"
                 isDisabled={!exportPermissions}
-              />
+              /> */}
+              <ExportCutiModal isDisabled={!exportPermissions} />
             </PermissionTooltip>
             <PermissionTooltip
               permission={createPermissions}

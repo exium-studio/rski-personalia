@@ -14,23 +14,20 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { RiUploadLine } from "@remixicon/react";
-import { endOfWeek, startOfWeek } from "date-fns";
 import { useRef, useState } from "react";
 import { iconSize } from "../../constant/sizes";
+import useFilterKaryawanExportCuti from "../../global/useFilterKaryawanExportCuti";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import download from "../../lib/download";
-import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
+import FilterKaryawanForExport from "../independent/FilterKaryawanForExport";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
-import DateRangePickerModal from "./input/DateRangePickerModal";
-import useFilterKaryawanExportPresensi from "../../global/useFilterKaryawanExportPresensi";
-import FilterKaryawanForExport from "../independent/FilterKaryawanForExport";
 
 interface Props extends ButtonProps {}
 
-export default function ExportPresensiModal({ ...props }: Props) {
+export default function ExportCutiModal({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`export-modal-${1}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
@@ -38,58 +35,51 @@ export default function ExportPresensiModal({ ...props }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
 
-  const today = new Date();
-  const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
-  const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
-  const defaultRangeTgl = {
-    from: startOfWeekDate,
-    to: endOfWeekDate,
-  };
+  // const today = new Date();
+  // const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
+  // const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
+  // const defaultRangeTgl = {
+  //   from: startOfWeekDate,
+  //   to: endOfWeekDate,
+  // };
   const {
     defaultFilterKaryawan,
     filterKaryawan,
     setFilterKaryawan,
     formattedFilterKaryawan,
     setFormattedFilterKaryawan,
-  } = useFilterKaryawanExportPresensi();
+  } = useFilterKaryawanExportCuti();
 
   // Filter Config
-  const defaultDateRangeFilterConfig = {
-    tgl_mulai: defaultRangeTgl?.from,
-    tgl_selesai: defaultRangeTgl?.to,
-  };
-  const [dateRange, setDateRange] = useState<any>(defaultDateRangeFilterConfig);
+  // const defaultFilterConfig = {
+  //   tgl_mulai: defaultRangeTgl?.from,
+  //   tgl_selesai: defaultRangeTgl?.to,
+  // };
+  // const [dateRange, setDateRange] = useState<any>(defaultFilterConfig);
 
-  const confirmDateRange = (
-    inputValue: { from: Date; to: Date } | undefined
-  ) => {
-    setDateRange({
-      tgl_mulai: inputValue?.from,
-      tgl_selesai: inputValue?.to,
-    });
-  };
+  // const confirmDateRange = (
+  //   inputValue: { from: Date; to: Date } | undefined
+  // ) => {
+  //   setDateRange({
+  //     tgl_mulai: inputValue?.from,
+  //     tgl_selesai: inputValue?.to,
+  //   });
+  // };
 
   const handleExport = () => {
     setLoading(true);
     const payload = {
-      tgl_mulai: formatDate(dateRange?.tgl_mulai, "short"),
-      tgl_selesai: formatDate(dateRange?.tgl_selesai, "short"),
+      // tgl_mulai: formatDate(dateRange?.tgl_mulai, "short"),
+      // tgl_selesai: formatDate(dateRange?.tgl_selesai, "short"),
       ...formattedFilterKaryawan,
     };
     req
-      .post("/api/rski/dashboard/presensi/export", payload, {
+      .post("/api/rski/dashboard/jadwal-karyawan/cuti/export", payload, {
         responseType: "blob",
       })
       .then((r) => {
         if (r.status === 200) {
-          download(
-            r.data,
-            `Data Presensi ${formatDate(
-              dateRange?.tgl_mulai,
-              "short"
-            )} - ${formatDate(dateRange?.tgl_selesai, "short")}`,
-            "xls"
-          );
+          download(r.data, `Data Cuti`, "xls");
         } else {
           toast({
             status: "error",
@@ -158,7 +148,7 @@ export default function ExportPresensiModal({ ...props }: Props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Export Presensi"} />
+            <DisclosureHeader title={"Export Cuti"} />
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.6}>Apakah anda yakin akan export tabel ini?</Text>
@@ -180,7 +170,7 @@ export default function ExportPresensiModal({ ...props }: Props) {
                 setFilterKaryawan={setFilterKaryawan}
                 setFormattedFilterKaryawan={setFormattedFilterKaryawan}
               />
-              <DateRangePickerModal
+              {/* <DateRangePickerModal
                 id="jadwal-date-range"
                 name="date-range"
                 minW={"165px"}
@@ -193,7 +183,7 @@ export default function ExportPresensiModal({ ...props }: Props) {
                 maxRange={31}
                 nonNullable
                 presetsConfig={["thisWeek", "thisMonth"]}
-              />
+              /> */}
 
               <ButtonGroup>
                 <Button
