@@ -15,7 +15,7 @@ import Textarea from "../../dependent/input/Textarea";
 import RequiredForm from "../RequiredForm";
 import formatDate from "../../../lib/formatDate";
 import backOnClose from "../../../lib/backOnClose";
-import MultiSelectKaryawanWithUnitKerja from "../../dependent/_Select/MultiSelectKaryawanWithUnitKerja";
+import MultiSelectKaryawanPenerimaWithFilter from "../../dependent/_Select/MultiSelectKaryawanPenerimaWithFilter";
 
 interface Props {
   forwardRef: MutableRefObject<null>;
@@ -96,7 +96,7 @@ export default function FormDashboardBuatPengumuman({
           Karyawan Penerima
           <RequiredForm />
         </FormLabel>
-        <MultiSelectKaryawanWithUnitKerja
+        <MultiSelectKaryawanPenerimaWithFilter
           name="user_id"
           placeholder="Karyawan Penerima"
           onConfirm={(input) => {

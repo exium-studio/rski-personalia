@@ -22,7 +22,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import req from "../../lib/req";
-import MultiSelectKaryawanWithUnitKerja from "../dependent/_Select/MultiSelectKaryawanWithUnitKerja";
+import MultiSelectKaryawanPenerimaWithFilter from "../dependent/_Select/MultiSelectKaryawanPenerimaWithFilter";
 import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanAllJenisKaryawan";
 import SelectModulVerifikasi from "../dependent/_Select/SelectModulVerifikasi";
 import DisclosureHeader from "../dependent/DisclosureHeader";
@@ -254,7 +254,7 @@ export default function EditHakVerifikasiModalDisclosure({
                   Karyawan Diverifikasi
                   <RequiredForm />
                 </FormLabel>
-                <MultiSelectKaryawanWithUnitKerja
+                <MultiSelectKaryawanPenerimaWithFilter
                   name="user_diverifikasi"
                   onConfirm={(input) => {
                     formik.setFieldValue("user_diverifikasi", input);

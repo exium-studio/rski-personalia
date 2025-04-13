@@ -15,7 +15,7 @@ import DatePickerModal from "../../dependent/input/DatePickerModal";
 import StringInput from "../../dependent/input/StringInput";
 import Textarea from "../../dependent/input/Textarea";
 import RequiredForm from "../RequiredForm";
-import MultiSelectKaryawanWithUnitKerja from "../../dependent/_Select/MultiSelectKaryawanWithUnitKerja";
+import MultiSelectKaryawanPenerimaWithFilter from "../../dependent/_Select/MultiSelectKaryawanPenerimaWithFilter";
 
 interface Props {
   data: any;
@@ -97,7 +97,7 @@ export default function FormDashboardUpdatePengumuman({
           Karyawan Penerima
           <RequiredForm />
         </FormLabel>
-        <MultiSelectKaryawanWithUnitKerja
+        <MultiSelectKaryawanPenerimaWithFilter
           name="user_id"
           placeholder="Karyawan Penerima"
           onConfirm={(input) => {
