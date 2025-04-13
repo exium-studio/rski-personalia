@@ -25,6 +25,8 @@ import req from "../../lib/req";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import DateRangePickerModal from "./input/DateRangePickerModal";
+import useFilterKaryawanExportPresensi from "../../global/useFilterKaryawanExportPresensi";
+import FilterKaryawanForExport from "../independent/FilterKaryawanForExport";
 
 interface Props extends ButtonProps {}
 
@@ -43,15 +45,21 @@ export default function ExportPresensiModal({ ...props }: Props) {
     from: startOfWeekDate,
     to: endOfWeekDate,
   };
+  const {
+    defaultFilterKaryawan,
+    filterKaryawan,
+    setFilterKaryawan,
+    formattedFilterKaryawan,
+    setFormattedFilterKaryawan,
+  } = useFilterKaryawanExportPresensi();
 
   // Filter Config
   const defaultFilterConfig = {
     tgl_mulai: defaultRangeTgl?.from,
     tgl_selesai: defaultRangeTgl?.to,
+    ...defaultFilterKaryawan,
   };
   const [dateRange, setDateRange] = useState<any>(defaultFilterConfig);
-  // const [bulan, setBulan] = useState<number>(today.getMonth());
-  // const [tahun, setTahun] = useState<number>(today.getFullYear());
 
   const confirmDateRange = (
     inputValue: { from: Date; to: Date } | undefined
@@ -67,6 +75,7 @@ export default function ExportPresensiModal({ ...props }: Props) {
     const payload = {
       tgl_mulai: formatDate(dateRange?.tgl_mulai, "short"),
       tgl_selesai: formatDate(dateRange?.tgl_selesai, "short"),
+      ...formattedFilterKaryawan,
     };
     req
       .post("/api/rski/dashboard/presensi/export", payload, {
@@ -165,7 +174,13 @@ export default function ExportPresensiModal({ ...props }: Props) {
                 tahun={tahun}
                 setTahun={setTahun}
               /> */}
-
+              <FilterKaryawanForExport
+                id="filter-karyawan-export-presensi"
+                defaultFilterKaryawan={defaultFilterKaryawan}
+                filterKaryawan={filterKaryawan}
+                setFilterKaryawan={setFilterKaryawan}
+                setFormattedFilterKaryawan={setFormattedFilterKaryawan}
+              />
               <DateRangePickerModal
                 id="jadwal-date-range"
                 name="date-range"

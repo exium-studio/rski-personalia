@@ -186,7 +186,7 @@ export default function FilterKaryawanForExport({
             </Center>
           )}
 
-          <Text>Filter Export</Text>
+          <Text>Filter Karyawan</Text>
         </HStack>
       </Button>
 
