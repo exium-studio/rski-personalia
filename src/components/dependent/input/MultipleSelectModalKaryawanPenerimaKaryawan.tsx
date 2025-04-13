@@ -39,7 +39,7 @@ import CContainer from "../../independent/wrapper/CContainer";
 import DisclosureHeader from "../DisclosureHeader";
 import SearchComponent from "./SearchComponent";
 
-const ListUnitKerja = ({ listKaryawan, selected, setSelected }: any) => {
+const ListUnitKerja = ({ listKaryawan, setSelectedKaryawan }: any) => {
   const [options, setOptions] = useState<any>(undefined);
 
   const toast = useToast();
@@ -68,7 +68,7 @@ const ListUnitKerja = ({ listKaryawan, selected, setSelected }: any) => {
     data?.label?.toLowerCase().includes(search.toLowerCase())
   );
 
-  function handleSelectKaryawanByUnitKerja(unitKerja: any) {
+  function handleSelectKaryawanByFilter(unitKerja: any) {
     const selectedKaryawan = listKaryawan
       .filter((karyawan: any) => karyawan?.unit_kerja?.id === unitKerja.id)
       .map((karyawan: any) => ({
@@ -77,7 +77,7 @@ const ListUnitKerja = ({ listKaryawan, selected, setSelected }: any) => {
       }));
 
     // Update selected state with new karyawan if they are not already selected
-    setSelected((prevSelected: any[]) => {
+    setSelectedKaryawan((prevSelected: any[]) => {
       const updatedSelected = [...prevSelected];
 
       selectedKaryawan.forEach((newKaryawan: any) => {
@@ -152,7 +152,137 @@ const ListUnitKerja = ({ listKaryawan, selected, setSelected }: any) => {
                       className="btn-outline"
                       borderRadius={"full"}
                       onClick={() => {
-                        handleSelectKaryawanByUnitKerja(item);
+                        handleSelectKaryawanByFilter(item);
+                      }}
+                    >
+                      {item?.label}
+                    </Button>
+                  ))}
+              </>
+            )}
+          </Wrap>
+        </AccordionPanel>
+      </AccordionItem>
+    </Accordion>
+  );
+};
+
+const ListStatusKaryawan = ({ listKaryawan, setSelectedKaryawan }: any) => {
+  const [options, setOptions] = useState<any>(undefined);
+
+  const toast = useToast();
+
+  useEffect(() => {
+    if (!options) {
+      req
+        .get("/api/get-list-status-karyawan")
+        .then((r) => {
+          if (r.status === 200) {
+            const options = r.data.data.map((item: any) => ({
+              id: item.id,
+              label: item.label,
+            }));
+            setOptions(options);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [options]);
+
+  const [search, setSearch] = useState<string>("");
+  const fd = options?.filter((data: any) =>
+    data?.label?.toLowerCase().includes(search.toLowerCase())
+  );
+
+  function handleSelectKaryawanByFilter(statusKaryawan: any) {
+    const selectedKaryawan = listKaryawan
+      .filter(
+        (karyawan: any) => karyawan?.status_karyawan?.id === statusKaryawan.id
+      )
+      .map((karyawan: any) => ({
+        value: karyawan.id,
+        label: karyawan.user.nama,
+      }));
+
+    // Update selected state with new karyawan if they are not already selected
+    setSelectedKaryawan((prevSelected: any[]) => {
+      const updatedSelected = [...prevSelected];
+
+      selectedKaryawan.forEach((newKaryawan: any) => {
+        // Check if the new karyawan is already in the selected array
+        const isAlreadySelected = updatedSelected.some(
+          (selected) => selected.value === newKaryawan.value
+        );
+
+        // Append only if not already selected
+        if (!isAlreadySelected) {
+          updatedSelected.push(newKaryawan);
+        }
+      });
+
+      return updatedSelected;
+    });
+
+    toast({
+      status: "success",
+      title: `Semua karyawan di Status Karyawan ${statusKaryawan.label} terpilih`,
+      isClosable: true,
+      position: "bottom-right",
+    });
+  }
+
+  return (
+    <Accordion allowToggle mb={2}>
+      <AccordionItem
+        bg={"var(--divider)"}
+        borderRadius={8}
+        border={"none"}
+        overflow={"clip"}
+      >
+        <AccordionButton as={Button} size={"lg"} className="btn">
+          <HStack w={"100%"} justify={"space-between"}>
+            <Text>Pilih Karyawan Berdasarkan Status Karyawan</Text>
+            <AccordionIcon />
+          </HStack>
+        </AccordionButton>
+        <AccordionPanel px={4}>
+          {!options && <ComponentSpinner minH={"300px"} />}
+
+          <SearchComponent
+            name="search_status_karyawan"
+            onChangeSetter={(input) => {
+              setSearch(input);
+            }}
+            inputValue={search}
+            placeholder="nama status karyawan"
+            tooltipLabel="Cari dengan nama status karyawan"
+            mb={4}
+            inputProps={{
+              border: "0px !important",
+              borderBottom: "1px solid var(--divider) !important",
+              borderRadius: "0 !important",
+              _focus: {
+                border: "0 !important",
+                borderBottom: "1px solid var(--p500) !important",
+              },
+            }}
+          />
+
+          <Wrap spacing={2} pb={2}>
+            {options && (
+              <>
+                {fd.length === 0 && <NotFound minH={"300px"} mb={4} />}
+
+                {fd.length > 0 &&
+                  fd?.map((item: any, i: number) => (
+                    <Button
+                      key={i}
+                      className="btn-outline"
+                      borderRadius={"full"}
+                      onClick={() => {
+                        handleSelectKaryawanByFilter(item);
                       }}
                     >
                       {item?.label}
@@ -387,15 +517,21 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
                 <Alert flexShrink={0} mb={2} alignItems={"start"}>
                   <AlertIcon />
                   <AlertDescription maxW={"640px !important"}>
-                    Klik Unit Kerja untuk memilih semua karyawan di unit kerja
-                    tersebut
+                    Klik Unit Kerja/Status Karyawan untuk memilih semua karyawan
+                    di unit kerja/status karyawan tersebut
                   </AlertDescription>
                 </Alert>
 
                 <ListUnitKerja
                   listKaryawan={listKaryawan}
                   selected={selected}
-                  setSelected={setSelected}
+                  setSelectedKaryawan={setSelected}
+                />
+
+                <ListStatusKaryawan
+                  listKaryawan={listKaryawan}
+                  selected={selected}
+                  setSelectedKaryawan={setSelected}
                 />
 
                 {(withSearch ||
