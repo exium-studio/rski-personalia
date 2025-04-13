@@ -171,7 +171,7 @@ export default function TabelKaryawan() {
       }, // 0
       {
         value: item?.user.status_aktif,
-        td: <StatusAktifBadge data={item?.user.status_aktif} w={"120px"} />,
+        td: <StatusAktifBadge data={item?.user?.status_aktif} w={"120px"} />,
         cProps: {
           justify: "center",
         },
