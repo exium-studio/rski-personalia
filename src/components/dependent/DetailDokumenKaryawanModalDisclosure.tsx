@@ -96,7 +96,7 @@ const TambahDokumenDisclosure = ({ children, karyawan_id }: any) => {
           payload
         )
         .then((r) => {
-          if (r.status === 200) {
+          if (r.status === 201) {
             resetForm();
             setRt(!rt);
             backOnClose();
