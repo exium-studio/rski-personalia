@@ -15,15 +15,15 @@ import {
 } from "@chakra-ui/react";
 import { RiUploadLine } from "@remixicon/react";
 import { useRef, useState } from "react";
-import req from "../../lib/req";
 import { iconSize } from "../../constant/sizes";
+import useFilterKaryawanExportKaryawan from "../../global/useFilterKaryawanExportKaryawan";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import ExportFilterKaryawan from "../independent/FilterExportKaryawan";
+import download from "../../lib/download";
+import req from "../../lib/req";
+import FilterKaryawanForExport from "../independent/FilterKaryawanForExport";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
-import useExportFilterKaryawan from "../../global/useExportFilterKaryawan";
-import download from "../../lib/download";
 
 interface Props extends ButtonProps {}
 
@@ -34,7 +34,13 @@ export default function ExportKaryawanModal({ ...props }: Props) {
 
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
-  const { formattedFilterKaryawan } = useExportFilterKaryawan();
+  const {
+    defaultFilterKaryawan,
+    filterKaryawan,
+    setFilterKaryawan,
+    formattedFilterKaryawan,
+    setFormattedFilterKaryawan,
+  } = useFilterKaryawanExportKaryawan();
 
   const handleExport = () => {
     setLoading(true);
@@ -112,7 +118,14 @@ export default function ExportKaryawanModal({ ...props }: Props) {
           </ModalBody>
           <ModalFooter>
             <CContainer gap={2}>
-              <ExportFilterKaryawan />
+              <FilterKaryawanForExport
+                id="filter-karyawan-export-karyawan"
+                defaultFilterKaryawan={defaultFilterKaryawan}
+                filterKaryawan={filterKaryawan}
+                setFilterKaryawan={setFilterKaryawan}
+                setFormattedFilterKaryawan={setFormattedFilterKaryawan}
+              />
+
               <ButtonGroup>
                 <Button
                   w={"100%"}

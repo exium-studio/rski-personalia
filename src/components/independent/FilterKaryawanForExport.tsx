@@ -19,39 +19,45 @@ import { RiEqualizer3Fill } from "@remixicon/react";
 import { useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
 import { iconSize } from "../../constant/sizes";
-import useExportFilterKaryawan from "../../global/useExportFilterKaryawan";
+import useFilterKaryawanExportKaryawan from "../../global/useFilterKaryawanExportKaryawan";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
 import FilterAgama from "../dependent/_FilterOptions/FilterAgama";
 import FilterJebatan from "../dependent/_FilterOptions/FilterJabatan";
 import FilterJenisKelamin from "../dependent/_FilterOptions/FilterJenisKelamin";
+import FilterJenisKompetensi from "../dependent/_FilterOptions/FilterJenisKompetensi";
 import FilterJenisPegawai from "../dependent/_FilterOptions/FilterJenisPegawai";
 import FilterMasaKerja from "../dependent/_FilterOptions/FilterMasaKerja";
+import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
 import FilterStatusAktif from "../dependent/_FilterOptions/FilterStatusAktif";
 import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryawan";
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import FilterPendidikanTerakhir from "../dependent/_FilterOptions/FilterPendidikanTerakhir";
-import formatDate from "../../lib/formatDate";
-import FilterJenisKompetensi from "../dependent/_FilterOptions/FilterJenisKompetensi";
 
 interface Props extends ButtonProps {
   title?: string;
+  id: string;
+  defaultFilterKaryawan: any;
+  filterKaryawan: any;
+  setFilterKaryawan: any;
+  setFormattedFilterKaryawan: any;
 }
 
-export default function FilterExportKaryawan({ title, ...props }: Props) {
+export default function FilterKaryawanForExport({
+  title,
+  id,
+  defaultFilterKaryawan,
+  filterKaryawan,
+  setFilterKaryawan,
+  setFormattedFilterKaryawan,
+  ...props
+}: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("export-filter-karyawan", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
-
-  const {
-    defaultFilterKaryawan,
-    filterKaryawan,
-    setFilterKaryawan,
-    setFormattedFilterKaryawan,
-  } = useExportFilterKaryawan();
 
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
     defaultFilterKaryawan

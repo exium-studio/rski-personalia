@@ -26,7 +26,7 @@ type Actions = {
   setFormattedFilterKaryawan: (filterKaryawan: any) => void;
 };
 
-const useExportFilterKaryawan = create<State & Actions>((set) => ({
+const useFilterKaryawanExportKaryawan = create<State & Actions>((set) => ({
   defaultFilterKaryawan: defaultFilterConfig,
   filterKaryawan: defaultFilterConfig,
   formattedFilterKaryawan: undefined,
@@ -45,4 +45,4 @@ const useExportFilterKaryawan = create<State & Actions>((set) => ({
     })),
 }));
 
-export default useExportFilterKaryawan;
+export default useFilterKaryawanExportKaryawan;
