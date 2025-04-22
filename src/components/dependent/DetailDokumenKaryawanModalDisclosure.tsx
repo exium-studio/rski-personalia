@@ -629,14 +629,13 @@ export default function DetailDokumenKaryawanModalDisclosure({
                           />
                         </Wrap>
 
-                        <HStack>
+                        <HStack mb={responsiveSpacing}>
                           <SearchComponent
                             name="search"
                             onChangeSetter={(input) => {
                               setSearch(input);
                             }}
                             inputValue={search}
-                            mb={responsiveSpacing}
                           />
 
                           <TambahDokumenDisclosure karyawan_id={karyawan_id}>
