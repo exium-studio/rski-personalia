@@ -40,6 +40,7 @@ import PermissionTooltip from "../wrapper/PermissionTooltip";
 import SelectShiftByUser from "./_Select/SelectShiftByUser";
 import DisclosureHeader from "./DisclosureHeader";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
+import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props {
   data: any;
@@ -77,6 +78,11 @@ export default function TabelJadwalItem({
       }
     }
   }, [jadwal]);
+  const user = useGetUserData();
+  const valid =
+    user?.id === 1 ||
+    (data.unit_kerja?.jenis_karyawan === 1 &&
+      !isDatePassed(tgl as string, true));
 
   const formik = useFormik({
     validateOnChange: false,
@@ -271,21 +277,20 @@ export default function TabelJadwalItem({
               </Text>
             </Box>
 
-            {data.unit_kerja?.jenis_karyawan === 1 &&
-              !isDatePassed(tgl as string, true) && (
-                <Icon
-                  as={RiEditBoxLine}
-                  fontSize={20}
-                  alignSelf={"flex-start"}
-                  color={
-                    // shiftMalam && shiftMalamLanjutan
-                    //   ? "var(--divider-text)"
-                    //   : "p.500"
-                    "p.500"
-                  }
-                  mb={"auto"}
-                />
-              )}
+            {valid && (
+              <Icon
+                as={RiEditBoxLine}
+                fontSize={20}
+                alignSelf={"flex-start"}
+                color={
+                  // shiftMalam && shiftMalamLanjutan
+                  //   ? "var(--divider-text)"
+                  //   : "p.500"
+                  "p.500"
+                }
+                mb={"auto"}
+              />
+            )}
           </HStack>
         </VStack>
       </PermissionTooltip>
@@ -377,9 +382,7 @@ export default function TabelJadwalItem({
                       formik.setFieldValue("shift", input);
                     }}
                     inputValue={formik.values.shift}
-                    isDisabled={
-                      isDatePassed(tgl as string, true) || libur || exLibur
-                    }
+                    isDisabled={!valid || libur || exLibur}
                     mb={4}
                   />
                   <CContainer gap={2}>
@@ -390,7 +393,7 @@ export default function TabelJadwalItem({
                         setLibur(e.target.checked);
                       }}
                       isChecked={libur}
-                      isDisabled={isDatePassed(tgl as string, true)}
+                      isDisabled={!valid}
                     >
                       <Text mt={"-3px"}>Jadwalkan Libur</Text>
                     </Checkbox>
@@ -401,7 +404,7 @@ export default function TabelJadwalItem({
                         setExLibur(e.target.checked);
                       }}
                       isChecked={exLibur}
-                      isDisabled={isDatePassed(tgl as string, true)}
+                      isDisabled={!valid}
                     >
                       <Text mt={"-3px"}>Jadwalkan Ex Libur</Text>
                     </Checkbox>
@@ -423,7 +426,7 @@ export default function TabelJadwalItem({
                   colorScheme="ap"
                   className="btn-ap clicky"
                   isLoading={loading}
-                  isDisabled={isDatePassed(tgl as string, true)}
+                  isDisabled={!valid}
                 >
                   Simpan
                 </Button>
