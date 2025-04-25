@@ -41,7 +41,7 @@ export default function SelectPendidikan({
           if (r.status === 200) {
             const options = r.data.data.map((item: any) => ({
               value: item.id,
-              label: item.nama_unit,
+              label: item.label,
             }));
             setOptions(options);
           }
