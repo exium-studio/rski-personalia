@@ -69,7 +69,7 @@ export default function SelectPendidikan({
       isOpen={isOpen}
       onOpen={onOpen}
       onClose={onClose}
-      options={optionsPendidikan}
+      options={options}
       onConfirm={(input) => {
         onConfirm(input);
       }}
