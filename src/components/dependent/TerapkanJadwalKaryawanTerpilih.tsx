@@ -140,7 +140,7 @@ export default function TerapkanJadwalKaryawanTerpilih({
   const user = useGetUserData();
   const { userPermissions } = useAuth();
   const createPermissions = isHasPermissions(userPermissions, [19]);
-  const valid = user.id === 1 || isDatePassed(tgl, true);
+  const valid = user.id === 1 || !isDatePassed(tgl, true);
 
   return (
     <>
