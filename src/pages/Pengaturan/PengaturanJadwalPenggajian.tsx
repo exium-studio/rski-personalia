@@ -196,8 +196,13 @@ export default function PengaturanJadwalPenggajian() {
                   </FormControl>
                 </form>
 
+                <Text mt={"auto"} opacity={0.4}>
+                  Tanggal penggajian yang bisa dipilih adalah tanggal hari ini
+                  dan selanjutnya agar tidak terjadi kesalahan dalam publikasi
+                  penggajian.
+                </Text>
+
                 <HStack
-                  mt={"auto"}
                   pt={responsiveSpacing}
                   justify={"space-between"}
                   align={"center"}
