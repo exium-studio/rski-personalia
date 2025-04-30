@@ -318,7 +318,6 @@ export default function DetailKaryawanModal({
                           className="scrollY"
                           bg={lightDarkColor}
                           px={responsiveSpacing}
-                          justify={"space-between"}
                         >
                           <VStack
                             gap={responsiveSpacing}
