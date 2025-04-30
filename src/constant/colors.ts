@@ -58,7 +58,7 @@ export const colorSchemes = [
   "orange",
   "purple",
   "green",
-  "yellow",
+  "pink",
   "teal",
   "blue",
   "pink",

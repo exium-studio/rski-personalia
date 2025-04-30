@@ -27,29 +27,43 @@ export default function DashboardTotal({ ...props }: Props) {
       key: "total_karyawan",
       label: "Total Karyawan",
       icon: RiTeamFill,
+      iconBgColor: "orange.400",
+      bgColor: "orange.200",
+    },
+    {
+      key: "karyawan_fulltime",
+      label: "Karyawan Fulltime",
+      icon: RiFileCopy2Fill,
+      iconBgColor: "purple.400",
+      bgColor: "purple.200",
+    },
+    {
+      key: "karyawan_parttime",
+      label: "Karyawan Parttime",
+      icon: RiFileCopy2Fill,
       iconBgColor: "green.400",
       bgColor: "green.200",
     },
     {
-      key: "karyawan_nonaktif",
-      label: "Karyawan Tidak Aktif",
+      key: "karyawan_outsourcing",
+      label: "Karyawan Outsourcing",
       icon: RiFileCopy2Fill,
-      iconBgColor: "red.400",
-      bgColor: "red.200",
+      iconBgColor: "pink.400",
+      bgColor: "pink.200",
     },
     {
       key: "jumlah_libur",
       label: "Total Libur",
       icon: RiHome4Fill,
-      iconBgColor: "blue.400",
-      bgColor: "blue.200",
+      iconBgColor: "teal.400",
+      bgColor: "teal.200",
     },
     {
       key: "jumlah_cuti",
       label: "Total Cuti",
       icon: RiLandscapeFill,
-      iconBgColor: "#D7AA67",
-      bgColor: "#FBD38D",
+      iconBgColor: "blue.400",
+      bgColor: "blue.200",
     },
   ];
 
@@ -69,13 +83,15 @@ export default function DashboardTotal({ ...props }: Props) {
       )}
 
       {!error && (
-        <SimpleGrid columns={[1, 2, 4]} gap={responsiveSpacing} {...props}>
+        <HStack wrap={"wrap"} gap={responsiveSpacing} {...props}>
           {loading && (
             <>
-              <Skeleton h={"107.94px"} borderRadius={12} />
-              <Skeleton h={"107.94px"} borderRadius={12} />
-              <Skeleton h={"107.94px"} borderRadius={12} />
-              <Skeleton h={"107.94px"} borderRadius={12} />
+              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
+              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
+              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
+              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
+              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
+              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
             </>
           )}
 
@@ -89,6 +105,7 @@ export default function DashboardTotal({ ...props }: Props) {
                 borderRadius={12}
                 color={"dark"}
                 bg={stat.bgColor}
+                flex={"1 1 150px"}
               >
                 <HStack>
                   <Center p={2} borderRadius={8} bg={stat.iconBgColor}>
@@ -105,7 +122,7 @@ export default function DashboardTotal({ ...props }: Props) {
                 </Text>
               </VStack>
             ))}
-        </SimpleGrid>
+        </HStack>
       )}
     </>
   );
