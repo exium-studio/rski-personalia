@@ -1,7 +1,4 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Button,
   ButtonGroup,
   ButtonProps,
@@ -12,22 +9,24 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import {
-  RiCalendarCheckLine,
-  RiCalendarScheduleLine,
-  RiUploadLine,
-} from "@remixicon/react";
-import { useRef, useState } from "react";
+import { RiUploadLine } from "@remixicon/react";
+import { endOfWeek, startOfWeek } from "date-fns";
+import { useEffect, useRef, useState } from "react";
+import { Interface__SelectOption } from "../../constant/interfaces";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import download from "../../lib/download";
+import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
 import CContainer from "../wrapper/CContainer";
+import SelectJenisKaryawan from "./_Select/SelectJenisKaryawan";
 import DisclosureHeader from "./DisclosureHeader";
+import DateRangePickerModal from "./input/DateRangePickerModal";
 
 interface Props extends ButtonProps {}
 
@@ -36,25 +35,51 @@ export default function ExportJadwalModal({ ...props }: Props) {
   useBackOnClose(`export-modal-${1}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
-  const [jenisKaryawan, setJenisKaryawan] = useState<number | undefined>(
-    undefined
-  );
+  const [jenisKaryawan, setJenisKaryawan] = useState<
+    Interface__SelectOption | undefined
+  >({ value: 1, label: "Shift" });
 
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
+
+  const today = new Date();
+  const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
+  const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
+  const defaultRangeTgl = {
+    from: startOfWeekDate,
+    to: endOfWeekDate,
+  };
+  const defaultDateRangeFilterConfig = {
+    tgl_mulai: defaultRangeTgl?.from,
+    tgl_selesai: defaultRangeTgl?.to,
+  };
+  const [dateRange, setDateRange] = useState<any>(defaultDateRangeFilterConfig);
+  const confirmDateRange = (
+    inputValue: { from: Date; to: Date } | undefined
+  ) => {
+    setDateRange({
+      tgl_mulai: inputValue?.from,
+      tgl_selesai: inputValue?.to,
+    });
+  };
 
   const handleExport = () => {
     setLoading(true);
 
     let url = "";
-    if (jenisKaryawan === 1) {
+    if (jenisKaryawan?.value === 1) {
       url = `api/rski/dashboard/jadwal-karyawan/export-shift`;
-    } else if (jenisKaryawan === 0) {
+    } else if (jenisKaryawan?.value === 0) {
       url = `api/rski/dashboard/jadwal-karyawan/export-non-shift`;
     }
 
+    const payload = {
+      tgl_mulai: formatDate(dateRange?.tgl_mulai, "short"),
+      tgl_selesai: formatDate(dateRange?.tgl_selesai, "short"),
+    };
+
     req
-      .get(url, {
+      .post(url, payload, {
         responseType: "blob", // Penting untuk menangani file biner
       })
       .then((r) => {
@@ -62,9 +87,9 @@ export default function ExportJadwalModal({ ...props }: Props) {
           download(
             r.data,
             `Export Jadwal ${
-              jenisKaryawan === 1
+              jenisKaryawan?.value === 1
                 ? "Shift"
-                : jenisKaryawan === 0
+                : jenisKaryawan?.value === 0
                 ? "Non-Shift"
                 : ""
             }`,
@@ -97,6 +122,15 @@ export default function ExportJadwalModal({ ...props }: Props) {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    const jenisKaryawanValue = jenisKaryawan?.value;
+    if (jenisKaryawanValue === 1) {
+      setDateRange(defaultDateRangeFilterConfig);
+    } else {
+      setDateRange(undefined);
+    }
+  }, [jenisKaryawan]);
 
   return (
     <>
@@ -131,44 +165,37 @@ export default function ExportJadwalModal({ ...props }: Props) {
             />
           </ModalHeader>
           <ModalBody>
-            <CContainer gap={2}>
-              <Alert status="warning">
-                <AlertIcon />
-                <AlertDescription>Pilih tipe export dahulu</AlertDescription>
-              </Alert>
-
-              <Button
-                onClick={() => {
-                  setJenisKaryawan(1);
-                }}
-                justifyContent={"space-between"}
-                className={
-                  jenisKaryawan === 1 ? "selected clicky" : "btn-outline clicky"
-                }
-                rightIcon={
-                  <Icon as={RiCalendarScheduleLine} fontSize={iconSize} />
-                }
-              >
-                Jadwal Shift
-              </Button>
-              <Button
-                onClick={() => {
-                  setJenisKaryawan(0);
-                }}
-                justifyContent={"space-between"}
-                className={
-                  jenisKaryawan === 0 ? "selected clicky" : "btn-outline clicky"
-                }
-                rightIcon={
-                  <Icon as={RiCalendarCheckLine} fontSize={iconSize} />
-                }
-              >
-                Jadwal Non-Shift
-              </Button>
-            </CContainer>
+            <Text opacity={0.6}>Apakah anda yakin akan export tabel ini?</Text>
           </ModalBody>
+
           <ModalFooter>
             <CContainer gap={2}>
+              <CContainer gap={2}>
+                <SelectJenisKaryawan
+                  name="jenis-karyawan"
+                  onConfirm={(input) => {
+                    setJenisKaryawan(input);
+                  }}
+                  inputValue={jenisKaryawan}
+                  nonNullable
+                />
+                <DateRangePickerModal
+                  id="jadwal-date-range"
+                  name="date-range"
+                  minW={"165px"}
+                  w={"100%"}
+                  onConfirm={confirmDateRange}
+                  inputValue={{
+                    from: dateRange?.tgl_mulai,
+                    to: dateRange?.tgl_selesai,
+                  }}
+                  maxRange={31}
+                  nonNullable
+                  presetsConfig={["thisWeek", "thisMonth"]}
+                  isDisabled={jenisKaryawan?.value === 0}
+                />
+              </CContainer>
+
               <ButtonGroup>
                 <Button
                   w={"100%"}

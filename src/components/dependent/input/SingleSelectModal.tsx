@@ -111,7 +111,7 @@ export default function SingleSelectModal({
             : placeholder
         }
         openDelay={500}
-        placement="bottom-start"
+        placement="bottom"
       >
         <Button
           className="btn-clear"
@@ -241,7 +241,7 @@ export default function SingleSelectModal({
                                 <Text fontSize={"sm"}>{option?.label2}</Text>
                               </Box>
                             }
-                            placement="bottom-start"
+                            placement="bottom"
                             openDelay={500}
                           >
                             <Button

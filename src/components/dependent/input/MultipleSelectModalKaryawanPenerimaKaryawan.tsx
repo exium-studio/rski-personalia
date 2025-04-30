@@ -396,7 +396,7 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
             ? `${inputValue && inputValue.map((item) => ` ${item.label}`)}`
             : placeholder
         }
-        placement="bottom-start"
+        placement="bottom"
         openDelay={500}
       >
         <Button

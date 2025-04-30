@@ -65,7 +65,7 @@ export default function SearchComponent({
     <Tooltip
       label={!searchLocal && (tooltipLabel || placeholder)}
       openDelay={500}
-      placement="bottom-start"
+      placement="bottom"
     >
       <InputGroup {...props}>
         <InputLeftElement>
