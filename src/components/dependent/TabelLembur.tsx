@@ -112,12 +112,7 @@ export default function TabelLembur({ filterConfig }: Props) {
       },
       {
         value: item.created_at,
-        td: (
-          <StatusLemburBadge
-            tgl_mulai_jadwal={item?.tgl_pengajuan}
-            w={"120px"}
-          />
-        ),
+        td: <StatusLemburBadge tgl_mulai_jadwal={item?.tgl_pengajuan} />,
       },
       {
         value: item?.tgl_pengajuan,

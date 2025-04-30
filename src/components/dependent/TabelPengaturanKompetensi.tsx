@@ -200,7 +200,6 @@ export default function TabelPengaturanKompetensi({ filterConfig }: Props) {
         value: item.jenis_kompetensi,
         td: (
           <BooleanBadge
-            w={"120px"}
             data={item.jenis_kompetensi}
             trueValue="Medis"
             falseValue="Non-Medis"

@@ -233,6 +233,9 @@ export const globalTheme = extendTheme({
     },
 
     Modal: {
+      // defaultProps: {
+      //   motionPreset: "none",
+      // },
       baseStyle: (props) => ({
         dialogContainer: {
           p: 4,
@@ -252,8 +255,8 @@ export const globalTheme = extendTheme({
           // maxH: "100%",
         },
         overlay: {
-          bg: "#00000011",
-          backdropFilter: "blur(8px)",
+          // bg: "#00000011",
+          // backdropFilter: "blur(8px)",
         },
         header: {
           p: 0,

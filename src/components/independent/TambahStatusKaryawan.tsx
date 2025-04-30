@@ -23,6 +23,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import req from "../../lib/req";
+import SelectKategoriStatusKaryawan from "../dependent/_Select/SelectKategoriStatusKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
@@ -40,13 +41,15 @@ export default function TambahStatusKaryawan({ ...props }: Props) {
 
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { label: "" },
+    initialValues: { label: "", kategori: undefined as any },
     validationSchema: yup.object().shape({
       label: yup.string().required("Harus diisi"),
+      kategori: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         label: values.label,
+        kategori_status_id: values.kategori?.id,
       };
       setLoading(true);
       req
@@ -116,7 +119,10 @@ export default function TambahStatusKaryawan({ ...props }: Props) {
           </ModalHeader>
           <ModalBody>
             <form id="tambahStatusKaryawanForm" onSubmit={formik.handleSubmit}>
-              <FormControl isInvalid={formik.errors.label ? true : false}>
+              <FormControl
+                isInvalid={formik.errors.label ? true : false}
+                mb={4}
+              >
                 <FormLabel>
                   Nama Status Karyawan
                   <RequiredForm />
@@ -131,6 +137,23 @@ export default function TambahStatusKaryawan({ ...props }: Props) {
                 />
                 <FormErrorMessage>
                   {formik.errors.label as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl isInvalid={formik.errors.label ? true : false}>
+                <FormLabel>
+                  Kategori
+                  <RequiredForm />
+                </FormLabel>
+                <SelectKategoriStatusKaryawan
+                  name="kategori"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("kategori", input);
+                  }}
+                  inputValue={formik.values.kategori}
+                />
+                <FormErrorMessage>
+                  {formik.errors.kategori as string}
                 </FormErrorMessage>
               </FormControl>
             </form>

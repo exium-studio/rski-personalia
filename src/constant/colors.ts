@@ -1,49 +1,49 @@
 import { useColorModeValue } from "@chakra-ui/react";
 
-const useContentBgColor = () => {
+export const useContentBgColor = () => {
   return useColorModeValue("#f8f8f8", "#151515");
 };
 
-const useTableStripedColor = () => {
+export const useTableStripedColor = () => {
   return useColorModeValue("#fbfbfb", "#161616");
 };
 
-const useBodyColor = () => {
+export const useBodyColor = () => {
   return useColorModeValue("white", "#191919");
 };
 
-const useWhiteDarkColor = () => {
+export const useWhiteDarkColor = () => {
   return useColorModeValue("white", "dark");
 };
 
-const useLightDarkColor = () => {
+export const useLightDarkColor = () => {
   return useColorModeValue("white", "#191919");
 };
 
-const useDarkLightColor = () => {
+export const useDarkLightColor = () => {
   return useColorModeValue("dark", "white");
 };
 
-const useErrorColor = () => {
+export const useErrorColor = () => {
   return useColorModeValue("#E53E3E", "#FC8181");
 };
 
-const useWarningColor = () => {
+export const useWarningColor = () => {
   return useColorModeValue("#C05621", "#FBD38D");
 };
 
-const useErrorAlphaColor = () => {
+export const useErrorAlphaColor = () => {
   return useColorModeValue("red.50", "rgba(254, 178, 178, 0.12)");
 };
 
-const useWarningAlphaColor = () => {
+export const useWarningAlphaColor = () => {
   return useColorModeValue(
     "rgba(251, 211, 141, 0.12)",
     "rgba(251, 211, 141, 0.12)"
   );
 };
 
-const statusKaryawanColorScheme = {
+export const statusKaryawanColorScheme = {
   tetap: "orange",
   Tetap: "orange",
   kontrak: "purple",
@@ -54,16 +54,13 @@ const statusKaryawanColorScheme = {
   Training: "green",
 };
 
-export {
-  useContentBgColor,
-  useBodyColor,
-  useWhiteDarkColor,
-  statusKaryawanColorScheme,
-  useLightDarkColor,
-  useDarkLightColor,
-  useErrorColor,
-  useErrorAlphaColor,
-  useWarningColor,
-  useWarningAlphaColor,
-  useTableStripedColor,
-};
+export const colorSchemes = [
+  "orange",
+  "purple",
+  "green",
+  "yellow",
+  "teal",
+  "blue",
+  "pink",
+  "red",
+];

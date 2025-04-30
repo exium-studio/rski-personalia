@@ -171,7 +171,7 @@ export default function TabelKaryawan() {
       }, // 0
       {
         value: item?.user.status_aktif,
-        td: <StatusAktifBadge data={item?.user?.status_aktif} w={"120px"} />,
+        td: <StatusAktifBadge data={item?.user?.status_aktif} />,
         cProps: {
           justify: "center",
         },
@@ -183,7 +183,7 @@ export default function TabelKaryawan() {
       }, // 2
       {
         value: item?.status_karyawan?.label,
-        td: <StatusKaryawanBadge w={"120px"} data={item?.status_karyawan} />,
+        td: <StatusKaryawanBadge data={item?.status_karyawan} />,
         cProps: {
           justify: "center",
         },

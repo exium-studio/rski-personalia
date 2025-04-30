@@ -98,7 +98,7 @@ export default function TabelKaryawanDinilai({ filterConfig }: Props) {
 
       {
         value: item.jenis_karyawan,
-        td: <StatusKaryawanBadge w={"120px"} data={item.status_karyawan} />,
+        td: <StatusKaryawanBadge data={item.status_karyawan} />,
         isNumeric: true,
         cProps: {
           justify: "center",

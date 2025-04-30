@@ -165,7 +165,7 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
       },
       {
         value: item.jenis_karyawan,
-        td: <JenisKaryawanBadge w={"120px"} data={item.jenis_karyawan} />,
+        td: <JenisKaryawanBadge data={item.jenis_karyawan} />,
         isNumeric: true,
         cProps: {
           justify: "center",

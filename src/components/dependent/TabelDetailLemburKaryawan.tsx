@@ -67,7 +67,6 @@ export default function TabelDetailLemburKaryawan({ data }: Props) {
             tgl_mulai_jadwal={
               item.jadwal_shift?.tgl_mulai || item.tgl_pengajuan
             }
-            w={"120px"}
           />
         ),
       },

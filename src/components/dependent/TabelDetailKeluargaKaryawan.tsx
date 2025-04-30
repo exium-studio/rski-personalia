@@ -174,7 +174,6 @@ export default function TabelDetailKeluargaKaryawan({
             data={item.status_hidup}
             trueValue="Aktif"
             falseValue="Tidak Aktif"
-            w={"120px"}
           />
         ),
         cProps: {

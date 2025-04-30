@@ -168,10 +168,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
               placement="right"
             >
               <Box>
-                <StatusApprovalBadge
-                  data={item?.status_perubahan}
-                  w={"120px"}
-                />
+                <StatusApprovalBadge data={item?.status_perubahan} />
               </Box>
             </Tooltip>
           ),

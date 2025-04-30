@@ -192,7 +192,6 @@ export default function TabelPengaturanJabatan({ filterConfig }: Props) {
             data={item.is_struktural}
             trueValue="Ya"
             falseValue="Tidak"
-            w={"120px"}
           />
         ),
         isNumeric: true,

@@ -21,6 +21,7 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import req from "../../lib/req";
+import SelectKategoriStatusKaryawan from "../dependent/_Select/SelectKategoriStatusKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
@@ -50,24 +51,19 @@ export default function EditStatusKaryawanModalDisclosure({
 
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: {
-      label: "" as any,
-    },
+    initialValues: { label: "", kategori: undefined as any },
     validationSchema: yup.object().shape({
       label: yup.string().required("Harus diisi"),
+      kategori: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         label: values.label,
-        _method: "patch",
+        kategori_status_id: values.kategori?.id,
       };
-      console.log(payload);
       setLoading(true);
       req
-        .post(
-          `/api/rski/dashboard/pengaturan/status-karyawan/${rowData.id}`,
-          payload
-        )
+        .post("/api/rski/dashboard/pengaturan/status-karyawan", payload)
         .then((r) => {
           if (r.status === 200) {
             toast({
@@ -76,8 +72,8 @@ export default function EditStatusKaryawanModalDisclosure({
               isClosable: true,
               position: "bottom-right",
             });
-            backOnClose();
             setRt(!rt);
+            resetForm();
           }
         })
         .catch((e) => {
@@ -102,6 +98,10 @@ export default function EditStatusKaryawanModalDisclosure({
 
   useEffect(() => {
     formikRef.current.setFieldValue("label", rowData.columnsFormat[0].value);
+    formikRef.current.setFieldValue(
+      "kategori",
+      rowData.columnsFormat[1].original_data
+    );
   }, [isOpen, rowData, formikRef]);
 
   return (
@@ -133,8 +133,8 @@ export default function EditStatusKaryawanModalDisclosure({
           <ModalBody>
             <form id="editStatusKaryawanForm" onSubmit={formik.handleSubmit}>
               <FormControl
-                // mb={4}
                 isInvalid={formik.errors.label ? true : false}
+                mb={4}
               >
                 <FormLabel>
                   Nama Status Karyawan
@@ -150,6 +150,23 @@ export default function EditStatusKaryawanModalDisclosure({
                 />
                 <FormErrorMessage>
                   {formik.errors.label as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl isInvalid={formik.errors.label ? true : false}>
+                <FormLabel>
+                  Kategori
+                  <RequiredForm />
+                </FormLabel>
+                <SelectKategoriStatusKaryawan
+                  name="kategori"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("kategori", input);
+                  }}
+                  inputValue={formik.values.kategori}
+                />
+                <FormErrorMessage>
+                  {formik.errors.kategori as string}
                 </FormErrorMessage>
               </FormControl>
             </form>

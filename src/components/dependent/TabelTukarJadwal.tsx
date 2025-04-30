@@ -160,7 +160,6 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
           td: (
             <StatusTukarJadwalApprovalKaryawanBadge
               data={item.acc_user_ditukar}
-              w={"120px"}
             />
           ),
           cProps: {

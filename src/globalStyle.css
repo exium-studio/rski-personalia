@@ -785,3 +785,12 @@ img[alt="Google"] {
     font-size: 15px !important;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

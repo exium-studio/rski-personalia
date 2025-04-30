@@ -150,7 +150,6 @@ export default function TabelIzin({ filterConfig }: Props) {
             <StatusVerifikasiBadge
               data={item.status_izin}
               alasan={item?.alasan}
-              w={"120px"}
             />
           ),
           cProps: {

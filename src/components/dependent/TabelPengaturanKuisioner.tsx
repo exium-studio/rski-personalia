@@ -189,10 +189,7 @@ export default function TabelPengaturanKuisioner({ filterConfig }: Props) {
         original_data: item.jenis_penilaian?.status_karyawans,
         value: item.jenis_penilaian?.status_karyawans?.id,
         td: (
-          <StatusKaryawanBadge
-            data={item.jenis_penilaian?.status_karyawans}
-            w={"120px"}
-          />
+          <StatusKaryawanBadge data={item.jenis_penilaian?.status_karyawans} />
         ),
         isNumeric: true,
         cProps: {

@@ -18,6 +18,7 @@ import DeleteDataPengaturanModalDisclosure from "./DeleteDataPengaturanModalDisc
 import RestoreDataPengaturanModalDisclosure from "./RestoreDataPengaturanModalDisclosure";
 import Retry from "./Retry";
 import StatusDihapus from "./StatusDihapus";
+import KategoriStatusKaryawanBadge from "./KategoriStatusKaryawanBadge";
 
 interface Props {
   filterConfig?: any;
@@ -126,6 +127,13 @@ export default function TabelPengaturanStatusKaryawan({ filterConfig }: Props) {
       },
     },
     {
+      th: "Kategori",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
       th: "Status Dihapus",
       isSortable: true,
       cProps: {
@@ -158,6 +166,14 @@ export default function TabelPengaturanStatusKaryawan({ filterConfig }: Props) {
         },
         cProps: {
           borderRight: "1px solid var(--divider3)",
+        },
+      },
+      {
+        value: item?.kategori_status?.id,
+        original_data: item?.kategori_status,
+        td: <KategoriStatusKaryawanBadge data={item.kategori_status} />,
+        cProps: {
+          justify: "center",
         },
       },
       {
