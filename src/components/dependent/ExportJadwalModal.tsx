@@ -53,6 +53,7 @@ export default function ExportJadwalModal({ ...props }: Props) {
     tgl_mulai: defaultRangeTgl?.from,
     tgl_selesai: defaultRangeTgl?.to,
   };
+  const defaultDateRangeFilterConfigRef = useRef(defaultDateRangeFilterConfig);
   const [dateRange, setDateRange] = useState<any>(defaultDateRangeFilterConfig);
   const confirmDateRange = (
     inputValue: { from: Date; to: Date } | undefined
@@ -126,7 +127,7 @@ export default function ExportJadwalModal({ ...props }: Props) {
   useEffect(() => {
     const jenisKaryawanValue = jenisKaryawan?.value;
     if (jenisKaryawanValue === 1) {
-      setDateRange(defaultDateRangeFilterConfig);
+      setDateRange(defaultDateRangeFilterConfigRef?.current);
     } else {
       setDateRange(undefined);
     }

@@ -2,7 +2,6 @@ import {
   Center,
   HStack,
   Icon,
-  SimpleGrid,
   SimpleGridProps,
   Text,
   VStack,
