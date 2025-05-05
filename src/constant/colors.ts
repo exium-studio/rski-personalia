@@ -61,6 +61,14 @@ export const colorSchemes = [
   "pink",
   "teal",
   "blue",
-  "pink",
   "red",
+];
+export const colorSchemesHex = [
+  "#fb923c",
+  "#a855f7",
+  "#22c55e",
+  "#ec4899",
+  "#14b8a6",
+  "#3b82f6",
+  "#ef4444",
 ];

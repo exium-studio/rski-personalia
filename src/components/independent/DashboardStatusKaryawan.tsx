@@ -7,7 +7,7 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { useBodyColor } from "../../constant/colors";
+import { colorSchemesHex, useBodyColor } from "../../constant/colors";
 import {
   dashboardItemHeight,
   dashboardItemMinWidth,
@@ -28,33 +28,15 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
     dependencies: [],
     noRt: true,
   });
-  const labels = [
-    "Tetap",
-    "Kontrak",
-    "Magang",
-    "Outsourcing",
-    "Paruh Waktu",
-    "Dokter Mitra",
-  ];
+  const labels = data?.map((item: any) => item?.status_karyawan.label);
   const datasets = [
     {
       label: "Jumlah Karyawan",
-      data: [
-        data?.[0]?.jumlah_karyawan,
-        data?.[1]?.jumlah_karyawan,
-        data?.[2]?.jumlah_karyawan,
-        data?.[3]?.jumlah_karyawan,
-        data?.[4]?.jumlah_karyawan,
-        data?.[5]?.jumlah_karyawan,
-      ],
-      backgroundColor: [
-        "#805AD5",
-        "#90CDF4",
-        "#FBD38D",
-        "#A0AEC0",
-        "#FBB6CE",
-        "#81E6D9",
-      ],
+      data: data?.map((item: any) => item.jumlah_karyawan),
+      backgroundColor: data?.map(
+        (item: any) =>
+          colorSchemesHex[item?.status_karyawan?.id % colorSchemesHex.length]
+      ),
       borderWidth: 0,
     },
   ];
@@ -135,87 +117,23 @@ export default function DashboardStatusKaryawan({ ...props }: Props) {
                       maxW={"240px"}
                       mx={"auto"}
                     >
-                      <HStack gap={4}>
-                        <Box
-                          borderRadius={"full"}
-                          w={"10px"}
-                          h={"10px"}
-                          bg={"purple.400"}
-                        />
-
-                        <Text>Tetap</Text>
-
-                        <Text ml={"auto"}>{data[0].jumlah_karyawan}</Text>
-                      </HStack>
-
-                      <HStack gap={4}>
-                        <Box
-                          borderRadius={"full"}
-                          w={"10px"}
-                          h={"10px"}
-                          bg={"blue.200"}
-                        />
-                        <Text>Kontrak</Text>
-
-                        <Text pl={2} ml={"auto"}>
-                          {data[1].jumlah_karyawan}
-                        </Text>
-                      </HStack>
-
-                      <HStack gap={4}>
-                        <Box
-                          borderRadius={"full"}
-                          w={"10px"}
-                          h={"10px"}
-                          bg={"orange.200"}
-                        />
-                        <Text>Magang</Text>
-
-                        <Text pl={2} ml={"auto"}>
-                          {data[2].jumlah_karyawan}
-                        </Text>
-                      </HStack>
-
-                      <HStack gap={4}>
-                        <Box
-                          borderRadius={"full"}
-                          w={"10px"}
-                          h={"10px"}
-                          bg={"gray.400"}
-                        />
-
-                        <Text>Outsourcing</Text>
-
-                        <Text ml={"auto"}>{data[3].jumlah_karyawan}</Text>
-                      </HStack>
-
-                      <HStack gap={4}>
-                        <Box
-                          borderRadius={"full"}
-                          w={"10px"}
-                          h={"10px"}
-                          bg={"pink.200"}
-                        />
-                        <Text>Paruh Waktu</Text>
-
-                        <Text pl={2} ml={"auto"}>
-                          {data[4].jumlah_karyawan}
-                        </Text>
-                      </HStack>
-
-                      <HStack gap={4}>
-                        <Box
-                          borderRadius={"full"}
-                          w={"10px"}
-                          h={"10px"}
-                          bg={"teal.200"}
-                        />
-                        <Text>Dokter Mitra</Text>
-
-                        <Text pl={2} ml={"auto"}>
-                          {data[5].jumlah_karyawan}
-                        </Text>
-                      </HStack>
+                      {data.map((item: any, i: number) => (
+                        <HStack key={i} gap={4}>
+                          <Box
+                            w={"10px"}
+                            h={"10px"}
+                            borderRadius={"full"}
+                            bg={
+                              colorSchemesHex[
+                                item?.status_karyawan?.id %
+                                  colorSchemesHex.length
+                              ]
+                            }
+                          />
+                          <Text>{item.status_karyawan.label}</Text>
+                          <Text ml={"auto"}>{item.jumlah_karyawan}</Text>
+                        </HStack>
+                      ))}
                     </VStack>
                   </Wrap>
                 </>
