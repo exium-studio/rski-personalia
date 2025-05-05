@@ -81,7 +81,7 @@ export default function ExportJadwalModal({ ...props }: Props) {
 
     req
       .post(url, payload, {
-        responseType: "blob", // Penting untuk menangani file biner
+        responseType: "blob",
       })
       .then((r) => {
         if (r.status === 200) {
@@ -106,14 +106,30 @@ export default function ExportJadwalModal({ ...props }: Props) {
           });
         }
       })
-      .catch((e) => {
-        console.error(e);
+      .catch(async (e) => {
+        // Default error message
+        let errorMsg =
+          "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS";
+
+        // Try to parse error blob if content-type is JSON
+        if (e?.response?.data instanceof Blob) {
+          try {
+            const contentType = e.response.headers["content-type"];
+            if (contentType && contentType.includes("application/json")) {
+              const text = await e.response.data.text();
+              const json = JSON.parse(text);
+              if (typeof json.message === "string") {
+                errorMsg = json.message;
+              }
+            }
+          } catch (err) {
+            console.error("Gagal parse blob jadi JSON:", err);
+          }
+        }
+
         toast({
           status: "error",
-          title:
-            (typeof e?.response?.data?.message === "string" &&
-              (e?.response?.data?.message as string)) ||
-            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
+          title: errorMsg,
           isClosable: true,
           position: "bottom-right",
         });
@@ -193,7 +209,7 @@ export default function ExportJadwalModal({ ...props }: Props) {
                   maxRange={31}
                   nonNullable
                   presetsConfig={["thisWeek", "thisMonth"]}
-                  isDisabled={jenisKaryawan?.value === 0}
+                  // isDisabled={jenisKaryawan?.value === 0}
                 />
               </CContainer>
 
