@@ -13,11 +13,11 @@ export default function Dashboard() {
   return (
     <>
       <CWrapper className="scrollY" overflowY={"auto"}>
-        <DashboardTotal />
-
-        <Text mt={2} mb={responsiveSpacing} opacity={0.4}>
+        <Text mb={2} opacity={0.4}>
           *data per hari ini
         </Text>
+
+        <DashboardTotal />
 
         <Wrap spacing={responsiveSpacing}>
           <DashboardJenisKelamin flex={"1 1 0"} />
