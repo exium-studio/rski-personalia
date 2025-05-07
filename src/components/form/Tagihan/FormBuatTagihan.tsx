@@ -10,7 +10,7 @@ import * as yup from "yup";
 import useRenderTrigger from "../../../hooks/useRenderTrigger";
 import backOnClose from "../../../lib/backOnClose";
 import req from "../../../lib/req";
-import MultiSelectKaryawanPenerimaWithFilter from "../../dependent/_Select/MultiSelectKaryawanPenerimaWithFilter";
+import MultiSelectKaryawanPenerimaWithFilter from "../../dependent/_Select/MultiSelectKaryawanWithFilter";
 import RequiredForm from "../RequiredForm";
 import SelectKategoriTagihan from "../../dependent/_Select/SelectKategoriTagihan";
 import NumberInput from "../../dependent/input/NumberInput";

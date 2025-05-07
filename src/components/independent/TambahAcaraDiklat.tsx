@@ -36,7 +36,7 @@ import Textarea from "../dependent/input/Textarea";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
-import MultiSelectKaryawanPenerimaWithFilter from "../dependent/_Select/MultiSelectKaryawanPenerimaWithFilter";
+import MultiSelectKaryawanPenerimaWithFilter from "../dependent/_Select/MultiSelectKaryawanWithFilter";
 
 interface Props extends ButtonProps {}
 

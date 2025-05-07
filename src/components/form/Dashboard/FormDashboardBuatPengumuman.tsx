@@ -15,7 +15,7 @@ import Textarea from "../../dependent/input/Textarea";
 import RequiredForm from "../RequiredForm";
 import formatDate from "../../../lib/formatDate";
 import backOnClose from "../../../lib/backOnClose";
-import MultiSelectKaryawanPenerimaWithFilter from "../../dependent/_Select/MultiSelectKaryawanPenerimaWithFilter";
+import MultiSelectKaryawanPenerimaWithFilter from "../../dependent/_Select/MultiSelectKaryawanWithFilter";
 
 interface Props {
   forwardRef: MutableRefObject<null>;

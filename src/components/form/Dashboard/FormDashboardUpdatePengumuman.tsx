@@ -15,7 +15,7 @@ import DatePickerModal from "../../dependent/input/DatePickerModal";
 import StringInput from "../../dependent/input/StringInput";
 import Textarea from "../../dependent/input/Textarea";
 import RequiredForm from "../RequiredForm";
-import MultiSelectKaryawanPenerimaWithFilter from "../../dependent/_Select/MultiSelectKaryawanPenerimaWithFilter";
+import MultiSelectKaryawanPenerimaWithFilter from "../../dependent/_Select/MultiSelectKaryawanWithFilter";
 
 interface Props {
   data: any;

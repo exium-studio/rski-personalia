@@ -15,7 +15,7 @@ interface Props extends ButtonProps {
   nonNullable?: boolean;
 }
 
-export default function MultiSelectKaryawanPenerimaWithFilter({
+export default function MultiSelectKaryawanWithFilter({
   name,
   onConfirm,
   inputValue,

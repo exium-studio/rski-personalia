@@ -27,7 +27,7 @@ import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnCloseOld";
 import isHasPermissions from "../../lib/isHasPermissions";
 import req from "../../lib/req";
-import MultiSelectKaryawanPenerimaWithFilter from "../dependent/_Select/MultiSelectKaryawanPenerimaWithFilter";
+import MultiSelectKaryawanPenerimaWithFilter from "../dependent/_Select/MultiSelectKaryawanWithFilter";
 import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanAllJenisKaryawan";
 import SelectModulVerifikasi from "../dependent/_Select/SelectModulVerifikasi";
 import DisclosureHeader from "../dependent/DisclosureHeader";
