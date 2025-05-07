@@ -284,7 +284,7 @@ export default function EditKaryawanForm({
         premi_id: values.potongan?.map((pot: any) => pot.value),
 
         tempat_lahir: values?.tempat_lahir,
-        tgl_lahir: formatDate(values?.tgl_lahir, "short"),
+        tgl_lahir: formatDate(values?.tgl_lahir, "short2"),
         no_hp: values?.no_hp,
         jenis_kelamin: values?.jenis_kelamin?.value,
         nik_ktp: values?.nik_ktp,
