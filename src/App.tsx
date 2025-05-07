@@ -33,6 +33,7 @@ import Jadwal from "./pages/Jadwal/Jadwal";
 import Lembur from "./pages/Jadwal/Lembur";
 import TukarJadwal from "./pages/Jadwal/TukarJadwal";
 import Karyawan from "./pages/Karyawan/Karyawan";
+import KaryawanMedis from "./pages/Karyawan/KaryawanMedis";
 import PerubahanDataKaryawan from "./pages/Karyawan/PermintaanPerubahanDataKaryawan";
 import TransferKaryawan from "./pages/Karyawan/TransferKaryawan";
 import Penggajian from "./pages/Keuangan/Penggajian";
@@ -64,8 +65,8 @@ import PengaturanUbahKataSandi from "./pages/Pengaturan/PengaturanUbahKataSandi"
 import PengaturanUnitKerja from "./pages/Pengaturan/PengaturanUnitKerja";
 import Diklat from "./pages/Perusahaan/Diklat";
 import DiklatEksternal from "./pages/Perusahaan/DiklatEksternal";
-import KaryawanMedis from "./pages/Perusahaan/KaryawanMedis";
 import MasaDiklat from "./pages/Perusahaan/MasaDiklat";
+import AnulirPresensi from "./pages/Presensi/AnulirPresensi";
 import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
@@ -311,6 +312,20 @@ export const App = () => {
                 allowed={[45]}
               >
                 <Presensi />
+              </NavContainer>
+            }
+          />
+          <Route
+            path="/anulir-presensi"
+            element={
+              <NavContainer
+                active={2}
+                title="AnulirPresensi"
+                topNavsData={navs[2].subNavs}
+                topNavActive={1}
+                allowed={[150]}
+              >
+                <AnulirPresensi />
               </NavContainer>
             }
           />

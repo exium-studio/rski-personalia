@@ -65,6 +65,11 @@ const navs = [
         label: "Presensi",
         link: "/presensi",
       },
+      {
+        allowed: [150],
+        label: "Anulir Presensi",
+        link: "/anulir-presensi",
+      },
     ],
   },
   {
