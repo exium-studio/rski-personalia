@@ -320,7 +320,7 @@ export const App = () => {
             element={
               <NavContainer
                 active={2}
-                title="AnulirPresensi"
+                title="Anulir Presensi"
                 topNavsData={navs[2].subNavs}
                 topNavActive={1}
                 allowed={[150]}

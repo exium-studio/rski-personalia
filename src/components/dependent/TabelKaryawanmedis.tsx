@@ -184,7 +184,7 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
           isDate: true,
           cProps: {
             color:
-              monthDiff(new Date(), new Date(item?.masa_berlaku_sip)) < 7
+              monthDiff(new Date(), new Date(item?.masa_berlaku_sip)) <= 7
                 ? "red.400"
                 : "",
             justifyContent: "center",
