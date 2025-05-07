@@ -17,23 +17,25 @@ import {
 } from "@chakra-ui/react";
 import { RiUser2Fill } from "@remixicon/react";
 import { useFormik } from "formik";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
+import req from "../../lib/req";
 import SelectKategoriDiklat from "../dependent/_Select/SelectKategoriDiklat";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DateRangePickerModal from "../dependent/input/DateRangePickerModal";
+import FileInput from "../dependent/input/FileInput";
 import FileInputLarge from "../dependent/input/FileInputLarge";
 import NumberInput from "../dependent/input/NumberInput";
 import Textarea from "../dependent/input/Textarea";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
-import req from "../../lib/req";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
-import formatDate from "../../lib/formatDate";
+import MultiSelectKaryawanPenerimaWithFilter from "../dependent/_Select/MultiSelectKaryawanPenerimaWithFilter";
 
 interface Props extends ButtonProps {}
 
@@ -50,6 +52,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
     validateOnChange: false,
     initialValues: {
       gambar: undefined as any,
+      whitelist_peserta: undefined as any,
       nama: "",
       kategori: {
         value: 1,
@@ -63,9 +66,15 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       jam_mulai: undefined as any,
       jam_selesai: undefined as any,
       skp: "" as any,
+      dokumen_diklat_1: undefined as any,
+      dokumen_diklat_2: undefined as any,
+      dokumen_diklat_3: undefined as any,
+      dokumen_diklat_4: undefined as any,
+      dokumen_diklat_5: undefined as any,
     },
     validationSchema: yup.object().shape({
       gambar: yup.string().required("Harus diisi"),
+      whitelist_peserta: yup.array(),
       nama: yup.string().required("Harus diisi"),
       kategori: yup.object().required("Harus diisi"),
       deskripsi: yup.string().required("Harus diisi"),
@@ -76,9 +85,18 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       jam_mulai: yup.string().required("Harus diisi"),
       jam_selesai: yup.string().required("Harus diisi"),
       skp: yup.string(),
+      dokumen_diklat_1: yup.mixed(),
+      dokumen_diklat_2: yup.mixed(),
+      dokumen_diklat_3: yup.mixed(),
+      dokumen_diklat_4: yup.mixed(),
+      dokumen_diklat_5: yup.mixed(),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = new FormData();
+      payload.append(
+        "user_id",
+        values.whitelist_peserta.map((item: any) => item.id)
+      );
       payload.append("dokumen", values.gambar);
       payload.append("nama", values.nama);
       payload.append("deskripsi", values.deskripsi);
@@ -89,6 +107,11 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       payload.append("jam_selesai", values.jam_selesai);
       payload.append("lokasi", values.lokasi);
       payload.append("skp", values.skp);
+      payload.append("dokumen_diklat_1", values.dokumen_diklat_1);
+      payload.append("dokumen_diklat_2", values.dokumen_diklat_2);
+      payload.append("dokumen_diklat_3", values.dokumen_diklat_3);
+      payload.append("dokumen_diklat_4", values.dokumen_diklat_4);
+      payload.append("dokumen_diklat_5", values.dokumen_diklat_5);
 
       setLoading(true);
       req
@@ -122,6 +145,18 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
         });
     },
   });
+
+  const formikRef = useRef(formik);
+  useEffect(() => {
+    if (formikRef.current.values?.whitelist_peserta?.length > 0) {
+      formikRef.current.setFieldValue(
+        "kuota",
+        formikRef.current.values.whitelist_peserta.length
+      );
+    } else {
+      formikRef.current.setFieldValue("kuota", undefined);
+    }
+  }, [formikRef.current.values?.whitelist_peserta]);
 
   return (
     <>
@@ -241,6 +276,24 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
               </SimpleGrid>
 
               <SimpleGrid columns={[1, 2, 3]} spacingX={4}>
+                <FormControl
+                  mb={4}
+                  isInvalid={!!formik.errors.whitelist_peserta}
+                >
+                  <FormLabel>Whitelist Peserta</FormLabel>
+                  <MultiSelectKaryawanPenerimaWithFilter
+                    name="whitelist_peserta"
+                    optionsDisplay="chip"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("whitelist_peserta", input);
+                    }}
+                    inputValue={formik.values.whitelist_peserta}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.whitelist_peserta as string}
+                  </FormErrorMessage>
+                </FormControl>
+
                 <FormControl mb={4} isInvalid={!!formik.errors.kuota}>
                   <FormLabel>
                     Kuota Peserta
@@ -252,6 +305,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                       formik.setFieldValue("kuota", input);
                     }}
                     inputValue={formik.values.kuota}
+                    isDisabled={formik.values?.whitelist_peserta?.length > 0}
                   />
                   <FormErrorMessage>
                     {formik.errors.kuota as string}
@@ -297,22 +351,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                   </FormErrorMessage>
                 </FormControl>
 
-                <FormControl mb={4} isInvalid={!!formik.errors.lokasi}>
-                  <FormLabel>
-                    Lokasi
-                    <RequiredForm />
-                  </FormLabel>
-                  <Input
-                    name="lokasi"
-                    placeholder="Gedung Serba Guna"
-                    onChange={formik.handleChange}
-                    value={formik.values.lokasi}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.lokasi as string}
-                  </FormErrorMessage>
-                </FormControl>
-
+                {/* Time */}
                 <CContainer>
                   <FormControl mb={4} isInvalid={!!formik.errors.jam_mulai}>
                     <FormLabel>
@@ -370,6 +409,119 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                   />
                   <FormErrorMessage>
                     {formik.errors.skp as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.lokasi}>
+                  <FormLabel>
+                    Lokasi
+                    <RequiredForm />
+                  </FormLabel>
+                  <Input
+                    name="lokasi"
+                    placeholder="Gedung Serba Guna"
+                    onChange={formik.handleChange}
+                    value={formik.values.lokasi}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.lokasi as string}
+                  </FormErrorMessage>
+                </FormControl>
+              </SimpleGrid>
+
+              <SimpleGrid columns={[1, 2, 3]} gap={4}>
+                <FormControl
+                  mb={4}
+                  isInvalid={!!formik.errors.dokumen_diklat_1}
+                >
+                  <FormLabel>Dokumen 1</FormLabel>
+                  <FileInput
+                    name="dokumen_diklat_1"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("dokumen_diklat_1", input);
+                    }}
+                    inputValue={formik.values.gambar}
+                    placeholder="Mendukung .png .jpg .jpeg .svg"
+                    isError={!!formik.errors.gambar}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.dokumen_diklat_1 as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl
+                  mb={4}
+                  isInvalid={!!formik.errors.dokumen_diklat_2}
+                >
+                  <FormLabel>Dokumen 2</FormLabel>
+                  <FileInput
+                    name="dokumen_diklat_2"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("dokumen_diklat_2", input);
+                    }}
+                    inputValue={formik.values.gambar}
+                    placeholder="Mendukung .png .jpg .jpeg .svg"
+                    isError={!!formik.errors.gambar}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.dokumen_diklat_2 as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl
+                  mb={4}
+                  isInvalid={!!formik.errors.dokumen_diklat_3}
+                >
+                  <FormLabel>Dokumen 3</FormLabel>
+                  <FileInput
+                    name="dokumen_diklat_3"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("dokumen_diklat_3", input);
+                    }}
+                    inputValue={formik.values.gambar}
+                    placeholder="Mendukung .png .jpg .jpeg .svg"
+                    isError={!!formik.errors.gambar}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.dokumen_diklat_3 as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl
+                  mb={4}
+                  isInvalid={!!formik.errors.dokumen_diklat_4}
+                >
+                  <FormLabel>Dokumen 4</FormLabel>
+                  <FileInput
+                    name="dokumen_diklat_4"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("dokumen_diklat_4", input);
+                    }}
+                    inputValue={formik.values.gambar}
+                    placeholder="Mendukung .png .jpg .jpeg .svg"
+                    isError={!!formik.errors.gambar}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.dokumen_diklat_4 as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl
+                  mb={4}
+                  isInvalid={!!formik.errors.dokumen_diklat_5}
+                >
+                  <FormLabel>Dokumen 5</FormLabel>
+                  <FileInput
+                    name="dokumen_diklat_5"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("dokumen_diklat_5", input);
+                    }}
+                    inputValue={formik.values.gambar}
+                    placeholder="Mendukung .png .jpg .jpeg .svg"
+                    isError={!!formik.errors.gambar}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.dokumen_diklat_5 as string}
                   </FormErrorMessage>
                 </FormControl>
               </SimpleGrid>
