@@ -127,12 +127,12 @@ const Filter = (props: any) => {
                     if (newValue > 0) {
                       setLocalFilterConfig((ps: any) => ({
                         ...ps,
-                        masa_sip: [newValue],
+                        masa_sip: newValue,
                       }));
                     } else {
                       setLocalFilterConfig((ps: any) => ({
                         ...ps,
-                        masa_sip: [],
+                        masa_sip: undefined,
                       }));
                     }
                   }}
@@ -170,12 +170,12 @@ const Filter = (props: any) => {
                     if (newValue > 0) {
                       setLocalFilterConfig((ps: any) => ({
                         ...ps,
-                        masa_str: [newValue],
+                        masa_str: newValue,
                       }));
                     } else {
                       setLocalFilterConfig((ps: any) => ({
                         ...ps,
-                        masa_str: [],
+                        masa_str: undefined,
                       }));
                     }
                   }}

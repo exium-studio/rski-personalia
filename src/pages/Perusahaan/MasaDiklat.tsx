@@ -6,6 +6,9 @@ import {
   FormLabel,
   HStack,
   Icon,
+  InputGroup,
+  InputRightAddon,
+  InputRightElement,
   Modal,
   ModalBody,
   ModalContent,
@@ -105,32 +108,40 @@ const Filter = (props: any) => {
               <SimpleGrid columns={[1, null, 2]} gap={4}>
                 <FormControl>
                   <FormLabel>{`Lebih dari (>)`}</FormLabel>
-                  <NumberInput
-                    onChangeSetter={(input) => {
-                      setLocalFilterConfig({
-                        ...localFilterConfig,
-                        more_than: input,
-                      });
-                    }}
-                    inputValue={localFilterConfig?.more_than}
-                    name="more_than"
-                    placeholder="Lebih dari"
-                  />
+                  <InputGroup>
+                    <InputRightElement mr={3}>jam</InputRightElement>
+                    <NumberInput
+                      onChangeSetter={(input) => {
+                        setLocalFilterConfig({
+                          ...localFilterConfig,
+                          more_than: input,
+                        });
+                      }}
+                      inputValue={localFilterConfig?.more_than}
+                      name="more_than"
+                      placeholder="Lebih dari"
+                      pr={"56px"}
+                    />
+                  </InputGroup>
                 </FormControl>
 
                 <FormControl>
                   <FormLabel>{`Kurang dari (<)`}</FormLabel>
-                  <NumberInput
-                    onChangeSetter={(input) => {
-                      setLocalFilterConfig({
-                        ...localFilterConfig,
-                        less_than: input,
-                      });
-                    }}
-                    inputValue={localFilterConfig?.less_than}
-                    name="less_than"
-                    placeholder="Kurang dari"
-                  />
+                  <InputGroup>
+                    <InputRightElement mr={3}>jam</InputRightElement>
+                    <NumberInput
+                      onChangeSetter={(input) => {
+                        setLocalFilterConfig({
+                          ...localFilterConfig,
+                          less_than: input,
+                        });
+                      }}
+                      inputValue={localFilterConfig?.less_than}
+                      name="less_than"
+                      placeholder="Kurang dari"
+                      pr={"56px"}
+                    />
+                  </InputGroup>
                 </FormControl>
               </SimpleGrid>
             </ModalBody>
