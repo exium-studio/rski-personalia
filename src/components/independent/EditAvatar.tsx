@@ -47,7 +47,7 @@ const EditAvatar = (props: Props) => {
       const url = `/api/rski/dashboard/karyawan/upload-photo-profile/${data.id}`;
 
       const payload = new FormData();
-      payload.append("foto_profil", values.foto_profil);
+      payload.append("dokumen", values.foto_profil);
       req
         .post(url, payload)
         .then((r) => {
