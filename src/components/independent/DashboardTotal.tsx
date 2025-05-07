@@ -85,12 +85,14 @@ export default function DashboardTotal({ ...props }: Props) {
         <HStack wrap={"wrap"} gap={responsiveSpacing} {...props}>
           {loading && (
             <>
-              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
-              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
-              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
-              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
-              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
-              <Skeleton flex={"1 1 150px"} h={"107.94px"} borderRadius={12} />
+              {Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton
+                  key={i}
+                  flex={"1 1 150px"}
+                  h={"107.94px"}
+                  borderRadius={12}
+                />
+              ))}
             </>
           )}
 
