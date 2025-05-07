@@ -98,7 +98,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
       ? { value: 1, label: "Laki - laki" }
       : { value: 0, label: "Perempuan" },
     tempat_lahir: data?.tempat_lahir,
-    tgl_lahir: data?.tgl_lahir,
+    tgl_lahir: new Date(data?.tgl_lahir),
     pendidikan_terakhir: {
       value: data?.pendidikan_terakhir?.id,
       label: data?.pendidikan_terakhir?.label,
