@@ -111,7 +111,7 @@ const Filter = (props: any) => {
                 <Center>
                   <Text fontSize={18} fontWeight={500}>
                     {localFilterConfig.masa_sip
-                      ? `<= ${localFilterConfig.masa_sip} bulan`
+                      ? `0 - ${localFilterConfig.masa_sip} bulan`
                       : `Semua`}
                   </Text>
                 </Center>
@@ -166,7 +166,7 @@ const Filter = (props: any) => {
                 <Center>
                   <Text fontSize={18} fontWeight={500}>
                     {localFilterConfig.masa_str
-                      ? `<= ${localFilterConfig.masa_str} bulan`
+                      ? `0 - ${localFilterConfig.masa_str} bulan`
                       : `Semua`}
                   </Text>
                 </Center>
