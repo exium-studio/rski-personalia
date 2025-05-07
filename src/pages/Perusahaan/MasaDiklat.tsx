@@ -118,36 +118,41 @@ const Filter = (props: any) => {
                   </Text>
                 </Center>
 
-                <RangeSlider
-                  min={0}
-                  max={20}
-                  step={1}
-                  defaultValue={[
-                    localFilterConfig.more_than || 0,
-                    localFilterConfig.less_than || 0,
-                  ]}
-                  colorScheme="ap"
-                  onChange={(val: number[]) => {
-                    const [start, end] = val;
+                <CContainer pr={4}>
+                  <RangeSlider
+                    min={0}
+                    max={20}
+                    step={1}
+                    defaultValue={[
+                      localFilterConfig.more_than || 0,
+                      localFilterConfig.less_than || 0,
+                    ]}
+                    colorScheme="ap"
+                    onChange={(val: number[]) => {
+                      const [start, end] = val;
 
-                    setLocalFilterConfig((ps: any) => ({
-                      ...ps,
-                      more_than: start,
-                      less_than: end,
-                    }));
-                  }}
-                  value={[
-                    localFilterConfig.more_than || 0,
-                    localFilterConfig.less_than || 0,
-                  ]}
-                >
-                  <RangeSliderTrack bg={"var(--divider2)"}>
-                    <RangeSliderFilledTrack />
-                  </RangeSliderTrack>
+                      setLocalFilterConfig((ps: any) => ({
+                        ...ps,
+                        more_than: start,
+                        less_than: end,
+                      }));
+                    }}
+                    value={[
+                      localFilterConfig.more_than || 0,
+                      localFilterConfig.less_than || 0,
+                    ]}
+                  >
+                    <RangeSliderTrack
+                      bg={"var(--divider2)"}
+                      w={"calc(100% + 15px) !important"}
+                    >
+                      <RangeSliderFilledTrack />
+                    </RangeSliderTrack>
 
-                  <RangeSliderThumb index={0} bg={"p.600"} />
-                  <RangeSliderThumb index={1} bg={"p.600"} />
-                </RangeSlider>
+                    <RangeSliderThumb index={0} bg={"p.600"} />
+                    <RangeSliderThumb index={1} bg={"p.600"} />
+                  </RangeSlider>
+                </CContainer>
 
                 <Flex justify="space-between">
                   {[0, 5, 10, 15, 20].map((val, i) => {
