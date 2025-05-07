@@ -106,7 +106,7 @@ const Filter = (props: any) => {
             <ModalBody>
               <SimpleGrid columns={[1, null, 2]} gap={4}>
                 <FormControl>
-                  <FormLabel>{`Lebih dari (>)`}</FormLabel>
+                  <FormLabel>{`Lebih dari/sama (>=)`}</FormLabel>
                   <InputGroup>
                     <InputRightElement mr={3}>jam</InputRightElement>
                     <NumberInput
@@ -125,7 +125,7 @@ const Filter = (props: any) => {
                 </FormControl>
 
                 <FormControl>
-                  <FormLabel>{`Kurang dari (<)`}</FormLabel>
+                  <FormLabel>{`Kurang dari/sama (<=)`}</FormLabel>
                   <InputGroup>
                     <InputRightElement mr={3}>jam</InputRightElement>
                     <NumberInput

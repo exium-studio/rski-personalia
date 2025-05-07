@@ -116,7 +116,9 @@ const Filter = (props: any) => {
                 <FormLabel>{`SIP`}</FormLabel>
                 <Center>
                   <Text fontSize={18} fontWeight={500}>
-                    {localFilterConfig.masa_sip || 0} Bulan
+                    {localFilterConfig.masa_sip
+                      ? `Kurang dari ${localFilterConfig.masa_sip} bulan`
+                      : `Semua`}
                   </Text>
                 </Center>
                 <Slider
@@ -159,7 +161,9 @@ const Filter = (props: any) => {
                 <FormLabel>{`STR`}</FormLabel>
                 <Center>
                   <Text fontSize={18} fontWeight={500}>
-                    {localFilterConfig.masa_str || 0} Bulan
+                    {localFilterConfig.masa_str
+                      ? `Kurang dari ${localFilterConfig.masa_str} bulan`
+                      : `Semua`}
                   </Text>
                 </Center>
                 <Slider
