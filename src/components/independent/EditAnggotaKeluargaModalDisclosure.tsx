@@ -278,54 +278,6 @@ export default function EditAnggotaKeluargaModalDisclosure({
                   </FormErrorMessage>
                 </FormControl>
 
-                <FormControl mb={4} isInvalid={!!formik.errors.jenis_kelamin}>
-                  <FormLabel>
-                    Jenis Kelamin
-                    <RequiredForm />
-                  </FormLabel>
-                  <SelectGender
-                    name="jenis_kelamin"
-                    onConfirm={(input) => {
-                      formik.setFieldValue("jenis_kelamin", input);
-                    }}
-                    inputValue={formik.values.jenis_kelamin}
-                    isError={!!formik.errors.jenis_kelamin}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.hubungan as string}
-                  </FormErrorMessage>
-                </FormControl>
-
-                <FormControl mb={4} isInvalid={!!formik.errors.agama}>
-                  <FormLabel>Agama</FormLabel>
-                  <SelectAgama
-                    name="agama"
-                    onConfirm={(input) => {
-                      formik.setFieldValue("agama", input);
-                    }}
-                    inputValue={formik.values.agama}
-                    isError={!!formik.errors.agama}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.hubungan as string}
-                  </FormErrorMessage>
-                </FormControl>
-
-                <FormControl mb={4} isInvalid={!!formik.errors.goldar}>
-                  <FormLabel>Golongan Darah</FormLabel>
-                  <SelectGoldar
-                    name="goldar"
-                    onConfirm={(input) => {
-                      formik.setFieldValue("goldar", input);
-                    }}
-                    inputValue={formik.values.goldar}
-                    isError={!!formik.errors.goldar}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.hubungan as string}
-                  </FormErrorMessage>
-                </FormControl>
-
                 <FormControl mb={4} isInvalid={!!formik.errors.status_hidup}>
                   <FormLabel>
                     Status Hidup
@@ -341,6 +293,24 @@ export default function EditAnggotaKeluargaModalDisclosure({
                   />
                   <FormErrorMessage>
                     {formik.errors.status_hidup as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.jenis_kelamin}>
+                  <FormLabel>
+                    Jenis Kelamin
+                    <RequiredForm />
+                  </FormLabel>
+                  <SelectGender
+                    name="jenis_kelamin"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("jenis_kelamin", input);
+                    }}
+                    inputValue={formik.values.jenis_kelamin}
+                    isError={!!formik.errors.jenis_kelamin}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.hubungan as string}
                   </FormErrorMessage>
                 </FormControl>
 
@@ -399,6 +369,36 @@ export default function EditAnggotaKeluargaModalDisclosure({
                   />
                   <FormErrorMessage>
                     {formik.errors.pendidikan_terakhir as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.agama}>
+                  <FormLabel>Agama</FormLabel>
+                  <SelectAgama
+                    name="agama"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("agama", input);
+                    }}
+                    inputValue={formik.values.agama}
+                    isError={!!formik.errors.agama}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.hubungan as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.goldar}>
+                  <FormLabel>Golongan Darah</FormLabel>
+                  <SelectGoldar
+                    name="goldar"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("goldar", input);
+                    }}
+                    inputValue={formik.values.goldar}
+                    isError={!!formik.errors.goldar}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.hubungan as string}
                   </FormErrorMessage>
                 </FormControl>
 
