@@ -86,7 +86,7 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
                       <Text opacity={0.4}>Status Hidup</Text>
                       <FlexLine />
                       <Text>
-                        {anggota?.status_hidup ? "Hidup" : "Meninggal"}
+                        {anggota?.status_hidup ? "Aktif" : "Tidak Aktif"}
                       </Text>
                     </HStack>
                     <HStack>
