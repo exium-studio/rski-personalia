@@ -119,12 +119,26 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
       isSortable: true,
     },
     {
-      th: "Masa Berakhir SIP",
+      th: "Tanggal Berakhir SIP",
       isSortable: true,
     },
     {
-      th: "Masa Berakhir STR",
+      th: "Masa Berlaku SIP",
       isSortable: true,
+      cProps: {
+        justifyContent: "center",
+      },
+    },
+    {
+      th: "Tanggal Berakhir STR",
+      isSortable: true,
+    },
+    {
+      th: "Masa Berlaku STR",
+      isSortable: true,
+      cProps: {
+        justifyContent: "center",
+      },
     },
   ];
   const formattedData = data?.map((item: any) => {
@@ -146,7 +160,6 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
           props: {
             position: "sticky",
             left: "0",
-            zIndex: 99,
             w: "243px",
           },
           cProps: {
@@ -160,27 +173,41 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
         },
         {
           value: item?.masa_berlaku_sip,
-          td: `${formatDate(item?.masa_berlaku_sip)} ${
-            item?.masa_berlaku_sip
-              ? `(berakhir dalam ${monthDiff(
-                  new Date(),
-                  new Date(item?.masa_berlaku_sip)
-                )} bulan)`
-              : ""
-          }`,
+          td: `${formatDate(item?.masa_berlaku_sip)}`,
+          isDate: true,
+        },
+        {
+          value: item?.masa_berlaku_sip,
+          td: item?.masa_berlaku_sip
+            ? `${monthDiff(new Date(), new Date(item?.masa_berlaku_sip))} bulan`
+            : "",
+          isDate: true,
+          cProps: {
+            color:
+              monthDiff(new Date(), new Date(item?.masa_berlaku_sip)) < 7
+                ? "red.400"
+                : "",
+            justifyContent: "center",
+          },
+        },
+        {
+          value: item?.masa_berlaku_str,
+          td: `${formatDate(item?.masa_berlaku_str)}`,
           isDate: true,
         },
         {
           value: item?.masa_berlaku_str,
-          td: `${formatDate(item?.masa_berlaku_str)} ${
-            item?.masa_berlaku_str
-              ? `(berakhir dalam ${monthDiff(
-                  new Date(),
-                  new Date(item?.masa_berlaku_str)
-                )} bulan)`
-              : ""
-          }`,
+          td: item?.masa_berlaku_str
+            ? `${monthDiff(new Date(), new Date(item?.masa_berlaku_str))} bulan`
+            : "",
           isDate: true,
+          cProps: {
+            color:
+              monthDiff(new Date(), new Date(item?.masa_berlaku_sip)) < 7
+                ? "red.400"
+                : "",
+            justifyContent: "center",
+          },
         },
       ],
     };
