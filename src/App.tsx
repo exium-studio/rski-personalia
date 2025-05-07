@@ -67,6 +67,7 @@ import DiklatEksternal from "./pages/Perusahaan/DiklatEksternal";
 import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
+import MasaDiklat from "./pages/Perusahaan/MasaDiklat";
 
 const AuthPageLayout = () => {
   // SX
@@ -435,6 +436,20 @@ export const App = () => {
                 allowed={[8]}
               >
                 <DiklatEksternal />
+              </NavContainer>
+            }
+          />
+          <Route
+            path="/perusahaan/masa-diklat"
+            element={
+              <NavContainer
+                active={5}
+                title="Masa Diklat"
+                topNavsData={navs[5].subNavs}
+                topNavActive={2}
+                allowed={[8]}
+              >
+                <MasaDiklat />
               </NavContainer>
             }
           />

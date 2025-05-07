@@ -138,6 +138,11 @@ const navs = [
         label: "Diklat Eksternal",
         link: "/perusahaan/diklat-eksternal",
       },
+      {
+        allowed: [8],
+        label: "Masa Diklat",
+        link: "/perusahaan/masa-diklat",
+      },
       // {
       //   label: "Pelaporan Karyawan",
       //   link: "/perusahaan/pelaporan-karyawan",
