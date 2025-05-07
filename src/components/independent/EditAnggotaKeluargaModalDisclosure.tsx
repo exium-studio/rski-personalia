@@ -90,9 +90,19 @@ export default function EditAnggotaKeluargaModalDisclosure({
       value: data?.hubungan,
       label: data?.hubungan,
     },
+    status_hidup: {
+      value: data?.status_hidup,
+      label: data?.status_hidup ? "Aktif" : "Tidak Aktif",
+    },
     jenis_kelamin: data?.jenis_kelamin
       ? { value: 1, label: "Laki - laki" }
       : { value: 0, label: "Perempuan" },
+    tempat_lahir: data?.tempat_lahir,
+    tgl_lahir: data?.tgl_lahir,
+    pendidikan_terakhir: {
+      value: data?.pendidikan_terakhir?.id,
+      label: data?.pendidikan_terakhir?.label,
+    },
     agama: data?.agama
       ? {
           value: data?.agama?.id,
@@ -105,16 +115,6 @@ export default function EditAnggotaKeluargaModalDisclosure({
           label: data?.kategori_darah?.label,
         }
       : (undefined as any),
-    status_hidup: {
-      value: data?.status_hidup,
-      label: data?.status_hidup ? "Aktif" : "Tidak Aktif",
-    },
-    tempat_lahir: data?.tempat_lahir,
-    tgl_lahir: data?.tgl_lahir,
-    pendidikan_terakhir: {
-      value: data?.pendidikan_terakhir?.id,
-      label: data?.pendidikan_terakhir?.label,
-    },
     pekerjaan: data?.pekerjaan,
     no_hp: data?.no_hp,
     email: data?.email || "",
@@ -129,13 +129,13 @@ export default function EditAnggotaKeluargaModalDisclosure({
     validationSchema: yup.object().shape({
       nama_keluarga: yup.string().required("Harus diisi"),
       hubungan: yup.object().required("Harus diisi"),
-      jenis_kelamin: yup.object().required("Harus diisi"),
-      agama: yup.object(),
-      goldar: yup.object(),
       status_hidup: yup.object().required("Harus diisi"),
+      jenis_kelamin: yup.object().required("Harus diisi"),
       tempat_lahir: yup.string().required("Harus diisi"),
       tgl_lahir: yup.string().required("Harus diisi"),
       pendidikan_terakhir: yup.object().required("Harus diisi"),
+      agama: yup.object(),
+      goldar: yup.object(),
       pekerjaan: yup.string(),
       no_hp: yup.string(),
       email: yup.string(),
