@@ -171,6 +171,7 @@ export default function TabelMasaDiklat({ filterConfig }: Props) {
       props: {
         position: "sticky",
         left: "0",
+        zIndex: 99,
         w: "243px",
       },
       cProps: {
@@ -215,7 +216,6 @@ export default function TabelMasaDiklat({ filterConfig }: Props) {
           props: {
             position: "sticky",
             left: "0",
-            zIndex: 99,
             w: "243px",
           },
           cProps: {
