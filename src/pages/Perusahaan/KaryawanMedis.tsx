@@ -24,7 +24,6 @@ import { RiEqualizer3Fill } from "@remixicon/react";
 import { useRef, useState } from "react";
 import DisclosureHeader from "../../components/dependent/DisclosureHeader";
 import ExportModal from "../../components/dependent/ExportModal";
-import NumberInput from "../../components/dependent/input/NumberInput";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelKaryawanmedis from "../../components/dependent/TabelKaryawanmedis";
 import CContainer from "../../components/wrapper/CContainer";

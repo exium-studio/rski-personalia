@@ -10,6 +10,8 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+import formatDate from "../../lib/formatDate";
+import monthDiff from "../../lib/monthDiff";
 
 interface Props {
   filterConfig: any;
@@ -124,20 +126,6 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
       th: "Masa Berakhir STR",
       isSortable: true,
     },
-    // {
-    //   th: "Total Masa Diklat",
-    //   isSortable: true,
-    //   cProps: {
-    //     justifyContent: "center",
-    //   },
-    // },
-    // {
-    //   th: "Total Diklat",
-    //   isSortable: true,
-    // },
-    // {
-    //   th: "Daftar Diklat",
-    // },
   ];
   const formattedData = data?.map((item: any) => {
     return {
@@ -170,30 +158,30 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
           td: item?.nik,
           isNumeric: true,
         },
-        // {
-        //   value: item?.masa_diklat,
-        //   td: item?.masa_diklat ? formatDuration(item?.masa_diklat) : "",
-        //   isNumeric: true,
-        //   cProps: {
-        //     justifyContent: "center",
-        //   },
-        // },
-        // {
-        //   value: item?.total_diklat,
-        //   td: item?.total_diklat ? formatNumber(item?.total_diklat) : "",
-        //   isNumeric: true,
-        //   cProps: {
-        //     justifyContent: "center",
-        //   },
-        // },
-        // {
-        //   value: item?.joined_diklat,
-        //   td:
-        //     item?.joined_diklat?.length > 0 ? <DaftarDiklat item={item} /> : "",
-        //   cProps: {
-        //     justifyContent: "center",
-        //   },
-        // },
+        {
+          value: item?.masa_berlaku_sip,
+          td: `${formatDate(item?.masa_berlaku_sip)} ${
+            item?.masa_berlaku_sip
+              ? `(berakhir dalam ${monthDiff(
+                  new Date(),
+                  new Date(item?.masa_berlaku_sip)
+                )} bulan)`
+              : ""
+          }`,
+          isDate: true,
+        },
+        {
+          value: item?.masa_berlaku_str,
+          td: `${formatDate(item?.masa_berlaku_str)} ${
+            item?.masa_berlaku_str
+              ? `(berakhir dalam ${monthDiff(
+                  new Date(),
+                  new Date(item?.masa_berlaku_str)
+                )} bulan)`
+              : ""
+          }`,
+          isDate: true,
+        },
       ],
     };
   });
