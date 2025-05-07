@@ -125,7 +125,7 @@ export default function Profil() {
                 <CContainer flex={"1 1 150px"} gap={responsiveSpacing}>
                   <Image
                     src={
-                      userData?.foto_profil ||
+                      userData?.foto_profil?.path ||
                       "/images/defaultProfilePhoto.webp"
                     }
                     aspectRatio={1}

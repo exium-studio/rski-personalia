@@ -83,7 +83,7 @@ const EditAvatar = (props: Props) => {
           });
         })
         .finally(() => {
-          backOnClose();
+          // backOnClose();
           setLoading(false);
         });
     },

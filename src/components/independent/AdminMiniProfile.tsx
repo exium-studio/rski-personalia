@@ -117,7 +117,7 @@ export default function AdminMiniProfile({ ...props }: Props) {
           </Text>
 
           <Avatar
-            src={userData?.foto_profil || ""}
+            src={userData?.foto_profil?.path || ""}
             name={userData?.nama || "Admin"}
             size={"xs"}
           />
