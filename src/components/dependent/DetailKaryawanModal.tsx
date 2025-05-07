@@ -29,9 +29,9 @@ import {
   RiCalendarScheduleFill,
   RiCircleFill,
   RiCloseCircleFill,
-  RiFileChartFill,
   RiGraduationCapFill,
   RiHeartFill,
+  RiHistoryFill,
   RiMarkPenLine,
   RiTimerFill,
   RiUserStarFill,
@@ -51,6 +51,7 @@ import useGetUserData from "../../hooks/useGetUserData";
 import backOnClose from "../../lib/backOnClose";
 import formatDurationShort from "../../lib/formatDurationShort";
 import isHasPermissions from "../../lib/isHasPermissions";
+import EditAvatar from "../independent/EditAvatar";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
@@ -74,7 +75,6 @@ import ResetPasswordKaryawan from "./ResetPasswordKaryawan";
 import Retry from "./Retry";
 import RunPenilaianModal from "./RunPenilaianModal";
 import StatusAktifBadge from "./StatusAktifBadge";
-import EditAvatar from "../independent/EditAvatar";
 
 interface Props {
   id?: string;
@@ -556,7 +556,7 @@ export default function DetailKaryawanModal({
                               >
                                 <Icon
                                   opacity={0.4}
-                                  as={RiFileChartFill}
+                                  as={RiHistoryFill}
                                   fontSize={32}
                                   transition={"200ms"}
                                   _groupHover={{ opacity: 1 }}
