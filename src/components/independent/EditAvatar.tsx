@@ -9,6 +9,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -119,6 +120,9 @@ const EditAvatar = (props: Props) => {
             <DisclosureHeader title={"Edit Foto Profil"} />
           </ModalHeader>
           <ModalBody>
+            <Text opacity={0.4} textAlign={"center"} mb={2}>
+              Gunakan foto 1:1 untuk hasil maksimal
+            </Text>
             <form id="edit-avatar-form" onSubmit={formik.handleSubmit}>
               <FileInputLarge
                 onChangeSetter={(input) => {
