@@ -16,7 +16,7 @@ interface Props {
 export default function ChartDoughnut({
   labels,
   datasets,
-  cutout = 60,
+  cutout = 80,
 }: Props) {
   const data = {
     labels: labels,
