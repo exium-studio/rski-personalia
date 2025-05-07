@@ -306,7 +306,7 @@ export default function DetailKeluargaKaryawanModalDisclosure({
                             size={"md"}
                             w={"55px"}
                             h={"55px"}
-                            src={data.user.foto_profil}
+                            src={data.user?.foto_profil?.path}
                             name={data.user.nama}
                           />
 

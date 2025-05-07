@@ -229,7 +229,7 @@ export default function TabelPekerjaKontrak({ filterConfig }: Props) {
                         <Avatar
                           size={"sm"}
                           name={row.user.nama}
-                          src={row.user.foto_profil}
+                          src={row.user?.foto_profil?.path}
                         />
                         <Text>{row.user.nama}</Text>
                       </HStack>

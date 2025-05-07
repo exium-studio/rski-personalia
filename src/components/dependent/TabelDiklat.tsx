@@ -194,7 +194,7 @@ const PesertaModal = ({ data }: any) => {
                         data={{
                           id: peserta?.user?.id,
                           nama: peserta?.user?.nama,
-                          foto_profil: peserta?.user?.foto_profil,
+                          foto_profil: peserta?.user?.foto_profil?.path,
                         }}
                         // noDetail
                         w={"fit-content"}
@@ -391,7 +391,7 @@ const KonfirmasiPublikasiSertifikat = ({
                         data={{
                           id: peserta?.user?.id,
                           nama: peserta?.user?.nama,
-                          foto_profil: peserta?.user?.foto_profil,
+                          foto_profil: peserta?.user?.foto_profil?.path,
                         }}
                         // noDetail
                         w={"fit-content"}

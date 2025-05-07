@@ -96,7 +96,7 @@ const ListKaryawanDiverifikasiModal = ({
                         data={{
                           id: user?.id,
                           nama: user?.nama,
-                          foto_profil: user?.foto_profil,
+                          foto_profil: user?.foto_profil?.path,
                         }}
                         // noDetail
                         w={"100%"}

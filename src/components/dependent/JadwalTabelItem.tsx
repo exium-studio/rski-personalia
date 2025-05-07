@@ -314,7 +314,7 @@ export default function TabelJadwalItem({
               <Avatar
                 mb={"auto"}
                 size={"xl"}
-                src={data.user.foto_profil}
+                src={data.user?.foto_profil?.path}
                 name={data.user.nama}
               />
 

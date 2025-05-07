@@ -88,7 +88,7 @@ export default function DashboardSiapaYangLembur({ ...props }: Props) {
                     <HStack key={i}>
                       <Avatar
                         name={karyawan.user.nama}
-                        src={karyawan.user.foto_profil}
+                        src={karyawan.user?.foto_profil?.path}
                       />
                       <Box>
                         <Text mb={1}>{karyawan.user.nama}</Text>

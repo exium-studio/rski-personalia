@@ -131,7 +131,7 @@ export default function TabelIzin({ filterConfig }: Props) {
               data={{
                 id: item.user.id,
                 nama: item.user.nama,
-                foto_profil: item.user.foto_profil,
+                foto_profil: item.user?.foto_profil?.path,
               }}
             />
           ),

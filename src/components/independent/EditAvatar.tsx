@@ -132,7 +132,7 @@ const EditAvatar = (props: Props) => {
                 name="avatar"
                 accept="image/*"
                 placeholder="Pilih Foto Profil"
-                initialFilepath={data.foto_profil}
+                initialFilepath={data?.foto_profil?.path}
               />
             </form>
           </ModalBody>

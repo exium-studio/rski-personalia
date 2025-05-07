@@ -106,7 +106,7 @@ export default function DetailPresensi() {
                     w={"130px"}
                     h={"130px"}
                     size={"xl"}
-                    src={data.user.foto_profil}
+                    src={data.user?.foto_profil?.path}
                     name={data.user.nama}
                   />
 

@@ -192,7 +192,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
               data={{
                 id: item?.list_peserta?.[0].user.id,
                 nama: item?.list_peserta?.[0].user.nama,
-                foto_profil: item?.list_peserta?.[0].user.foto_profil,
+                foto_profil: item?.list_peserta?.[0].user?.foto_profil?.path,
               }}
             />
           ),

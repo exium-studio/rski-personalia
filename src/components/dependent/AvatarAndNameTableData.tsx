@@ -35,7 +35,7 @@ export default function AvatarAndNameTableData({
       {noDetail || !viewPermission ? (
         <Avatar
           cursor={"pointer"}
-          src={data.foto_profil || ""}
+          src={data?.foto_profil || ""}
           name={data.nama}
           size={data.unit_kerja ? "md" : "sm"}
         />
@@ -46,7 +46,7 @@ export default function AvatarAndNameTableData({
         >
           <Avatar
             cursor={"pointer"}
-            src={data.foto_profil || ""}
+            src={data?.foto_profil || ""}
             name={data.nama}
             size={data.unit_kerja ? "md" : "sm"}
           />

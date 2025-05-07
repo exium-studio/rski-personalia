@@ -565,7 +565,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
                           <>
                             <Avatar
                               size={"lg"}
-                              src={data.user.foto_profil}
+                              src={data.user?.foto_profil?.path}
                               name={data.user.nama}
                               w={"55px"}
                               h={"55px"}

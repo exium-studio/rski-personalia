@@ -109,7 +109,7 @@ export default function TabelPresensi({ filterConfig }: Props) {
               fullName: `${item?.gelar_depan || ""} ${item.user?.nama} ${
                 item?.gelar_belakang || ""
               }`,
-              foto_profil: item.user.foto_profil,
+              foto_profil: item.user?.foto_profil?.path,
             }}
           />
         ),

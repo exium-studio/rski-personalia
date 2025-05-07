@@ -49,7 +49,7 @@ export interface User__Interface {
   password: string;
   role_id: number;
   role: string;
-  foto_profil: string;
+  foto_profil: any;
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -62,7 +62,7 @@ export interface Karyawan__Interface {
   berat_badan?: string;
   created_at?: string;
   email?: string;
-  foto_profil: string;
+  foto_profil: any;
   gelar_depan?: string;
   golongan_darah?: string;
   id: number;
@@ -321,7 +321,7 @@ export interface User {
   username: string;
   email_verified_at: null;
   role_id: null;
-  foto_profil: null;
+  foto_profil: any;
   data_completion_step: number;
   status_aktif: number;
   created_at: Date;
@@ -408,7 +408,7 @@ export interface Interface__User {
   email_verified_at: Date | string | null;
   role_id: number | null;
   roles: Interface__Role[];
-  foto_profil: string | null;
+  foto_profil: any;
   data_completion_step: number;
   unit_kerja?: Interface__UnitKerja;
   status_aktif: number;

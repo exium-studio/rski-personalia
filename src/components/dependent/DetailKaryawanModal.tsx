@@ -332,7 +332,7 @@ export default function DetailKaryawanModal({
                                 h={"200px"}
                                 size={"xxl"}
                                 fontSize={"64px !important"}
-                                src={data.user?.foto_profil}
+                                src={data.user?.foto_profil?.path}
                                 name={data.user?.nama}
                               />
                               <EditAvatar

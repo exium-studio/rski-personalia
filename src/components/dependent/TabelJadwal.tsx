@@ -100,7 +100,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
               data={{
                 id: item.user.id,
                 nama: item.user.nama,
-                foto_profil: item.user.foto_profil,
+                foto_profil: item.user?.foto_profil?.path,
                 unit_kerja: item.unit_kerja,
               }}
               addition={
