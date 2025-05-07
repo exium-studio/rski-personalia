@@ -2,6 +2,7 @@ import {
   Button,
   ButtonGroup,
   Center,
+  Flex,
   FormControl,
   FormLabel,
   HStack,
@@ -14,6 +15,10 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack,
   SimpleGrid,
   Text,
   useDisclosure,
@@ -104,9 +109,127 @@ const Filter = (props: any) => {
             <DisclosureHeader title={"Filter Masa Diklat"} />
 
             <ModalBody>
-              <SimpleGrid columns={[1, null, 2]} gap={4}>
+              <FormControl>
+                <FormLabel>{`Masa Diklat`}</FormLabel>
+
+                <Center>
+                  <Text fontSize={18} fontWeight={500}>
+                    {localFilterConfig.less_than || localFilterConfig.more_than
+                      ? `${localFilterConfig.more_than || 0} - ${
+                          localFilterConfig.less_than || 0
+                        } jam`
+                      : `Semua`}
+                  </Text>
+                </Center>
+
+                <RangeSlider
+                  min={0}
+                  max={20}
+                  step={1}
+                  defaultValue={[
+                    localFilterConfig.more_than || 0,
+                    localFilterConfig.less_than || 0,
+                  ]}
+                  colorScheme="ap"
+                  onChange={(val: number[]) => {
+                    const [start, end] = val;
+
+                    setLocalFilterConfig((ps: any) => ({
+                      ...ps,
+                      more_than: start,
+                      less_than: end,
+                    }));
+                  }}
+                  value={[
+                    localFilterConfig.more_than || 0,
+                    localFilterConfig.less_than || 0,
+                  ]}
+                >
+                  <RangeSliderTrack bg={"var(--divider2)"}>
+                    <RangeSliderFilledTrack />
+                  </RangeSliderTrack>
+
+                  <RangeSliderThumb index={0} bg={"p.600"} />
+                  <RangeSliderThumb index={1} bg={"p.600"} />
+                </RangeSlider>
+
+                <Flex justify="space-between">
+                  {[0, 5, 10, 15, 20].map((val, i) => {
+                    const valid = i !== 0 && i !== 4;
+
+                    return (
+                      <Text
+                        key={val}
+                        w={"0px"}
+                        textAlign={"center"}
+                        fontSize="sm"
+                        whiteSpace={"nowrap"}
+                        opacity={valid ? 1 : 0}
+                        ml={1}
+                      >
+                        {val}
+                      </Text>
+                    );
+                  })}
+                </Flex>
+              </FormControl>
+
+              {/* <SimpleGrid columns={[1, null, 2]} gap={4}>
                 <FormControl>
                   <FormLabel>{`Lebih dari/sama (>=)`}</FormLabel>
+
+                  <Center>
+                    <Text fontSize={18} fontWeight={500}>
+                      {localFilterConfig.masa_sip
+                        ? `<= ${localFilterConfig.masa_sip} bulan`
+                        : `Semua`}
+                    </Text>
+                  </Center>
+
+                  <RangeSlider
+                    min={0}
+                    max={12}
+                    step={1}
+                    defaultValue={[0, localFilterConfig.masa_sip || 0]}
+                    colorScheme="ap"
+                    onChange={(val: number[]) => {
+                      const [, end] = val;
+
+                      setLocalFilterConfig((ps: any) => ({
+                        ...ps,
+                        masa_sip: end,
+                      }));
+                    }}
+                    value={[0, localFilterConfig.masa_sip || 0]}
+                  >
+                    <RangeSliderTrack bg={"var(--divider2)"}>
+                      <RangeSliderFilledTrack />
+                    </RangeSliderTrack>
+
+                    <RangeSliderThumb index={0} bg={"p.600"} />
+                    <RangeSliderThumb index={1} bg={"p.600"} />
+                  </RangeSlider>
+
+                  <Flex justify="space-between">
+                    {[0, 3, 6, 9, 12].map((val, i) => {
+                      const valid = i !== 0 && i !== 4;
+
+                      return (
+                        <Text
+                          key={val}
+                          w={"0px"}
+                          textAlign={"center"}
+                          fontSize="sm"
+                          whiteSpace={"nowrap"}
+                          opacity={valid ? 1 : 0}
+                          ml={1}
+                        >
+                          {val}
+                        </Text>
+                      );
+                    })}
+                  </Flex>
+
                   <InputGroup>
                     <InputRightElement mr={3}>jam</InputRightElement>
                     <NumberInput
@@ -142,7 +265,7 @@ const Filter = (props: any) => {
                     />
                   </InputGroup>
                 </FormControl>
-              </SimpleGrid>
+              </SimpleGrid> */}
             </ModalBody>
 
             <ModalFooter>

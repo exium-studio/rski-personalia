@@ -2,6 +2,7 @@ import {
   Button,
   ButtonGroup,
   Center,
+  Flex,
   FormControl,
   FormLabel,
   HStack,
@@ -12,11 +13,10 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Slider,
-  SliderFilledTrack,
-  SliderMark,
-  SliderThumb,
-  SliderTrack,
+  RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -54,13 +54,6 @@ const Filter = (props: any) => {
     return count;
   };
   const lightDarkColor = useLightDarkColor();
-
-  // SX
-  const labelStyles = {
-    mt: "2",
-    // ml: "-2.5",
-    fontSize: "sm",
-  };
 
   return (
     <>
@@ -114,47 +107,58 @@ const Filter = (props: any) => {
             <ModalBody>
               <FormControl mb={4}>
                 <FormLabel>{`SIP`}</FormLabel>
+
                 <Center>
                   <Text fontSize={18} fontWeight={500}>
                     {localFilterConfig.masa_sip
-                      ? `Kurang dari ${localFilterConfig.masa_sip} bulan`
+                      ? `<= ${localFilterConfig.masa_sip} bulan`
                       : `Semua`}
                   </Text>
                 </Center>
-                <Slider
-                  colorScheme="ap"
-                  aria-label="slider-ex-6"
-                  onChange={(val) => {
-                    const newValue = Math.round((val * 12) / 100);
-                    if (newValue > 0) {
-                      setLocalFilterConfig((ps: any) => ({
-                        ...ps,
-                        masa_sip: newValue,
-                      }));
-                    } else {
-                      setLocalFilterConfig((ps: any) => ({
-                        ...ps,
-                        masa_sip: undefined,
-                      }));
-                    }
-                  }}
-                  value={(localFilterConfig.masa_sip * 100) / 12 || 0}
-                >
-                  <SliderMark value={25} {...labelStyles}>
-                    3
-                  </SliderMark>
-                  <SliderMark value={50} {...labelStyles}>
-                    6
-                  </SliderMark>
-                  <SliderMark value={75} {...labelStyles}>
-                    9
-                  </SliderMark>
 
-                  <SliderTrack bg={"var(--divider2)"}>
-                    <SliderFilledTrack />
-                  </SliderTrack>
-                  <SliderThumb bg={"p.600"} />
-                </Slider>
+                <RangeSlider
+                  min={0}
+                  max={12}
+                  step={1}
+                  defaultValue={[0, localFilterConfig.masa_sip || 0]}
+                  colorScheme="ap"
+                  onChange={(val: number[]) => {
+                    const [, end] = val;
+
+                    setLocalFilterConfig((ps: any) => ({
+                      ...ps,
+                      masa_sip: end,
+                    }));
+                  }}
+                  value={[0, localFilterConfig.masa_sip || 0]}
+                >
+                  <RangeSliderTrack bg={"var(--divider2)"}>
+                    <RangeSliderFilledTrack />
+                  </RangeSliderTrack>
+
+                  <RangeSliderThumb index={0} bg={"p.600"} />
+                  <RangeSliderThumb index={1} bg={"p.600"} />
+                </RangeSlider>
+
+                <Flex justify="space-between">
+                  {[0, 3, 6, 9, 12].map((val, i) => {
+                    const valid = i !== 0 && i !== 4;
+
+                    return (
+                      <Text
+                        key={val}
+                        w={"0px"}
+                        textAlign={"center"}
+                        fontSize="sm"
+                        whiteSpace={"nowrap"}
+                        opacity={valid ? 1 : 0}
+                        ml={1}
+                      >
+                        {val}
+                      </Text>
+                    );
+                  })}
+                </Flex>
               </FormControl>
 
               <FormControl mb={4}>
@@ -162,44 +166,54 @@ const Filter = (props: any) => {
                 <Center>
                   <Text fontSize={18} fontWeight={500}>
                     {localFilterConfig.masa_str
-                      ? `Kurang dari ${localFilterConfig.masa_str} bulan`
+                      ? `<= ${localFilterConfig.masa_str} bulan`
                       : `Semua`}
                   </Text>
                 </Center>
-                <Slider
-                  colorScheme="ap"
-                  aria-label="slider-ex-6"
-                  onChange={(val) => {
-                    const newValue = Math.round((val * 12) / 100);
-                    if (newValue > 0) {
-                      setLocalFilterConfig((ps: any) => ({
-                        ...ps,
-                        masa_str: newValue,
-                      }));
-                    } else {
-                      setLocalFilterConfig((ps: any) => ({
-                        ...ps,
-                        masa_str: undefined,
-                      }));
-                    }
-                  }}
-                  value={(localFilterConfig.masa_str * 100) / 12 || 0}
-                >
-                  <SliderMark value={25} {...labelStyles}>
-                    3
-                  </SliderMark>
-                  <SliderMark value={50} {...labelStyles}>
-                    6
-                  </SliderMark>
-                  <SliderMark value={75} {...labelStyles}>
-                    9
-                  </SliderMark>
 
-                  <SliderTrack bg={"var(--divider2)"}>
-                    <SliderFilledTrack />
-                  </SliderTrack>
-                  <SliderThumb bg={"p.600"} />
-                </Slider>
+                <RangeSlider
+                  min={0}
+                  max={12}
+                  step={1}
+                  defaultValue={[0, localFilterConfig.masa_str || 0]}
+                  colorScheme="ap"
+                  onChange={(val: number[]) => {
+                    const [, end] = val;
+
+                    setLocalFilterConfig((ps: any) => ({
+                      ...ps,
+                      masa_str: end,
+                    }));
+                  }}
+                  value={[0, localFilterConfig.masa_str || 0]}
+                >
+                  <RangeSliderTrack bg={"var(--divider2)"}>
+                    <RangeSliderFilledTrack />
+                  </RangeSliderTrack>
+
+                  <RangeSliderThumb index={0} bg={"p.600"} />
+                  <RangeSliderThumb index={1} bg={"p.600"} />
+                </RangeSlider>
+
+                <Flex justify="space-between">
+                  {[0, 3, 6, 9, 12].map((val, i) => {
+                    const valid = i !== 0 && i !== 4;
+
+                    return (
+                      <Text
+                        key={val}
+                        w={"0px"}
+                        textAlign={"center"}
+                        fontSize="sm"
+                        whiteSpace={"nowrap"}
+                        opacity={valid ? 1 : 0}
+                        ml={1}
+                      >
+                        {val}
+                      </Text>
+                    );
+                  })}
+                </Flex>
               </FormControl>
             </ModalBody>
 
