@@ -80,36 +80,66 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
                     <HStack>
                       <Text opacity={0.4}>Hubungan Keluarga</Text>
                       <FlexLine />
-                      <Text textAlign={"right"}>{anggota?.hubungan}</Text>
+                      <Text>{anggota?.hubungan}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Status Hidup</Text>
                       <FlexLine />
                       <Text>
-                        {anggota?.status_hidup ? "Aktif" : "Tidak Aktif"}
+                        {anggota?.status_hidup ? "Hidup" : "Meninggal"}
                       </Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Jenis Kelamin</Text>
+                      <FlexLine />
+                      <Text>
+                        {anggota?.jenis_kelamin ? "Laki-laki" : "Perempuan"}
+                      </Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Tempat Lahir</Text>
+                      <FlexLine />
+                      <Text>{anggota?.tempat_lahir}</Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Tanggal Lahir</Text>
+                      <FlexLine />
+                      <Text>{formatDate(anggota?.tgl_lahir)}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Pendidikan Terakhir</Text>
                       <FlexLine />
-                      <Text textAlign={"right"}>
-                        {anggota?.pendidikan_terakhir?.label}
-                      </Text>
+                      <Text>{anggota?.pendidikan_terakhir?.label}</Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Agama</Text>
+                      <FlexLine />
+                      <Text>{anggota?.agama?.label}</Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Golongan Darah</Text>
+                      <FlexLine />
+                      <Text>{anggota?.kategori_darah?.label}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Pekerjaan</Text>
                       <FlexLine />
-                      <Text textAlign={"right"}>{anggota.pekerjaan}</Text>
+                      <Text>{anggota?.pekerjaan}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Nomor Telepon</Text>
                       <FlexLine />
-                      <Text textAlign={"right"}>{anggota.no_hp}</Text>
+                      <Text>{anggota?.no_hp}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Email</Text>
                       <FlexLine />
-                      <Text textAlign={"right"}>{anggota.email}</Text>
+                      <Text>{anggota?.email}</Text>
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>No. Rekam Medis</Text>
+                      <FlexLine />
+                      <Text>{anggota?.no_rm}</Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Tanggungan BPJS</Text>
@@ -118,6 +148,15 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
                         data={anggota.is_bpjs}
                         trueValue="Ditanggung"
                         falseValue="Tidak Ditanggung"
+                      />
+                    </HStack>
+                    <HStack>
+                      <Text opacity={0.4}>Sudah Menikah</Text>
+                      <FlexLine />
+                      <BooleanBadge
+                        data={anggota?.is_menikah}
+                        trueValue="Menikah"
+                        falseValue="Belum Menikah"
                       />
                     </HStack>
                   </CContainer>
