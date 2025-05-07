@@ -93,11 +93,11 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       dokumen_diklat_5: yup.mixed(),
     }),
     onSubmit: (values, { resetForm }) => {
+      // console.log(values.whitelist_peserta);
       const payload = new FormData();
-      payload.append(
-        "user_id",
-        values.whitelist_peserta.map((item: any) => item.id)
-      );
+      values.whitelist_peserta.forEach((peserta: any) => {
+        payload.append("user_id[]", peserta.value);
+      });
       payload.append("dokumen", values.gambar);
       payload.append("nama", values.nama);
       payload.append("deskripsi", values.deskripsi);
@@ -108,11 +108,16 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       payload.append("jam_selesai", values.jam_selesai);
       payload.append("lokasi", values.lokasi);
       payload.append("skp", values.skp);
-      payload.append("dokumen_diklat_1", values.dokumen_diklat_1);
-      payload.append("dokumen_diklat_2", values.dokumen_diklat_2);
-      payload.append("dokumen_diklat_3", values.dokumen_diklat_3);
-      payload.append("dokumen_diklat_4", values.dokumen_diklat_4);
-      payload.append("dokumen_diklat_5", values.dokumen_diklat_5);
+      if (values.dokumen_diklat_1)
+        payload.append("dokumen_diklat_1", values.dokumen_diklat_1);
+      if (values.dokumen_diklat_2)
+        payload.append("dokumen_diklat_2", values.dokumen_diklat_2);
+      if (values.dokumen_diklat_3)
+        payload.append("dokumen_diklat_3", values.dokumen_diklat_3);
+      if (values.dokumen_diklat_4)
+        payload.append("dokumen_diklat_4", values.dokumen_diklat_4);
+      if (values.dokumen_diklat_5)
+        payload.append("dokumen_diklat_5", values.dokumen_diklat_5);
 
       setLoading(true);
       req

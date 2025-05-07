@@ -358,7 +358,6 @@ interface Props {
   onClose: () => void;
   status_riwayat_gaji: any;
 }
-
 export default function DetailPenggajianKaryawanModal({
   id,
   riwayat_id,
@@ -373,100 +372,6 @@ export default function DetailPenggajianKaryawanModal({
     onOpen,
     onClose
   );
-
-  // const dummy = {
-  //   pendapatan: {
-  //     pendapatan_tetap: [
-  //       {
-  //         nama_detail: "Gaji Pokok",
-  //         besaran: 100000,
-  //       },
-  //       {
-  //         nama_detail: "Tunjangan Jabatan",
-  //         besaran: 100000,
-  //       },
-  //       {
-  //         nama_detail: "Tunjangan Fungsional",
-  //         besaran: 100000,
-  //       },
-  //       {
-  //         nama_detail: "Tunjangan Khusus",
-  //         besaran: 100000,
-  //       },
-  //       {
-  //         nama_detail: "Tunjangan Lainnya",
-  //         besaran: 100000,
-  //       },
-  //     ],
-  //     pendapatan_tambahan: [
-  //       {
-  //         nama_detail: "Uang Lembur",
-  //         besaran: 100000,
-  //       },
-  //       {
-  //         nama_detail: "Uang Makan",
-  //         besaran: 100000,
-  //       },
-
-  //       // dinamis jika ada
-  //       {
-  //         nama_detail: "Reward BOR",
-  //         besaran: 100000,
-  //       },
-  //       {
-  //         nama_detail: "Reward Absensi",
-  //         besaran: 100000,
-  //       },
-  //       {
-  //         nama_detail: "THR",
-  //         besaran: 100000,
-  //       },
-
-  //       // dinamis ambil dari tabel penyesuaian gaji yang potongan
-  //       {
-  //         nama_detail: "Penyesuaian Gaji (ambil kolom nama_detail)",
-  //         besaran: 100000,
-  //       },
-  //     ],
-  //     total_pendapatan: 1000000,
-  //   },
-  //   potongan: {
-  //     potongan_tetap: [
-  //       {
-  //         nama_detail: "PPh21",
-  //         besaran: 100000,
-  //       },
-
-  //       // dinamis sesuai master data potongan (contoh nya ada 3 ini)
-  //       {
-  //         nama_detail: "BPJS Kesehatan",
-  //         besaran: 100000,
-  //       },
-  //       {
-  //         nama_detail: "BPJS Ketenagakerjaan",
-  //         besaran: 100000,
-  //       },
-  //       {
-  //         nama_detail: "DPLK",
-  //         besaran: 100000,
-  //       },
-  //     ],
-  //     potongan_tambahan: [
-  //       // dinamis ambil dari tabel penyesuaian gaji yang potongan
-  //       {
-  //         nama_detail: "Penyesuaian Gaji (ambil kolom nama_detail)",
-  //         besaran: 100000,
-  //       },
-
-  //       // dinamis ambil dari tabel tagihan potongan
-  //       {
-  //         nama_detail: "Tagihan Potongan (ambil kolom nama_detail)",
-  //         besaran: 100000,
-  //       },
-  //     ],
-  //     total_potongan: 1000000,
-  //   },
-  // };
 
   const initialRef = useRef(null);
   const { error, loading, data, retry } = useDataState<any>({
@@ -715,6 +620,28 @@ export default function DetailPenggajianKaryawanModal({
                                         );
                                       }
                                     )}
+
+                                    <CContainer px={4} mt={2}>
+                                      <HStack>
+                                        <Text opacity={0.6}>
+                                          Total Pendapatan Tetap
+                                        </Text>
+                                        <FlexLine />
+                                        <Text
+                                          fontWeight={500}
+                                          textAlign={"right"}
+                                        >
+                                          Rp{" "}
+                                          {formatNumber(
+                                            data?.pendapatan?.pendapatan_tetap.reduce(
+                                              (sum: any, i: any) =>
+                                                sum + (i.besaran ?? 0),
+                                              0
+                                            )
+                                          ) || 0}
+                                        </Text>
+                                      </HStack>
+                                    </CContainer>
                                   </CContainer>
 
                                   {/* Pendapatan Tambahan */}
@@ -757,6 +684,28 @@ export default function DetailPenggajianKaryawanModal({
                                         );
                                       }
                                     )}
+
+                                    <CContainer px={4} mt={2}>
+                                      <HStack>
+                                        <Text opacity={0.6}>
+                                          Total Pendapatan Tambahan
+                                        </Text>
+                                        <FlexLine />
+                                        <Text
+                                          fontWeight={500}
+                                          textAlign={"right"}
+                                        >
+                                          Rp{" "}
+                                          {formatNumber(
+                                            data?.pendapatan?.pendapatan_tambahan.reduce(
+                                              (sum: any, i: any) =>
+                                                sum + (i.besaran ?? 0),
+                                              0
+                                            )
+                                          ) || 0}
+                                        </Text>
+                                      </HStack>
+                                    </CContainer>
                                   </CContainer>
 
                                   {/* Total Pendapatan */}
@@ -816,7 +765,7 @@ export default function DetailPenggajianKaryawanModal({
                                           item?.nama_detail ===
                                           "BPJS Kesehatan";
                                         return (
-                                          <>
+                                          <CContainer key={i}>
                                             <HStack
                                               key={i}
                                               justify={"space-between"}
@@ -853,9 +802,9 @@ export default function DetailPenggajianKaryawanModal({
 
                                             {bpjs &&
                                               item?.keluarga_terkena_potongan?.map(
-                                                (anggota: any, i: number) => (
+                                                (anggota: any, ii: number) => (
                                                   <HStack
-                                                    key={i}
+                                                    key={ii}
                                                     justify={"space-between"}
                                                     py={2}
                                                     pr={4}
@@ -887,7 +836,7 @@ export default function DetailPenggajianKaryawanModal({
                                                   </HStack>
                                                 )
                                               )}
-                                          </>
+                                          </CContainer>
                                         );
                                       }
                                     )}
