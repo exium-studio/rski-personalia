@@ -7,6 +7,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Center,
   HStack,
   Icon,
   Modal,
@@ -73,6 +74,7 @@ import ResetPasswordKaryawan from "./ResetPasswordKaryawan";
 import Retry from "./Retry";
 import RunPenilaianModal from "./RunPenilaianModal";
 import StatusAktifBadge from "./StatusAktifBadge";
+import EditAvatar from "../independent/EditAvatar";
 
 interface Props {
   id?: string;
@@ -325,14 +327,20 @@ export default function DetailKaryawanModal({
                             align={"center"}
                             mb={3}
                           >
-                            <Avatar
-                              w={"200px"}
-                              h={"200px"}
-                              size={"xxl"}
-                              fontSize={"64px !important"}
-                              src={data.user?.foto_profil}
-                              name={data.user?.nama}
-                            />
+                            <Center position={"relative"}>
+                              <Avatar
+                                w={"200px"}
+                                h={"200px"}
+                                size={"xxl"}
+                                fontSize={"64px !important"}
+                                src={data.user?.foto_profil}
+                                name={data.user?.nama}
+                              />
+                              <EditAvatar
+                                aria-label="edit-avatar"
+                                data={data}
+                              />
+                            </Center>
 
                             <VStack gap={1} w={"100%"}>
                               <Text
