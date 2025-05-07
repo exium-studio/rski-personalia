@@ -152,12 +152,11 @@ const Filter = (props: any) => {
                     return (
                       <Text
                         key={val}
-                        w={"0px"}
+                        w={"18px"}
                         textAlign={"center"}
                         fontSize="sm"
                         whiteSpace={"nowrap"}
                         opacity={valid ? 1 : 0}
-                        ml={1}
                       >
                         {val}
                       </Text>
@@ -212,12 +211,11 @@ const Filter = (props: any) => {
                     return (
                       <Text
                         key={val}
-                        w={"0px"}
+                        w={"18px"}
                         textAlign={"center"}
                         fontSize="sm"
                         whiteSpace={"nowrap"}
                         opacity={valid ? 1 : 0}
-                        ml={1}
                       >
                         {val}
                       </Text>
