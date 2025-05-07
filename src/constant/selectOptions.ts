@@ -1,4 +1,4 @@
-const optionsAgama = [
+export const optionsAgama = [
   { value: 1, label: "Islam" },
   { value: 2, label: "Kristen" },
   { value: 3, label: "Katolik" },
@@ -7,7 +7,7 @@ const optionsAgama = [
   { value: 6, label: "Konghucu" },
 ];
 
-const optionsHubunganKeluarga = [
+export const optionsHubunganKeluarga = [
   { value: "Suami", label: "Suami" },
   { value: "Istri", label: "Istri" },
   { value: "Anak Ke-1", label: "Anak Ke-1" },
@@ -23,18 +23,18 @@ const optionsHubunganKeluarga = [
   // { value: "Kakek", label: "Kakek" },
 ];
 
-const optionsKategoriCuti = [
+export const optionsKategoriCuti = [
   { value: 1, label: "Tahunan" },
   { value: 2, label: "Kelahiran" },
   { value: 3, label: "Pribadi" },
 ];
 
-const optionsKategoriTukarJadwal = [
+export const optionsKategoriTukarJadwal = [
   { value: 1, label: "Tukar Shift" },
   { value: 2, label: "Tukar Libur" },
 ];
 
-const optionsStatusTukarJadwal = [
+export const optionsStatusTukarJadwal = [
   { value: 1, label: "Menunggu" },
   { value: 7, label: "Disetujui Karyawan" },
   { value: 6, label: "Ditolak Karyawan" },
@@ -44,34 +44,34 @@ const optionsStatusTukarJadwal = [
   { value: 5, label: "Verif. 2 Ditolak" },
 ];
 
-const optionsStatusKerja = [
+export const optionsStatusKerja = [
   { value: 1, label: "Kerja" },
   { value: 2, label: "Cuti" },
   { value: 3, label: "Izin" },
   { value: 4, label: "Libur" },
 ];
 
-const optionsJenisKaryawan = [
+export const optionsJenisKaryawan = [
   { value: 1, label: "Shift" },
   { value: 0, label: "Non-Shift" },
 ];
 
-const optionsJenisKompetensi = [
+export const optionsJenisKompetensi = [
   { value: 1, label: "Medis" },
   { value: 0, label: "Non-Medis" },
 ];
 
-const optionsJenisAktivitasPresensi = [
+export const optionsJenisAktivitasPresensi = [
   { value: 1, label: "Masuk" },
   { value: 2, label: "Keluar" },
 ];
 
-const optionsStatusHidup = [
+export const optionsStatusHidup = [
   { value: 1, label: "Aktif" },
   { value: 0, label: "Tidak Aktif" },
 ];
 
-const optionsJenisKelamin = [
+export const optionsJenisKelamin = [
   {
     value: 1,
     label: "Laki - Laki",
@@ -82,7 +82,7 @@ const optionsJenisKelamin = [
   },
 ];
 
-const optionsInboxType = [
+export const optionsInboxType = [
   {
     id: 1,
     label: "Cuti",
@@ -145,7 +145,7 @@ const optionsInboxType = [
   },
 ];
 
-const optionsJenisPotongan = [
+export const optionsJenisPotongan = [
   {
     value: 1,
     label: "Nominal (Rp)",
@@ -156,7 +156,7 @@ const optionsJenisPotongan = [
   },
 ];
 
-const optionsKategoriDiklat = [
+export const optionsKategoriDiklat = [
   {
     value: 1,
     label: "Internal",
@@ -167,7 +167,7 @@ const optionsKategoriDiklat = [
   },
 ];
 
-const optionsTipeTransfer = [
+export const optionsTipeTransfer = [
   {
     value: 1,
     label: "Mutasi",
@@ -178,7 +178,7 @@ const optionsTipeTransfer = [
   },
 ];
 
-const optionsSumberPotongan = [
+export const optionsSumberPotongan = [
   {
     value: 1,
     label: "Gaji Bruto",
@@ -193,7 +193,7 @@ const optionsSumberPotongan = [
   },
 ];
 
-const optionsStatusKaryawan = [
+export const optionsStatusKaryawan = [
   {
     value: 1,
     label: "Tetap",
@@ -220,7 +220,7 @@ const optionsStatusKaryawan = [
   },
 ];
 
-const optionsPendidikan = [
+export const optionsPendidikan = [
   {
     value: 1,
     label: "SD",
@@ -271,7 +271,7 @@ const optionsPendidikan = [
   },
 ];
 
-const optionsStatusAktif = [
+export const optionsStatusAktif = [
   {
     value: 1,
     label: "Belum Aktif",
@@ -286,19 +286,19 @@ const optionsStatusAktif = [
   },
 ];
 
-const optionsGoldar = [
+export const optionsGoldar = [
   { value: 1, label: "A" },
   { value: 2, label: "B" },
   { value: 3, label: "AB" },
   { value: 4, label: "O" },
 ];
 
-const optionsKategoriTagihan = [
+export const optionsKategoriTagihan = [
   { value: 1, label: "Obat/Perawatan" },
   { value: 2, label: "Koperasi" },
 ];
 
-const optionsModulVerifikasi = [
+export const optionsModulVerifikasi = [
   {
     value: 1,
     label: "Permintaan Perubahan Data",
@@ -330,28 +330,3 @@ const optionsModulVerifikasi = [
     label2: 2,
   },
 ];
-
-export {
-  optionsModulVerifikasi,
-  optionsKategoriTagihan,
-  optionsGoldar,
-  optionsStatusAktif,
-  optionsPendidikan,
-  optionsStatusKaryawan,
-  optionsSumberPotongan,
-  optionsTipeTransfer,
-  optionsKategoriDiklat,
-  optionsStatusHidup,
-  optionsAgama,
-  optionsKategoriCuti,
-  optionsKategoriTukarJadwal,
-  optionsStatusTukarJadwal,
-  optionsStatusKerja,
-  optionsJenisKaryawan,
-  optionsJenisAktivitasPresensi,
-  optionsJenisKelamin,
-  optionsInboxType,
-  optionsHubunganKeluarga,
-  optionsJenisKompetensi,
-  optionsJenisPotongan,
-};

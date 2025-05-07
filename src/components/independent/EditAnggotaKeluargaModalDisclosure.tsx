@@ -35,6 +35,9 @@ import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
 import DatePickerModal from "../dependent/input/DatePickerModal";
 import formatDate from "../../lib/formatDate";
+import SelectGoldar from "../dependent/_Select/SelectGoldar";
+import SelectGender from "../dependent/_Select/SelectGender";
+import SelectAgama from "../dependent/_Select/SelectAgama";
 
 interface Props extends BoxProps {
   idKaryawan: number;
@@ -64,16 +67,50 @@ export default function EditAnggotaKeluargaModalDisclosure({
 
   const data = rowData?.originalData;
 
+  // {
+  //   nama_keluarga: "",
+  //   hubungan: undefined as any,
+  //   jenis_kelamin: undefined as any,
+  //   agama: undefined as any,
+  //   goldar: undefined as any,
+  //   status_hidup: undefined as any,
+  //   tempat_lahir: "",
+  //   tgl_lahir: undefined as any,
+  //   pendidikan_terakhir: undefined as any,
+  //   pekerjaan: "",
+  //   no_hp: "",
+  //   email: "",
+  //   no_rm: "",
+  //   is_bpjs: false,
+  //   is_menikah: undefined as any,
+  // }
   const initialValues = {
     nama_keluarga: data?.nama_keluarga,
     hubungan: {
       value: data?.hubungan,
       label: data?.hubungan,
     },
+    jenis_kelamin: data?.jenis_kelamin
+      ? { value: 1, label: "Laki - laki" }
+      : { value: 0, label: "Perempuan" },
+    agama: data?.agama
+      ? {
+          value: data?.agama?.id,
+          label: data?.agama?.label,
+        }
+      : (undefined as any),
+    goldar: data?.kategori_darah
+      ? {
+          value: data?.kategori_darah?.id,
+          label: data?.kategori_darah?.label,
+        }
+      : (undefined as any),
     status_hidup: {
       value: data?.status_hidup,
       label: data?.status_hidup ? "Aktif" : "Tidak Aktif",
     },
+    tempat_lahir: data?.tempat_lahir,
+    tgl_lahir: data?.tgl_lahir,
     pendidikan_terakhir: {
       value: data?.pendidikan_terakhir?.id,
       label: data?.pendidikan_terakhir?.label,
@@ -81,8 +118,8 @@ export default function EditAnggotaKeluargaModalDisclosure({
     pekerjaan: data?.pekerjaan,
     no_hp: data?.no_hp,
     email: data?.email || "",
+    no_rm: data?.no_rm || "",
     is_bpjs: data.is_bpjs,
-    tgl_lahir: data?.tgl_lahir,
     is_menikah: data.is_menikah,
   };
 
@@ -92,14 +129,19 @@ export default function EditAnggotaKeluargaModalDisclosure({
     validationSchema: yup.object().shape({
       nama_keluarga: yup.string().required("Harus diisi"),
       hubungan: yup.object().required("Harus diisi"),
+      jenis_kelamin: yup.object().required("Harus diisi"),
+      agama: yup.object(),
+      goldar: yup.object(),
       status_hidup: yup.object().required("Harus diisi"),
+      tempat_lahir: yup.string().required("Harus diisi"),
+      tgl_lahir: yup.string().required("Harus diisi"),
       pendidikan_terakhir: yup.object().required("Harus diisi"),
-      pekerjaan: yup.string().required("Harus diisi"),
-      no_hp: yup.string().required("Harus diisi"),
+      pekerjaan: yup.string(),
+      no_hp: yup.string(),
       email: yup.string(),
+      no_rm: yup.string(),
       is_bpjs: yup.boolean(),
-      tgl_lahir: yup.string().required(),
-      is_menikah: yup.boolean().required(),
+      is_menikah: yup.boolean(),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
@@ -236,6 +278,54 @@ export default function EditAnggotaKeluargaModalDisclosure({
                   </FormErrorMessage>
                 </FormControl>
 
+                <FormControl mb={4} isInvalid={!!formik.errors.jenis_kelamin}>
+                  <FormLabel>
+                    Jenis Kelamin
+                    <RequiredForm />
+                  </FormLabel>
+                  <SelectGender
+                    name="jenis_kelamin"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("jenis_kelamin", input);
+                    }}
+                    inputValue={formik.values.jenis_kelamin}
+                    isError={!!formik.errors.jenis_kelamin}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.hubungan as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.agama}>
+                  <FormLabel>Agama</FormLabel>
+                  <SelectAgama
+                    name="agama"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("agama", input);
+                    }}
+                    inputValue={formik.values.agama}
+                    isError={!!formik.errors.agama}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.hubungan as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.goldar}>
+                  <FormLabel>Golongan Darah</FormLabel>
+                  <SelectGoldar
+                    name="goldar"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("goldar", input);
+                    }}
+                    inputValue={formik.values.goldar}
+                    isError={!!formik.errors.goldar}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.hubungan as string}
+                  </FormErrorMessage>
+                </FormControl>
+
                 <FormControl mb={4} isInvalid={!!formik.errors.status_hidup}>
                   <FormLabel>
                     Status Hidup
@@ -251,6 +341,24 @@ export default function EditAnggotaKeluargaModalDisclosure({
                   />
                   <FormErrorMessage>
                     {formik.errors.status_hidup as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.tempat_lahir}>
+                  <FormLabel>
+                    Tempat Lahir
+                    <RequiredForm />
+                  </FormLabel>
+                  <StringInput
+                    name="tempat_lahir"
+                    placeholder="Surakarta"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("tempat_lahir", input);
+                    }}
+                    inputValue={formik.values.tempat_lahir}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.nama_keluarga as string}
                   </FormErrorMessage>
                 </FormControl>
 
@@ -295,10 +403,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
                 </FormControl>
 
                 <FormControl mb={4} isInvalid={!!formik.errors.pekerjaan}>
-                  <FormLabel>
-                    Pekerjaan
-                    <RequiredForm />
-                  </FormLabel>
+                  <FormLabel>Pekerjaan </FormLabel>
                   <StringInput
                     name="pekerjaan"
                     onChangeSetter={(input) => {
@@ -313,10 +418,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
                 </FormControl>
 
                 <FormControl mb={4} isInvalid={!!formik.errors.no_hp}>
-                  <FormLabel>
-                    No.Telp
-                    <RequiredForm />
-                  </FormLabel>
+                  <FormLabel>No.Telp</FormLabel>
                   <StringInput
                     name="no_hp"
                     onChangeSetter={(input) => {
@@ -345,11 +447,26 @@ export default function EditAnggotaKeluargaModalDisclosure({
                   </FormErrorMessage>
                 </FormControl>
 
+                <FormControl mb={4} isInvalid={!!formik.errors.no_rm}>
+                  <FormLabel>No. Rekam Medis</FormLabel>
+                  <StringInput
+                    name="no_rm"
+                    placeholder="3301*******"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("no_rm", input);
+                    }}
+                    inputValue={formik.values.no_rm}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.nama_keluarga as string}
+                  </FormErrorMessage>
+                </FormControl>
+
                 <FormControl isInvalid={!!formik.errors.is_menikah} mb={4}>
                   {/* <FormLabel>
-                Tanggungan BPJS
-                 <RequiredForm />
-              </FormLabel> */}
+                                Tanggungan BPJS
+                                 <RequiredForm />
+                              </FormLabel> */}
 
                   <Checkbox
                     colorScheme="ap"
@@ -357,7 +474,6 @@ export default function EditAnggotaKeluargaModalDisclosure({
                       formik.setFieldValue("is_menikah", e.target.checked);
                     }}
                     isChecked={formik.values.is_menikah}
-                    isDisabled={!formik.values.status_hidup?.value}
                   >
                     <Text mt={"-2.5px"}>Sudah Menikah</Text>
                   </Checkbox>

@@ -34,6 +34,9 @@ import useGetUserData from "../../hooks/useGetUserData";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import DatePickerModal from "./input/DatePickerModal";
 import formatDate from "../../lib/formatDate";
+import SelectGender from "./_Select/SelectGender";
+import SelectAgama from "./_Select/SelectAgama";
+import SelectGoldar from "./_Select/SelectGoldar";
 
 export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,26 +58,36 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
     initialValues: {
       nama_keluarga: "",
       hubungan: undefined as any,
-      pendidikan_terakhir: undefined as any,
+      jenis_kelamin: undefined as any,
+      agama: undefined as any,
+      goldar: undefined as any,
       status_hidup: undefined as any,
+      tempat_lahir: "",
+      tgl_lahir: undefined as any,
+      pendidikan_terakhir: undefined as any,
       pekerjaan: "",
       no_hp: "",
       email: "",
+      no_rm: "",
       is_bpjs: false,
-      tgl_lahir: undefined as any,
-      is_menikah: undefined as any,
+      is_menikah: false,
     },
     validationSchema: yup.object().shape({
       nama_keluarga: yup.string().required("Harus diisi"),
       hubungan: yup.object().required("Harus diisi"),
-      pendidikan_terakhir: yup.object().required("Harus diisi"),
+      jenis_kelamin: yup.object().required("Harus diisi"),
+      agama: yup.object(),
+      goldar: yup.object(),
       status_hidup: yup.object().required("Harus diisi"),
-      pekerjaan: yup.string().required("Harus diisi"),
-      no_hp: yup.string().required("Harus diisi"),
+      tempat_lahir: yup.string().required("Harus diisi"),
+      tgl_lahir: yup.string().required("Harus diisi"),
+      pendidikan_terakhir: yup.object().required("Harus diisi"),
+      pekerjaan: yup.string(),
+      no_hp: yup.string(),
       email: yup.string(),
+      no_rm: yup.string(),
       is_bpjs: yup.boolean(),
-      tgl_lahir: yup.string().required(),
-      is_menikah: yup.boolean().required(),
+      is_menikah: yup.boolean(),
     }),
     onSubmit: (values, { resetForm }) => {
       setLoading(true);
@@ -206,6 +219,54 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
                 </FormErrorMessage>
               </FormControl>
 
+              <FormControl mb={4} isInvalid={!!formik.errors.jenis_kelamin}>
+                <FormLabel>
+                  Jenis Kelamin
+                  <RequiredForm />
+                </FormLabel>
+                <SelectGender
+                  name="jenis_kelamin"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("jenis_kelamin", input);
+                  }}
+                  inputValue={formik.values.jenis_kelamin}
+                  isError={!!formik.errors.jenis_kelamin}
+                />
+                <FormErrorMessage>
+                  {formik.errors.hubungan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={4} isInvalid={!!formik.errors.agama}>
+                <FormLabel>Agama</FormLabel>
+                <SelectAgama
+                  name="agama"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("agama", input);
+                  }}
+                  inputValue={formik.values.agama}
+                  isError={!!formik.errors.agama}
+                />
+                <FormErrorMessage>
+                  {formik.errors.hubungan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={4} isInvalid={!!formik.errors.agama}>
+                <FormLabel>Golongan Darah</FormLabel>
+                <SelectGoldar
+                  name="goldar"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("goldar", input);
+                  }}
+                  inputValue={formik.values.goldar}
+                  isError={!!formik.errors.goldar}
+                />
+                <FormErrorMessage>
+                  {formik.errors.hubungan as string}
+                </FormErrorMessage>
+              </FormControl>
+
               <FormControl mb={4} isInvalid={!!formik.errors.status_hidup}>
                 <FormLabel>
                   Status Hidup
@@ -221,6 +282,24 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
                 />
                 <FormErrorMessage>
                   {formik.errors.status_hidup as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={4} isInvalid={!!formik.errors.tempat_lahir}>
+                <FormLabel>
+                  Tempat Lahir
+                  <RequiredForm />
+                </FormLabel>
+                <StringInput
+                  name="tempat_lahir"
+                  placeholder="Surakarta"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("tempat_lahir", input);
+                  }}
+                  inputValue={formik.values.tempat_lahir}
+                />
+                <FormErrorMessage>
+                  {formik.errors.nama_keluarga as string}
                 </FormErrorMessage>
               </FormControl>
 
@@ -265,10 +344,7 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
               </FormControl>
 
               <FormControl mb={4} isInvalid={!!formik.errors.pekerjaan}>
-                <FormLabel>
-                  Pekerjaan
-                  <RequiredForm />
-                </FormLabel>
+                <FormLabel>Pekerjaan</FormLabel>
                 <StringInput
                   name="pekerjaan"
                   onChangeSetter={(input) => {
@@ -283,10 +359,7 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
               </FormControl>
 
               <FormControl mb={4} isInvalid={!!formik.errors.no_hp}>
-                <FormLabel>
-                  No.Telp
-                  <RequiredForm />
-                </FormLabel>
+                <FormLabel>No.Telp</FormLabel>
                 <StringInput
                   name="no_hp"
                   onChangeSetter={(input) => {
@@ -312,6 +385,21 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
                 />
                 <FormErrorMessage>
                   {formik.errors.email as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl mb={4} isInvalid={!!formik.errors.no_rm}>
+                <FormLabel>No. Rekam Medis</FormLabel>
+                <StringInput
+                  name="no_rm"
+                  placeholder="3301*******"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("no_rm", input);
+                  }}
+                  inputValue={formik.values.no_rm}
+                />
+                <FormErrorMessage>
+                  {formik.errors.nama_keluarga as string}
                 </FormErrorMessage>
               </FormControl>
 
