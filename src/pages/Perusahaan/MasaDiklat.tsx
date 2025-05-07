@@ -7,7 +7,6 @@ import {
   HStack,
   Icon,
   InputGroup,
-  InputRightAddon,
   InputRightElement,
   Modal,
   ModalBody,
@@ -25,6 +24,7 @@ import DisclosureHeader from "../../components/dependent/DisclosureHeader";
 import ExportModal from "../../components/dependent/ExportModal";
 import NumberInput from "../../components/dependent/input/NumberInput";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
+import TabelMasaDiklat from "../../components/dependent/TabelMasaDiklat";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
@@ -35,7 +35,6 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import formatNumber from "../../lib/formatNumber";
 import isHasPermissions from "../../lib/isHasPermissions";
-import TabelMasaDiklat from "../../components/dependent/TabelMasaDiklat";
 
 const Filter = (props: any) => {
   const { filterConfig, setFilterConfig } = props;

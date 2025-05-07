@@ -71,3 +71,4 @@
 [0223/122528.178:ERROR:crashpad_client_win.cc(810)] not connected
 [0327/233053.045:ERROR:crashpad_client_win.cc(811)] not connected
 [0327/233053.285:ERROR:crashpad_client_win.cc(811)] not connected
+[0507/125329.217:ERROR:third_party\crashpad\crashpad\client\crashpad_client_win.cc:811] not connected
