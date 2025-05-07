@@ -12,32 +12,27 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { RiCalendarLine, RiMapPinLine, RiTimeLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
+import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
+import formatDurationShort from "../../lib/formatDurationShort";
 import formatNumber from "../../lib/formatNumber";
+import formatTime from "../../lib/formatTime";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
+import CContainer from "../wrapper/CContainer";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
+import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "./DisclosureHeader";
-import CContainer from "../wrapper/CContainer";
-import formatDate from "../../lib/formatDate";
-import formatTime from "../../lib/formatTime";
-import {
-  RiCalendarLine,
-  RiClockwiseLine,
-  RiMapPinLine,
-  RiTimeLine,
-} from "@remixicon/react";
-import formatDurationShort from "../../lib/formatDurationShort";
 
 const DaftarDiklat = (props: any) => {
   const { item } = props;

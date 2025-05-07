@@ -12,6 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -148,15 +149,15 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
 
   const formikRef = useRef(formik);
   useEffect(() => {
-    if (formikRef.current.values?.whitelist_peserta?.length > 0) {
+    if (formik.values?.whitelist_peserta?.length > 0) {
       formikRef.current.setFieldValue(
         "kuota",
-        formikRef.current.values.whitelist_peserta.length
+        formik.values?.whitelist_peserta.length
       );
     } else {
       formikRef.current.setFieldValue("kuota", undefined);
     }
-  }, [formikRef.current.values?.whitelist_peserta]);
+  }, [formik.values?.whitelist_peserta]);
 
   return (
     <>
@@ -429,6 +430,9 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                 </FormControl>
               </SimpleGrid>
 
+              <Text opacity={0.6} my={2}>
+                *Unggah dokumen harus urut dari 1, maks. 5 dokumen
+              </Text>
               <SimpleGrid columns={[1, 2, 3]} gap={4}>
                 <FormControl
                   mb={4}
@@ -440,9 +444,9 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                     onChangeSetter={(input) => {
                       formik.setFieldValue("dokumen_diklat_1", input);
                     }}
-                    inputValue={formik.values.gambar}
+                    inputValue={formik.values.dokumen_diklat_1}
                     placeholder="Mendukung .png .jpg .jpeg .svg"
-                    isError={!!formik.errors.gambar}
+                    isError={!!formik.errors.dokumen_diklat_1}
                   />
                   <FormErrorMessage>
                     {formik.errors.dokumen_diklat_1 as string}
@@ -452,6 +456,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                 <FormControl
                   mb={4}
                   isInvalid={!!formik.errors.dokumen_diklat_2}
+                  isDisabled={!!!formik.values.dokumen_diklat_1}
                 >
                   <FormLabel>Dokumen 2</FormLabel>
                   <FileInput
@@ -459,9 +464,10 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                     onChangeSetter={(input) => {
                       formik.setFieldValue("dokumen_diklat_2", input);
                     }}
-                    inputValue={formik.values.gambar}
+                    inputValue={formik.values.dokumen_diklat_2}
                     placeholder="Mendukung .png .jpg .jpeg .svg"
-                    isError={!!formik.errors.gambar}
+                    isError={!!formik.errors.dokumen_diklat_2}
+                    isDisabled={!!!formik.values.dokumen_diklat_1}
                   />
                   <FormErrorMessage>
                     {formik.errors.dokumen_diklat_2 as string}
@@ -471,6 +477,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                 <FormControl
                   mb={4}
                   isInvalid={!!formik.errors.dokumen_diklat_3}
+                  isDisabled={!!!formik.values.dokumen_diklat_2}
                 >
                   <FormLabel>Dokumen 3</FormLabel>
                   <FileInput
@@ -478,9 +485,10 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                     onChangeSetter={(input) => {
                       formik.setFieldValue("dokumen_diklat_3", input);
                     }}
-                    inputValue={formik.values.gambar}
+                    inputValue={formik.values.dokumen_diklat_3}
                     placeholder="Mendukung .png .jpg .jpeg .svg"
-                    isError={!!formik.errors.gambar}
+                    isError={!!formik.errors.dokumen_diklat_3}
+                    isDisabled={!!!formik.values.dokumen_diklat_2}
                   />
                   <FormErrorMessage>
                     {formik.errors.dokumen_diklat_3 as string}
@@ -490,6 +498,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                 <FormControl
                   mb={4}
                   isInvalid={!!formik.errors.dokumen_diklat_4}
+                  isDisabled={!!!formik.values.dokumen_diklat_3}
                 >
                   <FormLabel>Dokumen 4</FormLabel>
                   <FileInput
@@ -497,9 +506,10 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                     onChangeSetter={(input) => {
                       formik.setFieldValue("dokumen_diklat_4", input);
                     }}
-                    inputValue={formik.values.gambar}
+                    inputValue={formik.values.dokumen_diklat_4}
                     placeholder="Mendukung .png .jpg .jpeg .svg"
-                    isError={!!formik.errors.gambar}
+                    isError={!!formik.errors.dokumen_diklat_4}
+                    isDisabled={!!!formik.values.dokumen_diklat_3}
                   />
                   <FormErrorMessage>
                     {formik.errors.dokumen_diklat_4 as string}
@@ -509,6 +519,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                 <FormControl
                   mb={4}
                   isInvalid={!!formik.errors.dokumen_diklat_5}
+                  isDisabled={!!!formik.values.dokumen_diklat_4}
                 >
                   <FormLabel>Dokumen 5</FormLabel>
                   <FileInput
@@ -516,9 +527,10 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                     onChangeSetter={(input) => {
                       formik.setFieldValue("dokumen_diklat_5", input);
                     }}
-                    inputValue={formik.values.gambar}
+                    inputValue={formik.values.dokumen_diklat_5}
                     placeholder="Mendukung .png .jpg .jpeg .svg"
-                    isError={!!formik.errors.gambar}
+                    isError={!!formik.errors.dokumen_diklat_5}
+                    isDisabled={!!!formik.values.dokumen_diklat_4}
                   />
                   <FormErrorMessage>
                     {formik.errors.dokumen_diklat_5 as string}
