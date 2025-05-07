@@ -12,7 +12,11 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  SimpleGrid,
+  Slider,
+  SliderFilledTrack,
+  SliderMark,
+  SliderThumb,
+  SliderTrack,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -22,6 +26,7 @@ import DisclosureHeader from "../../components/dependent/DisclosureHeader";
 import ExportModal from "../../components/dependent/ExportModal";
 import NumberInput from "../../components/dependent/input/NumberInput";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
+import TabelKaryawanmedis from "../../components/dependent/TabelKaryawanmedis";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
@@ -32,13 +37,12 @@ import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import formatNumber from "../../lib/formatNumber";
 import isHasPermissions from "../../lib/isHasPermissions";
-import TabelMasaDiklat from "../../components/dependent/TabelMasaDiklat";
 
 const Filter = (props: any) => {
   const { filterConfig, setFilterConfig } = props;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose("filter-masa-diklat", isOpen, onOpen, onClose);
+  useBackOnClose("filter-masa-berakhir-sip-str", isOpen, onOpen, onClose);
 
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
     filterConfig
@@ -46,11 +50,18 @@ const Filter = (props: any) => {
   const initialRef = useRef(null);
   const filterCount = () => {
     let count = 0;
-    if (filterConfig?.less_than) count += 1;
-    if (filterConfig?.more_than) count += 1;
+    if (filterConfig?.masa_sip) count += 1;
+    if (filterConfig?.masa_str) count += 1;
     return count;
   };
   const lightDarkColor = useLightDarkColor();
+
+  // SX
+  const labelStyles = {
+    mt: "2",
+    // ml: "-2.5",
+    fontSize: "sm",
+  };
 
   return (
     <>
@@ -84,7 +95,7 @@ const Filter = (props: any) => {
             </Center>
           )}
 
-          <Text>Filter Masa Diklat</Text>
+          <Text>Filter Sisa Masa Berlaku</Text>
         </HStack>
       </Button>
 
@@ -99,40 +110,94 @@ const Filter = (props: any) => {
 
         <ModalContent>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Filter Masa Diklat"} />
+            <DisclosureHeader title={"Filter Sisa Masa Berlaku"} />
 
             <ModalBody>
-              <SimpleGrid columns={[1, null, 2]} gap={4}>
-                <FormControl>
-                  <FormLabel>{`Lebih dari (>)`}</FormLabel>
-                  <NumberInput
-                    onChangeSetter={(input) => {
-                      setLocalFilterConfig({
-                        ...localFilterConfig,
-                        more_than: input,
-                      });
-                    }}
-                    inputValue={localFilterConfig?.more_than}
-                    name="more_than"
-                    placeholder="Lebih dari"
-                  />
-                </FormControl>
+              <FormControl mb={4}>
+                <FormLabel>{`SIP`}</FormLabel>
+                <Center>
+                  <Text fontSize={18} fontWeight={500}>
+                    {localFilterConfig.masa_sip || 0} Bulan
+                  </Text>
+                </Center>
+                <Slider
+                  colorScheme="ap"
+                  aria-label="slider-ex-6"
+                  onChange={(val) => {
+                    const newValue = Math.round((val * 12) / 100);
+                    if (newValue > 0) {
+                      setLocalFilterConfig((ps: any) => ({
+                        ...ps,
+                        masa_sip: [newValue],
+                      }));
+                    } else {
+                      setLocalFilterConfig((ps: any) => ({
+                        ...ps,
+                        masa_sip: [],
+                      }));
+                    }
+                  }}
+                  value={(localFilterConfig.masa_sip * 100) / 12 || 0}
+                >
+                  <SliderMark value={25} {...labelStyles}>
+                    3
+                  </SliderMark>
+                  <SliderMark value={50} {...labelStyles}>
+                    6
+                  </SliderMark>
+                  <SliderMark value={75} {...labelStyles}>
+                    9
+                  </SliderMark>
 
-                <FormControl>
-                  <FormLabel>{`Kurang dari (<)`}</FormLabel>
-                  <NumberInput
-                    onChangeSetter={(input) => {
-                      setLocalFilterConfig({
-                        ...localFilterConfig,
-                        less_than: input,
-                      });
-                    }}
-                    inputValue={localFilterConfig?.less_than}
-                    name="less_than"
-                    placeholder="Kurang dari"
-                  />
-                </FormControl>
-              </SimpleGrid>
+                  <SliderTrack bg={"var(--divider2)"}>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb bg={"p.600"} />
+                </Slider>
+              </FormControl>
+
+              <FormControl mb={4}>
+                <FormLabel>{`STR`}</FormLabel>
+                <Center>
+                  <Text fontSize={18} fontWeight={500}>
+                    {localFilterConfig.masa_str || 0} Bulan
+                  </Text>
+                </Center>
+                <Slider
+                  colorScheme="ap"
+                  aria-label="slider-ex-6"
+                  onChange={(val) => {
+                    const newValue = Math.round((val * 12) / 100);
+                    if (newValue > 0) {
+                      setLocalFilterConfig((ps: any) => ({
+                        ...ps,
+                        masa_str: [newValue],
+                      }));
+                    } else {
+                      setLocalFilterConfig((ps: any) => ({
+                        ...ps,
+                        masa_str: [],
+                      }));
+                    }
+                  }}
+                  value={(localFilterConfig.masa_str * 100) / 12 || 0}
+                >
+                  <SliderMark value={25} {...labelStyles}>
+                    3
+                  </SliderMark>
+                  <SliderMark value={50} {...labelStyles}>
+                    6
+                  </SliderMark>
+                  <SliderMark value={75} {...labelStyles}>
+                    9
+                  </SliderMark>
+
+                  <SliderTrack bg={"var(--divider2)"}>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb bg={"p.600"} />
+                </Slider>
+              </FormControl>
             </ModalBody>
 
             <ModalFooter>
@@ -143,8 +208,8 @@ const Filter = (props: any) => {
                   onClick={() => {
                     setLocalFilterConfig({
                       ...localFilterConfig,
-                      less_than: undefined,
-                      more_than: undefined,
+                      masa_sip: undefined,
+                      masa_str: undefined,
                     });
                   }}
                 >
@@ -171,15 +236,15 @@ const Filter = (props: any) => {
   );
 };
 
-export default function MasaDiklat() {
+export default function KaryawanMedis() {
   // SX
   const lightDarkColor = useLightDarkColor();
 
   // Filter Config
   const defaultFilterConfig = {
     search: "",
-    less_than: undefined as any,
-    more_than: undefined as any,
+    masa_sip: undefined as any,
+    masa_str: undefined as any,
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
 
@@ -234,7 +299,7 @@ export default function MasaDiklat() {
             </PermissionTooltip>
           </HStack>
 
-          <TabelMasaDiklat filterConfig={filterConfig} />
+          <TabelKaryawanmedis filterConfig={filterConfig} />
         </CContainer>
       </CWrapper>
     </>

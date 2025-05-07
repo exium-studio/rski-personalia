@@ -64,10 +64,11 @@ import PengaturanUbahKataSandi from "./pages/Pengaturan/PengaturanUbahKataSandi"
 import PengaturanUnitKerja from "./pages/Pengaturan/PengaturanUnitKerja";
 import Diklat from "./pages/Perusahaan/Diklat";
 import DiklatEksternal from "./pages/Perusahaan/DiklatEksternal";
+import KaryawanMedis from "./pages/Perusahaan/KaryawanMedis";
+import MasaDiklat from "./pages/Perusahaan/MasaDiklat";
 import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
-import MasaDiklat from "./pages/Perusahaan/MasaDiklat";
 
 const AuthPageLayout = () => {
   // SX
@@ -258,13 +259,27 @@ export const App = () => {
             }
           />
           <Route
+            path="/karyawan-medis"
+            element={
+              <NavContainer
+                active={1}
+                title="Karyawan Medis"
+                topNavsData={navs[1].subNavs}
+                topNavActive={1}
+                allowed={[50]}
+              >
+                <KaryawanMedis />
+              </NavContainer>
+            }
+          />
+          <Route
             path="/karyawan/transfer-karyawan"
             element={
               <NavContainer
                 active={1}
                 title="Transfer Karyawan"
                 topNavsData={navs[1].subNavs}
-                topNavActive={1}
+                topNavActive={2}
                 allowed={[133]}
               >
                 <TransferKaryawan />
@@ -278,7 +293,7 @@ export const App = () => {
                 active={1}
                 title="Permintaan Perubahan Data"
                 topNavsData={navs[1].subNavs}
-                topNavActive={2}
+                topNavActive={3}
                 allowed={[2]}
               >
                 <PerubahanDataKaryawan />

@@ -34,6 +34,11 @@ const navs = [
         link: "/karyawan",
       },
       {
+        allowed: [50],
+        label: "STR/SIP (Kary. Medis)",
+        link: "/karyawan-medis",
+      },
+      {
         allowed: [133],
         label: "Transfer Karyawan",
         link: "/karyawan/transfer-karyawan",
