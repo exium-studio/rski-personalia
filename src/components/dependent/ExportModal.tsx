@@ -120,7 +120,9 @@ export default function ExportModal({
             <DisclosureHeader title={title || "Export"} />
           </ModalHeader>
           <ModalBody>
-            <Text opacity={0.6}>Apakah anda yakin akan export tabel ini?</Text>
+            <Text opacity={0.6}>
+              Apakah anda yakin akan export (excel) semua data pada tabel ini?
+            </Text>
           </ModalBody>
           <ModalFooter gap={2}>
             <Button

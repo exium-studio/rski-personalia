@@ -238,7 +238,7 @@ export default function ExportRiwayatPenggajianModal({
             {/* 
             {tipeExport && (
               <Text opacity={0.6} mt={responsiveSpacing}>
-                Apakah anda yakin akan export tabel ini?
+                Apakah anda yakin akan export (excel)  semua data pada tabel ini?
               </Text>
             )} */}
           </ModalBody>

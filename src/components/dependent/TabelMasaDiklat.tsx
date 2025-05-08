@@ -153,6 +153,8 @@ export default function TabelMasaDiklat({ filterConfig }: Props) {
       url: `/api/rski/dashboard/perusahaan/get-masa-diklat?page=${pageConfig}`,
       payload: {
         ...filterConfig,
+        more_than: filterConfig?.more_than * 3600,
+        less_than: filterConfig?.less_than * 3600,
       },
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, filterConfig],

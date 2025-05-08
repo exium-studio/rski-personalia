@@ -161,7 +161,9 @@ export default function ExportPresensiModal({ ...props }: Props) {
             <DisclosureHeader title={"Export Presensi"} />
           </ModalHeader>
           <ModalBody>
-            <Text opacity={0.6}>Apakah anda yakin akan export tabel ini?</Text>
+            <Text opacity={0.6}>
+              Apakah anda yakin akan export (excel) semua data pada tabel ini?
+            </Text>
           </ModalBody>
           <ModalFooter>
             <CContainer gap={2}>
