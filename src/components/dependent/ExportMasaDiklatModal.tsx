@@ -14,17 +14,14 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { RiUploadLine } from "@remixicon/react";
-import { endOfWeek, startOfWeek } from "date-fns";
 import { useRef, useState } from "react";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import download from "../../lib/download";
-import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
-import DateRangePickerModal from "./input/DateRangePickerModal";
 import FilterMasaDiklat from "./FilterMasaDiklat";
 
 interface Props extends ButtonProps {}
