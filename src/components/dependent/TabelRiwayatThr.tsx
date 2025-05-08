@@ -11,6 +11,7 @@ import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import StatusPublikasiPenggajian from "./StatusPublikasiPenggajian";
 import TabelFooterConfig from "./TabelFooterConfig";
+import formatNumber from "../../lib/formatNumber";
 
 interface Props {
   filterConfig: any;
@@ -110,8 +111,8 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
         isDate: true,
       },
       {
-        value: item.karyawan_verifikasi,
-        td: item.karyawan_verifikasi,
+        value: item.karyawan_thr,
+        td: formatNumber(item.karyawan_thr),
         isNumeric: true,
         cProps: {
           justify: "center",
