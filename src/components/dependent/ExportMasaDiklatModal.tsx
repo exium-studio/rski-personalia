@@ -16,7 +16,6 @@ import {
 import { RiUploadLine } from "@remixicon/react";
 import { endOfWeek, startOfWeek } from "date-fns";
 import { useRef, useState } from "react";
-import { Interface__SelectOption } from "../../constant/interfaces";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
@@ -24,58 +23,34 @@ import download from "../../lib/download";
 import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
 import CContainer from "../wrapper/CContainer";
-import SelectJenisKaryawan from "./_Select/SelectJenisKaryawan";
 import DisclosureHeader from "./DisclosureHeader";
 import DateRangePickerModal from "./input/DateRangePickerModal";
+import FilterMasaDiklat from "./FilterMasaDiklat";
 
 interface Props extends ButtonProps {}
 
-export default function ExportJadwalModal({ ...props }: Props) {
+export default function ExportMasaDiklatModal({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`export-modal-${1}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
-  const [jenisKaryawan, setJenisKaryawan] = useState<
-    Interface__SelectOption | undefined
-  >({ value: 1, label: "Shift" });
-
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
 
-  const today = new Date();
-  const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
-  const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
-  const defaultRangeTgl = {
-    from: startOfWeekDate,
-    to: endOfWeekDate,
+  const defaultFilterConfig = {
+    less_than: undefined as any,
+    more_than: undefined as any,
   };
-  const defaultDateRangeFilterConfig = {
-    tgl_mulai: defaultRangeTgl?.from,
-    tgl_selesai: defaultRangeTgl?.to,
-  };
-  const [dateRange, setDateRange] = useState<any>(defaultDateRangeFilterConfig);
-  const confirmDateRange = (
-    inputValue: { from: Date; to: Date } | undefined
-  ) => {
-    setDateRange({
-      tgl_mulai: inputValue?.from,
-      tgl_selesai: inputValue?.to,
-    });
-  };
+  const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
 
   const handleExport = () => {
     setLoading(true);
 
-    let url = "";
-    if (jenisKaryawan?.value === 1) {
-      url = `api/rski/dashboard/jadwal-karyawan/export-shift`;
-    } else if (jenisKaryawan?.value === 0) {
-      url = `api/rski/dashboard/jadwal-karyawan/export-non-shift`;
-    }
+    const url = `/api/rski/dashboard/perusahaan/export-masa-diklat`;
 
     const payload = {
-      tgl_mulai: formatDate(dateRange?.tgl_mulai, "short"),
-      tgl_selesai: formatDate(dateRange?.tgl_selesai, "short"),
+      less_than: filterConfig.less_than * 3600,
+      more_than: filterConfig.more_than * 3600,
     };
 
     req
@@ -84,17 +59,7 @@ export default function ExportJadwalModal({ ...props }: Props) {
       })
       .then((r) => {
         if (r.status === 200) {
-          download(
-            r.data,
-            `Export Jadwal ${
-              jenisKaryawan?.value === 1
-                ? "Shift"
-                : jenisKaryawan?.value === 0
-                ? "Non-Shift"
-                : ""
-            }`,
-            "xls"
-          );
+          download(r.data, `Export Masa Diklat`, "xls");
         } else {
           toast({
             status: "error",
@@ -156,7 +121,6 @@ export default function ExportJadwalModal({ ...props }: Props) {
         isOpen={isOpen}
         onClose={() => {
           backOnClose();
-          setJenisKaryawan(undefined);
         }}
         initialFocusRef={initialRef}
         isCentered
@@ -164,12 +128,7 @@ export default function ExportJadwalModal({ ...props }: Props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader
-              title={"Export Jadwal"}
-              onClose={() => {
-                setJenisKaryawan(undefined);
-              }}
-            />
+            <DisclosureHeader title={"Export Masa Diklat"} onClose={() => {}} />
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.6}>
@@ -180,28 +139,10 @@ export default function ExportJadwalModal({ ...props }: Props) {
           <ModalFooter>
             <CContainer gap={2}>
               <CContainer gap={2}>
-                <SelectJenisKaryawan
-                  name="jenis-karyawan"
-                  onConfirm={(input) => {
-                    setJenisKaryawan(input);
-                  }}
-                  inputValue={jenisKaryawan}
-                  nonNullable
-                />
-                <DateRangePickerModal
-                  id="jadwal-date-range"
-                  name="date-range"
-                  minW={"165px"}
-                  w={"100%"}
-                  onConfirm={confirmDateRange}
-                  inputValue={{
-                    from: dateRange?.tgl_mulai,
-                    to: dateRange?.tgl_selesai,
-                  }}
-                  maxRange={31}
-                  nonNullable
-                  presetsConfig={["thisWeek", "thisMonth"]}
-                  // isDisabled={jenisKaryawan?.value === 0}
+                <FilterMasaDiklat
+                  id={"filter-masa-diklat-export"}
+                  inputValue={filterConfig}
+                  onConfirm={setFilterConfig}
                 />
               </CContainer>
 
@@ -211,9 +152,7 @@ export default function ExportJadwalModal({ ...props }: Props) {
                   className="btn-solid clicky"
                   onClick={() => {
                     backOnClose();
-                    setJenisKaryawan(undefined);
                   }}
-                  isDisabled={loading || jenisKaryawan === undefined}
                 >
                   Tidak
                 </Button>
@@ -221,7 +160,6 @@ export default function ExportJadwalModal({ ...props }: Props) {
                   w={"100%"}
                   className="btn-ap clicky"
                   colorScheme="ap"
-                  isDisabled={jenisKaryawan === undefined}
                   isLoading={loading}
                   onClick={handleExport}
                 >
