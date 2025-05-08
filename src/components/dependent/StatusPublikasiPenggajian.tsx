@@ -6,13 +6,19 @@ interface Props extends BadgeProps {
 
 export default function StatusPublikasiPenggajian({ data, ...props }: Props) {
   return (
-    <Badge
-      colorScheme={data.id === 2 ? "green" : "red"}
-      borderRadius={"full"}
-      textAlign={"center"}
-      {...props}
-    >
-      {data.label}
-    </Badge>
+    <>
+      {data ? (
+        <Badge
+          colorScheme={data?.id === 2 ? "green" : "red"}
+          borderRadius={"full"}
+          textAlign={"center"}
+          {...props}
+        >
+          {data?.label}
+        </Badge>
+      ) : (
+        ""
+      )}
+    </>
   );
 }

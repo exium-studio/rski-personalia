@@ -52,7 +52,7 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
       },
     },
     {
-      th: "Status THR",
+      th: "Status Penggajian",
       isSortable: true,
       cProps: {
         justify: "center",
@@ -75,7 +75,7 @@ export default function TabelRiwayatThr({ filterConfig }: Props) {
     },
   ];
   const formattedData = data?.map((item: any) => ({
-    id: item.id,
+    id: item?.id,
     columnsFormat: [
       {
         value: item.periode,
