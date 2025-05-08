@@ -429,13 +429,10 @@ export default function DetailKaryawanModal({
                                 fontSize={24}
                                 fontWeight={500}
                               >
-                                {formatDurationShort(
-                                  data?.total_durasi_internal +
-                                    data?.total_durasi_eksternal
-                                ) || 0}
+                                {formatDurationShort(data?.masa_diklat) || 0}
                               </Text>
                               <Text textAlign={"center"} opacity={0.4}>
-                                Total Diklat
+                                Masa Diklat
                               </Text>
                             </VStack>
 
