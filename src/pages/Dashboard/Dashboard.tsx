@@ -17,7 +17,7 @@ export default function Dashboard() {
           *data per hari ini
         </Text>
 
-        <DashboardTotal />
+        <DashboardTotal mb={responsiveSpacing} />
 
         <Wrap spacing={responsiveSpacing}>
           <DashboardJenisKelamin flex={"1 1 0"} />

@@ -97,8 +97,9 @@ button {
   font-size: 14px !important;
 }
 button:focus-visible {
-  border: 1px solid var(--p500) !important;
-  box-shadow: none !important;
+  /* border: 1px solid var(--p500) !important; */
+  box-shadow: 0 0 0px 1px white !important;
+  box-shadow: 0 0 0px 1px var(--p500) !important;
 }
 
 .btn-solid {
