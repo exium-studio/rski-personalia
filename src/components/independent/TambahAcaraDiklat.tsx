@@ -95,7 +95,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
     onSubmit: (values, { resetForm }) => {
       // console.log(values.whitelist_peserta);
       const payload = new FormData();
-      values.whitelist_peserta.forEach((peserta: any) => {
+      values.whitelist_peserta?.forEach((peserta: any) => {
         payload.append("user_id[]", peserta.value);
       });
       payload.append("dokumen", values.gambar);
