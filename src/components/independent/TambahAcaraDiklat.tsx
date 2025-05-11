@@ -201,29 +201,31 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
           <ModalBody className="scrollY">
             <form id="tambahAcaraDiklatForm" onSubmit={formik.handleSubmit}>
               <SimpleGrid columns={[1, 2]} spacingX={4} mb={2}>
-                <FormControl
-                  flex={"1 1"}
-                  mb={4}
-                  isInvalid={!!formik.errors.gambar}
-                >
-                  <FormLabel>
-                    Gambar Thumbnail
-                    <RequiredForm />
-                  </FormLabel>
-                  <FileInputLarge
-                    name="gambar"
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("gambar", input);
-                    }}
-                    inputValue={formik.values.gambar}
-                    placeholder="Mendukung .png .jpg .jpeg .svg"
-                    // cProps={{ h: "100%" }}
-                    isError={!!formik.errors.gambar}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.gambar as string}
-                  </FormErrorMessage>
-                </FormControl>
+                <CContainer h={"fit-content"}>
+                  <FormControl
+                    flex={"1 1"}
+                    mb={4}
+                    isInvalid={!!formik.errors.gambar}
+                  >
+                    <FormLabel>
+                      Gambar Thumbnail
+                      <RequiredForm />
+                    </FormLabel>
+                    <FileInputLarge
+                      name="gambar"
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("gambar", input);
+                      }}
+                      inputValue={formik.values.gambar}
+                      placeholder="Mendukung .png .jpg .jpeg .svg"
+                      // cProps={{ h: "calc(100%)" }}
+                      isError={!!formik.errors.gambar}
+                    />
+                    <FormErrorMessage>
+                      {formik.errors.gambar as string}
+                    </FormErrorMessage>
+                  </FormControl>
+                </CContainer>
 
                 <CContainer flex={"1 1"}>
                   <FormControl mb={4} isInvalid={!!formik.errors.nama}>
@@ -272,7 +274,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
                         formik.setFieldValue("deskripsi", input);
                       }}
                       inputValue={formik.values.deskripsi}
-                      minH={"100%"}
+                      // minH={"100%"}
                     />
                     <FormErrorMessage>
                       {formik.errors.deskripsi as string}
