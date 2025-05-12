@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionPanel,
   Avatar,
-  Badge,
   Box,
   Center,
   HStack,
@@ -22,13 +21,11 @@ import {
 } from "@chakra-ui/react";
 import {
   RiArchiveStackFill,
-  RiAwardFill,
   RiCalendarCheckFill,
   RiCalendarCloseFill,
   RiCalendarFill,
   RiCalendarScheduleFill,
   RiCircleFill,
-  RiCloseCircleFill,
   RiGraduationCapFill,
   RiHeartFill,
   RiHistoryFill,
@@ -73,6 +70,7 @@ import EditKaryawanModal from "./EditKaryawanModal";
 import SearchComponent from "./input/SearchComponent";
 import ResetPasswordKaryawan from "./ResetPasswordKaryawan";
 import Retry from "./Retry";
+import RewardPresensiBadgeWithEdit from "./RewardPresensiBadgeWithEdit";
 import RunPenilaianModal from "./RunPenilaianModal";
 import StatusAktifBadge from "./StatusAktifBadge";
 
@@ -364,36 +362,9 @@ export default function DetailKaryawanModal({
                                   fontSize={8}
                                   opacity={0.2}
                                 />
-                                <Badge
-                                  borderRadius={"full"}
-                                  paddingRight={2}
-                                  colorScheme={
-                                    data?.status_reward_presensi
-                                      ? "green"
-                                      : "red"
-                                  }
-                                >
-                                  <HStack>
-                                    <Text fontSize={12}>
-                                      {data?.status_reward_presensi
-                                        ? "Reward presensi"
-                                        : "Reward presensi"}
-                                    </Text>
-                                    <Icon
-                                      as={
-                                        data?.status_reward_presensi
-                                          ? RiAwardFill
-                                          : RiCloseCircleFill
-                                      }
-                                      color={
-                                        data?.status_reward_presensi
-                                          ? "green.400"
-                                          : "red.400"
-                                      }
-                                      fontSize={14}
-                                    />
-                                  </HStack>
-                                </Badge>
+                                <HStack>
+                                  <RewardPresensiBadgeWithEdit data={data} />
+                                </HStack>
                               </Wrap>
                             </VStack>
                           </VStack>
