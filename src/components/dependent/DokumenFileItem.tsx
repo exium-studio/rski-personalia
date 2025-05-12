@@ -41,7 +41,8 @@ export default function DokumenFileItem({
       : data?.status_berkas?.id === 2
       ? "green.400"
       : "red.400";
-  const checkboxVisible = data?.status_berkas?.id === 1;
+  // const checkboxVisible = data?.status_berkas?.id === 1;
+  const checkboxVisible = true;
 
   // Handle toggle checked
   const handleCheckboxChange = () => {

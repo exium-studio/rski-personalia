@@ -25,7 +25,7 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { RiVerifiedBadgeFill } from "@remixicon/react";
+import { RiDeleteBinFill, RiVerifiedBadgeFill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import * as yup from "yup";
@@ -46,11 +46,12 @@ import CContainer from "../wrapper/CContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import DisclosureHeader from "./DisclosureHeader";
 import DokumenFileItem from "./DokumenFileItem";
+import FileInputLarge from "./input/FileInputLarge";
 import SearchComponent from "./input/SearchComponent";
+import StringInput from "./input/StringInput";
 import Textarea from "./input/Textarea";
 import Retry from "./Retry";
-import StringInput from "./input/StringInput";
-import FileInputLarge from "./input/FileInputLarge";
+import useGetUserData from "../../hooks/useGetUserData";
 
 const Empty = ({ karyawan_id }: any) => {
   return (
@@ -290,7 +291,7 @@ const VerifikasiButtonModal = ({ data, selectedDokumen }: VerifikasiProps) => {
 
   return (
     <>
-      <Box ml={"auto"}>
+      <Box>
         <PermissionTooltip permission={editPermission}>
           <Button
             size={"lg"}
@@ -298,9 +299,7 @@ const VerifikasiButtonModal = ({ data, selectedDokumen }: VerifikasiProps) => {
             className="btn-ap clicky"
             leftIcon={<Icon as={RiVerifiedBadgeFill} fontSize={iconSize} />}
             pl={5}
-            isDisabled={
-              !editPermission || data?.status_berkas?.status === "Diverifikasi"
-            }
+            isDisabled={!editPermission || selectedDokumen.length === 0}
             onClick={onOpen}
           >
             Verifikasi
@@ -384,6 +383,7 @@ const VerifikasiButtonModal = ({ data, selectedDokumen }: VerifikasiProps) => {
               </FormControl>
             </form>
           </ModalBody>
+
           <ModalFooter gap={2}>
             <Button
               w={"100%"}
@@ -394,6 +394,113 @@ const VerifikasiButtonModal = ({ data, selectedDokumen }: VerifikasiProps) => {
               form="verifikasiDokumenForm"
             >
               Konfirmasi
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+const DeleteBerkasButotnModal = (props: any) => {
+  // Props
+  const { data, selectedDokumen } = props;
+
+  // Hooks
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`delete-berkas-modal-${data?.id}`, isOpen, onOpen, onClose);
+  const toast = useToast();
+
+  // Contexts
+  const { rt, setRt } = useRenderTrigger();
+
+  // States
+  const [loading, setLoading] = useState<boolean>(false);
+  const user = useGetUserData();
+  const superAdmin = user.id === 1;
+
+  function handleSubmit() {
+    const url = `api/delete-dokumen`;
+    const payload = {
+      berkas_id: selectedDokumen,
+    };
+
+    setLoading(true);
+
+    req
+      .post(url, payload)
+      .then((r) => {
+        if (r.status === 200) {
+          toast({
+            status: "success",
+            title: r.data.message,
+            isClosable: true,
+            position: "bottom-right",
+          });
+          backOnClose();
+          setRt(!rt);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            e?.response?.data?.message ||
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
+          isClosable: true,
+          position: "bottom-right",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  return (
+    <>
+      <PermissionTooltip permission={superAdmin}>
+        <Button
+          colorScheme="red"
+          variant={"outline"}
+          leftIcon={<Icon as={RiDeleteBinFill} fontSize={iconSize} />}
+          size={"lg"}
+          isDisabled={selectedDokumen?.length === 0 || !superAdmin}
+          onClick={onOpen}
+        >
+          Hapus
+        </Button>
+      </PermissionTooltip>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Hapus Berkas"} />
+          </ModalHeader>
+          <ModalBody>
+            <Text opacity={0.6}>
+              Apakah Anda yakin akan menghapus berkas-berkas ini?
+            </Text>
+          </ModalBody>
+
+          <ModalFooter gap={2}>
+            <Button w={"full"} onClick={backOnClose}>
+              Tidak
+            </Button>
+
+            <Button
+              w={"full"}
+              colorScheme="red"
+              isLoading={loading}
+              onClick={handleSubmit}
+            >
+              Ya
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -587,31 +694,7 @@ export default function DetailDokumenKaryawanModalDisclosure({
                               </Text>
                             </VStack>
 
-                            {/* <VStack align={"stretch"}>
-                              <Text fontSize={14} opacity={0.6}>
-                                Status Verifikasi
-                              </Text>
-                              <Text fontWeight={500}>
-                                <Tooltip label={data?.alasan}>
-                                  <Badge
-                                    colorScheme={
-                                      data?.status_berkas?.status ===
-                                      "Diverifikasi"
-                                        ? "green"
-                                        : data?.status_berkas?.status ===
-                                          "Menunggu"
-                                        ? "orange"
-                                        : "red"
-                                    }
-                                    borderRadius={"full"}
-                                  >
-                                    {data?.status_berkas?.status}
-                                  </Badge>
-                                </Tooltip>
-                              </Text>
-                            </VStack> */}
-
-                            <VStack align={"stretch"}>
+                            <VStack align={"stretch"} mr={"auto"}>
                               <Text fontSize={14} opacity={0.6}>
                                 Terakhir Diverifikasi
                               </Text>
@@ -622,6 +705,11 @@ export default function DetailDokumenKaryawanModalDisclosure({
                               </Text>
                             </VStack>
                           </>
+
+                          <DeleteBerkasButotnModal
+                            data={data}
+                            selectedDokumen={selectedDokumen}
+                          />
 
                           <VerifikasiButtonModal
                             data={data}
@@ -657,8 +745,8 @@ export default function DetailDokumenKaryawanModalDisclosure({
                             >
                               <AlertIcon />
                               <AlertDescription maxW={"100% !important"}>
-                                Arahkan mouse pada item dokumen dan cheklist
-                                dokumen yang ingin diverifikasi/ditolak
+                                Pilih file dahulu yang ingin di
+                                verifikasi/dihapus (Hanya Super Admin)
                               </AlertDescription>
                             </Alert>
 
