@@ -24,6 +24,7 @@ import req from "../../lib/req";
 import FilterKaryawanForExport from "../independent/FilterKaryawanForExport";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
+import SelectTipeCuti from "./_Select/SelectTipeCuti";
 
 interface Props extends ButtonProps {}
 
@@ -66,12 +67,14 @@ export default function ExportCutiModal({ ...props }: Props) {
   //   });
   // };
 
+  const [tipeCuti, setTipeCuti] = useState<any>(null);
   const handleExport = () => {
     setLoading(true);
     const payload = {
       // tgl_mulai: formatDate(dateRange?.tgl_mulai, "short"),
       // tgl_selesai: formatDate(dateRange?.tgl_selesai, "short"),
       ...formattedFilterKaryawan,
+      tipe_cuti: tipeCuti?.value,
     };
     req
       .post("/api/rski/dashboard/jadwal-karyawan/cuti/export", payload, {
@@ -172,6 +175,16 @@ export default function ExportCutiModal({ ...props }: Props) {
                 setFilterKaryawan={setFilterKaryawan}
                 setFormattedFilterKaryawan={setFormattedFilterKaryawan}
               />
+
+              <SelectTipeCuti
+                id="select-tipe-cuti-export-cuti"
+                name="select-tipe-cuti-export-cuti"
+                onConfirm={(input) => {
+                  setTipeCuti(input);
+                }}
+                inputValue={tipeCuti}
+              />
+
               {/* <DateRangePickerModal
                 id="jadwal-date-range"
                 name="date-range"
