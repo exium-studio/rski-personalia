@@ -139,6 +139,10 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
         justify: "center",
       },
     },
+    {
+      th: "Kategori Unit Kerja",
+      isSortable: true,
+    },
   ];
   const formattedData = fd?.map((item: any) => ({
     id: item.id,
@@ -170,6 +174,11 @@ export default function TabelPengaturanUnitKerja({ filterConfig }: Props) {
         cProps: {
           justify: "center",
         },
+      },
+      {
+        value: item.kategori_unit?.label,
+        td: item.kategori_unit?.label,
+        originalData: item?.kategori_unit,
       },
     ],
   }));

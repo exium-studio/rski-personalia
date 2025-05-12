@@ -25,6 +25,7 @@ import SelectJenisKaryawan from "../dependent/_Select/SelectJenisKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
+import SelectKategoriUnitKerja from "../dependent/_Select/SelectKategoriUnitKerja";
 
 interface Props extends BoxProps {
   rowData: any;
@@ -54,15 +55,18 @@ export default function EditUnitKerjaModalDisclosure({
     initialValues: {
       nama_unit: "",
       jenis_karyawan: undefined as any,
+      kategori_unit_kerja: undefined as any,
     },
     validationSchema: yup.object().shape({
       nama_unit: yup.string().required("Harus diisi"),
       jenis_karyawan: yup.object().required("Harus diisi"),
+      kategori_unit_kerja: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_unit: values.nama_unit,
         jenis_karyawan: values.jenis_karyawan.value,
+        kategori_unit_id: values.kategori_unit_kerja.value,
         _method: "patch",
       };
       setLoading(true);
@@ -112,6 +116,10 @@ export default function EditUnitKerjaModalDisclosure({
       formikRef.current.setFieldValue("jenis_karyawan", {
         value: rowData.columnsFormat[2].value,
         label: rowData.columnsFormat[2].value === 1 ? "Shift" : "Non-Shift",
+      });
+      formikRef.current.setFieldValue("kategori_unit_kerja", {
+        value: rowData.columnsFormat[3].originalData.id,
+        label: rowData.columnsFormat[3].originalData.label,
       });
     }
   }, [isOpen, rowData, formikRef]);
@@ -167,6 +175,7 @@ export default function EditUnitKerjaModalDisclosure({
 
               <FormControl
                 isInvalid={formik.errors.jenis_karyawan ? true : false}
+                mb={4}
               >
                 <FormLabel>
                   Jenis Karyawan
@@ -183,6 +192,26 @@ export default function EditUnitKerjaModalDisclosure({
                 />
                 <FormErrorMessage>
                   {formik.errors.jenis_karyawan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                isInvalid={formik.errors.jenis_karyawan ? true : false}
+              >
+                <FormLabel>
+                  Kategori Unit Kerja
+                  <RequiredForm />
+                </FormLabel>
+                <SelectKategoriUnitKerja
+                  name="kategori_unit_kerja"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("kategori_unit_kerja", input);
+                  }}
+                  inputValue={formik.values.kategori_unit_kerja}
+                  isError={!!formik.errors.kategori_unit_kerja}
+                />
+                <FormErrorMessage>
+                  {formik.errors.kategori_unit_kerja as string}
                 </FormErrorMessage>
               </FormControl>
             </form>

@@ -27,6 +27,7 @@ import SelectJenisKaryawan from "../dependent/_Select/SelectJenisKaryawan";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import RequiredForm from "../form/RequiredForm";
+import SelectKategoriUnitKerja from "../dependent/_Select/SelectKategoriUnitKerja";
 
 interface Props extends ButtonProps {}
 
@@ -41,15 +42,21 @@ export default function TambahUnitKerja({ ...props }: Props) {
 
   const formik = useFormik({
     validateOnChange: false,
-    initialValues: { nama_unit: "", jenis_karyawan: "" as any },
+    initialValues: {
+      nama_unit: "",
+      jenis_karyawan: "" as any,
+      kategori_unit_kerja: "" as any,
+    },
     validationSchema: yup.object().shape({
       nama_unit: yup.string().required("Harus diisi"),
       jenis_karyawan: yup.object().required("Harus diisi"),
+      kategori_unit_kerja: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = {
         nama_unit: values.nama_unit,
         jenis_karyawan: values.jenis_karyawan.value,
+        kategori_unit_id: values.kategori_unit_kerja.value,
       };
       setLoading(true);
       req
@@ -141,6 +148,7 @@ export default function TambahUnitKerja({ ...props }: Props) {
 
               <FormControl
                 isInvalid={formik.errors.jenis_karyawan ? true : false}
+                mb={4}
               >
                 <FormLabel>
                   Jenis Karyawan
@@ -157,6 +165,26 @@ export default function TambahUnitKerja({ ...props }: Props) {
                 />
                 <FormErrorMessage>
                   {formik.errors.jenis_karyawan as string}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                isInvalid={formik.errors.jenis_karyawan ? true : false}
+              >
+                <FormLabel>
+                  Kategori Unit Kerja
+                  <RequiredForm />
+                </FormLabel>
+                <SelectKategoriUnitKerja
+                  name="kategori_unit_kerja"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("kategori_unit_kerja", input);
+                  }}
+                  inputValue={formik.values.kategori_unit_kerja}
+                  isError={!!formik.errors.kategori_unit_kerja}
+                />
+                <FormErrorMessage>
+                  {formik.errors.kategori_unit_kerja as string}
                 </FormErrorMessage>
               </FormControl>
             </form>
