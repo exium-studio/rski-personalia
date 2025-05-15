@@ -11,11 +11,9 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { ReactNode, useRef, useState } from "react";
 import useBackOnClose from "../../hooks/useBackOnClose";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
@@ -40,21 +38,23 @@ export default function EditKuotaCutiDisclosure({
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
-  const toast = useToast();
-  const { rt, setRt } = useRenderTrigger();
+  // const toast = useToast();
+  // const { rt, setRt } = useRenderTrigger();
 
   // console.log(rowData);
   const [kuota, setKuota] = useState<any[]>(rowData?.originalData?.hak_cuti);
 
   function handleSubmit() {
-    // setLoading(true);
+    setLoading(true);
 
-    const url = `api/rski/dashboard/pengaturan/hak-cuti/${rowData?.id}`;
+    // const url = `api/rski/dashboard/pengaturan/hak-cuti/${rowData?.id}`;
     const payload = {
       id: rowData?.id,
       hak_cuti: kuota,
     };
     console.log(payload);
+
+    setLoading(false);
   }
 
   return (
