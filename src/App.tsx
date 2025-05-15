@@ -349,7 +349,7 @@ export const App = () => {
             element={
               <NavContainer
                 active={3}
-                title="Penukaran Jadwal"
+                title="Tukar Jadwal"
                 topNavsData={navs[3].subNavs}
                 topNavActive={1}
                 allowed={[29]}

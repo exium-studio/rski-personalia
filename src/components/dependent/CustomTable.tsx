@@ -451,7 +451,6 @@ export default function CustomTable({
                 }}
                 cursor={onRowClick ? "pointer" : "auto"}
                 px={2}
-                borderBottom={"1px solid var(--divider)"}
                 position={"relative"}
                 // className={onRowClick ? "rowHoverOnClick" : ""}
                 {...trBodyProps}
@@ -504,6 +503,7 @@ export default function CustomTable({
                         e.stopPropagation();
                         toggleRowSelection(row.id);
                       }}
+                      borderBottom={"1px solid var(--divider)"}
                     >
                       <Checkbox
                         colorScheme="ap"
@@ -536,6 +536,7 @@ export default function CustomTable({
                       px={4}
                       h={"48px"}
                       transition={"200ms"}
+                      borderBottom={"1px solid var(--divider)"}
                       {...col?.cProps}
                     >
                       {typeof col?.td === "string" ||
@@ -571,6 +572,7 @@ export default function CustomTable({
                         onRowClick ? { bg: "var(--divider2)" } : undefined
                       }
                       transition={"200ms"}
+                      borderBottom={"1px solid var(--divider)"}
                       onClick={(e) => {
                         e.stopPropagation();
                       }}

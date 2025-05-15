@@ -1,11 +1,8 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import MultiSelectStatusVerifikasi2 from "../../components/dependent/_Select/MultiSelectStatusVerifikasi2";
-import MultiSelectTipeCuti from "../../components/dependent/_Select/MultiSelectTipeCuti";
 import ExportCutiModal from "../../components/dependent/ExportCutiModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import TabelCuti from "../../components/dependent/TabelPengajuanCuti";
-import AjukanCutiModal from "../../components/independent/AjukanCutiModal";
+import TabelKuotaCuti from "../../components/dependent/TabelKuotaCuti";
 import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
@@ -15,7 +12,6 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import isHasPermissions from "../../lib/isHasPermissions";
-import TabelKuotaCuti from "../../components/dependent/TabelKuotaCuti";
 
 export default function KuotaCuti() {
   // Filter Config
