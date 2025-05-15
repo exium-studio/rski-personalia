@@ -4,12 +4,15 @@ import {
   Button,
   FormControl,
   FormLabel,
+  InputGroup,
+  InputRightElement,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { ReactNode, useRef, useState } from "react";
@@ -30,7 +33,7 @@ export default function EditKuotaCutiDisclosure({
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
-    `edit-unit-kerja-modal-${rowData.id}`,
+    `edit-kuota-cuti-modal-${rowData.id}`,
     isOpen,
     onOpen,
     onClose
@@ -75,7 +78,7 @@ export default function EditKuotaCutiDisclosure({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title="Edit Unit Kerja" />
+            <DisclosureHeader title="Edit Kuota Cuti" />
           </ModalHeader>
           <ModalBody>
             <form id="editRoleForm">
@@ -87,18 +90,25 @@ export default function EditKuotaCutiDisclosure({
                       {/* <RequiredForm /> */}
                     </FormLabel>
 
-                    <NumberInput
-                      name={`kuota-${1}`}
-                      onChangeSetter={(input) => {
-                        const updated = [...kuota];
-                        updated[i] = {
-                          ...updated[i],
-                          kuota: input,
-                        };
-                        setKuota(updated);
-                      }}
-                      inputValue={kuota?.[i]?.kuota}
-                    />
+                    <InputGroup>
+                      <NumberInput
+                        name={`kuota-${1}`}
+                        onChangeSetter={(input) => {
+                          const updated = [...kuota];
+                          updated[i] = {
+                            ...updated[i],
+                            kuota: input,
+                          };
+                          setKuota(updated);
+                        }}
+                        inputValue={kuota?.[i]?.kuota}
+                        pr={"52px"}
+                      />
+
+                      <InputRightElement pr={4}>
+                        <Text>hari</Text>
+                      </InputRightElement>
+                    </InputGroup>
                   </FormControl>
                 );
               })}
