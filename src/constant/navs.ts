@@ -95,8 +95,13 @@ const navs = [
       },
       {
         allowed: [41],
-        label: "Cuti",
+        label: "Pengajuan Cuti",
         link: "/jadwal/cuti",
+      },
+      {
+        allowed: [162],
+        label: "Hak Cuti",
+        link: "/jadwal/hak-cuti",
       },
       {
         allowed: [4],

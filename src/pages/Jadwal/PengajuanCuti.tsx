@@ -16,7 +16,7 @@ import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import isHasPermissions from "../../lib/isHasPermissions";
 
-export default function Cuti() {
+export default function PengajuanCuti() {
   // Filter Config
   const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
   const [filterConfig, setFilterConfig] = useState({

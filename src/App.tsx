@@ -27,7 +27,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import InternalServerErrorPage from "./pages/Error/InternalServerErrorPage";
 import MaintenancePage from "./pages/Error/MaintenancePage";
 import MissingPage from "./pages/Error/MissingPage";
-import Cuti from "./pages/Jadwal/Cuti";
+import PengajuanCuti from "./pages/Jadwal/PengajuanCuti";
 import Izin from "./pages/Jadwal/Izin";
 import Jadwal from "./pages/Jadwal/Jadwal";
 import Lembur from "./pages/Jadwal/Lembur";
@@ -376,12 +376,26 @@ export const App = () => {
             element={
               <NavContainer
                 active={3}
-                title="Cuti"
+                title="Pengajuan Cuti"
                 topNavsData={navs[3].subNavs}
                 topNavActive={3}
                 allowed={[41]}
               >
-                <Cuti />
+                <PengajuanCuti />
+              </NavContainer>
+            }
+          />
+          <Route
+            path="/jadwal/hak-cuti"
+            element={
+              <NavContainer
+                active={3}
+                title="Hak Cuti"
+                topNavsData={navs[3].subNavs}
+                topNavActive={4}
+                allowed={[162]}
+              >
+                <PengajuanCuti />
               </NavContainer>
             }
           />
@@ -392,7 +406,7 @@ export const App = () => {
                 active={3}
                 title="Izin"
                 topNavsData={navs[3].subNavs}
-                topNavActive={4}
+                topNavActive={5}
                 allowed={[4]}
               >
                 <Izin />
