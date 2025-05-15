@@ -386,11 +386,11 @@ export const App = () => {
             }
           />
           <Route
-            path="/jadwal/hak-cuti"
+            path="/jadwal/kuota-cuti"
             element={
               <NavContainer
                 active={3}
-                title="Hak Cuti"
+                title="Kuota Cuti"
                 topNavsData={navs[3].subNavs}
                 topNavActive={4}
                 allowed={[162]}

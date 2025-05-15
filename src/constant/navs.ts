@@ -100,8 +100,8 @@ const navs = [
       },
       {
         allowed: [162],
-        label: "Hak Cuti",
-        link: "/jadwal/hak-cuti",
+        label: "Kuota Cuti",
+        link: "/jadwal/kuota-cuti",
       },
       {
         allowed: [4],
