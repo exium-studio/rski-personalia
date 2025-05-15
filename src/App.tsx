@@ -70,6 +70,7 @@ import AnulirPresensi from "./pages/Presensi/AnulirPresensi";
 import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
+import KuotaCuti from "./pages/Jadwal/KuotaCuti";
 
 const AuthPageLayout = () => {
   // SX
@@ -395,7 +396,7 @@ export const App = () => {
                 topNavActive={4}
                 allowed={[162]}
               >
-                <PengajuanCuti />
+                <KuotaCuti />
               </NavContainer>
             }
           />

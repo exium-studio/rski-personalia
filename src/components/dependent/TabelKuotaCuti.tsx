@@ -1,33 +1,13 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  Button,
-  Center,
-  HStack,
-  ListItem,
-  MenuItem,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-  UnorderedList,
-  useDisclosure,
-  useToast,
-} from "@chakra-ui/react";
+import { Center, HStack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import useGetUserData from "../../hooks/useGetUserData";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
-import backOnClose from "../../lib/backOnClose";
 import countDateRange from "../../lib/countDateRange";
 import formatDate from "../../lib/formatDate";
+import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
-import req from "../../lib/req";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
@@ -36,130 +16,17 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
-import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
 import TabelElipsisText from "./TabelElipsisText";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
-
-const DeleteCutiConfirmation = ({ selectedRows }: any) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`delete-cuti-confirmation`, isOpen, onOpen, onClose);
-  const toast = useToast();
-  const { rt, setRt } = useRenderTrigger();
-  const [deleteCutiLoading, setDeleteCutiLoading] = useState(false);
-  function handleDeleteCuti(selectedRows: any) {
-    setDeleteCutiLoading(true);
-    const payload = {
-      ids_cuti: selectedRows,
-    };
-    req
-      .post(`/api/rski/dashboard/jadwal-karyawan/delete-cuti`, payload)
-      .then((r) => {
-        if (r.status === 200) {
-          toast({
-            status: "success",
-            title: r.data.message,
-            isClosable: true,
-            position: "bottom-right",
-          });
-          setRt(!rt);
-          backOnClose();
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        toast({
-          status: "error",
-          title:
-            (typeof e?.response?.data?.message === "string" &&
-              (e?.response?.data?.message as string)) ||
-            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
-          isClosable: true,
-          position: "bottom-right",
-        });
-      })
-      .finally(() => {
-        setDeleteCutiLoading(false);
-      });
-  }
-
-  return (
-    <>
-      <MenuItem
-        color={"red.400"}
-        isDisabled={selectedRows.length === 0}
-        onClick={onOpen}
-      >
-        Delete...
-      </MenuItem>
-
-      <Modal
-        isOpen={isOpen}
-        onClose={backOnClose}
-        isCentered
-        blockScrollOnMount={false}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <DisclosureHeader title={"Delete/Batalkan Cuti"} />
-          </ModalHeader>
-          <ModalBody>
-            <Text opacity={0.4}>
-              Apakah anda yakin akan menghapus cuti yang dipilih?
-            </Text>
-
-            <Alert status="warning" alignItems={"start"} mt={4}>
-              <AlertIcon />
-              <AlertDescription>
-                Aksi ini tidak dapat dibatalkan. Data karyawan yang akan
-                dipulihkan:
-                <UnorderedList>
-                  <ListItem>Jadwal</ListItem>
-                  <ListItem>Presensi</ListItem>
-                  <ListItem>Lembur</ListItem>
-                  <ListItem>Izin</ListItem>
-                </UnorderedList>
-              </AlertDescription>
-            </Alert>
-          </ModalBody>
-          <ModalFooter gap={2}>
-            <Button
-              onClick={backOnClose}
-              className="clicky btn-solid"
-              isDisabled={deleteCutiLoading}
-              w={"50%"}
-            >
-              Cancel
-            </Button>
-            <Button
-              w={"50%"}
-              className="clicky"
-              colorScheme="red"
-              onClick={() => {
-                handleDeleteCuti(selectedRows);
-              }}
-              isLoading={deleteCutiLoading}
-            >
-              Delete
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-};
 
 interface Props {
   filterConfig: any;
 }
-export default function TabelCuti({ filterConfig }: Props) {
+export default function TabelKuotaCuti({ filterConfig }: Props) {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
@@ -170,7 +37,7 @@ export default function TabelCuti({ filterConfig }: Props) {
   const { error, loading, notFound, data, paginationData, retry } =
     useDataState<any[]>({
       initialData: undefined,
-      url: `/api/rski/dashboard/jadwal-karyawan/get-cuti?page=${pageConfig}`,
+      url: `/api/rski/dashboard/pengaturan/get-hak-cuti?page=${pageConfig}`,
       payload: {
         ...formattedFilterKaryawan,
         ...(filterConfig?.status_cuti?.length > 0 && {
@@ -521,15 +388,6 @@ export default function TabelCuti({ filterConfig }: Props) {
                     <CustomTable
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}
-                      batchActions={[
-                        (selectedRows: any) => {
-                          return (
-                            <DeleteCutiConfirmation
-                              selectedRows={selectedRows}
-                            />
-                          );
-                        },
-                      ]}
                     />
                   </CustomTableContainer>
                 </>

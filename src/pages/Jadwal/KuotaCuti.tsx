@@ -4,7 +4,7 @@ import MultiSelectStatusVerifikasi2 from "../../components/dependent/_Select/Mul
 import MultiSelectTipeCuti from "../../components/dependent/_Select/MultiSelectTipeCuti";
 import ExportCutiModal from "../../components/dependent/ExportCutiModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import TabelPengajuanCuti from "../../components/dependent/TabelPengajuanCuti";
+import TabelCuti from "../../components/dependent/TabelPengajuanCuti";
 import AjukanCutiModal from "../../components/independent/AjukanCutiModal";
 import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import CContainer from "../../components/wrapper/CContainer";
@@ -15,8 +15,9 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import isHasPermissions from "../../lib/isHasPermissions";
+import TabelKuotaCuti from "../../components/dependent/TabelKuotaCuti";
 
-export default function PengajuanCuti() {
+export default function KuotaCuti() {
   // Filter Config
   const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
   const [filterConfig, setFilterConfig] = useState({
@@ -40,8 +41,7 @@ export default function PengajuanCuti() {
   const lightDarkColor = useLightDarkColor();
 
   const { userPermissions } = useAuth();
-  const createPermissions = isHasPermissions(userPermissions, [38]);
-  const exportPermissions = isHasPermissions(userPermissions, [42]);
+  const exportPermissions = isHasPermissions(userPermissions, [163]);
 
   return (
     <>
@@ -75,42 +75,6 @@ export default function PengajuanCuti() {
               placeholder="nama/no. induk karyawan"
             />
 
-            <MultiSelectTipeCuti
-              name={"tipe_cuti"}
-              // minW={"fit-content"}
-              maxW={"165px !important"}
-              placeholder="Filter Tipe Cuti"
-              onConfirm={(input: any) => {
-                setFilterConfig((ps: any) => ({
-                  ...ps,
-                  tipe_cuti: input,
-                }));
-              }}
-              inputValue={filterConfig.tipe_cuti}
-              optionsDisplay="chip"
-              pr={5}
-              maxSelectedDisplay={1}
-              _focus={{ border: "1px solid var(--divider3) !important" }}
-            />
-
-            <MultiSelectStatusVerifikasi2
-              name={"status_cuti"}
-              // minW={"fit-content"}
-              maxW={"165px !important"}
-              placeholder="Filter Status Cuti"
-              onConfirm={(input: any) => {
-                setFilterConfig((ps: any) => ({
-                  ...ps,
-                  status_cuti: input,
-                }));
-              }}
-              inputValue={filterConfig.status_cuti}
-              optionsDisplay="chip"
-              pr={5}
-              maxSelectedDisplay={1}
-              _focus={{ border: "1px solid var(--divider3) !important" }}
-            />
-
             <FilterKaryawan />
 
             <PermissionTooltip
@@ -125,18 +89,9 @@ export default function PengajuanCuti() {
               /> */}
               <ExportCutiModal isDisabled={!exportPermissions} />
             </PermissionTooltip>
-            <PermissionTooltip
-              permission={createPermissions}
-              boxProps={{ w: "fit-content" }}
-            >
-              <AjukanCutiModal
-                minW={"fit-content"}
-                isDisabled={!createPermissions}
-              />
-            </PermissionTooltip>
           </HStack>
 
-          <TabelPengajuanCuti filterConfig={filterConfig} />
+          <TabelKuotaCuti filterConfig={filterConfig} />
         </CContainer>
       </CWrapper>
     </>
