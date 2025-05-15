@@ -47,8 +47,6 @@ const RewardPresensiBadgeWithEdit = (props: Props) => {
   const [reward, setReward] = useState(data?.status_reward_presensi);
   const [loading, setLoading] = useState<boolean>(false);
 
-  console.log(data);
-
   // Utils
   function handleSubmit() {
     const url = `api/rski/dashboard/karyawan/update-reward-presensi/${data.id}`;

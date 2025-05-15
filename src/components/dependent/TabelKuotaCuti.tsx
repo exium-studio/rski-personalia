@@ -1,30 +1,25 @@
-import { Center, HStack, Text } from "@chakra-ui/react";
+import { Center, HStack, Icon, MenuItem, Text } from "@chakra-ui/react";
+import { RiEditLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
+import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
-import useGetUserData from "../../hooks/useGetUserData";
-import countDateRange from "../../lib/countDateRange";
-import formatDate from "../../lib/formatDate";
 import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
+import EditKuotaCutiDisclosure from "../independent/EditKuotaCutiDisclosure";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
-import VerifikatorBelumDitentukan from "../independent/VerifikatorBelumDitentukan";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
-import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
-import TabelElipsisText from "./TabelElipsisText";
 import TabelFooterConfig from "./TabelFooterConfig";
-import VerifikasiModal from "./VerifikasiModal";
-import VerifikatorName from "./VerifikatorName";
 
 interface Props {
-  filterConfig: any;
+  filterConfig?: any;
 }
 export default function TabelKuotaCuti({ filterConfig }: Props) {
   // Limit Config
@@ -33,6 +28,22 @@ export default function TabelKuotaCuti({ filterConfig }: Props) {
   const [pageConfig, setPageConfig] = useState<number>(1);
   // Filter Config
   const { formattedFilterKaryawan } = useFilterKaryawan();
+
+  // Row Options Config
+  const rowOptions = [
+    (rowData: any) => {
+      return (
+        <EditKuotaCutiDisclosure rowData={rowData}>
+          <PermissionTooltip permission={editPermission} placement="left">
+            <MenuItem isDisabled={!editPermission}>
+              <Text>Edit</Text>
+              <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
+        </EditKuotaCutiDisclosure>
+      );
+    },
+  ];
 
   const { error, loading, notFound, data, paginationData, retry } =
     useDataState<any[]>({
@@ -60,8 +71,13 @@ export default function TabelKuotaCuti({ filterConfig }: Props) {
     setPageConfig(1);
   }, [formattedFilterKaryawan, filterConfig]);
 
-  const userData = useGetUserData();
-
+  const tipeCutiList = data?.[0]?.hak_cuti?.map((hakCuti: any) => ({
+    value: hakCuti?.nama,
+    th: hakCuti?.nama,
+    cProps: {
+      justify: "center",
+    },
+  }));
   const formattedHeader = [
     {
       th: "Nama",
@@ -76,88 +92,26 @@ export default function TabelKuotaCuti({ filterConfig }: Props) {
         borderRight: "1px solid var(--divider3)",
       },
     },
-    {
-      th: "Status Cuti",
-      isSortable: true,
-      cProps: {
-        justify: "center",
-      },
-    },
-    {
-      th: "Tipe Cuti",
-      isSortable: true,
-    },
-    {
-      th: "Tanggal Mulai",
-      isSortable: true,
-    },
-    {
-      th: "Tanggal Selesai",
-      isSortable: true,
-    },
-    {
-      th: "Durasi",
-      isSortable: true,
-      cProps: {
-        justify: "center",
-      },
-    },
-    {
-      th: "Sisa Kuota (Jika Disetujui)",
-      isSortable: true,
-      cProps: {
-        justify: "center",
-      },
-    },
-    {
-      th: "Unit Kerja",
-      isSortable: true,
-    },
-    {
-      th: "Keterangan",
-      isSortable: true,
-    },
-    {
-      th: "Verif. 1",
-      props: {
-        position: "sticky",
-        right: 0,
-        zIndex: 4,
-        w: "122px",
-      },
-      cProps: {
-        justify: "center",
-        borderLeft: "1px solid var(--divider3)",
-        // borderRight: "1px solid var(--divider3)",
-        w: "122px",
-      },
-    },
-    {
-      th: "Verif. 2",
-      props: {
-        // position: "sticky",
-        right: 0,
-        zIndex: 3,
-        w: "122px",
-      },
-      cProps: {
-        justify: "center",
-        borderLeft: "1px solid var(--divider3)",
-        // borderRight: "1px solid var(--divider3)",
-        w: "122px",
-      },
-    },
+    ...(tipeCutiList ?? []),
   ];
   const formattedData = data?.map((item: any) => {
-    const verif1Permission =
-      item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
-      userData?.id === 1;
-    const verif2Permission =
-      item?.relasi_verifikasi?.[1]?.verifikator?.id === userData?.id ||
-      userData?.id === 1;
+    const cutiList = item?.hak_cuti?.map((hakCuti: any) => ({
+      value: hakCuti?.kuota || 0,
+      td: (
+        <HStack>
+          <Text>{hakCuti?.kuota || 0}</Text>
+          {/* <Text opacity={0.4}>hari</Text> */}
+        </HStack>
+      ),
+      isNumeric: true,
+      cProps: {
+        justify: "center",
+      },
+    }));
 
     return {
-      id: item.id,
+      id: item?.id,
+      originalData: item,
       columnsFormat: [
         {
           value: item.user.nama,
@@ -180,171 +134,13 @@ export default function TabelKuotaCuti({ filterConfig }: Props) {
             borderRight: "1px solid var(--divider3)",
           },
         },
-        {
-          value: item.status_izin,
-          td: (
-            <StatusVerifikasiBadge2
-              data={item.status_cuti}
-              alasan={item?.alasan}
-              w={"180px"}
-            />
-          ),
-          cProps: {
-            justify: "center",
-          },
-        },
-        {
-          value: item.tipe_cuti?.nama,
-          td: item.tipe_cuti?.nama,
-          isDate: true,
-        },
-        {
-          value: item.tgl_from,
-          td: formatDate(item.tgl_from),
-          isDate: true,
-        },
-        {
-          value: item.tgl_to,
-          td: formatDate(item?.tgl_to),
-          isDate: true,
-        },
-        {
-          value: countDateRange(
-            new Date(formatDate(item?.tgl_from, "iso")),
-            new Date(formatDate(item?.tgl_to, "iso"))
-          ),
-          td: `${countDateRange(
-            new Date(formatDate(item?.tgl_from, "iso")),
-            new Date(formatDate(item?.tgl_to, "iso"))
-          )} Hari`,
-          isNumeric: true,
-          cProps: {
-            justify: "center",
-          },
-        },
-        {
-          value: item?.sisa_kuota,
-          td: (
-            <HStack>
-              <Text>{item?.sisa_kuota}</Text>
-              <Text opacity={0.4}>/ {item?.total_kuota}</Text>
-            </HStack>
-          ),
-          isNumeric: true,
-          cProps: {
-            justify: "center",
-          },
-        },
-        {
-          value: item?.unit_kerja?.nama_unit,
-          td: item?.unit_kerja?.nama_unit,
-        },
-        {
-          value: item?.keterangan,
-          td: <TabelElipsisText data={item?.keterangan} />,
-        },
-        {
-          value: "",
-          td: (
-            <>
-              {item?.status_cuti?.id === 1 && (
-                <>
-                  {item?.relasi_verifikasi?.[0]?.id === null &&
-                    userData?.id !== 1 && <VerifikatorBelumDitentukan />}
-
-                  {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
-                    <PermissionTooltip permission={verif1Permission}>
-                      <VerifikasiModal
-                        aria-label={`cuti-verif-1-button-${item.id}`}
-                        id={`verifikasi-cuti-modal-${item.id}`}
-                        submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-1`}
-                        approvePayloadKey="verifikasi_pertama_disetujui"
-                        disapprovePayloadKey="verifikasi_pertama_ditolak"
-                        isDisabled={!verif1Permission}
-                      />
-                    </PermissionTooltip>
-                  )}
-                </>
-              )}
-
-              {[2, 3, 4, 5].includes(item?.status_cuti?.id) && (
-                <VerifikatorName
-                  nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
-                  verification={
-                    [2, 4, 5].includes(item?.status_cuti?.id) ? true : false
-                  }
-                />
-              )}
-            </>
-          ),
-          props: {
-            position: "sticky",
-            right: 0,
-            zIndex: 2,
-          },
-          cProps: {
-            justify: "center",
-            borderLeft: "1px solid var(--divider3)",
-            // borderRight: "1px solid var(--divider3)",
-            w: "122px",
-          },
-        },
-        {
-          value: "",
-          td: (
-            <>
-              {item?.relasi_verifikasi?.[1]?.id === null &&
-                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
-
-              {(item?.relasi_verifikasi?.[1]?.id || userData?.id === 1) && (
-                <>
-                  {[1, 3].includes(item?.status_cuti?.id) && (
-                    <VerifikatorName
-                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
-                      verification={null}
-                    />
-                  )}
-
-                  {item?.status_cuti?.id === 2 && (
-                    <PermissionTooltip permission={verif2Permission}>
-                      <VerifikasiModal
-                        aria-label={`cuti-verif-2-button-${item.id}`}
-                        id={`verifikasi-cuti-modal-${item.id}`}
-                        submitUrl={`api/rski/dashboard/jadwal-karyawan/cuti/${item.id}/verifikasi-tahap-2`}
-                        approvePayloadKey="verifikasi_kedua_disetujui"
-                        disapprovePayloadKey="verifikasi_kedua_ditolak"
-                        isDisabled={!verif2Permission}
-                      />
-                    </PermissionTooltip>
-                  )}
-
-                  {[4, 5].includes(item?.status_cuti?.id) && (
-                    <VerifikatorName
-                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
-                      verification={item?.status_cuti?.id === 4 ? true : false}
-                    />
-                  )}
-                </>
-              )}
-            </>
-          ),
-          props: {
-            // position: "sticky",
-            right: 0,
-            zIndex: 1,
-          },
-          cProps: {
-            justify: "center",
-            borderLeft: "1px solid var(--divider3)",
-            // borderRight: "1px solid var(--divider3)",
-            w: "122px",
-          },
-        },
+        ...(cutiList ?? []),
       ],
     };
   });
 
   const { userPermissions } = useAuth();
+  const editPermission = isHasPermissions(userPermissions, [66]);
   const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
 
   return (
@@ -388,6 +184,7 @@ export default function TabelKuotaCuti({ filterConfig }: Props) {
                     <CustomTable
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}
+                      rowOptions={rowOptions}
                     />
                   </CustomTableContainer>
                 </>
@@ -403,6 +200,7 @@ export default function TabelKuotaCuti({ filterConfig }: Props) {
         pageConfig={pageConfig}
         setPageConfig={setPageConfig}
         paginationData={paginationData}
+        // footer={<Footer>Kuota cuti dalam hari</Footer>}
       />
     </>
   );

@@ -11,7 +11,7 @@ export default function StatusVerifikasiBadge({
   ...props
 }: Props) {
   const colorScheme = () => {
-    switch (data.id) {
+    switch (data?.id) {
       default:
         return "green";
       case 1:
@@ -43,7 +43,7 @@ export default function StatusVerifikasiBadge({
           textAlign={"center"}
           {...props}
         >
-          {data.label}
+          {data?.label}
         </Badge>
       </Box>
     </Tooltip>

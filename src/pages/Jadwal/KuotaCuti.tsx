@@ -16,10 +16,10 @@ import isHasPermissions from "../../lib/isHasPermissions";
 export default function KuotaCuti() {
   // Filter Config
   const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
-  const [filterConfig, setFilterConfig] = useState({
-    status_cuti: undefined,
-    tipe_cuti: undefined,
-  });
+  // const [filterConfig, setFilterConfig] = useState({
+  //   status_cuti: undefined,
+  //   tipe_cuti: undefined,
+  // });
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -87,7 +87,9 @@ export default function KuotaCuti() {
             </PermissionTooltip>
           </HStack>
 
-          <TabelKuotaCuti filterConfig={filterConfig} />
+          <TabelKuotaCuti
+          // filterConfig={filterConfig}
+          />
         </CContainer>
       </CWrapper>
     </>
