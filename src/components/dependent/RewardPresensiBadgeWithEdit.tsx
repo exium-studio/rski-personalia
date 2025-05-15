@@ -49,7 +49,7 @@ const RewardPresensiBadgeWithEdit = (props: Props) => {
 
   // Utils
   function handleSubmit() {
-    const url = `api/edit-reward-presensi/${data.id}`;
+    const url = `/api/rski/dashboard/karyawan/update-reward-presensi/${data.id}`;
     const payload = {
       reward: reward,
     };
