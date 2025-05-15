@@ -420,7 +420,7 @@ const DeleteBerkasButotnModal = (props: any) => {
   const superAdmin = user.id === 1;
 
   function handleSubmit() {
-    const url = `api/delete-dokumen`;
+    const url = `api/rski/dashboard/karyawan/detail-karyawan-dokumen/${data?.id}/delete-berkas`;
     const payload = {
       berkas_id: selectedDokumen,
     };
