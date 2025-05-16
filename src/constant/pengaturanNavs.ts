@@ -17,6 +17,7 @@ import {
   RiMapPinLine,
   RiQuestionLine,
   RiQuestionMark,
+  RiStethoscopeLine,
   RiUser2Line,
   RiUserSettingsLine,
   RiVerifiedBadgeLine,
@@ -86,6 +87,12 @@ const pengaturanNavs = [
         icon: RiVerifiedBadgeLine,
         label: "Profesi",
         link: "/pengaturan/karyawan/kompetensi",
+      },
+      {
+        allowed: [],
+        icon: RiStethoscopeLine,
+        label: "Spesialisasi Dokter",
+        link: "/pengaturan/karyawan/spesialisasi",
       },
       {
         allowed: [114],

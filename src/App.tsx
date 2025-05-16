@@ -71,6 +71,7 @@ import Presensi from "./pages/Presensi/Presensi";
 import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
 import KuotaCuti from "./pages/Jadwal/KuotaCuti";
+import PengaturanSpesialisasiDokter from "./pages/Pengaturan/PengaturanSpesialisasiDokter";
 
 const AuthPageLayout = () => {
   // SX
@@ -674,11 +675,27 @@ export const App = () => {
                 active={7}
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
-                title="Pengaturan - Kompetensi"
+                title="Pengaturan - Profesi"
                 allowed={[76]}
               >
                 <PengaturanContainer activeGroup={1} active={5}>
                   <PengaturanKompetensi />
+                </PengaturanContainer>
+              </NavContainer>
+            }
+          />
+          <Route
+            path="/pengaturan/karyawan/spesialisasi"
+            element={
+              <NavContainer
+                active={7}
+                topNavsData={navs[7].subNavs}
+                topNavActive={0}
+                title="Pengaturan - Spesialisasi Dokter"
+                allowed={[76]}
+              >
+                <PengaturanContainer activeGroup={1} active={6}>
+                  <PengaturanSpesialisasiDokter />
                 </PengaturanContainer>
               </NavContainer>
             }
@@ -693,7 +710,7 @@ export const App = () => {
                 title="Pengaturan - Jenis Penilaian"
                 allowed={[114]}
               >
-                <PengaturanContainer activeGroup={1} active={6}>
+                <PengaturanContainer activeGroup={1} active={7}>
                   <PengaturanJenisPenilaian />
                 </PengaturanContainer>
               </NavContainer>
@@ -709,7 +726,7 @@ export const App = () => {
                 title="Pengaturan - Kuesioner Penilaian"
                 allowed={[84]}
               >
-                <PengaturanContainer activeGroup={1} active={7}>
+                <PengaturanContainer activeGroup={1} active={8}>
                   <PengaturanKuisioner />
                 </PengaturanContainer>
               </NavContainer>
@@ -725,7 +742,7 @@ export const App = () => {
                 title="Pengaturan - Tentang Rumah Sakit"
                 allowed={[140]}
               >
-                <PengaturanContainer activeGroup={1} active={8}>
+                <PengaturanContainer activeGroup={1} active={9}>
                   <PengaturanTentang />
                 </PengaturanContainer>
               </NavContainer>
@@ -741,7 +758,7 @@ export const App = () => {
                 title="Pengaturan - Materi"
                 allowed={[137]}
               >
-                <PengaturanContainer activeGroup={1} active={9}>
+                <PengaturanContainer activeGroup={1} active={10}>
                   <PengaturanMateri />
                 </PengaturanContainer>
               </NavContainer>
