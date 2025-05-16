@@ -18,6 +18,7 @@ import req from "../../../lib/req";
 import ComponentSpinner from "../../independent/ComponentSpinner";
 import DataNotFound from "../../independent/DataNotFound";
 import FilterItemWrapper from "../../wrapper/FilterItemWrapper";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   filterConfig: any;
@@ -30,6 +31,7 @@ export default function FilterUnitKerja({
 }: Props) {
   const { userPermissions } = useAuth();
   const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+  const location = useLocation();
 
   const [search, setSearch] = useState<string>("");
 
@@ -119,7 +121,10 @@ export default function FilterUnitKerja({
                   flexShrink={0}
                   h={"40px"}
                   maxW={"100%"}
-                  disabled={!bypassUnitKerjaPermission}
+                  disabled={
+                    !bypassUnitKerjaPermission &&
+                    location.pathname === "/karyawan"
+                  }
                   // justify={"center"}
                   px={4}
                   cursor={"pointer"}

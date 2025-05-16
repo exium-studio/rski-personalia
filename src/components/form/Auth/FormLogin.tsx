@@ -92,6 +92,8 @@ export default function FormLogin() {
     },
   });
 
+  console.log(userData);
+
   return (
     <>
       <Text fontSize={24} fontWeight={600} mb={2}>
@@ -104,11 +106,13 @@ export default function FormLogin() {
         {userData && (
           <CContainer gap={responsiveSpacing}>
             <HStack p={4} gap={4} borderRadius={8} bg={"var(--divider)"}>
-              <Avatar />
+              <Avatar src={userData?.foto_profil?.path} name={userData?.nama} />
 
               <CContainer>
-                <Text>{userData.nama}</Text>
-                <Text>{userData.email}</Text>
+                <Text>{userData?.nama}</Text>
+                <Text opacity={0.4}>
+                  {userData?.data_karyawan?.unit_kerja?.nama_unit}
+                </Text>
               </CContainer>
             </HStack>
 

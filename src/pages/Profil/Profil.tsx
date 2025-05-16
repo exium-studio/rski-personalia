@@ -10,7 +10,6 @@ import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useGetUserData from "../../hooks/useGetUserData";
-import StatusAktifBadge from "../../components/dependent/StatusAktifBadge";
 
 export default function Profil() {
   // SX
@@ -144,17 +143,13 @@ export default function Profil() {
                   overflow={"clip"}
                   align={"start"}
                 >
-                  <StatusAktifBadge
-                    data={userData?.status_aktif}
-                    mb={2}
-                    ml={-1}
-                  />
-
                   <Text fontWeight={600} fontSize={20}>
                     {userData?.nama}
                   </Text>
 
-                  <Text opacity={0.4}>{userData?.role?.name}</Text>
+                  <Text opacity={0.4}>
+                    {userData?.data_karyawan?.unit_kerja?.nama_unit}
+                  </Text>
 
                   <HStack
                     align={"end"}

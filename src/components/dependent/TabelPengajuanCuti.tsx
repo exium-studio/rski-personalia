@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import useGetUserData from "../../hooks/useGetUserData";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
@@ -43,9 +44,6 @@ import TabelElipsisText from "./TabelElipsisText";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
 
 const DeleteCutiConfirmation = ({ selectedRows }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -477,24 +475,17 @@ export default function TabelPengajuanCuti({ filterConfig }: Props) {
     };
   });
 
-  const { userPermissions } = useAuth();
-  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
-
   return (
     <>
       {error && (
         <>
-          {notFound &&
-            isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NoData minH={"300px"} />}
+          {notFound && isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NoData minH={"300px"} />
+          )}
 
-          {notFound &&
-            !isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NotFound minH={"300px"} />}
+          {notFound && !isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NotFound minH={"300px"} />
+          )}
 
           {!notFound && (
             <Center my={"auto"} minH={"300px"}>

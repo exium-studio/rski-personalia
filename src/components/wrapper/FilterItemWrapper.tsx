@@ -18,6 +18,7 @@ import { useBodyColor } from "../../constant/colors";
 import formatNumber from "../../lib/formatNumber";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
+import { useLocation } from "react-router-dom";
 
 interface Props extends AccordionItemProps {
   title: string;
@@ -39,8 +40,11 @@ export default function FilterItemWrapper({
   // SX
   const bodyColor = useBodyColor();
 
+  const location = useLocation();
   const { userPermissions } = useAuth();
   const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+
+  const isAtKaryawanPage = location.pathname === "/karyawan";
 
   return (
     <AccordionItem {...props}>
@@ -63,7 +67,12 @@ export default function FilterItemWrapper({
           <HStack>
             {filterValue && filterValue.length > 0 && (
               <>
-                {((filterKey === "unit_kerja" && bypassUnitKerjaPermission) ||
+                {((filterKey === "unit_kerja" &&
+                  bypassUnitKerjaPermission &&
+                  isAtKaryawanPage) ||
+                  (filterKey === "unit_kerja" &&
+                    !bypassUnitKerjaPermission &&
+                    !isAtKaryawanPage) ||
                   filterKey !== "unit_kerja") && (
                   <Tooltip label={"Hapus filter ini"} openDelay={500}>
                     <IconButton

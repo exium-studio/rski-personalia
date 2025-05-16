@@ -142,23 +142,18 @@ export default function TabelKuotaCuti({ filterConfig }: Props) {
 
   const { userPermissions } = useAuth();
   const editPermission = isHasPermissions(userPermissions, [160]);
-  // // const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
 
   return (
     <>
       {error && (
         <>
-          {notFound &&
-            isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              // // !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NoData minH={"300px"} />}
+          {notFound && isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NoData minH={"300px"} />
+          )}
 
-          {notFound &&
-            !isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              // // !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NotFound minH={"300px"} />}
+          {notFound && !isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NotFound minH={"300px"} />
+          )}
 
           {!notFound && (
             <Center my={"auto"} minH={"300px"}>

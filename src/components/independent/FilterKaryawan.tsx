@@ -41,6 +41,7 @@ import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryaw
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import { useLocation } from "react-router-dom";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -151,6 +152,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   const user = useGetUserData();
   const userRef = useRef(user);
   const { userPermissions } = useAuth();
+  const location = useLocation();
   const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
   // const filterKaryawanRef = useRef(filterKaryawan);
   const formattedFilterKaryawanRef = useRef(formattedFilterKaryawan);
@@ -164,7 +166,11 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       // console.log("uk user", unitKerjaUser);
       // console.log(unitKerjaUser);
 
-      if (unitKerjaUser && !bypassUnitKerjaPermission) {
+      if (
+        unitKerjaUser &&
+        !bypassUnitKerjaPermission &&
+        location.pathname === "/karyawan"
+      ) {
         const unitKerjaExists = filterKaryawan.unit_kerja.some(
           (uk: any) => uk.id === unitKerjaUser.id
         );

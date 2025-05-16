@@ -4,6 +4,7 @@ import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
 import formatDurationShort from "../../lib/formatDurationShort";
+import formatTime from "../../lib/formatTime";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -14,9 +15,6 @@ import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import StatusLemburBadge from "./StatusLemburBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
-import formatTime from "../../lib/formatTime";
-import isHasPermissions from "../../lib/isHasPermissions";
-import useAuth from "../../global/useAuth";
 
 interface Props {
   filterConfig?: any;
@@ -156,24 +154,17 @@ export default function TabelLembur({ filterConfig }: Props) {
     ],
   }));
 
-  const { userPermissions } = useAuth();
-  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
-
   return (
     <>
       {error && (
         <>
-          {notFound &&
-            isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NoData minH={"300px"} />}
+          {notFound && isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NoData minH={"300px"} />
+          )}
 
-          {notFound &&
-            !isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NotFound minH={"300px"} />}
+          {notFound && !isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NotFound minH={"300px"} />
+          )}
 
           {!notFound && (
             <Center my={"auto"} minH={"300px"}>

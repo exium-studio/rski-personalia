@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import dataKaryawanLabel from "../../constant/dataKaryawanLabel";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
+import useGetUserData from "../../hooks/useGetUserData";
+import formatDate from "../../lib/formatDate";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -17,11 +19,7 @@ import Retry from "./Retry";
 import StatusApprovalBadge from "./StatusVerifikasiBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
-import useGetUserData from "../../hooks/useGetUserData";
 import VerifikatorName from "./VerifikatorName";
-import formatDate from "../../lib/formatDate";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props {
   filterConfig: any;
@@ -259,24 +257,17 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
     };
   });
 
-  const { userPermissions } = useAuth();
-  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
-
   return (
     <>
       {error && (
         <>
-          {notFound &&
-            isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NoData minH={"300px"} />}
+          {notFound && isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NoData minH={"300px"} />
+          )}
 
-          {notFound &&
-            !isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NotFound minH={"300px"} />}
+          {notFound && !isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NotFound minH={"300px"} />
+          )}
 
           {!notFound && (
             <Center my={"auto"} minH={"300px"}>

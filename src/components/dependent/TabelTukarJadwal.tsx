@@ -20,8 +20,6 @@ import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props {
   filterConfig?: any;
@@ -343,24 +341,17 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
     };
   });
 
-  const { userPermissions } = useAuth();
-  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
-
   return (
     <>
       {error && (
         <>
-          {notFound &&
-            isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NoData minH={"300px"} />}
+          {notFound && isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NoData minH={"300px"} />
+          )}
 
-          {notFound &&
-            !isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NotFound minH={"300px"} />}
+          {notFound && !isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NotFound minH={"300px"} />
+          )}
 
           {!notFound && (
             <Center my={"auto"} minH={"300px"}>

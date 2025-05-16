@@ -15,6 +15,7 @@ import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useTransferKaryawanTableColumnsConfig from "../../global/useTransferKaryawanTableColumnsConfig";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
+import isDatePassed from "../../lib/isDatePassed";
 import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import EditTransferKaryawanModalDisclosure from "../independent/EditTransferKaryawanModalDisclosure";
@@ -27,7 +28,6 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
-import isDatePassed from "../../lib/isDatePassed";
 
 interface Props {
   filterConfig?: any;
@@ -279,23 +279,17 @@ export default function TabelTransferKaryawan({ filterConfig }: Props) {
     ],
   }));
 
-  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
-
   return (
     <>
       {error && (
         <>
-          {notFound &&
-            isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NoData minH={"300px"} />}
+          {notFound && isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NoData minH={"300px"} />
+          )}
 
-          {notFound &&
-            !isObjectEmpty(formattedFilterKaryawan, [
-              "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
-            ]) && <NotFound minH={"300px"} />}
+          {notFound && !isObjectEmpty(formattedFilterKaryawan, ["search"]) && (
+            <NotFound minH={"300px"} />
+          )}
 
           {!notFound && (
             <Center my={"auto"} minH={"300px"}>
