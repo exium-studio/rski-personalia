@@ -253,14 +253,18 @@ export default function EditKaryawanForm({
       gelar_depan: data?.gelar_depan || "",
       gelar_belakang: data?.gelar_belakang || "",
       str: data?.no_str,
-      created_str: data?.created_str ? new Date(data?.created_str) : undefined,
+      created_str: data?.created_str
+        ? new Date(formatDate(data?.created_str, "short2"))
+        : undefined,
       masa_berlaku_str: data?.masa_berlaku_str
-        ? new Date(data?.masa_berlaku_str)
+        ? new Date(formatDate(data?.masa_berlaku_str, "short2"))
         : undefined,
       sip: data?.no_sip,
-      created_sip: data?.created_sip ? new Date(data?.created_sip) : undefined,
+      created_sip: data?.created_sip
+        ? new Date(formatDate(data?.created_sip, "short2"))
+        : undefined,
       masa_berlaku_sip: data?.masa_berlaku_sip
-        ? new Date(data?.masa_berlaku_sip)
+        ? new Date(formatDate(data?.masa_berlaku_sip, "short2"))
         : undefined,
       no_bpjsksh: data?.no_bpjsksh,
       no_bpjsktk: data?.no_bpjsktk,
@@ -319,11 +323,11 @@ export default function EditKaryawanForm({
         gelar_depan: values.gelar_depan || "",
         gelar_belakang: values.gelar_belakang || "",
         no_str: values?.str,
-        created_str: formatDate(values?.created_str, "short2") || "",
-        masa_berlaku_str: formatDate(values?.masa_berlaku_str, "short2") || "",
+        created_str: formatDate(values?.created_str, "short") || "",
+        masa_berlaku_str: formatDate(values?.masa_berlaku_str, "short") || "",
         no_sip: values?.sip,
-        created_sip: formatDate(values?.created_sip, "short2") || "",
-        masa_berlaku_sip: formatDate(values?.masa_berlaku_sip, "short2") || "",
+        created_sip: formatDate(values?.created_sip, "short") || "",
+        masa_berlaku_sip: formatDate(values?.masa_berlaku_sip, "short") || "",
         no_bpjsksh: values?.no_bpjsksh,
         no_bpjsktk: values?.no_bpjsktk,
         npwp: values?.npwp,
