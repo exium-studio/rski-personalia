@@ -89,7 +89,7 @@ const pengaturanNavs = [
         link: "/pengaturan/karyawan/kompetensi",
       },
       {
-        allowed: [],
+        allowed: [158],
         icon: RiStethoscopeLine,
         label: "Spesialisasi Dokter",
         link: "/pengaturan/karyawan/spesialisasi",

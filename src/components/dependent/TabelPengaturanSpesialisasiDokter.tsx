@@ -29,8 +29,8 @@ export default function TabelPengaturanSpesialisasiDokter({
   // SX
 
   const { userPermissions } = useAuth();
-  const editPermission = isHasPermissions(userPermissions, [123]);
-  const deletePermission = isHasPermissions(userPermissions, [124]);
+  const editPermission = isHasPermissions(userPermissions, [156]);
+  const deletePermission = isHasPermissions(userPermissions, [157]);
 
   // Row Options Config
   const rowOptions = [

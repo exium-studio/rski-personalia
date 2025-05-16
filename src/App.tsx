@@ -692,7 +692,7 @@ export const App = () => {
                 topNavsData={navs[7].subNavs}
                 topNavActive={0}
                 title="Pengaturan - Spesialisasi Dokter"
-                allowed={[76]}
+                allowed={[158]}
               >
                 <PengaturanContainer activeGroup={1} active={6}>
                   <PengaturanSpesialisasiDokter />

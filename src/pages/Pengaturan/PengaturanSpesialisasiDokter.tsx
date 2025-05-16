@@ -23,7 +23,7 @@ export default function PengaturanSpesialisasiDokter() {
   const lightDarkColor = useLightDarkColor();
 
   const { userPermissions } = useAuth();
-  const createPermission = isHasPermissions(userPermissions, [77]);
+  const createPermission = isHasPermissions(userPermissions, [155]);
 
   return (
     <CContainer
