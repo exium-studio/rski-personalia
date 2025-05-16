@@ -60,6 +60,7 @@ import SelectStatusKaryawan from "./_Select/SelectStatusKaryawan";
 import DisclosureHeader from "./DisclosureHeader";
 import NumberInput from "./input/NumberInput";
 import StringInput from "./input/StringInput";
+import SelectSpesialisasi from "./_Select/SelectSpesialisasi";
 
 const validationSchemaStep1 = yup.object({
   nama_karyawan: yup.string().required("Harus diisi"),
@@ -74,6 +75,7 @@ const validationSchemaStep1 = yup.object({
   unit_kerja: yup.object().required("Harus diisi"),
   jabatan: yup.object().required("Harus diisi"),
   kompetensi: yup.object(),
+  spesialisasi: yup.object(),
   role: yup.object().required("Harus diisi"),
 });
 
@@ -128,6 +130,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
       unit_kerja: undefined as any,
       jabatan: undefined as any,
       kompetensi: undefined as any,
+      spesialisasi: undefined as any,
       role: undefined as any,
       kelompok_gaji: undefined as any,
       no_rekening: "",
@@ -161,6 +164,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         unit_kerja_id: values.unit_kerja?.value,
         jabatan_id: values.jabatan?.value,
         kompetensi_id: values.kompetensi?.value,
+        spesialisasi_id: values.spesialisasi?.value,
         role_id: values.role?.value,
         kelompok_gaji_id: values.kelompok_gaji?.value,
         no_rekening: values.no_rekening,
@@ -220,6 +224,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
     }
   }, [formik.values.jabatan]);
 
+  console.log(formik.values.unit_kerja);
   // console.log(formik.values.jabatan.original_data.tunjangan_jabatan);
 
   const handleNext = () => {
@@ -519,6 +524,28 @@ export default function TambahKaryawanModal({ ...props }: Props) {
           </FormHelperText>
           <FormErrorMessage>
             {formik.errors.kompetensi as string}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          mb={4}
+          flex={"1 1 300px"}
+          isInvalid={!!formik.errors.spesialisasi}
+        >
+          <FormLabel>Spesialisasi</FormLabel>
+          <SelectSpesialisasi
+            name="spesialisasi"
+            onConfirm={(input) => {
+              formik.setFieldValue("spesialisasi", input);
+            }}
+            inputValue={formik.values.spesialisasi}
+            isError={!!formik.errors.spesialisasi}
+          />
+          <FormHelperText opacity={0.4}>
+            Kosongkan jika tidak memiliki spesialisasi
+          </FormHelperText>
+          <FormErrorMessage>
+            {formik.errors.spesialisasi as string}
           </FormErrorMessage>
         </FormControl>
 
