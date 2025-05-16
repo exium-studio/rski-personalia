@@ -17,6 +17,7 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+import formatNumber from "../../lib/formatNumber";
 
 interface Props {
   filterConfig?: any;
@@ -99,7 +100,7 @@ export default function TabelKuotaCuti({ filterConfig }: Props) {
       value: hakCuti?.kuota || 0,
       td: (
         <HStack>
-          <Text>{hakCuti?.kuota || 0}</Text>
+          <Text>{formatNumber(hakCuti?.kuota) || 0}</Text>
           {/* <Text opacity={0.4}>hari</Text> */}
         </HStack>
       ),
