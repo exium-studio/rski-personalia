@@ -35,7 +35,7 @@ export default function FilterPendidikanTerakhir({
       req
         .get("/api/get-list-pendidikan")
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const options = r.data.data.map((item: any) => ({
               id: item.id,
               label: item.label,

@@ -97,7 +97,7 @@ export default function PengaturanHakAkses({ role_id }: Props) {
       req
         .post(`/api/rski/dashboard/pengaturan/permissions/${role_id}`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             setRt(!rt);
             backOnClose();
             toast({

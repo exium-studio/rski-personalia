@@ -87,7 +87,7 @@ export default function ExportRiwayatPenggajianModal({
         responseType: "blob", // Penting untuk menangani file biner
       })
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           download(
             r.data,
             `${fileName || "Laporan Penggajian"} ${

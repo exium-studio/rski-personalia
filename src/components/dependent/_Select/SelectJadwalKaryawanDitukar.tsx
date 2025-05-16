@@ -45,7 +45,7 @@ export default function SelectJadwalKaryawanDitukar({
           `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal/jadwal-ditukar/${user_id}`
         )
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const options = r.data.data.list_jadwal.map((item: any) => {
               if (item) {
                 return {

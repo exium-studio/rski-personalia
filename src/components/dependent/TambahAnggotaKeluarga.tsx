@@ -114,7 +114,7 @@ export default function TambahAnggotaKeluarga({ idKaryawan }: any) {
       req
         .post(url, payload)
         .then((r) => {
-          if (r.status === 201) {
+          if (r?.status === 201) {
             setRt(!rt);
             backOnClose();
             toast({

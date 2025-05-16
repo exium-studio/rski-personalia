@@ -68,7 +68,7 @@ export default function PengaturanLokasiPresensi() {
       req
         .post(`/api/rski/dashboard/pengaturan/lokasi-kantor`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,
@@ -106,7 +106,7 @@ export default function PengaturanLokasiPresensi() {
     req
       .get(`/api/rski/dashboard/pengaturan/get-lokasi-kantor/1`)
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           const dataRes = r.data.data;
           setData(dataRes);
           setCenter({ lat: dataRes.lat, lng: dataRes.long });

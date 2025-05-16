@@ -39,7 +39,7 @@ export default function MultiSelectKaryawanWithFilter({
       req
         .get("/api/get-list-user")
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             setListKaryawan(r.data.data);
             const options = r.data.data.map((item: any) => ({
               value: item?.user?.id,

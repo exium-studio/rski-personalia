@@ -43,7 +43,7 @@ export default function SelectKaryawanDitukar({
           `/api/rski/dashboard/jadwal-karyawan/get-tukar-jadwal/user-ditukar/${jadwal_id}`
         )
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const options = r.data.data.user.map((item: any) => ({
               value: item?.id,
               label: item?.nama,

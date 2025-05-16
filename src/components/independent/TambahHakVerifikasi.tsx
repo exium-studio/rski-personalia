@@ -114,7 +114,7 @@ export default function TambahHakVerifikasi({ ...props }: Props) {
       req
         .post(`/api/rski/dashboard/pengaturan/master-verifikasi`, payload)
         .then((r) => {
-          if (r.status === 201) {
+          if (r?.status === 201) {
             toast({
               status: "success",
               title: r.data.message,

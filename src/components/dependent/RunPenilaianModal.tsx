@@ -87,7 +87,7 @@ const ListPertanyaanModal = ({
       req
         .post(`/api/rski/dashboard/perusahaan/penilaian`, payload)
         .then((r) => {
-          if (r.status === 201) {
+          if (r?.status === 201) {
             toast({
               status: "success",
               title: r?.data?.message,

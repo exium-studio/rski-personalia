@@ -55,7 +55,7 @@ export default function TambahStatusKaryawan({ ...props }: Props) {
       req
         .post("/api/rski/dashboard/pengaturan/status-karyawan", payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,

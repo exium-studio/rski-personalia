@@ -193,7 +193,7 @@ export default function NavContainer({
       req
         .get(`/api/rski/dashboard/user-info`)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const userData = r.data.data;
             if (userData.status_aktif === 2) {
               setUserPermissions(userData.permission);

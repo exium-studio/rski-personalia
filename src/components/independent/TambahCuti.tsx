@@ -73,7 +73,7 @@ export default function TambahCuti({ ...props }: Props) {
       req
         .post(`/api/rski/dashboard/pengaturan/cuti`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,

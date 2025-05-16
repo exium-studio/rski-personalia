@@ -61,7 +61,7 @@ const DeleteMateri = ({ id }: any) => {
     req
       .delete(`/api/rski/dashboard/pengaturan/materi-pelatihan/${id}`)
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           setRt(!rt);
           backOnClose();
           backOnClose();
@@ -173,7 +173,7 @@ const MateriSlot = ({ initialValues }: any) => {
       req
         .post(url, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             setRt(!rt);
             backOnClose();
             toast({

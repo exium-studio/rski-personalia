@@ -55,7 +55,7 @@ export default function ExportKaryawanMedisModal({ ...props }: Props) {
         responseType: "blob",
       })
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           download(r.data, `Export Karyawan Medis`, "xls");
         } else {
           toast({

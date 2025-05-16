@@ -53,7 +53,7 @@ export default function FormForgotPasswordStep3() {
       req
         .post(`/api/reset-password`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             navigate("/");
             toast({
               status: "success",

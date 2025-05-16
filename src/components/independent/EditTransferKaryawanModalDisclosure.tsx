@@ -127,7 +127,7 @@ export default function EditTransferKaryawanModalDisclosure({
       req
         .post(`/api/rski/dashboard/karyawan/transfer/${rowData.id}`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,

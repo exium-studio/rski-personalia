@@ -63,7 +63,7 @@ export default function ResetPasswordKaryawan({ userData, ...props }: Props) {
       req
         .post(`/api/rski/dashboard/karyawan/reset-credentials`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             backOnClose();
             toast({
               status: "success",

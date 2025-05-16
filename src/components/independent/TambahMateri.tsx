@@ -69,7 +69,7 @@ export default function TambahMateri({ ...props }: Props) {
       req
         .post(url, payload)
         .then((r) => {
-          if (r.status === 201) {
+          if (r?.status === 201) {
             setRt(!rt);
             backOnClose();
             toast({

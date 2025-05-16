@@ -83,7 +83,7 @@ export default function ImportModal({
       req
         .post(url, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             backOnClose();
             toast({
               status: "success",
@@ -119,7 +119,7 @@ export default function ImportModal({
         responseType: "blob",
       })
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           download(r.data, `${title} template`, "xls");
           setRt(!rt);
           backOnClose();

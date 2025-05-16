@@ -49,7 +49,7 @@ const ListUnitKerja = ({ listKaryawan, setSelectedKaryawan }: any) => {
       req
         .get("/api/get-list-unit-kerja")
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const options = r.data.data.map((item: any) => ({
               id: item.id,
               label: item.nama_unit,
@@ -177,7 +177,7 @@ const ListStatusKaryawan = ({ listKaryawan, setSelectedKaryawan }: any) => {
       req
         .get("/api/get-list-status-karyawan")
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const options = r.data.data.map((item: any) => ({
               id: item.id,
               label: item.label,

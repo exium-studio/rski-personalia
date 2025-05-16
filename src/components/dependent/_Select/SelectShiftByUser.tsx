@@ -42,7 +42,7 @@ export default function SelectShiftByUser({
       req
         .get(`/api/get-list-shift/${data_karyawan_id}`)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const options = r.data.data.map((item: any) => ({
               value: item.id,
               label: `${formatTime(item.jam_from)} - ${formatTime(

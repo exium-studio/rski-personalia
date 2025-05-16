@@ -77,7 +77,7 @@ export default function AjukanLemburModal({ ...props }: Props) {
       req
         .post(`/api/rski/dashboard/jadwal-karyawan/lembur`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,

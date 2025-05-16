@@ -97,7 +97,7 @@ export default function TambahAcaraDiklatEksternal({ ...props }: Props) {
       req
         .post(`/api/rski/dashboard/perusahaan/diklat-eksternal-user`, payload)
         .then((r) => {
-          if (r.status === 201) {
+          if (r?.status === 201) {
             toast({
               status: "success",
               title: r.data.message,

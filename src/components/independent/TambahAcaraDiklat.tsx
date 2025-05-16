@@ -123,7 +123,7 @@ export default function TambahAcaraDiklat({ ...props }: Props) {
       req
         .post(`/api/rski/dashboard/perusahaan/diklat`, payload)
         .then((r) => {
-          if (r.status === 201) {
+          if (r?.status === 201) {
             toast({
               status: "success",
               title: r.data.message,

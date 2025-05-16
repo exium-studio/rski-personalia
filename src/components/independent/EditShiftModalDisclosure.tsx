@@ -79,7 +79,7 @@ export default function EditShiftModalDisclosure({
       req
         .post(`/api/rski/dashboard/pengaturan/shift/${rowData.id}`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,

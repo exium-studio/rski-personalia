@@ -49,7 +49,7 @@ const KonfirmasiPelunasan = ({ item }: any) => {
     req
       .post(url)
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           setRt(!rt);
           backOnClose();
           toast({

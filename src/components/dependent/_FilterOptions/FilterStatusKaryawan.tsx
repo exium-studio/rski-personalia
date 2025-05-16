@@ -20,7 +20,7 @@ export default function FilterStatusKaryawan({
       req
         .get("/api/get-list-status-karyawan")
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const options = r.data.data.map((item: any) => ({
               id: item.id,
               label: item.label,

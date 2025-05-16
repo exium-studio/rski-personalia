@@ -38,7 +38,7 @@ export default function SelectKompetensi({
       req
         .get("/api/get-list-kompetensi")
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const options = r.data.data.map((item: any) => ({
               value: item.id,
               label: item.nama_kompetensi,

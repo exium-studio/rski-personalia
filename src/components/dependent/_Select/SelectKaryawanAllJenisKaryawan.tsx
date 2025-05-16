@@ -38,7 +38,7 @@ export default function SelectKaryawanAllJenisKaryawan({
       req
         .get("/api/get-list-user")
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const options = r.data.data.map((item: any) => ({
               value: item?.user?.id,
               label: item?.user?.nama,

@@ -57,7 +57,7 @@ export default function FormDashboardBuatPengumuman({
       req
         .post(`/api/rski/dashboard/pengumuman`, payload)
         .then((r) => {
-          if (r.status === 201) {
+          if (r?.status === 201) {
             toast({
               status: "success",
               title: r.data.message,

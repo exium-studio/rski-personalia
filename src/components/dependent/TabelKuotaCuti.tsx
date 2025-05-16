@@ -141,8 +141,8 @@ export default function TabelKuotaCuti({ filterConfig }: Props) {
   });
 
   const { userPermissions } = useAuth();
-  const editPermission = isHasPermissions(userPermissions, [66]);
-  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+  const editPermission = isHasPermissions(userPermissions, [160]);
+  // // const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
 
   return (
     <>
@@ -151,13 +151,13 @@ export default function TabelKuotaCuti({ filterConfig }: Props) {
           {notFound &&
             isObjectEmpty(formattedFilterKaryawan, [
               "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
+              // // !bypassUnitKerjaPermission ? "unit_kerja" : "",
             ]) && <NoData minH={"300px"} />}
 
           {notFound &&
             !isObjectEmpty(formattedFilterKaryawan, [
               "search",
-              !bypassUnitKerjaPermission ? "unit_kerja" : "",
+              // // !bypassUnitKerjaPermission ? "unit_kerja" : "",
             ]) && <NotFound minH={"300px"} />}
 
           {!notFound && (

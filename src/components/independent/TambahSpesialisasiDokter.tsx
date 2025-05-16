@@ -53,7 +53,7 @@ export default function TambahSpesialisasiDokter({ ...props }: Props) {
       req
         .post(url, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,

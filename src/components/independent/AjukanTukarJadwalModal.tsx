@@ -73,7 +73,7 @@ export default function AjukanTukarJadwalModal({ ...props }: Props) {
       req
         .post(`/api/rski/dashboard/jadwal-karyawan/tukar-jadwal`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,

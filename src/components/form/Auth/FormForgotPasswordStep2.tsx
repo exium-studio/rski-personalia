@@ -45,7 +45,7 @@ export default function FormForgotPasswordStep2() {
       req
         .post(`/api/forgot-password-verifyOtp`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             navigate(`/forgot-password-3/${email}/${values.otp}`);
             toast({
               status: "success",

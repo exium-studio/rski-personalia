@@ -108,7 +108,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
     req
       .get(`/api/rski/dashboard/notifikasi/${notif_id}`)
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           setRt(!rt);
         }
       })
@@ -135,7 +135,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
     req
       .delete(`/api/rski/dashboard/notifikasi/delete-read-notifikasi`)
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           setRt(!rt);
         }
       })

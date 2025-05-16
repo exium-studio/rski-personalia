@@ -335,7 +335,7 @@ export default function EditKaryawanForm({
       req
         .post(`/api/rski/dashboard/karyawan/data-karyawan/${data.id}`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,

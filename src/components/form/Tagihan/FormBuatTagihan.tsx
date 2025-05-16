@@ -55,7 +55,7 @@ export default function FormBuatTagihan({ forwardRef, setLoading }: Props) {
       req
         .post(`/api/rski/dashboard/keuangan/tagihan-potongan`, payload)
         .then((r) => {
-          if (r.status === 201) {
+          if (r?.status === 201) {
             toast({
               status: "success",
               title: r.data.message,

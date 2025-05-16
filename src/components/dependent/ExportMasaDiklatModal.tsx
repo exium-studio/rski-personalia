@@ -55,7 +55,7 @@ export default function ExportMasaDiklatModal({ ...props }: Props) {
         responseType: "blob",
       })
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           download(r.data, `Export Masa Diklat`, "xls");
         } else {
           toast({

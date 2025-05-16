@@ -57,7 +57,7 @@ const PublikasiButtonModal = ({
     req
       .post("/api/rski/dashboard/keuangan/publikasi-penggajian")
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           setRt(!rt);
           backOnClose();
           toast({
@@ -171,7 +171,7 @@ const DeletePenggajian = ({ penggajian_id, status_penggajian }: any) => {
       req
         .post("/api/rski/dashboard/keuangan/delete-gaji", payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             setRt(!rt);
             backOnClose();
             backOnClose();

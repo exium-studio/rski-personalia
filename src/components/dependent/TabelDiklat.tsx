@@ -90,7 +90,7 @@ const KonfirmasiDeleteUser = ({
         `/api/rski/dashboard/perusahaan/diklat/${dataDiklat.id}/delete-peserta-diklat/${peserta.user.id}`
       )
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           setRt(!rt);
           backOnClose();
         }
@@ -283,7 +283,7 @@ const TambahKaryawan = (props: any) => {
       req
         .post(url, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,
@@ -411,7 +411,7 @@ const KonfirmasiPublikasiSertifikat = ({
     req
       .post(`/api/rski/dashboard/perusahaan/diklat/${data.id}/certificates`)
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           setRt(!rt);
           backOnClose();
           toast({

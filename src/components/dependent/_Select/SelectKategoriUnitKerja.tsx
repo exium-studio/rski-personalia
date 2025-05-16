@@ -38,7 +38,7 @@ export default function SelectKategoriUnitKerja({
       req
         .get("/api/get-list-kategori-unit-kerja")
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const options = r.data.data.map((item: any) => ({
               value: item.id,
               label: item.label,

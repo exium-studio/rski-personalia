@@ -38,7 +38,7 @@ export default function SelectPtkp({
       req
         .get("/api/get-list-ptkp")
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             const options = r.data.data.map((item: any) => ({
               value: item.id,
               label: item.kode_ptkp,

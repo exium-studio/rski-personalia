@@ -55,7 +55,7 @@ export default function FormLogin() {
         .then((r) => {
           // console.log(r.data.user.data);
 
-          if (r.status === 200) {
+          if (r?.status === 200) {
             // setCookie("__auth_token", r.data.token);
             localStorage.setItem("__auth_token", r.data.token);
             localStorage.setItem(

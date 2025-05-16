@@ -46,7 +46,7 @@ export default function FormForgotPasswordStep1() {
       req
         .post(`/api/forgot-password-sendOtp`, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             navigate(`/forgot-password-2/${values.email}`);
             toast({
               status: "success",

@@ -13,7 +13,7 @@ export default function useLogout() {
     req
       .get("/api/rski/dashboard/logout")
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           // removeCookie("__auth_token");
           localStorage.removeItem("__auth_token");
           localStorage.removeItem("__user_data");

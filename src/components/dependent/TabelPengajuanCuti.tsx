@@ -61,7 +61,7 @@ const DeleteCutiConfirmation = ({ selectedRows }: any) => {
     req
       .post(`/api/rski/dashboard/jadwal-karyawan/delete-cuti`, payload)
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           toast({
             status: "success",
             title: r.data.message,

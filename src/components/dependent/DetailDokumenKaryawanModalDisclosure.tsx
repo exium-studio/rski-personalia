@@ -97,7 +97,7 @@ const TambahDokumenDisclosure = ({ children, karyawan_id }: any) => {
           payload
         )
         .then((r) => {
-          if (r.status === 201) {
+          if (r?.status === 201) {
             resetForm();
             setRt(!rt);
             backOnClose();
@@ -258,7 +258,7 @@ const VerifikasiButtonModal = ({ data, selectedDokumen }: VerifikasiProps) => {
           payload
         )
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,
@@ -430,7 +430,7 @@ const DeleteBerkasButotnModal = (props: any) => {
     req
       .post(url, payload)
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           toast({
             status: "success",
             title: r.data.message,

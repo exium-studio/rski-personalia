@@ -114,7 +114,7 @@ function PenyesuaianGajiButtonModal({
       req
         .post(url, payload)
         .then((r) => {
-          if (r.status === 200) {
+          if (r?.status === 200) {
             backOnClose();
             toast({
               status: "success",

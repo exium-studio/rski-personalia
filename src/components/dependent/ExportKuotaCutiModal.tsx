@@ -82,7 +82,7 @@ export default function ExportKuotaCutiModal({ ...props }: Props) {
         responseType: "blob",
       })
       .then((r) => {
-        if (r.status === 200) {
+        if (r?.status === 200) {
           download(r.data, `Data Cuti`, "xls");
         } else {
           toast({
@@ -96,7 +96,7 @@ export default function ExportKuotaCutiModal({ ...props }: Props) {
       })
       .catch((e) => {
         console.error(e);
-        if (e.response.status === 404) {
+        if (e.response?.status === 404) {
           toast({
             status: "error",
             title: "Data presensi tidak ditemukan untuk periode yang diminta.",
