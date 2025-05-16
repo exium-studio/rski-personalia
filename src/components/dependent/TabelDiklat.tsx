@@ -10,6 +10,7 @@ import {
   HStack,
   Icon,
   IconButton,
+  MenuItem,
   Modal,
   ModalBody,
   ModalContent,
@@ -20,10 +21,19 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiAddLine, RiDeleteBinLine, RiSendPlaneFill } from "@remixicon/react";
+import {
+  RiAddLine,
+  RiDeleteBinLine,
+  RiEditLine,
+  RiSendPlaneFill,
+} from "@remixicon/react";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
+import * as yup from "yup";
 import { iconSize } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 import useBackOnClose from "../../hooks/useBackOnClose";
+import useCountdown from "../../hooks/useCountdown";
 import useDataState from "../../hooks/useDataState";
 import useGetUserData from "../../hooks/useGetUserData";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
@@ -31,8 +41,11 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
 import formatTime from "../../lib/formatTime";
+import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import req from "../../lib/req";
+import RequiredForm from "../form/RequiredForm";
+import EditDiklatInternal from "../independent/EditDiklatInternal";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
@@ -49,13 +62,8 @@ import TabelElipsisText from "./TabelElipsisText";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
-import SearchComponent from "./input/SearchComponent";
-import useCountdown from "../../hooks/useCountdown";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import RequiredForm from "../form/RequiredForm";
-import StringInput from "./input/StringInput";
 import MultiSelectKaryawanWithFilter from "./_Select/MultiSelectKaryawanWithFilter";
+import SearchComponent from "./input/SearchComponent";
 
 const KonfirmasiDeleteUser = ({
   peserta,
@@ -582,6 +590,28 @@ export default function TabelDiklat({ filterConfig }: Props) {
     setPageConfig(1);
   }, [filterConfig]);
 
+  // Contexts
+  const { userPermissions } = useAuth();
+
+  // States
+  const editPermission = isHasPermissions(userPermissions, [154]);
+
+  // Row Options Config
+  const rowOptions = [
+    (rowData: any) => {
+      return (
+        <EditDiklatInternal rowData={rowData}>
+          <PermissionTooltip permission={editPermission} placement="left">
+            <MenuItem isDisabled={!editPermission}>
+              <Text>Edit</Text>
+              <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
+        </EditDiklatInternal>
+      );
+    },
+  ];
+
   const userData = useGetUserData();
 
   const formattedHeader = [
@@ -692,7 +722,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       th: "Verif. 1",
       props: {
         position: "sticky",
-        right: 0,
+        right: "40px",
         zIndex: 4,
         w: "122px",
       },
@@ -708,7 +738,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
       props: {
         // position: "sticky",
         right: 0,
-        zIndex: 3,
+        zIndex: 1,
         w: "122px",
       },
       cProps: {
@@ -746,6 +776,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
 
     return {
       id: item.id,
+      originalData: item,
       columnsFormat: [
         {
           value: item.nama_diklat,
@@ -854,7 +885,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
           ),
           props: {
             position: "sticky",
-            right: 0,
+            right: "40px",
             zIndex: 2,
           },
           cProps: {
@@ -976,6 +1007,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
                     <CustomTable
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}
+                      rowOptions={rowOptions}
                     />
                   </CustomTableContainer>
                 </>

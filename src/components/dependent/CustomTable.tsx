@@ -426,6 +426,7 @@ export default function CustomTable({
                 p={0}
                 position={"sticky"}
                 right={0}
+                zIndex={99}
               >
                 <Center
                   h={"48px"}
