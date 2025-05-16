@@ -18,6 +18,7 @@ interface Props extends StackProps {
   };
   noDetail?: boolean;
   addition?: ReactNode;
+  truncateName?: "props" | "class";
 }
 
 export default function AvatarAndNameTableData({
@@ -25,6 +26,7 @@ export default function AvatarAndNameTableData({
   data,
   noDetail = false,
   addition,
+  truncateName = "class",
   ...props
 }: Props) {
   const { userPermissions } = useAuth();
@@ -55,7 +57,12 @@ export default function AvatarAndNameTableData({
 
       <CContainer gap={2} overflow={"hidden"}>
         <Tooltip label={data.nama} placement="right" openDelay={500}>
-          <Text w={"fit-content"} maxW={"100%"} className="noofline-1">
+          <Text
+            w={"fit-content"}
+            maxW={"100%"}
+            noOfLines={truncateName === "props" ? 1 : undefined}
+            className={truncateName === "class" ? "noofline-1" : ""}
+          >
             {data.fullName || data.nama}
           </Text>
         </Tooltip>

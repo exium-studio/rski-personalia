@@ -176,6 +176,7 @@ const PesertaModal = ({ data }: any) => {
           <ModalHeader>
             <DisclosureHeader title={"Peserta Diklat"} />
           </ModalHeader>
+
           <ModalBody className="scrollY">
             <CContainer gap={2}>
               {data?.list_peserta?.length === 0 && <NoData minH={"300px"} />}
@@ -213,6 +214,7 @@ const PesertaModal = ({ data }: any) => {
               )}
             </CContainer>
           </ModalBody>
+
           <ModalFooter>
             <Button
               onClick={backOnClose}
@@ -352,9 +354,8 @@ const KonfirmasiPublikasiSertifikat = ({
               <Alert alignItems={"start"} status="warning" mb={4}>
                 <AlertIcon />
                 <AlertDescription>
-                  Sebelum publikasi sertifikat, pastikan peserta yang tidak
-                  hadir telah dihapus untuk memastikan sertifikat hanya
-                  diberikan kepada yang hadir.
+                  Sebelum publikasi sertifikat, pastikan peserta yang akan
+                  menerima sertifikat sudah benar.
                 </AlertDescription>
               </Alert>
 
@@ -393,6 +394,7 @@ const KonfirmasiPublikasiSertifikat = ({
                           nama: peserta?.user?.nama,
                           foto_profil: peserta?.user?.foto_profil?.path,
                         }}
+                        truncateName={"props"}
                         // noDetail
                         w={"fit-content"}
                         maxW={"fit-content"}
