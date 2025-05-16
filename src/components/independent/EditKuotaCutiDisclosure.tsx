@@ -14,12 +14,15 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { ReactNode, useRef, useState } from "react";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import NumberInput from "../dependent/input/NumberInput";
+import req from "../../lib/req";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 
 interface Props extends BoxProps {
   rowData: any;
@@ -41,8 +44,8 @@ export default function EditKuotaCutiDisclosure({
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
-  // const toast = useToast();
-  // const { rt, setRt } = useRenderTrigger();
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
 
   // console.log(rowData);
   const [kuota, setKuota] = useState<any[]>(rowData?.originalData?.hak_cuti);
@@ -50,14 +53,42 @@ export default function EditKuotaCutiDisclosure({
   function handleSubmit() {
     setLoading(true);
 
-    // const url = `api/rski/dashboard/pengaturan/hak-cuti/${rowData?.id}`;
+    const url = `api/rski/dashboard/pengaturan/hak-cuti/${rowData?.id}`;
+
     const payload = {
       id: rowData?.id,
       hak_cuti: kuota,
     };
-    console.log(payload);
 
-    setLoading(false);
+    req
+      .post(url, payload)
+      .then((r) => {
+        if (r.status === 200) {
+          toast({
+            status: "success",
+            title: r.data.message,
+            isClosable: true,
+            position: "bottom-right",
+          });
+          backOnClose();
+          setRt(!rt);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
+          isClosable: true,
+          position: "bottom-right",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   return (
