@@ -12,6 +12,7 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import isHasPermissions from "../../lib/isHasPermissions";
+import ExportKuotaCutiModal from "../../components/dependent/ExportKuotaCutiModal";
 
 export default function KuotaCuti() {
   // Filter Config
@@ -83,7 +84,7 @@ export default function KuotaCuti() {
                 downloadFileName="Data Cuti"
                 isDisabled={!exportPermissions}
               /> */}
-              <ExportCutiModal isDisabled={!exportPermissions} />
+              <ExportKuotaCutiModal isDisabled={!exportPermissions} />
             </PermissionTooltip>
           </HStack>
 
