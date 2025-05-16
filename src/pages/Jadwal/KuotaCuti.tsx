@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import ExportCutiModal from "../../components/dependent/ExportCutiModal";
+import ExportKuotaCutiModal from "../../components/dependent/ExportKuotaCutiModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelKuotaCuti from "../../components/dependent/TabelKuotaCuti";
 import FilterKaryawan from "../../components/independent/FilterKaryawan";
@@ -12,7 +12,6 @@ import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import isHasPermissions from "../../lib/isHasPermissions";
-import ExportKuotaCutiModal from "../../components/dependent/ExportKuotaCutiModal";
 
 export default function KuotaCuti() {
   // Filter Config

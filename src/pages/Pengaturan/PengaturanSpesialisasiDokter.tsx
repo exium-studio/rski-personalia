@@ -1,17 +1,15 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import MultiSelectPengaturanDeletedAt from "../../components/dependent/MultiSelectPengaturanDeletedAt";
-import TabelPengaturanPendidikan from "../../components/dependent/TabelPengaturanPendidikan";
+import TabelPengaturanSpesialisasiDokter from "../../components/dependent/TabelPengaturanSpesialisasiDokter";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import TambahPendidikan from "../../components/independent/TambahPendidikan";
+import TambahSpesialisasiDokter from "../../components/independent/TambahSpesialisasiDokter";
 import CContainer from "../../components/wrapper/CContainer";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
-import TabelPengaturanSpesialisasiDokter from "../../components/dependent/TabelPengaturanSpesialisasiDokter";
-import TambahSpesialisasiDokter from "../../components/independent/TambahSpesialisasiDokter";
 
 export default function PengaturanSpesialisasiDokter() {
   // Filter Config
