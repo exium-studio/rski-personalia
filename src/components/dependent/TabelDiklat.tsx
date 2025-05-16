@@ -4,6 +4,9 @@ import {
   AlertIcon,
   Button,
   Center,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
   HStack,
   Icon,
   IconButton,
@@ -17,7 +20,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiDeleteBinLine, RiSendPlaneFill } from "@remixicon/react";
+import { RiAddLine, RiDeleteBinLine, RiSendPlaneFill } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
@@ -47,6 +50,12 @@ import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
 import SearchComponent from "./input/SearchComponent";
+import useCountdown from "../../hooks/useCountdown";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import RequiredForm from "../form/RequiredForm";
+import StringInput from "./input/StringInput";
+import MultiSelectKaryawanWithFilter from "./_Select/MultiSelectKaryawanWithFilter";
 
 const KonfirmasiDeleteUser = ({
   peserta,
@@ -230,6 +239,138 @@ const PesertaModal = ({ data }: any) => {
   );
 };
 
+const TambahKaryawan = (props: any) => {
+  // Props
+  const { data } = props;
+
+  // Hooks
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    "tambah-karyawan-diklat-internal-sertifikat",
+    isOpen,
+    onOpen,
+    onClose
+  );
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+
+  // States
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: { karyawan: undefined as any },
+    validationSchema: yup
+      .object()
+      .shape({ karyawan: yup.array().required("Harus diisi") }),
+    onSubmit: (values, { resetForm }) => {
+      console.log(values);
+
+      setLoading(true);
+
+      const payload = {
+        user_id: values.karyawan?.map((karyawan: any) => karyawan.value),
+      };
+      const url = `api/rski/dashboard/perusahaan/diklat/${data.id}/add-peserta-diklat`;
+      req
+        .post(url, payload)
+        .then((r) => {
+          if (r.status === 200) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            resetForm();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+  });
+
+  return (
+    <>
+      <IconButton
+        aria-label="tambah karyawan"
+        icon={<Icon as={RiAddLine} fontSize={iconSize} />}
+        className="btn-ap clicky"
+        colorScheme="ap"
+        onClick={onOpen}
+      />
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Tambah Karyawan Diklat"} />
+          </ModalHeader>
+
+          <ModalBody>
+            <form id="tamah-karyawan-sertifikat" onSubmit={formik.handleSubmit}>
+              <FormControl
+                mb={4}
+                isInvalid={formik.errors.karyawan ? true : false}
+              >
+                <FormLabel>
+                  Karyawan
+                  <RequiredForm />
+                </FormLabel>
+
+                <MultiSelectKaryawanWithFilter
+                  name="karyawan"
+                  // placeholder="Daftar Karyawan"
+                  onConfirm={(input) => {
+                    formik.setFieldValue("karyawan", input);
+                  }}
+                  optionsDisplay="chip"
+                  inputValue={formik.values.karyawan}
+                />
+                <FormErrorMessage>
+                  {formik.errors.karyawan as string}
+                </FormErrorMessage>
+              </FormControl>
+            </form>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              type="submit"
+              form="tamah-karyawan-sertifikat"
+              isLoading={loading}
+              w={"full"}
+              colorScheme="ap"
+              className="btn-ap clicky"
+            >
+              Simpan
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
 const KonfirmasiPublikasiSertifikat = ({
   data,
   verif3Permission,
@@ -243,25 +384,7 @@ const KonfirmasiPublikasiSertifikat = ({
     onClose
   );
 
-  const [countDown, setCountDown] = useState(10);
-  useEffect(() => {
-    if (isOpen) {
-      const interval = setInterval(() => {
-        setCountDown((prevCount) => {
-          if (prevCount > 0) {
-            return prevCount - 1;
-          } else {
-            clearInterval(interval);
-            return prevCount;
-          }
-        });
-      }, 1000);
-
-      return () => clearInterval(interval);
-    } else {
-      setCountDown(5);
-    }
-  }, [isOpen]);
+  const { countDown } = useCountdown({ initialValue: 10, conditions: isOpen });
 
   const [search, setSearch] = useState("");
   const fd = data.list_peserta.filter((item: any) => {
@@ -359,14 +482,17 @@ const KonfirmasiPublikasiSertifikat = ({
                 </AlertDescription>
               </Alert>
 
-              <SearchComponent
-                name="search_peserta_diklat"
-                onChangeSetter={(input) => {
-                  setSearch(input);
-                }}
-                inputValue={search}
-                mb={4}
-              />
+              <HStack mb={4}>
+                <SearchComponent
+                  name="search_peserta_diklat"
+                  onChangeSetter={(input) => {
+                    setSearch(input);
+                  }}
+                  inputValue={search}
+                />
+
+                <TambahKaryawan data={data} />
+              </HStack>
             </CContainer>
 
             <CContainer

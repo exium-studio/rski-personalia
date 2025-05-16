@@ -58,6 +58,7 @@ export default function EditKuotaCutiDisclosure({
     const payload = {
       id: rowData?.id,
       hak_cuti: kuota,
+      _method: "patch",
     };
 
     req
