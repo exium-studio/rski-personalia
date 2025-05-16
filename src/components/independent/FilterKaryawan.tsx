@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { RiEqualizer3Fill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useLightDarkColor } from "../../constant/colors";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
@@ -41,7 +42,6 @@ import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryaw
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import { useLocation } from "react-router-dom";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -211,6 +211,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     setFilterKaryawan,
     setFormattedFilterKaryawan,
     bypassUnitKerjaPermission,
+    location.pathname,
   ]);
 
   const handleApplyFilterRef = useRef(handleApplyFilter);

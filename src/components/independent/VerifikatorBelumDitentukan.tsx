@@ -4,7 +4,7 @@ import { iconSize } from "../../constant/sizes";
 
 export default function VerifikatorBelumDitentukan() {
   return (
-    <Tooltip label={"Verifikator Belum Ditentukan"} openDelay={500}>
+    <Tooltip label={"Verifikator Belum Ditentukan"} openDelay={500} mr={4}>
       <HStack opacity={0.4}>
         <Icon as={RiShieldKeyholeLine} fontSize={iconSize} />
         <Text className="noofline-1">{"Kosong"}</Text>
