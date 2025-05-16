@@ -3,7 +3,7 @@ import { useState } from "react";
 import ExportKaryawanMedisModal from "../../components/dependent/ExportKaryawanMedisModal";
 import FilterKaryawanMedis from "../../components/dependent/FilterKaryawanMedis";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import TabelKaryawanmedis from "../../components/dependent/TabelKaryawanmedis";
+import TabelKaryawanMedis from "../../components/dependent/TabelKaryawanMedis";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
@@ -71,7 +71,7 @@ export default function KaryawanMedis() {
             </PermissionTooltip>
           </HStack>
 
-          <TabelKaryawanmedis filterConfig={filterConfig} />
+          <TabelKaryawanMedis filterConfig={filterConfig} />
         </CContainer>
       </CWrapper>
     </>

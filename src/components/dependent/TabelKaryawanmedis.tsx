@@ -1,4 +1,4 @@
-import { Center } from "@chakra-ui/react";
+import { Center, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useDataState from "../../hooks/useDataState";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -121,6 +121,9 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
     {
       th: "Tanggal Berakhir SIP",
       isSortable: true,
+      cProps: {
+        justify: "center",
+      },
     },
     {
       th: "Masa Berlaku SIP",
@@ -132,6 +135,9 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
     {
       th: "Tanggal Berakhir STR",
       isSortable: true,
+      cProps: {
+        justify: "center",
+      },
     },
     {
       th: "Masa Berlaku STR",
@@ -173,18 +179,38 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
         },
         {
           value: item?.masa_berlaku_sip,
-          td: `${formatDate(item?.masa_berlaku_sip)}`,
-          isDate: true,
-        },
-        {
-          value: item?.masa_berlaku_sip,
           td: item?.masa_berlaku_sip
-            ? `${monthDiff(new Date(), new Date(item?.masa_berlaku_sip))} bulan`
+            ? formatDate(item?.masa_berlaku_sip, "short")
             : "",
           isDate: true,
           cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item?.masa_berlaku_sip,
+          td: item?.masa_berlaku_sip ? (
+            `${monthDiff(
+              new Date(),
+              formatDate(item?.masa_berlaku_sip, "short2"),
+              {
+                allowNegative: true,
+              }
+            )} bulan`
+          ) : item?.no_sip ? (
+            <Text color={"p.500"} fontWeight={"medium"}>
+              Seumur Hidup
+            </Text>
+          ) : (
+            ""
+          ),
+          isDate: true,
+          cProps: {
             color:
-              monthDiff(new Date(), new Date(item?.masa_berlaku_sip)) <= 7
+              monthDiff(
+                new Date(),
+                formatDate(item?.masa_berlaku_sip, "short2")
+              ) <= 7
                 ? "red.400"
                 : "",
             justifyContent: "center",
@@ -192,14 +218,27 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
         },
         {
           value: item?.masa_berlaku_str,
-          td: `${formatDate(item?.masa_berlaku_str)}`,
+          td: item?.masa_berlaku_str
+            ? formatDate(item?.masa_berlaku_str, "short")
+            : "",
           isDate: true,
+          cProps: {
+            justify: "center",
+          },
         },
         {
           value: item?.masa_berlaku_str,
-          td: item?.masa_berlaku_str
-            ? `${monthDiff(new Date(), new Date(item?.masa_berlaku_str))} bulan`
-            : "",
+          td: item?.masa_berlaku_str ? (
+            `${monthDiff(new Date(), new Date(item?.masa_berlaku_str), {
+              allowNegative: true,
+            })} bulan`
+          ) : item?.no_str ? (
+            <Text color={"p.500"} fontWeight={"medium"}>
+              Seumur Hidup
+            </Text>
+          ) : (
+            ""
+          ),
           isDate: true,
           cProps: {
             color:
