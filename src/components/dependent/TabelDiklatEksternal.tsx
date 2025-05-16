@@ -1,4 +1,4 @@
-import { Button, Center } from "@chakra-ui/react";
+import { Button, Center, Icon, MenuItem, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useDataState from "../../hooks/useDataState";
@@ -21,6 +21,11 @@ import TabelElipsisText from "./TabelElipsisText";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
+import isHasPermissions from "../../lib/isHasPermissions";
+import EditDiklatInternal from "../independent/EditDiklat";
+import { RiEditLine } from "@remixicon/react";
+import { iconSize } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
 
 interface Props {
   filterConfig: any;
@@ -48,6 +53,28 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
   }, [filterConfig]);
 
   const userData = useGetUserData();
+
+  // Contexts
+  const { userPermissions } = useAuth();
+
+  // States
+  const editPermission = isHasPermissions(userPermissions, [154]);
+
+  // Row Options Config
+  const rowOptions = [
+    (rowData: any) => {
+      return (
+        <EditDiklatInternal rowData={rowData} jenisDiklat="eksternal">
+          <PermissionTooltip permission={editPermission} placement="left">
+            <MenuItem isDisabled={!editPermission}>
+              <Text>Edit</Text>
+              <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
+            </MenuItem>
+          </PermissionTooltip>
+        </EditDiklatInternal>
+      );
+    },
+  ];
 
   const formattedHeader = [
     {
@@ -134,7 +161,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
       th: "Verif. 1",
       props: {
         position: "sticky",
-        right: 0,
+        right: "40px",
         zIndex: 4,
         w: "122px",
       },
@@ -170,6 +197,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
 
     return {
       id: item.id,
+      originalData: item,
       columnsFormat: [
         {
           value: item.nama_diklat,
@@ -303,7 +331,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
           ),
           props: {
             position: "sticky",
-            right: 0,
+            right: "40px",
             zIndex: 2,
           },
           cProps: {
@@ -404,6 +432,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
                     <CustomTable
                       formattedHeader={formattedHeader}
                       formattedData={formattedData}
+                      rowOptions={rowOptions}
                     />
                   </CustomTableContainer>
                 </>

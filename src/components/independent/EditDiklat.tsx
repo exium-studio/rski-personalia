@@ -29,11 +29,13 @@ import RequiredForm from "../form/RequiredForm";
 interface Props extends BoxProps {
   rowData: any;
   children?: ReactNode;
+  jenisDiklat?: "internal" | "eksternal";
 }
 
-export default function EditDiklatInternal({
+export default function EditDiklat({
   rowData,
   children,
+  jenisDiklat = "internal",
   ...props
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -121,7 +123,10 @@ export default function EditDiklatInternal({
 
       setLoading(true);
 
-      const url = `api/rski/dashboard/perusahaan/diklat/updat e-diklat/${rowData?.id}`;
+      let url = `api/rski/dashboard/perusahaan/diklat/updat e-diklat/${rowData?.id}`;
+      if (jenisDiklat === "eksternal")
+        url = `api/rski/dashboard/perusahaan/diklat/update-diklat-eksternal/${rowData?.id}`;
+
       req
         .post(url, payload)
         .then((r) => {
