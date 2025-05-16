@@ -676,6 +676,22 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
                 unhighlightClassName="uw"
                 searchWords={searchQuery}
                 autoEscape={true}
+                textToHighlight="Spesialisasi"
+              />
+            </Box>
+            <FlexLine />
+            <Text fontWeight={500} textAlign={"right"}>
+              {data?.spesialisasi?.nama_spesialisasi}
+            </Text>
+          </HStack>
+
+          <HStack justify={"space-between"}>
+            <Box opacity={0.6}>
+              <Highlighter
+                highlightClassName="hw"
+                unhighlightClassName="uw"
+                searchWords={searchQuery}
+                autoEscape={true}
                 textToHighlight="Tanggal Keluar"
               />
             </Box>

@@ -42,6 +42,7 @@ import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
 import parseNumber from "../../lib/parseNumber";
 import req from "../../lib/req";
+import SelectSpesialisasi from "../../components/dependent/_Select/SelectSpesialisasi";
 
 interface Props {
   activeStep: number;
@@ -75,6 +76,14 @@ export default function EditKaryawanForm({
     setNoLimitSip(data?.masa_berlaku_sip === null);
   }, [data]);
 
+  const optionalLength16 = yup
+    .string()
+    .notRequired()
+    .test("lengthIfFilled", "Harus 16 karakter", (value) => {
+      if (!value) return true; // skip validasi kalau kosong
+      return value.length === 16;
+    });
+
   const validationSchemaStep1 = yup.object({
     nama_karyawan: yup.string().required("Harus diisi"),
     nik: yup.string().required("Harus diisi"),
@@ -87,6 +96,7 @@ export default function EditKaryawanForm({
     unit_kerja: yup.object().required("Harus diisi"),
     jabatan: yup.object().required("Harus diisi"),
     kompetensi: yup.object(),
+    spesialisasi: yup.object(),
     role: yup.object().required("Harus diisi"),
   });
 
@@ -108,8 +118,8 @@ export default function EditKaryawanForm({
     // tgl_lahir: yup.date().required("Harus diisi"),
     // no_hp: yup.string().required("Harus diisi"),
     // jenis_kelamin: yup.object().required("Harus diisi"),
-    nik_ktp: yup.string().length(16, "Harus 16 karakter"),
-    no_kk: yup.string().length(16, "Harus 16 karakter"),
+    nik_ktp: optionalLength16,
+    no_kk: optionalLength16,
     // agama: yup.object().required("Harus diisi"),
     // golongan_darah: yup.object().required("Harus diisi"),
     // tinggi_badan: yup.string().required("Harus diisi"),
@@ -140,7 +150,7 @@ export default function EditKaryawanForm({
     validateOnChange: false,
     initialValues: {
       nama_karyawan: data?.user.nama,
-      nik: data?.nik,
+      nik: data?.nik || "",
       email: data?.email || "",
       tgl_berakhir_pks:
         (new Date(
@@ -168,6 +178,12 @@ export default function EditKaryawanForm({
         ? {
             value: data?.kompetensi?.id,
             label: data?.kompetensi?.nama_kompetensi,
+          }
+        : undefined,
+      spesialisasi: data?.spesialisasi
+        ? {
+            value: data?.spesialisasi?.id,
+            label: data?.spesialisasi?.nama_spesialisasi,
           }
         : undefined,
       role: data?.role
@@ -206,8 +222,8 @@ export default function EditKaryawanForm({
             label: data?.jenis_kelamin === 1 ? "Laki - Laki" : "Perempuan",
           }
         : undefined,
-      nik_ktp: data?.nik_ktp,
-      no_kk: data?.no_kk,
+      nik_ktp: data?.nik_ktp || "",
+      no_kk: data?.no_kk || "",
       agama: data?.agama
         ? {
             value: data?.agama?.id,
@@ -223,8 +239,8 @@ export default function EditKaryawanForm({
       tinggi_badan: data?.tinggi_badan,
       berat_badan: data?.berat_badan,
       riwayat_penyakit: data?.riwayat_penyakit,
-      alamat: data?.alamat,
-      no_ijazah: data?.no_ijazah,
+      alamat: data?.alamat || "",
+      no_ijazah: data?.no_ijazah || "",
       tahun_lulus: data?.tahun_lulus,
       // pendidikan_terakhir: data?.pendidikan_terakhir || "",
       pendidikan_terakhir: data?.pendidikan_terakhir
@@ -271,6 +287,7 @@ export default function EditKaryawanForm({
         unit_kerja_id: values.unit_kerja.value,
         jabatan_id: values.jabatan.value,
         kompetensi_id: values?.kompetensi?.value,
+        spesialisasi_id: values?.spesialisasi?.value,
         role_id: values?.role?.value,
         kelompok_gaji_id: values.kelompok_gaji.value,
         no_rekening: values.no_rekening,
@@ -647,6 +664,28 @@ export default function EditKaryawanForm({
           </FormHelperText>
           <FormErrorMessage>
             {formik.errors.kompetensi as string}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          mb={4}
+          flex={"1 1 300px"}
+          isInvalid={!!formik.errors.spesialisasi}
+        >
+          <FormLabel>Spesialisasi</FormLabel>
+          <SelectSpesialisasi
+            name="spesialisasi"
+            onConfirm={(input) => {
+              formik.setFieldValue("spesialisasi", input);
+            }}
+            inputValue={formik.values.spesialisasi}
+            isError={!!formik.errors.spesialisasi}
+          />
+          <FormHelperText opacity={0.4}>
+            Kosongkan jika tidak memiliki spesialisasi
+          </FormHelperText>
+          <FormErrorMessage>
+            {formik.errors.spesialisasi as string}
           </FormErrorMessage>
         </FormControl>
 

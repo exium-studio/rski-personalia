@@ -224,7 +224,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
     }
   }, [formik.values.jabatan]);
 
-  console.log(formik.values.unit_kerja);
+  // console.log(formik.values.unit_kerja);
   // console.log(formik.values.jabatan.original_data.tunjangan_jabatan);
 
   const handleNext = () => {
