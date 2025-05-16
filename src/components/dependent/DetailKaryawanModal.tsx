@@ -796,6 +796,8 @@ export default function DetailKaryawanModal({
                             top={"0"}
                             bg={lightDarkColor}
                             zIndex={2}
+                            pb={responsiveSpacing}
+                            mb={[-4, null, -5]}
                           >
                             <RunPenilaianModal user_id={data.user.id} />
 

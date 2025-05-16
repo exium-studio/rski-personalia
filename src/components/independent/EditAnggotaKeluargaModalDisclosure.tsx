@@ -8,6 +8,7 @@ import {
   Checkbox,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Modal,
   ModalBody,
@@ -372,6 +373,9 @@ export default function EditAnggotaKeluargaModalDisclosure({
                     inputValue={formik.values.pendidikan_terakhir}
                     isError={!!formik.errors.pendidikan_terakhir}
                   />
+                  <FormHelperText opacity={0.4}>
+                    Pilih "Belum Sekolah" jika belum sekolah
+                  </FormHelperText>
                   <FormErrorMessage>
                     {formik.errors.pendidikan_terakhir as string}
                   </FormErrorMessage>
@@ -495,6 +499,7 @@ export default function EditAnggotaKeluargaModalDisclosure({
                     onChange={(e) => {
                       formik.setFieldValue("is_bpjs", e.target.checked);
                     }}
+                    isDisabled={!formik.values.status_hidup?.value}
                   >
                     <Text mt={"-3px"}>Tanggungan BPJS</Text>
                   </Checkbox>
