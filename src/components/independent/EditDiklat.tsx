@@ -96,6 +96,9 @@ export default function EditDiklat({
     }),
     onSubmit: (values, { resetForm }) => {
       // console.log(values.whitelist_peserta);
+      // const payload = {
+      //   nama: "",
+      // };
       const payload = new FormData();
       // values.whitelist_peserta?.forEach((peserta: any) => {
       //   payload.append("user_id[]", peserta.value);
@@ -109,7 +112,7 @@ export default function EditDiklat({
       // payload.append("jam_mulai", values.jam_mulai);
       // payload.append("jam_selesai", values.jam_selesai);
       payload.append("lokasi", values.lokasi);
-      // payload.append("skp", values.skp);
+      payload.append("skp", values.skp);
       // if (values.dokumen_diklat_1)
       //   payload.append("dokumen_diklat_1", values.dokumen_diklat_1);
       // if (values.dokumen_diklat_2)
@@ -122,7 +125,6 @@ export default function EditDiklat({
       //   payload.append("dokumen_diklat_5", values.dokumen_diklat_5);
 
       setLoading(true);
-      console.log("ASU");
       let url = `api/rski/dashboard/perusahaan/update-diklat/${rowData?.id}`;
       if (jenisDiklat === "eksternal")
         url = `api/rski/dashboard/perusahaan/update-diklat-eksternal-user/${rowData?.id}`;
@@ -130,7 +132,7 @@ export default function EditDiklat({
       req
         .post(url, payload)
         .then((r) => {
-          if (r?.status === 201) {
+          if (r?.status === 200) {
             toast({
               status: "success",
               title: r.data.message,
@@ -138,6 +140,7 @@ export default function EditDiklat({
               position: "bottom-right",
             });
             setRt(!rt);
+            backOnClose();
             resetForm();
           }
         })
