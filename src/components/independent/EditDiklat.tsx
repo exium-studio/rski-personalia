@@ -122,10 +122,10 @@ export default function EditDiklat({
       //   payload.append("dokumen_diklat_5", values.dokumen_diklat_5);
 
       setLoading(true);
-
-      let url = `api/rski/dashboard/perusahaan/diklat/updat e-diklat/${rowData?.id}`;
+      console.log("ASU");
+      let url = `api/rski/dashboard/perusahaan/update-diklat/${rowData?.id}`;
       if (jenisDiklat === "eksternal")
-        url = `api/rski/dashboard/perusahaan/diklat/update-diklat-eksternal/${rowData?.id}`;
+        url = `api/rski/dashboard/perusahaan/update-diklat-eksternal-user/${rowData?.id}`;
 
       req
         .post(url, payload)
