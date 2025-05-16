@@ -341,41 +341,45 @@ export default function DetailPenggajianModal({
                     spacing={responsiveSpacing}
                     mb={responsiveSpacing}
                     align={"center"}
-                    h={"55px"}
+                    justify={"space-between"}
                   >
-                    <VStack align={"stretch"}>
-                      <Skeleton w={"100px"} h={"16px"} />
-                      <Skeleton w={"100px"} h={"16px"} />
-                    </VStack>
+                    <Wrap spacing={responsiveSpacing}>
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
 
-                    <VStack align={"stretch"}>
-                      <Skeleton w={"100px"} h={"16px"} />
-                      <Skeleton w={"100px"} h={"16px"} />
-                    </VStack>
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
 
-                    <VStack align={"stretch"}>
-                      <Skeleton w={"100px"} h={"16px"} />
-                      <Skeleton w={"100px"} h={"16px"} />
-                    </VStack>
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
 
-                    <VStack align={"stretch"}>
-                      <Skeleton w={"100px"} h={"16px"} />
-                      <Skeleton w={"100px"} h={"16px"} />
-                    </VStack>
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
 
-                    <VStack align={"stretch"}>
-                      <Skeleton w={"100px"} h={"16px"} />
-                      <Skeleton w={"100px"} h={"16px"} />
-                    </VStack>
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
 
-                    <VStack align={"stretch"}>
-                      <Skeleton w={"100px"} h={"16px"} />
-                      <Skeleton w={"100px"} h={"16px"} />
-                    </VStack>
+                      <VStack align={"stretch"}>
+                        <Skeleton w={"100px"} h={"16px"} />
+                        <Skeleton w={"100px"} h={"16px"} />
+                      </VStack>
+                    </Wrap>
 
-                    <Skeleton w={"120px"} ml={"auto"} />
+                    <HStack>
+                      <Skeleton w={"120px"} ml={"auto"} />
 
-                    <Skeleton w={"120px"} />
+                      <Skeleton w={"120px"} />
+                    </HStack>
                   </Wrap>
 
                   <CContainer
@@ -411,63 +415,66 @@ export default function DetailPenggajianModal({
                         spacing={responsiveSpacing}
                         mb={responsiveSpacing}
                         align={"center"}
+                        justify={"space-between"}
                       >
-                        <VStack align={"stretch"}>
-                          <Text fontSize={14} opacity={0.6}>
-                            Periode
-                          </Text>
-                          <Text fontWeight={500}>
-                            {formatDate(data.data_riwayat.periode, "periode")}
-                          </Text>
-                        </VStack>
+                        <Wrap spacing={responsiveSpacing}>
+                          <VStack align={"stretch"}>
+                            <Text fontSize={14} opacity={0.6}>
+                              Periode
+                            </Text>
+                            <Text fontWeight={500}>
+                              {formatDate(data.data_riwayat.periode, "periode")}
+                            </Text>
+                          </VStack>
 
-                        <VStack align={"stretch"}>
-                          <Text fontSize={14} opacity={0.6}>
-                            Pembaruan Terakhir
-                          </Text>
-                          <Text fontWeight={500}>
-                            {formatDate(data.data_riwayat.pembaruan_terakhir)}
-                          </Text>
-                        </VStack>
+                          <VStack align={"stretch"}>
+                            <Text fontSize={14} opacity={0.6}>
+                              Pembaruan Terakhir
+                            </Text>
+                            <Text fontWeight={500}>
+                              {formatDate(data.data_riwayat.pembaruan_terakhir)}
+                            </Text>
+                          </VStack>
 
-                        <VStack align={"stretch"}>
-                          <Text fontSize={14} opacity={0.6}>
-                            Karyawan Digaji
-                          </Text>
-                          <Text fontWeight={500}>
-                            {formatNumber(data.data_riwayat.karyawan_digaji)}
-                          </Text>
-                        </VStack>
+                          <VStack align={"stretch"}>
+                            <Text fontSize={14} opacity={0.6}>
+                              Karyawan Digaji
+                            </Text>
+                            <Text fontWeight={500}>
+                              {formatNumber(data.data_riwayat.karyawan_digaji)}
+                            </Text>
+                          </VStack>
 
-                        <VStack align={"stretch"}>
-                          <Text fontSize={14} opacity={0.6}>
-                            Status Penggajian
-                          </Text>
-                          <StatusPublikasiPenggajian
-                            data={data.data_riwayat?.status_riwayat_gaji}
-                          />
-                        </VStack>
+                          <VStack align={"stretch"}>
+                            <Text fontSize={14} opacity={0.6}>
+                              Status Penggajian
+                            </Text>
+                            <StatusPublikasiPenggajian
+                              data={data.data_riwayat?.status_riwayat_gaji}
+                            />
+                          </VStack>
 
-                        <VStack align={"stretch"}>
-                          <Text fontSize={14} opacity={0.6}>
-                            Dibuat Oleh
-                          </Text>
-                          <Text>{data?.data_riwayat?.created_by?.nama}</Text>
-                        </VStack>
+                          <VStack align={"stretch"}>
+                            <Text fontSize={14} opacity={0.6}>
+                              Dibuat Oleh
+                            </Text>
+                            <Text>{data?.data_riwayat?.created_by?.nama}</Text>
+                          </VStack>
 
-                        <VStack align={"stretch"}>
-                          <Text fontSize={14} opacity={0.6}>
-                            Dipublikasi Oleh
-                          </Text>
-                          <Text>
-                            {data?.data_riwayat?.status_riwayat_gaji?.id ===
-                              1 && !data?.data_riwayat?.submitted_by
-                              ? "-"
-                              : data?.data_riwayat?.submitted_by?.nama}
-                          </Text>
-                        </VStack>
+                          <VStack align={"stretch"}>
+                            <Text fontSize={14} opacity={0.6}>
+                              Dipublikasi Oleh
+                            </Text>
+                            <Text>
+                              {data?.data_riwayat?.status_riwayat_gaji?.id ===
+                                1 && !data?.data_riwayat?.submitted_by
+                                ? "-"
+                                : data?.data_riwayat?.submitted_by?.nama}
+                            </Text>
+                          </VStack>
+                        </Wrap>
 
-                        <HStack ml={"auto"}>
+                        <HStack>
                           <DeletePenggajian
                             penggajian_id={penggajian_id}
                             status_penggajian={
