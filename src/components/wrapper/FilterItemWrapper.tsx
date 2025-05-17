@@ -14,11 +14,12 @@ import {
 } from "@chakra-ui/react";
 import { RiCloseLine } from "@remixicon/react";
 import { Dispatch } from "react";
-import { useBodyColor } from "../../constant/colors";
-import formatNumber from "../../lib/formatNumber";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
 import { useLocation } from "react-router-dom";
+import { affectedtedPathForceUnitKerjaFilter } from "../../constant/affectedPathForceUnitKerjaFIlter";
+import { useBodyColor } from "../../constant/colors";
+import useAuth from "../../global/useAuth";
+import formatNumber from "../../lib/formatNumber";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props extends AccordionItemProps {
   title: string;
@@ -44,7 +45,10 @@ export default function FilterItemWrapper({
   const { userPermissions } = useAuth();
   const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
 
-  const isAtKaryawanPage = location.pathname === "/karyawan";
+  const isAtAffectedForceUnitKerjaFilterPage =
+    affectedtedPathForceUnitKerjaFilter.some(
+      (path) => path === location.pathname
+    );
 
   return (
     <AccordionItem {...props}>
@@ -69,10 +73,10 @@ export default function FilterItemWrapper({
               <>
                 {((filterKey === "unit_kerja" &&
                   bypassUnitKerjaPermission &&
-                  isAtKaryawanPage) ||
+                  isAtAffectedForceUnitKerjaFilterPage) ||
                   (filterKey === "unit_kerja" &&
                     !bypassUnitKerjaPermission &&
-                    !isAtKaryawanPage) ||
+                    !isAtAffectedForceUnitKerjaFilterPage) ||
                   filterKey !== "unit_kerja") && (
                   <Tooltip label={"Hapus filter ini"} openDelay={500}>
                     <IconButton

@@ -18,6 +18,7 @@ import {
 import { RiEqualizer3Fill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { affectedtedPathForceUnitKerjaFilter } from "../../constant/affectedPathForceUnitKerjaFIlter";
 import { useLightDarkColor } from "../../constant/colors";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
@@ -156,6 +157,10 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
   // const filterKaryawanRef = useRef(filterKaryawan);
   const formattedFilterKaryawanRef = useRef(formattedFilterKaryawan);
+  const isAtAffectedForceUnitKerjaFilterPage =
+    affectedtedPathForceUnitKerjaFilter.some(
+      (path) => path === location.pathname
+    );
 
   useEffect(() => {
     // console.log(userRef.current);
@@ -169,7 +174,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
       if (
         unitKerjaUser &&
         !bypassUnitKerjaPermission &&
-        location.pathname === "/karyawan"
+        isAtAffectedForceUnitKerjaFilterPage
       ) {
         const unitKerjaExists = filterKaryawan.unit_kerja.some(
           (uk: any) => uk.id === unitKerjaUser.id
@@ -211,7 +216,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     setFilterKaryawan,
     setFormattedFilterKaryawan,
     bypassUnitKerjaPermission,
-    location.pathname,
+    isAtAffectedForceUnitKerjaFilterPage,
   ]);
 
   const handleApplyFilterRef = useRef(handleApplyFilter);

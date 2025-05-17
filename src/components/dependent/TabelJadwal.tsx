@@ -28,6 +28,8 @@ import TabelJadwalItem from "./JadwalTabelItem";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 import TerapkanJadwalKaryawanTerpilih from "./TerapkanJadwalKaryawanTerpilih";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props {
   filterConfig?: any;
@@ -259,17 +261,24 @@ export default function TabelJadwal({ filterConfig }: Props) {
     ],
   }));
 
+  const { userPermissions } = useAuth();
+  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+
   return (
     <>
       {error && (
         <>
-          {notFound && isObjectEmpty(formattedFilterKaryawan) && (
-            <NoData minH={"300px"} />
-          )}
+          {notFound &&
+            isObjectEmpty(formattedFilterKaryawan, [
+              "search",
+              !bypassUnitKerjaPermission ? "unit_kerja" : "",
+            ]) && <NoData minH={"300px"} />}
 
-          {notFound && !isObjectEmpty(formattedFilterKaryawan) && (
-            <NotFound minH={"300px"} />
-          )}
+          {notFound &&
+            !isObjectEmpty(formattedFilterKaryawan, [
+              "search",
+              !bypassUnitKerjaPermission ? "unit_kerja" : "",
+            ]) && <NotFound minH={"300px"} />}
 
           {!notFound && (
             <Center my={"auto"} minH={"300px"}>

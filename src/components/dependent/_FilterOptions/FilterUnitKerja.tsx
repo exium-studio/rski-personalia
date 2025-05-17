@@ -19,6 +19,7 @@ import ComponentSpinner from "../../independent/ComponentSpinner";
 import DataNotFound from "../../independent/DataNotFound";
 import FilterItemWrapper from "../../wrapper/FilterItemWrapper";
 import { useLocation } from "react-router-dom";
+import { affectedtedPathForceUnitKerjaFilter } from "../../../constant/affectedPathForceUnitKerjaFIlter";
 
 interface Props {
   filterConfig: any;
@@ -31,6 +32,10 @@ export default function FilterUnitKerja({
 }: Props) {
   const { userPermissions } = useAuth();
   const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+  const isAtAffectedForceUnitKerjaFilterPage =
+    affectedtedPathForceUnitKerjaFilter.some(
+      (path) => path === location.pathname
+    );
   const location = useLocation();
 
   const [search, setSearch] = useState<string>("");
@@ -123,7 +128,7 @@ export default function FilterUnitKerja({
                   maxW={"100%"}
                   disabled={
                     !bypassUnitKerjaPermission &&
-                    location.pathname === "/karyawan"
+                    isAtAffectedForceUnitKerjaFilterPage
                   }
                   // justify={"center"}
                   px={4}
