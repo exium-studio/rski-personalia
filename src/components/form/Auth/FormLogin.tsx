@@ -92,8 +92,6 @@ export default function FormLogin() {
     },
   });
 
-  console.log(userData);
-
   return (
     <>
       <Text fontSize={24} fontWeight={600} mb={2}>

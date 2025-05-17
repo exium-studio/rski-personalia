@@ -32,11 +32,11 @@ export default function FilterUnitKerja({
 }: Props) {
   const { userPermissions } = useAuth();
   const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+  const location = useLocation();
   const isAtAffectedForceUnitKerjaFilterPage =
     affectedtedPathForceUnitKerjaFilter.some(
       (path) => path === location.pathname
     );
-  const location = useLocation();
 
   const [search, setSearch] = useState<string>("");
 
