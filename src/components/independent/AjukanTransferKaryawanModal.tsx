@@ -77,7 +77,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
       jabatan_tujuan: yup.object(),
       kelompok_gaji_tujuan: yup.object(),
       role_tujuan: yup.object(),
-      dokumen: yup.mixed().required("Harus diisi"),
+      dokumen: yup.mixed(),
       alasan: yup.string().required("Harus diisi"),
       beri_tahu_manajer_direktur: yup.boolean(),
       beri_tahu_karyawan: yup.boolean(),
@@ -343,7 +343,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                 <FormControl mb={4} isInvalid={!!formik.errors.dokumen}>
                   <FormLabel>
                     Dokumen (maks. 10 MB)
-                    <RequiredForm />
+                    {/* <RequiredForm /> */}
                   </FormLabel>
                   <FileInput
                     name="dokumen"
