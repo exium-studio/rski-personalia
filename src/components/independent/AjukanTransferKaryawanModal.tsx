@@ -187,11 +187,10 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
             >
               <AlertIcon />
               <AlertDescription maxW={"100% !important"}>
-                Data karyawan yang ditransfer akan diperbarui secara otomatis
-                oleh sistem pada tanggal mulai yang telah ditentukan. Jika ada
-                perubahan data karyawan (Unit Kerja, Jabatan, Kelompok Gaji)
-                sebelum tanggal tersebut, data yang baru akan digantikan oleh
-                data transfer ini.
+                Data karyawan akan diperbarui otomatis pada tanggal transfer
+                yang ditentukan. Jika ada perubahan sebelumnya (Unit Kerja,
+                Jabatan, atau Kelompok Gaji), maka akan ditimpa oleh data ini
+                mulai/efektif yg sudah ditentukan.
               </AlertDescription>
             </Alert>
 
@@ -217,7 +216,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
 
                 <FormControl mb={4} isInvalid={!!formik.errors.tgl_mulai}>
                   <FormLabel>
-                    Tanggal Mulai
+                    Tanggal Mulai/Efektif
                     <RequiredForm />
                   </FormLabel>
                   <DatePickerModal

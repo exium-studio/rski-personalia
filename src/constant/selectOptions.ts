@@ -176,6 +176,10 @@ export const optionsTipeTransfer = [
     value: 2,
     label: "Promosi",
   },
+  {
+    value: 3,
+    label: "Rotasi",
+  },
 ];
 
 export const optionsSumberPotongan = [
