@@ -266,7 +266,7 @@ export default function TabelDetailKeluargaKaryawan({
 
   return (
     <>
-      <HStack mb={responsiveSpacing}>
+      <HStack mb={responsiveSpacing} overflowX={"auto"} className="scrollX">
         <SearchComponent
           name="search"
           onChangeSetter={(input) => {
@@ -276,6 +276,7 @@ export default function TabelDetailKeluargaKaryawan({
             }));
           }}
           inputValue={filterConfig.search}
+          minW={"200px"}
         />
 
         <MultiSelectHubunganKeluarga
