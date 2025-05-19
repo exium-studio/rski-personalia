@@ -134,7 +134,7 @@ export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
       },
     },
     {
-      th: "Kuota per Tahun",
+      th: "Tanpa Kuota",
       isSortable: true,
       cProps: {
         justify: "center",
@@ -160,6 +160,7 @@ export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
   ];
   const formattedData = fd?.map((item: any) => ({
     id: item.id,
+    originalData: item,
     columnsFormat: [
       {
         value: item.nama,
@@ -182,9 +183,16 @@ export default function TabelPengaturanTipeCuti({ filterConfig }: Props) {
         },
       },
       {
-        value: item.kuota,
-        td: `${formatNumber(item.kuota)}`,
-        isNumeric: true,
+        value: item.is_unlimited,
+        td: (
+          <BooleanBadge
+            data={item.is_unlimited}
+            trueValue="Ya"
+            falseValue="Tidak"
+            w={"100px"}
+          />
+        ),
+        isBoolean: true,
         cProps: {
           justify: "center",
         },

@@ -2,7 +2,7 @@ import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelPengaturanCuti from "../../components/dependent/TabelPengaturanCuti";
-import TambahCuti from "../../components/independent/TambahCuti";
+import TambahCuti from "../../components/independent/TambahTipeCuti";
 import CContainer from "../../components/wrapper/CContainer";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";

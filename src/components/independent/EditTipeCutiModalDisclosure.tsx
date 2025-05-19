@@ -7,8 +7,6 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  InputGroup,
-  InputRightElement,
   Modal,
   ModalBody,
   ModalContent,
@@ -27,7 +25,6 @@ import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import req from "../../lib/req";
 import DisclosureHeader from "../dependent/DisclosureHeader";
-import NumberInput from "../dependent/input/NumberInput";
 import StringInput from "../dependent/input/StringInput";
 import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
@@ -60,6 +57,7 @@ export default function EditTipeCutiModalDisclosure({
     initialValues: {
       nama: "",
       kuota: undefined as any,
+      is_unlimited: false,
       cuti_administratif: undefined as any,
       is_need_requirement: undefined as any,
       keterangan: undefined as any,
@@ -67,6 +65,7 @@ export default function EditTipeCutiModalDisclosure({
     validationSchema: yup.object().shape({
       nama: yup.string().required("Harus diisi"),
       kuota: yup.number().required("Harus diisi"),
+      is_unlimited: yup.boolean(),
       cuti_administratif: yup.number(),
       is_need_requirement: yup.number(),
       keterangan: yup.string().required("Harus diisi"),
@@ -75,6 +74,7 @@ export default function EditTipeCutiModalDisclosure({
       const payload = {
         nama: values.nama,
         kuota: values.kuota,
+        is_unlimited: values.is_unlimited,
         cuti_administratif: values.cuti_administratif,
         is_need_requirement: values.is_need_requirement,
         keterangan: values.keterangan,
@@ -123,19 +123,22 @@ export default function EditTipeCutiModalDisclosure({
   useEffect(() => {
     // console.log(rowData.columnsFormat[4].value);
 
-    formikRef.current.setFieldValue("nama", rowData.columnsFormat[0].value);
-    formikRef.current.setFieldValue("kuota", rowData.columnsFormat[2].value);
+    formikRef.current.setFieldValue("nama", rowData.originalData?.nama);
+    formikRef.current.setFieldValue(
+      "keterangan",
+      rowData.originalData?.keterangan
+    );
+    formikRef.current.setFieldValue(
+      "is_unlimited",
+      rowData.originalData?.is_unlimited
+    );
     formikRef.current.setFieldValue(
       "cuti_administratif",
-      rowData.columnsFormat[3].value
+      rowData.originalData?.cuti_administratif
     );
     formikRef.current.setFieldValue(
       "is_need_requirement",
-      rowData.columnsFormat[4].value
-    );
-    formikRef.current.setFieldValue(
-      "keterangan",
-      rowData.columnsFormat[5].value
+      rowData.originalData?.is_need_requirement
     );
   }, [isOpen, rowData, formikRef]);
 
@@ -185,7 +188,7 @@ export default function EditTipeCutiModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl mb={4} isInvalid={!!formik.errors.kuota}>
+              {/* <FormControl mb={4} isInvalid={!!formik.errors.kuota}>
                 <FormLabel>
                   Kuota per Tahun (hari)
                   <RequiredForm />
@@ -209,7 +212,7 @@ export default function EditTipeCutiModalDisclosure({
                 <FormErrorMessage>
                   {formik.errors.kuota as string}
                 </FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
 
               <FormControl mb={4} isInvalid={!!formik.errors.keterangan}>
                 <FormLabel>
@@ -231,8 +234,32 @@ export default function EditTipeCutiModalDisclosure({
                 </FormErrorMessage>
               </FormControl>
 
+              <FormControl mb={6} isInvalid={!!formik.errors.is_unlimited}>
+                <Checkbox
+                  colorScheme="ap"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      formik.setFieldValue("is_unlimited", 1);
+                    } else {
+                      formik.setFieldValue("is_unlimited", 0);
+                    }
+                  }}
+                  isChecked={!!formik.values.is_unlimited}
+                >
+                  <Text mt={"-2.5px"}>Tanpa Kuota</Text>
+                </Checkbox>
+                <FormHelperText mt={2}>
+                  Cuti ini tidak ada maksimal kuota, tidak akan ditampilkan di
+                  Menu "Kuota Cuti"
+                </FormHelperText>
+
+                <FormErrorMessage>
+                  {formik.errors.is_unlimited as string}
+                </FormErrorMessage>
+              </FormControl>
+
               <FormControl
-                mb={4}
+                mb={6}
                 isInvalid={!!formik.errors.cuti_administratif}
               >
                 <Checkbox
