@@ -1,4 +1,12 @@
-import { Center, Icon, MenuItem, Text, Tooltip } from "@chakra-ui/react";
+import {
+  Badge,
+  Center,
+  HStack,
+  Icon,
+  MenuItem,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
 import { RiDeleteBinLine, RiEditLine, RiHistoryLine } from "@remixicon/react";
 import { dummyKelompokGaji } from "../../const/dummy";
 import { Interface__SelectOption } from "../../constant/interfaces";
@@ -46,6 +54,9 @@ export default function TabelPengaturanStatusKaryawan({ filterConfig }: Props) {
       );
     },
     (rowData: any) => {
+      const essentialStatuses = [1, 2, 3];
+      const essential = essentialStatuses.includes(rowData.id);
+
       return (
         <RestoreDataPengaturanModalDisclosure
           id={rowData.id}
@@ -53,7 +64,11 @@ export default function TabelPengaturanStatusKaryawan({ filterConfig }: Props) {
         >
           <PermissionTooltip permission={editPermission} placement="left">
             <MenuItem
-              isDisabled={!rowData.columnsFormat[1].value || !editPermission}
+              isDisabled={
+                essential ||
+                !rowData.originalData?.deleted_at ||
+                !editPermission
+              }
             >
               <Text>Restore</Text>
               <Icon as={RiHistoryLine} fontSize={iconSize} opacity={0.4} />
@@ -64,6 +79,9 @@ export default function TabelPengaturanStatusKaryawan({ filterConfig }: Props) {
     },
     "divider",
     (rowData: any) => {
+      const essentialStatuses = [1, 2, 3];
+      const essential = essentialStatuses.includes(rowData.id);
+
       return (
         <DeleteDataPengaturanModalDisclosure
           id={rowData.id}
@@ -72,7 +90,11 @@ export default function TabelPengaturanStatusKaryawan({ filterConfig }: Props) {
           <PermissionTooltip permission={deletePermission} placement="left">
             <MenuItem
               fontWeight={500}
-              isDisabled={rowData.columnsFormat[1].value || !deletePermission}
+              isDisabled={
+                essential ||
+                rowData.originalData?.deleted_at ||
+                !deletePermission
+              }
             >
               <Text color={"red.400"}>Delete</Text>
               <Icon
@@ -127,14 +149,14 @@ export default function TabelPengaturanStatusKaryawan({ filterConfig }: Props) {
       },
     },
     {
-      th: "Kategori",
+      th: "Status Dihapus",
       isSortable: true,
       cProps: {
         justify: "center",
       },
     },
     {
-      th: "Status Dihapus",
+      th: "Kategori",
       isSortable: true,
       cProps: {
         justify: "center",
@@ -143,20 +165,29 @@ export default function TabelPengaturanStatusKaryawan({ filterConfig }: Props) {
   ];
   const formattedData = fd?.map((item: any) => ({
     id: item.id,
+    originalData: item,
     columnsFormat: [
       {
         value: item.label,
         td: (
           <Tooltip openDelay={500} label={item.label} placement="right">
-            <Text
-              w={"100%"}
-              maxW={"303px"}
-              overflow={"hidden"}
-              whiteSpace={"nowrap"}
-              textOverflow={"ellipsis"}
-            >
-              {item?.label}
-            </Text>
+            <HStack>
+              <Text
+                w={"100%"}
+                maxW={"303px"}
+                overflow={"hidden"}
+                whiteSpace={"nowrap"}
+                textOverflow={"ellipsis"}
+              >
+                {item?.label}
+              </Text>
+
+              {[1, 2, 3].includes(item?.id) && (
+                <Badge borderRadius={"full"} colorScheme="ap">
+                  Esensial
+                </Badge>
+              )}
+            </HStack>
           </Tooltip>
         ),
         props: {
@@ -169,17 +200,17 @@ export default function TabelPengaturanStatusKaryawan({ filterConfig }: Props) {
         },
       },
       {
-        value: item?.kategori_status?.id,
-        original_data: item?.kategori_status,
-        td: <KategoriStatusKaryawanBadge data={item.kategori_status} />,
+        value: item.deleted_at,
+        td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
+        isDate: true,
         cProps: {
           justify: "center",
         },
       },
       {
-        value: item.deleted_at,
-        td: item.deleted_at ? <StatusDihapus data={item.deleted_at} /> : "",
-        isDate: true,
+        value: item?.kategori_status?.id,
+        original_data: item?.kategori_status,
+        td: <KategoriStatusKaryawanBadge data={item.kategori_status} />,
         cProps: {
           justify: "center",
         },
