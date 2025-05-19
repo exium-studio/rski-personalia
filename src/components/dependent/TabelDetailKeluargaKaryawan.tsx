@@ -103,11 +103,27 @@ export default function TabelDetailKeluargaKaryawan({
       },
     },
     {
+      th: "Jenis Kelamin",
+      isSortable: true,
+    },
+    {
+      th: "Tempat Lahir",
+      isSortable: true,
+    },
+    {
       th: "Tanggal Lahir",
       isSortable: true,
     },
     {
       th: "Pendidikan Terakhir",
+      isSortable: true,
+    },
+    {
+      th: "Agama",
+      isSortable: true,
+    },
+    {
+      th: "Golongan Darah",
       isSortable: true,
     },
     {
@@ -120,6 +136,10 @@ export default function TabelDetailKeluargaKaryawan({
     },
     {
       th: "Email",
+      isSortable: true,
+    },
+    {
+      th: "No. Rekam Medis",
       isSortable: true,
     },
     {
@@ -181,11 +201,21 @@ export default function TabelDetailKeluargaKaryawan({
         },
       },
       {
-        value: item.status_hidup,
+        value: item.jenis_kelamin,
+        td: item.jenis_kelamin ? "Laki - laki" : "Perempuan",
+        isNumeric: true,
+      },
+      {
+        value: item.tempat_lahir,
+        td: item.tempat_lahir,
+      },
+      {
+        value: item.tgl_lahir,
         td: item?.tgl_lahir
           ? `${formatDate(item?.tgl_lahir)} (
                         ${calculateAge(item?.tgl_lahir)} Tahun)`
           : "",
+        isDate: true,
         cProps: {
           justify: "center",
         },
@@ -193,6 +223,14 @@ export default function TabelDetailKeluargaKaryawan({
       {
         value: item.pendidikan_terakhir?.label,
         td: item.pendidikan_terakhir?.label,
+      },
+      {
+        value: item.kategori_agama_id?.label,
+        td: item.kategori_agama_id?.label,
+      },
+      {
+        value: item.kategori_darah_id?.label,
+        td: item.kategori_darah_id?.label,
       },
       {
         value: item.pekerjaan,
@@ -205,6 +243,10 @@ export default function TabelDetailKeluargaKaryawan({
       {
         value: item.email,
         td: item.email,
+      },
+      {
+        value: item.no_rm,
+        td: item.no_rm,
       },
       {
         value: item.is_menikah,
