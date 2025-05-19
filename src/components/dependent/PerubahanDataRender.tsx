@@ -114,12 +114,20 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
                     <HStack>
                       <Text opacity={0.4}>Agama</Text>
                       <FlexLine />
-                      <Text>{anggota?.agama?.label}</Text>
+                      <Text>
+                        {anggota?.agama?.label ||
+                          anggota?.kategori_agama?.label ||
+                          anggota?.kategori_agama_id?.label}
+                      </Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Golongan Darah</Text>
                       <FlexLine />
-                      <Text>{anggota?.kategori_darah?.label}</Text>
+                      <Text>
+                        {anggota?.darah?.label ||
+                          anggota?.kategori_darah?.label ||
+                          anggota?.kategori_darah_id?.label}
+                      </Text>
                     </HStack>
                     <HStack>
                       <Text opacity={0.4}>Pekerjaan</Text>
