@@ -114,9 +114,11 @@ export default function TabelIzin({ filterConfig }: Props) {
     },
   ];
   const formattedData = data?.map((item: any) => {
-    const verif1Permission =
-      item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
-      userData?.id === 1;
+    // const verif1Permission =
+    //   item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
+    //   userData?.id === 1;
+
+    const verif1Permission = true;
 
     return {
       id: item.id,

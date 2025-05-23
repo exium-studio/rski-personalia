@@ -78,6 +78,7 @@ export default function PengajuanCuti() {
             <MultiSelectTipeCuti
               name={"tipe_cuti"}
               // minW={"fit-content"}
+              minW={"150px"}
               maxW={"165px !important"}
               placeholder="Filter Tipe Cuti"
               onConfirm={(input: any) => {
@@ -96,6 +97,7 @@ export default function PengajuanCuti() {
             <MultiSelectStatusVerifikasi2
               name={"status_cuti"}
               // minW={"fit-content"}
+              minW={"150px"}
               maxW={"165px !important"}
               placeholder="Filter Status Cuti"
               onConfirm={(input: any) => {

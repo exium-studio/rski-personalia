@@ -72,6 +72,7 @@ import Profil from "./pages/Profil/Profil";
 import { globalTheme } from "./theme/globalTheme";
 import KuotaCuti from "./pages/Jadwal/KuotaCuti";
 import PengaturanSpesialisasiDokter from "./pages/Pengaturan/PengaturanSpesialisasiDokter";
+import PembatalanReward from "./pages/Presensi/PembatalanReward";
 
 const AuthPageLayout = () => {
   // SX
@@ -328,6 +329,20 @@ export const App = () => {
                 allowed={[150]}
               >
                 <AnulirPresensi />
+              </NavContainer>
+            }
+          />
+          <Route
+            path="/pembatalan-reward"
+            element={
+              <NavContainer
+                active={2}
+                title="Pembatalan Reward"
+                topNavsData={navs[2].subNavs}
+                topNavActive={2}
+                allowed={[]} // TODO: Permission
+              >
+                <PembatalanReward />
               </NavContainer>
             }
           />

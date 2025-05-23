@@ -188,12 +188,15 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
     },
   ];
   const formattedData = data?.map((item: any) => {
-    const verif1Permission =
-      item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
-      userData?.id === 1;
-    const verif2Permission =
-      item?.relasi_verifikasi?.[1]?.verifikator?.id === userData?.id ||
-      userData?.id === 1;
+    // const verif1Permission =
+    //   item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
+    //   userData?.id === 1;
+    // const verif2Permission =
+    //   item?.relasi_verifikasi?.[1]?.verifikator?.id === userData?.id ||
+    //   userData?.id === 1;
+
+    const verif1Permission = true;
+    const verif2Permission = true;
 
     return {
       id: item.id,
