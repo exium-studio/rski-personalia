@@ -40,32 +40,6 @@ const DaftarDiklat = (props: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`joined-diklat-${item.id}`, isOpen, onOpen, onClose);
 
-  //   {
-  //     "id": 5,
-  //     "nama_diklat": "Pelatihan B3",
-  //     "kategori_diklat": {
-  //         "id": 1,
-  //         "label": "Internal",
-  //         "created_at": "2024-08-29T15:10:20.000000Z",
-  //         "updated_at": "2024-08-29T15:10:20.000000Z"
-  //     },
-  //     "status_diklat": {
-  //         "id": 4,
-  //         "label": "Verifikasi 2 Disetujui",
-  //         "created_at": "2024-08-29T15:10:20.000000Z",
-  //         "updated_at": "2024-08-29T15:10:20.000000Z"
-  //     },
-  //     "deskripsi": "Pelatihan B3 Untuk Karyawan Laboratorium",
-  //     "tgl_mulai": "04-02-2025",
-  //     "tgl_selesai": "04-03-2025",
-  //     "jam_mulai": "12:00:00",
-  //     "jam_selesai": "14:00:00",
-  //     "durasi": 7200,
-  //     "lokasi": "Ruang Hastina Pura",
-  //     "created_at": "2025-03-03T14:26:27.000000Z",
-  //     "updated_at": "2025-04-24T01:57:41.000000Z"
-  // },
-
   return (
     <>
       <Button variant={"ghost"} colorScheme="ap" onClick={onOpen}>
@@ -128,7 +102,7 @@ const DaftarDiklat = (props: any) => {
             </CContainer>
           </ModalBody>
           <ModalFooter>
-            <Button w={"full"} onClick={backOnClose}>
+            <Button w={"full"} onClick={backOnClose} className="btn-solid">
               Mengerti
             </Button>
           </ModalFooter>
@@ -188,7 +162,7 @@ export default function TabelMasaDiklat({ filterConfig }: Props) {
       th: "Total Masa Diklat",
       isSortable: true,
       cProps: {
-        justifyContent: "center",
+        justify: "center",
       },
     },
     {
@@ -197,6 +171,9 @@ export default function TabelMasaDiklat({ filterConfig }: Props) {
     },
     {
       th: "Daftar Diklat",
+      cProps: {
+        justify: "center",
+      },
     },
   ];
   const formattedData = data?.map((item: any) => {
