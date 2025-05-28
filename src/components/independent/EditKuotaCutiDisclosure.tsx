@@ -110,7 +110,7 @@ export default function EditKuotaCutiDisclosure({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title="Edit Kuota Cuti" />
+            <DisclosureHeader title="Edit Kuota Hak Cuti" />
           </ModalHeader>
           <ModalBody>
             <form id="editRoleForm">

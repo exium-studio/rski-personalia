@@ -2,7 +2,7 @@ import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ExportKuotaCutiModal from "../../components/dependent/ExportKuotaCutiModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
-import TabelKuotaCuti from "../../components/dependent/TabelKuotaCuti";
+import TabelKuotaCuti from "../../components/dependent/TabelKuotaHakCuti";
 import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";

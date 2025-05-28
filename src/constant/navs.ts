@@ -105,7 +105,7 @@ const navs = [
       },
       {
         allowed: [162],
-        label: "Kuota Cuti",
+        label: "Kuota Hak Cuti",
         link: "/jadwal/kuota-cuti",
       },
       {

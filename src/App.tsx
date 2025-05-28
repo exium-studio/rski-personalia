@@ -407,7 +407,7 @@ export const App = () => {
             element={
               <NavContainer
                 active={3}
-                title="Kuota Cuti"
+                title="Kuota Hak Cuti"
                 topNavsData={navs[3].subNavs}
                 topNavActive={4}
                 allowed={[162]}

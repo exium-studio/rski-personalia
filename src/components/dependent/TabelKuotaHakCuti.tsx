@@ -22,7 +22,7 @@ import formatNumber from "../../lib/formatNumber";
 interface Props {
   filterConfig?: any;
 }
-export default function TabelKuotaCuti({ filterConfig }: Props) {
+export default function TabelKuotaHakCuti({ filterConfig }: Props) {
   // Limit Config
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
@@ -100,7 +100,10 @@ export default function TabelKuotaCuti({ filterConfig }: Props) {
       value: hakCuti?.kuota || 0,
       td: (
         <HStack>
-          <Text>{formatNumber(hakCuti?.kuota) || 0}</Text>
+          <Text>{formatNumber(hakCuti?.used_kuota)}</Text>
+          <Text opacity={0.4}>
+            / {formatNumber(hakCuti?.kuota + hakCuti?.used_kuota) || 0}
+          </Text>
           {/* <Text opacity={0.4}>hari</Text> */}
         </HStack>
       ),

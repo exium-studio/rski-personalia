@@ -250,7 +250,7 @@ export default function EditTipeCutiModalDisclosure({
                 </Checkbox>
                 <FormHelperText mt={2}>
                   Cuti ini tidak ada maksimal kuota, tidak akan ditampilkan di
-                  Menu "Kuota Cuti"
+                  Menu "Kuota Hak Cuti"
                 </FormHelperText>
 
                 <FormErrorMessage>

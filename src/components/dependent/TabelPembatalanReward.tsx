@@ -1,4 +1,16 @@
-import { Center } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  HStack,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useDataState from "../../hooks/useDataState";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -10,6 +22,106 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+import CContainer from "../wrapper/CContainer";
+import formatDate from "../../lib/formatDate";
+import backOnClose from "../../lib/backOnClose";
+import DisclosureHeader from "./DisclosureHeader";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import capFirst from "../../lib/capFirst";
+import FlexLine from "../independent/FlexLine";
+import formatTime from "../../lib/formatTime";
+import formatDuration from "../../lib/formatDuration";
+
+const DetailData = (props: any) => {
+  // Props
+  const { penyebab, item } = props;
+
+  // Hooks
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`data-penyebab-${item.id}`, isOpen, onOpen, onClose);
+
+  // States
+  const renderer = {
+    izin: (
+      <CContainer gap={4}>
+        <HStack>
+          <Text opacity={0.6}>Tanggal izin</Text>
+          <FlexLine />
+          <Text>{formatDate(item?.data_izin?.tgl_izin)}</Text>
+        </HStack>
+        <HStack>
+          <Text opacity={0.6}>Waktu izin</Text>
+          <FlexLine />
+          <Text>{formatTime(item?.data_izin?.waktu_izin)}</Text>
+        </HStack>
+        <HStack>
+          <Text opacity={0.6}>Durasi</Text>
+          <FlexLine />
+          <Text>{formatDuration(item?.data_izin?.durasi)}</Text>
+        </HStack>
+        <HStack>
+          <Text opacity={0.6}>Keterangan</Text>
+          <FlexLine />
+          <Text>{item?.data_izin?.keterangan}</Text>
+        </HStack>
+      </CContainer>
+    ),
+    cuti: (
+      <CContainer gap={4}>
+        <HStack>
+          <Text opacity={0.6}>Tipe cuti</Text>
+          <FlexLine />
+          <Text>{formatDate(item?.data_cuti?.tipe_cuti?.nama)}</Text>
+        </HStack>
+        <HStack>
+          <Text opacity={0.6}>Tanggal mulai</Text>
+          <FlexLine />
+          <Text>{formatTime(item?.data_cuti?.tgl_from)}</Text>
+        </HStack>
+        <HStack>
+          <Text opacity={0.6}>Tanggal selesai</Text>
+          <FlexLine />
+          <Text>{formatTime(item?.data_cuti?.tgl_to)}</Text>
+        </HStack>
+        <HStack>
+          <Text opacity={0.6}>Keterangan</Text>
+          <FlexLine />
+          <Text>{item?.data_cuti?.keterangan || item?.data_cuti?.alasan}</Text>
+        </HStack>
+      </CContainer>
+    ),
+  };
+
+  return (
+    <>
+      <Button colorScheme="ap" variant={"ghost"} onClick={onOpen}>
+        Lihat
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Data Penyebab"} />
+          </ModalHeader>
+
+          <ModalBody>{renderer[penyebab as keyof typeof renderer]}</ModalBody>
+
+          <ModalFooter>
+            <Button className="btn-solid" onClick={backOnClose} w={"full"}>
+              Mengerti
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 interface Props {
   filterConfig: any;
@@ -23,7 +135,7 @@ export default function TabelPembatalanReward({ filterConfig }: Props) {
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any[]>({
       initialData: undefined,
-      url: `/api/rski/dashboard/perusahaan/get-masa-diklat?page=${pageConfig}`,
+      url: `api/rski/dashboard/anulir-presensi/get-data-history-reward?page=${pageConfig}`,
       payload: {
         ...filterConfig,
       },
@@ -56,7 +168,23 @@ export default function TabelPembatalanReward({ filterConfig }: Props) {
       isSortable: true,
     },
     {
+      th: "Unit Kerja",
+      isSortable: true,
+    },
+    {
+      th: "Tanggal Pembatalan",
+      isSortable: true,
+    },
+    {
       th: "Penyebab",
+      isSortable: true,
+    },
+    {
+      th: "Data Penyebab",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
     },
     {
       th: "Keterangan",
@@ -90,7 +218,29 @@ export default function TabelPembatalanReward({ filterConfig }: Props) {
         {
           value: item?.nik,
           td: item?.nik,
-          isNumeric: true,
+        },
+        {
+          value: formatDate(item?.tgl_pembatalan),
+          td: formatDate(item?.tgl_pembatalan),
+        },
+        {
+          value: item?.unit_kerja?.nama_unit,
+          td: item?.unit_kerja?.nama_unit,
+        },
+        {
+          value: capFirst(item?.tipe_pembatalan),
+          td: capFirst(item?.tipe_pembatalan),
+        },
+        {
+          value: "",
+          td: <DetailData penyebab={item?.tipe_pembatalan} item={item} />,
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item?.keterangan,
+          td: item?.keterangan,
         },
       ],
     };
