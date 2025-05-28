@@ -55,12 +55,12 @@ const DetailData = (props: any) => {
           <Text>{formatTime(item?.data_izin?.waktu_izin)}</Text>
         </HStack>
         <HStack>
-          <Text opacity={0.6}>Durasi</Text>
+          <Text opacity={0.6}>Durasi izin</Text>
           <FlexLine />
           <Text>{formatDuration(item?.data_izin?.durasi)}</Text>
         </HStack>
         <HStack>
-          <Text opacity={0.6}>Keterangan</Text>
+          <Text opacity={0.6}>Keterangan izin</Text>
           <FlexLine />
           <Text>{item?.data_izin?.keterangan}</Text>
         </HStack>
@@ -71,20 +71,20 @@ const DetailData = (props: any) => {
         <HStack>
           <Text opacity={0.6}>Tipe cuti</Text>
           <FlexLine />
-          <Text>{formatDate(item?.data_cuti?.tipe_cuti?.nama)}</Text>
+          <Text>{item?.data_cuti?.tipe_cuti?.nama}</Text>
         </HStack>
         <HStack>
           <Text opacity={0.6}>Tanggal mulai</Text>
           <FlexLine />
-          <Text>{formatTime(item?.data_cuti?.tgl_from)}</Text>
+          <Text>{formatDate(item?.data_cuti?.tgl_from)}</Text>
         </HStack>
         <HStack>
           <Text opacity={0.6}>Tanggal selesai</Text>
           <FlexLine />
-          <Text>{formatTime(item?.data_cuti?.tgl_to)}</Text>
+          <Text>{formatDate(item?.data_cuti?.tgl_to)}</Text>
         </HStack>
         <HStack>
-          <Text opacity={0.6}>Keterangan</Text>
+          <Text opacity={0.6}>Keterangan cuti</Text>
           <FlexLine />
           <Text>{item?.data_cuti?.keterangan || item?.data_cuti?.alasan}</Text>
         </HStack>

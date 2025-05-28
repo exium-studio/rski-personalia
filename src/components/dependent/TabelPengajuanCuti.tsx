@@ -44,6 +44,7 @@ import TabelElipsisText from "./TabelElipsisText";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
+import formatNumber from "../../lib/formatNumber";
 
 const DeleteCutiConfirmation = ({ selectedRows }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -360,8 +361,13 @@ export default function TabelPengajuanCuti({ filterConfig }: Props) {
           value: item?.sisa_kuota,
           td: (
             <HStack>
-              <Text>{item?.sisa_kuota}</Text>
-              <Text opacity={0.4}>/ {item?.total_kuota}</Text>
+              <Text>{formatNumber(item?.sisa_kuota)}</Text>
+              <Text opacity={0.4}>
+                /{" "}
+                {formatNumber(
+                  item?.hak_cuti?.kuota + item?.hak_cuti?.used_kuota
+                )}
+              </Text>
             </HStack>
           ),
           isNumeric: true,
