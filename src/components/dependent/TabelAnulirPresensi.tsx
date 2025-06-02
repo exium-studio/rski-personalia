@@ -192,12 +192,8 @@ export default function TabelAnulirPresensi({ filterConfig }: Props) {
                         {item?.presensi?.jadwal_non_shift?.nama || "Libur"}
                       </Text>
 
-                      {item?.presensi?.jadwal_non_shift?.tgl_mulai && (
-                        <Text>
-                          {formatDate(
-                            item?.presensi?.jadwal_non_shift?.tgl_mulai
-                          )}
-                        </Text>
+                      {item?.presensi?.jam_masuk && (
+                        <Text>{formatDate(item?.presensi?.jam_masuk)}</Text>
                       )}
 
                       {item?.presensi?.jadwal_non_shift ? (
