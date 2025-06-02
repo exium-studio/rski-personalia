@@ -1,41 +1,197 @@
 import {
   Avatar,
   Box,
+  Button,
+  FormControl,
+  FormLabel,
   HStack,
   Icon,
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
   Text,
+  useDisclosure,
+  useToast,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
 import { RiMapPin2Fill, RiMarkPenLine, RiUserFill } from "@remixicon/react";
+import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
+import * as yup from "yup";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
 import formatTime from "../../lib/formatTime";
 import formatTimeOld from "../../lib/formatTimeOld";
+import req from "../../lib/req";
+import useScreenWidth from "../../lib/useScreenWidth";
 import FlexLine from "../independent/FlexLine";
 import Img from "../independent/Img";
 import NoData from "../independent/NoData";
 import Skeleton from "../independent/Skeleton";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
+import FileInput from "./input/FileInput";
 import SearchComponent from "./input/SearchComponent";
+import Textarea from "./input/Textarea";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import LokasiPresensi from "./LokasiPresensi";
 import Retry from "./Retry";
-import useScreenWidth from "../../lib/useScreenWidth";
+import RequiredForm from "../form/RequiredForm";
+
+const CreateAnulir = (props: any) => {
+  // Props
+  const { data } = props;
+
+  // Hooks
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`${data?.id}`, isOpen, onOpen, onClose);
+  const toast = useToast();
+
+  // Contexts
+  const { rt, setRt } = useRenderTrigger();
+
+  // States
+  const [loading, setLoading] = useState<boolean>(false);
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      alasan: "",
+      dokumen: undefined as any,
+    },
+    validationSchema: yup.object().shape({
+      alasan: yup.string().required("Harus diisi"),
+      dokumen: yup.string(),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      const payload = new FormData();
+      payload.append("data_karyawan_id", data?.user?.data_karyawan_id);
+      payload.append("presensi_id", data?.id);
+      payload.append("alasan", values?.alasan);
+      payload.append("dokumen", values?.dokumen);
+
+      setLoading(true);
+      req
+        .post(`/api/rski/dashboard/presensi/anulir-presensi`, payload)
+        .then((r) => {
+          if (r?.status === 201) {
+            toast({
+              status: "success",
+              title: r.data.message,
+              isClosable: true,
+              position: "bottom-right",
+            });
+            setRt(!rt);
+            backOnClose();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast({
+            status: "error",
+            title:
+              (typeof e?.response?.data?.message === "string" &&
+                (e?.response?.data?.message as string)) ||
+              "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+  });
+
+  // Utils
+  function submitAnulir() {}
+
+  return (
+    <>
+      <Button ml={"auto"} colorScheme="ap" variant={"outline"} onClick={onOpen}>
+        Anulir Presensi Ini
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Anulir Presensi"} />
+          </ModalHeader>
+
+          <ModalBody>
+            <Text opacity={0.6} mb={4}>
+              Apakah anda yakin akan anulir presensi ini?
+            </Text>
+
+            <form id="anulir-presensi-form" onSubmit={formik.handleSubmit}>
+              <FormControl mb={4} isInvalid={!!formik.errors.alasan}>
+                <FormLabel>
+                  Alasan
+                  <RequiredForm />
+                </FormLabel>
+                <Textarea
+                  name="alasan"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("alasan", input);
+                  }}
+                  inputValue={formik.values.alasan}
+                />
+              </FormControl>
+
+              <FormControl isInvalid={!!formik.errors.dokumen}>
+                <FormLabel>Dokumen Tambahan</FormLabel>
+                <FileInput
+                  name="dokumen"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("dokumen", input);
+                  }}
+                  inputValue={formik.values.dokumen}
+                />
+              </FormControl>
+            </form>
+          </ModalBody>
+
+          <ModalFooter gap={2}>
+            <Button
+              flex={1}
+              onClick={backOnClose}
+              className="btn-solid"
+              isDisabled={loading}
+            >
+              Tidak
+            </Button>
+            <Button
+              type="submit"
+              form="anulir-presensi-form"
+              flex={1}
+              colorScheme="ap"
+              isLoading={loading}
+            >
+              Ya
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 interface Props {
   presensi_id: number;
@@ -131,6 +287,8 @@ export default function DetailPresensiKaryawanModal({
                       <Skeleton w={"100px"} h={"16px"} />
                       <Skeleton w={"100px"} h={"16px"} />
                     </VStack>
+
+                    <Skeleton ml={"auto"} w={"100px"} h={"40px"} />
                   </Wrap>
 
                   <SimpleGrid
@@ -201,6 +359,9 @@ export default function DetailPresensiKaryawanModal({
                             />
                           </Text>
                         </VStack>
+
+                        {/* Create anulir button */}
+                        <CreateAnulir data={data} />
                       </Wrap>
 
                       <CContainer

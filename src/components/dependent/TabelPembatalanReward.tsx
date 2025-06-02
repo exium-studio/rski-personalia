@@ -138,7 +138,7 @@ export default function TabelPembatalanReward({ filterConfig }: Props) {
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any[]>({
       initialData: undefined,
-      url: `api/rski/dashboard/presensi/get-data-history-reward?page=${pageConfig}`,
+      url: `/api/rski/dashboard/presensi/get-data-history-reward?page=${pageConfig}`,
       payload: {
         ...formattedFilterKaryawan,
         ...(filterConfig?.status_cuti?.length > 0 && {

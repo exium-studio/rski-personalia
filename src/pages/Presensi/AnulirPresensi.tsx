@@ -1,9 +1,9 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import ExportModal from "../../components/dependent/ExportModal";
-import DateRangePickerModal from "../../components/dependent/input/DateRangePickerModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelAnulirPresensi from "../../components/dependent/TabelAnulirPresensi";
+import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
@@ -57,26 +57,7 @@ export default function AnulirPresensi() {
               inputValue={filterConfig.search}
             />
 
-            <DateRangePickerModal
-              id="date-range-picker-modal"
-              name="date-range-picker-modal"
-              onConfirm={(input) => {
-                setFilterConfig({
-                  ...filterConfig,
-                  tgl_mulai: input?.from,
-                  tgl_selesai: input?.to,
-                });
-              }}
-              inputValue={
-                filterConfig.tgl_mulai && filterConfig.tgl_selesai
-                  ? {
-                      from: filterConfig.tgl_mulai,
-                      to: filterConfig.tgl_selesai,
-                    }
-                  : undefined
-              }
-              w={"200px"}
-            />
+            <FilterKaryawan />
 
             <PermissionTooltip
               permission={exportPermissions}

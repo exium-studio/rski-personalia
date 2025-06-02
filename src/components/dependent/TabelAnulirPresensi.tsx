@@ -10,6 +10,7 @@ import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 interface Props {
   filterConfig: any;
@@ -19,13 +20,21 @@ export default function TabelAnulirPresensi({ filterConfig }: Props) {
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
+  // Filter Config
+  const { formattedFilterKaryawan } = useFilterKaryawan();
 
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any[]>({
       initialData: undefined,
-      url: `/api/rski/dashboard/perusahaan/get-masa-diklat?page=${pageConfig}`,
+      url: `/api/rski/dashboard/presensi/get-data-anulir-presensi?page=${pageConfig}`,
       payload: {
-        ...filterConfig,
+        ...formattedFilterKaryawan,
+        ...(filterConfig?.status_cuti?.length > 0 && {
+          status_cuti: filterConfig.status_cuti.map((sp: any) => sp.value),
+        }),
+        ...(filterConfig?.tipe_cuti?.length > 0 && {
+          tipe_cuti: filterConfig.tipe_cuti.map((sp: any) => sp.value),
+        }),
       },
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, filterConfig],
