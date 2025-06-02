@@ -1,4 +1,4 @@
-import { Center, Text, useDisclosure } from "@chakra-ui/react";
+import { Badge, Center, Text, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useDataState from "../../hooks/useDataState";
@@ -95,6 +95,13 @@ export default function TabelPresensi({ filterConfig }: Props) {
         justify: "center",
       },
     },
+    {
+      th: "Anulir Presensi",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
   ];
   const formattedData = data?.map((item: any) => ({
     id: item.id,
@@ -152,6 +159,18 @@ export default function TabelPresensi({ filterConfig }: Props) {
         td: `${formatDate(item.jam_keluar, "basicShort")} - ${formatTime(
           item.jam_keluar
         )}`,
+        isTime: true,
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item.jam_keluar,
+        td: item?.data_presensi?.presensi_anulir && (
+          <Badge colorScheme="green" borderRadius={"full"}>
+            Dianulir
+          </Badge>
+        ),
         isTime: true,
         cProps: {
           justify: "center",
