@@ -1,4 +1,17 @@
-import { Center } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  HStack,
+  Icon,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useDataState from "../../hooks/useDataState";
 import isObjectEmpty from "../../lib/isObjectEmpty";
@@ -11,6 +24,39 @@ import CustomTable from "./CustomTable";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import formatDate from "../../lib/formatDate";
+import formatTimeFromDate from "../../lib/formatTimeFromDate";
+import TabelElipsisText from "./TabelElipsisText";
+import { Link } from "react-router-dom";
+import backOnClose from "../../lib/backOnClose";
+import DisclosureHeader from "./DisclosureHeader";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import CContainer from "../wrapper/CContainer";
+import { RiArrowDownLine, RiArrowUpLine } from "@remixicon/react";
+import formatTime from "../../lib/formatTime";
+
+const Jadwal = (props: any) => {
+  // Props
+  const { jam_from, jam_to } = props;
+
+  return (
+    <HStack gap={4}>
+      <HStack>
+        <Center borderRadius={"full"} bg={"var(--p500a4)"} p={1}>
+          <Icon as={RiArrowUpLine} color={"p.500"} />
+        </Center>
+        <Text>{formatTime(jam_from)}</Text>
+      </HStack>
+
+      <HStack>
+        <Center borderRadius={"full"} bg={"var(--reda)"} p={1}>
+          <Icon as={RiArrowDownLine} color={"red.400"} />
+        </Center>
+        <Text>{formatTime(jam_to)}</Text>
+      </HStack>
+    </HStack>
+  );
+};
 
 interface Props {
   filterConfig: any;
@@ -66,27 +112,130 @@ export default function TabelAnulirPresensi({ filterConfig }: Props) {
     },
     {
       th: "Jadwal",
+      cProps: {
+        justify: "center",
+      },
     },
     {
-      th: "Presensi",
+      th: "Presensi Masuk",
+      isSortable: true,
+    },
+    {
+      th: "Presensi Keluar",
+      isSortable: true,
+    },
+    {
+      th: "Dokumen Tambahan",
+      cProps: {
+        justify: "center",
+      },
     },
     {
       th: "Keterangan",
     },
   ];
   const formattedData = data?.map((item: any) => {
+    const JadwalModal = () => {
+      // Hooks
+      const { isOpen, onOpen, onClose } = useDisclosure();
+      useBackOnClose(`jadwal-modal-${item?.id}`, isOpen, onOpen, onClose);
+
+      return (
+        <>
+          <Button variant={"ghost"} colorScheme="ap" onClick={onOpen}>
+            Lihat
+          </Button>
+
+          <Modal
+            isOpen={isOpen}
+            onClose={backOnClose}
+            isCentered
+            blockScrollOnMount={false}
+            size={"sm"}
+          >
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>
+                <DisclosureHeader title={"Jadwal"} />
+              </ModalHeader>
+
+              <ModalBody>
+                <CContainer gap={2}>
+                  {item?.presensi?.unit_kerja?.jenis_karyawan && (
+                    <>
+                      <Text opacity={0.6}>
+                        {item?.presensi?.jadwal_shift?.shift?.nama || "Libur"}
+                      </Text>
+
+                      {item?.presensi?.jadwal_shift?.tgl_mulai && (
+                        <Text>
+                          {formatDate(item?.presensi?.jadwal_shift?.tgl_mulai)}
+                        </Text>
+                      )}
+
+                      {item?.presensi?.jadwal_shift?.shift ? (
+                        <Jadwal
+                          jam_from={
+                            item?.presensi?.jadwal_shift?.shift?.jam_from
+                          }
+                          jam_to={item?.presensi?.jadwal_shift?.shift?.jam_to}
+                        />
+                      ) : (
+                        <Text>-</Text>
+                      )}
+                    </>
+                  )}
+
+                  {!item?.presensi?.unit_kerja?.jenis_karyawan && (
+                    <>
+                      <Text opacity={0.6}>
+                        {item?.presensi?.jadwal_non_shift?.nama || "Libur"}
+                      </Text>
+
+                      {item?.presensi?.jadwal_non_shift?.tgl_mulai && (
+                        <Text>
+                          {formatDate(
+                            item?.presensi?.jadwal_non_shift?.tgl_mulai
+                          )}
+                        </Text>
+                      )}
+
+                      {item?.presensi?.jadwal_non_shift ? (
+                        <Jadwal
+                          jam_from={item?.presensi?.jadwal_non_shift?.jam_from}
+                          jam_to={item?.presensi?.jadwal_non_shift?.jam_to}
+                        />
+                      ) : (
+                        <Text>-</Text>
+                      )}
+                    </>
+                  )}
+                </CContainer>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button className="btn-solid" onClick={backOnClose} flex={1}>
+                  Mengerti
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </>
+      );
+    };
+
     return {
       id: item.id,
       columnsFormat: [
         {
-          value: item?.user?.nama,
+          value: item.data_karyawan.user.nama,
           td: (
             <AvatarAndNameTableData
-              detailKaryawanId={item.id}
+              detailKaryawanId={item.data_karyawan.id}
               data={{
-                id: item?.user?.id,
-                nama: item?.user?.nama,
-                foto_profil: item?.user?.foto_profil?.path,
+                id: item?.data_karyawan?.user.id,
+                nama: item?.data_karyawan?.user?.nama,
+                foto_profil: item?.data_karyawan?.user?.foto_profil?.path,
               }}
             />
           ),
@@ -100,9 +249,53 @@ export default function TabelAnulirPresensi({ filterConfig }: Props) {
           },
         },
         {
-          value: item?.nik,
-          td: item?.nik,
+          value: item?.data_karyawan?.nik,
+          td: item?.data_karyawan?.nik,
           isNumeric: true,
+        },
+        {
+          value: item?.jadwal_shift?.id || item?.jadwal_non_shift?.id,
+          td: <JadwalModal />,
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item?.presensi?.jam_masuk,
+          td: item?.presensi?.jam_masuk
+            ? `${formatDate(
+                item?.presensi?.jam_masuk,
+                "short"
+              )} - ${formatTimeFromDate(item?.presensi?.jam_masuk)}`
+            : "",
+          isDate: true,
+        },
+        {
+          value: item?.presensi?.jam_keluar,
+          td: item?.presensi?.jam_keluar
+            ? `${formatDate(
+                item?.presensi?.jam_keluar,
+                "short"
+              )} - ${formatTimeFromDate(item?.presensi?.jam_keluar)}`
+            : "",
+          isDate: true,
+        },
+        {
+          value: item?.dokumen_anulir?.id,
+          td: (
+            <Link to={item?.dokumen_anulir?.path} target="_blank">
+              <Button variant={"ghost"} colorScheme="ap">
+                Lihat
+              </Button>
+            </Link>
+          ),
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item?.keterangan,
+          td: <TabelElipsisText data={item?.keterangan} />,
         },
       ],
     };

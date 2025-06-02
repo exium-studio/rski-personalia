@@ -36,6 +36,7 @@ import formatTime from "../../lib/formatTime";
 import formatTimeOld from "../../lib/formatTimeOld";
 import req from "../../lib/req";
 import useScreenWidth from "../../lib/useScreenWidth";
+import RequiredForm from "../form/RequiredForm";
 import FlexLine from "../independent/FlexLine";
 import Img from "../independent/Img";
 import NoData from "../independent/NoData";
@@ -48,7 +49,6 @@ import Textarea from "./input/Textarea";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import LokasiPresensi from "./LokasiPresensi";
 import Retry from "./Retry";
-import RequiredForm from "../form/RequiredForm";
 
 const CreateAnulir = (props: any) => {
   // Props
@@ -79,7 +79,7 @@ const CreateAnulir = (props: any) => {
       payload.append("data_karyawan_id", data?.user?.data_karyawan_id);
       payload.append("presensi_id", data?.id);
       payload.append("alasan", values?.alasan);
-      payload.append("dokumen", values?.dokumen);
+      payload.append("dokumen", values?.dokumen || null);
 
       setLoading(true);
       req
@@ -113,9 +113,6 @@ const CreateAnulir = (props: any) => {
         });
     },
   });
-
-  // Utils
-  function submitAnulir() {}
 
   return (
     <>

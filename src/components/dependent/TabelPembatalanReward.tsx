@@ -32,6 +32,7 @@ import FlexLine from "../independent/FlexLine";
 import formatTime from "../../lib/formatTime";
 import formatDuration from "../../lib/formatDuration";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
+import TabelElipsisText from "./TabelElipsisText";
 
 const DetailData = (props: any) => {
   // Props
@@ -249,7 +250,7 @@ export default function TabelPembatalanReward({ filterConfig }: Props) {
         },
         {
           value: item?.keterangan,
-          td: item?.keterangan,
+          td: <TabelElipsisText data={item?.keterangan} />,
         },
       ],
     };
