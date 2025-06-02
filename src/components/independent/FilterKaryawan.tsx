@@ -21,16 +21,13 @@ import { useLocation } from "react-router-dom";
 import { affectedtedPathForceUnitKerjaFilter } from "../../constant/affectedPathForceUnitKerjaFIlter";
 import { useLightDarkColor } from "../../constant/colors";
 import { iconSize } from "../../constant/sizes";
-import useAuth from "../../global/useAuth";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useCallBackOnNavigate from "../../hooks/useCallBackOnNavigate";
-import useGetUserData from "../../hooks/useGetUserData";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
 import formattedFilterKaryawanReducer from "../../lib/formattedFilterKaryawanReducer";
-import isHasPermissions from "../../lib/isHasPermissions";
 import FilterAgama from "../dependent/_FilterOptions/FilterAgama";
 import FilterJebatan from "../dependent/_FilterOptions/FilterJabatan";
 import FilterJenisKelamin from "../dependent/_FilterOptions/FilterJenisKelamin";
@@ -57,7 +54,6 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     defaultFilterKaryawan,
     filterKaryawan,
     setFilterKaryawan,
-    formattedFilterKaryawan,
     setFormattedFilterKaryawan,
     clearFormattedFilterKaryawan,
   } = useFilterKaryawan();
@@ -150,74 +146,16 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     clearFormattedFilterKaryawan();
   });
 
-  const user = useGetUserData();
-  const userRef = useRef(user);
-  const { userPermissions } = useAuth();
   const location = useLocation();
-  const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
+  // const user = useGetUserData();
+  // const userRef = useRef(user);
+  // const { userPermissions } = useAuth();
+  // const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
   // const filterKaryawanRef = useRef(filterKaryawan);
-  const formattedFilterKaryawanRef = useRef(formattedFilterKaryawan);
-  const isAtAffectedForceUnitKerjaFilterPage =
-    affectedtedPathForceUnitKerjaFilter.some(
-      (path) => path === location.pathname
-    );
-
-  useEffect(() => {
-    // console.log(userRef.current);
-
-    if (userRef.current) {
-      const unitKerjaUser = userRef.current?.data_karyawan?.unit_kerja;
-
-      // console.log("uk user", unitKerjaUser);
-      // console.log(unitKerjaUser);
-
-      if (
-        unitKerjaUser &&
-        !bypassUnitKerjaPermission &&
-        isAtAffectedForceUnitKerjaFilterPage
-      ) {
-        const unitKerjaExists = filterKaryawan.unit_kerja.some(
-          (uk: any) => uk.id === unitKerjaUser.id
-        );
-
-        if (!unitKerjaExists) {
-          const presetUnitKerjaFilterKaryawan = {
-            ...filterKaryawan,
-            unit_kerja: [
-              ...filterKaryawan.unit_kerja,
-              {
-                id: unitKerjaUser?.id,
-                label: unitKerjaUser?.nama_unit,
-              },
-            ],
-          };
-          setFilterKaryawan(presetUnitKerjaFilterKaryawan);
-        }
-
-        const formattedUnitKerjaExists =
-          formattedFilterKaryawanRef.current?.unit_kerja?.includes(
-            unitKerjaUser.id
-          );
-
-        if (!formattedUnitKerjaExists) {
-          const presetUnitKerjaFormattedFilterKaryawan = {
-            ...formattedFilterKaryawanRef.current,
-            unit_kerja: [
-              ...(formattedFilterKaryawanRef.current?.unit_kerja || []),
-              unitKerjaUser.id,
-            ],
-          };
-          setFormattedFilterKaryawan(presetUnitKerjaFormattedFilterKaryawan);
-        }
-      }
-    }
-  }, [
-    filterKaryawan,
-    setFilterKaryawan,
-    setFormattedFilterKaryawan,
-    bypassUnitKerjaPermission,
-    isAtAffectedForceUnitKerjaFilterPage,
-  ]);
+  // const formattedFilterKaryawanRef = useRef(formattedFilterKaryawan);
+  const isForceFilterUnitkerja = affectedtedPathForceUnitKerjaFilter.some(
+    (path) => path === location.pathname
+  );
 
   const handleApplyFilterRef = useRef(handleApplyFilter);
   useEffect(() => {
@@ -281,10 +219,12 @@ export default function FilterKaryawan({ title, ...props }: Props) {
 
           <ModalBody className="scrollY">
             <Accordion allowToggle>
-              <FilterUnitKerja
-                filterConfig={localFilterConfig}
-                setFilterConfig={setLocalFilterConfig}
-              />
+              {!isForceFilterUnitkerja && (
+                <FilterUnitKerja
+                  filterConfig={localFilterConfig}
+                  setFilterConfig={setLocalFilterConfig}
+                />
+              )}
 
               <FilterJenisPegawai
                 filterConfig={localFilterConfig}

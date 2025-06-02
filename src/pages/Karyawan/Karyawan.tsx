@@ -1,5 +1,5 @@
 import { HStack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ExportKaryawanModal from "../../components/dependent/ExportKaryawanModal";
 import ImportModal from "../../components/dependent/ImportModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
@@ -13,12 +13,19 @@ import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useFilterKaryawanForceFilter from "../../global/useFilterKaryawanForceFilter";
+import { useForceUnitKerjaFilter } from "../../hooks/useForceUnitKerjaFilter";
+import useGetUserData from "../../hooks/useGetUserData";
 import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Karyawan() {
   // Filter Config
-  const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
+  const {
+    filterKaryawan,
+    formattedFilterKaryawan,
+    setFilterKaryawan,
+    setFormattedFilterKaryawan,
+  } = useFilterKaryawanForceFilter();
   const [search, setSearch] = useState("");
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -30,6 +37,18 @@ export default function Karyawan() {
       clearTimeout(handler);
     };
   }, [search, setFilterKaryawan, setFormattedFilterKaryawan]);
+
+  // Handle force filter unit kerja
+  const user = useGetUserData();
+  const userRef = useRef(user);
+  const formattedFilterKaryawanRef = useRef(formattedFilterKaryawan);
+  useForceUnitKerjaFilter({
+    userRef,
+    filterKaryawan,
+    setFilterKaryawan,
+    formattedFilterKaryawanRef,
+    setFormattedFilterKaryawan,
+  });
 
   // SX
   const lightDarkColor = useLightDarkColor();

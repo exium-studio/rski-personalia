@@ -11,11 +11,13 @@ import {
 } from "@chakra-ui/react";
 import { eachDayOfInterval } from "date-fns";
 import { useEffect, useState } from "react";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useAuth from "../../global/useAuth";
+import useFilterKaryawanForceFilter from "../../global/useFilterKaryawanForceFilter";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
 import formatDurationShort from "../../lib/formatDurationShort";
 import formatTime from "../../lib/formatTime";
+import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -28,8 +30,6 @@ import TabelJadwalItem from "./JadwalTabelItem";
 import Retry from "./Retry";
 import TabelFooterConfig from "./TabelFooterConfig";
 import TerapkanJadwalKaryawanTerpilih from "./TerapkanJadwalKaryawanTerpilih";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
 
 interface Props {
   filterConfig?: any;
@@ -41,7 +41,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
   // Filter Karyawan Config
-  const { formattedFilterKaryawan } = useFilterKaryawan();
+  const { formattedFilterKaryawan } = useFilterKaryawanForceFilter();
 
   // console.log(filterKaryawan);
   // console.log(formattedFilterKaryawan);

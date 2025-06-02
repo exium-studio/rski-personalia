@@ -14,8 +14,9 @@ import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
 import useGetUserData from "../../hooks/useGetUserData";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Presensi() {
   const today = new Date();
@@ -36,15 +37,17 @@ export default function Presensi() {
     ...defaultFilterConfig,
   });
   const [search, setSearch] = useState("");
+  const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
   useEffect(() => {
     const handler = setTimeout(() => {
-      setFilterConfig((ps: any) => ({ ...ps, search: search }));
+      setFilterKaryawan({ search });
+      setFormattedFilterKaryawan({ search });
     }, 1);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [search, setFilterConfig]);
+  }, [search, setFilterKaryawan, setFormattedFilterKaryawan]);
 
   const confirmDateRange = (
     inputValue: { from: Date; to: Date } | undefined

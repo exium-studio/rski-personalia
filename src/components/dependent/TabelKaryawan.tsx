@@ -1,11 +1,13 @@
 import { Center, Text, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Interface__DetailKaryawan } from "../../constant/interfaces";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useAuth from "../../global/useAuth";
+import useFilterKaryawanForceFilter from "../../global/useFilterKaryawanForceFilter";
 import useKaryawanTableColumnsConfig from "../../global/useKaryawanTableColumnsConfig";
 import useDataState from "../../hooks/useDataState";
 import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 import formatDate from "../../lib/formatDate";
+import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
@@ -18,8 +20,6 @@ import Retry from "./Retry";
 import StatusAktifBadge from "./StatusAktifBadge";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
 import TabelFooterConfig from "./TabelFooterConfig";
-import useAuth from "../../global/useAuth";
-import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function TabelKaryawan() {
   // Limit Config
@@ -29,7 +29,7 @@ export default function TabelKaryawan() {
   // Karyawan Detail Disclosure
   const { isOpen, onOpen, onClose } = useDisclosure();
   // Filter Config
-  const { formattedFilterKaryawan } = useFilterKaryawan();
+  const { formattedFilterKaryawan } = useFilterKaryawanForceFilter();
   // Columns Config
   const { columnsConfig } = useKaryawanTableColumnsConfig();
 

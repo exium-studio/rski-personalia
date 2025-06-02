@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { endOfWeek, startOfWeek } from "date-fns";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ExportJadwalModal from "../../components/dependent/ExportJadwalModal";
 import ImportModal from "../../components/dependent/ImportModal";
 import DateRangePickerModal from "../../components/dependent/input/DateRangePickerModal";
@@ -14,35 +14,32 @@ import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useFilterKaryawanForceFilter from "../../global/useFilterKaryawanForceFilter";
 import isHasPermissions from "../../lib/isHasPermissions";
+import useGetUserData from "../../hooks/useGetUserData";
+import { useForceUnitKerjaFilter } from "../../hooks/useForceUnitKerjaFilter";
 
 export default function Jadwal() {
-  // Permissions
-  const { userPermissions } = useAuth();
-  const exportPermissions = isHasPermissions(userPermissions, [24]);
-  const importPermissions = isHasPermissions(userPermissions, [23]);
-  const createPermissions = isHasPermissions(userPermissions, [19]);
-  // const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
-
+  // Filter Config
   const today = new Date();
   const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
   const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
-
   const defaultRangeTgl = {
     from: startOfWeekDate,
     to: endOfWeekDate,
   };
-
-  // Filter Config
   const defaultFilterConfig = {
     tgl_mulai: defaultRangeTgl?.from,
     tgl_selesai: defaultRangeTgl?.to,
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
+  const {
+    filterKaryawan,
+    formattedFilterKaryawan,
+    setFilterKaryawan,
+    setFormattedFilterKaryawan,
+  } = useFilterKaryawanForceFilter();
   const [search, setSearch] = useState("");
-  const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
-
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterKaryawan({ search });
@@ -63,6 +60,24 @@ export default function Jadwal() {
       tgl_selesai: inputValue?.to,
     }));
   };
+
+  // Permissions
+  const { userPermissions } = useAuth();
+  const exportPermissions = isHasPermissions(userPermissions, [24]);
+  const importPermissions = isHasPermissions(userPermissions, [23]);
+  const createPermissions = isHasPermissions(userPermissions, [19]);
+
+  // Handle force filter unit kerja
+  const user = useGetUserData();
+  const userRef = useRef(user);
+  const formattedFilterKaryawanRef = useRef(formattedFilterKaryawan);
+  useForceUnitKerjaFilter({
+    userRef,
+    filterKaryawan,
+    setFilterKaryawan,
+    formattedFilterKaryawanRef,
+    setFormattedFilterKaryawan,
+  });
 
   // console.log(filterKaryawan);
   // console.log(formattedFilterKaryawan);
