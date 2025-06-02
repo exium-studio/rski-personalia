@@ -13,20 +13,19 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Highlighter from "react-highlight-words";
+import useBackOnClose from "../../hooks/useBackOnClose";
 import useGetUserData from "../../hooks/useGetUserData";
+import backOnClose from "../../lib/backOnClose";
 import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
 import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
 import FlexLine from "../independent/FlexLine";
+import DisclosureHeader from "./DisclosureHeader";
+import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import JenisProfesiBadge from "./JenisProfesiBadge";
 import SimplePopover from "./SimplePopover";
 import SmallLink from "./SmallLink";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
-import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "./DisclosureHeader";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import CContainer from "../wrapper/CContainer";
-import JenisKaryawanBadge from "./JenisKaryawanBadge";
 
 const PJUnitKerjaModal = (props: any) => {
   // Props

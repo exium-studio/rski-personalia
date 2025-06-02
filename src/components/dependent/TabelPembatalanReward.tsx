@@ -12,29 +12,28 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import backOnClose from "../../lib/backOnClose";
+import capFirst from "../../lib/capFirst";
+import formatDate from "../../lib/formatDate";
+import formatDuration from "../../lib/formatDuration";
+import formatTime from "../../lib/formatTime";
 import isObjectEmpty from "../../lib/isObjectEmpty";
+import FlexLine from "../independent/FlexLine";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
+import CContainer from "../wrapper/CContainer";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
-import Retry from "./Retry";
-import TabelFooterConfig from "./TabelFooterConfig";
-import CContainer from "../wrapper/CContainer";
-import formatDate from "../../lib/formatDate";
-import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "./DisclosureHeader";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import capFirst from "../../lib/capFirst";
-import FlexLine from "../independent/FlexLine";
-import formatTime from "../../lib/formatTime";
-import formatDuration from "../../lib/formatDuration";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
-import TabelElipsisText from "./TabelElipsisText";
-import JadwalItem from "./JadwalItem";
 import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
+import DisclosureHeader from "./DisclosureHeader";
+import Retry from "./Retry";
+import TabelElipsisText from "./TabelElipsisText";
+import TabelFooterConfig from "./TabelFooterConfig";
 
 const DetailDataPresensi = (props: any) => {
   // Props
