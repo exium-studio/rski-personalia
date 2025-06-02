@@ -33,6 +33,31 @@ import formatTime from "../../lib/formatTime";
 import formatDuration from "../../lib/formatDuration";
 import useFilterKaryawan from "../../global/useFilterKaryawan";
 import TabelElipsisText from "./TabelElipsisText";
+import JadwalItem from "./JadwalItem";
+import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
+
+const DetailDataPresensi = (props: any) => {
+  // Props
+  const { item } = props;
+
+  // Hooks
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <>
+      <Button colorScheme="ap" variant={"ghost"} onClick={onOpen}>
+        Lihat
+      </Button>
+
+      <DetailPresensiKaryawanModal
+        presensi_id={item?.data_presensi?.id}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+      />
+    </>
+  );
+};
 
 const DetailData = (props: any) => {
   // Props
@@ -96,35 +121,43 @@ const DetailData = (props: any) => {
 
   return (
     <>
-      <Button colorScheme="ap" variant={"ghost"} onClick={onOpen}>
-        Lihat
-      </Button>
+      {penyebab === "presensi" && <DetailDataPresensi item={item} />}
 
-      <Modal
-        isOpen={isOpen}
-        onClose={backOnClose}
-        isCentered
-        blockScrollOnMount={false}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <DisclosureHeader title={"Data Penyebab"} />
-          </ModalHeader>
+      {penyebab !== "presensi" && (
+        <>
+          <Button colorScheme="ap" variant={"ghost"} onClick={onOpen}>
+            Lihat
+          </Button>
 
-          <ModalBody>{renderer[penyebab as keyof typeof renderer]}</ModalBody>
+          <Modal
+            isOpen={isOpen}
+            onClose={backOnClose}
+            isCentered
+            blockScrollOnMount={false}
+          >
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>
+                <DisclosureHeader title={"Data Penyebab"} />
+              </ModalHeader>
 
-          <ModalFooter>
-            <Button
-              className="btn-solid clicky"
-              onClick={backOnClose}
-              w={"full"}
-            >
-              Mengerti
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+              <ModalBody>
+                {renderer[penyebab as keyof typeof renderer]}
+              </ModalBody>
+
+              <ModalFooter>
+                <Button
+                  className="btn-solid clicky"
+                  onClick={backOnClose}
+                  w={"full"}
+                >
+                  Mengerti
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </>
+      )}
     </>
   );
 };

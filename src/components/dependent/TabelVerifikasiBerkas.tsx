@@ -52,12 +52,6 @@ export default function TabelVerifikasiBerkas({ filterConfig }: Props) {
     },
   ];
 
-  //! DEBUG
-  // console.log(filterConfig);
-  //! DEBUG
-
-  //TODO get karyawan
-
   const [data] = useState<any[] | null>(dummyKaryawanList);
   const [loading] = useState<boolean>(false);
 

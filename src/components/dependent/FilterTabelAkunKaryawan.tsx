@@ -55,8 +55,6 @@ export default function FilterTabelAkunKaryawan({
       filterConfig.status_karyawan.length > 0) ||
       (filterConfig.unit_kerja && filterConfig.unit_kerja.length > 0));
 
-  //TODO post api filter data karyawan
-
   // SX
   const bodyColor = useBodyColor();
 

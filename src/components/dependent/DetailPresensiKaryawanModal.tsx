@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   HStack,
   Icon,
@@ -49,6 +50,9 @@ import Textarea from "./input/Textarea";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
 import LokasiPresensi from "./LokasiPresensi";
 import Retry from "./Retry";
+import PermissionTooltip from "../wrapper/PermissionTooltip";
+import useAuth from "../../global/useAuth";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 const CreateAnulir = (props: any) => {
   // Props
@@ -72,7 +76,7 @@ const CreateAnulir = (props: any) => {
     },
     validationSchema: yup.object().shape({
       alasan: yup.string().required("Harus diisi"),
-      dokumen: yup.string(),
+      dokumen: yup.string().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
       const payload = new FormData();
@@ -114,11 +118,23 @@ const CreateAnulir = (props: any) => {
     },
   });
 
+  const { userPermissions } = useAuth();
+  const createPermissions = isHasPermissions(userPermissions, [151]);
+
   return (
     <>
-      <Button ml={"auto"} colorScheme="ap" variant={"outline"} onClick={onOpen}>
-        Anulir Presensi Ini
-      </Button>
+      <PermissionTooltip permission={createPermissions}>
+        <Button
+          isDisabled={
+            !createPermissions || !!data?.data_presensi?.presensi_anulir
+          }
+          colorScheme="ap"
+          variant={"outline"}
+          onClick={onOpen}
+        >
+          Anulir Presensi Ini
+        </Button>
+      </PermissionTooltip>
 
       <Modal
         isOpen={isOpen}
@@ -150,17 +166,27 @@ const CreateAnulir = (props: any) => {
                   }}
                   inputValue={formik.values.alasan}
                 />
+                <FormErrorMessage>
+                  {formik.errors.alasan as string}
+                </FormErrorMessage>
               </FormControl>
 
               <FormControl isInvalid={!!formik.errors.dokumen}>
-                <FormLabel>Dokumen Tambahan</FormLabel>
+                <FormLabel>
+                  Dokumen Tambahan
+                  <RequiredForm />
+                </FormLabel>
                 <FileInput
                   name="dokumen"
                   onChangeSetter={(input) => {
                     formik.setFieldValue("dokumen", input);
                   }}
                   inputValue={formik.values.dokumen}
+                  isError={!!formik.errors.dokumen}
                 />
+                <FormErrorMessage>
+                  {formik.errors.dokumen as string}
+                </FormErrorMessage>
               </FormControl>
             </form>
           </ModalBody>
@@ -358,7 +384,9 @@ export default function DetailPresensiKaryawanModal({
                         </VStack>
 
                         {/* Create anulir button */}
-                        <CreateAnulir data={data} />
+                        <Box ml={"auto"}>
+                          <CreateAnulir data={data} />
+                        </Box>
                       </Wrap>
 
                       <CContainer

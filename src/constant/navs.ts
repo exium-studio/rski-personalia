@@ -71,7 +71,7 @@ const navs = [
         link: "/anulir-presensi",
       },
       {
-        allowed: [], // TODO: Permission
+        allowed: [164],
         label: "Pembatalan Reward",
         link: "/pembatalan-reward",
       },

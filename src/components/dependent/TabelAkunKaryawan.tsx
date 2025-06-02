@@ -55,12 +55,6 @@ export default function TabelAkunKaryawan({ filterConfig }: Props) {
     },
   ];
 
-  //! DEBUG
-  // console.log(filterConfig);
-  //! DEBUG
-
-  //TODO get akun karyawan
-
   const [data] = useState<any[] | null>(dummyAkunKaryawan);
   const [loading] = useState<boolean>(false);
 

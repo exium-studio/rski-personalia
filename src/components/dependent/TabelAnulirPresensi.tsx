@@ -1,8 +1,6 @@
 import {
   Button,
   Center,
-  HStack,
-  Icon,
   Modal,
   ModalBody,
   ModalContent,
@@ -13,50 +11,26 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import backOnClose from "../../lib/backOnClose";
+import formatDate from "../../lib/formatDate";
+import formatTimeFromDate from "../../lib/formatTimeFromDate";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
+import CContainer from "../wrapper/CContainer";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
-import Retry from "./Retry";
-import TabelFooterConfig from "./TabelFooterConfig";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
-import formatDate from "../../lib/formatDate";
-import formatTimeFromDate from "../../lib/formatTimeFromDate";
-import TabelElipsisText from "./TabelElipsisText";
-import { Link } from "react-router-dom";
-import backOnClose from "../../lib/backOnClose";
 import DisclosureHeader from "./DisclosureHeader";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import CContainer from "../wrapper/CContainer";
-import { RiArrowDownLine, RiArrowUpLine } from "@remixicon/react";
-import formatTime from "../../lib/formatTime";
-
-const Jadwal = (props: any) => {
-  // Props
-  const { jam_from, jam_to } = props;
-
-  return (
-    <HStack gap={4}>
-      <HStack>
-        <Center borderRadius={"full"} bg={"var(--p500a4)"} p={1}>
-          <Icon as={RiArrowUpLine} color={"p.500"} />
-        </Center>
-        <Text>{formatTime(jam_from)}</Text>
-      </HStack>
-
-      <HStack>
-        <Center borderRadius={"full"} bg={"var(--reda)"} p={1}>
-          <Icon as={RiArrowDownLine} color={"red.400"} />
-        </Center>
-        <Text>{formatTime(jam_to)}</Text>
-      </HStack>
-    </HStack>
-  );
-};
+import JadwalItem from "./JadwalItem";
+import Retry from "./Retry";
+import TabelElipsisText from "./TabelElipsisText";
+import TabelFooterConfig from "./TabelFooterConfig";
 
 interface Props {
   filterConfig: any;
@@ -174,7 +148,7 @@ export default function TabelAnulirPresensi({ filterConfig }: Props) {
                       )}
 
                       {item?.presensi?.jadwal_shift?.shift ? (
-                        <Jadwal
+                        <JadwalItem
                           jam_from={
                             item?.presensi?.jadwal_shift?.shift?.jam_from
                           }
@@ -197,7 +171,7 @@ export default function TabelAnulirPresensi({ filterConfig }: Props) {
                       )}
 
                       {item?.presensi?.jadwal_non_shift ? (
-                        <Jadwal
+                        <JadwalItem
                           jam_from={item?.presensi?.jadwal_non_shift?.jam_from}
                           jam_to={item?.presensi?.jadwal_non_shift?.jam_to}
                         />

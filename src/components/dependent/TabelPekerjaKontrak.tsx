@@ -55,12 +55,6 @@ export default function TabelPekerjaKontrak({ filterConfig }: Props) {
     },
   ];
 
-  //! DEBUG
-  // console.log(filterConfig);
-  //! DEBUG
-
-  //TODO get karyawan
-
   const [data] = useState<any[] | null>(dummyPekerjaKontrak);
   const [loading] = useState<boolean>(false);
 

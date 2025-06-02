@@ -50,8 +50,6 @@ export default function FilterTabelJadwal({
     backOnClose(onClose);
   }
 
-  //TODO post api filter data karyawan
-
   // SX
   const bodyColor = useBodyColor();
 
