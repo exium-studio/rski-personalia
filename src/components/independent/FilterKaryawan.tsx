@@ -107,7 +107,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
 
   function handleApplyFilter() {
     const formattedFilters = {
-      // search: localFilterConfig.search,
+      search: localFilterConfig.search,
       unit_kerja: localFilterConfig.unit_kerja.map((item: any) => item.id),
       jenis_karyawan: localFilterConfig.jenis_karyawan.map(
         (item: any) => item.value
