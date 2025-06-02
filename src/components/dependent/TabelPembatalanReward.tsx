@@ -115,7 +115,11 @@ const DetailData = (props: any) => {
           <ModalBody>{renderer[penyebab as keyof typeof renderer]}</ModalBody>
 
           <ModalFooter>
-            <Button className="btn-solid" onClick={backOnClose} w={"full"}>
+            <Button
+              className="btn-solid clicky"
+              onClick={backOnClose}
+              w={"full"}
+            >
               Mengerti
             </Button>
           </ModalFooter>

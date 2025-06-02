@@ -169,7 +169,7 @@ const CreateAnulir = (props: any) => {
             <Button
               flex={1}
               onClick={backOnClose}
-              className="btn-solid"
+              className="btn-solid clicky"
               isDisabled={loading}
             >
               Tidak

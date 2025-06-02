@@ -102,7 +102,11 @@ const DaftarDiklat = (props: any) => {
             </CContainer>
           </ModalBody>
           <ModalFooter>
-            <Button w={"full"} onClick={backOnClose} className="btn-solid">
+            <Button
+              w={"full"}
+              onClick={backOnClose}
+              className="btn-solid clicky"
+            >
               Mengerti
             </Button>
           </ModalFooter>

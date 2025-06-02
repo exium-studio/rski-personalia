@@ -1,4 +1,17 @@
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import Highlighter from "react-highlight-words";
 import useGetUserData from "../../hooks/useGetUserData";
 import calculateMasaKerjaFromTanggalMasuk from "../../lib/calculateMasaKerjaFromTanggalMasuk";
@@ -9,6 +22,64 @@ import JenisProfesiBadge from "./JenisProfesiBadge";
 import SimplePopover from "./SimplePopover";
 import SmallLink from "./SmallLink";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
+import backOnClose from "../../lib/backOnClose";
+import DisclosureHeader from "./DisclosureHeader";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import CContainer from "../wrapper/CContainer";
+import JenisKaryawanBadge from "./JenisKaryawanBadge";
+
+const PJUnitKerjaModal = (props: any) => {
+  // Props
+  const { data } = props;
+
+  // Hooks
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`${data?.id}`, isOpen, onOpen, onClose);
+
+  return (
+    <>
+      <Button
+        onClick={onOpen}
+        variant={"ghost"}
+        colorScheme="ap"
+        className="btn-clear"
+      >
+        Lihat
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Unit Kerja Diampu"} />
+          </ModalHeader>
+
+          <ModalBody gap={4}>
+            {data?.pj_unit_kerja?.map((item: any, i: number) => {
+              return (
+                <HStack key={i}>
+                  <JenisKaryawanBadge data={item?.jenis_karyawan} />
+                  <Text>{item?.nama_unit}</Text>
+                </HStack>
+              );
+            })}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button onClick={onClose} flex={1} className="btn-solid clicky">
+              Mengerti
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 interface Props {
   nama?: string;
@@ -734,6 +805,20 @@ export default function DetailDataKaryawan({ nama, data, searchQuery }: Props) {
               </Text>
             </HStack>
           )}
+
+          <HStack justify={"space-between"}>
+            <Box opacity={0.6}>
+              <Highlighter
+                highlightClassName="hw"
+                unhighlightClassName="uw"
+                searchWords={searchQuery}
+                autoEscape={true}
+                textToHighlight={"Unit Kerja Diampu"}
+              />
+            </Box>
+            <FlexLine />
+            <PJUnitKerjaModal data={data} />
+          </HStack>
 
           {/* <HStack justify={"space-between"}>
             <Box opacity={0.6}>

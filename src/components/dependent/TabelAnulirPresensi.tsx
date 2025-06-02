@@ -210,7 +210,11 @@ export default function TabelAnulirPresensi({ filterConfig }: Props) {
               </ModalBody>
 
               <ModalFooter>
-                <Button className="btn-solid" onClick={backOnClose} flex={1}>
+                <Button
+                  className="btn-solid clicky"
+                  onClick={backOnClose}
+                  flex={1}
+                >
                   Mengerti
                 </Button>
               </ModalFooter>
