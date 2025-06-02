@@ -83,6 +83,8 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
       beri_tahu_karyawan: yup.boolean(),
     }),
     onSubmit: (values, { resetForm }) => {
+      console.log(values);
+
       const payload = new FormData();
       payload.append("user_id", values.karyawan?.value);
       payload.append("tgl_mulai", formatDate(values.tgl_mulai, "short"));
@@ -104,7 +106,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
       }
 
       payload.append("alasan", values.alasan);
-      payload.append("dokumen", values.dokumen);
+      if (values.dokumen) payload.append("dokumen", values.dokumen);
       payload.append(
         "beri_tahu_karyawan",
         values.beri_tahu_karyawan ? "1" : "0"

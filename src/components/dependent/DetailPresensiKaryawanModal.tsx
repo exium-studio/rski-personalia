@@ -79,7 +79,7 @@ const CreateAnulir = (props: any) => {
       payload.append("data_karyawan_id", data?.user?.data_karyawan_id);
       payload.append("presensi_id", data?.id);
       payload.append("alasan", values?.alasan);
-      payload.append("dokumen", values?.dokumen || null);
+      if (values?.dokumen) payload.append("dokumen", values?.dokumen);
 
       setLoading(true);
       req
