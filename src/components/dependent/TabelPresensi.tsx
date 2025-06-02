@@ -96,6 +96,13 @@ export default function TabelPresensi({ filterConfig }: Props) {
       },
     },
     {
+      th: "Reward",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
       th: "Anulir Presensi",
       isSortable: true,
       cProps: {
@@ -169,11 +176,27 @@ export default function TabelPresensi({ filterConfig }: Props) {
         },
       },
       {
-        value: item.jam_keluar,
-        td: item?.data_presensi?.presensi_anulir && (
+        value: item?.pembatalan_reward,
+        td: item?.pembatalan_reward ? (
+          <Badge colorScheme="red" borderRadius={"full"}>
+            Dibatalkan
+          </Badge>
+        ) : (
+          ""
+        ),
+        isTime: true,
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item?.presensi_anulir,
+        td: item?.presensi_anulir ? (
           <Badge colorScheme="green" borderRadius={"full"}>
             Dianulir
           </Badge>
+        ) : (
+          ""
         ),
         isTime: true,
         cProps: {
