@@ -1,9 +1,9 @@
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
-import ExportModal from "../../components/dependent/ExportModal";
-import DateRangePickerModal from "../../components/dependent/input/DateRangePickerModal";
+import ExportPembatalanRewardModal from "../../components/dependent/ExportPembatalanRewardModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelPembatalanReward from "../../components/dependent/TabelPembatalanReward";
+import FilterKaryawan from "../../components/independent/FilterKaryawan";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
@@ -25,7 +25,7 @@ export default function PembatalanReward() {
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
 
   const { userPermissions } = useAuth();
-  const exportPermissions = isHasPermissions(userPermissions, [153]);
+  const exportPermissions = isHasPermissions(userPermissions, [165]);
 
   return (
     <>
@@ -57,37 +57,13 @@ export default function PembatalanReward() {
               inputValue={filterConfig.search}
             />
 
-            <DateRangePickerModal
-              id="date-range-picker-modal"
-              name="date-range-picker-modal"
-              onConfirm={(input) => {
-                setFilterConfig({
-                  ...filterConfig,
-                  tgl_mulai: input?.from,
-                  tgl_selesai: input?.to,
-                });
-              }}
-              inputValue={
-                filterConfig.tgl_mulai && filterConfig.tgl_selesai
-                  ? {
-                      from: filterConfig.tgl_mulai,
-                      to: filterConfig.tgl_selesai,
-                    }
-                  : undefined
-              }
-              w={"200px"}
-            />
+            <FilterKaryawan />
 
             <PermissionTooltip
               permission={exportPermissions}
               boxProps={{ w: "fit-content" }}
             >
-              <ExportModal
-                url="/api/rski/dashboard/perusahaan/diklat-eksternal/export"
-                title="Export Diklat Eksternal"
-                downloadFileName="Data Diklat Eksternal"
-                isDisabled={!exportPermissions}
-              />
+              <ExportPembatalanRewardModal isDisabled={!exportPermissions} />
             </PermissionTooltip>
           </HStack>
 

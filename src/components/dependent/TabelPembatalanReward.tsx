@@ -31,6 +31,7 @@ import capFirst from "../../lib/capFirst";
 import FlexLine from "../independent/FlexLine";
 import formatTime from "../../lib/formatTime";
 import formatDuration from "../../lib/formatDuration";
+import useFilterKaryawan from "../../global/useFilterKaryawan";
 
 const DetailData = (props: any) => {
   // Props
@@ -131,13 +132,21 @@ export default function TabelPembatalanReward({ filterConfig }: Props) {
   const [limitConfig, setLimitConfig] = useState<number>(10);
   // Pagination Config
   const [pageConfig, setPageConfig] = useState<number>(1);
+  // Filter Config
+  const { formattedFilterKaryawan } = useFilterKaryawan();
 
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any[]>({
       initialData: undefined,
-      url: `api/rski/dashboard/anulir-presensi/get-data-history-reward?page=${pageConfig}`,
+      url: `api/rski/dashboard/presensi/get-data-history-reward?page=${pageConfig}`,
       payload: {
-        ...filterConfig,
+        ...formattedFilterKaryawan,
+        ...(filterConfig?.status_cuti?.length > 0 && {
+          status_cuti: filterConfig.status_cuti.map((sp: any) => sp.value),
+        }),
+        ...(filterConfig?.tipe_cuti?.length > 0 && {
+          tipe_cuti: filterConfig.tipe_cuti.map((sp: any) => sp.value),
+        }),
       },
       limit: limitConfig,
       dependencies: [limitConfig, pageConfig, filterConfig],
