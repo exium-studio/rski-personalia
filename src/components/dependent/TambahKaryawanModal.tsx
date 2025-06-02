@@ -56,11 +56,12 @@ import useScreenHeight from "../../lib/useScreenHeight";
 import useScreenWidth from "../../lib/useScreenWidth";
 import CContainer from "../wrapper/CContainer";
 import MultiselectPotongan from "./_Select/MultiselectPotongan";
+import SelectSpesialisasi from "./_Select/SelectSpesialisasi";
 import SelectStatusKaryawan from "./_Select/SelectStatusKaryawan";
 import DisclosureHeader from "./DisclosureHeader";
 import NumberInput from "./input/NumberInput";
 import StringInput from "./input/StringInput";
-import SelectSpesialisasi from "./_Select/SelectSpesialisasi";
+import MultiSelectUnitKerja from "./_Select/MultiSelectUnitKerja";
 
 const validationSchemaStep1 = yup.object({
   nama_karyawan: yup.string().required("Harus diisi"),
@@ -77,6 +78,7 @@ const validationSchemaStep1 = yup.object({
   kompetensi: yup.object(),
   spesialisasi: yup.object(),
   role: yup.object().required("Harus diisi"),
+  pj_unit_kerja: yup.array(),
 });
 
 const validationSchemaStep2 = yup.object({
@@ -132,6 +134,7 @@ export default function TambahKaryawanModal({ ...props }: Props) {
       kompetensi: undefined as any,
       spesialisasi: undefined as any,
       role: undefined as any,
+      pj_unit_kerja: undefined as any,
       kelompok_gaji: undefined as any,
       no_rekening: "",
       tunjangan_jabatan: undefined as any,
@@ -166,6 +169,9 @@ export default function TambahKaryawanModal({ ...props }: Props) {
         kompetensi_id: values.kompetensi?.value,
         spesialisasi_id: values.spesialisasi?.value,
         role_id: values.role?.value,
+        pj_unit_kerja: values.pj_unit_kerja
+          ? values.pj_unit_kerja?.map((pj: any) => pj?.value)
+          : [],
         kelompok_gaji_id: values.kelompok_gaji?.value,
         no_rekening: values.no_rekening,
         tunjangan_fungsional: values.tunjangan_fungsional,
@@ -563,6 +569,26 @@ export default function TambahKaryawanModal({ ...props }: Props) {
             isError={!!formik.errors.role}
           />
           <FormErrorMessage>{formik.errors.role as string}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          mb={4}
+          flex={"1 1 300px"}
+          isInvalid={!!formik.errors.pj_unit_kerja}
+        >
+          <FormLabel>Unit Kerja Diampu</FormLabel>
+          <MultiSelectUnitKerja
+            name="pj_unit_kerja"
+            onConfirm={(input) => {
+              formik.setFieldValue("pj_unit_kerja", input);
+            }}
+            inputValue={formik.values.pj_unit_kerja}
+            isError={!!formik.errors.pj_unit_kerja}
+            optionsDisplay="chip"
+          />
+          <FormErrorMessage>
+            {formik.errors.pj_unit_kerja as string}
+          </FormErrorMessage>
         </FormControl>
       </SimpleGrid>
     );

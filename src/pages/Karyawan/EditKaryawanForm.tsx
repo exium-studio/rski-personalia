@@ -43,6 +43,7 @@ import formatNumber from "../../lib/formatNumber";
 import parseNumber from "../../lib/parseNumber";
 import req from "../../lib/req";
 import SelectSpesialisasi from "../../components/dependent/_Select/SelectSpesialisasi";
+import MultiSelectUnitKerja from "../../components/dependent/_Select/MultiSelectUnitKerja";
 
 interface Props {
   activeStep: number;
@@ -98,6 +99,7 @@ export default function EditKaryawanForm({
     kompetensi: yup.object(),
     spesialisasi: yup.object(),
     role: yup.object().required("Harus diisi"),
+    pj_unit_kerja: yup.array(),
   });
 
   const validationSchemaStep2 = yup.object({
@@ -191,6 +193,12 @@ export default function EditKaryawanForm({
             value: data?.role?.id,
             label: data?.role?.name,
           }
+        : undefined,
+      pj_unit_kerja: data?.pj_unit_kerja
+        ? data?.pj_unit_kerja.map((item: any) => ({
+            value: item?.id,
+            label: item?.nama_unit,
+          }))
         : undefined,
       kelompok_gaji: {
         value: data?.kelompok_gaji?.id,
@@ -293,6 +301,10 @@ export default function EditKaryawanForm({
         kompetensi_id: values?.kompetensi?.value,
         spesialisasi_id: values?.spesialisasi?.value,
         role_id: values?.role?.value,
+        pj_unit_kerja: values.pj_unit_kerja
+          ? values.pj_unit_kerja?.map((pj: any) => pj?.value)
+          : [],
+
         kelompok_gaji_id: values.kelompok_gaji.value,
         no_rekening: values.no_rekening,
         tunjangan_jabatan: values.tunjangan_jabatan,
@@ -707,6 +719,26 @@ export default function EditKaryawanForm({
             isError={!!formik.errors.role}
           />
           <FormErrorMessage>{formik.errors.role as string}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          mb={4}
+          flex={"1 1 300px"}
+          isInvalid={!!formik.errors.pj_unit_kerja}
+        >
+          <FormLabel>Unit Kerja Diampu</FormLabel>
+          <MultiSelectUnitKerja
+            name="pj_unit_kerja"
+            onConfirm={(input) => {
+              formik.setFieldValue("pj_unit_kerja", input);
+            }}
+            inputValue={formik.values.pj_unit_kerja}
+            isError={!!formik.errors.pj_unit_kerja}
+            optionsDisplay="chip"
+          />
+          <FormErrorMessage>
+            {formik.errors.pj_unit_kerja as string}
+          </FormErrorMessage>
         </FormControl>
       </SimpleGrid>
     );
