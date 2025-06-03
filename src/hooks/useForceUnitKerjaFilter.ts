@@ -17,45 +17,71 @@ export function useForceUnitKerjaFilter({
 }: UseForceUnitKerjaFilterParams) {
   useEffect(() => {
     if (userRef.current) {
-      const unitKerjaUser = userRef.current?.data_karyawan?.unit_kerja;
+      const pjUnitKerja = userRef.current?.data_karyawan?.pj_unit_kerja; // array
 
-      if (unitKerjaUser) {
-        const unitKerjaExists = filterKaryawan.unit_kerja.some(
-          (uk: any) => uk.id === unitKerjaUser.id
-        );
+      console.log(
+        "pjUnitKerja",
+        pjUnitKerja?.map((item: any) => ({
+          id: item.id,
+          label: item.nama_unit,
+        }))
+      );
 
-        if (!unitKerjaExists) {
-          setFilterKaryawan({
-            ...filterKaryawan,
-            unit_kerja: [
-              ...filterKaryawan.unit_kerja,
-              {
-                id: unitKerjaUser.id,
-                label: unitKerjaUser.nama_unit,
-              },
-            ],
-          });
-        }
+      if (pjUnitKerja && pjUnitKerja.length > 0) {
+        // const filterUnitKerjaExist = pjUnitKerja.every((item: any) =>
+        //   filterKaryawan.unit_kerja.some((data: any) => data.id === item.id)
+        // );
+        // if (!filterUnitKerjaExist) {
+        //   setFilterKaryawan({
+        //     ...filterKaryawan,
+        //     unit_kerja: [
+        //       ...filterKaryawan.unit_kerja,
+        //       ...pjUnitKerja?.map((item: any) => ({
+        //         id: item.id,
+        //         label: item.nama_unit,
+        //       })),
+        //     ],
+        //   });
+        // }
 
-        const formattedUnitKerjaExists =
-          formattedFilterKaryawanRef.current?.unit_kerja?.includes(
-            unitKerjaUser.id
-          );
+        // setFilterKaryawan({
+        //   ...filterKaryawanRef.current,
+        //   unit_kerja: [
+        //     ...filterKaryawan.unit_kerja,
+        //     ...pjUnitKerja?.map((item: any) => ({
+        //       id: item.id,
+        //       label: item.nama_unit,
+        //     })),
+        //   ],
+        // });
 
-        if (!formattedUnitKerjaExists) {
-          setFormattedFilterKaryawan({
-            ...formattedFilterKaryawanRef.current,
-            unit_kerja: [
-              ...(formattedFilterKaryawanRef.current?.unit_kerja || []),
-              unitKerjaUser.id,
-            ],
-          });
-        }
+        setFormattedFilterKaryawan({
+          ...formattedFilterKaryawanRef.current,
+          unit_kerja: [
+            ...(formattedFilterKaryawanRef.current?.unit_kerja || []),
+            ...pjUnitKerja?.map((item: any) => item.id),
+          ],
+        });
+
+        // const formattedUnitKerjaExists =
+        //   formattedFilterKaryawanRef.current?.unit_kerja?.includes(
+        //     pjUnitKerja.id
+        //   );
+
+        // if (!formattedUnitKerjaExists) {
+        //   setFormattedFilterKaryawan({
+        //     ...formattedFilterKaryawanRef.current,
+        //     unit_kerja: [
+        //       ...(formattedFilterKaryawanRef.current?.unit_kerja || []),
+        //       pjUnitKerja.id,
+        //     ],
+        //   });
+        // }
       }
     }
   }, [
     userRef,
-    filterKaryawan,
+    // filterKaryawan,
     setFilterKaryawan,
     formattedFilterKaryawanRef,
     setFormattedFilterKaryawan,

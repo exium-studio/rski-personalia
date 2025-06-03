@@ -266,12 +266,12 @@ export default function TabelPembatalanReward({ filterConfig }: Props) {
           td: item?.nik,
         },
         {
-          value: formatDate(item?.tgl_pembatalan),
-          td: formatDate(item?.tgl_pembatalan),
-        },
-        {
           value: item?.unit_kerja?.nama_unit,
           td: item?.unit_kerja?.nama_unit,
+        },
+        {
+          value: formatDate(item?.tgl_pembatalan),
+          td: formatDate(item?.tgl_pembatalan),
         },
         {
           value: capFirst(item?.tipe_pembatalan),

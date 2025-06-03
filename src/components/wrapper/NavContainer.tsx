@@ -195,9 +195,11 @@ export default function NavContainer({
         .then((r) => {
           if (r?.status === 200) {
             const userData = r.data.data;
+            console.log(userData);
             if (userData.status_aktif === 2) {
               setUserPermissions(userData.permission);
               userPermissionsRef.current = userData.permission;
+              localStorage.setItem("__user_data", JSON.stringify(userData));
             } else {
               logoutRef.current();
               console.log("logging out...");
