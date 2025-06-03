@@ -19,13 +19,13 @@ export function useForceUnitKerjaFilter({
     if (userRef.current) {
       const pjUnitKerja = userRef.current?.data_karyawan?.pj_unit_kerja; // array
 
-      console.log(
-        "pjUnitKerja",
-        pjUnitKerja?.map((item: any) => ({
-          id: item.id,
-          label: item.nama_unit,
-        }))
-      );
+      // console.log(
+      //   "pjUnitKerja",
+      //   pjUnitKerja?.map((item: any) => ({
+      //     id: item.id,
+      //     label: item.nama_unit,
+      //   }))
+      // );
 
       if (pjUnitKerja && pjUnitKerja.length > 0) {
         // const filterUnitKerjaExist = pjUnitKerja.every((item: any) =>

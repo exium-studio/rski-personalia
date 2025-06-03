@@ -47,9 +47,10 @@ export default function TambahStatusKaryawan({ ...props }: Props) {
       kategori: yup.object().required("Harus diisi"),
     }),
     onSubmit: (values, { resetForm }) => {
+      console.log(values);
       const payload = {
         label: values.label,
-        kategori_status_id: values.kategori?.id,
+        kategori_status_id: values.kategori?.value,
       };
       setLoading(true);
       req
