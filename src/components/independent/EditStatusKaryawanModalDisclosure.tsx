@@ -59,7 +59,7 @@ export default function EditStatusKaryawanModalDisclosure({
     onSubmit: (values, { resetForm }) => {
       const payload = {
         label: values.label,
-        kategori_status_id: values.kategori?.id,
+        kategori_status_id: values.kategori?.value,
       };
       setLoading(true);
       req
