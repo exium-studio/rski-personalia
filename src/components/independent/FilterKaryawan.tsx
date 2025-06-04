@@ -40,6 +40,7 @@ import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryaw
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import useGetUserData from "../../hooks/useGetUserData";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -147,8 +148,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   });
 
   const location = useLocation();
-  // const user = useGetUserData();
-  // const userRef = useRef(user);
+  const user = useGetUserData();
   // const { userPermissions } = useAuth();
   // const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
   // const filterKaryawanRef = useRef(filterKaryawan);
@@ -219,7 +219,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
 
           <ModalBody className="scrollY">
             <Accordion allowToggle>
-              {!isForceFilterUnitkerja && (
+              {user?.id === 1 && !isForceFilterUnitkerja && (
                 <FilterUnitKerja
                   filterConfig={localFilterConfig}
                   setFilterConfig={setLocalFilterConfig}

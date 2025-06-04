@@ -65,8 +65,8 @@ export default function AnulirPresensi() {
             >
               <ExportModal
                 url="/api/rski/dashboard/perusahaan/diklat-eksternal/export"
-                title="Export Diklat Eksternal"
-                downloadFileName="Data Diklat Eksternal"
+                title="Export Anulir Presensi"
+                downloadFileName="Data Anulir Presensi  "
                 isDisabled={!exportPermissions}
               />
             </PermissionTooltip>

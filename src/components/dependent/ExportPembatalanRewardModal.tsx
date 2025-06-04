@@ -123,7 +123,7 @@ export default function ExportPembatalanRewardModal({ ...props }: Props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Export Cuti"} />
+            <DisclosureHeader title={"Export Reward"} />
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.6}>
@@ -133,7 +133,7 @@ export default function ExportPembatalanRewardModal({ ...props }: Props) {
           <ModalFooter>
             <CContainer gap={2}>
               <FilterKaryawanForExport
-                id="filter-karyawan-export-presensi"
+                id="filter-karyawan-export-reward-presensi"
                 defaultFilterKaryawan={defaultFilterKaryawan}
                 filterKaryawan={filterKaryawan}
                 setFilterKaryawan={setFilterKaryawan}
