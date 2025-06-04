@@ -224,12 +224,10 @@ export default function EditKaryawanForm({
       tempat_lahir: data?.tempat_lahir,
       tgl_lahir: data?.tgl_lahir && new Date(data?.tgl_lahir),
       no_hp: data?.no_hp,
-      jenis_kelamin: data?.jenis_kelamin
-        ? {
-            value: data?.jenis_kelamin,
-            label: data?.jenis_kelamin === 1 ? "Laki - Laki" : "Perempuan",
-          }
-        : undefined,
+      jenis_kelamin: {
+        value: data?.jenis_kelamin,
+        label: data?.jenis_kelamin === 1 ? "Laki - Laki" : "Perempuan",
+      },
       nik_ktp: data?.nik_ktp || "",
       no_kk: data?.no_kk || "",
       agama: data?.agama
