@@ -219,7 +219,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
 
           <ModalBody className="scrollY">
             <Accordion allowToggle>
-              {user?.id === 1 && !isForceFilterUnitkerja && (
+              {(user?.id === 1 || !isForceFilterUnitkerja) && (
                 <FilterUnitKerja
                   filterConfig={localFilterConfig}
                   setFilterConfig={setLocalFilterConfig}
