@@ -21,7 +21,7 @@ import { useLocation } from "react-router-dom";
 import { affectedtedPathForceUnitKerjaFilter } from "../../constant/affectedPathForceUnitKerjaFIlter";
 import { useLightDarkColor } from "../../constant/colors";
 import { iconSize } from "../../constant/sizes";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useFilterKaryawanForceFilter from "../../global/useFilterKaryawanForceFilter";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useGetUserData from "../../hooks/useGetUserData";
 import backOnClose from "../../lib/backOnClose";
@@ -45,10 +45,16 @@ interface Props extends ButtonProps {
   title?: string;
 }
 
-export default function FilterKaryawan({ title, ...props }: Props) {
+export default function FilterKaryawanForceFilter({ title, ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("filter-karyawan", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
+
+  const location = useLocation();
+  const user = useGetUserData();
+  const isForceFilterUnitkerja = affectedtedPathForceUnitKerjaFilter.some(
+    (path) => path === location.pathname
+  );
 
   const {
     defaultFilterKaryawan,
@@ -56,7 +62,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     setFilterKaryawan,
     setFormattedFilterKaryawan,
     clearFormattedFilterKaryawan,
-  } = useFilterKaryawan();
+  } = useFilterKaryawanForceFilter();
 
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
     filterKaryawan
@@ -136,7 +142,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
 
     clearFormattedFilterKaryawan();
 
-    console.log("formatted filter", formattedFilters);
+    // console.log("formatted filter", formattedFilters);
 
     setFormattedFilterKaryawan(
       formattedFilterKaryawanReducer(formattedFilters)
@@ -147,16 +153,6 @@ export default function FilterKaryawan({ title, ...props }: Props) {
   //   setFilterKaryawan(defaultFilterKaryawan);
   //   clearFormattedFilterKaryawan();
   // });
-
-  const location = useLocation();
-  const user = useGetUserData();
-  // const { userPermissions } = useAuth();
-  // const bypassUnitKerjaPermission = isHasPermissions(userPermissions, [25]);
-  // const filterKaryawanRef = useRef(filterKaryawan);
-  // const formattedFilterKaryawanRef = useRef(formattedFilterKaryawan);
-  const isForceFilterUnitkerja = affectedtedPathForceUnitKerjaFilter.some(
-    (path) => path === location.pathname
-  );
 
   const handleApplyFilterRef = useRef(handleApplyFilter);
   useEffect(() => {

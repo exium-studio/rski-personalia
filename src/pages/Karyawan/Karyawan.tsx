@@ -5,7 +5,7 @@ import ImportModal from "../../components/dependent/ImportModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelKaryawan from "../../components/dependent/TabelKaryawan";
 import TambahKaryawanModal from "../../components/dependent/TambahKaryawanModal";
-import FilterKaryawan from "../../components/independent/FilterKaryawan";
+import FilterKaryawanForceFilter from "../../components/independent/FilterKaryawanForceFilter";
 import KaryawanTableColumnsConfig from "../../components/independent/KaryawanTableColumnsConfig";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
@@ -90,7 +90,7 @@ export default function Karyawan() {
               placeholder="nama/no. induk karyawan"
             />
 
-            <FilterKaryawan />
+            <FilterKaryawanForceFilter />
 
             <KaryawanTableColumnsConfig title="Config Kolom Tabel Karyawan" />
 

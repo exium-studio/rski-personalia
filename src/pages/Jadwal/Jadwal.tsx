@@ -6,7 +6,7 @@ import ImportModal from "../../components/dependent/ImportModal";
 import DateRangePickerModal from "../../components/dependent/input/DateRangePickerModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelJadwal from "../../components/dependent/TabelJadwal";
-import FilterKaryawan from "../../components/independent/FilterKaryawan";
+import FilterKaryawanForceFilter from "../../components/independent/FilterKaryawanForceFilter";
 import TerapkanJadwalModal from "../../components/independent/TerapkanJadwalModal";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
@@ -15,9 +15,9 @@ import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import useFilterKaryawanForceFilter from "../../global/useFilterKaryawanForceFilter";
-import isHasPermissions from "../../lib/isHasPermissions";
-import useGetUserData from "../../hooks/useGetUserData";
 import { useForceUnitKerjaFilter } from "../../hooks/useForceUnitKerjaFilter";
+import useGetUserData from "../../hooks/useGetUserData";
+import isHasPermissions from "../../lib/isHasPermissions";
 
 export default function Jadwal() {
   // Filter Config
@@ -132,7 +132,7 @@ export default function Jadwal() {
               presetsConfig={["thisWeek", "nextWeek"]}
             />
 
-            <FilterKaryawan />
+            <FilterKaryawanForceFilter />
 
             <PermissionTooltip
               permission={exportPermissions}

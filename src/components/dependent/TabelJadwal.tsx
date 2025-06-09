@@ -43,8 +43,7 @@ export default function TabelJadwal({ filterConfig }: Props) {
   // Filter Karyawan Config
   const { formattedFilterKaryawan } = useFilterKaryawanForceFilter();
 
-  // console.log(filterKaryawan);
-  // console.log(formattedFilterKaryawan);
+  // console.log("formattred filter tabel jadwal", formattedFilterKaryawan);
 
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any>({
