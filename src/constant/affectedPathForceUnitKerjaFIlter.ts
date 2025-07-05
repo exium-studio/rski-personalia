@@ -1,1 +1,5 @@
-export const affectedtedPathForceUnitKerjaFilter = ["/karyawan", "/jadwal"];
+export const affectedtedPathForceUnitKerjaFilter = [
+  "/karyawan",
+  "/jadwal",
+  "/presensi",
+];

@@ -1,6 +1,6 @@
 import { Badge, Center, Text, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useFilterKaryawanForceFilter from "../../global/useFilterKaryawanForceFilter";
 import useDataState from "../../hooks/useDataState";
 import formatDate from "../../lib/formatDate";
 import formatTime from "../../lib/formatTimeOld";
@@ -27,7 +27,7 @@ export default function TabelPresensi({ filterConfig }: Props) {
   // Presensi Detail Disclosure Config
   const { isOpen, onOpen, onClose } = useDisclosure();
   // Filter Karyawan Config
-  const { formattedFilterKaryawan } = useFilterKaryawan();
+  const { formattedFilterKaryawan } = useFilterKaryawanForceFilter();
 
   const { error, notFound, loading, data, paginationData, retry } =
     useDataState<any>({

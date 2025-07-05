@@ -6,7 +6,7 @@ import ImportModal from "../../components/dependent/ImportModal";
 import DateRangePickerModal from "../../components/dependent/input/DateRangePickerModal";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelPresensi from "../../components/dependent/TabelPresensi";
-import FilterKaryawan from "../../components/independent/FilterKaryawan";
+import FilterKaryawanForceFilter from "../../components/independent/FilterKaryawanForceFilter";
 import PresensiTotal from "../../components/independent/PresensiTotal";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
@@ -14,7 +14,7 @@ import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
-import useFilterKaryawan from "../../global/useFilterKaryawan";
+import useFilterKaryawanForceFilter from "../../global/useFilterKaryawanForceFilter";
 import useGetUserData from "../../hooks/useGetUserData";
 import isHasPermissions from "../../lib/isHasPermissions";
 
@@ -37,7 +37,8 @@ export default function Presensi() {
     ...defaultFilterConfig,
   });
   const [search, setSearch] = useState("");
-  const { setFilterKaryawan, setFormattedFilterKaryawan } = useFilterKaryawan();
+  const { setFilterKaryawan, setFormattedFilterKaryawan } =
+    useFilterKaryawanForceFilter();
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterKaryawan({ search });
@@ -135,7 +136,7 @@ export default function Presensi() {
               presetsConfig={["thisWeek", "thisMonth"]}
             />
 
-            <FilterKaryawan />
+            <FilterKaryawanForceFilter />
 
             <PermissionTooltip
               permission={exportPermission}
