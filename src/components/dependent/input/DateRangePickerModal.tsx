@@ -195,12 +195,12 @@ export default function DateRangePickerModal({
   }
   function prevMonth() {
     const currentMonth = date.getMonth();
-    const currentyear = date.getFullYear();
+    const currentYear = date.getFullYear();
 
-    const prevMonth = new Date(
-      bulan === 1 ? currentyear - 1 : tahun,
-      bulan === 1 ? 11 : currentMonth - 1
-    );
+    const newMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+    const newYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+    const prevMonth = new Date(newYear, newMonth);
     setDate(prevMonth);
     setBulan(prevMonth.getMonth());
     setTahun(prevMonth.getFullYear());
