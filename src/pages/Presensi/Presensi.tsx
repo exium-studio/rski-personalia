@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { endOfWeek, startOfWeek } from "date-fns";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ExportPresensiModal from "../../components/dependent/ExportPresensiModal";
 import ImportModal from "../../components/dependent/ImportModal";
 import DateRangePickerModal from "../../components/dependent/input/DateRangePickerModal";
@@ -17,6 +17,7 @@ import useAuth from "../../global/useAuth";
 import useFilterKaryawanForceFilter from "../../global/useFilterKaryawanForceFilter";
 import useGetUserData from "../../hooks/useGetUserData";
 import isHasPermissions from "../../lib/isHasPermissions";
+import { useForceUnitKerjaFilter } from "../../hooks/useForceUnitKerjaFilter";
 
 export default function Presensi() {
   const today = new Date();
@@ -37,8 +38,12 @@ export default function Presensi() {
     ...defaultFilterConfig,
   });
   const [search, setSearch] = useState("");
-  const { setFilterKaryawan, setFormattedFilterKaryawan } =
-    useFilterKaryawanForceFilter();
+  const {
+    filterKaryawan,
+    formattedFilterKaryawan,
+    setFilterKaryawan,
+    setFormattedFilterKaryawan,
+  } = useFilterKaryawanForceFilter();
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilterKaryawan({ search });
@@ -70,9 +75,22 @@ export default function Presensi() {
   // SX
   const lightDarkColor = useLightDarkColor();
 
+  // Permission
   const { userPermissions } = useAuth();
   const exportPermission = isHasPermissions(userPermissions, [47]);
   const importPermission = isHasPermissions(userPermissions, [46]);
+
+  // Handle force filter unit kerja
+  const user = useGetUserData();
+  const userRef = useRef(user);
+  const formattedFilterKaryawanRef = useRef(formattedFilterKaryawan);
+  useForceUnitKerjaFilter({
+    userRef,
+    filterKaryawan,
+    setFilterKaryawan,
+    formattedFilterKaryawanRef,
+    setFormattedFilterKaryawan,
+  });
 
   return (
     <>
