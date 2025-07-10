@@ -4,7 +4,7 @@ import ExportModal from "../../components/dependent/ExportModal";
 import NumberInput from "../../components/dependent/input/NumberInput";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelDiklat from "../../components/dependent/TabelDiklat";
-import TambahAcaraDiklat from "../../components/independent/TambahAcaraDiklat";
+import TambahAcaraDiklat from "../../components/independent/TambahDiklatInternal";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import { useLightDarkColor } from "../../constant/colors";

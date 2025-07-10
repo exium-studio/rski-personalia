@@ -34,6 +34,7 @@ interface Props extends ButtonProps {
   initialFilepath?: string;
   cProps?: StackProps;
   iProps?: ImageProps;
+  disabled?: boolean;
 }
 
 export default function FileInputLarge({
@@ -46,6 +47,7 @@ export default function FileInputLarge({
   initialFilepath,
   cProps,
   iProps,
+  disabled,
   ...props
 }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -118,7 +120,12 @@ export default function FileInputLarge({
         mb={4}
       />
 
-      <CContainer h={"100%"} w={"100%"}>
+      <CContainer
+        h={"100%"}
+        w={"100%"}
+        opacity={disabled ? 0.5 : 1}
+        pointerEvents={disabled ? "none" : "auto"}
+      >
         <VStack
           as={Button}
           w={"100%"}

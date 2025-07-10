@@ -45,7 +45,7 @@ import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import req from "../../lib/req";
 import RequiredForm from "../form/RequiredForm";
-import EditDiklat from "../independent/EditDiklat";
+import EditDiklatInternal from "../independent/EditDiklatInternal";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
@@ -601,14 +601,14 @@ export default function TabelDiklat({ filterConfig }: Props) {
   const rowOptions = [
     (rowData: any) => {
       return (
-        <EditDiklat rowData={rowData}>
+        <EditDiklatInternal rowData={rowData}>
           <PermissionTooltip permission={editPermission} placement="left">
             <MenuItem isDisabled={!editPermission}>
               <Text>Edit</Text>
               <Icon as={RiEditLine} fontSize={iconSize} opacity={0.4} />
             </MenuItem>
           </PermissionTooltip>
-        </EditDiklat>
+        </EditDiklatInternal>
       );
     },
   ];

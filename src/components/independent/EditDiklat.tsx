@@ -25,6 +25,7 @@ import DisclosureHeader from "../dependent/DisclosureHeader";
 import StringInput from "../dependent/input/StringInput";
 import Textarea from "../dependent/input/Textarea";
 import RequiredForm from "../form/RequiredForm";
+import formatDate from "../../lib/formatDate";
 
 interface Props extends BoxProps {
   rowData: any;
@@ -40,7 +41,7 @@ export default function EditDiklat({
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
-    `edit-kuota-cuti-modal-${rowData.id}`,
+    `edit-diklat-external-modal-${rowData.id}`,
     isOpen,
     onOpen,
     onClose
@@ -57,17 +58,17 @@ export default function EditDiklat({
       // gambar: undefined as any,
       // whitelist_peserta: undefined as any,
       nama: "",
-      // kategori: {
-      //   value: 1,
-      //   label: "Internal",
-      // },
+      kategori: {
+        value: 1,
+        label: "Internal",
+      },
       deskripsi: "",
-      // kuota: undefined as any,
+      kuota: undefined as any,
       lokasi: "",
-      // tgl_mulai: undefined as any,
-      // tgl_selesai: undefined as any,
-      // jam_mulai: undefined as any,
-      // jam_selesai: undefined as any,
+      tgl_mulai: undefined as any,
+      tgl_selesai: undefined as any,
+      jam_mulai: undefined as any,
+      jam_selesai: undefined as any,
       skp: "" as any,
       // dokumen_diklat_1: undefined as any,
       // dokumen_diklat_2: undefined as any,
@@ -79,14 +80,14 @@ export default function EditDiklat({
       // gambar: yup.string().required("Harus diisi"),
       // whitelist_peserta: yup.array(),
       nama: yup.string().required("Harus diisi"),
-      // kategori: yup.object().required("Harus diisi"),
+      kategori: yup.object().required("Harus diisi"),
       deskripsi: yup.string().required("Harus diisi"),
-      // kuota: yup.number().required("Harus diisi"),
+      kuota: yup.number().required("Harus diisi"),
       lokasi: yup.string().required("Harus diisi"),
-      // tgl_mulai: yup.string().required("Harus diisi"),
-      // tgl_selesai: yup.string().required("Harus diisi"),
-      // jam_mulai: yup.string().required("Harus diisi"),
-      // jam_selesai: yup.string().required("Harus diisi"),
+      tgl_mulai: yup.string().required("Harus diisi"),
+      tgl_selesai: yup.string().required("Harus diisi"),
+      jam_mulai: yup.string().required("Harus diisi"),
+      jam_selesai: yup.string().required("Harus diisi"),
       skp: yup.string(),
       // dokumen_diklat_1: yup.mixed(),
       // dokumen_diklat_2: yup.mixed(),
@@ -95,7 +96,7 @@ export default function EditDiklat({
       // dokumen_diklat_5: yup.mixed(),
     }),
     onSubmit: (values, { resetForm }) => {
-      // console.log(values.whitelist_peserta);
+      console.log(values);
       // const payload = {
       //   nama: "",
       // };
@@ -106,11 +107,11 @@ export default function EditDiklat({
       // payload.append("dokumen", values.gambar);
       payload.append("nama", values.nama);
       payload.append("deskripsi", values.deskripsi);
-      // payload.append("kuota", values.kuota);
-      // payload.append("tgl_mulai", formatDate(values.tgl_mulai, "short"));
-      // payload.append("tgl_selesai", formatDate(values.tgl_selesai, "short"));
-      // payload.append("jam_mulai", values.jam_mulai);
-      // payload.append("jam_selesai", values.jam_selesai);
+      payload.append("kuota", values.kuota);
+      payload.append("tgl_mulai", formatDate(values.tgl_mulai, "short"));
+      payload.append("tgl_selesai", formatDate(values.tgl_selesai, "short"));
+      payload.append("jam_mulai", values.jam_mulai);
+      payload.append("jam_selesai", values.jam_selesai);
       payload.append("lokasi", values.lokasi);
       payload.append("skp", values.skp);
       // if (values.dokumen_diklat_1)
@@ -125,7 +126,7 @@ export default function EditDiklat({
       //   payload.append("dokumen_diklat_5", values.dokumen_diklat_5);
 
       setLoading(true);
-      let url = `api/rski/dashboard/perusahaan/update-diklat/${rowData?.id}`;
+      let url = `api/rski/dashboard/perusahaan/update-diklat-eksternal-user/${rowData?.id}`;
       if (jenisDiklat === "eksternal")
         url = `api/rski/dashboard/perusahaan/update-diklat-eksternal-user/${rowData?.id}`;
 
