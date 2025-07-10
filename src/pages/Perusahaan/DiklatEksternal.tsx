@@ -4,7 +4,7 @@ import ExportModal from "../../components/dependent/ExportModal";
 import NumberInput from "../../components/dependent/input/NumberInput";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelDiklatEksternal from "../../components/dependent/TabelDiklatEksternal";
-import TambahAcaraDiklatEksternal from "../../components/independent/TambahAcaraDiklatEksternal";
+import TambahAcaraDiklatEksternal from "../../components/independent/TambahDiklatEksternal";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
 import PermissionTooltip from "../../components/wrapper/PermissionTooltip";

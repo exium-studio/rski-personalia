@@ -85,7 +85,6 @@ export default function TambahAcaraDiklatEksternal({ ...props }: Props) {
       payload.append("dokumen", values.dokumen);
       payload.append("nama", values.nama);
       payload.append("deskripsi", values.deskripsi);
-      // payload.append("kuota", values.kuota);
       payload.append("tgl_mulai", formatDate(values.tgl_mulai, "short"));
       payload.append("tgl_selesai", formatDate(values.tgl_selesai, "short"));
       payload.append("jam_mulai", values.jam_mulai);
