@@ -18,19 +18,18 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
   RangeSliderTrack,
-  Switch,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import useBackOnClose from "../../hooks/useBackOnClose";
+import { RiEqualizer3Fill } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { useLightDarkColor } from "../../constant/colors";
-import { RiEqualizer3Fill } from "@remixicon/react";
 import { iconSize } from "../../constant/sizes";
-import formatNumber from "../../lib/formatNumber";
+import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "./DisclosureHeader";
+import formatNumber from "../../lib/formatNumber";
 import CContainer from "../wrapper/CContainer";
+import DisclosureHeader from "./DisclosureHeader";
 
 const FilterMasaDiklat = (props: any) => {
   const { id, inputValue, onConfirm } = props;
@@ -59,7 +58,7 @@ const FilterMasaDiklat = (props: any) => {
         more_than: 20,
       });
     }
-  }, [more]);
+  }, [more, localFilterConfig]);
 
   return (
     <>

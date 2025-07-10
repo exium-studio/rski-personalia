@@ -2,12 +2,9 @@ import {
   Box,
   BoxProps,
   Button,
-  ButtonProps,
   FormControl,
   FormErrorMessage,
-  FormHelperText,
   FormLabel,
-  Icon,
   Input,
   Modal,
   ModalBody,
@@ -18,16 +15,15 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiUser2Fill } from "@remixicon/react";
 import { useFormik } from "formik";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import { iconSize } from "../../constant/sizes";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
+import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanAllJenisKaryawan";
 import SelectKategoriDiklat from "../dependent/_Select/SelectKategoriDiklat";
 import DisclosureHeader from "../dependent/DisclosureHeader";
 import DateRangePickerModal from "../dependent/input/DateRangePickerModal";
@@ -36,7 +32,6 @@ import Textarea from "../dependent/input/Textarea";
 import TimePickerModal from "../dependent/input/TimePickerModal";
 import RequiredForm from "../form/RequiredForm";
 import CContainer from "../wrapper/CContainer";
-import SelectKaryawanAllJenisKaryawan from "../dependent/_Select/SelectKaryawanAllJenisKaryawan";
 
 interface Props extends BoxProps {
   rowData: any;
