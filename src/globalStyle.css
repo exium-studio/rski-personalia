@@ -179,6 +179,10 @@ button:focus-visible {
   transform: scale(0.97);
 }
 
+.chakra-checkbox__label {
+  margin-top: -2px !important;
+}
+
 .selected {
   background: var(--p500a5) !important;
   color: var(--p500) !important;
