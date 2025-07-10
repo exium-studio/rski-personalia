@@ -33,7 +33,10 @@ export default function DashboardJenisKelamin({ ...props }: Props) {
   const datasets = [
     {
       label: "Persentase (%)",
-      data: [data?.persen_laki_laki, data?.persen_perempuan],
+      data: [
+        data?.akumulatif_karyawan?.[0]?.persen_laki_laki,
+        data?.akumulatif_karyawan?.[0]?.persen_perempuan,
+      ],
       backgroundColor: ["#90CDF4", "#805AD5"],
       borderWidth: 0,
     },
@@ -41,6 +44,8 @@ export default function DashboardJenisKelamin({ ...props }: Props) {
 
   // SX
   const bodyColor = useBodyColor();
+
+  console.log(data);
 
   return (
     <>
@@ -125,9 +130,15 @@ export default function DashboardJenisKelamin({ ...props }: Props) {
 
                         <Text>Pria</Text>
 
-                        <Text pl={2} ml={"auto"}>
-                          {data.persen_laki_laki}%
-                        </Text>
+                        <HStack ml={"auto"}>
+                          <Text opacity={0.5}>
+                            {data?.akumulatif_karyawan?.[0]?.persen_laki_laki}%
+                          </Text>
+
+                          <Text>
+                            {data?.akumulatif_karyawan?.[1]?.jumlah_laki_laki}
+                          </Text>
+                        </HStack>
                       </HStack>
 
                       <HStack gap={4}>
@@ -140,9 +151,15 @@ export default function DashboardJenisKelamin({ ...props }: Props) {
 
                         <Text>Wanita</Text>
 
-                        <Text pl={2} ml={"auto"}>
-                          {data.persen_perempuan}%
-                        </Text>
+                        <HStack ml={"auto"}>
+                          <Text opacity={0.5}>
+                            {data?.akumulatif_karyawan?.[0]?.persen_perempuan}%
+                          </Text>
+
+                          <Text>
+                            {data?.akumulatif_karyawan?.[1]?.jumlah_perempuan}
+                          </Text>
+                        </HStack>
                       </HStack>
                     </VStack>
                   </Wrap>
