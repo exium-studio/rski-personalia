@@ -25,6 +25,9 @@ import FilterKaryawanForExport from "../independent/FilterKaryawanForExport";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import SelectTipeCuti from "./_Select/SelectTipeCuti";
+import { endOfWeek, startOfWeek } from "date-fns";
+import formatDate from "../../lib/formatDate";
+import DateRangePickerModal from "./input/DateRangePickerModal";
 
 interface Props extends ButtonProps {}
 
@@ -36,13 +39,13 @@ export default function ExportCutiModal({ ...props }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
 
-  // const today = new Date();
-  // const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
-  // const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
-  // const defaultRangeTgl = {
-  //   from: startOfWeekDate,
-  //   to: endOfWeekDate,
-  // };
+  const today = new Date();
+  const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
+  const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
+  const defaultRangeTgl = {
+    from: startOfWeekDate,
+    to: endOfWeekDate,
+  };
   const {
     defaultFilterKaryawan,
     filterKaryawan,
@@ -52,27 +55,27 @@ export default function ExportCutiModal({ ...props }: Props) {
   } = useFilterKaryawanExportCuti();
 
   // Filter Config
-  // const defaultFilterConfig = {
-  //   tgl_mulai: defaultRangeTgl?.from,
-  //   tgl_selesai: defaultRangeTgl?.to,
-  // };
-  // const [dateRange, setDateRange] = useState<any>(defaultFilterConfig);
+  const defaultFilterConfig = {
+    tgl_mulai: defaultRangeTgl?.from,
+    tgl_selesai: defaultRangeTgl?.to,
+  };
+  const [dateRange, setDateRange] = useState<any>(defaultFilterConfig);
 
-  // const confirmDateRange = (
-  //   inputValue: { from: Date; to: Date } | undefined
-  // ) => {
-  //   setDateRange({
-  //     tgl_mulai: inputValue?.from,
-  //     tgl_selesai: inputValue?.to,
-  //   });
-  // };
+  const confirmDateRange = (
+    inputValue: { from: Date; to: Date } | undefined
+  ) => {
+    setDateRange({
+      tgl_mulai: inputValue?.from,
+      tgl_selesai: inputValue?.to,
+    });
+  };
 
   const [tipeCuti, setTipeCuti] = useState<any>(null);
   const handleExport = () => {
     setLoading(true);
     const payload = {
-      // tgl_mulai: formatDate(dateRange?.tgl_mulai, "short"),
-      // tgl_selesai: formatDate(dateRange?.tgl_selesai, "short"),
+      tgl_mulai: formatDate(dateRange?.tgl_mulai, "short"),
+      tgl_selesai: formatDate(dateRange?.tgl_selesai, "short"),
       ...formattedFilterKaryawan,
       tipe_cuti: tipeCuti?.value,
     };
@@ -185,7 +188,7 @@ export default function ExportCutiModal({ ...props }: Props) {
                 inputValue={tipeCuti}
               />
 
-              {/* <DateRangePickerModal
+              <DateRangePickerModal
                 id="jadwal-date-range"
                 name="date-range"
                 minW={"165px"}
@@ -198,7 +201,7 @@ export default function ExportCutiModal({ ...props }: Props) {
                 maxRange={31}
                 nonNullable
                 presetsConfig={["thisWeek", "thisMonth"]}
-              /> */}
+              />
 
               <ButtonGroup>
                 <Button
