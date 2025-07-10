@@ -124,7 +124,7 @@ export default function FileInputLarge({
         h={"100%"}
         w={"100%"}
         opacity={disabled ? 0.5 : 1}
-        pointerEvents={disabled ? "none" : "auto"}
+        cursor={disabled ? "disabled !important" : "auto"}
       >
         <VStack
           as={Button}
@@ -148,6 +148,7 @@ export default function FileInputLarge({
               inputRef.current.click();
             }
           }}
+          pointerEvents={disabled ? "none" : "auto"}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}

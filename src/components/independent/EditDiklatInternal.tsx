@@ -15,6 +15,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import MultiSelectKaryawanPenerimaWithFilter from "../dependent/_Select/MultiSelectKaryawanWithFilter";
 import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
@@ -320,6 +321,25 @@ export default function EditDiklatInternal({
               </SimpleGrid>
 
               <SimpleGrid columns={[1, 2, 3]} spacingX={4}>
+                <FormControl
+                  mb={4}
+                  isInvalid={!!formik.errors.whitelist_peserta}
+                >
+                  <FormLabel>Whitelist Peserta</FormLabel>
+                  <MultiSelectKaryawanPenerimaWithFilter
+                    name="whitelist_peserta"
+                    optionsDisplay="chip"
+                    onConfirm={(input) => {
+                      formik.setFieldValue("whitelist_peserta", input);
+                    }}
+                    inputValue={formik.values.whitelist_peserta}
+                    disabled
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.whitelist_peserta as string}
+                  </FormErrorMessage>
+                </FormControl>
+
                 <FormControl mb={4} isInvalid={!!formik.errors.kuota}>
                   <FormLabel>
                     Kuota Peserta
@@ -374,22 +394,6 @@ export default function EditDiklatInternal({
                       (formik.errors.tgl_mulai ||
                         formik.errors.tgl_selesai) as string
                     }
-                  </FormErrorMessage>
-                </FormControl>
-
-                <FormControl mb={4} isInvalid={!!formik.errors.lokasi}>
-                  <FormLabel>
-                    Lokasi
-                    <RequiredForm />
-                  </FormLabel>
-                  <Input
-                    name="lokasi"
-                    placeholder="Gedung Serba Guna"
-                    onChange={formik.handleChange}
-                    value={formik.values.lokasi}
-                  />
-                  <FormErrorMessage>
-                    {formik.errors.lokasi as string}
                   </FormErrorMessage>
                 </FormControl>
 
@@ -451,6 +455,22 @@ export default function EditDiklatInternal({
                   />
                   <FormErrorMessage>
                     {formik.errors.skp as string}
+                  </FormErrorMessage>
+                </FormControl>
+
+                <FormControl mb={4} isInvalid={!!formik.errors.lokasi}>
+                  <FormLabel>
+                    Lokasi
+                    <RequiredForm />
+                  </FormLabel>
+                  <Input
+                    name="lokasi"
+                    placeholder="Gedung Serba Guna"
+                    onChange={formik.handleChange}
+                    value={formik.values.lokasi}
+                  />
+                  <FormErrorMessage>
+                    {formik.errors.lokasi as string}
                   </FormErrorMessage>
                 </FormControl>
               </SimpleGrid>

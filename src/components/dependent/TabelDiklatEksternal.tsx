@@ -22,7 +22,7 @@ import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
 import isHasPermissions from "../../lib/isHasPermissions";
-import EditDiklatInternal from "../independent/EditDiklat";
+import EditDiklatInternal from "../independent/EditDiklatEksternal";
 import { RiEditLine } from "@remixicon/react";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
