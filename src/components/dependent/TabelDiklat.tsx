@@ -215,6 +215,7 @@ const PesertaModal = ({ data }: any) => {
                           foto_profil: peserta?.user?.foto_profil?.path,
                         }}
                         // noDetail
+                        truncateName={"props"}
                         w={"fit-content"}
                         maxW={"fit-content"}
                       />
