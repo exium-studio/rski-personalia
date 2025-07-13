@@ -201,7 +201,7 @@ export default function EditDiklat({
         <ModalContent minH={"calc(100vh - 32px)"} borderRadius={12}>
           <ModalHeader ref={initialRef}>
             <DisclosureHeader
-              title="Tambah Data Diklat"
+              title="Edit Data Diklat"
               onClose={() => {
                 formik.resetForm();
               }}
@@ -453,7 +453,7 @@ export default function EditDiklat({
                 flexShrink={0}
                 isLoading={loading}
               >
-                Tambahkan Data
+                Simpan
               </Button>
             </CContainer>
           </ModalBody>
