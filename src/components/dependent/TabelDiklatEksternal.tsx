@@ -50,7 +50,7 @@ interface Props {
   filterConfig: any;
 }
 
-const DeleteCutiConfirmation = ({ rowData }: any) => {
+const DeleteConfirmation = ({ rowData }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(
     `delete-diklat-eksternal-confirmation-${rowData?.id}`,
@@ -190,7 +190,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
       );
     },
     (rowData: any) => {
-      return <DeleteCutiConfirmation rowData={rowData} />;
+      return <DeleteConfirmation rowData={rowData} />;
     },
   ];
 

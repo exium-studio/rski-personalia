@@ -65,6 +65,102 @@ import VerifikatorName from "./VerifikatorName";
 import MultiSelectKaryawanWithFilter from "./_Select/MultiSelectKaryawanWithFilter";
 import SearchComponent from "./input/SearchComponent";
 
+const DeleteConfirmation = ({ rowData }: any) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    `delete-diklat-internal-confirmation-${rowData?.id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+  const [deleteCutiLoading, setDeleteCutiLoading] = useState(false);
+  function handleDeleteCuti(rowData: any) {
+    setDeleteCutiLoading(true);
+    req
+      .delete(
+        `/api/rski/dashboard/perusahaan/delete-diklat-internal/${rowData?.id}`
+      )
+      .then((r) => {
+        if (r?.status === 200) {
+          toast({
+            status: "success",
+            title: r.data.message,
+            isClosable: true,
+            position: "bottom-right",
+          });
+          setRt(!rt);
+          backOnClose();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
+          isClosable: true,
+          position: "bottom-right",
+        });
+      })
+      .finally(() => {
+        setDeleteCutiLoading(false);
+      });
+  }
+
+  return (
+    <>
+      <MenuItem color={"red.400"} onClick={onOpen}>
+        Delete...
+      </MenuItem>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Delete/Batalkan Diklat Eksternal"} />
+          </ModalHeader>
+          <ModalBody>
+            <Text opacity={0.4}>
+              Apakah anda yakin akan menghapus data diklat internal yang
+              dipilih?
+            </Text>
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button
+              onClick={backOnClose}
+              className="clicky btn-solid"
+              isDisabled={deleteCutiLoading}
+              w={"50%"}
+            >
+              Cancel
+            </Button>
+            <Button
+              w={"50%"}
+              className="clicky"
+              colorScheme="red"
+              onClick={() => {
+                handleDeleteCuti(rowData);
+              }}
+              isLoading={deleteCutiLoading}
+            >
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
 const KonfirmasiDeleteUser = ({
   peserta,
   dataDiklat,
@@ -610,6 +706,9 @@ export default function TabelDiklat({ filterConfig }: Props) {
           </PermissionTooltip>
         </EditDiklatInternal>
       );
+    },
+    (rowData: any) => {
+      return <DeleteConfirmation rowData={rowData} />;
     },
   ];
 
