@@ -222,6 +222,7 @@ export default function EditDiklat({
                         formik.setFieldValue("user", input);
                       }}
                       inputValue={formik.values.user}
+                      disabled
                     />
                     <FormErrorMessage>
                       {formik.errors.user as string}
