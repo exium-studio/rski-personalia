@@ -1,4 +1,23 @@
-import { Button, Center, Icon, MenuItem, Text } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Button,
+  Center,
+  Icon,
+  ListItem,
+  MenuItem,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  UnorderedList,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useDataState from "../../hooks/useDataState";
@@ -26,10 +45,111 @@ import EditDiklatInternal from "../independent/EditDiklatEksternal";
 import { RiEditLine } from "@remixicon/react";
 import { iconSize } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
+import req from "../../lib/req";
+import backOnClose from "../../lib/backOnClose";
+import DisclosureHeader from "./DisclosureHeader";
 
 interface Props {
   filterConfig: any;
 }
+
+const DeleteCutiConfirmation = ({ rowData }: any) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    `delete-diklat-eksternal-confirmation-${rowData?.id}`,
+    isOpen,
+    onOpen,
+    onClose
+  );
+  const toast = useToast();
+  const { rt, setRt } = useRenderTrigger();
+  const [deleteCutiLoading, setDeleteCutiLoading] = useState(false);
+  function handleDeleteCuti(rowData: any) {
+    setDeleteCutiLoading(true);
+    req
+      .delete(
+        `/api/rski/dashboard/perusahaan/delete-diklat-eksternal/${rowData?.id}`
+      )
+      .then((r) => {
+        if (r?.status === 200) {
+          toast({
+            status: "success",
+            title: r.data.message,
+            isClosable: true,
+            position: "bottom-right",
+          });
+          setRt(!rt);
+          backOnClose();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
+          isClosable: true,
+          position: "bottom-right",
+        });
+      })
+      .finally(() => {
+        setDeleteCutiLoading(false);
+      });
+  }
+
+  return (
+    <>
+      <MenuItem color={"red.400"} onClick={onOpen}>
+        Delete...
+      </MenuItem>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        isCentered
+        blockScrollOnMount={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Delete/Batalkan Diklat Eksternal"} />
+          </ModalHeader>
+          <ModalBody>
+            <Text opacity={0.4}>
+              Apakah anda yakin akan menghapus data diklat eksternal yang
+              dipilih?
+            </Text>
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button
+              onClick={backOnClose}
+              className="clicky btn-solid"
+              isDisabled={deleteCutiLoading}
+              w={"50%"}
+            >
+              Cancel
+            </Button>
+            <Button
+              w={"50%"}
+              className="clicky"
+              colorScheme="red"
+              onClick={() => {
+                handleDeleteCuti(rowData);
+              }}
+              isLoading={deleteCutiLoading}
+            >
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 
 export default function TabelDiklatEksternal({ filterConfig }: Props) {
   // Limit Config
@@ -73,6 +193,9 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
           </PermissionTooltip>
         </EditDiklatInternal>
       );
+    },
+    (rowData: any) => {
+      return <DeleteCutiConfirmation rowData={rowData} />;
     },
   ];
 
