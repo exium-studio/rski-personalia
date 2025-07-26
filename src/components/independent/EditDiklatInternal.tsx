@@ -85,7 +85,7 @@ export default function EditDiklatInternal({
     },
     validationSchema: yup.object().shape({
       // gambar: yup.string().required("Harus diisi"),
-      // whitelist_peserta: yup.array(),
+      whitelist_peserta: yup.array(),
       nama: yup.string().required("Harus diisi"),
       kategori: yup.object().required("Harus diisi"),
       deskripsi: yup.string().required("Harus diisi"),
@@ -105,9 +105,9 @@ export default function EditDiklatInternal({
     onSubmit: (values, { resetForm }) => {
       // console.log(values.whitelist_peserta);
       const payload = new FormData();
-      // values.whitelist_peserta?.forEach((peserta: any) => {
-      //   payload.append("user_id[]", peserta.value);
-      // });
+      values.whitelist_peserta?.forEach((peserta: any) => {
+        payload.append("user_id[]", peserta.value);
+      });
       // payload.append("dokumen", values.gambar);
       payload.append("nama", values.nama);
       payload.append("deskripsi", values.deskripsi);
@@ -118,16 +118,6 @@ export default function EditDiklatInternal({
       payload.append("jam_selesai", values.jam_selesai);
       payload.append("lokasi", values.lokasi);
       payload.append("skp", values.skp);
-      // if (values.dokumen_diklat_1)
-      //   payload.append("dokumen_diklat_1", values.dokumen_diklat_1);
-      // if (values.dokumen_diklat_2)
-      //   payload.append("dokumen_diklat_2", values.dokumen_diklat_2);
-      // if (values.dokumen_diklat_3)
-      //   payload.append("dokumen_diklat_3", values.dokumen_diklat_3);
-      // if (values.dokumen_diklat_4)
-      //   payload.append("dokumen_diklat_4", values.dokumen_diklat_4);
-      // if (values.dokumen_diklat_5)
-      //   payload.append("dokumen_diklat_5", values.dokumen_diklat_5);
 
       setLoading(true);
       req
@@ -184,6 +174,15 @@ export default function EditDiklatInternal({
       formikRef.current.setFieldValue(
         "deskripsi",
         rowData.originalData.deskripsi
+      );
+      formikRef.current.setFieldValue(
+        "whitelist_peserta",
+        rowData.originalData.list_peserta?.map((item: any) => {
+          return {
+            value: item.user.id,
+            label: item.user.nama,
+          };
+        })
       );
       formikRef.current.setFieldValue("kuota", rowData.originalData.kuota);
       formikRef.current.setFieldValue(
@@ -333,7 +332,6 @@ export default function EditDiklatInternal({
                       formik.setFieldValue("whitelist_peserta", input);
                     }}
                     inputValue={formik.values.whitelist_peserta}
-                    disabled
                   />
                   <FormErrorMessage>
                     {formik.errors.whitelist_peserta as string}
