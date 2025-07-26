@@ -201,7 +201,7 @@ export default function PerubahanDataRender({ column, data, index }: any) {
       return <ListKeluargaModal data={data} index={index} />;
     case "foto_profil":
       return (
-        <ViewPhotoModalDisclosure src={data}>
+        <ViewPhotoModalDisclosure src={data?.path}>
           <Image
             maxW={"32px"}
             src={data?.path}
