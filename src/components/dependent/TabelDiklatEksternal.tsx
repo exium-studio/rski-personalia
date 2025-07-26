@@ -1,11 +1,7 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Button,
   Center,
   Icon,
-  ListItem,
   MenuItem,
   Modal,
   ModalBody,
@@ -14,18 +10,26 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  UnorderedList,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { RiEditLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { iconSize } from "../../constant/sizes";
+import useAuth from "../../global/useAuth";
+import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import useGetUserData from "../../hooks/useGetUserData";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
+import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatDuration from "../../lib/formatDuration";
 import formatTime from "../../lib/formatTime";
+import isHasPermissions from "../../lib/isHasPermissions";
 import isObjectEmpty from "../../lib/isObjectEmpty";
+import req from "../../lib/req";
+import EditDiklatInternal from "../independent/EditDiklatEksternal";
 import NoData from "../independent/NoData";
 import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
@@ -34,22 +38,13 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
 import CustomTable from "./CustomTable";
+import DisclosureHeader from "./DisclosureHeader";
 import Retry from "./Retry";
 import StatusVerifikasiBadge2 from "./StatusVerifikasiBadge2";
 import TabelElipsisText from "./TabelElipsisText";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
-import isHasPermissions from "../../lib/isHasPermissions";
-import EditDiklatInternal from "../independent/EditDiklatEksternal";
-import { RiEditLine } from "@remixicon/react";
-import { iconSize } from "../../constant/sizes";
-import useAuth from "../../global/useAuth";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
-import req from "../../lib/req";
-import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "./DisclosureHeader";
 
 interface Props {
   filterConfig: any;
