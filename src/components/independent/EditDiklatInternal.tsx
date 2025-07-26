@@ -85,7 +85,7 @@ export default function EditDiklatInternal({
     },
     validationSchema: yup.object().shape({
       // gambar: yup.string().required("Harus diisi"),
-      whitelist_peserta: yup.array(),
+      whitelist_peserta: yup.array().required("Harus diisi"),
       nama: yup.string().required("Harus diisi"),
       kategori: yup.object().required("Harus diisi"),
       deskripsi: yup.string().required("Harus diisi"),
@@ -177,7 +177,7 @@ export default function EditDiklatInternal({
       );
       formikRef.current.setFieldValue(
         "whitelist_peserta",
-        rowData.originalData.list_peserta?.map((item: any) => {
+        [...rowData.originalData.list_peserta]?.map((item: any) => {
           return {
             value: item.user.id,
             label: item.user.nama,
@@ -329,6 +329,7 @@ export default function EditDiklatInternal({
                     name="whitelist_peserta"
                     optionsDisplay="chip"
                     onConfirm={(input) => {
+                      console.log("input", input);
                       formik.setFieldValue("whitelist_peserta", input);
                     }}
                     inputValue={formik.values.whitelist_peserta}
