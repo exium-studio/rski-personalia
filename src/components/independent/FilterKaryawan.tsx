@@ -143,11 +143,6 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     );
   }
 
-  // useCallBackOnNavigate(() => {
-  //   setFilterKaryawan(defaultFilterKaryawan);
-  //   clearFormattedFilterKaryawan();
-  // });
-
   const location = useLocation();
   const user = useGetUserData();
   // const { userPermissions } = useAuth();
