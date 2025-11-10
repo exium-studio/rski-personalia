@@ -41,6 +41,7 @@ const FilterMasaDiklat = (props: any) => {
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
     inputValue
   );
+  const localFilterConfigRef = useRef(localFilterConfig);
   const initialRef = useRef(null);
   const filterCount = () => {
     let count = 0;
@@ -53,12 +54,12 @@ const FilterMasaDiklat = (props: any) => {
   useEffect(() => {
     if (more) {
       setLocalFilterConfig({
-        ...localFilterConfig,
+        ...localFilterConfigRef.current,
         less_than: undefined,
         more_than: 20,
       });
     }
-  }, [more, localFilterConfig]);
+  }, [more]);
 
   return (
     <>
@@ -116,8 +117,10 @@ const FilterMasaDiklat = (props: any) => {
                 <CContainer opacity={more ? 0.5 : 1}>
                   <Center>
                     <Text fontSize={18} fontWeight={500}>
-                      {localFilterConfig.less_than ||
-                      localFilterConfig.more_than
+                      {more
+                        ? "> 20 jam"
+                        : localFilterConfig.less_than ||
+                          localFilterConfig.more_than
                         ? `${localFilterConfig.more_than || 0} - ${
                             localFilterConfig.less_than || 0
                           } jam`
@@ -207,6 +210,7 @@ const FilterMasaDiklat = (props: any) => {
                   w={"50%"}
                   className="btn-solid clicky"
                   onClick={() => {
+                    setMore(false);
                     setLocalFilterConfig({
                       ...localFilterConfig,
                       less_than: undefined,
