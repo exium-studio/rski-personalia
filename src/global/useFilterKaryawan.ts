@@ -37,7 +37,10 @@ type Actions = {
 const useFilterKaryawan = create<State & Actions>((set) => ({
   defaultFilterKaryawan: defaultFilterConfig,
   filterKaryawan: defaultFilterConfig,
-  formattedFilterKaryawan: undefined,
+  formattedFilterKaryawan: {
+    search: "",
+    status_aktif: [2],
+  },
   setFilterKaryawan: (newFilter) =>
     set((state) => ({
       filterKaryawan: {

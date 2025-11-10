@@ -61,7 +61,7 @@ export default function FilterKaryawanForceFilter({ title, ...props }: Props) {
     filterKaryawan,
     setFilterKaryawan,
     setFormattedFilterKaryawan,
-    clearFormattedFilterKaryawan,
+    // clearFormattedFilterKaryawan,
   } = useFilterKaryawanForceFilter();
 
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
@@ -139,35 +139,24 @@ export default function FilterKaryawanForceFilter({ title, ...props }: Props) {
     };
 
     setFilterKaryawan(localFilterConfig);
-
-    clearFormattedFilterKaryawan();
-
+    // clearFormattedFilterKaryawan();
     // console.log("formatted filter", formattedFilters);
-
     setFormattedFilterKaryawan(
       formattedFilterKaryawanReducer(formattedFilters)
     );
   }
 
-  // useCallBackOnNavigate(() => {
-  //   setFilterKaryawan(defaultFilterKaryawan);
-  //   clearFormattedFilterKaryawan();
-  // });
+  // console.debug(formattedFilterKaryawanReducer(formattedFilters));
 
-  const handleApplyFilterRef = useRef(handleApplyFilter);
-  useEffect(() => {
-    handleApplyFilterRef.current();
-  }, []);
+  // const handleApplyFilterRef = useRef(handleApplyFilter);
+  // useEffect(() => {
+  //   handleApplyFilterRef.current();
+  // }, []);
 
   useEffect(() => {
     setFilterKaryawan(defaultFilterKaryawan);
-    clearFormattedFilterKaryawan();
-  }, [
-    location.pathname,
-    defaultFilterKaryawan,
-    setFilterKaryawan,
-    clearFormattedFilterKaryawan,
-  ]);
+    // clearFormattedFilterKaryawan();
+  }, [location.pathname, defaultFilterKaryawan, setFilterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();

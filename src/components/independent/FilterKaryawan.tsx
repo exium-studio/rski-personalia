@@ -28,6 +28,7 @@ import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
 import formattedFilterKaryawanReducer from "../../lib/formattedFilterKaryawanReducer";
+import DisclosureHeader from "../dependent/DisclosureHeader";
 import FilterAgama from "../dependent/_FilterOptions/FilterAgama";
 import FilterJebatan from "../dependent/_FilterOptions/FilterJabatan";
 import FilterJenisKelamin from "../dependent/_FilterOptions/FilterJenisKelamin";
@@ -39,7 +40,6 @@ import FilterStatusAktif from "../dependent/_FilterOptions/FilterStatusAktif";
 import FilterStatusKaryawan from "../dependent/_FilterOptions/FilterStatusKaryawan";
 import FilterTglMasuk from "../dependent/_FilterOptions/FilterTglMasuk";
 import FilterUnitKerja from "../dependent/_FilterOptions/FilterUnitKerja";
-import DisclosureHeader from "../dependent/DisclosureHeader";
 
 interface Props extends ButtonProps {
   title?: string;
@@ -55,7 +55,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     filterKaryawan,
     setFilterKaryawan,
     setFormattedFilterKaryawan,
-    clearFormattedFilterKaryawan,
+    // clearFormattedFilterKaryawan,
   } = useFilterKaryawan();
 
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
@@ -133,11 +133,8 @@ export default function FilterKaryawan({ title, ...props }: Props) {
     };
 
     setFilterKaryawan(localFilterConfig);
-
-    clearFormattedFilterKaryawan();
-
-    console.log("formatted filter", formattedFilters);
-
+    // clearFormattedFilterKaryawan();
+    // console.log("formatted filter", formattedFilters);
     setFormattedFilterKaryawan(
       formattedFilterKaryawanReducer(formattedFilters)
     );
@@ -160,13 +157,8 @@ export default function FilterKaryawan({ title, ...props }: Props) {
 
   useEffect(() => {
     setFilterKaryawan(defaultFilterKaryawan);
-    clearFormattedFilterKaryawan();
-  }, [
-    location.pathname,
-    defaultFilterKaryawan,
-    setFilterKaryawan,
-    clearFormattedFilterKaryawan,
-  ]);
+    // clearFormattedFilterKaryawan();
+  }, [location.pathname, defaultFilterKaryawan, setFilterKaryawan]);
 
   // SX
   const lightDarkColor = useLightDarkColor();
@@ -204,7 +196,7 @@ export default function FilterKaryawan({ title, ...props }: Props) {
             </Center>
           )}
 
-          <Text>Filter Kary.</Text>
+          <Text>Filter Kary. Jembot</Text>
         </HStack>
       </Button>
 
