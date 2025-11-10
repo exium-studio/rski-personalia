@@ -163,7 +163,6 @@ export default function EditAnggotaKeluargaModalDisclosure({
         is_menikah: values.is_menikah,
         // _method: "patch",
       };
-      console.log(payload);
       setLoading(true);
       req
         .post(
