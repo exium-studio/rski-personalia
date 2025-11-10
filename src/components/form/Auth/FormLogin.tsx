@@ -26,6 +26,7 @@ export default function FormLogin() {
   const navigate = useNavigate();
   const toast = useToast();
   const userData = useGetUserData();
+  const auth = localStorage.getItem("__auth_token");
 
   const { setUserPermissions } = useAuth();
 
@@ -52,7 +53,7 @@ export default function FormLogin() {
 
       req
         .post(`/api/login`, payload)
-        .then((r) => {
+        .then((r: any) => {
           // console.log(r.data.user.data);
 
           if (r?.status === 200) {
@@ -74,7 +75,7 @@ export default function FormLogin() {
             });
           }
         })
-        .catch((e) => {
+        .catch((e: any) => {
           console.log(e);
           toast({
             status: "error",
@@ -101,10 +102,13 @@ export default function FormLogin() {
         Masuk untuk mendapatkan akses ke data & informasi.
       </Text>
       <form id="FormLogin" onSubmit={formik.handleSubmit}>
-        {userData && (
+        {auth && userData && (
           <CContainer gap={responsiveSpacing}>
             <HStack p={4} gap={4} borderRadius={8} bg={"var(--divider)"}>
-              <Avatar src={userData?.foto_profil?.path} name={userData?.nama} />
+              <Avatar
+                src={auth && userData?.foto_profil?.path}
+                name={userData?.nama}
+              />
 
               <CContainer>
                 <Text>{userData?.nama}</Text>
@@ -129,60 +133,64 @@ export default function FormLogin() {
           </CContainer>
         )}
 
-        {!userData && (
-          <>
-            <FormControl isInvalid={formik.errors.email ? true : false} mb={4}>
-              <FormLabel>
-                Username/Email/NIK
-                <RequiredForm />
-              </FormLabel>
-              <StringInput
-                name="email"
-                placeholder={"Email"}
-                onChangeSetter={(input) => {
-                  formik.setFieldValue("email", input);
-                }}
-                inputValue={formik.values.email}
-              />
-              <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-            </FormControl>
+        {!auth ||
+          (!userData && (
+            <>
+              <FormControl
+                isInvalid={formik.errors.email ? true : false}
+                mb={4}
+              >
+                <FormLabel>
+                  Username/Email/NIK
+                  <RequiredForm />
+                </FormLabel>
+                <StringInput
+                  name="email"
+                  placeholder={"Email"}
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("email", input);
+                  }}
+                  inputValue={formik.values.email}
+                />
+                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+              </FormControl>
 
-            <FormControl
-              isInvalid={formik.errors.password ? true : false}
-              mb={2}
-            >
-              <FormLabel>
-                Password
-                <RequiredForm />
-              </FormLabel>
+              <FormControl
+                isInvalid={formik.errors.password ? true : false}
+                mb={2}
+              >
+                <FormLabel>
+                  Password
+                  <RequiredForm />
+                </FormLabel>
 
-              <PasswordInput
-                name="password"
-                onChangeSetter={(input) => {
-                  formik.setFieldValue("password", input);
-                }}
-                inputValue={formik.values.password}
-              />
-              <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
-            </FormControl>
+                <PasswordInput
+                  name="password"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("password", input);
+                  }}
+                  inputValue={formik.values.password}
+                />
+                <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+              </FormControl>
 
-            <Text color={"p.500"} as={Link} to={"/forgot-password-1"}>
-              Lupa password?
-            </Text>
+              <Text color={"p.500"} as={Link} to={"/forgot-password-1"}>
+                Lupa password?
+              </Text>
 
-            <Button
-              mt={4}
-              type="submit"
-              form="FormLogin"
-              colorScheme="ap"
-              className="btn-ap clicky"
-              w={"100%"}
-              isLoading={loading}
-            >
-              Login
-            </Button>
-          </>
-        )}
+              <Button
+                mt={4}
+                type="submit"
+                form="FormLogin"
+                colorScheme="ap"
+                className="btn-ap clicky"
+                w={"100%"}
+                isLoading={loading}
+              >
+                Login
+              </Button>
+            </>
+          ))}
       </form>
     </>
   );
