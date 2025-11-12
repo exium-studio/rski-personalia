@@ -753,14 +753,16 @@ img[alt="Google"] {
 @media screen and (min-width: 768px) {
   a,
   p,
-  label,
+  label {
+    font-size: 16px;
+  }
   td,
   th,
-  button,
   input,
+  button,
   textarea,
   select {
-    font-size: 16px;
+    font-size: 16px !important;
   }
   .breadcrumbItem,
   .breadcrumbSeparator {
