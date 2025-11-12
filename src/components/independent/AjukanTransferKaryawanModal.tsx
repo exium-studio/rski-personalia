@@ -347,6 +347,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                     Dokumen (maks. 10 MB)
                     {/* <RequiredForm /> */}
                   </FormLabel>
+
                   <FileInput
                     name="dokumen"
                     accept=".pdf"
@@ -356,6 +357,7 @@ export default function AjukanTransferKaryawanModal({ ...props }: Props) {
                     inputValue={formik.values.dokumen}
                     isError={!!formik.errors.dokumen}
                   />
+
                   <FormErrorMessage>
                     {formik.errors.dokumen as string}
                   </FormErrorMessage>

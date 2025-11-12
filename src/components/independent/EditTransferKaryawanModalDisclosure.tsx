@@ -173,10 +173,10 @@ export default function EditTransferKaryawanModalDisclosure({
     });
     formikRef.current.setFieldValue(
       "unit_kerja_tujuan",
-      rowData?.columnsFormat[5]?.original_data
+      rowData?.columnsFormat[6]?.original_data
         ? {
-            value: rowData.columnsFormat[5].original_data?.id,
-            label: rowData.columnsFormat[5].original_data?.nama_unit,
+            value: rowData.columnsFormat[6].original_data?.id,
+            label: rowData.columnsFormat[6].original_data?.nama_unit,
           }
         : undefined
     );
