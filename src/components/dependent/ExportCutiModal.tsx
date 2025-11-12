@@ -198,7 +198,7 @@ export default function ExportCutiModal({ ...props }: Props) {
                   from: dateRange.tgl_mulai,
                   to: dateRange.tgl_selesai,
                 }}
-                maxRange={366}
+                maxRange={1830}
                 nonNullable
                 presetsConfig={["thisWeek", "thisMonth"]}
               />
