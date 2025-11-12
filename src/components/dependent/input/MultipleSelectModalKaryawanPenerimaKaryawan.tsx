@@ -754,7 +754,7 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
                   </Box>
                 )}
 
-                <HStack justify={"space-between"} mb={4}>
+                <HStack justify={"space-between"} mb={4} h={"32px"}>
                   <Box
                     onClick={() => {
                       if (!selectAll) {
@@ -777,15 +777,18 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
                     </Checkbox>
                   </Box>
 
-                  <Button
-                    className="btn-outline"
-                    size={"sm"}
-                    onClick={() => {
-                      setSelected(fo);
-                    }}
-                  >
-                    Pilih terfilter
-                  </Button>
+                  {filter.unitKerja.length + filter.statusKaryawan.length >
+                    0 && (
+                    <Button
+                      className="btn-outline"
+                      size={"sm"}
+                      onClick={() => {
+                        setSelected(fo);
+                      }}
+                    >
+                      Pilih terfilter
+                    </Button>
+                  )}
                 </HStack>
 
                 {fo.length > 0 && (
