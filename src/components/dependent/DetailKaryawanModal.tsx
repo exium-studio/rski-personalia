@@ -138,6 +138,8 @@ export default function DetailKaryawanModal({
         "masa_berlaku_sip",
       ];
       const allowedNullKeys = [
+        "spesialisasi",
+        "pj_unit_kerja",
         "gelar_depan",
         "gelar_belakang",
         "masa_kerja",
@@ -188,6 +190,8 @@ export default function DetailKaryawanModal({
 
   const { userPermissions } = useAuth();
   const editPermission = isHasPermissions(userPermissions, [49]);
+
+  // console.log(emptyDataLabel);
 
   return (
     <Modal

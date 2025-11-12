@@ -19,7 +19,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { RiBook2Fill } from "@remixicon/react";
+import { RiBook2Fill, RiRefreshLine, RiUpload2Line } from "@remixicon/react";
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from "yup";
@@ -224,25 +224,31 @@ const MateriSlot = ({ initialValues }: any) => {
           </Text>
         </Center>
 
-        <HStack opacity={0.4} justify={"space-between"} py={3} px={4}>
+        <CContainer opacity={0.4} justify={"space-between"} py={3} px={4}>
           <Tooltip
             label={`Diunggah pada ${formatDate(initialValues.created_at)}`}
             openDelay={500}
           >
-            <Text fontSize={11}>
-              {formatDate(initialValues.created_at, "short")}
-            </Text>
+            <HStack>
+              <Icon as={RiUpload2Line} />
+              <Text fontSize={11}>
+                {formatDate(initialValues.created_at, "short")}
+              </Text>
+            </HStack>
           </Tooltip>
 
           <Tooltip
             label={`Diperbarui pada ${formatDate(initialValues.updated_at)}`}
             openDelay={500}
           >
-            <Text fontSize={11} opacity={0.4}>
-              {formatDate(initialValues.updated_at, "short")}
-            </Text>
+            <HStack>
+              <Icon as={RiRefreshLine} />
+              <Text fontSize={11}>
+                {formatDate(initialValues.updated_at, "short")}
+              </Text>
+            </HStack>
           </Tooltip>
-        </HStack>
+        </CContainer>
       </CContainer>
 
       <Modal
