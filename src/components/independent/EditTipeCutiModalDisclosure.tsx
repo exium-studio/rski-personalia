@@ -64,7 +64,7 @@ export default function EditTipeCutiModalDisclosure({
     },
     validationSchema: yup.object().shape({
       nama: yup.string().required("Harus diisi"),
-      kuota: yup.number().required("Harus diisi"),
+      kuota: yup.number(),
       is_unlimited: yup.boolean(),
       cuti_administratif: yup.number(),
       is_need_requirement: yup.number(),
