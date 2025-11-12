@@ -166,7 +166,7 @@ export default function FormDashboardBuatPengumuman({
         </FormLabel>
         <Textarea
           name="konten"
-          placeholder="isi konten"
+          placeholder="Isi konten"
           onChangeSetter={(input) => {
             formik.setFieldValue("konten", input);
           }}

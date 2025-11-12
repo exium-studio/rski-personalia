@@ -203,7 +203,8 @@ export default function PerubahanDataRender({ column, data, index }: any) {
       return (
         <ViewPhotoModalDisclosure src={data?.path}>
           <Image
-            maxW={"32px"}
+            w={"32px"}
+            h={"32px"}
             src={data?.path}
             aspectRatio={1}
             objectFit={"cover"}

@@ -64,6 +64,7 @@ export default function StringInput({
             border: "1px solid var(--p500) !important",
             boxShadow: "none !important",
           }}
+          // fontSize={"16px !important"}
           onChange={handleChange}
           value={inputValue}
           placeholder={placeholder}

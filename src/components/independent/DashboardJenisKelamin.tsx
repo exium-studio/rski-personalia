@@ -45,8 +45,6 @@ export default function DashboardJenisKelamin({ ...props }: Props) {
   // SX
   const bodyColor = useBodyColor();
 
-  console.log(data);
-
   return (
     <>
       {loading && (

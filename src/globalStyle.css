@@ -751,47 +751,32 @@ img[alt="Google"] {
 
 /* Media Querries */
 @media screen and (min-width: 768px) {
-  a {
+  a,
+  p,
+  label,
+  td,
+  th,
+  button,
+  input,
+  textarea,
+  select {
     font-size: 16px !important;
-  }
-  p {
-    font-size: 16px;
-  }
-  label {
-    font-size: 16px !important;
-  }
-  td {
-    font-size: 16px !important;
-  }
-  th {
-    font-size: 14px !important;
   }
   .breadcrumbItem,
   .breadcrumbSeparator {
     font-size: 13px !important;
   }
   .chakra-alert__title {
-    font-size: 16px;
+    font-size: 14px;
   }
   .chakra-alert__desc {
-    font-size: 16px;
+    font-size: 14px;
   }
   .chakra-form__error-message {
     font-size: 14px !important;
   }
   .chakra-form__helper-text {
     font-size: 14px !important;
-  }
-
-  button {
-    font-size: 15px !important;
-  }
-  input,
-  textarea {
-    font-size: 15px !important;
-  }
-  select {
-    font-size: 15px !important;
   }
 }
 

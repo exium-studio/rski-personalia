@@ -4,15 +4,14 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Badge,
   Box,
   Button,
+  Center,
   Checkbox,
   HStack,
   Icon,
+  IconButton,
   Modal,
   ModalBody,
   ModalContent,
@@ -21,17 +20,22 @@ import {
   ModalOverlay,
   Text,
   Tooltip,
-  useToast,
+  useDisclosure,
   Wrap,
 } from "@chakra-ui/react";
-import { RiArrowDownSLine } from "@remixicon/react";
+import {
+  RiArrowDownSLine,
+  RiCloseLine,
+  RiEqualizer3Line,
+} from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
-import { useErrorColor } from "../../../constant/colors";
+import { useBodyColor, useErrorColor } from "../../../constant/colors";
 import { Interface__SelectOption } from "../../../constant/interfaces";
 import { responsiveSpacing } from "../../../constant/sizes";
 import useBackOnClose from "../../../hooks/useBackOnClose";
 import useScreenHeight from "../../../hooks/useScreenHeight";
 import backOnClose from "../../../lib/backOnClose";
+import formatNumber from "../../../lib/formatNumber";
 import req from "../../../lib/req";
 import ComponentSpinner from "../../independent/ComponentSpinner";
 import NotFound from "../../independent/NotFound";
@@ -39,10 +43,15 @@ import CContainer from "../../independent/wrapper/CContainer";
 import DisclosureHeader from "../DisclosureHeader";
 import SearchComponent from "./SearchComponent";
 
-const ListUnitKerja = ({ listKaryawan, setSelectedKaryawan }: any) => {
-  const [options, setOptions] = useState<any>(undefined);
+const DEFAULT_FILTER = {
+  unitKerja: [],
+  statusKaryawan: [],
+};
 
-  const toast = useToast();
+const ListUnitKerja = ({ filter, setFilter }: any) => {
+  const bodyColor = useBodyColor();
+
+  const [options, setOptions] = useState<any>(undefined);
 
   useEffect(() => {
     if (!options) {
@@ -68,109 +77,136 @@ const ListUnitKerja = ({ listKaryawan, setSelectedKaryawan }: any) => {
     data?.label?.toLowerCase().includes(search.toLowerCase())
   );
 
-  function handleSelectKaryawanByFilter(unitKerja: any) {
-    const selectedKaryawan = listKaryawan
-      .filter((karyawan: any) => karyawan?.unit_kerja?.id === unitKerja.id)
-      .map((karyawan: any) => ({
-        value: karyawan.id,
-        label: karyawan.user.nama,
-      }));
-
-    // Update selected state with new karyawan if they are not already selected
-    setSelectedKaryawan((prevSelected: any[]) => {
-      const updatedSelected = [...prevSelected];
-
-      selectedKaryawan.forEach((newKaryawan: any) => {
-        // Check if the new karyawan is already in the selected array
-        const isAlreadySelected = updatedSelected.some(
-          (selected) => selected.value === newKaryawan.value
-        );
-
-        // Append only if not already selected
-        if (!isAlreadySelected) {
-          updatedSelected.push(newKaryawan);
-        }
-      });
-
-      return updatedSelected;
-    });
-
-    toast({
-      status: "success",
-      title: `Semua karyawan di Unit Kerja ${unitKerja.label} terpilih`,
-      isClosable: true,
-      position: "bottom-right",
-    });
-  }
-
   return (
-    <Accordion allowToggle mb={2}>
-      <AccordionItem
-        bg={"var(--divider)"}
-        borderRadius={8}
-        border={"none"}
-        overflow={"clip"}
+    <AccordionItem overflow={"clip"}>
+      <AccordionButton
+        _hover={{
+          bg: "transparent",
+        }}
+        role="group"
       >
-        <AccordionButton as={Button} size={"lg"} className="btn">
-          <HStack w={"100%"} justify={"space-between"}>
-            <Text>Pilih Karyawan Berdasarkan Unit Kerja</Text>
-            <AccordionIcon />
-          </HStack>
-        </AccordionButton>
-        <AccordionPanel px={4}>
-          {!options && <ComponentSpinner minH={"300px"} />}
+        <HStack w={"100%"} justify={"space-between"}>
+          <Text>Unit Kerja</Text>
 
-          <SearchComponent
-            name="search_unit_kerja"
-            onChangeSetter={(input) => {
-              setSearch(input);
-            }}
-            inputValue={search}
-            placeholder="nama unit kerja"
-            tooltipLabel="Cari dengan nama unit kerja"
-            mb={4}
-            inputProps={{
-              border: "0px !important",
-              borderBottom: "1px solid var(--divider) !important",
-              borderRadius: "0 !important",
-              _focus: {
-                border: "0 !important",
-                borderBottom: "1px solid var(--p500) !important",
-              },
-            }}
-          />
+          {filter.unitKerja.length > 0 && (
+            <HStack ml={"auto"}>
+              <Tooltip label={"Hapus filter ini"} openDelay={500}>
+                <IconButton
+                  as={Center}
+                  aria-label="Delete filter item button"
+                  icon={<Icon as={RiCloseLine} fontSize={20} />}
+                  size={"xs"}
+                  borderRadius={"full"}
+                  colorScheme="red"
+                  variant={"ghost"}
+                  opacity={0}
+                  _groupHover={{ opacity: 1 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFilter((ps: any) => ({
+                      ...ps,
+                      unitKerja: [],
+                    }));
+                  }}
+                />
+              </Tooltip>
 
-          <Wrap spacing={2} pb={2}>
-            {options && (
-              <>
-                {fd.length === 0 && <NotFound minH={"300px"} mb={4} />}
+              <Center
+                flexShrink={0}
+                minW={"24px"}
+                h={"24px"}
+                borderRadius={"full"}
+                bg={"p.500"}
+                ml={"auto"}
+                mr={2}
+              >
+                <Text color={bodyColor} fontSize={12} fontWeight={600}>
+                  {formatNumber(filter.unitKerja.length)}
+                </Text>
+              </Center>
+            </HStack>
+          )}
 
-                {fd.length > 0 &&
-                  fd?.map((item: any, i: number) => (
-                    <Button
-                      key={i}
-                      className="btn-outline"
-                      borderRadius={"full"}
-                      onClick={() => {
-                        handleSelectKaryawanByFilter(item);
-                      }}
-                    >
-                      {item?.label}
-                    </Button>
-                  ))}
-              </>
-            )}
-          </Wrap>
-        </AccordionPanel>
-      </AccordionItem>
-    </Accordion>
+          <AccordionIcon />
+        </HStack>
+      </AccordionButton>
+
+      <AccordionPanel px={0}>
+        {!options && <ComponentSpinner minH={"300px"} />}
+
+        <SearchComponent
+          name="search_unit_kerja"
+          onChangeSetter={(input) => {
+            setSearch(input);
+          }}
+          inputValue={search}
+          placeholder="nama unit kerja"
+          tooltipLabel="Cari dengan nama unit kerja"
+          mb={4}
+          inputProps={{
+            border: "0px !important",
+            borderBottom: "1px solid var(--divider) !important",
+            borderRadius: "0 !important",
+            _focus: {
+              border: "0 !important",
+              borderBottom: "1px solid var(--p500) !important",
+            },
+          }}
+        />
+
+        <Wrap spacing={2} pb={2}>
+          {options && (
+            <>
+              {fd.length === 0 && <NotFound minH={"300px"} mb={4} />}
+
+              {fd.length > 0 &&
+                fd?.map((item: any, i: number) => (
+                  <Button
+                    key={i}
+                    className="btn-outline"
+                    borderRadius={"full"}
+                    borderColor={
+                      filter.unitKerja.some((fi: any) => fi.id === item.id)
+                        ? "var(--p500)"
+                        : ""
+                    }
+                    bg={
+                      filter.unitKerja.some((fi: any) => fi.id === item.id)
+                        ? "var(--p500a5) !important"
+                        : ""
+                    }
+                    onClick={() => {
+                      setFilter((prev: any) => {
+                        const current = prev.unitKerja || [];
+                        const exists = current.some(
+                          (v: any) => v.id === item.id
+                        );
+
+                        const updated = exists
+                          ? current.filter((v: any) => v.id !== item.id) // remove if exists
+                          : [...current, item]; // add if not exists
+
+                        return {
+                          ...prev,
+                          unitKerja: updated,
+                        };
+                      });
+                    }}
+                  >
+                    {item?.label}
+                  </Button>
+                ))}
+            </>
+          )}
+        </Wrap>
+      </AccordionPanel>
+    </AccordionItem>
   );
 };
+const ListStatusKaryawan = ({ filter, setFilter }: any) => {
+  const bodyColor = useBodyColor();
 
-const ListStatusKaryawan = ({ listKaryawan, setSelectedKaryawan }: any) => {
   const [options, setOptions] = useState<any>(undefined);
-
-  const toast = useToast();
 
   useEffect(() => {
     if (!options) {
@@ -196,104 +232,254 @@ const ListStatusKaryawan = ({ listKaryawan, setSelectedKaryawan }: any) => {
     data?.label?.toLowerCase().includes(search.toLowerCase())
   );
 
-  function handleSelectKaryawanByFilter(statusKaryawan: any) {
-    const selectedKaryawan = listKaryawan
-      .filter(
-        (karyawan: any) => karyawan?.status_karyawan?.id === statusKaryawan.id
-      )
-      .map((karyawan: any) => ({
-        value: karyawan.id,
-        label: karyawan.user.nama,
-      }));
+  return (
+    <AccordionItem overflow={"clip"}>
+      <AccordionButton
+        _hover={{
+          bg: "transparent",
+        }}
+        role="group"
+      >
+        <HStack w={"100%"} justify={"space-between"}>
+          <Text>Status Karyawan</Text>
 
-    // Update selected state with new karyawan if they are not already selected
-    setSelectedKaryawan((prevSelected: any[]) => {
-      const updatedSelected = [...prevSelected];
+          {filter.statusKaryawan.length > 0 && (
+            <HStack ml={"auto"}>
+              <Tooltip label={"Hapus filter ini"} openDelay={500}>
+                <IconButton
+                  as={Center}
+                  aria-label="Delete filter item button"
+                  icon={<Icon as={RiCloseLine} fontSize={20} />}
+                  size={"xs"}
+                  borderRadius={"full"}
+                  colorScheme="red"
+                  variant={"ghost"}
+                  opacity={0}
+                  _groupHover={{ opacity: 1 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFilter((ps: any) => ({
+                      ...ps,
+                      statusKaryawan: [],
+                    }));
+                  }}
+                />
+              </Tooltip>
 
-      selectedKaryawan.forEach((newKaryawan: any) => {
-        // Check if the new karyawan is already in the selected array
-        const isAlreadySelected = updatedSelected.some(
-          (selected) => selected.value === newKaryawan.value
-        );
+              <Center
+                flexShrink={0}
+                minW={"24px"}
+                h={"24px"}
+                borderRadius={"full"}
+                bg={"p.500"}
+                ml={"auto"}
+                mr={2}
+              >
+                <Text color={bodyColor} fontSize={12} fontWeight={600}>
+                  {formatNumber(filter.statusKaryawan.length)}
+                </Text>
+              </Center>
+            </HStack>
+          )}
 
-        // Append only if not already selected
-        if (!isAlreadySelected) {
-          updatedSelected.push(newKaryawan);
-        }
-      });
+          <AccordionIcon />
+        </HStack>
+      </AccordionButton>
 
-      return updatedSelected;
-    });
+      <AccordionPanel px={0}>
+        {!options && <ComponentSpinner minH={"300px"} />}
 
-    toast({
-      status: "success",
-      title: `Semua karyawan di Status Karyawan ${statusKaryawan.label} terpilih`,
-      isClosable: true,
-      position: "bottom-right",
-    });
-  }
+        <SearchComponent
+          name="search_status_karyawan"
+          onChangeSetter={(input) => {
+            setSearch(input);
+          }}
+          inputValue={search}
+          placeholder="nama status karyawan"
+          tooltipLabel="Cari dengan nama status karyawan"
+          mb={4}
+          inputProps={{
+            border: "0px !important",
+            borderBottom: "1px solid var(--divider) !important",
+            borderRadius: "0 !important",
+            _focus: {
+              border: "0 !important",
+              borderBottom: "1px solid var(--p500) !important",
+            },
+          }}
+        />
+
+        <Wrap spacing={2} pb={2}>
+          {options && (
+            <>
+              {fd.length === 0 && <NotFound minH={"300px"} mb={4} />}
+
+              {fd.length > 0 &&
+                fd?.map((item: any, i: number) => (
+                  <Button
+                    key={i}
+                    className="btn-outline"
+                    borderRadius="full"
+                    borderColor={
+                      filter.statusKaryawan?.some(
+                        (fi: any) => fi.id === item.id
+                      )
+                        ? "var(--p500)"
+                        : ""
+                    }
+                    bg={
+                      filter.statusKaryawan?.some(
+                        (fi: any) => fi.id === item.id
+                      )
+                        ? "var(--p500a5) !important"
+                        : ""
+                    }
+                    onClick={() => {
+                      setFilter((prev: any) => {
+                        const current = prev.statusKaryawan || [];
+                        const exists = current.some(
+                          (v: any) => v.id === item.id
+                        );
+
+                        const updated = exists
+                          ? current.filter((v: any) => v.id !== item.id) // remove if already selected
+                          : [...current, item]; // add if not selected
+
+                        return {
+                          ...prev,
+                          statusKaryawan: updated,
+                        };
+                      });
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
+            </>
+          )}
+        </Wrap>
+      </AccordionPanel>
+    </AccordionItem>
+  );
+};
+const Filter = (props: any) => {
+  const bodyColor = useBodyColor();
+
+  const {
+    listKaryawan,
+    selected,
+    setSelectedKaryawan,
+    applyFilter,
+    ...restProps
+  } = props;
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`filter-select-karyawan-penerima`, isOpen, onOpen, onClose);
+
+  const [filter, setFilter] = useState<any>(DEFAULT_FILTER);
 
   return (
-    <Accordion allowToggle mb={2}>
-      <AccordionItem
-        bg={"var(--divider)"}
-        borderRadius={8}
-        border={"none"}
-        overflow={"clip"}
+    <>
+      <Button
+        className="btn-outline"
+        flexShrink={0}
+        leftIcon={<Icon as={RiEqualizer3Line} />}
+        justifyContent="start"
+        onClick={onOpen}
+        pl={5}
+        pr={2}
+        {...restProps}
       >
-        <AccordionButton as={Button} size={"lg"} className="btn">
-          <HStack w={"100%"} justify={"space-between"}>
-            <Text>Pilih Karyawan Berdasarkan Status Karyawan</Text>
-            <AccordionIcon />
+        Filter
+        {filter.unitKerja.length + filter.statusKaryawan.length > 0 && (
+          <HStack ml={"auto"}>
+            <Tooltip label={"Hapus filter ini"} openDelay={500}>
+              <IconButton
+                as={Center}
+                aria-label="Delete filter item button"
+                icon={<Icon as={RiCloseLine} fontSize={20} />}
+                size={"xs"}
+                borderRadius={"full"}
+                colorScheme={"red"}
+                variant={"ghost"}
+                opacity={0}
+                _groupHover={{ opacity: 1 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFilter((ps: any) => ({
+                    ...ps,
+                    statusKaryawan: [],
+                  }));
+                }}
+              />
+            </Tooltip>
+
+            <Center
+              flexShrink={0}
+              minW={"24px"}
+              h={"24px"}
+              borderRadius={"full"}
+              bg={"p.500"}
+              ml={"auto"}
+              mr={2}
+            >
+              <Text color={bodyColor} fontSize={12} fontWeight={600}>
+                {formatNumber(
+                  filter.unitKerja.length + filter.statusKaryawan.length
+                )}
+              </Text>
+            </Center>
           </HStack>
-        </AccordionButton>
-        <AccordionPanel px={4}>
-          {!options && <ComponentSpinner minH={"300px"} />}
+        )}
+      </Button>
 
-          <SearchComponent
-            name="search_status_karyawan"
-            onChangeSetter={(input) => {
-              setSearch(input);
-            }}
-            inputValue={search}
-            placeholder="nama status karyawan"
-            tooltipLabel="Cari dengan nama status karyawan"
-            mb={4}
-            inputProps={{
-              border: "0px !important",
-              borderBottom: "1px solid var(--divider) !important",
-              borderRadius: "0 !important",
-              _focus: {
-                border: "0 !important",
-                borderBottom: "1px solid var(--p500) !important",
-              },
-            }}
-          />
+      <Modal
+        isOpen={isOpen}
+        onClose={backOnClose}
+        size="lg"
+        isCentered
+        scrollBehavior="inside"
+      >
+        <ModalOverlay />
 
-          <Wrap spacing={2} pb={2}>
-            {options && (
-              <>
-                {fd.length === 0 && <NotFound minH={"300px"} mb={4} />}
+        <ModalContent>
+          <ModalHeader>
+            <DisclosureHeader title={"Filter"} />
+          </ModalHeader>
 
-                {fd.length > 0 &&
-                  fd?.map((item: any, i: number) => (
-                    <Button
-                      key={i}
-                      className="btn-outline"
-                      borderRadius={"full"}
-                      onClick={() => {
-                        handleSelectKaryawanByFilter(item);
-                      }}
-                    >
-                      {item?.label}
-                    </Button>
-                  ))}
-              </>
-            )}
-          </Wrap>
-        </AccordionPanel>
-      </AccordionItem>
-    </Accordion>
+          <ModalBody>
+            <Accordion allowToggle mb={2}>
+              <ListUnitKerja filter={filter} setFilter={setFilter} />
+              <ListStatusKaryawan filter={filter} setFilter={setFilter} />
+            </Accordion>
+          </ModalBody>
+
+          <ModalFooter gap={2}>
+            <Button
+              className="btn-outline"
+              flex={1}
+              onClick={() => {
+                setFilter(DEFAULT_FILTER);
+              }}
+            >
+              Clear
+            </Button>
+
+            <Button
+              className="btn-p"
+              colorScheme={"ap"}
+              flex={1}
+              onClick={() => {
+                applyFilter(filter);
+                backOnClose();
+              }}
+            >
+              Terapkan
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
@@ -338,21 +524,46 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
   useBackOnClose(`${id}-${name}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
+  const [filter, setFilter] = useState<any>({
+    unitKerja: [],
+    statusKaryawan: [],
+  });
   const [search, setSearch] = useState<string>("");
   const [selected, setSelected] = useState<
     Interface__SelectOption[] | undefined
   >(inputValue || []);
 
-  const fo = search
-    ? options?.filter((option) => {
+  const fo: Interface__SelectOption[] | undefined = listKaryawan
+    ?.filter((item: any) => {
+      // --- Search logic ---
+      if (search) {
         const searchTerm = search.toLowerCase();
-        return (
-          option.value.toString().toLowerCase().includes(searchTerm) ||
-          option.label.toString().toLowerCase().includes(searchTerm) ||
-          option.label2?.toString().toLowerCase().includes(searchTerm)
-        );
-      })
-    : options;
+        const matchSearch =
+          item.user?.nama?.toLowerCase().includes(searchTerm) ||
+          item.user?.username?.toLowerCase().includes(searchTerm);
+
+        if (!matchSearch) return false;
+      }
+
+      // --- Filter Unit Kerja ---
+      if (filter.unitKerja.length > 0) {
+        const unitIds = filter.unitKerja.map((u: any) => u.id);
+        if (!unitIds.includes(item.unit_kerja?.id)) return false;
+      }
+
+      // --- Filter Status Karyawan ---
+      if (filter.statusKaryawan.length > 0) {
+        const statusIds = filter.statusKaryawan.map((s: any) => s.id);
+        if (!statusIds.includes(item.status_karyawan?.id)) return false;
+      }
+
+      return true;
+    })
+    ?.map((item: any) => ({
+      value: item.id,
+      label: item.user?.nama || "-",
+      label2: item.unit_kerja?.nama_unit || "",
+    }));
 
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
@@ -374,6 +585,9 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
       }
       backOnClose();
     }
+  }
+  function applyFilter(resolvedFilter: any) {
+    setFilter(resolvedFilter);
   }
 
   useEffect(() => {
@@ -514,24 +728,12 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
           <ModalBody className="scrollY" overflowY={"auto"}>
             {fo && (
               <>
-                <Alert flexShrink={0} mb={2} alignItems={"start"}>
-                  <AlertIcon />
-                  <AlertDescription maxW={"640px !important"}>
-                    Klik Unit Kerja/Status Karyawan untuk memilih semua karyawan
-                    di unit kerja/status karyawan tersebut
-                  </AlertDescription>
-                </Alert>
-
-                <ListUnitKerja
+                <Filter
                   listKaryawan={listKaryawan}
                   selected={selected}
                   setSelectedKaryawan={setSelected}
-                />
-
-                <ListStatusKaryawan
-                  listKaryawan={listKaryawan}
-                  selected={selected}
-                  setSelectedKaryawan={setSelected}
+                  applyFilter={applyFilter}
+                  mb={2}
                 />
 
                 {(withSearch ||
@@ -552,28 +754,39 @@ export default function MultipleSelectModalKaryawanPenerimaKaryawan({
                   </Box>
                 )}
 
-                <Box
-                  onClick={() => {
-                    if (!selectAll) {
-                      setSelected(options);
-                    } else {
-                      setSelected(undefined);
-                    }
-                  }}
-                  w={"fit-content"}
-                  mb={4}
-                >
-                  <Checkbox
-                    name="semua_karyawan"
-                    onChange={(e) => setSelectAll(e.target.checked)}
-                    isChecked={selectAll}
-                    colorScheme="ap"
+                <HStack justify={"space-between"} mb={4}>
+                  <Box
+                    onClick={() => {
+                      if (!selectAll) {
+                        setSelected(options);
+                      } else {
+                        setSelected(undefined);
+                      }
+                    }}
+                    w={"fit-content"}
                   >
-                    <Text mt="-2.5px" color={"p.500"} fontWeight={500}>
-                      Pilih Semua
-                    </Text>
-                  </Checkbox>
-                </Box>
+                    <Checkbox
+                      name="semua_karyawan"
+                      onChange={(e) => setSelectAll(e.target.checked)}
+                      isChecked={selectAll}
+                      colorScheme="ap"
+                    >
+                      <Text mt="-2.5px" color={"p.500"} fontWeight={500}>
+                        Pilih Semua
+                      </Text>
+                    </Checkbox>
+                  </Box>
+
+                  <Button
+                    className="btn-outline"
+                    size={"sm"}
+                    onClick={() => {
+                      setSelected(fo);
+                    }}
+                  >
+                    Pilih terfilter
+                  </Button>
+                </HStack>
 
                 {fo.length > 0 && (
                   <>
