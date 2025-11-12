@@ -101,6 +101,7 @@ export default function FormLogin() {
       <Text opacity={0.6} mb={8}>
         Masuk untuk mendapatkan akses ke data & informasi.
       </Text>
+
       <form id="FormLogin" onSubmit={formik.handleSubmit}>
         {auth && userData && (
           <CContainer gap={responsiveSpacing}>
@@ -133,64 +134,60 @@ export default function FormLogin() {
           </CContainer>
         )}
 
-        {!auth ||
-          (!userData && (
-            <>
-              <FormControl
-                isInvalid={formik.errors.email ? true : false}
-                mb={4}
-              >
-                <FormLabel>
-                  Username/Email/NIK
-                  <RequiredForm />
-                </FormLabel>
-                <StringInput
-                  name="email"
-                  placeholder={"Email"}
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("email", input);
-                  }}
-                  inputValue={formik.values.email}
-                />
-                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-              </FormControl>
+        {(!auth || !userData) && (
+          <>
+            <FormControl isInvalid={formik.errors.email ? true : false} mb={4}>
+              <FormLabel>
+                Username/Email/NIK
+                <RequiredForm />
+              </FormLabel>
+              <StringInput
+                name="email"
+                placeholder={"Email"}
+                onChangeSetter={(input) => {
+                  formik.setFieldValue("email", input);
+                }}
+                inputValue={formik.values.email}
+              />
+              <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+            </FormControl>
 
-              <FormControl
-                isInvalid={formik.errors.password ? true : false}
-                mb={2}
-              >
-                <FormLabel>
-                  Password
-                  <RequiredForm />
-                </FormLabel>
+            <FormControl
+              isInvalid={formik.errors.password ? true : false}
+              mb={2}
+            >
+              <FormLabel>
+                Password
+                <RequiredForm />
+              </FormLabel>
 
-                <PasswordInput
-                  name="password"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("password", input);
-                  }}
-                  inputValue={formik.values.password}
-                />
-                <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
-              </FormControl>
+              <PasswordInput
+                name="password"
+                onChangeSetter={(input) => {
+                  formik.setFieldValue("password", input);
+                }}
+                inputValue={formik.values.password}
+              />
+              <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+            </FormControl>
 
-              <Text color={"p.500"} as={Link} to={"/forgot-password-1"}>
-                Lupa password?
-              </Text>
+            <Text color={"p.500"} as={Link} to={"/forgot-password-1"}>
+              Lupa password?
+            </Text>
 
-              <Button
-                mt={4}
-                type="submit"
-                form="FormLogin"
-                colorScheme="ap"
-                className="btn-ap clicky"
-                w={"100%"}
-                isLoading={loading}
-              >
-                Login
-              </Button>
-            </>
-          ))}
+            <Button
+              mt={4}
+              type="submit"
+              form="FormLogin"
+              colorScheme="ap"
+              className="btn-ap clicky"
+              w={"100%"}
+              isLoading={loading}
+            >
+              Login
+            </Button>
+          </>
+        )}
       </form>
     </>
   );
