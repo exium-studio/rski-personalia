@@ -170,11 +170,11 @@ export const optionsKategoriDiklat = [
 export const optionsTipeTransfer = [
   {
     value: 1,
-    label: "Mutasi",
+    label: "Promosi",
   },
   {
     value: 2,
-    label: "Promosi",
+    label: "Mutasi",
   },
   {
     value: 3,
