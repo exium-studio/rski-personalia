@@ -219,10 +219,10 @@ export default function PerubahanDataRender({ column, data, index }: any) {
       );
     case "alamat":
     case "asal_sekolah":
-      return <TabelElipsisText data={data} textAlign={"center"} />;
+      return <TabelElipsisText data={data || "-"} textAlign={"center"} />;
     case "golongan_darah":
     case "agama":
-      return <Text whiteSpace={"nowrap"}>{data.label}</Text>;
+      return <Text whiteSpace={"nowrap"}>{data?.label || "-"}</Text>;
     case "tinggi_badan":
       return <Text whiteSpace={"nowrap"}>{formatNumber(data)} cm</Text>;
     case "berat_badan":
