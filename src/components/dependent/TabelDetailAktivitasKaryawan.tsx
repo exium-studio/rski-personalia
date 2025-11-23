@@ -6,6 +6,7 @@ import CustomTableContainer from "../wrapper/CustomTableContainer";
 import CustomTable from "./CustomTable";
 import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
 import formatDate from "../../lib/formatDate";
+import BooleanBadge from "./BooleanBadge";
 
 interface Props {
   data: any[];
@@ -58,6 +59,27 @@ export default function TabelDetailAktivitasKaryawan({
       },
     },
     {
+      th: "Presensi keluar",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
+      th: "Biometrik masuk",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
+      th: "Biometrik keluar",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
       th: "Durasi kerja",
       isSortable: true,
       cProps: {
@@ -100,6 +122,32 @@ export default function TabelDetailAktivitasKaryawan({
             item.jam_keluar
           )}`,
           isTime: true,
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item?.biometrik_masuk === "Sesuai",
+          td: (
+            <BooleanBadge
+              data={item?.biometrik_masuk === "Sesuai"}
+              trueValue={"Sesuai"}
+              falseValue={"Tidak Sesuai"}
+            />
+          ),
+          cProps: {
+            justify: "center",
+          },
+        },
+        {
+          value: item?.biometrik_keluar === "Sesuai",
+          td: (
+            <BooleanBadge
+              data={item?.biometrik_keluar === "Sesuai"}
+              trueValue={"Sesuai"}
+              falseValue={"Tidak Sesuai"}
+            />
+          ),
           cProps: {
             justify: "center",
           },
