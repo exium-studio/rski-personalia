@@ -10,6 +10,7 @@ import NotFound from "../independent/NotFound";
 import Skeleton from "../independent/Skeleton";
 import CustomTableContainer from "../wrapper/CustomTableContainer";
 import AvatarAndNameTableData from "./AvatarAndNameTableData";
+import BooleanBadge from "./BooleanBadge";
 import CustomTable from "./CustomTable";
 import DetailPresensiKaryawanModal from "./DetailPresensiKaryawanModal";
 import JenisKaryawanBadge from "./JenisKaryawanBadge";
@@ -96,6 +97,20 @@ export default function TabelPresensi({ filterConfig }: Props) {
       },
     },
     {
+      th: "Biometrik masuk",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
+      th: "Biometrik keluar",
+      isSortable: true,
+      cProps: {
+        justify: "center",
+      },
+    },
+    {
       th: "Reward",
       isSortable: true,
       cProps: {
@@ -171,6 +186,32 @@ export default function TabelPresensi({ filterConfig }: Props) {
             item.jam_keluar
           )}`,
         isTime: true,
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item?.biometrik_masuk === "Sesuai",
+        td: (
+          <BooleanBadge
+            data={item?.biometrik_masuk === "Sesuai"}
+            trueValue={"Sesuai"}
+            falseValue={"Tidak Sesuai"}
+          />
+        ),
+        cProps: {
+          justify: "center",
+        },
+      },
+      {
+        value: item?.biometrik_keluar === "Sesuai",
+        td: (
+          <BooleanBadge
+            data={item?.biometrik_keluar === "Sesuai"}
+            trueValue={"Sesuai"}
+            falseValue={"Tidak Sesuai"}
+          />
+        ),
         cProps: {
           justify: "center",
         },
