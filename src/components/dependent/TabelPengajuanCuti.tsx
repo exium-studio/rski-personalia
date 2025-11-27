@@ -4,7 +4,6 @@ import {
   AlertIcon,
   Button,
   Center,
-  HStack,
   ListItem,
   MenuItem,
   Modal,
@@ -27,6 +26,7 @@ import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import countDateRange from "../../lib/countDateRange";
 import formatDate from "../../lib/formatDate";
+import formatNumber from "../../lib/formatNumber";
 import isObjectEmpty from "../../lib/isObjectEmpty";
 import req from "../../lib/req";
 import NoData from "../independent/NoData";
@@ -44,7 +44,6 @@ import TabelElipsisText from "./TabelElipsisText";
 import TabelFooterConfig from "./TabelFooterConfig";
 import VerifikasiModal from "./VerifikasiModal";
 import VerifikatorName from "./VerifikatorName";
-import formatNumber from "../../lib/formatNumber";
 
 const DeleteCutiConfirmation = ({ selectedRows }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -290,6 +289,9 @@ export default function TabelPengajuanCuti({ filterConfig }: Props) {
 
     const verif1Permission = true;
     const verif2Permission = true;
+    const isUnlimited = item?.tipe_cuti?.is_unlimited;
+
+    // console.debug(item?.hak_cuti?.kuota);
 
     return {
       id: item.id,
@@ -358,17 +360,15 @@ export default function TabelPengajuanCuti({ filterConfig }: Props) {
           },
         },
         {
-          value: item?.sisa_kuota,
+          value: item?.hak_cuti?.kuota,
           td: (
-            <HStack>
-              <Text>{formatNumber(item?.sisa_kuota)}</Text>
-              <Text opacity={0.4}>
-                /{" "}
-                {formatNumber(
-                  item?.hak_cuti?.kuota + item?.hak_cuti?.used_kuota
-                )}
-              </Text>
-            </HStack>
+            <>
+              {!isUnlimited ? (
+                <Text>{formatNumber(item?.sisa_kuota)}</Text>
+              ) : (
+                <Text opacity={0.4}>{`-`}</Text>
+              )}
+            </>
           ),
           isNumeric: true,
           cProps: {
