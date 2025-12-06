@@ -37,67 +37,6 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
     setPageConfig(1);
   }, [filterConfig]);
 
-  //    {
-  //     "id": 2699,
-  //     "user": {
-  //         "id": 2733,
-  //         "nama": "MARDHATILLAH",
-  //         "username": "mardhatillah",
-  //         "email_verified_at": null,
-  //         "data_karyawan_id": 2699,
-  //         "foto_profil": null,
-  //         "data_completion_step": 0,
-  //         "status_aktif": 2,
-  //         "tgl_dinonaktifkan": null,
-  //         "alasan": null,
-  //         "created_at": "2024-09-12T06:41:19.000000Z",
-  //         "updated_at": "2024-09-12T06:41:19.000000Z"
-  //     },
-  //     "role": {
-  //         "id": 19,
-  //         "name": "Manajer",
-  //         "deskripsi": null,
-  //         "created_at": null,
-  //         "updated_at": null
-  //     },
-  //     "email": "mardhatillah.bws@gmail.com",
-  //     "nik": "20101154",
-  //     "nik_ktp": "3311125908770003",
-  //     "status_karyawan": {
-  //         "id": 1,
-  //         "label": "Tetap",
-  //         "kategori_status_id": 1,
-  //         "deleted_at": null,
-  //         "created_at": "2024-08-29T15:10:20.000000Z",
-  //         "updated_at": "2024-08-29T15:10:20.000000Z"
-  //     },
-  //     "tempat_lahir": "JAKARTA",
-  //     "tgl_lahir": "19-08-1977",
-  //     "no_kk": "3311122408090013",
-  //     "alamat": "MANGKUYUDAN RT.02\/04 JL.MEGA PERMAI NO.5, NGABEYAN, KARTASURA, SUKOHARJO",
-  //     "gelar_depan": "dr",
-  //     "gelar_belakang": "MPH",
-  //     "no_hp": "089510610891",
-  //     "jenis_kelamin": 0,
-  //     "kompetensi": {
-  //         "id": 2,
-  //         "nama_kompetensi": "Dokter Umum",
-  //         "jenis_kompetensi": 1,
-  //         "nilai_bor": 120000,
-  //         "deleted_at": null,
-  //         "created_at": "2024-09-09T20:20:12.000000Z",
-  //         "updated_at": null
-  //     },
-  //     "no_str": "UB00000801709496",
-  //     "created_str": "2024-02-02 00:00:00",
-  //     "masa_berlaku_str": null,
-  //     "no_sip": "33724.57142\/DU\/01\/KS.23.01\/0553\/VII\/2022",
-  //     "created_sip": "2022-07-22 00:00:00",
-  //     "masa_berlaku_sip": "2027-08-19 00:00:00",
-  //     "created_at": "2024-09-12T06:41:19.000000Z",
-  //     "updated_at": "2025-04-24T09:27:41.000000Z"
-  // }
-
   // const userData = useGetUserData();
 
   const formattedHeader = [
@@ -204,7 +143,6 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
           ) : (
             ""
           ),
-          isDate: true,
           cProps: {
             color:
               monthDiff(
@@ -229,9 +167,13 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
         {
           value: item?.masa_berlaku_str,
           td: item?.masa_berlaku_str ? (
-            `${monthDiff(new Date(), new Date(item?.masa_berlaku_str), {
-              allowNegative: true,
-            })} bulan`
+            `${monthDiff(
+              new Date(),
+              new Date(formatDate(item?.masa_berlaku_str, "short2")),
+              {
+                allowNegative: true,
+              }
+            )} bulan`
           ) : item?.no_str ? (
             <Text color={"p.500"} fontWeight={"medium"}>
               Seumur Hidup
@@ -239,7 +181,6 @@ export default function TabelKaryawanmedis({ filterConfig }: Props) {
           ) : (
             ""
           ),
-          isDate: true,
           cProps: {
             color:
               monthDiff(new Date(), new Date(item?.masa_berlaku_sip)) < 7
