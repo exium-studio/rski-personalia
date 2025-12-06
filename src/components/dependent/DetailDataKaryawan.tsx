@@ -26,6 +26,7 @@ import JenisProfesiBadge from "./JenisProfesiBadge";
 import SimplePopover from "./SimplePopover";
 import SmallLink from "./SmallLink";
 import StatusKaryawanBadge from "./StatusKaryawanBadge";
+import NoData from "../independent/NoData";
 
 const PJUnitKerjaModal = (props: any) => {
   // Props
@@ -33,7 +34,7 @@ const PJUnitKerjaModal = (props: any) => {
 
   // Hooks
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`${data?.id}`, isOpen, onOpen, onClose);
+  useBackOnClose(`pj-unit-kerja-modal-${data?.id}`, isOpen, onOpen, onClose);
 
   return (
     <>
@@ -59,6 +60,8 @@ const PJUnitKerjaModal = (props: any) => {
           </ModalHeader>
 
           <ModalBody gap={4}>
+            {data?.pj_unit_kerja?.length === 0 && <NoData minH={"300px"} />}
+
             {data?.pj_unit_kerja?.map((item: any, i: number) => {
               return (
                 <HStack key={i}>
