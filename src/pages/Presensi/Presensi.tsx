@@ -149,7 +149,7 @@ export default function Presensi() {
                 from: filterConfig.tgl_mulai,
                 to: filterConfig.tgl_selesai,
               }}
-              maxRange={31}
+              maxRange={1830}
               nonNullable
               presetsConfig={["thisWeek", "thisMonth"]}
             />
