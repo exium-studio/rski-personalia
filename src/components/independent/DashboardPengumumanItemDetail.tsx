@@ -214,6 +214,7 @@ export default function DashboardPengumumanItemDetail({
         }}
         initialFocusRef={initialRef}
         isCentered
+        size={"5xl"}
       >
         <ModalOverlay />
         <ModalContent>

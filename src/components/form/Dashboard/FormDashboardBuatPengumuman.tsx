@@ -7,15 +7,15 @@ import {
 import { useFormik } from "formik";
 import { Dispatch, MutableRefObject } from "react";
 import * as yup from "yup";
-import req from "../../../lib/req";
 import useRenderTrigger from "../../../hooks/useRenderTrigger";
+import backOnClose from "../../../lib/backOnClose";
+import formatDate from "../../../lib/formatDate";
+import req from "../../../lib/req";
 import DatePickerModal from "../../dependent/input/DatePickerModal";
 import StringInput from "../../dependent/input/StringInput";
-import Textarea from "../../dependent/input/Textarea";
-import RequiredForm from "../RequiredForm";
-import formatDate from "../../../lib/formatDate";
-import backOnClose from "../../../lib/backOnClose";
+import { RichEditor } from "../../dependent/RichEditor";
 import MultiSelectKaryawanPenerimaWithFilter from "../../dependent/_Select/MultiSelectKaryawanWithFilter";
+import RequiredForm from "../RequiredForm";
 
 interface Props {
   forwardRef: MutableRefObject<null>;
@@ -164,10 +164,8 @@ export default function FormDashboardBuatPengumuman({
           Pengumuman
           <RequiredForm />
         </FormLabel>
-        <Textarea
-          name="konten"
-          placeholder="Isi konten"
-          onChangeSetter={(input) => {
+        <RichEditor
+          onChange={(input) => {
             formik.setFieldValue("konten", input);
           }}
           inputValue={formik.values.konten}

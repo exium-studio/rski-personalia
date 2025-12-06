@@ -46,6 +46,7 @@ export default function DashboardBuatPengumumanModal({ ...props }: Props) {
         }}
         initialFocusRef={initialRef}
         isCentered
+        size={"5xl"}
       >
         <ModalOverlay />
         <ModalContent>

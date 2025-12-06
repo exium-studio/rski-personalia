@@ -13,9 +13,9 @@ import formatDate from "../../../lib/formatDate";
 import req from "../../../lib/req";
 import DatePickerModal from "../../dependent/input/DatePickerModal";
 import StringInput from "../../dependent/input/StringInput";
-import Textarea from "../../dependent/input/Textarea";
-import RequiredForm from "../RequiredForm";
+import { RichEditor } from "../../dependent/RichEditor";
 import MultiSelectKaryawanPenerimaWithFilter from "../../dependent/_Select/MultiSelectKaryawanWithFilter";
+import RequiredForm from "../RequiredForm";
 
 interface Props {
   data: any;
@@ -165,10 +165,8 @@ export default function FormDashboardUpdatePengumuman({
           Pengumuman
           <RequiredForm />
         </FormLabel>
-        <Textarea
-          name="konten"
-          placeholder="Isi pengumuman"
-          onChangeSetter={(input) => {
+        <RichEditor
+          onChange={(input) => {
             formik.setFieldValue("konten", input);
           }}
           inputValue={formik.values.konten}
