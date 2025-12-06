@@ -31,10 +31,10 @@ import isHasPermissions from "../../lib/isHasPermissions";
 import req from "../../lib/req";
 import timeSince from "../../lib/timeSince";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import Retry from "../dependent/Retry";
 import FormDashboardUpdatePengumuman from "../form/Dashboard/FormDashboardUpdatePengumuman";
 import PermissionTooltip from "../wrapper/PermissionTooltip";
 import ComponentSpinner from "./ComponentSpinner";
-import Retry from "../dependent/Retry";
 
 interface DeletePengumumanProps extends ButtonProps {
   data: any;
@@ -195,12 +195,11 @@ export default function DashboardPengumumanItemDetail({
           )}
         </HStack>
 
-        <Text fontSize={14}>{initialData.konten}</Text>
-
         <Wrap mt={"auto"} pt={2} justify={"space-between"}>
           <Text fontSize={14} opacity={0.4}>
             diperbarui : {timeSince(initialData.updated_at as string)}
           </Text>
+
           <Text fontSize={14} opacity={0.4}>
             berakhir {formatDate(initialData.tgl_berakhir)}
           </Text>
