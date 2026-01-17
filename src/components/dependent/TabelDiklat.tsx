@@ -71,7 +71,7 @@ const DeleteConfirmation = ({ rowData }: any) => {
     `delete-diklat-internal-confirmation-${rowData?.id}`,
     isOpen,
     onOpen,
-    onClose
+    onClose,
   );
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
@@ -80,7 +80,7 @@ const DeleteConfirmation = ({ rowData }: any) => {
     setDeleteCutiLoading(true);
     req
       .delete(
-        `/api/rski/dashboard/perusahaan/delete-diklat-internal/${rowData?.id}`
+        `/api/rski/dashboard/perusahaan/delete-diklat-internal/${rowData?.id}`,
       )
       .then((r) => {
         if (r?.status === 200) {
@@ -172,7 +172,7 @@ const KonfirmasiDeleteUser = ({
     `konfirmasi-delete-${peserta.user.id}`,
     isOpen,
     onOpen,
-    onClose
+    onClose,
   );
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -183,7 +183,7 @@ const KonfirmasiDeleteUser = ({
     setLoading(true);
     req
       .delete(
-        `/api/rski/dashboard/perusahaan/diklat/${dataDiklat.id}/delete-peserta-diklat/${peserta.user.id}`
+        `/api/rski/dashboard/perusahaan/diklat/${dataDiklat.id}/delete-peserta-diklat/${peserta.user.id}`,
       )
       .then((r) => {
         if (r?.status === 200) {
@@ -354,7 +354,7 @@ const TambahKaryawan = (props: any) => {
     "tambah-karyawan-diklat-internal-sertifikat",
     isOpen,
     onOpen,
-    onClose
+    onClose,
   );
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
@@ -486,7 +486,7 @@ const KonfirmasiPublikasiSertifikat = ({
     `konfirmasi-publikasi-modal-${data.id}`,
     isOpen,
     onOpen,
-    onClose
+    onClose,
   );
 
   const { countDown } = useCountdown({ initialValue: 10, conditions: isOpen });

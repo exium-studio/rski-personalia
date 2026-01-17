@@ -56,7 +56,7 @@ const DeleteConfirmation = ({ rowData }: any) => {
     `delete-diklat-eksternal-confirmation-${rowData?.id}`,
     isOpen,
     onOpen,
-    onClose
+    onClose,
   );
   const toast = useToast();
   const { rt, setRt } = useRenderTrigger();
@@ -65,7 +65,7 @@ const DeleteConfirmation = ({ rowData }: any) => {
     setDeleteCutiLoading(true);
     req
       .delete(
-        `/api/rski/dashboard/perusahaan/delete-diklat-eksternal/${rowData?.id}`
+        `/api/rski/dashboard/perusahaan/delete-diklat-eksternal/${rowData?.id}`,
       )
       .then((r) => {
         if (r?.status === 200) {
@@ -315,6 +315,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
 
     const verif1Permission = true;
     const verif2Permission = true;
+    const verif3Permission = true;
 
     return {
       id: item.id,
@@ -478,11 +479,62 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
                   )}
 
                   {item?.status_diklat?.id === 2 && (
-                    <PermissionTooltip permission={verif2Permission}>
+                    <PermissionTooltip permission={verif3Permission}>
                       <VerifikasiModal
-                        aria-label={`diklat-eksternal-verif-2-button-${item.id}`}
+                        aria-label={`diklat-eksternal-verif-3-button-${item.id}`}
                         id={`verifikasi-diklat-eksternal-modal-${item.id}`}
                         submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-diklat-eksternal-step-2`}
+                        approvePayloadKey="verifikasi_kedua_disetujui"
+                        disapprovePayloadKey="verifikasi_kedua_ditolak"
+                        isDisabled={!verif3Permission}
+                      />
+                    </PermissionTooltip>
+                  )}
+
+                  {[4, 5].includes(item?.status_diklat?.id) && (
+                    <VerifikatorName
+                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                      verification={
+                        item?.status_diklat?.id === 4 ? true : false
+                      }
+                    />
+                  )}
+                </>
+              )}
+            </>
+          ),
+          props: {
+            // position: "sticky",
+            right: 0,
+            zIndex: 1,
+          },
+          cProps: {
+            justify: "center",
+            // borderLeft: "1px solid var(--divider3)",
+          },
+        },
+        {
+          value: "",
+          td: (
+            <>
+              {item?.relasi_verifikasi?.[1]?.id === null &&
+                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
+
+              {(item?.relasi_verifikasi?.[1]?.id || userData?.id === 1) && (
+                <>
+                  {[1, 3].includes(item?.status_diklat?.id) && (
+                    <VerifikatorName
+                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                      verification={null}
+                    />
+                  )}
+
+                  {item?.status_diklat?.id === 2 && (
+                    <PermissionTooltip permission={verif2Permission}>
+                      <VerifikasiModal
+                        aria-label={`diklat-internal-verif-2-button-${item.id}`}
+                        id={`verifikasi-diklat-internal-modal-${item.id}`}
+                        submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-2`}
                         approvePayloadKey="verifikasi_kedua_disetujui"
                         disapprovePayloadKey="verifikasi_kedua_ditolak"
                         isDisabled={!verif2Permission}
@@ -508,6 +560,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
             zIndex: 1,
           },
           cProps: {
+            borderRight: "1px solid var(--divider3)",
             justify: "center",
             // borderLeft: "1px solid var(--divider3)",
           },
