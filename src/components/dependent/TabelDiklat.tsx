@@ -1117,13 +1117,13 @@ export default function TabelDiklat({ filterConfig }: Props) {
           cProps: {
             borderRight: "1px solid var(--divider3)",
             justify: "center",
-            // borderLeft: "1px solid var(--divider3)",
+            // borderLeft: "1px solid  var(--divider3)",
           },
         },
         // Publikasi
         {
           value: "",
-          td: item.status_diklat.id === 4 && (
+          td: item.status_diklat.id === 6 && (
             <KonfirmasiPublikasiSertifikat
               data={item}
               verif3Permission={verif3Permission}
