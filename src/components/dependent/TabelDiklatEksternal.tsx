@@ -456,7 +456,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
                 </>
               )}
 
-              {[2, 3, 4, 5].includes(item?.status_diklat?.id) && (
+              {[2, 3, 4, 5, 6, 7].includes(item?.status_diklat?.id) && (
                 <VerifikatorName
                   nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
                   verification={
@@ -507,7 +507,7 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
                     </PermissionTooltip>
                   )}
 
-                  {[4, 5].includes(item?.status_diklat?.id) && (
+                  {[4, 5, 6, 7].includes(item?.status_diklat?.id) && (
                     <VerifikatorName
                       nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
                       verification={
