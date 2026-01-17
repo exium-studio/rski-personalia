@@ -849,6 +849,21 @@ export default function TabelDiklat({ filterConfig }: Props) {
       },
     },
     {
+      th: "Verif. 3",
+      props: {
+        // position: "sticky",
+        right: 0,
+        zIndex: 1,
+        w: "122px",
+      },
+      cProps: {
+        justify: "center",
+        // borderLeft: "1px solid var(--divider3)",
+        borderRight: "1px solid var(--divider3)",
+        w: "122px",
+      },
+    },
+    {
       th: "Sertifikat",
       props: {
         // position: "sticky",
@@ -953,6 +968,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
           value: item.lokasi,
           td: item.lokasi,
         },
+        // Verif 1
         {
           value: "",
           td: (
@@ -966,7 +982,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
                     <PermissionTooltip permission={verif1Permission}>
                       <VerifikasiModal
                         aria-label={`diklat-internal-verif-1-button-${item.id}`}
-                        id={`verifikasi-diklat-internal-modal-${item.id}`}
+                        id={`diklat-internal-verif-1-modal-${item.id}`}
                         submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-1`}
                         approvePayloadKey="verifikasi_pertama_disetujui"
                         disapprovePayloadKey="verifikasi_pertama_ditolak"
@@ -998,6 +1014,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
             borderRight: "1px solid var(--divider3)",
           },
         },
+        // Verif 2
         {
           value: "",
           td: (
@@ -1018,7 +1035,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
                     <PermissionTooltip permission={verif2Permission}>
                       <VerifikasiModal
                         aria-label={`diklat-internal-verif-2-button-${item.id}`}
-                        id={`verifikasi-diklat-internal-modal-${item.id}`}
+                        id={`diklat-internal-verif-2-modal-${item.id}`}
                         submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-2`}
                         approvePayloadKey="verifikasi_kedua_disetujui"
                         disapprovePayloadKey="verifikasi_kedua_ditolak"
@@ -1050,6 +1067,60 @@ export default function TabelDiklat({ filterConfig }: Props) {
             // borderLeft: "1px solid var(--divider3)",
           },
         },
+        // Verif 3
+        {
+          value: "",
+          td: (
+            <>
+              {item?.relasi_verifikasi?.[1]?.id === null &&
+                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
+
+              {(item?.relasi_verifikasi?.[1]?.id || userData?.id === 1) && (
+                <>
+                  {[1, 2, 3, 7].includes(item?.status_diklat?.id) && (
+                    <VerifikatorName
+                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                      verification={null}
+                    />
+                  )}
+
+                  {item?.status_diklat?.id === 4 && (
+                    <PermissionTooltip permission={verif3Permission}>
+                      <VerifikasiModal
+                        aria-label={`diklat-internal-verif-3-button-${item.id}`}
+                        id={`diklat-internal-verif-3-modal-${item.id}`}
+                        submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-3`}
+                        approvePayloadKey="verifikasi_ketiga_disetujui"
+                        disapprovePayloadKey="verifikasi_ketiga_ditolak"
+                        isDisabled={!verif3Permission}
+                      />
+                    </PermissionTooltip>
+                  )}
+
+                  {[6, 7].includes(item?.status_diklat?.id) && (
+                    <VerifikatorName
+                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                      verification={
+                        item?.status_diklat?.id === 6 ? true : false
+                      }
+                    />
+                  )}
+                </>
+              )}
+            </>
+          ),
+          props: {
+            // position: "sticky",
+            right: 0,
+            zIndex: 1,
+          },
+          cProps: {
+            borderRight: "1px solid var(--divider3)",
+            justify: "center",
+            // borderLeft: "1px solid var(--divider3)",
+          },
+        },
+        // Publikasi
         {
           value: "",
           td: item.status_diklat.id === 4 && (
