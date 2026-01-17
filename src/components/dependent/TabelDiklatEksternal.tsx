@@ -535,8 +535,8 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
                         aria-label={`diklat-internal-verif-2-button-${item.id}`}
                         id={`verifikasi-diklat-internal-modal-${item.id}`}
                         submitUrl={`/api/rski/dashboard/perusahaan/diklat/${item.id}/verifikasi-step-2`}
-                        approvePayloadKey="verifikasi_kedua_disetujui"
-                        disapprovePayloadKey="verifikasi_kedua_ditolak"
+                        approvePayloadKey="verifikasi_ketiga_disetujui"
+                        disapprovePayloadKey="verifikasi_ketiga_ditolak"
                         isDisabled={!verif2Permission}
                       />
                     </PermissionTooltip>
