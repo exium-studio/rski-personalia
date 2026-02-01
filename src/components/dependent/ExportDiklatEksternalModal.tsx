@@ -30,9 +30,9 @@ import FilterKaryawanForExport from "../independent/FilterKaryawanForExport";
 
 interface Props extends ButtonProps {}
 
-export default function ExportPresensiModal({ ...props }: Props) {
+export default function ExportDiklatEksternalModal({ ...props }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`export-modal-${1}`, isOpen, onOpen, onClose);
+  useBackOnClose(`export-diklat-eksternal-modal-${1}`, isOpen, onOpen, onClose);
   const initialRef = useRef(null);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -77,14 +77,14 @@ export default function ExportPresensiModal({ ...props }: Props) {
       ...formattedFilterKaryawan,
     };
     req
-      .post("/api/rski/dashboard/presensi/export", payload, {
+      .post("/api/rski/dashboard/perusahaan/diklat-eksternal/export", payload, {
         responseType: "blob",
       })
       .then((r) => {
         if (r?.status === 200) {
           download(
             r.data,
-            `Data Presensi ${formatDate(
+            `Data Diklat Eksternal ${formatDate(
               dateRange?.tgl_mulai,
               "short",
             )} - ${formatDate(dateRange?.tgl_selesai, "short")}`,
@@ -105,7 +105,8 @@ export default function ExportPresensiModal({ ...props }: Props) {
         if (e.response?.status === 404) {
           toast({
             status: "error",
-            title: "Data presensi tidak ditemukan untuk periode yang diminta.",
+            title:
+              "Data diklat internal tidak ditemukan untuk periode yang diminta.",
             position: "bottom-right",
             isClosable: true,
           });
@@ -158,7 +159,7 @@ export default function ExportPresensiModal({ ...props }: Props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader ref={initialRef}>
-            <DisclosureHeader title={"Export Presensi"} />
+            <DisclosureHeader title={"Export Diklat Internal"} />
           </ModalHeader>
           <ModalBody>
             <Text opacity={0.6}>
