@@ -1,17 +1,17 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import ExportModal from "../../components/dependent/ExportModal";
+import ExportDiklatInternalModal from "../../components/dependent/ExportDiklatInternalModal";
 import NumberInput from "../../components/dependent/input/NumberInput";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelDiklat from "../../components/dependent/TabelDiklat";
 import TambahAcaraDiklat from "../../components/independent/TambahDiklatInternal";
 import CContainer from "../../components/wrapper/CContainer";
 import CWrapper from "../../components/wrapper/CWrapper";
+import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 import { useLightDarkColor } from "../../constant/colors";
 import { responsiveSpacing } from "../../constant/sizes";
 import useAuth from "../../global/useAuth";
 import isHasPermissions from "../../lib/isHasPermissions";
-import PermissionTooltip from "../../components/wrapper/PermissionTooltip";
 
 export default function Diklat() {
   // Filter Config
@@ -85,12 +85,13 @@ export default function Diklat() {
               permission={exportPermissions}
               boxProps={{ w: "fit-content" }}
             >
-              <ExportModal
+              {/* <ExportModal
                 url="/api/rski/dashboard/perusahaan/diklat-internal/export"
                 title="Export Diklat Internal"
                 downloadFileName="Data Diklat Internal"
                 isDisabled={!exportPermissions}
-              />
+              /> */}
+              <ExportDiklatInternalModal />
             </PermissionTooltip>
 
             <PermissionTooltip

@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import ExportModal from "../../components/dependent/ExportModal";
+import ExportDiklatEksternalModal from "../../components/dependent/ExportDiklatEksternalModal";
 import NumberInput from "../../components/dependent/input/NumberInput";
 import SearchComponent from "../../components/dependent/input/SearchComponent";
 import TabelDiklatEksternal from "../../components/dependent/TabelDiklatEksternal";
@@ -85,12 +85,14 @@ export default function DiklatEksternal() {
               permission={exportPermissions}
               boxProps={{ w: "fit-content" }}
             >
-              <ExportModal
+              {/* <ExportModal
                 url="/api/rski/dashboard/perusahaan/diklat-eksternal/export"
                 title="Export Diklat Eksternal"
                 downloadFileName="Data Diklat Eksternal"
                 isDisabled={!exportPermissions}
-              />
+              /> */}
+
+              <ExportDiklatEksternalModal />
             </PermissionTooltip>
 
             <PermissionTooltip
