@@ -108,7 +108,7 @@ const NavMenu = ({ nav, i, active, topNavActive, navsRef }: any) => {
           {nav.subNavs.map((subNav: any, ii: number) => {
             const permission = isHasPermissions(
               userPermissions,
-              subNav.allowed
+              subNav.allowed,
             );
 
             return (
