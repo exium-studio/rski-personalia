@@ -15,25 +15,67 @@ import {
 import { RiFileLine } from "@remixicon/react";
 import { Link } from "react-router-dom";
 import { iconSize } from "../../constant/sizes";
+import useBackOnClose from "../../hooks/useBackOnClose";
+import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import formatNumber from "../../lib/formatNumber";
-import ViewPhotoModalDisclosure from "./ViewPhotoModalDisclosure";
-import backOnClose from "../../lib/backOnClose";
-import DisclosureHeader from "./DisclosureHeader";
-import useBackOnClose from "../../hooks/useBackOnClose";
-import CContainer from "../wrapper/CContainer";
 import FlexLine from "../independent/FlexLine";
-import TabelElipsisText from "./TabelElipsisText";
 import NoData from "../independent/NoData";
+import CContainer from "../wrapper/CContainer";
 import BooleanBadge from "./BooleanBadge";
+import DisclosureHeader from "./DisclosureHeader";
+import TabelElipsisText from "./TabelElipsisText";
+import ViewPhotoModalDisclosure from "./ViewPhotoModalDisclosure";
 
 interface DatakeluargaProps {
   data: any;
+  dataCompare?: any;
   index: number;
 }
-const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
+const ListKeluargaModal = ({ data, dataCompare, index }: DatakeluargaProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose(`anggota-keluarga-modal-${index}`, isOpen, onOpen, onClose);
+
+  const fields = [
+    { label: "Hubungan Keluarga", get: (a: any) => a?.hubungan },
+    {
+      label: "Status Hidup",
+      get: (a: any) => (a?.status_hidup ? "Aktif" : "Tidak Aktif"),
+    },
+    {
+      label: "Jenis Kelamin",
+      get: (a: any) => (a?.jenis_kelamin ? "Laki-laki" : "Perempuan"),
+    },
+    { label: "Tempat Lahir", get: (a: any) => a?.tempat_lahir },
+    {
+      label: "Tanggal Lahir",
+      get: (a: any) => formatDate(a?.tgl_lahir),
+    },
+    {
+      label: "Pendidikan Terakhir",
+      get: (a: any) => a?.pendidikan_terakhir?.label,
+    },
+    {
+      label: "Agama",
+      get: (a: any) =>
+        a?.agama?.label ||
+        a?.kategori_agama?.label ||
+        a?.kategori_agama_id?.label,
+    },
+    {
+      label: "Golongan Darah",
+      get: (a: any) =>
+        a?.darah?.label ||
+        a?.kategori_darah?.label ||
+        a?.kategori_darah_id?.label,
+    },
+    { label: "Pekerjaan", get: (a: any) => a?.pekerjaan },
+    { label: "Nomor Telepon", get: (a: any) => a?.no_hp },
+    { label: "Email", get: (a: any) => a?.email },
+    { label: "No. Rekam Medis", get: (a: any) => a?.no_rm },
+    { label: "Tanggungan BPJS", get: (a: any) => a?.is_bpjs },
+    { label: "Sudah Menikah", get: (a: any) => a?.is_menikah },
+  ];
 
   // console.log(data);
 
@@ -61,116 +103,64 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
             <DisclosureHeader title={"Anggota Keluarga"} />
           </ModalHeader>
           <ModalBody className="scrollY" gap={4}>
-            {data?.length > 0 && (
-              <>
-                {data?.map((anggota: any, i: number) => (
+            {data?.length > 0 &&
+              data.map((anggota: any, i: number) => {
+                const compare = dataCompare?.[i];
+
+                return (
                   <CContainer
                     key={i}
                     borderBottom={
-                      i !== data?.length - 1 ? "1px solid var(--divider)" : ""
+                      i !== data.length - 1 ? "1px solid var(--divider)" : ""
                     }
-                    // pt={i !== 0 ? 4 : 0}
-                    // pb={i !== data?.length - 1 ? 4 : 0}
                     p={4}
                     borderRadius={8}
                     gap={2}
                     bg={"var(--divider)"}
                   >
                     <Text fontWeight={600}>{anggota?.nama_keluarga}</Text>
-                    <HStack>
-                      <Text opacity={0.4}>Hubungan Keluarga</Text>
-                      <FlexLine />
-                      <Text>{anggota?.hubungan}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Status Hidup</Text>
-                      <FlexLine />
-                      <Text>
-                        {anggota?.status_hidup ? "Aktif" : "Tidak Aktif"}
-                      </Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Jenis Kelamin</Text>
-                      <FlexLine />
-                      <Text>
-                        {anggota?.jenis_kelamin ? "Laki-laki" : "Perempuan"}
-                      </Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Tempat Lahir</Text>
-                      <FlexLine />
-                      <Text>{anggota?.tempat_lahir}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Tanggal Lahir</Text>
-                      <FlexLine />
-                      <Text>{formatDate(anggota?.tgl_lahir)}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Pendidikan Terakhir</Text>
-                      <FlexLine />
-                      <Text>{anggota?.pendidikan_terakhir?.label}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Agama</Text>
-                      <FlexLine />
-                      <Text>
-                        {anggota?.agama?.label ||
-                          anggota?.kategori_agama?.label ||
-                          anggota?.kategori_agama_id?.label}
-                      </Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Golongan Darah</Text>
-                      <FlexLine />
-                      <Text>
-                        {anggota?.darah?.label ||
-                          anggota?.kategori_darah?.label ||
-                          anggota?.kategori_darah_id?.label}
-                      </Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Pekerjaan</Text>
-                      <FlexLine />
-                      <Text>{anggota?.pekerjaan}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Nomor Telepon</Text>
-                      <FlexLine />
-                      <Text>{anggota?.no_hp}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Email</Text>
-                      <FlexLine />
-                      <Text>{anggota?.email}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>No. Rekam Medis</Text>
-                      <FlexLine />
-                      <Text>{anggota?.no_rm}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Tanggungan BPJS</Text>
-                      <FlexLine />
-                      <BooleanBadge
-                        data={anggota.is_bpjs}
-                        trueValue="Ditanggung"
-                        falseValue="Tidak Ditanggung"
-                      />
-                    </HStack>
-                    <HStack>
-                      <Text opacity={0.4}>Sudah Menikah</Text>
-                      <FlexLine />
-                      <BooleanBadge
-                        data={anggota?.is_menikah}
-                        trueValue="Menikah"
-                        falseValue="Belum Menikah"
-                      />
-                    </HStack>
+
+                    {fields.map((field, idx) => {
+                      const value = field.get(anggota);
+                      const compareValue = field.get(compare);
+                      const isDiff = compare && value !== compareValue;
+
+                      const isBooleanField =
+                        field.label === "Tanggungan BPJS" ||
+                        field.label === "Sudah Menikah";
+
+                      return (
+                        <HStack key={idx}>
+                          <Text opacity={0.4}>{field.label}</Text>
+                          <FlexLine />
+                          {isBooleanField ? (
+                            <BooleanBadge
+                              data={value}
+                              trueValue={
+                                field.label === "Tanggungan BPJS"
+                                  ? "Ditanggung"
+                                  : "Menikah"
+                              }
+                              falseValue={
+                                field.label === "Tanggungan BPJS"
+                                  ? "Tidak Ditanggung"
+                                  : "Belum Menikah"
+                              }
+                            />
+                          ) : (
+                            <Text
+                              color={isDiff ? "p.500" : ""}
+                              fontWeight={isDiff ? "bold" : "normal"}
+                            >
+                              {value}
+                            </Text>
+                          )}
+                        </HStack>
+                      );
+                    })}
                   </CContainer>
-                ))}
-              </>
-            )}
+                );
+              })}
 
             {(!data || data?.length === 0) && <NoData minH={"300px"} />}
           </ModalBody>
@@ -189,7 +179,12 @@ const ListKeluargaModal = ({ data, index }: DatakeluargaProps) => {
   );
 };
 
-export default function PerubahanDataRender({ column, data, index }: any) {
+export default function PerubahanDataRender({
+  column,
+  data,
+  dataCompare,
+  index,
+}: any) {
   // console.log(column, data);
   switch (column) {
     default:
@@ -198,7 +193,13 @@ export default function PerubahanDataRender({ column, data, index }: any) {
       return <Text>{data ? data?.label : "-"}</Text>;
     case "data keluarga":
     case "Data Keluarga":
-      return <ListKeluargaModal data={data} index={index} />;
+      return (
+        <ListKeluargaModal
+          data={data}
+          dataCompare={dataCompare}
+          index={index}
+        />
+      );
     case "foto_profil":
       return (
         <ViewPhotoModalDisclosure src={data?.path}>

@@ -41,7 +41,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
         ...formattedFilterKaryawan,
         ...(filterConfig?.status_verifikasi?.length > 0 && {
           status_verifikasi: filterConfig.status_verifikasi.map(
-            (sp: any) => sp.value
+            (sp: any) => sp.value,
           ),
         }),
       },
@@ -191,6 +191,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
             <PerubahanDataRender
               column={item?.kolom?.toLowerCase()}
               data={item.original_data}
+              dataCompare={item.updated_data}
             />
           ),
           cProps: {
@@ -203,6 +204,7 @@ export default function TabelPermintaanPerubahanData({ filterConfig }: Props) {
             <PerubahanDataRender
               column={item?.kolom?.toLowerCase()}
               data={item.updated_data}
+              dataCompare={item.original_data}
               index={i}
             />
           ),
