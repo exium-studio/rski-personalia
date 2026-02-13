@@ -131,8 +131,15 @@ const ListKeluargaModal = ({ data, dataCompare, index }: DatakeluargaProps) => {
 
                       return (
                         <HStack key={idx}>
-                          <Text opacity={0.4}>{field.label}</Text>
+                          <Text
+                            fontWeight={isDiff ? "semibold" : "normal"}
+                            opacity={isDiff ? 1 : 0.4}
+                          >
+                            {field.label}
+                          </Text>
+
                           <FlexLine />
+
                           {isBooleanField ? (
                             <BooleanBadge
                               data={value}
@@ -150,7 +157,7 @@ const ListKeluargaModal = ({ data, dataCompare, index }: DatakeluargaProps) => {
                           ) : (
                             <Text
                               color={isDiff ? "p.500" : ""}
-                              fontWeight={isDiff ? "bold" : "normal"}
+                              fontWeight={isDiff ? "semibold" : "normal"}
                             >
                               {value}
                             </Text>
