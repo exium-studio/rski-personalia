@@ -193,7 +193,7 @@ export default function ExportDiklatInternalModal({ ...props }: Props) {
                   from: dateRange.tgl_mulai,
                   to: dateRange.tgl_selesai,
                 }}
-                maxRange={31}
+                maxRange={1830}
                 nonNullable
                 presetsConfig={["thisWeek", "thisMonth"]}
               />
