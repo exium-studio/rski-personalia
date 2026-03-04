@@ -10,6 +10,11 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
   Tooltip,
   useDisclosure,
@@ -42,7 +47,7 @@ function InboxRow({ index, style, data }: any) {
       style={style}
       align={"start"}
       px={6}
-      py={4}
+      py={3}
       cursor={"pointer"}
       _hover={{ bg: "var(--divider)" }}
       transition={"200ms"}
@@ -55,15 +60,17 @@ function InboxRow({ index, style, data }: any) {
       }
     >
       <CContainer gap={1}>
-        <Tooltip label={item?.kategori_notifikasi?.label} openDelay={500}>
+        <Tooltip label={item?.kategori_notifikasi?.label} openDelay={200}>
           <Text fontWeight={600} w={"fit-content"}>
             {item?.kategori_notifikasi?.label}
           </Text>
         </Tooltip>
 
-        <Text fontSize={14} opacity={0.6}>
-          {item?.message}
-        </Text>
+        <Tooltip label={item?.message} openDelay={200}>
+          <Text fontSize={14} opacity={0.6} noOfLines={2}>
+            {item?.message}
+          </Text>
+        </Tooltip>
 
         <Text fontSize={12} opacity={0.4} pt={2}>
           {formatDate(item?.created_at)}
@@ -265,7 +272,8 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
               }
             />
           </ModalHeader>
-          <ModalBody className="scrollY" px={0}>
+
+          <ModalBody px={0}>
             {error && (
               <>
                 {notFound && <NoData minH={"300px"} />}
@@ -316,7 +324,66 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
                             />
                           </Box>
 
-                          <>
+                          <Tabs isLazy variant={"line"} colorScheme={"p"}>
+                            <TabList w={"full"} px={6} mb={2}>
+                              {fdv?.length > 0 && (
+                                <Tab w={"full"} fontWeight={500}>
+                                  Perlu Verifikasi ({fdv.length})
+                                </Tab>
+                              )}
+                              {fdr?.length > 0 && (
+                                <Tab w={"full"} fontWeight={500}>
+                                  Reguler ({fdr.length})
+                                </Tab>
+                              )}
+                            </TabList>
+
+                            <TabPanels pt={0}>
+                              {fdv?.length > 0 && (
+                                <TabPanel p={0}>
+                                  <List
+                                    height={Math.min(400, fdv.length * 124)}
+                                    itemCount={fdv.length}
+                                    itemSize={124}
+                                    width="100%"
+                                    itemData={{
+                                      items: fdv,
+                                      onClick: tandaiBaca,
+                                      type: "verification",
+                                      links: verificationLinks,
+                                    }}
+                                  >
+                                    {InboxRow}
+                                  </List>
+                                </TabPanel>
+                              )}
+
+                              {fdr?.length > 0 && (
+                                <TabPanel p={0}>
+                                  <List
+                                    height={Math.min(400, fdr.length * 124)}
+                                    itemCount={fdr.length}
+                                    itemSize={124}
+                                    width="100%"
+                                    itemData={{
+                                      items: fdr,
+                                      onClick: tandaiBaca,
+                                      type: "regular",
+                                      links: verificationLinks,
+                                    }}
+                                  >
+                                    {InboxRow}
+                                  </List>
+                                </TabPanel>
+                              )}
+                            </TabPanels>
+
+                            {fdv?.length === 0 && fdr?.length === 0 && (
+                              <NotFound minH="300px" />
+                            )}
+                          </Tabs>
+
+                          {/* <>
                             {fdv?.length > 0 && (
                               <>
                                 <CContainer px={6}>
@@ -326,7 +393,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
                                 </CContainer>
 
                                 <List
-                                  height={Math.min(400, fdv.length * 96)}
+                                  height={Math.min(200, fdv.length * 96)}
                                   itemCount={fdv.length}
                                   itemSize={96}
                                   width="100%"
@@ -355,7 +422,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
                                 </CContainer>
 
                                 <List
-                                  height={Math.min(400, fdr.length * 96)}
+                                  height={Math.min(200, fdr.length * 96)}
                                   itemCount={fdr.length}
                                   itemSize={96}
                                   width="100%"
@@ -374,7 +441,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
                             {fdv?.length === 0 && fdr?.length === 0 && (
                               <NotFound minH={"300px"} />
                             )}
-                          </>
+                          </> */}
                         </CContainer>
                       </>
                     )}
@@ -383,6 +450,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
               </>
             )}
           </ModalBody>
+
           <ModalFooter>
             <Button
               w={"100%"}
