@@ -39,7 +39,7 @@ const FilterMasaDiklat = (props: any) => {
 
   const [more, setMore] = useState(false);
   const [localFilterConfig, setLocalFilterConfig] = useState<any | null>(
-    inputValue
+    inputValue,
   );
   const localFilterConfigRef = useRef(localFilterConfig);
   const initialRef = useRef(null);
@@ -120,11 +120,11 @@ const FilterMasaDiklat = (props: any) => {
                       {more
                         ? "> 20 jam"
                         : localFilterConfig.less_than ||
-                          localFilterConfig.more_than
-                        ? `${localFilterConfig.more_than || 0} - ${
-                            localFilterConfig.less_than || 0
-                          } jam`
-                        : `Semua`}
+                            localFilterConfig.more_than
+                          ? `${localFilterConfig.more_than || 0} - ${
+                              localFilterConfig.less_than || 0
+                            } jam`
+                          : `Semua`}
                     </Text>
                   </Center>
 
