@@ -20,11 +20,14 @@ import useFilterKaryawanExportKuotaCuti from "../../global/useFilterKaryawanExpo
 import useBackOnClose from "../../hooks/useBackOnClose";
 import backOnClose from "../../lib/backOnClose";
 import download from "../../lib/download";
+import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
 import FilterKaryawanForExport from "../independent/FilterKaryawanForExport";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
+import DateRangePickerModal from "./input/DateRangePickerModal";
 import SelectTipeCuti from "./_Select/SelectTipeCuti";
+import { endOfWeek, startOfWeek } from "date-fns";
 
 interface Props extends ButtonProps {}
 
@@ -36,13 +39,13 @@ export default function ExportKuotaCutiModal({ ...props }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
 
-  // const today = new Date();
-  // const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
-  // const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
-  // const defaultRangeTgl = {
-  //   from: startOfWeekDate,
-  //   to: endOfWeekDate,
-  // };
+  const today = new Date();
+  const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
+  const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
+  const defaultRangeTgl = {
+    from: startOfWeekDate,
+    to: endOfWeekDate,
+  };
   const {
     defaultFilterKaryawan,
     filterKaryawan,
@@ -52,28 +55,28 @@ export default function ExportKuotaCutiModal({ ...props }: Props) {
   } = useFilterKaryawanExportKuotaCuti();
 
   // Filter Config
-  // const defaultFilterConfig = {
-  //   tgl_mulai: defaultRangeTgl?.from,
-  //   tgl_selesai: defaultRangeTgl?.to,
-  // };
-  // const [dateRange, setDateRange] = useState<any>(defaultFilterConfig);
+  const defaultFilterConfig = {
+    tgl_mulai: defaultRangeTgl?.from,
+    tgl_selesai: defaultRangeTgl?.to,
+  };
+  const [dateRange, setDateRange] = useState<any>(defaultFilterConfig);
 
-  // const confirmDateRange = (
-  //   inputValue: { from: Date; to: Date } | undefined
-  // ) => {
-  //   setDateRange({
-  //     tgl_mulai: inputValue?.from,
-  //     tgl_selesai: inputValue?.to,
-  //   });
-  // };
+  const confirmDateRange = (
+    inputValue: { from: Date; to: Date } | undefined,
+  ) => {
+    setDateRange({
+      tgl_mulai: inputValue?.from,
+      tgl_selesai: inputValue?.to,
+    });
+  };
 
   const [tipeCuti, setTipeCuti] = useState<any>(null);
   const handleExport = () => {
     setLoading(true);
     const url = `api/rski/dashboard/pengaturan/hak-cuti/export`;
     const payload = {
-      // tgl_mulai: formatDate(dateRange?.tgl_mulai, "short"),
-      // tgl_selesai: formatDate(dateRange?.tgl_selesai, "short"),
+      tgl_mulai: formatDate(dateRange?.tgl_mulai, "short"),
+      tgl_selesai: formatDate(dateRange?.tgl_selesai, "short"),
       ...formattedFilterKaryawan,
       tipe_cuti: tipeCuti?.value,
     };
@@ -169,12 +172,28 @@ export default function ExportKuotaCutiModal({ ...props }: Props) {
                 tahun={tahun}
                 setTahun={setTahun}
               /> */}
+
               <FilterKaryawanForExport
                 id="filter-karyawan-export-presensi"
                 defaultFilterKaryawan={defaultFilterKaryawan}
                 filterKaryawan={filterKaryawan}
                 setFilterKaryawan={setFilterKaryawan}
                 setFormattedFilterKaryawan={setFormattedFilterKaryawan}
+              />
+
+              <DateRangePickerModal
+                id="jadwal-date-range"
+                name="date-range"
+                minW={"165px"}
+                w={"100%"}
+                onConfirm={confirmDateRange}
+                inputValue={{
+                  from: dateRange.tgl_mulai,
+                  to: dateRange.tgl_selesai,
+                }}
+                maxRange={1830}
+                nonNullable
+                presetsConfig={["thisWeek", "thisMonth"]}
               />
 
               <SelectTipeCuti
@@ -185,21 +204,6 @@ export default function ExportKuotaCutiModal({ ...props }: Props) {
                 }}
                 inputValue={tipeCuti}
               />
-
-              {/* <DateRangePickerModal
-                id="jadwal-date-range"
-                name="date-range"
-                minW={"165px"}
-                w={"100%"}
-                onConfirm={confirmDateRange}
-                inputValue={{
-                  from: dateRange.tgl_mulai,
-                  to: dateRange.tgl_selesai,
-                }}
-                maxRange={31}
-                nonNullable
-                presetsConfig={["thisWeek", "thisMonth"]}
-              /> */}
 
               <ButtonGroup>
                 <Button

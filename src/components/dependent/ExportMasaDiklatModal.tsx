@@ -23,6 +23,8 @@ import req from "../../lib/req";
 import CContainer from "../wrapper/CContainer";
 import DisclosureHeader from "./DisclosureHeader";
 import FilterMasaDiklat from "./FilterMasaDiklat";
+import { endOfWeek, startOfWeek } from "date-fns";
+import DateRangePickerModal from "./input/DateRangePickerModal";
 
 interface Props extends ButtonProps {}
 
@@ -34,9 +36,17 @@ export default function ExportMasaDiklatModal({ ...props }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
 
+  const today = new Date();
+  const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
+  const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
+  const defaultRangeTgl = {
+    from: startOfWeekDate,
+    to: endOfWeekDate,
+  };
   const defaultFilterConfig = {
     less_than: undefined as any,
     more_than: undefined as any,
+    dateRange: defaultRangeTgl,
   };
   const [filterConfig, setFilterConfig] = useState<any>(defaultFilterConfig);
 
@@ -48,6 +58,8 @@ export default function ExportMasaDiklatModal({ ...props }: Props) {
     const payload = {
       less_than: filterConfig.less_than * 3600,
       more_than: filterConfig.more_than * 3600,
+      tgl_mulai: filterConfig.dateRange.from,
+      tgl_selesai: filterConfig.dateRange.to,
     };
 
     req
@@ -101,6 +113,16 @@ export default function ExportMasaDiklatModal({ ...props }: Props) {
       });
   };
 
+  const confirmDateRange = (
+    inputValue: { from: Date; to: Date } | undefined,
+  ) => {
+    setFilterConfig((ps: any) => ({
+      ...ps,
+      tgl_mulai: inputValue?.from,
+      tgl_selesai: inputValue?.to,
+    }));
+  };
+
   return (
     <>
       <Button
@@ -140,6 +162,21 @@ export default function ExportMasaDiklatModal({ ...props }: Props) {
                   id={"filter-masa-diklat-export"}
                   inputValue={filterConfig}
                   onConfirm={setFilterConfig}
+                />
+
+                <DateRangePickerModal
+                  id="jadwal-date-range"
+                  name="date-range"
+                  minW={"165px"}
+                  w={"100%"}
+                  onConfirm={confirmDateRange}
+                  inputValue={{
+                    from: filterConfig.dateRange.tgl_mulai,
+                    to: filterConfig.dateRange.tgl_selesai,
+                  }}
+                  maxRange={1830}
+                  nonNullable
+                  presetsConfig={["thisWeek", "thisMonth"]}
                 />
               </CContainer>
 
