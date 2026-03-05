@@ -36,7 +36,7 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
     ...formattedFilterKaryawan,
     ...(filterConfig?.status_penukaran?.length > 0 && {
       status_penukaran: filterConfig.status_penukaran.map(
-        (sp: any) => sp.value
+        (sp: any) => sp.value,
       ),
     }),
   };
@@ -136,10 +136,10 @@ export default function TabelTUkarJadwal({ filterConfig }: Props) {
   ];
   const formattedData = data?.map((item: any) => {
     // const verif1Permission =
-    //   item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
+    //   item?.verified_by?.[0]?.verifikator?.id === userData?.id ||
     //   userData?.id === 1;
     // const verif2Permission =
-    //   item?.relasi_verifikasi?.[1]?.verifikator?.id === userData?.id ||
+    //   item?.verified_by?.[1]?.verifikator?.id === userData?.id ||
     //   userData?.id === 1;
 
     const verif1Permission = true;

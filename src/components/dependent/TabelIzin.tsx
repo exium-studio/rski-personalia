@@ -115,7 +115,7 @@ export default function TabelIzin({ filterConfig }: Props) {
   ];
   const formattedData = data?.map((item: any) => {
     // const verif1Permission =
-    //   item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
+    //   item?.verified_by?.[0]?.verifikator?.id === userData?.id ||
     //   userData?.id === 1;
 
     const verif1Permission = true;
@@ -184,10 +184,10 @@ export default function TabelIzin({ filterConfig }: Props) {
             <>
               {item?.status_izin?.id === 1 && (
                 <>
-                  {item?.relasi_verifikasi?.[0]?.id === null &&
+                  {item?.verified_by?.[0]?.id === null &&
                     userData?.id !== 1 && <VerifikatorBelumDitentukan />}
 
-                  {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
+                  {(item?.verified_by?.[0]?.id || userData?.id === 1) && (
                     <PermissionTooltip permission={verif1Permission}>
                       <VerifikasiModal
                         aria-label={`cuti-verif-1-button-${item.id}`}
@@ -204,7 +204,7 @@ export default function TabelIzin({ filterConfig }: Props) {
 
               {[2, 3].includes(item?.status_izin?.id) && (
                 <VerifikatorName
-                  nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
+                  nama={item?.verified_by?.[0]?.verifikator?.nama}
                   verification={
                     [2].includes(item?.status_izin?.id) ? true : false
                   }

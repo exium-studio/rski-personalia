@@ -880,13 +880,13 @@ export default function TabelDiklat({ filterConfig }: Props) {
   ];
   const formattedData = data?.map((item: any) => {
     // const verif1Permission =
-    //   item?.relasi_verifikasi?.[0]?.verifikator?.id === userData?.id ||
+    //   item?.verified_by?.[0]?.verifikator?.id === userData?.id ||
     //   userData?.id === 1;
     // const verif2Permission =
-    //   item?.relasi_verifikasi?.[1]?.verifikator?.id === userData?.id ||
+    //   item?.verified_by?.[1]?.verifikator?.id === userData?.id ||
     //   userData?.id === 1;
     // const verif3Permission =
-    //   item?.relasi_verifikasi?.[2]?.verifikator?.id === userData?.id ||
+    //   item?.verified_by?.[2]?.verifikator?.id === userData?.id ||
     //   userData?.id === 1;
 
     const verif1Permission = true;
@@ -975,10 +975,10 @@ export default function TabelDiklat({ filterConfig }: Props) {
             <>
               {item?.status_diklat?.id === 1 && (
                 <>
-                  {item?.relasi_verifikasi?.[0]?.id === null &&
+                  {item?.verified_by?.[0]?.id === null &&
                     userData?.id !== 1 && <VerifikatorBelumDitentukan />}
 
-                  {(item?.relasi_verifikasi?.[0]?.id || userData?.id === 1) && (
+                  {(item?.verified_by?.[0]?.id || userData?.id === 1) && (
                     <PermissionTooltip permission={verif1Permission}>
                       <VerifikasiModal
                         aria-label={`diklat-internal-verif-1-button-${item.id}`}
@@ -995,7 +995,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
 
               {[2, 3, 4, 5, 6, 7].includes(item?.status_diklat?.id) && (
                 <VerifikatorName
-                  nama={item?.relasi_verifikasi?.[0]?.verifikator?.nama}
+                  nama={item?.verified_by?.[0]?.verifikator?.nama}
                   verification={
                     [2, 4, 5].includes(item?.status_diklat?.id) ? true : false
                   }
@@ -1019,14 +1019,15 @@ export default function TabelDiklat({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.relasi_verifikasi?.[1]?.id === null &&
-                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
+              {item?.verified_by?.[1]?.id === null && userData?.id !== 1 && (
+                <VerifikatorBelumDitentukan />
+              )}
 
-              {(item?.relasi_verifikasi?.[1]?.id || userData?.id === 1) && (
+              {(item?.verified_by?.[1]?.id || userData?.id === 1) && (
                 <>
                   {[1, 3].includes(item?.status_diklat?.id) && (
                     <VerifikatorName
-                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                      nama={item?.verified_by?.[1]?.verifikator?.nama}
                       verification={null}
                     />
                   )}
@@ -1046,7 +1047,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
 
                   {[4, 5, 6, 7].includes(item?.status_diklat?.id) && (
                     <VerifikatorName
-                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                      nama={item?.verified_by?.[1]?.verifikator?.nama}
                       verification={
                         item?.status_diklat?.id === 4 ? true : false
                       }
@@ -1072,14 +1073,15 @@ export default function TabelDiklat({ filterConfig }: Props) {
           value: "",
           td: (
             <>
-              {item?.relasi_verifikasi?.[1]?.id === null &&
-                userData?.id !== 1 && <VerifikatorBelumDitentukan />}
+              {item?.verified_by?.[1]?.id === null && userData?.id !== 1 && (
+                <VerifikatorBelumDitentukan />
+              )}
 
-              {(item?.relasi_verifikasi?.[1]?.id || userData?.id === 1) && (
+              {(item?.verified_by?.[1]?.id || userData?.id === 1) && (
                 <>
                   {[1, 2, 3, 7].includes(item?.status_diklat?.id) && (
                     <VerifikatorName
-                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                      nama={item?.verified_by?.[1]?.verifikator?.nama}
                       verification={null}
                     />
                   )}
@@ -1099,7 +1101,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
 
                   {[6, 7].includes(item?.status_diklat?.id) && (
                     <VerifikatorName
-                      nama={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+                      nama={item?.verified_by?.[1]?.verifikator?.nama}
                       verification={
                         item?.status_diklat?.id === 6 ? true : false
                       }
@@ -1127,7 +1129,7 @@ export default function TabelDiklat({ filterConfig }: Props) {
             <KonfirmasiPublikasiSertifikat
               data={item}
               verif3Permission={verif3Permission}
-              verifikatorName={item?.relasi_verifikasi?.[1]?.verifikator?.nama}
+              verifikatorName={item?.verified_by?.[1]?.verifikator?.nama}
             />
           ),
           props: {
