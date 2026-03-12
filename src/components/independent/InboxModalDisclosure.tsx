@@ -89,9 +89,21 @@ function InboxRow({ index, style, data }: any) {
     >
       <CContainer gap={1}>
         <Tooltip label={item?.kategori_notifikasi?.label} openDelay={200}>
-          <Text fontWeight={600} w={"fit-content"}>
-            {item?.kategori_notifikasi?.label}
-          </Text>
+          <HStack>
+            <Text fontWeight={600} w={"fit-content"} noOfLines={1}>
+              {item?.kategori_notifikasi?.label}
+            </Text>
+
+            {!item?.is_read && (
+              <Box
+                flexShrink={0}
+                rounded={"full"}
+                w={"6px"}
+                h={"6px"}
+                bg={"red.400"}
+              />
+            )}
+          </HStack>
         </Tooltip>
 
         <Tooltip label={item?.message} openDelay={200}>
@@ -99,18 +111,19 @@ function InboxRow({ index, style, data }: any) {
             {item?.message}
           </Text>
         </Tooltip>
-
-        <Text fontSize={12} opacity={0.4} pt={2}>
-          {formatDate(item?.created_at)}
-        </Text>
       </CContainer>
 
-      <HStack justify={"end"}>
+      <HStack wrap={"wrap"} justify={"end"}>
+        <Text fontSize={12} opacity={0.4} mr={"auto"}>
+          {formatDate(item?.created_at)}
+        </Text>
+
         {!item?.is_read && (
           <Button
             onClick={() => {
               tandaiBaca(item.id);
             }}
+            className={"btn"}
             isLoading={loading}
             variant={"outline"}
             size={"sm"}
@@ -121,7 +134,7 @@ function InboxRow({ index, style, data }: any) {
 
         {isVerification && (
           <Link to={data.links[item?.kategori_notifikasi?.label]}>
-            <Button variant={"outline"} size={"sm"}>
+            <Button variant={"outline"} size={"sm"} className={"btn"}>
               Lihat
             </Button>
           </Link>
@@ -245,6 +258,8 @@ export default function InboxModalDisclosure({ children }: Props) {
     // Feedback: "",
   };
 
+  const ITEM_SIZE = 144;
+
   return (
     <>
       <Box onClick={onOpen} position={"relative"}>
@@ -364,9 +379,9 @@ export default function InboxModalDisclosure({ children }: Props) {
                           {fdv?.length > 0 && (
                             <TabPanel p={0}>
                               <List
-                                height={Math.min(550, fdv.length * 124)}
+                                height={Math.min(400, fdv.length * ITEM_SIZE)}
                                 itemCount={fdv.length}
-                                itemSize={124}
+                                itemSize={ITEM_SIZE}
                                 width="100%"
                                 itemData={{
                                   items: fdv,
@@ -382,9 +397,9 @@ export default function InboxModalDisclosure({ children }: Props) {
                           {fdr?.length > 0 && (
                             <TabPanel p={0}>
                               <List
-                                height={Math.min(550, fdr.length * 124)}
+                                height={Math.min(400, fdr.length * ITEM_SIZE)}
                                 itemCount={fdr.length}
-                                itemSize={124}
+                                itemSize={ITEM_SIZE}
                                 width="100%"
                                 itemData={{
                                   items: fdr,
