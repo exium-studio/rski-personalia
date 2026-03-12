@@ -38,10 +38,11 @@ import NoData from "./NoData";
 import NotFound from "./NotFound";
 import Skeleton from "./Skeleton";
 
-function InboxRow({ index, style, data, rt, setRt }: any) {
+function InboxRow({ index, style, data }: any) {
   const item = data.items[index];
 
   const isVerification = data.type === "verification";
+  const setRt = data.setRt;
 
   const toast = useToast();
 
@@ -54,7 +55,7 @@ function InboxRow({ index, style, data, rt, setRt }: any) {
       .get(`/api/rski/dashboard/notifikasi/${notif_id}`)
       .then((r) => {
         if (r?.status === 200) {
-          setRt(!rt);
+          setRt((ps: boolean) => !ps);
         }
       })
       .catch((e) => {
@@ -385,7 +386,6 @@ export default function InboxModalDisclosure({ children }: Props) {
                                   type: "verification",
                                   links: verificationLinks,
                                   setRt: setRt,
-                                  rt: rt,
                                 }}
                               >
                                 {InboxRow}
@@ -405,7 +405,6 @@ export default function InboxModalDisclosure({ children }: Props) {
                                   type: "regular",
                                   links: verificationLinks,
                                   setRt: setRt,
-                                  rt: rt,
                                 }}
                               >
                                 {InboxRow}
