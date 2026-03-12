@@ -42,6 +42,8 @@ import Skeleton from "./Skeleton";
 function InboxRow({ index, style, data }: any) {
   const item = data.items[index];
 
+  const isVerification = data.type === "verification";
+
   const { rt, setRt } = useRenderTrigger();
 
   const toast = useToast();
@@ -76,7 +78,8 @@ function InboxRow({ index, style, data }: any) {
   }
 
   return (
-    <HStack
+    <CContainer
+      gap={4}
       style={style}
       px={6}
       py={3}
@@ -102,23 +105,29 @@ function InboxRow({ index, style, data }: any) {
         </Text>
       </CContainer>
 
-      <CContainer>
+      <HStack>
         {!item?.is_read && (
           <Button
             onClick={() => {
               tandaiBaca(item.id);
             }}
             isLoading={loading}
+            variant={"outline"}
+            size={"sm"}
           >
             Tandai Baca
           </Button>
         )}
 
-        <Link to={data.links[item?.kategori_notifikasi?.label]}>
-          <Button>Lihat</Button>
-        </Link>
-      </CContainer>
-    </HStack>
+        {isVerification && (
+          <Link to={data.links[item?.kategori_notifikasi?.label]}>
+            <Button variant={"outline"} size={"sm"}>
+              Lihat
+            </Button>
+          </Link>
+        )}
+      </HStack>
+    </CContainer>
   );
 }
 
@@ -355,7 +364,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                           {fdv?.length > 0 && (
                             <TabPanel p={0}>
                               <List
-                                height={Math.min(400, fdv.length * 124)}
+                                height={Math.min(452, fdv.length * 124)}
                                 itemCount={fdv.length}
                                 itemSize={124}
                                 width="100%"
@@ -373,7 +382,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                           {fdr?.length > 0 && (
                             <TabPanel p={0}>
                               <List
-                                height={Math.min(400, fdr.length * 124)}
+                                height={Math.min(452, fdr.length * 124)}
                                 itemCount={fdr.length}
                                 itemSize={124}
                                 width="100%"
