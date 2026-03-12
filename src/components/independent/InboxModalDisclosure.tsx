@@ -83,7 +83,6 @@ function InboxRow({ index, style, data }: any) {
       cursor={"pointer"}
       _hover={{ bg: "var(--divider)" }}
       transition={"200ms"}
-      onClick={() => data.onClick(item.id)}
     >
       <CContainer gap={1}>
         <Tooltip label={item?.kategori_notifikasi?.label} openDelay={200}>
