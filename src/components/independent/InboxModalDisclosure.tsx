@@ -364,7 +364,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                           {fdv?.length > 0 && (
                             <TabPanel p={0}>
                               <List
-                                height={Math.min(452, fdv.length * 124)}
+                                height={Math.min(493, fdv.length * 124)}
                                 itemCount={fdv.length}
                                 itemSize={124}
                                 width="100%"
@@ -382,7 +382,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                           {fdr?.length > 0 && (
                             <TabPanel p={0}>
                               <List
-                                height={Math.min(452, fdr.length * 124)}
+                                height={Math.min(493, fdr.length * 124)}
                                 itemCount={fdr.length}
                                 itemSize={124}
                                 width="100%"
