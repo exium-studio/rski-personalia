@@ -10,7 +10,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spinner,
   Tab,
   TabList,
   TabPanel,
@@ -27,6 +26,7 @@ import { FixedSizeList as List } from "react-window";
 import { useLightDarkColor } from "../../constant/colors";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
+import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
@@ -39,26 +39,51 @@ import NoData from "./NoData";
 import NotFound from "./NotFound";
 import Skeleton from "./Skeleton";
 
-function InboxRow({ index, style, data, loading }: any) {
+function InboxRow({ index, style, data }: any) {
   const item = data.items[index];
-  const isVerification = data.type === "verification";
+
+  const { rt, setRt } = useRenderTrigger();
+
+  const toast = useToast();
+
+  const [loading, setLoading] = useState<boolean>();
+
+  function tandaiBaca(notif_id: number) {
+    setLoading(true);
+
+    req
+      .get(`/api/rski/dashboard/notifikasi/${notif_id}`)
+      .then((r) => {
+        if (r?.status === 200) {
+          setRt(!rt);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        toast({
+          status: "error",
+          title:
+            (typeof e?.response?.data?.message === "string" &&
+              (e?.response?.data?.message as string)) ||
+            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
+          position: "bottom-right",
+          isClosable: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
 
   return (
     <HStack
       style={style}
-      align={"start"}
       px={6}
       py={3}
       cursor={"pointer"}
       _hover={{ bg: "var(--divider)" }}
       transition={"200ms"}
       onClick={() => data.onClick(item.id)}
-      as={isVerification ? Link : undefined}
-      to={
-        isVerification
-          ? data.links[item?.kategori_notifikasi?.label]
-          : undefined
-      }
     >
       <CContainer gap={1}>
         <Tooltip label={item?.kategori_notifikasi?.label} openDelay={200}>
@@ -78,11 +103,24 @@ function InboxRow({ index, style, data, loading }: any) {
         </Text>
       </CContainer>
 
-      {loading && <Spinner size={"xs"} />}
+      <CContainer>
+        {
+          !item?.is_read(
+            <Button
+              onClick={() => {
+                tandaiBaca(item.id);
+              }}
+              isLoading={loading}
+            >
+              Tandai Baca
+            </Button>,
+          )
+        }
 
-      {!item?.is_read && !loading && (
-        <Box w={"6px"} h={"6px"} borderRadius={"full"} bg={"red.400"} />
-      )}
+        <Link to={data.links[item?.kategori_notifikasi?.label]}>
+          <Button>Lihat</Button>
+        </Link>
+      </CContainer>
     </HStack>
   );
 }
@@ -99,7 +137,6 @@ export default function InboxModalDisclosure({ children }: Props) {
   const [deleteLoading, setDeleteloading] = useState<boolean>(false);
   const [rt, setRt] = useState<boolean>(false);
   const [search, setSearch] = useState("");
-  const [loadingTandaiBaca, setLoadingTandaiBaca] = useState<boolean>();
   const { error, notFound, loading, data, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/notifikasi`,
@@ -155,33 +192,6 @@ export default function InboxModalDisclosure({ children }: Props) {
   // Utils
   const toast = useToast();
   const sw = useScreenWidth();
-
-  function tandaiBaca(notif_id: number) {
-    setLoadingTandaiBaca(true);
-
-    req
-      .get(`/api/rski/dashboard/notifikasi/${notif_id}`)
-      .then((r) => {
-        if (r?.status === 200) {
-          setRt(!rt);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        toast({
-          status: "error",
-          title:
-            (typeof e?.response?.data?.message === "string" &&
-              (e?.response?.data?.message as string)) ||
-            "Terjadi kendala, silahkan periksa jaringan atau hubungi SIM RS",
-          position: "bottom-right",
-          isClosable: true,
-        });
-      })
-      .finally(() => {
-        setLoadingTandaiBaca(false);
-      });
-  }
 
   function deleteNotif() {
     setDeleteloading(true);
@@ -354,10 +364,8 @@ export default function InboxModalDisclosure({ children }: Props) {
                                 width="100%"
                                 itemData={{
                                   items: fdv,
-                                  onClick: tandaiBaca,
                                   type: "verification",
                                   links: verificationLinks,
-                                  loading: loadingTandaiBaca,
                                 }}
                               >
                                 {InboxRow}
@@ -374,10 +382,8 @@ export default function InboxModalDisclosure({ children }: Props) {
                                 width="100%"
                                 itemData={{
                                   items: fdr,
-                                  onClick: tandaiBaca,
                                   type: "regular",
                                   links: verificationLinks,
-                                  loading: loadingTandaiBaca,
                                 }}
                               >
                                 {InboxRow}
