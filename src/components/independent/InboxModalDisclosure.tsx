@@ -10,6 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Tab,
   TabList,
   TabPanel,
@@ -22,23 +23,23 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { FixedSizeList as List } from "react-window";
 import { useLightDarkColor } from "../../constant/colors";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
+import useScreenWidth from "../../lib/useScreenWidth";
 import DisclosureHeader from "../dependent/DisclosureHeader";
+import SearchComponent from "../dependent/input/SearchComponent";
 import Retry from "../dependent/Retry";
 import CContainer from "../wrapper/CContainer";
 import NoData from "./NoData";
-import Skeleton from "./Skeleton";
-import SearchComponent from "../dependent/input/SearchComponent";
 import NotFound from "./NotFound";
-import useScreenWidth from "../../lib/useScreenWidth";
-import { FixedSizeList as List } from "react-window";
+import Skeleton from "./Skeleton";
 
-function InboxRow({ index, style, data }: any) {
+function InboxRow({ index, style, data, loading }: any) {
   const item = data.items[index];
   const isVerification = data.type === "verification";
 
@@ -77,7 +78,9 @@ function InboxRow({ index, style, data }: any) {
         </Text>
       </CContainer>
 
-      {!item?.is_read && (
+      {loading && <Spinner size={"xs"} />}
+
+      {!item?.is_read && !loading && (
         <Box w={"6px"} h={"6px"} borderRadius={"full"} bg={"red.400"} />
       )}
     </HStack>
@@ -96,13 +99,13 @@ export default function InboxModalDisclosure({ children }: Props) {
   const [deleteLoading, setDeleteloading] = useState<boolean>(false);
   const [rt, setRt] = useState<boolean>(false);
   const [search, setSearch] = useState("");
-  const { error, notFound, loading, setLoading, data, retry } =
-    useDataState<any>({
-      initialData: undefined,
-      url: `/api/rski/dashboard/notifikasi`,
-      dependencies: [rt],
-      noRt: true,
-    });
+  const [loadingTandaiBaca, setLoadingTandaiBaca] = useState<boolean>();
+  const { error, notFound, loading, data, retry } = useDataState<any>({
+    initialData: undefined,
+    url: `/api/rski/dashboard/notifikasi`,
+    dependencies: [rt],
+    noRt: true,
+  });
   const [notRedCount, setNotReadCount] = useState<number | undefined>(
     undefined,
   );
@@ -154,7 +157,7 @@ export default function InboxModalDisclosure({ children }: Props) {
   const sw = useScreenWidth();
 
   function tandaiBaca(notif_id: number) {
-    setLoading(true);
+    setLoadingTandaiBaca(true);
 
     req
       .get(`/api/rski/dashboard/notifikasi/${notif_id}`)
@@ -176,7 +179,7 @@ export default function InboxModalDisclosure({ children }: Props) {
         });
       })
       .finally(() => {
-        setLoading(false);
+        setLoadingTandaiBaca(false);
       });
   }
 
@@ -354,6 +357,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                                   onClick: tandaiBaca,
                                   type: "verification",
                                   links: verificationLinks,
+                                  loading: loadingTandaiBaca,
                                 }}
                               >
                                 {InboxRow}
@@ -373,6 +377,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                                   onClick: tandaiBaca,
                                   type: "regular",
                                   links: verificationLinks,
+                                  loading: loadingTandaiBaca,
                                 }}
                               >
                                 {InboxRow}
