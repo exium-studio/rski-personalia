@@ -43,12 +43,18 @@ function InboxRow({ index, style, data }: any) {
 
   const isVerification = data.type === "verification";
   const setRt = data.setRt;
+  const setData = data.setData;
 
   const toast = useToast();
 
   const [loading, setLoading] = useState<boolean>();
 
   function tandaiBaca(notif_id: number) {
+    setData((ps: any) => {
+      const filtered = ps.filter((p: any) => p.id !== notif_id);
+      return filtered;
+    });
+
     setLoading(true);
 
     req
@@ -154,7 +160,7 @@ export default function InboxModalDisclosure({ children }: Props) {
   const [deleteLoading, setDeleteloading] = useState<boolean>(false);
   const [rt, setRt] = useState<boolean>(false);
   const [search, setSearch] = useState("");
-  const { error, notFound, loading, data, retry } = useDataState<any>({
+  const { error, notFound, loading, data, setData, retry } = useDataState<any>({
     initialData: undefined,
     url: `/api/rski/dashboard/notifikasi`,
     dependencies: [rt],
@@ -386,6 +392,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                                   type: "verification",
                                   links: verificationLinks,
                                   setRt: setRt,
+                                  setData: setData,
                                 }}
                               >
                                 {InboxRow}
@@ -405,6 +412,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                                   type: "regular",
                                   links: verificationLinks,
                                   setRt: setRt,
+                                  setData: setData,
                                 }}
                               >
                                 {InboxRow}
