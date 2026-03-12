@@ -26,7 +26,6 @@ import { FixedSizeList as List } from "react-window";
 import { useLightDarkColor } from "../../constant/colors";
 import useBackOnClose from "../../hooks/useBackOnClose";
 import useDataState from "../../hooks/useDataState";
-import useRenderTrigger from "../../hooks/useRenderTrigger";
 import backOnClose from "../../lib/backOnClose";
 import formatDate from "../../lib/formatDate";
 import req from "../../lib/req";
@@ -39,12 +38,10 @@ import NoData from "./NoData";
 import NotFound from "./NotFound";
 import Skeleton from "./Skeleton";
 
-function InboxRow({ index, style, data }: any) {
+function InboxRow({ index, style, data, setRt }: any) {
   const item = data.items[index];
 
   const isVerification = data.type === "verification";
-
-  const { rt, setRt } = useRenderTrigger();
 
   const toast = useToast();
 
@@ -57,7 +54,7 @@ function InboxRow({ index, style, data }: any) {
       .get(`/api/rski/dashboard/notifikasi/${notif_id}`)
       .then((r) => {
         if (r?.status === 200) {
-          setRt(!rt);
+          setRt((ps: boolean) => !ps);
         }
       })
       .catch((e) => {
@@ -113,7 +110,7 @@ function InboxRow({ index, style, data }: any) {
         </Tooltip>
       </CContainer>
 
-      <HStack wrap={"wrap"} justify={"end"}>
+      <HStack wrap={"wrap"} justify={"end"} mt={"auto"}>
         <Text fontSize={12} opacity={0.4} mr={"auto"}>
           {formatDate(item?.created_at)}
         </Text>
@@ -387,6 +384,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                                   items: fdv,
                                   type: "verification",
                                   links: verificationLinks,
+                                  setRt: setRt,
                                 }}
                               >
                                 {InboxRow}
@@ -405,6 +403,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                                   items: fdr,
                                   type: "regular",
                                   links: verificationLinks,
+                                  setRt: setRt,
                                 }}
                               >
                                 {InboxRow}
