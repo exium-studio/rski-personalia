@@ -31,7 +31,7 @@ const useDataState = <T>({
   const [loadingLoadMore, setLoadingLoadMore] = useState<boolean>(false);
   const [data, setData] = useState<T | undefined>(initialData);
   const [paginationData, setPaginationData] = useState<T | undefined>(
-    initialData
+    initialData,
   );
   const [offset] = useState<number>((page - 1) * (limit || 0));
   const { rt } = useRenderTrigger();

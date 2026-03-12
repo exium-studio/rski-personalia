@@ -87,7 +87,7 @@ function InboxRow({ index, style, data }: any) {
 interface Props extends BoxProps {
   children?: any;
 }
-export default function InboxModalDisclosure({ children, ...props }: Props) {
+export default function InboxModalDisclosure({ children }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useBackOnClose("notification-modal", isOpen, onOpen, onClose);
   const initialRef = useRef(null);
@@ -288,7 +288,7 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
 
             {!error && (
               <>
-                {loading && (
+                {loading && !data && (
                   <>
                     <Skeleton
                       minH={"500px"}
@@ -304,147 +304,88 @@ export default function InboxModalDisclosure({ children, ...props }: Props) {
                     {(!data || (data && data.length === 0)) && (
                       <NoData label="Tidak Ada Inbox" />
                     )}
-                    {(data || (data && data.length > 0)) && (
-                      <>
-                        <CContainer>
-                          <Box
-                            px={5}
-                            pb={6}
-                            bg={lightDarkColor}
-                            position={"sticky"}
-                            top={0}
-                            zIndex={3}
-                          >
-                            <SearchComponent
-                              name="search"
-                              onChangeSetter={(input) => {
-                                setSearch(input);
-                              }}
-                              inputValue={search}
-                            />
-                          </Box>
+                  </>
+                )}
 
-                          <Tabs isLazy variant={"line"} colorScheme={"p"}>
-                            <TabList w={"full"} px={6} mb={2}>
-                              {fdv?.length > 0 && (
-                                <Tab w={"full"} fontWeight={500}>
-                                  Perlu Verifikasi ({fdv.length})
-                                </Tab>
-                              )}
-                              {fdr?.length > 0 && (
-                                <Tab w={"full"} fontWeight={500}>
-                                  Reguler ({fdr.length})
-                                </Tab>
-                              )}
-                            </TabList>
+                {(data || (data && data.length > 0)) && (
+                  <>
+                    <CContainer>
+                      <Box
+                        px={5}
+                        pb={6}
+                        bg={lightDarkColor}
+                        position={"sticky"}
+                        top={0}
+                        zIndex={3}
+                      >
+                        <SearchComponent
+                          name="search"
+                          onChangeSetter={(input) => {
+                            setSearch(input);
+                          }}
+                          inputValue={search}
+                        />
+                      </Box>
 
-                            <TabPanels pt={0}>
-                              {fdv?.length > 0 && (
-                                <TabPanel p={0}>
-                                  <List
-                                    height={Math.min(400, fdv.length * 124)}
-                                    itemCount={fdv.length}
-                                    itemSize={124}
-                                    width="100%"
-                                    itemData={{
-                                      items: fdv,
-                                      onClick: tandaiBaca,
-                                      type: "verification",
-                                      links: verificationLinks,
-                                    }}
-                                  >
-                                    {InboxRow}
-                                  </List>
-                                </TabPanel>
-                              )}
+                      <Tabs isLazy variant={"line"} colorScheme={"p"}>
+                        <TabList w={"full"} px={6} mb={2}>
+                          {fdv?.length > 0 && (
+                            <Tab w={"full"} fontWeight={500}>
+                              Perlu Verifikasi ({fdv.length})
+                            </Tab>
+                          )}
+                          {fdr?.length > 0 && (
+                            <Tab w={"full"} fontWeight={500}>
+                              Reguler ({fdr.length})
+                            </Tab>
+                          )}
+                        </TabList>
 
-                              {fdr?.length > 0 && (
-                                <TabPanel p={0}>
-                                  <List
-                                    height={Math.min(400, fdr.length * 124)}
-                                    itemCount={fdr.length}
-                                    itemSize={124}
-                                    width="100%"
-                                    itemData={{
-                                      items: fdr,
-                                      onClick: tandaiBaca,
-                                      type: "regular",
-                                      links: verificationLinks,
-                                    }}
-                                  >
-                                    {InboxRow}
-                                  </List>
-                                </TabPanel>
-                              )}
-                            </TabPanels>
+                        <TabPanels pt={0}>
+                          {fdv?.length > 0 && (
+                            <TabPanel p={0}>
+                              <List
+                                height={Math.min(400, fdv.length * 124)}
+                                itemCount={fdv.length}
+                                itemSize={124}
+                                width="100%"
+                                itemData={{
+                                  items: fdv,
+                                  onClick: tandaiBaca,
+                                  type: "verification",
+                                  links: verificationLinks,
+                                }}
+                              >
+                                {InboxRow}
+                              </List>
+                            </TabPanel>
+                          )}
 
-                            {fdv?.length === 0 && fdr?.length === 0 && (
-                              <NotFound minH="300px" />
-                            )}
-                          </Tabs>
+                          {fdr?.length > 0 && (
+                            <TabPanel p={0}>
+                              <List
+                                height={Math.min(400, fdr.length * 124)}
+                                itemCount={fdr.length}
+                                itemSize={124}
+                                width="100%"
+                                itemData={{
+                                  items: fdr,
+                                  onClick: tandaiBaca,
+                                  type: "regular",
+                                  links: verificationLinks,
+                                }}
+                              >
+                                {InboxRow}
+                              </List>
+                            </TabPanel>
+                          )}
+                        </TabPanels>
 
-                          {/* <>
-                            {fdv?.length > 0 && (
-                              <>
-                                <CContainer px={6}>
-                                  <Text fontWeight={500} mb={2}>
-                                    Perlu Verifikasi
-                                  </Text>
-                                </CContainer>
-
-                                <List
-                                  height={Math.min(200, fdv.length * 96)}
-                                  itemCount={fdv.length}
-                                  itemSize={96}
-                                  width="100%"
-                                  itemData={{
-                                    items: fdv,
-                                    onClick: tandaiBaca,
-                                    type: "verification",
-                                    links: verificationLinks,
-                                  }}
-                                >
-                                  {InboxRow}
-                                </List>
-                              </>
-                            )}
-
-                            {fdr?.length > 0 && (
-                              <>
-                                <CContainer px={6}>
-                                  <Text
-                                    fontWeight={500}
-                                    mt={fdv?.length > 0 ? 4 : 0}
-                                    mb={2}
-                                  >
-                                    Reguler
-                                  </Text>
-                                </CContainer>
-
-                                <List
-                                  height={Math.min(200, fdr.length * 96)}
-                                  itemCount={fdr.length}
-                                  itemSize={96}
-                                  width="100%"
-                                  itemData={{
-                                    items: fdr,
-                                    onClick: tandaiBaca,
-                                    type: "regular",
-                                    links: verificationLinks,
-                                  }}
-                                >
-                                  {InboxRow}
-                                </List>
-                              </>
-                            )}
-
-                            {fdv?.length === 0 && fdr?.length === 0 && (
-                              <NotFound minH={"300px"} />
-                            )}
-                          </> */}
-                        </CContainer>
-                      </>
-                    )}
+                        {fdv?.length === 0 && fdr?.length === 0 && (
+                          <NotFound minH="300px" />
+                        )}
+                      </Tabs>
+                    </CContainer>
                   </>
                 )}
               </>
