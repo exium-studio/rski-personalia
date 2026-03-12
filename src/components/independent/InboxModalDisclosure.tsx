@@ -103,18 +103,16 @@ function InboxRow({ index, style, data }: any) {
       </CContainer>
 
       <CContainer>
-        {
-          !item?.is_read(
-            <Button
-              onClick={() => {
-                tandaiBaca(item.id);
-              }}
-              isLoading={loading}
-            >
-              Tandai Baca
-            </Button>,
-          )
-        }
+        {!item?.is_read && (
+          <Button
+            onClick={() => {
+              tandaiBaca(item.id);
+            }}
+            isLoading={loading}
+          >
+            Tandai Baca
+          </Button>
+        )}
 
         <Link to={data.links[item?.kategori_notifikasi?.label]}>
           <Button>Lihat</Button>
