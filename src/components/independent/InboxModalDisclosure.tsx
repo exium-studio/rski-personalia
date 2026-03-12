@@ -38,7 +38,7 @@ import NoData from "./NoData";
 import NotFound from "./NotFound";
 import Skeleton from "./Skeleton";
 
-function InboxRow({ index, style, data, setRt }: any) {
+function InboxRow({ index, style, data, rt, setRt }: any) {
   const item = data.items[index];
 
   const isVerification = data.type === "verification";
@@ -54,7 +54,7 @@ function InboxRow({ index, style, data, setRt }: any) {
       .get(`/api/rski/dashboard/notifikasi/${notif_id}`)
       .then((r) => {
         if (r?.status === 200) {
-          setRt((ps: boolean) => !ps);
+          setRt(!rt);
         }
       })
       .catch((e) => {
@@ -385,6 +385,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                                   type: "verification",
                                   links: verificationLinks,
                                   setRt: setRt,
+                                  rt: rt,
                                 }}
                               >
                                 {InboxRow}
@@ -404,6 +405,7 @@ export default function InboxModalDisclosure({ children }: Props) {
                                   type: "regular",
                                   links: verificationLinks,
                                   setRt: setRt,
+                                  rt: rt,
                                 }}
                               >
                                 {InboxRow}
