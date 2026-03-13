@@ -51,8 +51,15 @@ function InboxRow({ index, style, data }: any) {
 
   function tandaiBaca(notif_id: number) {
     setData((ps: any) => {
-      const filtered = ps.filter((p: any) => p.id !== notif_id);
-      return filtered;
+      return {
+        ...ps,
+        notifikasi_verifikasi: ps?.notifikasi_verifikasi?.filter(
+          (s: any) => s.id !== notif_id,
+        ),
+        notifikasi_reguler: ps?.notifikasi_reguler?.filter(
+          (s: any) => s.id !== notif_id,
+        ),
+      };
     });
 
     setLoading(true);
