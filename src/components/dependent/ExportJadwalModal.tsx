@@ -27,6 +27,8 @@ import CContainer from "../wrapper/CContainer";
 import SelectJenisKaryawan from "./_Select/SelectJenisKaryawan";
 import DisclosureHeader from "./DisclosureHeader";
 import DateRangePickerModal from "./input/DateRangePickerModal";
+import useFilterKaryawanExportJadwal from "../../global/useFilterKaryawanExportJadwal";
+import FilterKaryawanForExport from "../independent/FilterKaryawanForExport";
 
 interface Props extends ButtonProps {}
 
@@ -42,6 +44,13 @@ export default function ExportJadwalModal({ ...props }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
 
+  const {
+    defaultFilterKaryawan,
+    filterKaryawan,
+    setFilterKaryawan,
+    formattedFilterKaryawan,
+    setFormattedFilterKaryawan,
+  } = useFilterKaryawanExportJadwal();
   const today = new Date();
   const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
   const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
@@ -55,11 +64,12 @@ export default function ExportJadwalModal({ ...props }: Props) {
   };
   const [dateRange, setDateRange] = useState<any>(defaultDateRangeFilterConfig);
   const confirmDateRange = (
-    inputValue: { from: Date; to: Date } | undefined
+    inputValue: { from: Date; to: Date } | undefined,
   ) => {
     setDateRange({
       tgl_mulai: inputValue?.from,
       tgl_selesai: inputValue?.to,
+      ...formattedFilterKaryawan,
     });
   };
 
@@ -90,10 +100,10 @@ export default function ExportJadwalModal({ ...props }: Props) {
               jenisKaryawan?.value === 1
                 ? "Shift"
                 : jenisKaryawan?.value === 0
-                ? "Non-Shift"
-                : ""
+                  ? "Non-Shift"
+                  : ""
             }`,
-            "xls"
+            "xls",
           );
         } else {
           toast({
@@ -180,6 +190,13 @@ export default function ExportJadwalModal({ ...props }: Props) {
           <ModalFooter>
             <CContainer gap={2}>
               <CContainer gap={2}>
+                <FilterKaryawanForExport
+                  id="filter-karyawan-export-jadwal"
+                  defaultFilterKaryawan={defaultFilterKaryawan}
+                  filterKaryawan={filterKaryawan}
+                  setFilterKaryawan={setFilterKaryawan}
+                  setFormattedFilterKaryawan={setFormattedFilterKaryawan}
+                />
                 <SelectJenisKaryawan
                   name="jenis-karyawan"
                   onConfirm={(input) => {

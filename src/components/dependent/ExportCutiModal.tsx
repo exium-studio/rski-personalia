@@ -62,7 +62,7 @@ export default function ExportCutiModal({ ...props }: Props) {
   const [dateRange, setDateRange] = useState<any>(defaultFilterConfig);
 
   const confirmDateRange = (
-    inputValue: { from: Date; to: Date } | undefined
+    inputValue: { from: Date; to: Date } | undefined,
   ) => {
     setDateRange({
       tgl_mulai: inputValue?.from,
@@ -172,7 +172,7 @@ export default function ExportCutiModal({ ...props }: Props) {
                 setTahun={setTahun}
               /> */}
               <FilterKaryawanForExport
-                id="filter-karyawan-export-presensi"
+                id="filter-karyawan-export-cuti"
                 defaultFilterKaryawan={defaultFilterKaryawan}
                 filterKaryawan={filterKaryawan}
                 setFilterKaryawan={setFilterKaryawan}
