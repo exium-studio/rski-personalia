@@ -460,7 +460,9 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
                 <VerifikatorName
                   nama={item?.verified_by?.[0]?.verifikator?.nama}
                   verification={
-                    [2, 4, 5].includes(item?.status_diklat?.id) ? true : false
+                    [2, 4, 5, 6, 7].includes(item?.status_diklat?.id)
+                      ? true
+                      : false
                   }
                 />
               )}
@@ -512,7 +514,9 @@ export default function TabelDiklatEksternal({ filterConfig }: Props) {
                     <VerifikatorName
                       nama={item?.verified_by?.[1]?.verifikator?.nama}
                       verification={
-                        item?.status_diklat?.id === 4 ? true : false
+                        [2, 3, 4, 6, 7].includes(item?.status_diklat?.id)
+                          ? true
+                          : false
                       }
                     />
                   )}
